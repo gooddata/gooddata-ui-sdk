@@ -404,7 +404,7 @@ export interface DeclarativeAttribute {
      * @type {string}
      * @memberof DeclarativeAttribute
      */
-    sourceColumnDataType?: string;
+    sourceColumnDataType?: DeclarativeAttributeSourceColumnDataTypeEnum;
 }
 
 export const DeclarativeAttributeSortDirectionEnum = {
@@ -414,6 +414,18 @@ export const DeclarativeAttributeSortDirectionEnum = {
 
 export type DeclarativeAttributeSortDirectionEnum =
     typeof DeclarativeAttributeSortDirectionEnum[keyof typeof DeclarativeAttributeSortDirectionEnum];
+export const DeclarativeAttributeSourceColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type DeclarativeAttributeSourceColumnDataTypeEnum =
+    typeof DeclarativeAttributeSourceColumnDataTypeEnum[keyof typeof DeclarativeAttributeSourceColumnDataTypeEnum];
 
 /**
  * Color palette and its properties.
@@ -917,7 +929,7 @@ export interface DeclarativeFact {
      * @type {string}
      * @memberof DeclarativeFact
      */
-    sourceColumnDataType?: string;
+    sourceColumnDataType?: DeclarativeFactSourceColumnDataTypeEnum;
     /**
      * A list of tags.
      * @type {Array<string>}
@@ -925,6 +937,20 @@ export interface DeclarativeFact {
      */
     tags?: Array<string>;
 }
+
+export const DeclarativeFactSourceColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type DeclarativeFactSourceColumnDataTypeEnum =
+    typeof DeclarativeFactSourceColumnDataTypeEnum[keyof typeof DeclarativeFactSourceColumnDataTypeEnum];
+
 /**
  *
  * @export
@@ -997,7 +1023,7 @@ export interface DeclarativeLabel {
      * @type {string}
      * @memberof DeclarativeLabel
      */
-    sourceColumnDataType?: string;
+    sourceColumnDataType?: DeclarativeLabelSourceColumnDataTypeEnum;
     /**
      * A list of tags.
      * @type {Array<string>}
@@ -1012,6 +1038,18 @@ export interface DeclarativeLabel {
     valueType?: DeclarativeLabelValueTypeEnum;
 }
 
+export const DeclarativeLabelSourceColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type DeclarativeLabelSourceColumnDataTypeEnum =
+    typeof DeclarativeLabelSourceColumnDataTypeEnum[keyof typeof DeclarativeLabelSourceColumnDataTypeEnum];
 export const DeclarativeLabelValueTypeEnum = {
     TEXT: "TEXT",
     HYPERLINK: "HYPERLINK",
@@ -2140,6 +2178,12 @@ export interface GenerateLdmRequest {
      * @memberof GenerateLdmRequest
      */
     wdfPrefix?: string;
+    /**
+     *
+     * @type {PdmLdmRequest}
+     * @memberof GenerateLdmRequest
+     */
+    pdm?: PdmLdmRequest;
 }
 /**
  * A grain identifier.
@@ -2308,10 +2352,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -2321,6 +2365,43 @@ export const JsonApiAnalyticalDashboardInTypeEnum = {
 export type JsonApiAnalyticalDashboardInTypeEnum =
     typeof JsonApiAnalyticalDashboardInTypeEnum[keyof typeof JsonApiAnalyticalDashboardInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardInAttributes
+ */
+export interface JsonApiAnalyticalDashboardInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2387,10 +2468,10 @@ export interface JsonApiAnalyticalDashboardOut {
     meta?: JsonApiAnalyticalDashboardOutMeta;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -2711,10 +2792,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     meta?: JsonApiAnalyticalDashboardOutMeta;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -2756,10 +2837,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -2769,43 +2850,6 @@ export const JsonApiAnalyticalDashboardPatchTypeEnum = {
 export type JsonApiAnalyticalDashboardPatchTypeEnum =
     typeof JsonApiAnalyticalDashboardPatchTypeEnum[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardPatchAttributes
- */
-export interface JsonApiAnalyticalDashboardPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -3113,7 +3157,7 @@ export interface JsonApiAttributeOutAttributes {
      * @type {string}
      * @memberof JsonApiAttributeOutAttributes
      */
-    sourceColumnDataType?: string;
+    sourceColumnDataType?: JsonApiAttributeOutAttributesSourceColumnDataTypeEnum;
 }
 
 export const JsonApiAttributeOutAttributesGranularityEnum = {
@@ -3143,6 +3187,18 @@ export const JsonApiAttributeOutAttributesSortDirectionEnum = {
 
 export type JsonApiAttributeOutAttributesSortDirectionEnum =
     typeof JsonApiAttributeOutAttributesSortDirectionEnum[keyof typeof JsonApiAttributeOutAttributesSortDirectionEnum];
+export const JsonApiAttributeOutAttributesSourceColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type JsonApiAttributeOutAttributesSourceColumnDataTypeEnum =
+    typeof JsonApiAttributeOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiAttributeOutAttributesSourceColumnDataTypeEnum];
 
 /**
  *
@@ -3329,10 +3385,10 @@ export interface JsonApiColorPaletteIn {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiColorPaletteIn
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiColorPaletteInTypeEnum = {
@@ -3342,25 +3398,6 @@ export const JsonApiColorPaletteInTypeEnum = {
 export type JsonApiColorPaletteInTypeEnum =
     typeof JsonApiColorPaletteInTypeEnum[keyof typeof JsonApiColorPaletteInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiColorPaletteInAttributes
- */
-export interface JsonApiColorPaletteInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiColorPaletteInAttributes
-     */
-    name: string;
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiColorPaletteInAttributes
-     */
-    content: object;
-}
 /**
  *
  * @export
@@ -3394,10 +3431,10 @@ export interface JsonApiColorPaletteOut {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiColorPaletteOut
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiColorPaletteOutTypeEnum = {
@@ -3407,6 +3444,25 @@ export const JsonApiColorPaletteOutTypeEnum = {
 export type JsonApiColorPaletteOutTypeEnum =
     typeof JsonApiColorPaletteOutTypeEnum[keyof typeof JsonApiColorPaletteOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiColorPaletteOutAttributes
+ */
+export interface JsonApiColorPaletteOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiColorPaletteOutAttributes
+     */
+    name: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiColorPaletteOutAttributes
+     */
+    content: object;
+}
 /**
  *
  * @export
@@ -3465,10 +3521,10 @@ export interface JsonApiColorPaletteOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiColorPaletteOutWithLinks
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -3732,10 +3788,10 @@ export interface JsonApiCspDirectiveIn {
     id: string;
     /**
      *
-     * @type {JsonApiCspDirectiveInAttributes}
+     * @type {JsonApiCspDirectiveOutAttributes}
      * @memberof JsonApiCspDirectiveIn
      */
-    attributes: JsonApiCspDirectiveInAttributes;
+    attributes: JsonApiCspDirectiveOutAttributes;
 }
 
 export const JsonApiCspDirectiveInTypeEnum = {
@@ -3745,19 +3801,6 @@ export const JsonApiCspDirectiveInTypeEnum = {
 export type JsonApiCspDirectiveInTypeEnum =
     typeof JsonApiCspDirectiveInTypeEnum[keyof typeof JsonApiCspDirectiveInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCspDirectiveInAttributes
- */
-export interface JsonApiCspDirectiveInAttributes {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiCspDirectiveInAttributes
-     */
-    sources: Array<string>;
-}
 /**
  *
  * @export
@@ -3791,10 +3834,10 @@ export interface JsonApiCspDirectiveOut {
     id: string;
     /**
      *
-     * @type {JsonApiCspDirectiveInAttributes}
+     * @type {JsonApiCspDirectiveOutAttributes}
      * @memberof JsonApiCspDirectiveOut
      */
-    attributes: JsonApiCspDirectiveInAttributes;
+    attributes: JsonApiCspDirectiveOutAttributes;
 }
 
 export const JsonApiCspDirectiveOutTypeEnum = {
@@ -3804,6 +3847,19 @@ export const JsonApiCspDirectiveOutTypeEnum = {
 export type JsonApiCspDirectiveOutTypeEnum =
     typeof JsonApiCspDirectiveOutTypeEnum[keyof typeof JsonApiCspDirectiveOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectiveOutAttributes
+ */
+export interface JsonApiCspDirectiveOutAttributes {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiCspDirectiveOutAttributes
+     */
+    sources: Array<string>;
+}
 /**
  *
  * @export
@@ -3862,10 +3918,10 @@ export interface JsonApiCspDirectiveOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiCspDirectiveInAttributes}
+     * @type {JsonApiCspDirectiveOutAttributes}
      * @memberof JsonApiCspDirectiveOutWithLinks
      */
-    attributes: JsonApiCspDirectiveInAttributes;
+    attributes: JsonApiCspDirectiveOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -3960,10 +4016,10 @@ export interface JsonApiCustomApplicationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiCustomApplicationSettingOutAttributes}
+     * @type {JsonApiCustomApplicationSettingInAttributes}
      * @memberof JsonApiCustomApplicationSettingIn
      */
-    attributes: JsonApiCustomApplicationSettingOutAttributes;
+    attributes: JsonApiCustomApplicationSettingInAttributes;
 }
 
 export const JsonApiCustomApplicationSettingInTypeEnum = {
@@ -3973,6 +4029,25 @@ export const JsonApiCustomApplicationSettingInTypeEnum = {
 export type JsonApiCustomApplicationSettingInTypeEnum =
     typeof JsonApiCustomApplicationSettingInTypeEnum[keyof typeof JsonApiCustomApplicationSettingInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingInAttributes
+ */
+export interface JsonApiCustomApplicationSettingInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingInAttributes
+     */
+    applicationName: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiCustomApplicationSettingInAttributes
+     */
+    content: object;
+}
 /**
  *
  * @export
@@ -4012,10 +4087,10 @@ export interface JsonApiCustomApplicationSettingOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiCustomApplicationSettingOutAttributes}
+     * @type {JsonApiCustomApplicationSettingInAttributes}
      * @memberof JsonApiCustomApplicationSettingOut
      */
-    attributes: JsonApiCustomApplicationSettingOutAttributes;
+    attributes: JsonApiCustomApplicationSettingInAttributes;
 }
 
 export const JsonApiCustomApplicationSettingOutTypeEnum = {
@@ -4025,25 +4100,6 @@ export const JsonApiCustomApplicationSettingOutTypeEnum = {
 export type JsonApiCustomApplicationSettingOutTypeEnum =
     typeof JsonApiCustomApplicationSettingOutTypeEnum[keyof typeof JsonApiCustomApplicationSettingOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCustomApplicationSettingOutAttributes
- */
-export interface JsonApiCustomApplicationSettingOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCustomApplicationSettingOutAttributes
-     */
-    applicationName: string;
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiCustomApplicationSettingOutAttributes
-     */
-    content: object;
-}
 /**
  *
  * @export
@@ -4121,10 +4177,10 @@ export interface JsonApiCustomApplicationSettingOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiCustomApplicationSettingOutAttributes}
+     * @type {JsonApiCustomApplicationSettingInAttributes}
      * @memberof JsonApiCustomApplicationSettingOutWithLinks
      */
-    attributes: JsonApiCustomApplicationSettingOutAttributes;
+    attributes: JsonApiCustomApplicationSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -4225,10 +4281,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -4238,6 +4294,43 @@ export const JsonApiDashboardPluginInTypeEnum = {
 export type JsonApiDashboardPluginInTypeEnum =
     typeof JsonApiDashboardPluginInTypeEnum[keyof typeof JsonApiDashboardPluginInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginInAttributes
+ */
+export interface JsonApiDashboardPluginInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -4304,10 +4397,10 @@ export interface JsonApiDashboardPluginOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -4381,10 +4474,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -4420,10 +4513,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -4433,43 +4526,6 @@ export const JsonApiDashboardPluginPatchTypeEnum = {
 export type JsonApiDashboardPluginPatchTypeEnum =
     typeof JsonApiDashboardPluginPatchTypeEnum[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginPatchAttributes
- */
-export interface JsonApiDashboardPluginPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -4746,10 +4802,10 @@ export interface JsonApiDataSourceInAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
      * @memberof JsonApiDataSourceInAttributes
      */
-    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
 }
 
 export const JsonApiDataSourceInAttributesTypeEnum = {
@@ -4772,25 +4828,6 @@ export const JsonApiDataSourceInAttributesTypeEnum = {
 export type JsonApiDataSourceInAttributesTypeEnum =
     typeof JsonApiDataSourceInAttributesTypeEnum[keyof typeof JsonApiDataSourceInAttributesTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDataSourceInAttributesParameters
- */
-export interface JsonApiDataSourceInAttributesParameters {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDataSourceInAttributesParameters
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDataSourceInAttributesParameters
-     */
-    value: string;
-}
 /**
  *
  * @export
@@ -4893,16 +4930,16 @@ export interface JsonApiDataSourceOutAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
      * @memberof JsonApiDataSourceOutAttributes
      */
-    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
      * @memberof JsonApiDataSourceOutAttributes
      */
-    decodedParameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    decodedParameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
 }
 
 export const JsonApiDataSourceOutAttributesTypeEnum = {
@@ -5125,10 +5162,10 @@ export interface JsonApiDataSourcePatchAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
      * @memberof JsonApiDataSourcePatchAttributes
      */
-    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
 }
 
 export const JsonApiDataSourcePatchAttributesTypeEnum = {
@@ -5151,6 +5188,25 @@ export const JsonApiDataSourcePatchAttributesTypeEnum = {
 export type JsonApiDataSourcePatchAttributesTypeEnum =
     typeof JsonApiDataSourcePatchAttributesTypeEnum[keyof typeof JsonApiDataSourcePatchAttributesTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDataSourcePatchAttributesParameters
+ */
+export interface JsonApiDataSourcePatchAttributesParameters {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourcePatchAttributesParameters
+     */
+    name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourcePatchAttributesParameters
+     */
+    value: string;
+}
 /**
  *
  * @export
@@ -5968,7 +6024,7 @@ export interface JsonApiFactOutAttributes {
      * @type {string}
      * @memberof JsonApiFactOutAttributes
      */
-    sourceColumnDataType?: string;
+    sourceColumnDataType?: JsonApiFactOutAttributesSourceColumnDataTypeEnum;
     /**
      *
      * @type {boolean}
@@ -5976,6 +6032,20 @@ export interface JsonApiFactOutAttributes {
      */
     areRelationsValid?: boolean;
 }
+
+export const JsonApiFactOutAttributesSourceColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type JsonApiFactOutAttributesSourceColumnDataTypeEnum =
+    typeof JsonApiFactOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiFactOutAttributesSourceColumnDataTypeEnum];
+
 /**
  *
  * @export
@@ -6110,10 +6180,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -6189,10 +6259,10 @@ export interface JsonApiFilterContextOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -6331,10 +6401,10 @@ export interface JsonApiFilterContextOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -6376,10 +6446,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -6514,7 +6584,7 @@ export interface JsonApiLabelOutAttributes {
      * @type {string}
      * @memberof JsonApiLabelOutAttributes
      */
-    sourceColumnDataType?: string;
+    sourceColumnDataType?: JsonApiLabelOutAttributesSourceColumnDataTypeEnum;
     /**
      *
      * @type {string}
@@ -6529,6 +6599,18 @@ export interface JsonApiLabelOutAttributes {
     areRelationsValid?: boolean;
 }
 
+export const JsonApiLabelOutAttributesSourceColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type JsonApiLabelOutAttributesSourceColumnDataTypeEnum =
+    typeof JsonApiLabelOutAttributesSourceColumnDataTypeEnum[keyof typeof JsonApiLabelOutAttributesSourceColumnDataTypeEnum];
 export const JsonApiLabelOutAttributesValueTypeEnum = {
     TEXT: "TEXT",
     HYPERLINK: "HYPERLINK",
@@ -6694,10 +6776,10 @@ export interface JsonApiMetricIn {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricIn
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
 }
 
 export const JsonApiMetricInTypeEnum = {
@@ -6706,6 +6788,62 @@ export const JsonApiMetricInTypeEnum = {
 
 export type JsonApiMetricInTypeEnum = typeof JsonApiMetricInTypeEnum[keyof typeof JsonApiMetricInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributes
+ */
+export interface JsonApiMetricInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiMetricInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiMetricInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     *
+     * @type {JsonApiMetricInAttributesContent}
+     * @memberof JsonApiMetricInAttributes
+     */
+    content: JsonApiMetricInAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributesContent
+ */
+export interface JsonApiMetricInAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    maql: string;
+}
 /**
  *
  * @export
@@ -6772,10 +6910,10 @@ export interface JsonApiMetricOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricOut
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6790,43 +6928,6 @@ export const JsonApiMetricOutTypeEnum = {
 
 export type JsonApiMetricOutTypeEnum = typeof JsonApiMetricOutTypeEnum[keyof typeof JsonApiMetricOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributes
- */
-export interface JsonApiMetricOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     *
-     * @type {JsonApiMetricPatchAttributesContent}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    content: JsonApiMetricPatchAttributesContent;
-}
 /**
  *
  * @export
@@ -6964,10 +7065,10 @@ export interface JsonApiMetricOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricOutWithLinks
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -7054,29 +7155,10 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricPatchAttributesContent}
+     * @type {JsonApiMetricInAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricPatchAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricPatchAttributesContent
- */
-export interface JsonApiMetricPatchAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    maql: string;
+    content?: JsonApiMetricInAttributesContent;
 }
 /**
  *
@@ -7111,10 +7193,10 @@ export interface JsonApiOrganizationIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationPatchAttributes}
+     * @type {JsonApiOrganizationInAttributes}
      * @memberof JsonApiOrganizationIn
      */
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
 }
 
 export const JsonApiOrganizationInTypeEnum = {
@@ -7124,6 +7206,61 @@ export const JsonApiOrganizationInTypeEnum = {
 export type JsonApiOrganizationInTypeEnum =
     typeof JsonApiOrganizationInTypeEnum[keyof typeof JsonApiOrganizationInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationInAttributes
+ */
+export interface JsonApiOrganizationInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    hostname?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    allowedOrigins?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthIssuerLocation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthClientSecret?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthIssuerId?: string;
+}
 /**
  *
  * @export
@@ -7348,10 +7485,10 @@ export interface JsonApiOrganizationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationPatchAttributes}
+     * @type {JsonApiOrganizationInAttributes}
      * @memberof JsonApiOrganizationPatch
      */
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
 }
 
 export const JsonApiOrganizationPatchTypeEnum = {
@@ -7361,61 +7498,6 @@ export const JsonApiOrganizationPatchTypeEnum = {
 export type JsonApiOrganizationPatchTypeEnum =
     typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationPatchAttributes
- */
-export interface JsonApiOrganizationPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    hostname?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    allowedOrigins?: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthIssuerLocation?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthClientId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthClientSecret?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    earlyAccess?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthIssuerId?: string;
-}
 /**
  *
  * @export
@@ -7449,10 +7531,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -7461,39 +7543,6 @@ export const JsonApiOrganizationSettingInTypeEnum = {
 
 export type JsonApiOrganizationSettingInTypeEnum =
     typeof JsonApiOrganizationSettingInTypeEnum[keyof typeof JsonApiOrganizationSettingInTypeEnum];
-
-/**
- *
- * @export
- * @interface JsonApiOrganizationSettingInAttributes
- */
-export interface JsonApiOrganizationSettingInAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiOrganizationSettingInAttributes
-     */
-    content?: object;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationSettingInAttributes
-     */
-    type?: JsonApiOrganizationSettingInAttributesTypeEnum;
-}
-
-export const JsonApiOrganizationSettingInAttributesTypeEnum = {
-    TIMEZONE: "TIMEZONE",
-    ACTIVE_THEME: "ACTIVE_THEME",
-    ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE",
-    WHITE_LABELING: "WHITE_LABELING",
-    LOCALE: "LOCALE",
-    FORMAT_LOCALE: "FORMAT_LOCALE",
-    MAPBOX_TOKEN: "MAPBOX_TOKEN",
-} as const;
-
-export type JsonApiOrganizationSettingInAttributesTypeEnum =
-    typeof JsonApiOrganizationSettingInAttributesTypeEnum[keyof typeof JsonApiOrganizationSettingInAttributesTypeEnum];
 
 /**
  *
@@ -7528,10 +7577,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -7599,10 +7648,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7638,10 +7687,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -7650,6 +7699,39 @@ export const JsonApiOrganizationSettingPatchTypeEnum = {
 
 export type JsonApiOrganizationSettingPatchTypeEnum =
     typeof JsonApiOrganizationSettingPatchTypeEnum[keyof typeof JsonApiOrganizationSettingPatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingPatchAttributes
+ */
+export interface JsonApiOrganizationSettingPatchAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiOrganizationSettingPatchAttributes
+     */
+    content?: object;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingPatchAttributes
+     */
+    type?: JsonApiOrganizationSettingPatchAttributesTypeEnum;
+}
+
+export const JsonApiOrganizationSettingPatchAttributesTypeEnum = {
+    TIMEZONE: "TIMEZONE",
+    ACTIVE_THEME: "ACTIVE_THEME",
+    ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE",
+    WHITE_LABELING: "WHITE_LABELING",
+    LOCALE: "LOCALE",
+    FORMAT_LOCALE: "FORMAT_LOCALE",
+    MAPBOX_TOKEN: "MAPBOX_TOKEN",
+} as const;
+
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum =
+    typeof JsonApiOrganizationSettingPatchAttributesTypeEnum[keyof typeof JsonApiOrganizationSettingPatchAttributesTypeEnum];
 
 /**
  *
@@ -7684,10 +7766,10 @@ export interface JsonApiThemeIn {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeIn
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiThemeInTypeEnum = {
@@ -7729,10 +7811,10 @@ export interface JsonApiThemeOut {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeOut
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiThemeOutTypeEnum = {
@@ -7799,10 +7881,10 @@ export interface JsonApiThemeOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeOutWithLinks
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7884,16 +7966,16 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupPatchAttributes}
      * @memberof JsonApiUserGroupIn
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -7906,19 +7988,6 @@ export type JsonApiUserGroupInTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiUserGroupInAttributes
- */
-export interface JsonApiUserGroupInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserGroupInAttributes
-     */
-    name?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiUserGroupInDocument
  */
 export interface JsonApiUserGroupInDocument {
@@ -7928,32 +7997,6 @@ export interface JsonApiUserGroupInDocument {
      * @memberof JsonApiUserGroupInDocument
      */
     data: JsonApiUserGroupIn;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupInRelationships
- */
-export interface JsonApiUserGroupInRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupInRelationshipsParents}
-     * @memberof JsonApiUserGroupInRelationships
-     */
-    parents?: JsonApiUserGroupInRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupInRelationshipsParents
- */
-export interface JsonApiUserGroupInRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupInRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -8002,16 +8045,16 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupPatchAttributes}
      * @memberof JsonApiUserGroupOut
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -8091,16 +8134,16 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupPatchAttributes}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -8136,16 +8179,16 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupPatchAttributes}
      * @memberof JsonApiUserGroupPatch
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupPatchAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -8158,6 +8201,19 @@ export type JsonApiUserGroupPatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiUserGroupPatchAttributes
+ */
+export interface JsonApiUserGroupPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserGroupPatchAttributes
+     */
+    name?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserGroupPatchDocument
  */
 export interface JsonApiUserGroupPatchDocument {
@@ -8167,6 +8223,32 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationships
+ */
+export interface JsonApiUserGroupPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserGroupPatchRelationships
+     */
+    parents?: JsonApiUserGroupPatchRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationshipsParents
+ */
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupPatchRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -8195,16 +8277,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -8213,37 +8295,6 @@ export const JsonApiUserInTypeEnum = {
 
 export type JsonApiUserInTypeEnum = typeof JsonApiUserInTypeEnum[keyof typeof JsonApiUserInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserInAttributes
- */
-export interface JsonApiUserInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    authenticationId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    firstname?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    lastname?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    email?: string;
-}
 /**
  *
  * @export
@@ -8256,19 +8307,6 @@ export interface JsonApiUserInDocument {
      * @memberof JsonApiUserInDocument
      */
     data: JsonApiUserIn;
-}
-/**
- *
- * @export
- * @interface JsonApiUserInRelationships
- */
-export interface JsonApiUserInRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupInRelationshipsParents}
-     * @memberof JsonApiUserInRelationships
-     */
-    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -8317,16 +8355,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -8405,16 +8443,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -8450,16 +8488,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -8468,6 +8506,37 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchAttributes
+ */
+export interface JsonApiUserPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    authenticationId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    firstname?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    lastname?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    email?: string;
+}
 /**
  *
  * @export
@@ -8480,6 +8549,19 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchRelationships
+ */
+export interface JsonApiUserPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserPatchRelationships
+     */
+    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * JSON:API representation of userSetting entity.
@@ -8501,10 +8583,10 @@ export interface JsonApiUserSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiUserSettingIn
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiUserSettingInTypeEnum = {
@@ -8547,10 +8629,10 @@ export interface JsonApiUserSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiUserSettingOut
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiUserSettingOutTypeEnum = {
@@ -8618,10 +8700,10 @@ export interface JsonApiUserSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiUserSettingOutWithLinks
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -8664,10 +8746,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -8743,10 +8825,10 @@ export interface JsonApiVisualizationObjectOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -8838,10 +8920,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -8883,10 +8965,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -8929,16 +9011,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -8951,6 +9033,31 @@ export type JsonApiWorkspaceDataFilterInTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterInAttributes
+ */
+export interface JsonApiWorkspaceDataFilterInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    columnName?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterInDocument
  */
 export interface JsonApiWorkspaceDataFilterInDocument {
@@ -8960,6 +9067,32 @@ export interface JsonApiWorkspaceDataFilterInDocument {
      * @memberof JsonApiWorkspaceDataFilterInDocument
      */
     data: JsonApiWorkspaceDataFilterIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationships
+ */
+export interface JsonApiWorkspaceDataFilterInRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterInRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -9008,16 +9141,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -9097,16 +9230,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -9142,16 +9275,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -9164,31 +9297,6 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterPatchAttributes
- */
-export interface JsonApiWorkspaceDataFilterPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    columnName?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterPatchDocument
  */
 export interface JsonApiWorkspaceDataFilterPatchDocument {
@@ -9198,32 +9306,6 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
      * @memberof JsonApiWorkspaceDataFilterPatchDocument
      */
     data: JsonApiWorkspaceDataFilterPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationships
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -9464,16 +9546,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -9486,31 +9568,6 @@ export type JsonApiWorkspaceInTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceInAttributes
- */
-export interface JsonApiWorkspaceInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    earlyAccess?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    description?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceInDocument
  */
 export interface JsonApiWorkspaceInDocument {
@@ -9520,32 +9577,6 @@ export interface JsonApiWorkspaceInDocument {
      * @memberof JsonApiWorkspaceInDocument
      */
     data: JsonApiWorkspaceIn;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceInRelationships
- */
-export interface JsonApiWorkspaceInRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceInRelationshipsParent}
-     * @memberof JsonApiWorkspaceInRelationships
-     */
-    parent?: JsonApiWorkspaceInRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceInRelationshipsParent
- */
-export interface JsonApiWorkspaceInRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspaceInRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -9600,16 +9631,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -9752,16 +9783,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -9797,16 +9828,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -9819,6 +9850,31 @@ export type JsonApiWorkspacePatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspacePatchAttributes
+ */
+export interface JsonApiWorkspacePatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    earlyAccess?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    description?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspacePatchDocument
  */
 export interface JsonApiWorkspacePatchDocument {
@@ -9828,6 +9884,32 @@ export interface JsonApiWorkspacePatchDocument {
      * @memberof JsonApiWorkspacePatchDocument
      */
     data: JsonApiWorkspacePatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationships
+ */
+export interface JsonApiWorkspacePatchRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspacePatchRelationshipsParent}
+     * @memberof JsonApiWorkspacePatchRelationships
+     */
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationshipsParent
+ */
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspacePatchRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * JSON:API representation of workspaceSetting entity.
@@ -9849,10 +9931,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -9901,10 +9983,10 @@ export interface JsonApiWorkspaceSettingOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -9978,10 +10060,10 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -10017,10 +10099,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingInAttributes}
+     * @type {JsonApiOrganizationSettingPatchAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiOrganizationSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
@@ -10152,6 +10234,44 @@ export interface Parameter {
      * @memberof Parameter
      */
     value: string;
+}
+/**
+ * PDM additions wrapper.
+ * @export
+ * @interface PdmLdmRequest
+ */
+export interface PdmLdmRequest {
+    /**
+     * List of SQL datasets.
+     * @type {Array<PdmSql>}
+     * @memberof PdmLdmRequest
+     */
+    sqls?: Array<PdmSql>;
+}
+/**
+ * SQL dataset definition.
+ * @export
+ * @interface PdmSql
+ */
+export interface PdmSql {
+    /**
+     * SQL statement.
+     * @type {string}
+     * @memberof PdmSql
+     */
+    statement: string;
+    /**
+     * SQL dataset title.
+     * @type {string}
+     * @memberof PdmSql
+     */
+    title: string;
+    /**
+     * Columns defining SQL dataset.
+     * @type {Array<SqlColumn>}
+     * @memberof PdmSql
+     */
+    columns?: Array<SqlColumn>;
 }
 /**
  * Desired levels of permissions for an assignee.
@@ -10309,6 +10429,38 @@ export const ResolvedSettingTypeEnum = {
 } as const;
 
 export type ResolvedSettingTypeEnum = typeof ResolvedSettingTypeEnum[keyof typeof ResolvedSettingTypeEnum];
+
+/**
+ * Columns defining SQL dataset.
+ * @export
+ * @interface SqlColumn
+ */
+export interface SqlColumn {
+    /**
+     * Column name.
+     * @type {string}
+     * @memberof SqlColumn
+     */
+    name: string;
+    /**
+     * Column data type.
+     * @type {string}
+     * @memberof SqlColumn
+     */
+    dataType: SqlColumnDataTypeEnum;
+}
+
+export const SqlColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof SqlColumnDataTypeEnum];
 
 /**
  * List of users
