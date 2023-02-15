@@ -100,6 +100,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableKPIAttributeFilterRenaming,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableSqlDatasets,
+            "enableSqlDatasets",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSqlDatasets,
+        ),
     };
 }
 
