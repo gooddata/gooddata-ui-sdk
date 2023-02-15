@@ -210,8 +210,8 @@ describe("permissions logic", () => {
                     ],
                 },
                 remove: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent",
+                    enabled: true,
+                    tooltip: "",
                 },
                 change: {
                     enabled: true,
@@ -254,8 +254,8 @@ describe("permissions logic", () => {
                     ],
                 },
                 remove: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent",
+                    enabled: true,
+                    tooltip: "",
                 },
                 change: {
                     enabled: true,

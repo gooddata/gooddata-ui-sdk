@@ -119,7 +119,7 @@ export const getGranteePossibilities = (
     }
 
     // cannot remove permission that is defined on the dashboard in parent workspace
-    if (grantee.inheritedPermissions.length !== 0) {
+    if (grantee.permissions.length === 0 && grantee.inheritedPermissions.length !== 0) {
         disableWithTooltip(remove, granularPermissionMessageTooltips.cannotRemoveFromParent.id);
     }
 
