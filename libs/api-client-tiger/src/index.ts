@@ -210,9 +210,9 @@ export {
     TestRequest,
     ScanSqlResponse,
     ActionsApiScanSqlRequest,
-    SqlColumn,
+    SqlColumnDataTypeEnum as ScanApiSqlColumnDataTypeEnum,
+    SqlColumn as ScanApiSqlColumn,
     ScanSqlRequest,
-    SqlColumnDataTypeEnum,
 } from "./generated/scan-json-api/api";
 
 export * from "./client";
