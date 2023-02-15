@@ -1,6 +1,10 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { useCallback } from "react";
-import { DescriptionTooltipOpenedData, userInteractionTriggered } from "../events";
+import {
+    DescriptionTooltipOpenedData,
+    ShareDialogInteractionData,
+    userInteractionTriggered,
+} from "../events";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch";
 
@@ -16,26 +20,44 @@ export const useDashboardUserInteraction = () => {
 
     const poweredByGDLogoClicked = useCallback(() => {
         eventDispatch(userInteractionTriggered("poweredByGDLogoClicked"));
-    }, []);
+    }, [eventDispatch]);
 
     const kpiAlertDialogClosed = useCallback(() => {
         eventDispatch(userInteractionTriggered("kpiAlertDialogClosed"));
-    }, []);
+    }, [eventDispatch]);
 
-    const kpiAlertDialogOpened = useCallback((alreadyHasAlert: boolean) => {
-        eventDispatch(
-            userInteractionTriggered({ interaction: "kpiAlertDialogOpened", data: { alreadyHasAlert } }),
-        );
-    }, []);
+    const kpiAlertDialogOpened = useCallback(
+        (alreadyHasAlert: boolean) => {
+            eventDispatch(
+                userInteractionTriggered({ interaction: "kpiAlertDialogOpened", data: { alreadyHasAlert } }),
+            );
+        },
+        [eventDispatch],
+    );
 
-    const descriptionTooltipOpened = useCallback((eventData: DescriptionTooltipOpenedData) => {
-        eventDispatch(userInteractionTriggered({ interaction: "descriptionTooltipOpened", data: eventData }));
-    }, []);
+    const descriptionTooltipOpened = useCallback(
+        (eventData: DescriptionTooltipOpenedData) => {
+            eventDispatch(
+                userInteractionTriggered({ interaction: "descriptionTooltipOpened", data: eventData }),
+            );
+        },
+        [eventDispatch],
+    );
+
+    const shareDialogInteraction = useCallback(
+        (eventData: ShareDialogInteractionData) => {
+            eventDispatch(
+                userInteractionTriggered({ interaction: "shareDialogInteraction", data: eventData }),
+            );
+        },
+        [eventDispatch],
+    );
 
     return {
         poweredByGDLogoClicked,
         kpiAlertDialogClosed,
         kpiAlertDialogOpened,
         descriptionTooltipOpened,
+        shareDialogInteraction,
     };
 };

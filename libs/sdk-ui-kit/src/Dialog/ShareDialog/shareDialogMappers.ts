@@ -17,7 +17,6 @@ import {
     IGranularUserGroupAccess,
     isGranularUserAccess,
     isGranularUserGroupAccess,
-    idRef,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -36,7 +35,13 @@ import {
     IGranularGranteeUser,
     IGranularGranteeGroup,
 } from "./ShareDialogBase/types";
-import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
+import {
+    GranteeGroupAll,
+    InactiveOwner,
+    getAppliedGrantees,
+    hasGroupAll,
+    getIsGranteeCurrentUser,
+} from "./ShareDialogBase/utils";
 import { ISharedObject } from "./types";
 
 const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeStatus => {
@@ -45,18 +50,6 @@ const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeSt
     }
 
     return "Active";
-};
-
-/**
- * Decide whether specific grantee is the currently logged in user.
- *
- * In some cases, current user might have uriRef instead of idRef or vice versa. This would result in
- * a false negative match. Method conveniently checks also user login to avoid such mismatch.
- */
-const getIsGranteeCurrentUser = (granteeRef: ObjRef, currentUser: IUser) => {
-    return (
-        areObjRefsEqual(granteeRef, currentUser.ref) || areObjRefsEqual(granteeRef, idRef(currentUser.login))
-    );
 };
 
 /**

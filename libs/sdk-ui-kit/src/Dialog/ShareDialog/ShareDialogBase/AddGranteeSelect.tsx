@@ -20,6 +20,7 @@ import {
     OptionRenderer,
 } from "./AsyncSelectComponents";
 import { loadGranteeOptionsPromise } from "./backend/loadGranteeOptionsPromise";
+import { useShareDialogInteraction } from "./ComponentInteractionContext";
 
 const SEARCH_INTERVAL = 400;
 
@@ -30,6 +31,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     const { appliedGrantees, currentUser, sharedObjectRef, onSelectGrantee } = props;
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
+    const { availableGranteeListOpenInteraction } = useShareDialogInteraction();
 
     const intl = useIntl();
     const selectRef = useRef<SelectInstance<any, false>>(null);
@@ -68,13 +70,22 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
                     backend,
                     workspace,
                     intl,
+                    availableGranteeListOpenInteraction,
                 ),
                 SEARCH_INTERVAL,
                 {
                     leading: true,
                 },
             ),
-        [backend, workspace, intl, appliedGrantees, currentUser, sharedObjectRef],
+        [
+            backend,
+            workspace,
+            intl,
+            appliedGrantees,
+            currentUser,
+            sharedObjectRef,
+            availableGranteeListOpenInteraction,
+        ],
     );
 
     const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {

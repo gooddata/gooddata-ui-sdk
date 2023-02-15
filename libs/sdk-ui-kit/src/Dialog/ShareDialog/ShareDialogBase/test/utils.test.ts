@@ -1,6 +1,15 @@
 // (C) 2021-2023 GoodData Corporation
+import { idRef, IUser, uriRef } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
-import { getGranteeItemTestId, getGranteeLabel, notInArrayFilter, sortGranteesByName } from "../utils";
+import { CurrentUserPermissions } from "../../types";
+import {
+    getGranteeItemTestId,
+    getGranteeLabel,
+    getGranularPermissionFromUserPermissions,
+    getIsGranteeCurrentUser,
+    notInArrayFilter,
+    sortGranteesByName,
+} from "../utils";
 import { current, groupAll, owner, user } from "./GranteeMock";
 
 describe("utils", () => {
@@ -41,6 +50,111 @@ describe("utils", () => {
         it("should return grantee name for group all", () => {
             const intl = createIntlMock();
             expect(getGranteeLabel(groupAll, intl)).toEqual("All users");
+        });
+    });
+
+    describe("getGranularPermissionFromUserPermissions", () => {
+        it.each([
+            [
+                "can edit object",
+                {
+                    canEditAffectedObject: true,
+                    canEditLockedAffectedObject: true,
+                    canShareAffectedObject: true,
+                    canShareLockedAffectedObject: true,
+                    canViewAffectedObject: true,
+                },
+                "EDIT",
+            ],
+            [
+                "cannot edit locked object",
+                {
+                    canEditAffectedObject: true,
+                    canEditLockedAffectedObject: false,
+                    canShareAffectedObject: true,
+                    canShareLockedAffectedObject: true,
+                    canViewAffectedObject: true,
+                },
+                "EDIT",
+            ],
+            [
+                "can share object",
+                {
+                    canEditAffectedObject: false,
+                    canEditLockedAffectedObject: false,
+                    canShareAffectedObject: true,
+                    canShareLockedAffectedObject: true,
+                    canViewAffectedObject: true,
+                },
+                "SHARE",
+            ],
+            [
+                "cannot share locked object",
+                {
+                    canEditAffectedObject: false,
+                    canEditLockedAffectedObject: false,
+                    canShareAffectedObject: true,
+                    canShareLockedAffectedObject: false,
+                    canViewAffectedObject: true,
+                },
+                "SHARE",
+            ],
+            [
+                "can view object",
+                {
+                    canEditAffectedObject: false,
+                    canEditLockedAffectedObject: false,
+                    canShareAffectedObject: false,
+                    canShareLockedAffectedObject: false,
+                    canViewAffectedObject: true,
+                },
+                "VIEW",
+            ],
+            [
+                "has no permission",
+                {
+                    canEditAffectedObject: false,
+                    canEditLockedAffectedObject: false,
+                    canShareAffectedObject: false,
+                    canShareLockedAffectedObject: false,
+                    canViewAffectedObject: false,
+                },
+                undefined,
+            ],
+        ])(
+            "should return correct granular permission when user %s",
+            (_label: string, userPermissions: CurrentUserPermissions, expected: string | undefined) => {
+                expect(getGranularPermissionFromUserPermissions(userPermissions)).toEqual(expected);
+            },
+        );
+    });
+
+    describe("getIsGranteeCurrentUser", () => {
+        const userWithUriRef: IUser = {
+            ref: uriRef("user-uri"),
+            login: "user-id",
+            email: "user-email",
+        };
+
+        const userWithIdRef: IUser = {
+            ref: idRef("user-id"),
+            login: "user-id",
+            email: "user-email",
+        };
+
+        it("should return true when grantee ref matches user ref", () => {
+            const granteeRef = uriRef("user-uri");
+            expect(getIsGranteeCurrentUser(granteeRef, userWithUriRef)).toBe(true);
+        });
+
+        it("should return true when grantee ref matches user login", () => {
+            const granteeRef = idRef("user-id");
+            expect(getIsGranteeCurrentUser(granteeRef, userWithUriRef)).toBe(true);
+        });
+
+        it("should return false when grantee ref does not match uri nor login", () => {
+            const granteeRef = uriRef("user-uri");
+            expect(getIsGranteeCurrentUser(granteeRef, userWithIdRef)).toBe(false);
         });
     });
 });

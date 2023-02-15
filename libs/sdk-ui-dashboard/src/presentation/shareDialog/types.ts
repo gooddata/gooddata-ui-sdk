@@ -6,6 +6,7 @@ import {
     ISharedObject,
     ISharingApplyPayload as ISharingDialogApplyPayload,
     CurrentUserPermissions,
+    IShareDialogInteractionData,
 } from "@gooddata/sdk-ui-kit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -73,6 +74,11 @@ export interface IShareDialogProps {
      * Callback to be called when user closes the share dialog.
      */
     onCancel: () => void;
+
+    /**
+     * Callback to be called on specific share dialog interactions.
+     */
+    onInteraction?: (data: IShareDialogInteractionData) => void;
 }
 
 ///

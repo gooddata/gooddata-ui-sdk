@@ -20,6 +20,8 @@ import {
     mapSharedObjectToAffectedSharedObject,
 } from "./shareDialogMappers";
 import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
+import { ComponentInteractionProvider } from "./ShareDialogBase/ComponentInteractionContext";
+import noop from "lodash/noop";
 
 /**
  * @internal
@@ -34,6 +36,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         onApply,
         onCancel,
         onError,
+        onInteraction = noop,
         isLockingSupported,
         isCurrentUserWorkspaceManager,
         labels,
@@ -116,15 +119,24 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             <BackendProvider backend={effectiveBackend}>
                 <WorkspaceProvider workspace={effectiveWorkspace}>
                     <ComponentLabelsProvider labels={labels}>
-                        <ShareDialogBase
+                        <ComponentInteractionProvider
+                            onInteraction={onInteraction}
                             currentUser={currentUser}
-                            sharedObject={affectedSharedObject}
-                            isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                             currentUserPermissions={currentUserPermissions}
-                            onCancel={onCancel}
-                            onSubmit={onSubmit}
-                            onError={onShareDialogBaseError}
-                        />
+                            isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
+                            sharedObjectStatus={affectedSharedObject.shareStatus}
+                            isSharedObjectLocked={affectedSharedObject.isLocked}
+                        >
+                            <ShareDialogBase
+                                currentUser={currentUser}
+                                sharedObject={affectedSharedObject}
+                                isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
+                                currentUserPermissions={currentUserPermissions}
+                                onCancel={onCancel}
+                                onSubmit={onSubmit}
+                                onError={onShareDialogBaseError}
+                            />
+                        </ComponentInteractionProvider>
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
             </BackendProvider>

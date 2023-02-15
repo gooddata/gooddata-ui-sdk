@@ -220,6 +220,11 @@ export interface DashboardCopySavedPayload {
      * Definition of the newly created dashboard copy.
      */
     readonly dashboard: IDashboard;
+
+    /**
+     * Flag describing whether a locked dashboard was copied.
+     */
+    readonly isOriginalDashboardLocked: boolean;
 }
 
 /**
@@ -238,6 +243,7 @@ export interface DashboardCopySaved extends IDashboardEvent {
 export function dashboardCopySaved(
     ctx: DashboardContext,
     dashboard: IDashboard,
+    isOriginalDashboardLocked: boolean,
     correlationId?: string,
 ): DashboardCopySaved {
     return {
@@ -246,6 +252,7 @@ export function dashboardCopySaved(
         correlationId,
         payload: {
             dashboard,
+            isOriginalDashboardLocked,
         },
     };
 }

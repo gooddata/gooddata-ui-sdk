@@ -14,6 +14,7 @@ import {
 import { notInArrayFilter, getAppliedGrantees } from "./utils";
 import { useGetAccessList } from "./backend/useGetAccessList";
 import { mapShareStatusToGroupAll } from "../shareDialogMappers";
+import { useShareDialogInteraction } from "./ComponentInteractionContext";
 
 /**
  * @internal
@@ -55,6 +56,7 @@ const useShareDialogState = (
     const [isUnderLenientControlNow, setUnderLenientControlNow] = useState(isUnderLenientControl);
     const [isLockedNow, setLockedNow] = useState(isLocked);
     const [originalGranularGrantees, setOriginalGranularGrantees] = useState<IGranularGrantee[]>([]);
+    const { granteeAddInteraction } = useShareDialogInteraction();
 
     const onGranularGranteeAddChange = useCallback((grantee: GranteeItem) => {
         setGranteesToAdd((state) => state.map((s) => (areObjRefsEqual(s.id, grantee.id) ? grantee : s)));
@@ -69,9 +71,13 @@ const useShareDialogState = (
         setGranteesToAdd((state) => state.filter((g) => !areObjRefsEqual(g.id, grantee.id)));
     }, []);
 
-    const onGranteeAdd = useCallback((grantee: GranteeItem) => {
-        setGranteesToAdd((state) => [...state, grantee]);
-    }, []);
+    const onGranteeAdd = useCallback(
+        (grantee: GranteeItem) => {
+            setGranteesToAdd((state) => [...state, grantee]);
+            granteeAddInteraction(grantee);
+        },
+        [granteeAddInteraction],
+    );
 
     const onGranularGranteeShareChange = useCallback(
         (grantee: IGranularGrantee) => {
@@ -178,6 +184,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
     const { sharedObject, currentUser, onSubmit, onError } = props;
     const { ref, shareStatus, owner, isUnderLenientControl, isLocked, areGranularPermissionsSupported } =
         sharedObject;
+    const { saveInteraction: shareDialogSaveInteraction } = useShareDialogInteraction();
 
     const {
         dialogMode,
@@ -243,6 +250,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
             return;
         }
         const allGranteesToAdd = [...granteesToAdd, ...granteesToUpdate];
+        shareDialogSaveInteraction();
         onSubmit(grantees, allGranteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
     }, [
         grantees,
@@ -253,6 +261,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         isUnderLenientControlNow,
         isLockedNow,
         onSubmit,
+        shareDialogSaveInteraction,
     ]);
 
     const onSubmitAddGrantee = useCallback(() => {
@@ -260,6 +269,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
             return;
         }
         const allGranteesToAdd = [...granteesToAdd, ...granteesToUpdate];
+        shareDialogSaveInteraction();
         onSubmit(grantees, allGranteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
     }, [
         grantees,
@@ -270,6 +280,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         isUnderLenientControlNow,
         isLockedNow,
         onSubmit,
+        shareDialogSaveInteraction,
     ]);
 
     const sharedGrantees = useMemo(() => {

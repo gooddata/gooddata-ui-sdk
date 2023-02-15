@@ -41,6 +41,7 @@ export const loadGranteeOptionsPromise =
         backend: IAnalyticalBackend,
         workspace: string,
         intl: IntlShape,
+        onGranteesLoaded: (numberOfAvailableGrantees: number) => void,
     ) =>
     async (inputValue: string): Promise<IGroupedOption[] | ISelectErrorOption[]> => {
         try {
@@ -86,6 +87,8 @@ export const loadGranteeOptionsPromise =
                 };
                 mappedGroups = [groupAllOption, ...mappedGroups];
             }
+
+            onGranteesLoaded([...mappedUsers, ...mappedGroups].length);
 
             return [
                 {

@@ -1,4 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
+import { AccessGranularPermission, ShareStatus } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
 import { DashboardEventBody, IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
@@ -48,6 +49,45 @@ export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase
 /**
  * @beta
  */
+export type ShareDialogInteractionType =
+    | "SHARE_DIALOG_OPENED"
+    | "SHARE_DIALOG_CLOSED"
+    | "SHARE_DIALOG_SAVED"
+    | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED"
+    | "SHARE_DIALOG_PERMISSIONS_CHANGED"
+    | "SHARE_DIALOG_GRANTEE_REMOVED"
+    | "SHARE_DIALOG_GRANTEE_ADDED"
+    | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
+
+/**
+ * @beta
+ */
+export type ShareDialogInteractionData = {
+    type: ShareDialogInteractionType;
+    flowId: string;
+    currentUserPermission: AccessGranularPermission;
+    isCurrentUserWorkspaceManager: boolean;
+    isSharedObjectLocked: boolean;
+    sharedObjectStatus: ShareStatus;
+    isCurrentUserSelfUpdating?: boolean;
+    isExistingGrantee?: boolean;
+    granteeType?: "user" | "group";
+    granteeEffectivePermission?: AccessGranularPermission;
+    granteeUpdatedPermission?: AccessGranularPermission;
+    numberOfAvailableGrantees?: number;
+};
+
+/**
+ * @beta
+ */
+export type ShareDialogInteractionPayload = UserInteractionPayloadWithDataBase<
+    "shareDialogInteraction",
+    ShareDialogInteractionData
+>;
+
+/**
+ * @beta
+ */
 export interface BareUserInteractionPayload {
     interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked";
 }
@@ -55,7 +95,10 @@ export interface BareUserInteractionPayload {
 /**
  * @beta
  */
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload;
+export type UserInteractionPayloadWithData =
+    | KpiAlertDialogOpenedPayload
+    | DescriptionTooltipOpenedPayload
+    | ShareDialogInteractionPayload;
 
 /**
  * @beta

@@ -1,31 +1,35 @@
 // (C) 2022-2023 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
 import { GranteeUserIcon } from "../GranteeIcons";
-import { GranteeItem, IGranularGranteeUser } from "../types";
+import { DialogModeType, GranteeItem, IGranularGranteeUser } from "../types";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils";
 import { CurrentUserPermissions } from "../../types";
 
 import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState";
 import { getGranteePossibilities } from "./permissionsLogic";
+import { useShareDialogInteraction } from "../ComponentInteractionContext";
 
 interface IGranularGranteeUserItemProps {
     grantee: IGranularGranteeUser;
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
+    mode: DialogModeType;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
-    const { grantee, currentUserPermissions, isSharedObjectLocked, onChange, onDelete } = props;
+    const { grantee, currentUserPermissions, isSharedObjectLocked, onChange, onDelete, mode } = props;
     const { email } = grantee;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
+    const { permissionsDropdownOpenInteraction } = useShareDialogInteraction();
     const intl = useIntl();
+
     const itemClassName = cx(
         { "s-share-dialog-current-user": grantee.isCurrentUser },
         "s-share-dialog-grantee-item",
@@ -45,19 +49,39 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
         [grantee, currentUserPermissions, isSharedObjectLocked],
     );
 
+    const handleToggleDropdown = useCallback(() => {
+        toggleDropdown();
+
+        if (!isDropdownOpen) {
+            permissionsDropdownOpenInteraction(
+                grantee,
+                mode === "ShareGrantee",
+                granteePossibilities.assign.effective,
+            );
+        }
+    }, [
+        toggleDropdown,
+        isDropdownOpen,
+        grantee,
+        mode,
+        permissionsDropdownOpenInteraction,
+        granteePossibilities,
+    ]);
+
     return (
         <div className={itemClassName}>
             <GranularPermissionsDropdownWithBubble
                 grantee={grantee}
                 granteePossibilities={granteePossibilities}
                 isDropdownOpen={isDropdownOpen}
-                toggleDropdown={toggleDropdown}
+                toggleDropdown={handleToggleDropdown}
                 onChange={onChange}
                 onDelete={onDelete}
                 isDropdownDisabled={!granteePossibilities.change.enabled}
                 bubbleTextId={granteePossibilities.change.tooltip}
                 className="gd-grantee-granular-permission"
                 triggerClassName="gd-grantee-granular-permission-bubble-trigger"
+                mode={mode}
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{label}</div>

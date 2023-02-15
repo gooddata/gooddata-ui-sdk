@@ -48,10 +48,16 @@ const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
                     handleOnChange(permission);
                 }
             }}
-            className={cx("gd-list-item", "gd-menu-item", "gd-granular-permission-select-item", {
-                "is-disabled": !permission.enabled,
-                "is-selected": isSelected,
-            })}
+            className={cx(
+                "gd-list-item",
+                "gd-menu-item",
+                "gd-granular-permission-select-item",
+                "s-granular-permission-item",
+                {
+                    "is-disabled": !permission.enabled,
+                    "is-selected": isSelected,
+                },
+            )}
         >
             <div>{intl.formatMessage(granularPermissionMessageLabels[permission.id])}</div>
         </div>
