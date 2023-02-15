@@ -24,6 +24,7 @@ describe("static features", () => {
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
+                [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -34,6 +35,7 @@ describe("static features", () => {
             enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
             enableLongitudeAndLatitudeLabels: true,
+            enableSqlDatasets: true,
         });
     });
 
@@ -48,6 +50,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
+                    [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                 },
                 "beta",
             ),
@@ -60,6 +63,7 @@ describe("static features", () => {
             enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
             enableLongitudeAndLatitudeLabels: true,
+            enableSqlDatasets: true,
         });
     });
 });
