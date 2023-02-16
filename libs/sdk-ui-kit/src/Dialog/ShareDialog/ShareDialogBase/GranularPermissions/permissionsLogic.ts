@@ -125,6 +125,7 @@ export const getGranteePossibilities = (
 
     // disable all permissions change if all assignment options are disabled and also the Remove option is disabled
     if (
+        change.enabled &&
         !remove.enabled &&
         permissionTypeItems.every(
             (item) => !item.enabled || item.hidden || item.id === granteeEffectivePermission,
