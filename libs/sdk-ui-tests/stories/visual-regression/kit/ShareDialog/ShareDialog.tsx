@@ -64,6 +64,7 @@ const BasicExample: React.FC = () => {
                                     isLeniencyControlSupported: true,
                                     isMetadataObjectLockingSupported: true,
                                 }}
+                                isCurrentUserWorkspaceManager={false}
                                 onCancel={onCancel}
                                 onSubmit={onSubmit}
                                 onError={onCancel}

@@ -4456,6 +4456,7 @@ export interface IShareDialogProps {
     backend: IAnalyticalBackend;
     currentUserPermissions: CurrentUserPermissions;
     currentUserRef: ObjRef;
+    isCurrentUserWorkspaceManager: boolean;
     isLockingSupported: boolean;
     isVisible?: boolean;
     onApply: (payload: ISharingApplyPayload) => void;

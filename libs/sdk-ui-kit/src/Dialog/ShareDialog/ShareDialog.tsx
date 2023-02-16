@@ -35,6 +35,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         onCancel,
         onError,
         isLockingSupported,
+        isCurrentUserWorkspaceManager,
         labels,
         currentUserPermissions,
     } = props;
@@ -43,6 +44,8 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
     const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
     const isMetadataObjectLockingSupported = effectiveBackend.capabilities.supportsMetadataObjectLocking;
+    const canWorkspaceManagerSeeEverySharedObject =
+        effectiveBackend.capabilities.canWorkspaceManagerSeeEverySharedObject;
     const { createdBy } = sharedObject;
 
     const onShareDialogBaseError = useCallback(
@@ -95,6 +98,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             isLeniencyControlSupported,
             areGranularPermissionsSupported,
             isMetadataObjectLockingSupported,
+            canWorkspaceManagerSeeEverySharedObject,
         );
     }, [
         sharedObject,
@@ -103,6 +107,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         isLeniencyControlSupported,
         areGranularPermissionsSupported,
         isMetadataObjectLockingSupported,
+        canWorkspaceManagerSeeEverySharedObject,
     ]);
 
     return (
@@ -113,6 +118,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
                         <ShareDialogBase
                             currentUserRef={currentUserRef}
                             sharedObject={affectedSharedObject}
+                            isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                             currentUserPermissions={currentUserPermissions}
                             onCancel={onCancel}
                             onSubmit={onSubmit}

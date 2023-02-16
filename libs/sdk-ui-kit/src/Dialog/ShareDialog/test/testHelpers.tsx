@@ -57,6 +57,7 @@ export const defaultProps: IShareDialogProps = {
     onApply: noop,
     onCancel: noop,
     onError: noop,
+    isCurrentUserWorkspaceManager: false,
     currentUserPermissions: defaultUserPermissions,
 };
 
@@ -199,4 +200,8 @@ export function setUnderLenientControlCheckbox(wrapper: ReactWrapper, value: boo
         .hostNodes()
         .simulate("change", { target: { checked: value } });
     wrapper.update();
+}
+
+export function isAdminInformationMessageVisible(wrapper: ReactWrapper): boolean {
+    return wrapper.find(".s-granular-permissions-admin-information").hostNodes().length === 1;
 }

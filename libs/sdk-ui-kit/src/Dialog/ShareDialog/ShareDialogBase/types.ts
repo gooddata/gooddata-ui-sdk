@@ -185,6 +185,7 @@ export interface IAffectedSharedObject {
     isLeniencyControlSupported: boolean;
     isMetadataObjectLockingSupported: boolean;
     areGranularPermissionsSupported?: boolean;
+    canWorkspaceManagerSeeEverySharedObject?: boolean;
 }
 
 /**
@@ -194,6 +195,7 @@ export interface IShareDialogBaseProps {
     sharedObject: IAffectedSharedObject;
     currentUserRef: ObjRef;
     currentUserPermissions: CurrentUserPermissions;
+    isCurrentUserWorkspaceManager: boolean;
     onCancel: () => void;
     onSubmit: (
         grantees: GranteeItem[],
@@ -229,6 +231,7 @@ export interface IShareGranteeBaseProps {
     isUnderLenientControlNow: boolean;
     sharedObject: IAffectedSharedObject;
     grantees: GranteeItem[];
+    isCurrentUserWorkspaceManager: boolean;
     currentUserPermissions: CurrentUserPermissions;
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;

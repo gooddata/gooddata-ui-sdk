@@ -15,7 +15,8 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  * @internal
  */
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
-    const { onCancel, sharedObject, currentUserRef, currentUserPermissions } = props;
+    const { onCancel, sharedObject, currentUserRef, currentUserPermissions, isCurrentUserWorkspaceManager } =
+        props;
 
     const {
         onAddedGranteeDelete,
@@ -65,6 +66,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onLockChange={onLockChange}
                         onUnderLenientControlChange={onUnderLenientControlChange}
                         onGranularGranteeChange={onGranularGranteeShareChange}
+                        isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                     />
                 ) : (
                     <AddGranteeBase

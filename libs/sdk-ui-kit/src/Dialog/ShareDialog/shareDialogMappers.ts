@@ -265,6 +265,7 @@ export const mapSharedObjectToAffectedSharedObject = (
     isLeniencyControlSupported: boolean,
     areGranularPermissionsSupported = false,
     isMetadataObjectLockingSupported = true,
+    canWorkspaceManagerSeeEverySharedObject = false,
 ): IAffectedSharedObject => {
     const { ref, shareStatus, isLocked, isUnderStrictControl } = sharedObject;
     return {
@@ -277,5 +278,6 @@ export const mapSharedObjectToAffectedSharedObject = (
         isLeniencyControlSupported,
         areGranularPermissionsSupported,
         isMetadataObjectLockingSupported,
+        canWorkspaceManagerSeeEverySharedObject,
     };
 };

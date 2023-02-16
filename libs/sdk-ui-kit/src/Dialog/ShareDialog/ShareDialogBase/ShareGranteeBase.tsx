@@ -10,12 +10,15 @@ import { ShareGranteeContent } from "./ShareGranteeContent";
 import { IShareGranteeBaseProps } from "./types";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl";
 import { SharedObjectLockControl } from "./SharedObjectLockControl";
+import { useAdminInformationMessageState } from "./useAdminInformationMessage";
+import { AdminInformationMessage } from "./AdminInformationMessage";
 
 /**
  * @internal
  */
 export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     const {
+        currentUserRef,
         isLoading,
         isLockedNow,
         isUnderLenientControlNow,
@@ -30,6 +33,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onAddGranteeButtonClick,
         onLockChange,
         onUnderLenientControlChange,
+        isCurrentUserWorkspaceManager,
     } = props;
     const {
         owner,
@@ -38,9 +42,10 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         areGranularPermissionsSupported,
         isMetadataObjectLockingSupported,
         isLocked,
+        canWorkspaceManagerSeeEverySharedObject,
     } = sharedObject;
-
     const intl = useIntl();
+    const { isMessageVisible, handleMessageClose } = useAdminInformationMessageState(currentUserRef);
 
     const granteeList = useMemo(() => {
         return compact([owner, ...grantees]);
@@ -53,6 +58,15 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
     }, [intl]);
+
+    const shouldDisplayAdminMessage = useMemo(
+        () =>
+            canWorkspaceManagerSeeEverySharedObject &&
+            isCurrentUserWorkspaceManager &&
+            !isLoading &&
+            isMessageVisible,
+        [canWorkspaceManagerSeeEverySharedObject, isCurrentUserWorkspaceManager, isLoading, isMessageVisible],
+    );
 
     return (
         <ConfirmDialogBase
@@ -77,6 +91,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 onChange={onGranularGranteeChange}
             />
             <ContentDivider />
+            <AdminInformationMessage isVisible={shouldDisplayAdminMessage} onClose={handleMessageClose} />
             <SharedObjectUnderLenientControl
                 isUnderLenientControl={isUnderLenientControlNow}
                 isLeniencyControlSupported={isLeniencyControlSupported}
