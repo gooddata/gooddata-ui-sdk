@@ -66,6 +66,12 @@ describe("permissions logic", () => {
             type: "granularUser",
         } as IGranularGrantee;
 
+        const granteeDirectEditIndirectEdit = {
+            permissions: ["EDIT"],
+            inheritedPermissions: ["EDIT"],
+            type: "granularUser",
+        } as IGranularGrantee;
+
         const granteeDirectShare = {
             permissions: ["SHARE"],
             inheritedPermissions: [],
@@ -305,17 +311,17 @@ describe("permissions logic", () => {
         });
 
         it("disables all changes when the current user(VIEW) has lower permission than the grantee(EDIT)", () => {
-            const locked = true;
+            const locked = false;
 
             const possibilities = getGranteePossibilities(granteeDirectEdit, viewUserPermissions, locked);
 
             expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
                 assign: {
-                    effective: "SHARE",
+                    effective: "EDIT",
                     items: [
                         {
                             id: "EDIT",
-                            hidden: true,
+                            hidden: false,
                             enabled: false,
                             tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
                         },
@@ -420,6 +426,50 @@ describe("permissions logic", () => {
                 change: {
                     enabled: false,
                     tooltip: "shareDialog.share.granular.grantee.tooltip.noChangeAvailable",
+                },
+            });
+        });
+
+        it("disables all changes when all options are disabled due to overlapping conditions", () => {
+            const locked = false;
+
+            const possibilities = getGranteePossibilities(
+                granteeDirectEditIndirectEdit,
+                shareUserPermissions,
+                locked,
+            );
+
+            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
+                assign: {
+                    effective: "EDIT",
+                    items: [
+                        {
+                            id: "EDIT",
+                            hidden: false,
+                            enabled: false,
+                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
+                        },
+                        {
+                            id: "SHARE",
+                            hidden: false,
+                            enabled: false,
+                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser",
+                        },
+                        {
+                            id: "VIEW",
+                            hidden: false,
+                            enabled: false,
+                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser",
+                        },
+                    ],
+                },
+                remove: {
+                    enabled: false,
+                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher",
+                },
+                change: {
+                    enabled: false,
+                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher",
                 },
             });
         });
