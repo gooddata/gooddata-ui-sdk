@@ -59,6 +59,11 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
     const configurationCategoryClasses = cx("configuration-category", {
         "s-widget-alerts-information-loaded": isNumOfAlertsLoaded,
     });
+    const scrollablePanelClasses = cx(
+        "configuration-panel",
+        "configuration-panel-kpi",
+        "s-configuration-scrollable-panel",
+    );
 
     const sectionHeaderClasses = cx({ "is-disabled": !metric });
 
@@ -76,7 +81,7 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
     return (
         <>
             <KpiConfigurationPanelHeader onCloseButtonClick={onClose} />
-            <ScrollablePanel className={"configuration-panel configuration-panel-kpi"}>
+            <ScrollablePanel className={scrollablePanelClasses}>
                 <div className={configurationCategoryClasses}>
                     <KpiConfigurationMessages numberOfAlerts={numberOfAlerts} />
 
