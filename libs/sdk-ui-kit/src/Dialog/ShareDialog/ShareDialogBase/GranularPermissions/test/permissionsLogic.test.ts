@@ -28,7 +28,7 @@ describe("permissions logic", () => {
             ${["SHARE"]} | ${["EDIT"]} | ${"SHARE"}
             ${["SHARE"]} | ${["VIEW"]} | ${"SHARE"}
             ${["VIEW"]}  | ${["VIEW"]} | ${"VIEW"}
-        `("returns up to SHARE when dashboard is locked", ({ direct, inherited, expected }) => {
+        `("returns up to SHARE when object is locked", ({ direct, inherited, expected }) => {
             const result = getEffectivePermission(direct, inherited, true);
 
             expect(result).toEqual(expected);
@@ -37,27 +37,27 @@ describe("permissions logic", () => {
 
     describe("getGranteePossibilities", () => {
         const editUserPermissions: CurrentUserPermissions = {
-            canEditDashboard: true,
-            canEditLockedDashboard: true,
-            canShareDashboard: true,
-            canShareLockedDashboard: true,
-            canViewDashboard: true,
+            canEditAffectedObject: true,
+            canEditLockedAffectedObject: true,
+            canShareAffectedObject: true,
+            canShareLockedAffectedObject: true,
+            canViewAffectedObject: true,
         };
 
         const shareUserPermissions: CurrentUserPermissions = {
-            canEditDashboard: false,
-            canEditLockedDashboard: false,
-            canShareDashboard: true,
-            canShareLockedDashboard: true,
-            canViewDashboard: true,
+            canEditAffectedObject: false,
+            canEditLockedAffectedObject: false,
+            canShareAffectedObject: true,
+            canShareLockedAffectedObject: true,
+            canViewAffectedObject: true,
         };
 
         const viewUserPermissions: CurrentUserPermissions = {
-            canEditDashboard: false,
-            canEditLockedDashboard: false,
-            canShareDashboard: false,
-            canShareLockedDashboard: false,
-            canViewDashboard: true,
+            canEditAffectedObject: false,
+            canEditLockedAffectedObject: false,
+            canShareAffectedObject: false,
+            canShareLockedAffectedObject: false,
+            canViewAffectedObject: true,
         };
 
         const granteeDirectEdit = {
@@ -270,7 +270,7 @@ describe("permissions logic", () => {
             });
         });
 
-        it("hides Edit & share when the dashboard is locked", () => {
+        it("hides Edit & share when the object is locked", () => {
             const locked = true;
 
             const possibilities = getGranteePossibilities(granteeDirectEdit, editUserPermissions, locked);

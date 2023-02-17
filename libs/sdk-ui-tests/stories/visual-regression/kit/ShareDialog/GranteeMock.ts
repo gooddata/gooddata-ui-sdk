@@ -12,11 +12,11 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 export const defaultUserPermissions: CurrentUserPermissions = {
-    canEditDashboard: true,
-    canEditLockedDashboard: true,
-    canShareDashboard: true,
-    canShareLockedDashboard: true,
-    canViewDashboard: true,
+    canEditAffectedObject: true,
+    canEditLockedAffectedObject: true,
+    canShareAffectedObject: true,
+    canShareLockedAffectedObject: true,
+    canViewAffectedObject: true,
 };
 
 export const user: IGranteeUser = {

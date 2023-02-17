@@ -171,13 +171,13 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
  * @internal
  */
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
-    const { grantee, mode, currentUserPermissions, isDashboardLocked, onDelete, onChange } = props;
+    const { grantee, mode, currentUserPermissions, isSharedObjectLocked, onDelete, onChange } = props;
 
     if (isGranularGranteeUser(grantee)) {
         return (
             <GranularGranteeUserItem
                 currentUserPermissions={currentUserPermissions}
-                isDashboardLocked={isDashboardLocked}
+                isSharedObjectLocked={isSharedObjectLocked}
                 grantee={grantee}
                 onChange={onChange}
                 onDelete={onDelete}
@@ -187,7 +187,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
         return (
             <GranularGranteeGroupItem
                 currentUserPermissions={currentUserPermissions}
-                isDashboardLocked={isDashboardLocked}
+                isSharedObjectLocked={isSharedObjectLocked}
                 grantee={grantee}
                 onChange={onChange}
                 onDelete={onDelete}

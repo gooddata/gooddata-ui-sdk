@@ -5,7 +5,6 @@ import {
     ObjRef,
     IAccessControlAware,
     ShareStatus,
-    IDashboardPermissions,
     IAccessGrantee,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -13,7 +12,14 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 /**
  * @internal
  */
-export type CurrentUserPermissions = IDashboardPermissions;
+export type CurrentUserPermissions = {
+    [permission in
+        | "canEditLockedAffectedObject"
+        | "canEditAffectedObject"
+        | "canShareLockedAffectedObject"
+        | "canShareAffectedObject"
+        | "canViewAffectedObject"]: boolean;
+};
 
 /**
  * @internal

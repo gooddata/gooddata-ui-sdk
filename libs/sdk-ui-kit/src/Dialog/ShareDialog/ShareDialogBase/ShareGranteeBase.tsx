@@ -82,7 +82,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         >
             <ShareGranteeContent
                 currentUserPermissions={currentUserPermissions}
-                isDashboardLocked={isLocked}
+                isSharedObjectLocked={isLocked}
                 isLoading={isLoading}
                 grantees={granteeList}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}

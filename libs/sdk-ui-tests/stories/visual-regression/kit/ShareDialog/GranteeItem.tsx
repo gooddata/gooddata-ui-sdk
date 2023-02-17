@@ -11,9 +11,9 @@ import "../styles/goodstrap.scss";
 import { action } from "@storybook/addon-actions";
 import {
     ComponentLabelsProvider,
-    DialogModeType,
     getGranteeItemTestId,
     GranteeItemComponent,
+    IGranteeItemProps,
 } from "@gooddata/sdk-ui-kit";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 import {
@@ -31,11 +31,11 @@ import {
 } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
-const defaultGranteeItemComponentProps = {
-    mode: "ShareGrantee" as DialogModeType,
+const defaultGranteeItemComponentProps: Omit<IGranteeItemProps, "grantee"> = {
+    mode: "ShareGrantee",
     onDelete: action("onDelete"),
     currentUserPermissions: defaultUserPermissions,
-    isDashboardLocked: false,
+    isSharedObjectLocked: false,
 };
 
 const UserItemBasicExample = (): JSX.Element => {

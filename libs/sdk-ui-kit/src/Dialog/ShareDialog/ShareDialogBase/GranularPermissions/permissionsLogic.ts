@@ -17,7 +17,7 @@ const allPermissionsSorted: AccessGranularPermission[] = ["EDIT", "SHARE", "VIEW
 export const getEffectivePermission = (
     permissions: AccessGranularPermission[],
     inheritedPermissions: AccessGranularPermission[],
-    isDashboardLocked: boolean,
+    isSharedObjectLocked: boolean,
 ): AccessGranularPermission => {
     const allUserPermissions = [...permissions, ...inheritedPermissions];
 
@@ -27,7 +27,7 @@ export const getEffectivePermission = (
 
     invariant(effectivePermission, "Provided item permissions are incomplete or invalid");
 
-    if (isDashboardLocked && effectivePermission === "EDIT") {
+    if (isSharedObjectLocked && effectivePermission === "EDIT") {
         return "SHARE";
     }
 
@@ -42,7 +42,7 @@ const disableWithTooltip = (possibility: IGranteePermissionsPossibility, tooltip
 const getPermissionTypeItems = (
     grantee: IGranularGrantee,
     currentUserPermissions: CurrentUserPermissions,
-    isDashboardLocked: boolean,
+    isSharedObjectLocked: boolean,
 ): IGranularPermissionTypeItem[] => {
     return allPermissionsSorted.map<IGranularPermissionTypeItem>((permission, permissionIndex) => {
         const item: IGranularPermissionTypeItem = {
@@ -54,15 +54,15 @@ const getPermissionTypeItems = (
 
         // don't allow setting permissions higher that the current user
         if (
-            (permission === "EDIT" && !currentUserPermissions.canEditDashboard) ||
-            (permission === "SHARE" && !currentUserPermissions.canShareDashboard) ||
-            !currentUserPermissions.canViewDashboard
+            (permission === "EDIT" && !currentUserPermissions.canEditAffectedObject) ||
+            (permission === "SHARE" && !currentUserPermissions.canShareAffectedObject) ||
+            !currentUserPermissions.canViewAffectedObject
         ) {
             disableWithTooltip(item, "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher");
         }
 
-        // hide Edit & share on inherited dashboards
-        if (permission === "EDIT" && isDashboardLocked) {
+        // hide Edit & share on inherited object
+        if (permission === "EDIT" && isSharedObjectLocked) {
             item.hidden = true;
         }
 
@@ -86,12 +86,12 @@ const getPermissionTypeItems = (
 export const getGranteePossibilities = (
     grantee: IGranularGrantee,
     currentUserPermissions: CurrentUserPermissions,
-    isDashboardLocked: boolean,
+    isSharedObjectLocked: boolean,
 ): IGranteePermissionsPossibilities => {
     const granteeEffectivePermission = getEffectivePermission(
         grantee.permissions,
         grantee.inheritedPermissions,
-        isDashboardLocked,
+        isSharedObjectLocked,
     );
 
     // the "Remove" option state
@@ -107,18 +107,18 @@ export const getGranteePossibilities = (
     };
 
     //state of the permissions selection dropdown items
-    const permissionTypeItems = getPermissionTypeItems(grantee, currentUserPermissions, isDashboardLocked);
+    const permissionTypeItems = getPermissionTypeItems(grantee, currentUserPermissions, isSharedObjectLocked);
 
     // cannot change or remove permissions of a grantee that has higher permission than the current user
     if (
-        (granteeEffectivePermission === "EDIT" && !currentUserPermissions.canEditDashboard) ||
-        (granteeEffectivePermission === "SHARE" && !currentUserPermissions.canShareDashboard)
+        (granteeEffectivePermission === "EDIT" && !currentUserPermissions.canEditAffectedObject) ||
+        (granteeEffectivePermission === "SHARE" && !currentUserPermissions.canShareAffectedObject)
     ) {
         disableWithTooltip(change, granularPermissionMessageTooltips.cannotChangeHigher.id);
         disableWithTooltip(remove, granularPermissionMessageTooltips.cannotChangeHigher.id);
     }
 
-    // cannot remove permission that is defined on the dashboard in parent workspace
+    // cannot remove permission that is defined on the object in parent workspace
     if (grantee.permissions.length === 0 && grantee.inheritedPermissions.length !== 0) {
         disableWithTooltip(remove, granularPermissionMessageTooltips.cannotRemoveFromParent.id);
     }

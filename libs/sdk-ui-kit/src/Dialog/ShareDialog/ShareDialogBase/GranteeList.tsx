@@ -16,7 +16,7 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
         mode,
         areGranularPermissionsSupported,
         currentUserPermissions,
-        isDashboardLocked,
+        isSharedObjectLocked,
         onDelete,
         onChange,
     } = props;
@@ -37,7 +37,7 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
                 return (
                     <GranteeItemComponent
                         currentUserPermissions={currentUserPermissions}
-                        isDashboardLocked={isDashboardLocked}
+                        isSharedObjectLocked={isSharedObjectLocked}
                         key={serializeObjRef(grantee.id)}
                         grantee={grantee}
                         mode={mode}
