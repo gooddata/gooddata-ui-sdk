@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { DashboardContext } from "../types/commonTypes";
 
@@ -111,7 +111,8 @@ export type DashboardEventType =
     | "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED"
     | "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED"
     | "GDC.DASH/EVT.RENDER.RESOLVED"
-    | "GDC.DASH/EVT.SHARING.CHANGED";
+    | "GDC.DASH/EVT.SHARING.CHANGED"
+    | "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED";
 
 /**
  * Base type for all dashboard events.

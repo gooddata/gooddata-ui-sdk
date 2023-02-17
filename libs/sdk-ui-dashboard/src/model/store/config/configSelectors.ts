@@ -380,6 +380,15 @@ export const selectAllowUnfinishedFeatures = createSelector(
 );
 
 /**
+ * Returns whether creating new insight from dashboard is enabled.
+ *
+ * @internal
+ */
+export const selectAllowCreateInsightRequest = createSelector(selectConfig, (state) => {
+    return state.allowCreateInsightRequest ?? false;
+});
+
+/**
  * Returns whether analytical designer is enabled.
  *
  * @internal

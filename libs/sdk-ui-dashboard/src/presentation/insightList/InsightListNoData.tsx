@@ -1,21 +1,22 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { INoDataButton } from "./types";
 
 export interface IVisualizationListNoDataProps {
     hasNoMatchingData: boolean;
     isUserInsights: boolean;
-    button?: INoDataButton;
+    showNoDataCreateButton?: boolean;
+    onCreateButtonClick: (event: React.MouseEvent) => void;
 }
 
 export const InsightListNoData: React.FC<IVisualizationListNoDataProps> = ({
     hasNoMatchingData,
     isUserInsights,
-    button,
+    showNoDataCreateButton,
+    onCreateButtonClick,
 }) => {
     return (
         <div
@@ -36,12 +37,12 @@ export const InsightListNoData: React.FC<IVisualizationListNoDataProps> = ({
                             <FormattedMessage id="visualizationsList.noInsights" />
                         )}
                     </span>{" "}
-                    {button ? (
+                    {showNoDataCreateButton ? (
                         <Button
-                            className={`gd-button-link ${button.className}`}
+                            className="gd-button-link s-create-new-insight"
                             tagName="a"
-                            onClick={button.onClick}
-                            value={button.value}
+                            onClick={onCreateButtonClick}
+                            value={<FormattedMessage id="visualizationsList.create" />}
                         />
                     ) : null}
                 </>

@@ -52,6 +52,7 @@ export {
     selectEnableAnalyticalDashboardPermissions,
     selectIsSaveAsNewButtonHidden,
     selectAllowUnfinishedFeatures,
+    selectAllowCreateInsightRequest,
     selectDashboardEditModeDevRollout,
     selectIsAnalyticalDesignerEnabled,
     selectIsDeleteFilterButtonEnabled,
