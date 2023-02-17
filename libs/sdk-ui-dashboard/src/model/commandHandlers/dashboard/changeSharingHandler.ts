@@ -6,6 +6,7 @@ import {
     IDashboard,
     IDashboardDefinition,
     isGranularAccessGrantee,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes";
@@ -15,7 +16,6 @@ import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/m
 import { invalidArgumentsProvided } from "../../events/general";
 import { metaActions } from "../../store/meta";
 import { BatchAction, batchActions } from "redux-batched-actions";
-import { PromiseFnReturnType } from "../../types/sagas";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions";
@@ -76,7 +76,11 @@ function updateDashboard(
         .updateDashboard(saveSharingCtx.persistedDashboard, saveSharingCtx.dashboardToSave);
 }
 
-function changeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+function getDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<IDashboard> {
+    return ctx.backend.workspace(ctx.workspace).dashboards().getDashboard(dashboardRef);
+}
+
+function changeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<void> {
     const { granteesToAdd, granteesToDelete } = saveSharingCtx.cmd.payload.newSharingProperties;
     const grantees = [...granteesToAdd, ...granteesToDelete].filter(isGranularAccessGrantee);
 
@@ -103,11 +107,15 @@ function* saveSharing(
     const setDashboardPermissionsAction =
         dashboardPermissionsActions.setDashboardPermissions(updatedDashboardPermissions);
 
-    const dashboard: PromiseFnReturnType<typeof updateDashboard> = yield call(
-        updateDashboard,
-        ctx,
-        saveSharingCtx,
-    );
+    let dashboard: IDashboard;
+    if (!ctx.backend.capabilities.supportsGranularAccessControl) {
+        // update dashboard with specified share status
+        dashboard = yield call(updateDashboard, ctx, saveSharingCtx);
+    } else {
+        // get dashboard with computed share status from backend
+        dashboard = yield call(getDashboard, ctx, saveSharingCtx.persistedDashboard.ref);
+    }
+
     const setDashboardMetaAction = metaActions.setMeta({ dashboard });
 
     const batch = batchActions(
@@ -148,7 +156,7 @@ export function* changeSharingHandler(
 
     /**
      * BE might evaluate that share status has changed for the dashboard. When this happens, we want to use the new share status
-     * for further operations to avoid UI inconsistensies.
+     * for further operations to avoid UI inconsistencies.
      */
     const updatedDashboardProperties = {
         ...cmd.payload.newSharingProperties,

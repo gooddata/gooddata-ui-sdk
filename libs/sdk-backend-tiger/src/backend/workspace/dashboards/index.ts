@@ -316,9 +316,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        // TODO: TNT-1310 Revert back to `return convertDashboard(result.data, filterContext)`
-        const { id, type } = result.data.data;
-        return this.getDashboard(idRef(id, type));
+        return convertDashboard(result.data, filterContext);
     };
 
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {
