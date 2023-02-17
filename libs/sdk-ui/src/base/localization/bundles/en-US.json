@@ -1595,7 +1595,7 @@
         "limit": 0
     },
     "shareDialog.share.granular.administrator.info": {
-        "value": "<b>Note.</b> You and all other administrators have full access to all dashboards.",
+        "value": "<b>Note.</b> You and other administrators have full access to all dashboards.",
         "comment": "",
         "limit": 0
     },
