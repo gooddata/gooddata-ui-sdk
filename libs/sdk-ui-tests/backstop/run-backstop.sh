@@ -40,6 +40,7 @@ wait-for-url() {
 echo "Creating docker network for the storybook & backstop to share: ${BACKSTOP_NET}"
 
 docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && exit 1 ; }
+trap "docker network rm -f ${BACKSTOP_NET}" EXIT
 
 {
     echo "Starting nginx container serving storybooks from ${STORYBOOK_ASSETS}"
@@ -84,7 +85,7 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
 
     echo "Cleaning up docker network ${BACKSTOP_NET}"
 
-    docker network rm "${BACKSTOP_NET}"
+    docker network rm -f "${BACKSTOP_NET}"
 
     # Check if the test report exists - if not, it means that the test
     # failed with "cannot open the browser" error.
