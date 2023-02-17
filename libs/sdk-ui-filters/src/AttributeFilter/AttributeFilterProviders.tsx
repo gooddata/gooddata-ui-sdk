@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterComponentsProvider } from "./Context/AttributeFilterComponentsContext";
@@ -13,6 +13,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
     props,
 ) => {
     const {
+        resetOnParentFilterChange = true,
         children,
         locale,
         backend,
@@ -79,6 +80,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     filter={filter}
                     connectToPlaceholder={connectToPlaceholder}
                     identifier={identifier}
+                    resetOnParentFilterChange={resetOnParentFilterChange}
                     parentFilters={parentFilters}
                     parentFilterOverAttribute={parentFilterOverAttribute}
                     onApply={onApply}

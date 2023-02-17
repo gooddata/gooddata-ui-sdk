@@ -1,13 +1,14 @@
 // (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, select, SagaReturnType } from "redux-saga/effects";
+import { batchActions } from "redux-batched-actions";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands";
 import { DashboardRenderModeChanged } from "../../events";
 import { renderModeChanged } from "../../events/renderMode";
 import { renderModeActions } from "../../store/renderMode";
 import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
-import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
+import { resetDashboardRuntime } from "../dashboard/resetDashboardHandler";
 import { validateDrills } from "../common/validateDrills";
 import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
@@ -30,10 +31,15 @@ export function* changeRenderModeHandler(
         //To avoid sending DashboardWidgetExecutionSucceeded or DashboardWidgetExecutionFailed events
         //for discarded widgets must be sanitization done before mode changed.
         if (renderModeChangeOptions.resetDashboard) {
-            yield call(resetDashboardHandler, ctx, resetDashboardCommand(correlationId));
+            const data: SagaReturnType<typeof resetDashboardRuntime> = yield call(
+                resetDashboardRuntime,
+                ctx,
+                resetDashboardCommand(correlationId),
+            );
+            yield put(batchActions([data.batch, renderModeActions.setRenderMode(renderMode), data.reset]));
+        } else {
+            yield put(batchActions([renderModeActions.setRenderMode(renderMode)]));
         }
-
-        yield put(renderModeActions.setRenderMode(renderMode));
 
         if (renderMode === "edit") {
             const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
