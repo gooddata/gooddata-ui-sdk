@@ -380,6 +380,7 @@ export interface IBackendCapabilities {
     canExportXlsx?: boolean;
     canSortData?: boolean;
     canTransformExistingResult?: boolean;
+    canWorkspaceManagerSeeEverySharedObject?: boolean;
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
     supportsAccessControl?: boolean;

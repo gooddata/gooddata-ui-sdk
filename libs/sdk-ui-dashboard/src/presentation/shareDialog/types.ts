@@ -50,6 +50,11 @@ export interface IShareDialogProps {
     isLockingSupported: boolean;
 
     /**
+     * Is currently logger user a workspace manager?
+     */
+    isCurrentUserWorkspaceManager: boolean;
+
+    /**
      * Dashboard permissions for current user.
      */
     currentUserPermissions: CurrentUserPermissions;

@@ -68,6 +68,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
                     onSubmit={action("onSubmit")}
                     onUnderLenientControlChange={action("onUnderLenientControlChange")}
                     onLockChange={action("onLockChange")}
+                    isCurrentUserWorkspaceManager={false}
                     currentUserPermissions={defaultUserPermissions}
                 />
             </div>

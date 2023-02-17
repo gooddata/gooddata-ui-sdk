@@ -23,7 +23,7 @@ const useShareDialogDashboardHeader = () => {
     const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const currentUserRef = useDashboardSelector(selectCurrentUserRef);
-    const isLockingSupported = useDashboardSelector(selectCanManageWorkspace);
+    const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const dashboardPermissions = useDashboardSelector(selectDashboardPermissions);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
@@ -68,7 +68,8 @@ const useShareDialogDashboardHeader = () => {
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
-        isLockingSupported,
+        isLockingSupported: isWorkspaceManager,
+        isCurrentUserWorkspaceManager: isWorkspaceManager,
         currentUserPermissions: dashboardPermissions,
     };
 };
@@ -87,6 +88,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         onApplyShareDialog,
         onErrorShareDialog,
         isLockingSupported,
+        isCurrentUserWorkspaceManager,
         currentUserPermissions,
     } = useShareDialogDashboardHeader();
 
@@ -105,6 +107,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
             onApply={onApplyShareDialog}
             onError={onErrorShareDialog}
             isLockingSupported={isLockingSupported}
+            isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
         />
     );

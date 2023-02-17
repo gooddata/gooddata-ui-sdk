@@ -752,6 +752,8 @@ export interface IAffectedSharedObject {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
     // (undocumented)
+    canWorkspaceManagerSeeEverySharedObject?: boolean;
+    // (undocumented)
     isLeniencyControlSupported: boolean;
     // (undocumented)
     isLocked: boolean;
@@ -3424,6 +3426,8 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
+    isCurrentUserWorkspaceManager: boolean;
+    // (undocumented)
     onCancel: () => void;
     // (undocumented)
     onError: (err: Error) => void;
@@ -3453,6 +3457,8 @@ export interface IShareDialogProps {
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     currentUserRef: ObjRef;
+    // (undocumented)
+    isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
     isLockingSupported: boolean;
     // (undocumented)
@@ -3485,6 +3491,8 @@ export interface IShareGranteeBaseProps {
     currentUserRef: ObjRef;
     // (undocumented)
     grantees: GranteeItem[];
+    // (undocumented)
+    isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
     isDirty: boolean;
     // (undocumented)

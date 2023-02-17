@@ -3,6 +3,7 @@
 exports[`shareDialogMappers mapSharedObjectToAffectedSharedObject should map shared object to expected affected shared object 1`] = `
 Object {
   "areGranularPermissionsSupported": false,
+  "canWorkspaceManagerSeeEverySharedObject": false,
   "isLeniencyControlSupported": false,
   "isLocked": true,
   "isLockingSupported": true,

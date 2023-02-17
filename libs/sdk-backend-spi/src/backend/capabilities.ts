@@ -212,6 +212,12 @@ export interface IBackendCapabilities {
     supportsSeparateLatitudeLongitudeLabels?: boolean;
 
     /**
+     * Indicates whether backends supports displaying message to inform workspace managers about having
+     * access to the shared object.
+     */
+    canWorkspaceManagerSeeEverySharedObject?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

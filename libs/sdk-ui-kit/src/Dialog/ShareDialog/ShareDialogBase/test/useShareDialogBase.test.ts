@@ -46,6 +46,7 @@ const defaultProps: IShareDialogBaseProps = {
         areGranularPermissionsSupported: true,
     },
     currentUserRef: idRef("user-id"),
+    isCurrentUserWorkspaceManager: false,
     currentUserPermissions: {
         canViewDashboard: true,
         canShareDashboard: true,

@@ -56,6 +56,7 @@ export interface IShareDialogProps {
     onCancel: () => void;
     onError?: (error: GoodDataSdkError) => void;
     isLockingSupported: boolean;
+    isCurrentUserWorkspaceManager: boolean;
     labels: IShareDialogLabels;
     currentUserPermissions: CurrentUserPermissions;
 }

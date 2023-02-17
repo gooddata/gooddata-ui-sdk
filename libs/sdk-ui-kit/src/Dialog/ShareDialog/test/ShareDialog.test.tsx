@@ -32,6 +32,7 @@ import {
     checkLockCheckbox,
     setUnderLenientControlCheckbox,
     isGranularPermissionsDropdownButtonVisible,
+    isAdminInformationMessageVisible,
 } from "./testHelpers";
 
 describe("ShareDialog", () => {
@@ -306,6 +307,33 @@ describe("ShareDialog", () => {
             clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
             expect(isGranteeVisible(wrapper, granteeSelector)).toBe(true);
             expect(isGranularPermissionsDropdownButtonVisible(wrapper)).toBe(true);
+        });
+
+        it("should render admin information message when user is admin", async () => {
+            const wrapper = await createComponent({ isCurrentUserWorkspaceManager: true }, [], [], [], [], {
+                canWorkspaceManagerSeeEverySharedObject: true,
+            });
+
+            await waitForComponentToPaint(wrapper);
+            expect(isAdminInformationMessageVisible(wrapper)).toBe(true);
+        });
+
+        it("should render admin information message when not supported", async () => {
+            const wrapper = await createComponent({ isCurrentUserWorkspaceManager: true }, [], [], [], [], {
+                canWorkspaceManagerSeeEverySharedObject: false,
+            });
+
+            await waitForComponentToPaint(wrapper);
+            expect(isAdminInformationMessageVisible(wrapper)).toBe(false);
+        });
+
+        it("should not render admin information message when user is not an admin", async () => {
+            const wrapper = await createComponent({ isCurrentUserWorkspaceManager: false }, [], [], [], [], {
+                canWorkspaceManagerSeeEverySharedObject: true,
+            });
+
+            await waitForComponentToPaint(wrapper);
+            expect(isAdminInformationMessageVisible(wrapper)).toBe(false);
         });
     });
 });
