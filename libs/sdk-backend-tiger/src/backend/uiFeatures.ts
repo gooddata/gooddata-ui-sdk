@@ -61,7 +61,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableLongitudeAndLatitudeLabels: false,
     enableDescriptions: true,
     enableAnalyticalDashboardPermissions: false,
-    enablePushpinGeoChart: false,
+    enablePushpinGeoChart: true,
     enableKPIAttributeFilterRenaming: false,
     enableKPIDashboardExportPDF: false, // TODO: TNT-1307 can be set to true after sdk v8.12 codedrop and backends fully support that
     enableSqlDatasets: false,
