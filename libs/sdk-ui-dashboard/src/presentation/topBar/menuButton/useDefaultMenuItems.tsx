@@ -26,6 +26,7 @@ import {
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { IMenuButtonItem } from "../../topBar/types";
 import { messages } from "../../../locales";
+import { selectIsSaveAsNewButtonVisible } from "../buttonBar/button";
 
 /**
  * @internal
@@ -94,6 +95,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
     const isSaveAsNewHidden = useDashboardSelector(selectIsSaveAsNewButtonHidden);
+    const isStandaloneSaveAsNewButtonVisible = useDashboardSelector(selectIsSaveAsNewButtonVisible);
 
     const canExport = useDashboardSelector(selectCanExportPdf);
     const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
@@ -107,8 +109,16 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         }
 
         const isDeleteVisible = isInEditMode && (menuButtonItemsVisibility.deleteButton ?? true);
+
+        /**
+         * Do not show save as new button in menu item when it is already shown
+         * as a standalone top bar button.
+         */
         const isSaveAsVisible =
-            canCreateDashboard && !isSaveAsNewHidden && (menuButtonItemsVisibility.saveAsNewButton ?? true);
+            !isStandaloneSaveAsNewButtonVisible &&
+            canCreateDashboard &&
+            !isSaveAsNewHidden &&
+            (menuButtonItemsVisibility.saveAsNewButton ?? true);
         const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
 
         const isPdfExportVisible =
@@ -170,6 +180,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         defaultOnScheduleEmailing,
         intl,
         isEmptyLayout,
+        isExportPdfEntitlementPresent,
         isInEditMode,
         isInViewMode,
         isKPIDashboardExportPDFEnabled,
@@ -177,6 +188,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isReadOnly,
         isSaveAsNewHidden,
         isScheduledEmailingVisible,
+        isStandaloneSaveAsNewButtonVisible,
         menuButtonItemsVisibility.deleteButton,
         menuButtonItemsVisibility.pdfExportButton,
         menuButtonItemsVisibility.saveAsNewButton,
