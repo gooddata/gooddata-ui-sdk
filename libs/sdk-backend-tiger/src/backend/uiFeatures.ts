@@ -55,7 +55,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
     enableMultipleDates: true,
     enableKPIDashboardDeleteFilterButton: false,
-    // disable edit mode in gdc-dashboards during development
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: false,
@@ -63,7 +62,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalDashboardPermissions: false,
     enablePushpinGeoChart: true,
     enableKPIAttributeFilterRenaming: false,
-    enableKPIDashboardExportPDF: false, // TODO: TNT-1307 can be set to true after sdk v8.12 codedrop and backends fully support that
+    enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
 };
 

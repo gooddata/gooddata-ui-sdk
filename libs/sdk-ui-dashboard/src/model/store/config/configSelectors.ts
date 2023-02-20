@@ -220,7 +220,7 @@ export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, 
  * @public
  */
 export const selectEnableKPIDashboardExportPDF = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardExportPDF ?? false;
+    return state.settings?.enableKPIDashboardExportPDF ?? true;
 });
 
 /**
