@@ -1237,6 +1237,17 @@
         "limit": 0,
         "translate": false
     },
+    "visualizationsList.create|insight": {
+        "value": "Create insight",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.create|report": {
+        "value": "Create report",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
     "visualizationsList.noUserInsights|insight": {
         "value": "No insights created.",
         "comment": "",

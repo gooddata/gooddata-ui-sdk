@@ -98,6 +98,7 @@ import {
     DashboardDrillableItemsChanged,
 } from "./drill";
 import { DashboardRenderModeChanged } from "./renderMode";
+import { CreateInsightRequested } from "./lab";
 
 export {
     IDashboardEvent,
@@ -398,6 +399,8 @@ export {
     isDashboardRenderModeChanged,
 } from "./renderMode";
 
+export { createInsightRequested, CreateInsightRequested } from "./lab";
+
 /**
  * Union type that contains all available built-in dashboard events.
  *
@@ -494,7 +497,9 @@ export type DashboardEvents =
     | DashboardDrillToInsightRequested
     | DashboardDrillToLegacyDashboardRequested
     | DashboardDrillRequested
-    | DashboardDrillableItemsChanged;
+    | DashboardDrillableItemsChanged
+    // internal
+    | CreateInsightRequested;
 
 /**
  * Creates DashboardEvent predicate that test whether the provided event matches it.

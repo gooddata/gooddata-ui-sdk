@@ -166,6 +166,12 @@ export interface DashboardConfig {
 
     /**
      * @internal
+     * Allow to create insight button and event
+     */
+    allowCreateInsightRequest?: boolean;
+
+    /**
+     * @internal
      * Specify which render mode will be use d for initial rendering.
      *
      * @remarks

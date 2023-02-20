@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useState, useEffect, useCallback } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -19,9 +19,13 @@ import { InsightListItem, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { InsightListNoData } from "./InsightListNoData";
 import {
+    createInsightRequested,
+    selectAllowCreateInsightRequest,
+    selectCanCreateVisualization,
     selectCurrentUserRef,
     selectInsightListLastUpdateRequested,
     selectSettings,
+    useDashboardEventDispatch,
     useDashboardSelector,
 } from "../../model";
 import { IInsightListProps } from "./types";
@@ -55,7 +59,6 @@ export const InsightList: React.FC<IInsightListProps> = ({
     height,
     width = LIST_WIDTH,
     searchAutofocus,
-    noDataButton,
     renderItem,
     selectedRef,
     onSelect,
@@ -71,6 +74,8 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const userRef = useDashboardSelector(selectCurrentUserRef);
     const userUri = isUriRef(userRef) ? userRef.uri : undefined;
     const insightListLastUpdateRequested = useDashboardSelector(selectInsightListLastUpdateRequested);
+    const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
+    const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
 
     const params = pagesToLoad.map((pageNumber) => ({
@@ -141,6 +146,14 @@ export const InsightList: React.FC<IInsightListProps> = ({
         return isFirstOrLast ? ITEM_HEIGHT + firstLastItemMargin : ITEM_HEIGHT;
     };
 
+    const eventDispatch = useDashboardEventDispatch();
+    const createInsightRequestedEvent = useCallback((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        eventDispatch(createInsightRequested());
+    }, []);
+
     const TABS_AND_SEARCHFIELD_HEIGHT = 70;
     const SEARCHFIELD_HEIGHT = 47;
 
@@ -149,6 +162,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const dropdownListHeight = height && height - controlsHeight;
     const dropdownListLoading = isLoading && insights.length === 0;
     const showDropdownListTabs = initialLoadCompleted && !search;
+    const showNoDataCreateButton = allowCreateInsightRequest && canCreateVisualization;
 
     return (
         <DropdownList
@@ -204,7 +218,8 @@ export const InsightList: React.FC<IInsightListProps> = ({
                 <InsightListNoData
                     isUserInsights={selectedTabId === messages.tabsMy.id}
                     hasNoMatchingData={hasNoMatchingData}
-                    button={noDataButton}
+                    showNoDataCreateButton={showNoDataCreateButton}
+                    onCreateButtonClick={createInsightRequestedEvent}
                 />
             )}
             onScrollEnd={(startIndex, endIndex) => {

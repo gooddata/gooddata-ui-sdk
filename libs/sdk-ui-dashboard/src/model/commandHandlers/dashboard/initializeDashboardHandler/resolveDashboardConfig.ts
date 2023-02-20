@@ -183,6 +183,7 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
         allowUnfinishedFeatures: config.allowUnfinishedFeatures ?? false,
+        allowCreateInsightRequest: config.allowCreateInsightRequest ?? false,
         initialRenderMode: config.initialRenderMode ?? "view",
         hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
         hideShareButton: config.hideShareButton ?? false,
