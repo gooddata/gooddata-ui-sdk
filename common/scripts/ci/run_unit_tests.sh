@@ -33,6 +33,19 @@ fi
 # ---------------------------------------------------------------------
 
 #
+# Stop wiremock server(s) & destroy the network
+#
+stop_wiremocks() {
+  echo "Stopping wiremock server for bear integrated tests."
+  $_WIREMOCK_STOP
+
+  echo "Stopping wiremock server for tiger integrated tests."
+  $_TIGER_WIREMOCK_STOP
+
+  docker network rm -f ${WIREMOCK_NET}
+}
+
+#
 # Start wiremock server(s) needed by the integrated tests. This will create a dedicated docker bridge network
 # that will be used by the containers.
 #
@@ -46,24 +59,12 @@ start_wiremocks() {
   _TIGER_WIREMOCK_STOP="${TIGER_WIREMOCK_DIR}/stop_wiremock.sh"
 
   docker network create ${WIREMOCK_NET} || { echo "Network creation failed" && exit 1; }
+  trap stop_wiremocks EXIT
 
   echo "Starting wiremock server for bear integrated tests"
   $_WIREMOCK_START detached
   echo "Starting wiremock server for tiger integrated tests"
   $_TIGER_WIREMOCK_START detached
-}
-
-#
-# Stop wiremock server(s) & destroy the network
-#
-stop_wiremocks() {
-  echo "Stopping wiremock server for bear integrated tests."
-  $_WIREMOCK_STOP
-
-  echo "Stopping wiremock server for tiger integrated tests."
-  $_TIGER_WIREMOCK_STOP
-
-  docker network rm ${WIREMOCK_NET}
 }
 
 # ---------------------------------------------------------------------
