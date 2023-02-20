@@ -1,22 +1,33 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
-import { CodeOptionType, DEFAULT_HEIGHT, InsightCodeType, UnitsType } from "./EmbedInsightDialogBase/types";
+import {
+    DEFAULT_HEIGHT,
+    EmbedOptionsType,
+    EmbedType,
+    UnitsType,
+    DEFAULT_LOCALE,
+} from "./EmbedInsightDialogBase/types";
 
 /**
  * @internal
  */
-export const getDefaultEmbedCodeOptions = (codeType: InsightCodeType): CodeOptionType => {
-    if (codeType === "definition") {
+export const getDefaultEmbedTypeOptions = (embedType: EmbedType): EmbedOptionsType => {
+    if (embedType === "react") {
         return {
-            type: "definition",
-            includeConfiguration: true,
+            type: "react",
+            codeType: "ts",
+            componentType: "reference",
+            displayConfiguration: true,
             customHeight: true,
         };
     }
 
     return {
-        type: "reference",
+        type: "webComponents",
         displayTitle: true,
+        customTitle: true,
+        allowLocale: true,
+        locale: DEFAULT_LOCALE,
         customHeight: true,
     };
 };
@@ -24,7 +35,7 @@ export const getDefaultEmbedCodeOptions = (codeType: InsightCodeType): CodeOptio
 /**
  * @internal
  */
-export const getHeightWithUnitsForEmbedCode = (codeOption: CodeOptionType): string | number => {
+export const getHeightWithUnitsForEmbedCode = (codeOption: EmbedOptionsType): string | number => {
     const unit = codeOption.unit ? codeOption.unit : "px";
 
     const customHeightValue = codeOption.height

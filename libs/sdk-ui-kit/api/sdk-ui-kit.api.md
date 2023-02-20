@@ -20,6 +20,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -273,9 +274,6 @@ export type CodeLanguageType = "js" | "ts";
 // @internal (undocumented)
 export const CodeOptions: React_2.VFC<ICodeOptionsProps>;
 
-// @internal (undocumented)
-export type CodeOptionType = IOptionsByDefinition | IOptionsByReference;
-
 // @internal
 export type Color = string;
 
@@ -502,6 +500,12 @@ export const EllipsisText: React_2.FC<IEllipsisTextProps>;
 export const EmbedInsightDialogBase: React_2.VFC<IEmbedInsightDialogBaseProps>;
 
 // @internal (undocumented)
+export type EmbedOptionsType = IReactOptions | IWebComponentsOptions;
+
+// @internal (undocumented)
+export type EmbedType = "react" | "webComponents";
+
+// @internal (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
@@ -611,13 +615,13 @@ export const getColorsPreviewFromTheme: (theme: ITheme) => string[];
 export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
 
 // @internal (undocumented)
-export const getDefaultEmbedCodeOptions: (codeType: InsightCodeType) => CodeOptionType;
+export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
 
 // @internal (undocumented)
 export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => string;
 
 // @internal (undocumented)
-export const getHeightWithUnitsForEmbedCode: (codeOption: CodeOptionType) => string | number;
+export const getHeightWithUnitsForEmbedCode: (codeOption: EmbedOptionsType) => string | number;
 
 // @internal (undocumented)
 export type GetOptimalAlignment = {
@@ -1049,9 +1053,9 @@ export interface ICodeLanguageSelectProps {
 // @internal (undocumented)
 export interface ICodeOptionsProps {
     // (undocumented)
-    onChange: (opt: CodeOptionType) => void;
+    onChange: (opt: IReactOptions) => void;
     // (undocumented)
-    option: CodeOptionType;
+    option: IReactOptions;
 }
 
 // @internal (undocumented)
@@ -1623,15 +1627,16 @@ export interface IEllipsisTextProps {
 
 // @internal (undocumented)
 export type IEmbedInsightDialogBaseProps = {
-    codeOption: CodeOptionType;
-    codeLanguage: CodeLanguageType;
     code: string;
+    embedTab: EmbedType;
+    embedTypeOptions: IReactOptions | IWebComponentsOptions;
     propertiesLink?: string;
     integrationDocLink?: string;
+    openSaveInsightDialog: () => void;
     onClose: () => void;
-    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
-    onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
-    onCodeOptionChange: (codeOption: CodeOptionType) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType, codeType: EmbedType) => void;
+    onOptionsChange: (opt: IReactOptions | IWebComponentsOptions) => void;
+    onTabChange: (selectedTab: EmbedType) => void;
 };
 
 // @internal (undocumented)
@@ -2649,6 +2654,18 @@ export interface ILoadingSpinner {
 }
 
 // @internal (undocumented)
+export interface ILocaleSettingProps {
+    // (undocumented)
+    isChecked: boolean;
+    // (undocumented)
+    onChecked: () => void;
+    // (undocumented)
+    onLocaleSelected: (locale: ILocale) => void;
+    // (undocumented)
+    selectedLocal: ILocale;
+}
+
+// @internal (undocumented)
 export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     anchorElementSelector?: string;
@@ -3165,34 +3182,6 @@ export interface IOptimalAlignment {
     visiblePart?: number;
 }
 
-// @internal (undocumented)
-export interface IOptionsByDefinition {
-    // (undocumented)
-    customHeight: boolean;
-    // (undocumented)
-    height?: string;
-    // (undocumented)
-    includeConfiguration: boolean;
-    // (undocumented)
-    type: "definition";
-    // (undocumented)
-    unit?: UnitsType;
-}
-
-// @internal (undocumented)
-export interface IOptionsByReference {
-    // (undocumented)
-    customHeight: boolean;
-    // (undocumented)
-    displayTitle: boolean;
-    // (undocumented)
-    height?: string;
-    // (undocumented)
-    type: "reference";
-    // (undocumented)
-    unit?: UnitsType;
-}
-
 // @internal
 export interface IOverlayControllerProviderProps {
     overlayController: OverlayController;
@@ -3261,6 +3250,24 @@ export interface IPositioning {
     offset?: IOffset;
     // (undocumented)
     snapPoints: ISnapPoints;
+}
+
+// @internal (undocumented)
+export interface IReactOptions {
+    // (undocumented)
+    codeType: CodeLanguageType;
+    // (undocumented)
+    componentType: InsightCodeType;
+    // (undocumented)
+    customHeight: boolean;
+    // (undocumented)
+    displayConfiguration: boolean;
+    // (undocumented)
+    height?: string;
+    // (undocumented)
+    type: "react";
+    // (undocumented)
+    unit?: UnitsType;
 }
 
 // @internal (undocumented)
@@ -3931,6 +3938,26 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
+export interface IWebComponentsOptions {
+    // (undocumented)
+    allowLocale: boolean;
+    // (undocumented)
+    customHeight: boolean;
+    // (undocumented)
+    customTitle: boolean;
+    // (undocumented)
+    displayTitle: boolean;
+    // (undocumented)
+    height?: string;
+    // (undocumented)
+    locale?: ILocale;
+    // (undocumented)
+    type: "webComponents";
+    // (undocumented)
+    unit?: UnitsType;
+}
+
+// @internal (undocumented)
 export interface IWithBubbleProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
@@ -4072,6 +4099,9 @@ export const LoadingMask: React_2.FC<ILoadingMaskProps>;
 
 // @internal (undocumented)
 export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
+
+// @internal (undocumented)
+export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {

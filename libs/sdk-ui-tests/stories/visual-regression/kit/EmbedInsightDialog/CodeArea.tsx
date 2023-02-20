@@ -1,12 +1,13 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
+import { action } from "@storybook/addon-actions";
+import { CodeArea } from "@gooddata/sdk-ui-kit";
+
 import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { CodeArea } from "@gooddata/sdk-ui-kit";
-import { code } from "./CodeMock";
-import { action } from "@storybook/addon-actions";
 
+import { code } from "./CodeMock";
 const AreaWrapper: React.FC = (props) => {
     const { children } = props;
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;

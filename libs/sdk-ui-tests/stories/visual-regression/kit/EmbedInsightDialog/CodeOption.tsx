@@ -1,45 +1,52 @@
 // (C) 2022 GoodData Corporation
 import React, { useState } from "react";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { CodeOptions, IReactOptions } from "@gooddata/sdk-ui-kit";
+
 import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { CodeOptions, CodeOptionType } from "@gooddata/sdk-ui-kit";
 
 const FullExampleByDefinition: React.VFC = () => {
-    const [option, setOption] = useState<CodeOptionType>({
-        type: "definition",
-        includeConfiguration: true,
+    const [option, setOption] = useState<IReactOptions>({
+        type: "react",
+        componentType: "reference",
+        codeType: "ts",
+        displayConfiguration: false,
         customHeight: true,
     });
 
     return (
         <>
-            <h4>Custom height on</h4>
+            <h4>Display configuration off</h4>
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
 };
 
 const FullExampleByReference: React.VFC = () => {
-    const [option, setOption] = useState<CodeOptionType>({
-        type: "reference",
-        displayTitle: true,
+    const [option, setOption] = useState<IReactOptions>({
+        type: "react",
+        componentType: "reference",
+        codeType: "ts",
+        displayConfiguration: true,
         customHeight: true,
     });
 
     return (
         <>
-            <h4>Custom height on</h4>
+            <h4>Display configuration on</h4>
             <CodeOptions option={option} onChange={(opt) => setOption(opt)} />
         </>
     );
 };
 
 const CustomHeightExampleByDefinition: React.VFC = () => {
-    const [option, setOption] = useState<CodeOptionType>({
-        type: "definition",
-        includeConfiguration: true,
+    const [option, setOption] = useState<IReactOptions>({
+        type: "react",
+        componentType: "definition",
+        codeType: "ts",
+        displayConfiguration: true,
         customHeight: false,
     });
 
@@ -52,9 +59,11 @@ const CustomHeightExampleByDefinition: React.VFC = () => {
 };
 
 const CustomHeightExampleByReference: React.VFC = () => {
-    const [option, setOption] = useState<CodeOptionType>({
-        type: "reference",
-        displayTitle: true,
+    const [option, setOption] = useState<IReactOptions>({
+        type: "react",
+        componentType: "reference",
+        codeType: "ts",
+        displayConfiguration: true,
         customHeight: false,
     });
 
@@ -67,9 +76,11 @@ const CustomHeightExampleByReference: React.VFC = () => {
 };
 
 const CustomHeightFullDefinedExampleByDefinition: React.VFC = () => {
-    const [option, setOption] = useState<CodeOptionType>({
-        type: "definition",
-        includeConfiguration: true,
+    const [option, setOption] = useState<IReactOptions>({
+        type: "react",
+        componentType: "definition",
+        codeType: "ts",
+        displayConfiguration: true,
         customHeight: true,
         height: "600",
         unit: "px",
@@ -84,9 +95,11 @@ const CustomHeightFullDefinedExampleByDefinition: React.VFC = () => {
 };
 
 const CustomHeightFullDefinedExampleByReference: React.VFC = () => {
-    const [option, setOption] = useState<CodeOptionType>({
-        type: "reference",
-        displayTitle: true,
+    const [option, setOption] = useState<IReactOptions>({
+        type: "react",
+        componentType: "reference",
+        displayConfiguration: true,
+        codeType: "ts",
         customHeight: true,
         height: "600",
         unit: "px",

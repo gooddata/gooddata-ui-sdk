@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getWebComponentsCodeGenerator display the custom insight title 1`] = `
+"<!-- Load the library... -->
+<script type=\\"module\\" src=\\"https://localhost/components/workspaceId?auth=sso\\"></script>
+<!-- ...and embed an insight -->
+
+<gd-insight
+    insight=\\"insightId\\"
+    title=\\"Custom insight title\\"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator display the insight title 1`] = `
+"<!-- Load the library... -->
+<script type=\\"module\\" src=\\"https://localhost/components/workspaceId?auth=sso\\"></script>
+<!-- ...and embed an insight -->
+
+<gd-insight
+    insight=\\"insightId\\"
+    title=\\"Insight title\\"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator with the custom height 1`] = `
+"<!-- Load the library... -->
+<script type=\\"module\\" src=\\"https://localhost/components/workspaceId?auth=sso\\"></script>
+<!-- ...and embed an insight -->
+
+<gd-insight
+    insight=\\"insightId\\"
+    title=\\"Custom insight title\\"
+    locale=\\"en-US\\"
+    style=\\"600px\\"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator with the locale 1`] = `
+"<!-- Load the library... -->
+<script type=\\"module\\" src=\\"https://localhost/components/workspaceId?auth=sso\\"></script>
+<!-- ...and embed an insight -->
+
+<gd-insight
+    insight=\\"insightId\\"
+    title=\\"Custom insight title\\"
+    locale=\\"en-US\\"
+></gd-insight>"
+`;
+
+exports[`getWebComponentsCodeGenerator without any configuration 1`] = `
+"<!-- Load the library... -->
+<script type=\\"module\\" src=\\"https://localhost/components/workspaceId?auth=sso\\"></script>
+<!-- ...and embed an insight -->
+
+<gd-insight
+    insight=\\"insightId\\"
+></gd-insight>"
+`;

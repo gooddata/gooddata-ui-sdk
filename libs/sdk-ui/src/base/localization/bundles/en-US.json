@@ -1695,19 +1695,44 @@
         "comment": "Label of confirm button, copy code to clipboard.",
         "limit": 0
     },
+    "embedInsightDialog.component.type": {
+        "value": "Component type",
+        "comment": "Selector that define the component type of generated code Referential or Programmatic",
+        "limit": 0
+    },
     "embedInsightDialog.code.language.codeAs": {
         "value": "Code as",
         "comment": "Selector that define language of generated code Typescript or Javascript",
         "limit": 0
     },
-    "embedInsightDialog.code.options": {
+    "embedInsightDialog.react.options": {
         "value": "Other options",
         "comment": "Options of generated code. Include component specific item, define height etc.",
         "limit": 0
     },
-    "embedInsightDialog.code.options.include.config": {
-        "value": "Include configuration",
-        "comment": "Option that generated code will have custom Insight configuration like color, axes, legend etc.",
+    "embedInsightDialog.webComponents.options": {
+        "value": "Options",
+        "comment": "Options of generated code. Include component specific item, define height etc.",
+        "limit": 0
+    },
+    "embedInsightDialog.webComponents.options.displayTitle": {
+        "value": "Display title",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.webComponents.options.customTitle": {
+        "value": "Custom title",
+        "comment": "Options of generated code. Include component specific item, define height etc.",
+        "limit": 0
+    },
+    "embedInsightDialog.webComponents.options.locale": {
+        "value": "Locale",
+        "comment": "Options of generated code. Include component specific item, define height etc.",
+        "limit": 0
+    },
+    "embedInsightDialog.webComponents.locale.tooltip": {
+        "value": "Choose a specific language localization. If disabled, the visualization defaults to your current display language settings.",
+        "comment": "Tooltip for the web components locale",
         "limit": 0
     },
     "embedInsightDialog.code.options.include.config.info|insight": {
@@ -1726,54 +1751,53 @@
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.code.options.display.title": {
-        "value": "Display title",
+    "embedInsightDialog.code.options.display.configuration": {
+        "value": "Display configuration",
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.headLine.byReference|insight": {
-        "value": "Embed as a live insight",
-        "comment": "Embed as a reference to a saved insight in a generic GD.UI react component. Any future changes to the insight (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
+    "embedInsightDialog.headLine.embedInsight|insight": {
+        "value": "Embed insight",
+        "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.headLine.byReference|report": {
-        "value": "Embed as a live report",
-        "comment": "Embed as a reference to a saved insight in a generic GD.UI react component. Any future changes to the insight (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
+    "embedInsightDialog.headLine.embedInsight|report": {
+        "value": "Embed report",
+        "comment": "",
         "limit": 0,
         "translate": false
     },
-    "embedInsightDialog.headLine.byDefinition|insight": {
-        "value": "Embed as a permanent insight",
-        "comment": "Embed as an insight definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the insight (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
-        "limit": 0
-    },
-    "embedInsightDialog.headLine.byDefinition|report": {
-        "value": "Embed as a permanent report",
-        "comment": "Embed as an insight definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the insight (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
-        "limit": 0,
-        "translate": false
-    },
-    "embedInsightDialog.headLine.byReference.tooltip|insight": {
+    "embedInsightDialog.componentType.byReference.tooltip|insight": {
         "value": "Embed as a reference to a saved insight in a generic GD.UI react component. Any future changes to the insight (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a live insight means",
         "limit": 0
     },
-    "embedInsightDialog.headLine.byReference.tooltip|report": {
+    "embedInsightDialog.componentType.byReference.tooltip|report": {
         "value": "Embed as a reference to a saved report in a generic GD.UI react component. Any future changes to the report (such as visualization type, metrics, attributes) will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a live insight means",
         "limit": 0,
         "translate": false
     },
-    "embedInsightDialog.headLine.byDefinition.tooltip|insight": {
+    "embedInsightDialog.componentType.byDefinition.tooltip|insight": {
         "value": "Embed as an insight definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the insight (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a a permanent report",
         "limit": 0
     },
-    "embedInsightDialog.headLine.byDefinition.tooltip|report": {
+    "embedInsightDialog.componentType.byDefinition.tooltip|report": {
         "value": "Embed as an report definition in a specific GD.UI react component based on the currently selected visualization type. No future changes to the report (such as visualization type, metrics, attributes) made in this application will be reflected in the embedded version.",
         "comment": "Tooltip that explain what Embed as a a permanent report",
         "limit": 0,
         "translate": false
+    },
+    "embedInsightDialog.webComponents.customTitle.tooltip": {
+        "value": "Define the text of the title directly in the code snippet.",
+        "comment": "Tooltip for the web components custom title",
+        "limit": 0
+    },
+    "embedInsightDialog.webComponents.customTitle.disabled.tooltip": {
+        "value": "Enable Display title first.",
+        "comment": "Tooltip for the web components custom title when it is disabled",
+        "limit": 0
     },
     "embedInsightDialog.prepareEnvironmentMessage": {
         "value": "<b>Note.</b> In order for this snippet to work, prepare your environment.",
@@ -1798,6 +1822,38 @@
     "embedInsightDialog.complete.list.props.message": {
         "value": "Complete list of embedding properties",
         "comment": "Link to documentation of used component and all component properties",
+        "limit": 0
+    },
+    "embedInsightDialog.emptyInsight.byReference|insight": {
+        "value": "Code snipped will be displayed here once you <a>save the insight</a>.",
+        "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "embedInsightDialog.emptyInsight.byReference|report": {
+        "value": "Code snipped will be displayed here once you <a>save the report</a>.",
+        "comment": "The disabled message for code area. Do not translate html tags <a>, </a>",
+        "limit": 0,
+        "translate": false
+    },
+    "embedInsightDialog.emptyInsight.byDefinition|insight": {
+        "value": "This insight type cannot be embedded as programmatic type component.",
+        "comment": "The disabled message for code area",
+        "limit": 0
+    },
+    "embedInsightDialog.emptyInsight.byDefinition|report": {
+        "value": "This report type cannot be embedded as programmatic type component.",
+        "comment": "The disabled message for code area",
+        "limit": 0,
+        "translate": false
+    },
+    "embedDialog.tab.react": {
+        "value": "React",
+        "comment": "The tab title",
+        "limit": 0
+    },
+    "embedDialog.tab.webComponents": {
+        "value": "Web Components",
+        "comment": "The tab title",
         "limit": 0
     },
     "error.overlay.login": {

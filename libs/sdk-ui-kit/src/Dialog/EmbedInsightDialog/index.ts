@@ -1,16 +1,17 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 export type {
-    IOptionsByDefinition,
+    IReactOptions,
+    IWebComponentsOptions,
+    EmbedType,
+    EmbedOptionsType,
     InsightCodeType,
     CodeLanguageType,
-    CodeOptionType,
-    IOptionsByReference,
     UnitsType,
     CopyCodeOriginType,
 } from "./EmbedInsightDialogBase/types";
 
-export { getDefaultEmbedCodeOptions, getHeightWithUnitsForEmbedCode } from "./utils";
+export { getDefaultEmbedTypeOptions, getHeightWithUnitsForEmbedCode } from "./utils";
 
 export { EmbedInsightDialogBase } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
 export type { IEmbedInsightDialogBaseProps } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
@@ -26,3 +27,6 @@ export type { ICodeLanguageSelectProps } from "./EmbedInsightDialogBase/componen
 
 export { CodeOptions } from "./EmbedInsightDialogBase/components/CodeOptions";
 export type { ICodeOptionsProps } from "./EmbedInsightDialogBase/components/CodeOptions";
+
+export { LocaleSetting } from "./EmbedInsightDialogBase/components/LocaleSetting";
+export type { ILocaleSettingProps } from "./EmbedInsightDialogBase/components/LocaleSetting";

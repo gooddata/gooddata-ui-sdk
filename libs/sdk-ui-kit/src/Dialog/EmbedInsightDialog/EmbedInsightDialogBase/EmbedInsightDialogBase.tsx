@@ -1,34 +1,31 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import copy from "copy-to-clipboard";
-import { FormattedMessage, useIntl } from "react-intl";
-import { CodeArea } from "./components/CodeArea";
-import { ConfirmDialogBase } from "../../ConfirmDialogBase";
-import { PrepareEnvMessage } from "./components/PrepareEnvMessage";
-import { CodeLanguageSelect } from "./components/CodeLanguageSelect";
-import { CodeLanguageType, CodeOptionType, CopyCodeOriginType, InsightCodeType } from "./types";
-import { CodeOptions } from "./components/CodeOptions";
-import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
-import { Bubble, BubbleHoverTrigger } from "../../../Bubble";
-import { dialogHeadlineLabels, dialogChangeMessageLabels } from "../../../locales";
+import { useIntl } from "react-intl";
 
-const HEADER_TOOLTIP_ALIGN_POINTS = [{ align: "bc tl" }];
-const HEADER_TOOLTIP_ARROW_OFFSETS = { "bc tl": [-7, 0] };
+import { ConfirmDialogBase } from "../../ConfirmDialogBase";
+import { Tabs, ITab } from "../../../Tabs";
+import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales";
+
+import { CopyCodeOriginType, EmbedType, IReactOptions, IWebComponentsOptions } from "./types";
+import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
+import { EmbedInsightContent } from "./components/EmbedInsightContent";
 
 /**
  * @internal
  */
 export type IEmbedInsightDialogBaseProps = {
-    codeOption: CodeOptionType;
-    codeLanguage: CodeLanguageType;
     code: string;
+    embedTab: EmbedType;
+    embedTypeOptions: IReactOptions | IWebComponentsOptions;
     propertiesLink?: string;
     integrationDocLink?: string;
+    openSaveInsightDialog: () => void;
     onClose: () => void;
-    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
-    onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
-    onCodeOptionChange: (codeOption: CodeOptionType) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType, codeType: EmbedType) => void;
+    onOptionsChange: (opt: IReactOptions | IWebComponentsOptions) => void;
+    onTabChange: (selectedTab: EmbedType) => void;
 };
 
 /**
@@ -37,26 +34,27 @@ export type IEmbedInsightDialogBaseProps = {
 export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (props) => {
     const {
         code,
-        codeLanguage,
-        codeOption,
         propertiesLink,
         integrationDocLink,
+        embedTab,
+        embedTypeOptions,
+        openSaveInsightDialog,
         onClose,
         onCopyCode,
-        onCodeLanguageChange,
-        onCodeOptionChange,
+        onOptionsChange,
+        onTabChange,
     } = props;
 
     const intl = useIntl();
 
     const onCopyButtonClick = useCallback(() => {
         copy(code);
-        onCopyCode(code, "button");
+        onCopyCode(code, "button", embedTab);
     }, [code, onCopyCode]);
 
     const onAreaCopy = useCallback(() => {
         copy(code);
-        onCopyCode(code, "keyboard");
+        onCopyCode(code, "keyboard", embedTab);
     }, [code, onCopyCode]);
 
     return (
@@ -67,7 +65,8 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             onSubmit={onCopyButtonClick}
             cancelButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.close" })}
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
-            headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
+            isSubmitDisabled={!code}
+            headline={intl.formatMessage({ id: dialogHeadlineLabels.embedInsight.id })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
             dialogHeaderClassName={"embed-insight-dialog-header"}
             footerLeftRenderer={
@@ -81,42 +80,27 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                       }
                     : undefined
             }
-            titleRightIconRenderer={() => (
-                <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
-                    <span className="gd-icon-circle-question s-circle_question-dialog-title question-mark-icon embed-insight-dialog-header-icon" />
-                    <Bubble
-                        className="bubble-primary"
-                        alignPoints={HEADER_TOOLTIP_ALIGN_POINTS}
-                        arrowOffsets={HEADER_TOOLTIP_ARROW_OFFSETS}
-                    >
-                        <FormattedMessage id={getChangesLabelId(codeOption.type)} />
-                    </Bubble>
-                </BubbleHoverTrigger>
-            )}
         >
-            <div className="embed-insight-dialog-content">
-                <PrepareEnvMessage integrationDocLink={integrationDocLink} />
-                <div className="embed-insight-dialog-code">
-                    <div className="embed-insight-dialog-code-settings">
-                        <CodeLanguageSelect
-                            selectedLanguage={codeLanguage}
-                            onLanguageChanged={onCodeLanguageChange}
-                        />
-                        <CodeOptions option={codeOption} onChange={onCodeOptionChange} />
-                    </div>
-                    <div className="embed-insight-dialog-code-wrapper">
-                        <CodeArea code={code} onCopyCode={onAreaCopy} />
-                    </div>
-                </div>
-            </div>
+            <Tabs
+                tabs={getTabIds()}
+                onTabSelect={(tab) => {
+                    onTabChange(tab.id.includes("react") ? "react" : "webComponents");
+                }}
+                selectedTabId={dialogEmbedTabLabels[embedTab].id}
+            />
+            <EmbedInsightContent
+                integrationDocLink={integrationDocLink}
+                code={code}
+                embedTab={embedTab}
+                embedTypeOptions={embedTypeOptions}
+                onCopyCode={onAreaCopy}
+                openSaveInsightDialog={openSaveInsightDialog}
+                onOptionsChange={onOptionsChange}
+            />
         </ConfirmDialogBase>
     );
 };
 
-const getDialogLabelId = (codeType: InsightCodeType): string => {
-    return dialogHeadlineLabels[codeType].id;
-};
-
-const getChangesLabelId = (codeType: InsightCodeType): string => {
-    return dialogChangeMessageLabels[codeType].id;
+const getTabIds = (): ITab[] => {
+    return [{ id: dialogEmbedTabLabels.react.id }, { id: dialogEmbedTabLabels.webComponents.id }];
 };
