@@ -102,18 +102,26 @@ function* saveSharing(
     if (!isEmpty(grantees)) {
         yield call(changeGrantees, ctx, saveSharingCtx);
     }
+
     // get up-to-date permissions from backend
-    const updatedDashboardPermissions = yield call(loadDashboardPermissions, ctx);
+    const updatedDashboardPermissions: SagaReturnType<typeof loadDashboardPermissions> = yield call(
+        loadDashboardPermissions,
+        ctx,
+    );
     const setDashboardPermissionsAction =
         dashboardPermissionsActions.setDashboardPermissions(updatedDashboardPermissions);
 
     let dashboard: IDashboard;
-    if (!ctx.backend.capabilities.supportsGranularAccessControl) {
-        // update dashboard with specified share status
-        dashboard = yield call(updateDashboard, ctx, saveSharingCtx);
+    if (updatedDashboardPermissions.canViewDashboard) {
+        if (!ctx.backend.capabilities.supportsGranularAccessControl) {
+            // update dashboard with specified share status
+            dashboard = yield call(updateDashboard, ctx, saveSharingCtx);
+        } else {
+            // get dashboard with computed share status from backend
+            dashboard = yield call(getDashboard, ctx, saveSharingCtx.persistedDashboard.ref);
+        }
     } else {
-        // get dashboard with computed share status from backend
-        dashboard = yield call(getDashboard, ctx, saveSharingCtx.persistedDashboard.ref);
+        dashboard = saveSharingCtx.persistedDashboard;
     }
 
     const setDashboardMetaAction = metaActions.setMeta({ dashboard });
