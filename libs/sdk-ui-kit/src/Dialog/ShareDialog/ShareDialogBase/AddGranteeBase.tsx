@@ -45,7 +45,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
     } = props;
     const intl = useIntl();
     const {
-        isLocked: isDashboardLocked,
+        isLocked: isSharedObjectLocked,
         ref: sharedObjectRef,
         areGranularPermissionsSupported,
     } = sharedObject;
@@ -70,7 +70,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}
-                isDashboardLocked={isDashboardLocked}
+                isSharedObjectLocked={isSharedObjectLocked}
                 currentUserRef={currentUserRef}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}

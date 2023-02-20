@@ -39,11 +39,11 @@ export const defaultSharedObject: ISharedObject = {
 };
 
 const defaultUserPermissions: CurrentUserPermissions = {
-    canEditDashboard: false,
-    canEditLockedDashboard: false,
-    canShareDashboard: true,
-    canShareLockedDashboard: true,
-    canViewDashboard: true,
+    canEditAffectedObject: false,
+    canEditLockedAffectedObject: false,
+    canShareAffectedObject: true,
+    canShareLockedAffectedObject: true,
+    canViewAffectedObject: true,
 };
 
 export const defaultProps: IShareDialogProps = {

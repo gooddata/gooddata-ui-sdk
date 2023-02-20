@@ -16,13 +16,13 @@ import { getGranteePossibilities } from "./permissionsLogic";
 interface IGranularGranteeGroupItemProps {
     grantee: IGranularGranteeGroup;
     currentUserPermissions: CurrentUserPermissions;
-    isDashboardLocked: boolean;
+    isSharedObjectLocked: boolean;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> = (props) => {
-    const { grantee, currentUserPermissions, isDashboardLocked, onChange, onDelete } = props;
+    const { grantee, currentUserPermissions, isSharedObjectLocked, onChange, onDelete } = props;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const intl = useIntl();
 
@@ -37,8 +37,8 @@ export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> 
 
     const label = useMemo(() => getGranteeLabel(grantee, intl), [grantee, intl]);
     const granteePossibilities = useMemo(
-        () => getGranteePossibilities(grantee, currentUserPermissions, isDashboardLocked),
-        [grantee, currentUserPermissions, isDashboardLocked],
+        () => getGranteePossibilities(grantee, currentUserPermissions, isSharedObjectLocked),
+        [grantee, currentUserPermissions, isSharedObjectLocked],
     );
     return (
         <div className={itemClassName}>

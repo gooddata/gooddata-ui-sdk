@@ -50,7 +50,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
         addedGrantees,
         areGranularPermissionsSupported,
         currentUserPermissions,
-        isDashboardLocked,
+        isSharedObjectLocked,
         sharedObjectRef,
         onDelete,
         onAddUserOrGroups,
@@ -80,7 +80,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
             />
             <GranteeList
                 currentUserPermissions={currentUserPermissions}
-                isDashboardLocked={isDashboardLocked}
+                isSharedObjectLocked={isSharedObjectLocked}
                 grantees={addedGrantees}
                 mode={"AddGrantee"}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}

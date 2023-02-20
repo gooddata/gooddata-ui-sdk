@@ -20,7 +20,6 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
-import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -317,7 +316,9 @@ export const ContentDivider: React_2.VFC;
 export type CopyCodeOriginType = "keyboard" | "button";
 
 // @internal (undocumented)
-export type CurrentUserPermissions = IDashboardPermissions;
+export type CurrentUserPermissions = {
+    [permission in "canEditLockedAffectedObject" | "canEditAffectedObject" | "canShareLockedAffectedObject" | "canShareAffectedObject" | "canViewAffectedObject"]: boolean;
+};
 
 // @internal (undocumented)
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
@@ -1809,7 +1810,7 @@ export interface IGranteeItemProps {
     // (undocumented)
     grantee: GranteeItem;
     // (undocumented)
-    isDashboardLocked: boolean;
+    isSharedObjectLocked: boolean;
     // (undocumented)
     mode: DialogModeType;
     // (undocumented)
@@ -3528,9 +3529,9 @@ export interface IShareGranteeContentProps {
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
-    isDashboardLocked: boolean;
-    // (undocumented)
     isLoading: boolean;
+    // (undocumented)
+    isSharedObjectLocked: boolean;
     // (undocumented)
     onAddGrantee: () => void;
     // (undocumented)

@@ -1,6 +1,6 @@
 // (C) 2020-2023 GoodData Corporation
 import React, { useCallback } from "react";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { CurrentUserPermissions, useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
     useDashboardSelector,
     selectIsShareDialogOpen,
@@ -70,7 +70,7 @@ const useShareDialogDashboardHeader = () => {
         onErrorShareDialog,
         isLockingSupported: isWorkspaceManager,
         isCurrentUserWorkspaceManager: isWorkspaceManager,
-        currentUserPermissions: dashboardPermissions,
+        dashboardPermissions,
     };
 };
 
@@ -89,12 +89,20 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         onErrorShareDialog,
         isLockingSupported,
         isCurrentUserWorkspaceManager,
-        currentUserPermissions,
+        dashboardPermissions,
     } = useShareDialogDashboardHeader();
 
     if (!isShareDialogOpen) {
         return null;
     }
+
+    const currentUserPermissions: CurrentUserPermissions = {
+        canEditAffectedObject: dashboardPermissions.canEditDashboard,
+        canEditLockedAffectedObject: dashboardPermissions.canEditLockedDashboard,
+        canShareAffectedObject: dashboardPermissions.canShareDashboard,
+        canShareLockedAffectedObject: dashboardPermissions.canShareLockedDashboard,
+        canViewAffectedObject: dashboardPermissions.canViewDashboard,
+    };
 
     return (
         <ShareDialog
