@@ -32,7 +32,7 @@ import {
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
 import { Draft } from "immer";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
+import { newMapForObjectWithIdentity, ObjRefMap } from "../../../_staging/metadata/objRefMap";
 import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout";
 import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
@@ -343,12 +343,10 @@ const getWidgetByRef = (state: Draft<LayoutState>, widgetRef: ObjRef) => {
         section.items.map((item) => item.widget),
     );
 
-    return allWidgets.find((w) => {
-        // defer type checks until the actual widget is found
-        const ref: ObjRef | undefined = w && (w as any).ref;
+    const widgets = allWidgets.filter(Boolean) as NonNullable<typeof allWidgets[number]>[];
+    const widgetMap = newMapForObjectWithIdentity(widgets);
 
-        return ref && areObjRefsEqual(ref, widgetRef);
-    });
+    return widgetMap.get(widgetRef);
 };
 
 //
@@ -473,13 +471,13 @@ type ReplaceWidgetInsight = {
 };
 
 const replaceInsightWidgetInsight: LayoutReducer<ReplaceWidgetInsight> = (state, action) => {
-    invariant(state.layout);
+    invariant(state.layout, "State of layout is empty");
 
     const { insightRef, properties, ref, header, newSize } = action.payload;
     const widget = getWidgetByRef(state, ref);
     const data = getWidgetCoordinatesAndItem(state.layout, ref);
 
-    invariant(isInsightWidget(widget));
+    invariant(isInsightWidget(widget), "IInsightWidget is missing in state");
 
     if (properties) {
         widget.properties = properties;
