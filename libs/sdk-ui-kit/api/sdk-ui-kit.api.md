@@ -28,6 +28,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
+import { IUser } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
@@ -727,9 +728,9 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     appliedGrantees: GranteeItem[];
     // (undocumented)
-    currentUserPermissions: CurrentUserPermissions;
+    currentUser: IUser;
     // (undocumented)
-    currentUserRef: ObjRef;
+    currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     isDirty: boolean;
     // (undocumented)
@@ -3423,9 +3424,9 @@ export const isGranularGranteeUser: (obj: unknown) => obj is IGranularGranteeUse
 // @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
-    currentUserPermissions: CurrentUserPermissions;
+    currentUser: IUser;
     // (undocumented)
-    currentUserRef: ObjRef;
+    currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
@@ -3455,9 +3456,9 @@ export interface IShareDialogProps {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
-    currentUserPermissions: CurrentUserPermissions;
+    currentUser: IUser;
     // (undocumented)
-    currentUserRef: ObjRef;
+    currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
@@ -3487,9 +3488,9 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 // @internal (undocumented)
 export interface IShareGranteeBaseProps {
     // (undocumented)
-    currentUserPermissions: CurrentUserPermissions;
+    currentUser: IUser;
     // (undocumented)
-    currentUserRef: ObjRef;
+    currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)

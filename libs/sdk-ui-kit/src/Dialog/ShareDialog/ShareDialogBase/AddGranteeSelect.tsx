@@ -27,7 +27,7 @@ const SEARCH_INTERVAL = 400;
  * @internal
  */
 export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
-    const { appliedGrantees, currentUserRef, sharedObjectRef, onSelectGrantee } = props;
+    const { appliedGrantees, currentUser, sharedObjectRef, onSelectGrantee } = props;
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
 
@@ -62,7 +62,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
         () =>
             debounce(
                 loadGranteeOptionsPromise(
-                    currentUserRef,
+                    currentUser,
                     sharedObjectRef,
                     appliedGrantees,
                     backend,
@@ -74,7 +74,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
                     leading: true,
                 },
             ),
-        [backend, workspace, intl, appliedGrantees, currentUserRef, sharedObjectRef],
+        [backend, workspace, intl, appliedGrantees, currentUser, sharedObjectRef],
     );
 
     const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {

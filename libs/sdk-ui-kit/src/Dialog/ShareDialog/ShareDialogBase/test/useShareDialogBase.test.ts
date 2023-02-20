@@ -5,6 +5,7 @@ import { idRef } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
 
 import {
+    defaultUser,
     granularGranteeGroup,
     granularGranteeItems,
     granularGranteesAccess,
@@ -45,7 +46,7 @@ const defaultProps: IShareDialogBaseProps = {
         isMetadataObjectLockingSupported: false,
         areGranularPermissionsSupported: true,
     },
-    currentUserRef: idRef("user-id"),
+    currentUser: defaultUser,
     isCurrentUserWorkspaceManager: false,
     currentUserPermissions: {
         canViewAffectedObject: true,

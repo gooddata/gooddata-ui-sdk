@@ -13,7 +13,7 @@ import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 
-import { defaultUserPermissions, groupAll, owner } from "./GranteeMock";
+import { defaultUser, defaultUserPermissions, groupAll, owner } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -53,7 +53,7 @@ const BasicExample: React.FC = () => {
                         />
                         {open ? (
                             <ShareDialogBase
-                                currentUserRef={uriRef("ref")}
+                                currentUser={defaultUser}
                                 sharedObject={{
                                     ref: uriRef("ref"),
                                     shareStatus: "private",

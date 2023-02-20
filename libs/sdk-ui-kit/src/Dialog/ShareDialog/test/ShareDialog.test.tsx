@@ -67,14 +67,18 @@ describe("ShareDialog", () => {
         });
 
         it("should mark current user in grantees ", async () => {
-            const userRef = userAccessGrantee.user.ref;
-            const wrapper = await createComponent({ currentUserRef: userRef }, [], [], [userAccessGrantee]);
+            const wrapper = await createComponent(
+                { currentUser: userAccessGrantee.user },
+                [],
+                [],
+                [userAccessGrantee],
+            );
             expect(isCurrentUserInGrantees(wrapper)).toBe(true);
         });
 
         it("should mark by word YOU current logged user in grantees list when current logged user is owner", async () => {
             const sharedObject: ISharedObject = { ...defaultSharedObject, createdBy: workspaceUser };
-            const wrapper = await createComponent({ sharedObject, currentUserRef: workspaceUser.ref });
+            const wrapper = await createComponent({ sharedObject, currentUser: workspaceUser });
             expect(isCurrentUserInGrantees(wrapper)).toBe(true);
         });
 

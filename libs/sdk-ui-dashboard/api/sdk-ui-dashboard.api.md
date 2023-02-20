@@ -4453,8 +4453,8 @@ export interface IShareButtonProps {
 // @alpha (undocumented)
 export interface IShareDialogProps {
     backend: IAnalyticalBackend;
+    currentUser: IUser;
     currentUserPermissions: CurrentUserPermissions;
-    currentUserRef: ObjRef;
     isCurrentUserWorkspaceManager: boolean;
     isLockingSupported: boolean;
     isVisible?: boolean;

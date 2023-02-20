@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IUser } from "@gooddata/sdk-model";
 import {
     ISharedObject,
     ISharingApplyPayload as ISharingDialogApplyPayload,
@@ -40,9 +40,9 @@ export interface IShareDialogProps {
     sharedObject: ISharedObject;
 
     /**
-     * Current user reference
+     * Current user
      */
-    currentUserRef: ObjRef;
+    currentUser: IUser;
 
     /**
      * Is locking of the dashboard supported by the currently logged user and backend?

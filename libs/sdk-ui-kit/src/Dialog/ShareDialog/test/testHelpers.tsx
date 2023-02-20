@@ -20,7 +20,7 @@ import {
     IAvailableUserAccessGrantee,
 } from "@gooddata/sdk-model";
 import { ShareDialog } from "../ShareDialog";
-import { groupAll } from "../ShareDialogBase/test/GranteeMock";
+import { groupAll, defaultUser } from "../ShareDialogBase/test/GranteeMock";
 import { getGranteeItemTestId } from "../ShareDialogBase/utils";
 import { mapWorkspaceUserToGrantee } from "../shareDialogMappers";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi/src";
@@ -50,7 +50,7 @@ export const defaultProps: IShareDialogProps = {
     backend: recordedBackend(ReferenceRecordings.Recordings),
     workspace: "foo",
     sharedObject: defaultSharedObject,
-    currentUserRef: uriRef("userRef"),
+    currentUser: defaultUser,
     labels,
     isLockingSupported: true,
     locale: "en-US",
@@ -127,7 +127,7 @@ export function isGranularPermissionsDropdownButtonVisible(wrapper: ReactWrapper
 }
 
 export function getGranteeSelector(user: IAvailableUserAccessGrantee): string {
-    const grantee = mapWorkspaceUserToGrantee(user, uriRef(""));
+    const grantee = mapWorkspaceUserToGrantee(user, defaultUser);
     return `.${getGranteeItemTestId(grantee)}`;
 }
 
@@ -169,7 +169,7 @@ export function getGroupAllOptionSelector(): string {
 }
 
 export function getUserOptionSelector(user: IAvailableUserAccessGrantee): string {
-    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, uriRef("")), "option")}`;
+    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, defaultUser), "option")}`;
 }
 
 export function clickOnOption(wrapper: ReactWrapper, selector: string): void {

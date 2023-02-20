@@ -46,7 +46,7 @@ const enrichGranteeWithDefaultPermission = (
 export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
     const {
         appliedGrantees,
-        currentUserRef,
+        currentUser,
         addedGrantees,
         areGranularPermissionsSupported,
         currentUserPermissions,
@@ -73,7 +73,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
     return (
         <>
             <AddGranteeSelect
-                currentUserRef={currentUserRef}
+                currentUser={currentUser}
                 appliedGrantees={appliedGrantees}
                 sharedObjectRef={sharedObjectRef}
                 onSelectGrantee={onSelectGrantee}

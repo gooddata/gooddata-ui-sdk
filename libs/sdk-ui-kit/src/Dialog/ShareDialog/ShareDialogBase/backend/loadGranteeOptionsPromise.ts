@@ -11,6 +11,7 @@ import {
     isAvailableUserGroupAccessGrantee,
     isAvailableUserAccessGrantee,
     IAvailableAccessGrantee,
+    IUser,
 } from "@gooddata/sdk-model";
 
 const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
@@ -34,7 +35,7 @@ const matchAllGroupQueryString = (query: string, allGroupLabel: string): boolean
  */
 export const loadGranteeOptionsPromise =
     (
-        currentUserRef: ObjRef,
+        currentUser: IUser,
         sharedObjectRef: ObjRef,
         appliedGrantees: GranteeItem[],
         backend: IAnalyticalBackend,
@@ -50,7 +51,7 @@ export const loadGranteeOptionsPromise =
 
             const mappedUsers: ISelectOption[] = availableGrantees
                 .filter(isAvailableUserAccessGrantee)
-                .map((availableGrantee) => mapWorkspaceUserToGrantee(availableGrantee, currentUserRef))
+                .map((availableGrantee) => mapWorkspaceUserToGrantee(availableGrantee, currentUser))
                 .sort(sortGranteesByName(intl))
                 .map((user) => {
                     return {

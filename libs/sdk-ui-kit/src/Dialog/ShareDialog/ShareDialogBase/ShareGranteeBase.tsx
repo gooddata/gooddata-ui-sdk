@@ -18,7 +18,7 @@ import { AdminInformationMessage } from "./AdminInformationMessage";
  */
 export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     const {
-        currentUserRef,
+        currentUser,
         isLoading,
         isLockedNow,
         isUnderLenientControlNow,
@@ -45,7 +45,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         canWorkspaceManagerSeeEverySharedObject,
     } = sharedObject;
     const intl = useIntl();
-    const { isMessageVisible, handleMessageClose } = useAdminInformationMessageState(currentUserRef);
+    const { isMessageVisible, handleMessageClose } = useAdminInformationMessageState(currentUser.ref);
 
     const granteeList = useMemo(() => {
         return compact([owner, ...grantees]);

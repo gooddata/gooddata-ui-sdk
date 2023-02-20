@@ -1,8 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { useCallback } from "react";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { mapAccessGranteeDetailToGrantee } from "../../shareDialogMappers";
-import { ObjRef, AccessGranteeDetail } from "@gooddata/sdk-model";
+import { ObjRef, AccessGranteeDetail, IUser } from "@gooddata/sdk-model";
 import { GranteeItem } from "../types";
 
 /**
@@ -10,7 +10,7 @@ import { GranteeItem } from "../types";
  */
 interface IUseGetAccessListProps {
     sharedObjectRef: ObjRef;
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     onSuccess: (result: GranteeItem[]) => void;
     onError: (err: Error) => void;
 }
@@ -19,7 +19,7 @@ interface IUseGetAccessListProps {
  * @internal
  */
 export const useGetAccessList = (props: IUseGetAccessListProps): void => {
-    const { sharedObjectRef, currentUserRef, onSuccess, onError } = props;
+    const { sharedObjectRef, currentUser, onSuccess, onError } = props;
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
 
@@ -28,10 +28,10 @@ export const useGetAccessList = (props: IUseGetAccessListProps): void => {
 
     const onSuccessCallBack = useCallback(
         (result: AccessGranteeDetail[]) => {
-            const grantees = result.map((item) => mapAccessGranteeDetailToGrantee(item, currentUserRef));
+            const grantees = result.map((item) => mapAccessGranteeDetailToGrantee(item, currentUser));
             onSuccess(grantees);
         },
-        [currentUserRef, onSuccess],
+        [currentUser, onSuccess],
     );
 
     useCancelablePromise({ promise, onError, onSuccess: onSuccessCallBack }, [
