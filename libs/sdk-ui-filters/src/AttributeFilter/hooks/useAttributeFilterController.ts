@@ -31,6 +31,7 @@ export type IUseAttributeFilterControllerProps = Omit<
     "fullscreenOnMobile" | "locale" | "title"
 > & {
     elementsOptions?: { limit: number };
+    resetOnParentFilterChange?: boolean;
 };
 
 /**
@@ -57,6 +58,7 @@ export const useAttributeFilterController = (
         connectToPlaceholder,
         parentFilters,
         parentFilterOverAttribute,
+        resetOnParentFilterChange = true,
         onApply,
         onError,
 
@@ -93,6 +95,7 @@ export const useAttributeFilterController = (
         limit: elementsOptions?.limit,
         onApply,
         setConnectedPlaceholderValue,
+        resetOnParentFilterChange,
     });
     const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue });
 
@@ -141,9 +144,17 @@ function useInitOrReload(
         limit?: number;
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
         onApply: OnApplyCallbackType;
+        resetOnParentFilterChange: boolean;
     },
 ) {
-    const { filter, limitingAttributeFilters, limit, setConnectedPlaceholderValue, onApply } = props;
+    const {
+        filter,
+        limitingAttributeFilters,
+        limit,
+        resetOnParentFilterChange,
+        setConnectedPlaceholderValue,
+        onApply,
+    } = props;
     useEffect(() => {
         if (limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
@@ -160,33 +171,129 @@ function useInitOrReload(
     }, [handler]);
 
     useEffect(() => {
-        if (!isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters())) {
-            handler.changeSelection({ keys: [], isInverted: true });
-            handler.setLimitingAttributeFilters(limitingAttributeFilters);
-            // the next lines are to apply selection to the state of the parent component to make the
-            // new attribute filter state persistent
-            handler.commitSelection();
-            const nextFilter = handler.getFilter();
-            const isInverted = handler.getCommittedSelection()?.isInverted;
+        const limitingAttributesChanged = !isEqual(
+            limitingAttributeFilters,
+            handler.getLimitingAttributeFilters(),
+        );
+        const filtersChanged = !isEqual(filter, handler.getFilter());
 
-            setConnectedPlaceholderValue(nextFilter);
-            onApply?.(nextFilter, isInverted);
+        const props: UpdateFilterProps = {
+            filter,
+            limitingAttributeFilters,
+            limitingAttributesChanged,
+            filtersChanged,
+            setConnectedPlaceholderValue,
+            onApply,
+        };
 
-            if (handler.getInitStatus() !== "success") {
-                handler.init(PARENT_FILTERS_CORRELATION);
-            } else {
-                handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
-            }
-        } else if (!isEqual(filter, handler.getFilter())) {
-            const elements = filterAttributeElements(filter);
-            const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
-            const isInverted = isNegativeAttributeFilter(filter);
+        const change = resetOnParentFilterChange
+            ? updateAutomaticResettingFilter(handler, props)
+            : updateNonResettingFilter(handler, props);
+        refreshByType(handler, change);
+    }, [
+        filter,
+        limitingAttributeFilters,
+        resetOnParentFilterChange,
+        handler,
+        onApply,
+        setConnectedPlaceholderValue,
+    ]);
+}
 
-            handler.changeSelection({ keys, isInverted });
-            handler.commitSelection();
-            handler.init();
+type UpdateFilterProps = {
+    filter: IAttributeFilter;
+    limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+    limitingAttributesChanged: boolean;
+    filtersChanged: boolean;
+    setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
+    onApply: OnApplyCallbackType;
+};
+
+type UpdateFilterType = "init-parent" | "init-self" | undefined;
+
+function updateNonResettingFilter(
+    handler: IMultiSelectAttributeFilterHandler,
+    {
+        filter,
+        limitingAttributeFilters,
+        limitingAttributesChanged,
+        filtersChanged,
+        setConnectedPlaceholderValue,
+    }: UpdateFilterProps,
+): UpdateFilterType {
+    const elements = filterAttributeElements(filter);
+    const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
+    const isInverted = isNegativeAttributeFilter(filter);
+
+    handler.changeSelection({ keys, isInverted });
+    handler.setLimitingAttributeFilters(limitingAttributeFilters);
+    handler.commitSelection();
+
+    const nextFilter = handler.getFilter();
+    setConnectedPlaceholderValue(nextFilter);
+
+    if (limitingAttributesChanged) {
+        return "init-parent";
+    } else if (filtersChanged) {
+        return "init-self";
+    }
+
+    return undefined;
+}
+
+function updateAutomaticResettingFilter(
+    handler: IMultiSelectAttributeFilterHandler,
+    {
+        filter,
+        limitingAttributeFilters,
+        limitingAttributesChanged,
+        filtersChanged,
+        setConnectedPlaceholderValue,
+        onApply,
+    }: UpdateFilterProps,
+): UpdateFilterType {
+    if (limitingAttributesChanged) {
+        handler.changeSelection({ keys: [], isInverted: true });
+        handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        // the next lines are to apply selection to the state of the parent component to make the
+        // new attribute filter state persistent
+        handler.commitSelection();
+
+        //if filters are controlled from outside, do not call this kind of update because is already updated by controlled app
+        const nextFilter = handler.getFilter();
+        const isInverted = handler.getCommittedSelection()?.isInverted;
+
+        setConnectedPlaceholderValue(nextFilter);
+        onApply?.(nextFilter, isInverted);
+
+        return "init-parent";
+    }
+
+    if (filtersChanged) {
+        const elements = filterAttributeElements(filter);
+        const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
+        const isInverted = isNegativeAttributeFilter(filter);
+
+        handler.changeSelection({ keys, isInverted });
+        handler.commitSelection();
+
+        return "init-self";
+    }
+
+    return undefined;
+}
+
+function refreshByType(handler: IMultiSelectAttributeFilterHandler, change: UpdateFilterType) {
+    if (change === "init-parent") {
+        if (handler.getInitStatus() !== "success") {
+            handler.init(PARENT_FILTERS_CORRELATION);
+        } else {
+            handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
         }
-    }, [filter, limitingAttributeFilters, handler, onApply, setConnectedPlaceholderValue]);
+    }
+    if (change === "init-self") {
+        handler.init();
+    }
 }
 
 //

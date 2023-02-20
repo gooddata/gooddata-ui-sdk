@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -162,6 +162,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     return (
         <AttributeFilterParentFilteringProvider filter={filter}>
             <AttributeFilterButton
+                resetOnParentFilterChange={false}
                 filter={attributeFilter}
                 onApply={(newFilter) => {
                     onFilterChanged(

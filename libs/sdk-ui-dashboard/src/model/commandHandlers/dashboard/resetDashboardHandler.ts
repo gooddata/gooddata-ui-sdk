@@ -23,6 +23,26 @@ export function* resetDashboardHandler(
     ctx: DashboardContext,
     cmd: ResetDashboard,
 ): SagaIterator<DashboardWasReset> {
+    const data: SagaReturnType<typeof resetDashboardFromPersisted> = yield call(
+        resetDashboardFromPersisted,
+        ctx,
+    );
+    yield put(batchActions(data.batch, "@@GDC.DASH/RESET"));
+    return dashboardWasReset(ctx, data.persistedDashboard, cmd.correlationId);
+}
+
+export function* resetDashboardRuntime(ctx: DashboardContext, cmd: ResetDashboard) {
+    const data: SagaReturnType<typeof resetDashboardFromPersisted> = yield call(
+        resetDashboardFromPersisted,
+        ctx,
+    );
+    return {
+        batch: batchActions(data.batch, "@@GDC.DASH/RESET"),
+        reset: dashboardWasReset(ctx, data.persistedDashboard, cmd.correlationId),
+    };
+}
+
+function* resetDashboardFromPersisted(ctx: DashboardContext) {
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
         selectPersistedDashboard,
     );
@@ -78,7 +98,8 @@ export function* resetDashboardHandler(
         batch = actionsToInitializeNewDashboard(dateFilterConfig);
     }
 
-    yield put(batchActions(batch, "@@GDC.DASH/RESET"));
-
-    return dashboardWasReset(ctx, persistedDashboard, cmd.correlationId);
+    return {
+        batch,
+        persistedDashboard,
+    };
 }

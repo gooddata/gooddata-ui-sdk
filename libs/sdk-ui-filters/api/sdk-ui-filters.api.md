@@ -482,6 +482,8 @@ export interface IAttributeFilterCoreProps {
     onError?: (error: GoodDataSdkError) => void;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
     parentFilters?: AttributeFiltersOrPlaceholders;
+    // @internal (undocumented)
+    resetOnParentFilterChange?: boolean;
     staticElements?: IAttributeElement[];
     title?: string;
     workspace?: string;
@@ -1051,6 +1053,7 @@ export type IUseAttributeFilterControllerProps = Omit<IAttributeFilterCoreProps,
     elementsOptions?: {
         limit: number;
     };
+    resetOnParentFilterChange?: boolean;
 };
 
 // @beta
