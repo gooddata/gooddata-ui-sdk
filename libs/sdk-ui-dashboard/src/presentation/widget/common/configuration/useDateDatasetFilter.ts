@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useCallback, useEffect } from "react";
 import { ICatalogDateDataset } from "@gooddata/sdk-model";
 import {
@@ -30,13 +30,17 @@ export function useDateDatasetFilter(dateDatasets: Readonly<ICatalogDateDataset[
      * Only open the picker if
      * 1. auto selection happened
      * 2. there was no recommended dataset
+     * 3. there are more datasets than one
      *
      * In that case we want to show the user the picker to pick one of the non-recommended datasets.
      * Otherwise the preselected recommended dataset is most likely correct so we do not bother the user
      * with the automatically opened picker.
      */
     const shouldOpenDateDatasetPicker =
-        isWidgetDateDatasetAutoSelect && dateDatasets && !getRecommendedCatalogDateDataset(dateDatasets);
+        isWidgetDateDatasetAutoSelect &&
+        dateDatasets &&
+        dateDatasets.length > 1 &&
+        !getRecommendedCatalogDateDataset(dateDatasets);
 
     return { handleDateDatasetChanged, shouldOpenDateDatasetPicker };
 }
