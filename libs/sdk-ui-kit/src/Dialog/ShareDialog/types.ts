@@ -6,6 +6,7 @@ import {
     IAccessControlAware,
     ShareStatus,
     IAccessGrantee,
+    IUser,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -56,7 +57,7 @@ export interface IShareDialogProps {
     backend: IAnalyticalBackend;
     workspace: string;
     sharedObject: ISharedObject;
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     locale?: string;
     onApply: (payload: ISharingApplyPayload) => void;
     onCancel: () => void;

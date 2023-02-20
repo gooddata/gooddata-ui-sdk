@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import { AccessGranularPermission, ObjRef, ShareStatus } from "@gooddata/sdk-model";
+import { AccessGranularPermission, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 import { CurrentUserPermissions, IShareDialogLabels } from "../types";
@@ -193,7 +193,7 @@ export interface IAffectedSharedObject {
  */
 export interface IShareDialogBaseProps {
     sharedObject: IAffectedSharedObject;
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     currentUserPermissions: CurrentUserPermissions;
     isCurrentUserWorkspaceManager: boolean;
     onCancel: () => void;
@@ -224,7 +224,7 @@ export interface IGranteeItemProps {
  * @internal
  */
 export interface IShareGranteeBaseProps {
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     isDirty: boolean;
     isLoading: boolean;
     isLockedNow: boolean;
@@ -261,7 +261,7 @@ export interface IShareGranteeContentProps {
  */
 export interface IAddGranteeBaseProps {
     isDirty: boolean;
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
@@ -278,7 +278,7 @@ export interface IAddGranteeBaseProps {
  * @internal
  */
 export interface IAddGranteeContentProps {
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
@@ -348,7 +348,7 @@ export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => 
  */
 export interface IAddGranteeSelectProps {
     onSelectGrantee: (grantee: GranteeItem) => void;
-    currentUserRef: ObjRef;
+    currentUser: IUser;
     appliedGrantees: GranteeItem[];
     sharedObjectRef: ObjRef;
 }

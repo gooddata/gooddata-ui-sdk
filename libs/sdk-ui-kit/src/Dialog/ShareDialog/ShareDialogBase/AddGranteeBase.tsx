@@ -32,7 +32,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
     const {
         appliedGrantees,
         addedGrantees,
-        currentUserRef,
+        currentUser,
         isDirty,
         currentUserPermissions,
         sharedObject,
@@ -71,7 +71,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}
                 isSharedObjectLocked={isSharedObjectLocked}
-                currentUserRef={currentUserRef}
+                currentUser={currentUser}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}

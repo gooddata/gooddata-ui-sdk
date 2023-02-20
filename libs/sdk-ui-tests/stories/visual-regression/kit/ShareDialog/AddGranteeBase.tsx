@@ -9,11 +9,19 @@ import { AddGranteeBase, ComponentLabelsProvider, IAffectedSharedObject } from "
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
-import { current, defaultUserPermissions, granularGrantees, group, groupAll, user } from "./GranteeMock";
+import {
+    current,
+    defaultUser,
+    defaultUserPermissions,
+    granularGrantees,
+    group,
+    groupAll,
+    user,
+} from "./GranteeMock";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 import { LabelsMock } from "./LabelsMock";
 
 const sharedObject: IAffectedSharedObject = {
@@ -47,7 +55,7 @@ const EmptySelectionExample = (): JSX.Element => {
                         <AddGranteeBase
                             isDirty={false}
                             addedGrantees={[]}
-                            currentUserRef={uriRef("")}
+                            currentUser={defaultUser}
                             appliedGrantees={[groupAll, user]}
                             onAddUserOrGroups={action("onAddUserOrGroups")}
                             onDelete={action("onDelete")}
@@ -77,7 +85,7 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
                             isDirty={false}
                             addedGrantees={[user]}
                             appliedGrantees={[]}
-                            currentUserRef={uriRef("")}
+                            currentUser={defaultUser}
                             onAddUserOrGroups={action("onAddUserOrGroups")}
                             onDelete={action("onDelete")}
                             onCancel={action("onCancel")}
@@ -106,7 +114,7 @@ const GranularItemsExample = (): JSX.Element => {
                             isDirty={false}
                             addedGrantees={granularGrantees}
                             appliedGrantees={[]}
-                            currentUserRef={uriRef("")}
+                            currentUser={defaultUser}
                             onAddUserOrGroups={action("onAddUserOrGroups")}
                             onDelete={action("onDelete")}
                             onCancel={action("onCancel")}
@@ -138,7 +146,7 @@ const SelectedItemsExample = (): JSX.Element => {
                             isDirty={true}
                             addedGrantees={[user, current, group]}
                             appliedGrantees={[groupAll]}
-                            currentUserRef={uriRef("")}
+                            currentUser={defaultUser}
                             onAddUserOrGroups={action("onAddUserOrGroups")}
                             onDelete={action("onDelete")}
                             onCancel={action("onCancel")}

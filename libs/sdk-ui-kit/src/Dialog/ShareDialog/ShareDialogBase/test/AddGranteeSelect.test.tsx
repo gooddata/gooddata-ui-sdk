@@ -7,7 +7,12 @@ import { noop } from "lodash";
 import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { availableUserAccessGrantee, availableUserGroupAccessGrantee, groupAll } from "./GranteeMock";
+import {
+    availableUserAccessGrantee,
+    availableUserGroupAccessGrantee,
+    defaultUser,
+    groupAll,
+} from "./GranteeMock";
 import { mapWorkspaceUserToGrantee, mapWorkspaceUserGroupToGrantee } from "../../shareDialogMappers";
 import { getGranteeItemTestId } from "../utils";
 import {
@@ -21,7 +26,7 @@ import { act } from "react-dom/test-utils";
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,
     appliedGrantees: [],
-    currentUserRef: uriRef("user-uri"),
+    currentUser: defaultUser,
     sharedObjectRef: uriRef("shared-object"),
 };
 
@@ -67,7 +72,7 @@ function isErrorMessageVisible(wrapper: ReactWrapper) {
 }
 
 function getUserOptionSelector(user: IAvailableUserAccessGrantee): string {
-    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, uriRef("")), "option")}`;
+    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, defaultUser), "option")}`;
 }
 
 function getGroupOptionSelector(group: IAvailableUserGroupAccessGrantee): string {
@@ -153,7 +158,7 @@ describe("AddGranteeSelect", () => {
         wrapper.update();
 
         const userSelector = getUserOptionSelector(availableUserAccessGrantee);
-        const expectedPayload = mapWorkspaceUserToGrantee(availableUserAccessGrantee, uriRef(""));
+        const expectedPayload = mapWorkspaceUserToGrantee(availableUserAccessGrantee, defaultUser);
 
         clickOnOption(wrapper, userSelector);
         wrapper.update();

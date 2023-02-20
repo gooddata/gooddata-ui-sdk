@@ -14,7 +14,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
         backend,
         isVisible,
         sharedObject,
-        currentUserRef,
+        currentUser,
         isLockingSupported,
         isCurrentUserWorkspaceManager,
         currentUserPermissions,
@@ -51,7 +51,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
             backend={backend}
             workspace={workspace}
             sharedObject={sharedObject}
-            currentUserRef={currentUserRef}
+            currentUser={currentUser}
             onApply={onApply}
             onCancel={onCancel}
             onError={onError}

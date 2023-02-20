@@ -7,7 +7,7 @@ import {
     useDashboardDispatch,
     uiActions,
     selectPersistedDashboard,
-    selectCurrentUserRef,
+    selectCurrentUser,
     useDashboardCommandProcessing,
     changeSharing,
     selectCanManageWorkspace,
@@ -22,7 +22,7 @@ const useShareDialogDashboardHeader = () => {
     const { addSuccess, addError } = useToastMessage();
     const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
-    const currentUserRef = useDashboardSelector(selectCurrentUserRef);
+    const currentUser = useDashboardSelector(selectCurrentUser);
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const dashboardPermissions = useDashboardSelector(selectDashboardPermissions);
     const backend = useBackendStrict();
@@ -64,7 +64,7 @@ const useShareDialogDashboardHeader = () => {
         workspace,
         isShareDialogOpen,
         persistedDashboard,
-        currentUserRef,
+        currentUser,
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
@@ -83,7 +83,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         workspace,
         isShareDialogOpen,
         persistedDashboard,
-        currentUserRef,
+        currentUser,
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
@@ -109,7 +109,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
             backend={backend}
             workspace={workspace}
             isVisible={isShareDialogOpen}
-            currentUserRef={currentUserRef}
+            currentUser={currentUser}
             sharedObject={persistedDashboard!}
             onCancel={onCloseShareDialog}
             onApply={onApplyShareDialog}

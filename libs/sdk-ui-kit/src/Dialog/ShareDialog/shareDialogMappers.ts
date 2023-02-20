@@ -17,6 +17,7 @@ import {
     IGranularUserGroupAccess,
     isGranularUserAccess,
     isGranularUserGroupAccess,
+    idRef,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -47,11 +48,23 @@ const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeSt
 };
 
 /**
+ * Decide whether specific grantee is the currently logged in user.
+ *
+ * In some cases, current user might have uriRef instead of idRef or vice versa. This would result in
+ * a false negative match. Method conveniently checks also user login to avoid such mismatch.
+ */
+const getIsGranteeCurrentUser = (granteeRef: ObjRef, currentUser: IUser) => {
+    return (
+        areObjRefsEqual(granteeRef, currentUser.ref) || areObjRefsEqual(granteeRef, idRef(currentUser.login))
+    );
+};
+
+/**
  * @internal
  */
 export const mapWorkspaceUserToGrantee = (
     user: IAvailableUserAccessGrantee,
-    currentUserRef: ObjRef,
+    currentUser: IUser,
 ): IGranteeUser => {
     return {
         type: "user",
@@ -59,7 +72,7 @@ export const mapWorkspaceUserToGrantee = (
         name: user.name,
         email: user.email,
         isOwner: false,
-        isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
+        isCurrentUser: getIsGranteeCurrentUser(user.ref, currentUser),
         status: mapUserStatusToGranteeStatus(user.status),
     };
 };
@@ -153,7 +166,7 @@ export const mapGranteesToGranularAccessGrantees = (
 /**
  * @internal
  */
-export const mapUserAccessToGrantee = (userAccess: IUserAccess, currentUserRef: ObjRef): IGranteeUser => {
+export const mapUserAccessToGrantee = (userAccess: IUserAccess, currentUser: IUser): IGranteeUser => {
     const { user, type } = userAccess;
 
     return {
@@ -162,7 +175,7 @@ export const mapUserAccessToGrantee = (userAccess: IUserAccess, currentUserRef: 
         name: mapUserFullName(user),
         email: user.email,
         isOwner: false,
-        isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
+        isCurrentUser: getIsGranteeCurrentUser(user.ref, currentUser),
         status: mapUserStatusToGranteeStatus(user.status),
     };
 };
@@ -185,7 +198,7 @@ export const mapUserGroupAccessToGrantee = (userGroupAccess: IUserGroupAccess): 
  */
 export const mapGranularUserAccessToGrantee = (
     userAccess: IGranularUserAccess,
-    currentUserRef: ObjRef,
+    currentUser: IUser,
 ): IGranularGranteeUser => {
     const { user, type, permissions, inheritedPermissions } = userAccess;
 
@@ -195,7 +208,7 @@ export const mapGranularUserAccessToGrantee = (
         name: mapUserFullName(user),
         email: user.email,
         isOwner: false,
-        isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
+        isCurrentUser: getIsGranteeCurrentUser(user.ref, currentUser),
         status: mapUserStatusToGranteeStatus(user.status),
         permissions,
         inheritedPermissions,
@@ -221,14 +234,14 @@ export const mapGranularUserGroupAccessToGrantee = (
 
 export const mapAccessGranteeDetailToGrantee = (
     accessGranteeDetail: AccessGranteeDetail,
-    currentUserRef: ObjRef,
+    currentUser: IUser,
 ): GranteeItem => {
     if (isUserAccess(accessGranteeDetail)) {
-        return mapUserAccessToGrantee(accessGranteeDetail, currentUserRef);
+        return mapUserAccessToGrantee(accessGranteeDetail, currentUser);
     } else if (isUserGroupAccess(accessGranteeDetail)) {
         return mapUserGroupAccessToGrantee(accessGranteeDetail);
     } else if (isGranularUserAccess(accessGranteeDetail)) {
-        return mapGranularUserAccessToGrantee(accessGranteeDetail, currentUserRef);
+        return mapGranularUserAccessToGrantee(accessGranteeDetail, currentUser);
     } else if (isGranularUserGroupAccess(accessGranteeDetail)) {
         return mapGranularUserGroupAccessToGrantee(accessGranteeDetail);
     }

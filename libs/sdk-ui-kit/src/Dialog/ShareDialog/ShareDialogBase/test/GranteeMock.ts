@@ -78,6 +78,8 @@ export const workspaceUser: IWorkspaceUser = {
     login: userProps.email,
 };
 
+export const defaultUser: IWorkspaceUser = { ...workspaceUser, ref: uriRef(""), login: "" };
+
 export const userAccessGrantee: IUserAccess = {
     type: "user",
     user: workspaceUser,

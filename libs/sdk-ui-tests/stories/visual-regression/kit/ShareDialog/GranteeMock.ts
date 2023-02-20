@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { uriRef } from "@gooddata/sdk-model";
+import { IWorkspaceUser, uriRef } from "@gooddata/sdk-model";
 import {
     GranteeItem,
     IGranteeGroup,
@@ -17,6 +17,14 @@ export const defaultUserPermissions: CurrentUserPermissions = {
     canShareAffectedObject: true,
     canShareLockedAffectedObject: true,
     canViewAffectedObject: true,
+};
+
+export const defaultUser: IWorkspaceUser = {
+    ref: uriRef("john-uri"),
+    uri: "uri",
+    email: "john.doe@d.com",
+    fullName: "John Doe",
+    login: "john-id",
 };
 
 export const user: IGranteeUser = {

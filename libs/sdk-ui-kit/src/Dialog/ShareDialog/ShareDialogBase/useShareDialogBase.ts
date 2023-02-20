@@ -175,7 +175,7 @@ export interface IUseShareDialogBaseReturnType {
  * @internal
  */
 export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialogBaseReturnType => {
-    const { sharedObject, currentUserRef, onSubmit, onError } = props;
+    const { sharedObject, currentUser, onSubmit, onError } = props;
     const { ref, shareStatus, owner, isUnderLenientControl, isLocked, areGranularPermissionsSupported } =
         sharedObject;
 
@@ -212,7 +212,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         [onLoadGrantees, shareStatus, areGranularPermissionsSupported],
     );
 
-    useGetAccessList({ currentUserRef, sharedObjectRef: ref, onSuccess: onLoadGranteesSuccess, onError });
+    useGetAccessList({ currentUser, sharedObjectRef: ref, onSuccess: onLoadGranteesSuccess, onError });
 
     const isShareDialogDirty = useMemo(() => {
         if (areGranularPermissionsSupported) {

@@ -30,7 +30,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         workspace,
         locale,
         sharedObject,
-        currentUserRef,
+        currentUser,
         onApply,
         onCancel,
         onError,
@@ -47,6 +47,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     const canWorkspaceManagerSeeEverySharedObject =
         effectiveBackend.capabilities.canWorkspaceManagerSeeEverySharedObject;
     const { createdBy } = sharedObject;
+    const { ref: currentUserRef } = currentUser;
 
     const onShareDialogBaseError = useCallback(
         (err: Error) => {
@@ -116,7 +117,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
                 <WorkspaceProvider workspace={effectiveWorkspace}>
                     <ComponentLabelsProvider labels={labels}>
                         <ShareDialogBase
-                            currentUserRef={currentUserRef}
+                            currentUser={currentUser}
                             sharedObject={affectedSharedObject}
                             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                             currentUserPermissions={currentUserPermissions}

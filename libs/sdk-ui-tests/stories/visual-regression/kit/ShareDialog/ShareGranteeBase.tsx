@@ -15,7 +15,7 @@ import {
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
-import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock";
+import { defaultUser, defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -46,7 +46,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
         <ComponentLabelsProvider labels={LabelsMock}>
             <div id="Share-Grantee-base-basic-example">
                 <ShareGranteeBase
-                    currentUserRef={uriRef("")}
+                    currentUser={defaultUser}
                     isDirty={isDirty}
                     isLoading={false}
                     sharedObject={{

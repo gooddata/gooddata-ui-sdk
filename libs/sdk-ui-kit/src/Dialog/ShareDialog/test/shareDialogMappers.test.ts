@@ -15,6 +15,8 @@ import {
     owner,
     user,
     userAccessGrantee,
+    workspaceUser,
+    defaultUser,
 } from "../ShareDialogBase/test/GranteeMock";
 import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types";
 import { GranteeGroupAll } from "../ShareDialogBase/utils";
@@ -201,7 +203,7 @@ describe("shareDialogMappers", () => {
                 type: "user",
             };
 
-            expect(mapWorkspaceUserToGrantee(availableUserAccessGrantee, uriRef(""))).toEqual(
+            expect(mapWorkspaceUserToGrantee(availableUserAccessGrantee, defaultUser)).toEqual(
                 expectedGrantee,
             );
         });
@@ -217,7 +219,7 @@ describe("shareDialogMappers", () => {
                 type: "user",
             };
 
-            expect(mapWorkspaceUserToGrantee(availableUserAccessGrantee, uriRef("john-id"))).toEqual(
+            expect(mapWorkspaceUserToGrantee(availableUserAccessGrantee, workspaceUser)).toEqual(
                 expectedGrantee,
             );
         });
@@ -301,7 +303,7 @@ describe("shareDialogMappers", () => {
                 status: "Active",
                 type: "user",
             };
-            expect(mapAccessGranteeDetailToGrantee(userAccessGrantee, uriRef(""))).toEqual(expectedGrantee);
+            expect(mapAccessGranteeDetailToGrantee(userAccessGrantee, defaultUser)).toEqual(expectedGrantee);
         });
 
         it("should return correctly mapped current IUserAccess to grantee", () => {
@@ -314,7 +316,7 @@ describe("shareDialogMappers", () => {
                 status: "Active",
                 type: "user",
             };
-            expect(mapAccessGranteeDetailToGrantee(userAccessGrantee, uriRef("john-id"))).toEqual(
+            expect(mapAccessGranteeDetailToGrantee(userAccessGrantee, workspaceUser)).toEqual(
                 expectedGrantee,
             );
         });
@@ -326,7 +328,7 @@ describe("shareDialogMappers", () => {
                 type: "group",
             };
 
-            expect(mapAccessGranteeDetailToGrantee(groupAccessGrantee, uriRef(""))).toEqual(expected);
+            expect(mapAccessGranteeDetailToGrantee(groupAccessGrantee, defaultUser)).toEqual(expected);
         });
 
         it("should return correctly mapped IGranularUserAccess to grantee", () => {
@@ -341,7 +343,7 @@ describe("shareDialogMappers", () => {
                 permissions: ["VIEW"],
                 inheritedPermissions: ["SHARE"],
             };
-            expect(mapAccessGranteeDetailToGrantee(granularUserAccess, uriRef("john-id"))).toEqual(
+            expect(mapAccessGranteeDetailToGrantee(granularUserAccess, workspaceUser)).toEqual(
                 expectedGrantee,
             );
         });
@@ -355,7 +357,7 @@ describe("shareDialogMappers", () => {
                 inheritedPermissions: [],
             };
 
-            expect(mapAccessGranteeDetailToGrantee(granularUserGroupAccess, uriRef(""))).toEqual(expected);
+            expect(mapAccessGranteeDetailToGrantee(granularUserGroupAccess, defaultUser)).toEqual(expected);
         });
     });
 
