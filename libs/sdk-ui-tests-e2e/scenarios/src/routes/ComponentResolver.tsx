@@ -20,6 +20,7 @@ import {
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
 import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
+import { DashboardScenarioTigerPermissions } from "../components/Scenarios/Dashboard/DashboardScenarioTigerPermissions";
 import { DashboardAttributeFilteringScenario } from "../components/Scenarios/Dashboard/DashboardAttributeFilteringScenario";
 import { DashboardStageNameScenario } from "../components/Scenarios/Dashboard/DashboardStageNameScenario";
 import { DashboardDateFilteringScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringScenario";
@@ -41,6 +42,7 @@ import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAn
 export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
     DASHBOARD_TIGER: "dashboard/dashboard-tiger",
+    DASHBOARD_TIGER_PERMISSIONS: "dashboard/dashboard-tiger-permissions",
     DASHBOARD_ATTRIBUTE_FILTERING: "dashboard/attribute-filtering",
     DASHBOARD_DATE_FILTERING: "dashboard/date-filtering",
     DASHBOARD_FILTERING: "dashboard/filtering",
@@ -74,6 +76,7 @@ export const SCENARIO_KEYS = {
 const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
+    [SCENARIO_KEYS.DASHBOARD_TIGER_PERMISSIONS, DashboardScenarioTigerPermissions],
     [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_FILTERING, DashboardAttributeFilteringScenario],
     [SCENARIO_KEYS.DASHBOARD_DATE_FILTERING, DashboardDateFilteringScenario],
     [SCENARIO_KEYS.DASHBOARD_STAGE_NAME, DashboardStageNameScenario],

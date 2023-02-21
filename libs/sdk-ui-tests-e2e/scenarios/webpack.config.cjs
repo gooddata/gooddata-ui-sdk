@@ -11,6 +11,11 @@ const Dotenv = require("dotenv-webpack");
 require("dotenv").config({ path: "./.env" });
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_OPTIONS = "--max-old-space-size=4096";
+
+// we are providing tiger token ourselves, clear it so that it's not
+// baked inside the testing app image
+process.env.TIGER_API_TOKEN = "";
 
 module.exports = async (env, argv) => {
     const [backendUrl, workspace, backendType] = [
@@ -206,7 +211,7 @@ module.exports = async (env, argv) => {
             name: "local-run",
             devServer: {
                 static: {
-                    directory: path.join(__dirname, "scenarios/build"),
+                    directory: path.join(__dirname, "build"),
                 },
                 devMiddleware: {
                     stats: "errors-only",
