@@ -20,13 +20,27 @@ export class ShareDialog {
         return this;
     }
 
-    setPermission(user: string, permission: string) {
-        this.getElement()
+    getItemForGivenUserOrGroup(userOrGroup: string) {
+        return this.getElement()
             .find(".s-share-dialog-grantee-item")
-            .contains(user)
-            .parents(".s-share-dialog-grantee-item")
+            .contains(userOrGroup)
+            .parents(".s-share-dialog-grantee-item");
+    }
+
+    hasPermissionSet(user: string, permission: string) {
+        this.getItemForGivenUserOrGroup(user)
             .find(".s-granular-permission-button")
-            .click();
+            .contains(new RegExp("^" + permission + "$", "g"));
+        return this;
+    }
+
+    openDropdownForUserOrGroup(userOrGroup: string) {
+        this.getItemForGivenUserOrGroup(userOrGroup).find(".s-granular-permission-button").click();
+        return this;
+    }
+
+    setPermission(user: string, permission: string) {
+        this.openDropdownForUserOrGroup(user);
         this.getPermissionsDropdownElement()
             .find(".gd-granular-permission-select-item")
             // we need exact match here! (View is also included in View & share)
@@ -35,8 +49,34 @@ export class ShareDialog {
         return this;
     }
 
+    isPermissionDisabled(permission: string) {
+        this.getPermissionsDropdownElement()
+            .find(".gd-granular-permission-select-item.is-disabled")
+            .contains(new RegExp("^" + permission + "$", "g"));
+        return this;
+    }
+
+    remove(userOrGroup: string) {
+        this.openDropdownForUserOrGroup(userOrGroup);
+        this.getPermissionsDropdownElement().find(".gd-list-item").contains("Remove").click();
+
+        return this;
+    }
+
     save() {
         this.getElement().get(".s-save").click();
+        return this;
+    }
+
+    cancel() {
+        this.getElement().get(".s-cancel").click();
+        return this;
+    }
+
+    isEmpty(empty: boolean = true) {
+        this.getElement()
+            .find(".s-gd-share-dialog-grantee-list-empty-selection")
+            .should(empty ? "exist" : "not.exist");
         return this;
     }
 }

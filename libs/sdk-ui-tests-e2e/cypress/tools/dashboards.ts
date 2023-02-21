@@ -9,6 +9,11 @@ export class Dashboard {
         return cy.get(element);
     }
 
+    hasError(): this {
+        cy.get(".s-error").should("exist");
+        return this;
+    }
+
     getTopBarElement(): Cypress.Chainable {
         return cy.get(".s-top-bar");
     }
@@ -152,6 +157,12 @@ export class TopBar {
 
     getMenuButtonItemElement(itemClass: string): this {
         cy.get(`.${itemClass}`);
+        return this;
+    }
+
+    enterSharing(): this {
+        this.shareButtonExists();
+        this.clickShareButton();
         return this;
     }
 }

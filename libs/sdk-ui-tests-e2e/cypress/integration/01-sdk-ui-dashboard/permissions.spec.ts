@@ -28,11 +28,7 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
         });
 
         it("should render topBar with share button", () => {
-            const topBar = new TopBar();
-            topBar.shareButtonExists();
-            topBar.clickShareButton();
-            cy.debug();
-
+            new TopBar().enterSharing();
             new ShareDialog().dialogExists(true).addButtonIsActive();
         });
     });
@@ -53,7 +49,9 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
             deleteUserAndGroup(username, groupname);
             Users.createGroup(groupname);
             Users.createUser(username, [groupname]);
-            WorkspaceAccess.assignUserPermissionToWorkspace(getProjectId(), username, "VIEW");
+            WorkspaceAccess.assignUserPermissionToWorkspace(getProjectId(), [
+                { user: username, permission: "VIEW" },
+            ]);
             DashboardAccess.assignUserPermissionToDashboard(
                 getProjectId(),
                 Dashboards.KPIs,
@@ -81,9 +79,7 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
             Navigation.visit("dashboard/dashboard-tiger-permissions");
 
             // share the dashboard with viewer user
-            const topBar = new TopBar();
-            topBar.shareButtonExists();
-            topBar.clickShareButton();
+            new TopBar().enterSharing();
 
             new ShareDialog()
                 .dialogExists(true)
@@ -97,7 +93,160 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
 
             const dashboard = new Dashboard();
             dashboard.topBarExist();
-            topBar.shareButtonExists(true);
+            new TopBar().shareButtonExists(true);
+        });
+
+        it("should show sharing for user who is viewer but got permission to share via group", () => {
+            DashboardAccess.assignGroupPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                groupname,
+                "SHARE",
+            );
+            Users.switchToUser(username);
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+
+            new Dashboard().topBarExist();
+            new TopBar().shareButtonExists(true);
+        });
+
+        it("should be able to remove person from sharing list and that person should no longer be able to access", () => {
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            const topBar = new TopBar();
+            topBar.enterSharing();
+
+            const shareDialog = new ShareDialog();
+            shareDialog.dialogExists(true).addButtonIsActive().remove(username).save();
+
+            topBar.enterSharing();
+            shareDialog.isEmpty().cancel();
+
+            // check that the user cannot access
+            Users.switchToUser(username);
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+
+            new Dashboard().hasError();
+        });
+
+        it("should not allow users who have share permission to raise their permissions to edit", () => {
+            DashboardAccess.assignUserPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                username,
+                "SHARE",
+            );
+            Users.switchToUser(username);
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            new TopBar().enterSharing();
+
+            const shareDialog = new ShareDialog();
+            shareDialog.openDropdownForUserOrGroup(username).isPermissionDisabled("Can edit & share");
+        });
+
+        it("should not allow members of group who have share permission to raise permissions to edit", () => {
+            DashboardAccess.assignGroupPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                groupname,
+                "SHARE",
+            );
+            Users.switchToUser(username);
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            new TopBar().enterSharing();
+
+            const shareDialog = new ShareDialog();
+            shareDialog.openDropdownForUserOrGroup(username).isPermissionDisabled("Can edit & share");
+        });
+    });
+
+    describe("Basic multiple groups/users case", () => {
+        const firstUser = "test-viewer-1";
+        const firstGroup = "test-viewers-1";
+        const secondUser = "test-viewer-2";
+        const secondGroup = "test-viewers-2";
+
+        beforeEach(() => {
+            cy.login();
+            Users.switchToDefaultUser();
+            Api.setEarlyAccess(getProjectId(), "develop");
+
+            Users.deleteUser(firstUser);
+            Users.deleteUser(secondUser);
+            Users.deleteGroup(firstGroup);
+            Users.deleteGroup(secondGroup);
+
+            Users.createGroup(firstGroup);
+            Users.createGroup(secondGroup);
+
+            // first user is part of both groups!
+            Users.createUser(firstUser, [firstGroup, secondGroup]);
+            Users.createUser(secondUser, [firstGroup]);
+
+            WorkspaceAccess.assignUserPermissionToWorkspace(getProjectId(), [
+                { user: firstUser, permission: "VIEW" },
+                { user: secondUser, permission: "VIEW" },
+            ]);
+        });
+
+        afterEach(() => {
+            Users.switchToDefaultUser();
+            Users.deleteUser(firstUser);
+            Users.deleteUser(secondUser);
+            Users.deleteGroup(firstGroup);
+            Users.deleteGroup(secondGroup);
+        });
+
+        it("should correctly visualize assigned different permissions for groups", () => {
+            DashboardAccess.assignGroupPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                firstGroup,
+                "SHARE",
+            );
+            DashboardAccess.assignGroupPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                secondGroup,
+                "VIEW",
+            );
+
+            Users.switchToUser(firstUser);
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            new TopBar().enterSharing();
+            new ShareDialog()
+                .dialogExists(true)
+                .hasPermissionSet(firstGroup, "Can view & share")
+                .hasPermissionSet(secondGroup, "Can view");
+        });
+
+        it("should correctly visualize user & group permissions", () => {
+            DashboardAccess.assignGroupPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                firstGroup,
+                "SHARE",
+            );
+            DashboardAccess.assignUserPermissionToDashboard(
+                getProjectId(),
+                Dashboards.KPIs,
+                firstUser,
+                "SHARE",
+            );
+
+            Users.switchToUser(firstUser);
+            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            new TopBar().enterSharing();
+            new ShareDialog()
+                .dialogExists(true)
+                .hasPermissionSet(firstGroup, "Can view & share")
+                .hasPermissionSet(firstUser, "Can view & share");
+
+            // cannot raise permissions but also cannot lower permissions as
+            // share is already implied by group membership
+            new ShareDialog()
+                .openDropdownForUserOrGroup(firstUser)
+                .isPermissionDisabled("Can edit & share")
+                .isPermissionDisabled("Can view");
         });
     });
 });
