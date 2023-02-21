@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { Overlay } from "../../../Overlay";
 import { IAlignPoint } from "../../../typings/positioning";
@@ -8,6 +8,7 @@ import { ShareGranteeBase } from "./ShareGranteeBase";
 import { AddGranteeBase } from "./AddGranteeBase";
 import { IShareDialogBaseProps } from "./types";
 import { useShareDialogBase } from "./useShareDialogBase";
+import { useShareDialogInteraction } from "./ComponentInteractionContext";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 
@@ -17,6 +18,17 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
     const { onCancel, sharedObject, currentUser, currentUserPermissions, isCurrentUserWorkspaceManager } =
         props;
+    const { openInteraction, closeInteraction } = useShareDialogInteraction();
+
+    useEffect(() => {
+        openInteraction();
+    }, [openInteraction]);
+
+    const handleCancel = useCallback(() => {
+        onCancel();
+        closeInteraction();
+    }, [onCancel, closeInteraction]);
+
     const {
         onAddedGranteeDelete,
         onSharedGranteeDelete,
@@ -58,7 +70,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         isUnderLenientControlNow={isUnderLenientControlNow}
                         sharedObject={sharedObject}
                         grantees={sharedGrantees}
-                        onCancel={onCancel}
+                        onCancel={handleCancel}
                         onSubmit={onSubmitShareGrantee}
                         onAddGranteeButtonClick={onAddGranteeButtonClick}
                         onGranteeDelete={onSharedGranteeDelete}
@@ -77,7 +89,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         sharedObject={sharedObject}
                         onAddUserOrGroups={onGranteeAdd}
                         onDelete={onAddedGranteeDelete}
-                        onCancel={onCancel}
+                        onCancel={handleCancel}
                         onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
                         onGranularGranteeChange={onGranularGranteeAddChange}

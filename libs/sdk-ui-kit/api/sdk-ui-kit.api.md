@@ -3440,6 +3440,22 @@ export interface IShareDialogBaseProps {
 }
 
 // @internal (undocumented)
+export interface IShareDialogInteractionData extends ShareDialogInteractionGranteeData {
+    // (undocumented)
+    currentUserPermission: AccessGranularPermission;
+    // (undocumented)
+    flowId: string;
+    // (undocumented)
+    isCurrentUserWorkspaceManager: boolean;
+    // (undocumented)
+    isSharedObjectLocked: boolean;
+    // (undocumented)
+    sharedObjectStatus: ShareStatus;
+    // (undocumented)
+    type: ShareDialogInteractionType;
+}
+
+// @internal (undocumented)
 export interface IShareDialogLabels {
     // (undocumented)
     accessRegimeLabel: string;
@@ -3473,6 +3489,8 @@ export interface IShareDialogProps {
     onCancel: () => void;
     // (undocumented)
     onError?: (error: GoodDataSdkError) => void;
+    // (undocumented)
+    onInteraction?: (data: IShareDialogInteractionData) => void;
     // (undocumented)
     sharedObject: ISharedObject;
     // (undocumented)
@@ -4237,6 +4255,19 @@ export const ShareDialog: React_2.FC<IShareDialogProps>;
 
 // @internal (undocumented)
 export const ShareDialogBase: React_2.FC<IShareDialogBaseProps>;
+
+// @internal (undocumented)
+export type ShareDialogInteractionGranteeData = {
+    isCurrentUserSelfUpdating?: boolean;
+    isExistingGrantee?: boolean;
+    granteeType?: "user" | "group";
+    granteeEffectivePermission?: AccessGranularPermission;
+    granteeUpdatedPermission?: AccessGranularPermission;
+    numberOfAvailableGrantees?: number;
+};
+
+// @internal (undocumented)
+export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @internal (undocumented)
 export const ShareGranteeBase: React_2.FC<IShareGranteeBaseProps>;

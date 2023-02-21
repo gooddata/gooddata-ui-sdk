@@ -7,6 +7,7 @@
 /// <reference types="lodash" />
 /// <reference types="react" />
 
+import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
@@ -112,6 +113,7 @@ import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
+import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
 import { ITempFilterContext } from '@gooddata/sdk-model';
@@ -1155,6 +1157,7 @@ export interface DashboardCopySaved extends IDashboardEvent {
 // @public
 export interface DashboardCopySavedPayload {
     readonly dashboard: IDashboard;
+    readonly isOriginalDashboardLocked: boolean;
 }
 
 // @public
@@ -4461,6 +4464,7 @@ export interface IShareDialogProps {
     onApply: (payload: ISharingApplyPayload) => void;
     onCancel: () => void;
     onError?: (error: GoodDataSdkError) => void;
+    onInteraction?: (data: IShareDialogInteractionData) => void;
     sharedObject: ISharedObject;
     workspace: string;
 }
@@ -6377,6 +6381,28 @@ export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 // @internal (undocumented)
 export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 
+// @beta (undocumented)
+export type ShareDialogInteractionData = {
+    type: ShareDialogInteractionType;
+    flowId: string;
+    currentUserPermission: AccessGranularPermission;
+    isCurrentUserWorkspaceManager: boolean;
+    isSharedObjectLocked: boolean;
+    sharedObjectStatus: ShareStatus;
+    isCurrentUserSelfUpdating?: boolean;
+    isExistingGrantee?: boolean;
+    granteeType?: "user" | "group";
+    granteeEffectivePermission?: AccessGranularPermission;
+    granteeUpdatedPermission?: AccessGranularPermission;
+    numberOfAvailableGrantees?: number;
+};
+
+// @beta (undocumented)
+export type ShareDialogInteractionPayload = UserInteractionPayloadWithDataBase<"shareDialogInteraction", ShareDialogInteractionData>;
+
+// @beta (undocumented)
+export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
+
 // @alpha (undocumented)
 export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element | null;
 
@@ -7137,6 +7163,7 @@ export const useDashboardUserInteraction: () => {
     kpiAlertDialogClosed: () => void;
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
     descriptionTooltipOpened: (eventData: DescriptionTooltipOpenedData) => void;
+    shareDialogInteraction: (eventData: ShareDialogInteractionData) => void;
 };
 
 // @internal (undocumented)
@@ -7279,7 +7306,7 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilt
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @beta (undocumented)
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload;
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload;
 
 // @beta (undocumented)
 export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {

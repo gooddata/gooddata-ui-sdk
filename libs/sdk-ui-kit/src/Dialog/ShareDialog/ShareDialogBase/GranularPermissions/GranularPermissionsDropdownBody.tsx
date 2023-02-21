@@ -7,12 +7,13 @@ import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem";
 
-import { GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types";
+import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types";
 import { ItemsWrapper, Separator } from "../../../../List";
 import { Overlay } from "../../../../Overlay";
 import { IAlignPoint } from "../../../../typings/positioning";
 import { withBubble } from "../../../../Bubble";
 import { granularPermissionMessageLabels } from "../../../../locales";
+import { useShareDialogInteraction } from "../ComponentInteractionContext";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;
@@ -24,6 +25,7 @@ interface IGranularPermissionsDropdownBodyProps {
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
     handleSetSelectedPermission: (permission: AccessGranularPermission) => void;
+    mode: DialogModeType;
 }
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
@@ -33,7 +35,7 @@ const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () =
     tooltipId,
     onClick,
 }) => {
-    const className = cx("gd-list-item gd-menu-item", {
+    const className = cx("gd-list-item gd-menu-item", "s-granular-permission-remove", {
         "is-disabled": disabled,
     });
 
@@ -60,7 +62,10 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
     onChange,
     onDelete,
     handleSetSelectedPermission,
+    mode,
 }) => {
+    const { permissionsChangeInteraction, permissionsRemoveInteraction } = useShareDialogInteraction();
+
     const handleOnDelete = useCallback(() => {
         if (granteePossibilities.remove.enabled) {
             const changedGrantee: GranteeItem = {
@@ -69,9 +74,27 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                 inheritedPermissions: [],
             };
             onDelete(changedGrantee);
+            permissionsRemoveInteraction(
+                grantee,
+                mode === "ShareGrantee",
+                granteePossibilities.assign.effective,
+            );
             toggleDropdown();
         }
-    }, [grantee, onDelete, toggleDropdown, granteePossibilities]);
+    }, [grantee, onDelete, toggleDropdown, mode, granteePossibilities, permissionsRemoveInteraction]);
+
+    const handleOnChange = useCallback(
+        (changedGrantee: IGranularGrantee) => {
+            permissionsChangeInteraction(
+                grantee,
+                mode === "ShareGrantee",
+                granteePossibilities.assign.effective,
+                changedGrantee.permissions[0],
+            );
+            onChange(changedGrantee);
+        },
+        [grantee, onChange, mode, granteePossibilities, permissionsChangeInteraction],
+    );
 
     if (!isShowDropdown) {
         return null;
@@ -98,7 +121,7 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                                 permission={permissionItem}
                                 selectedPermission={selectedPermission}
                                 toggleDropdown={toggleDropdown}
-                                onChange={onChange}
+                                onChange={handleOnChange}
                                 handleSetSelectedPermission={handleSetSelectedPermission}
                                 bubbleTextId={permissionItem.tooltip}
                                 showBubble={!permissionItem.enabled}

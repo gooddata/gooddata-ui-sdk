@@ -25,6 +25,8 @@ import { getGranteeItemTestId } from "../ShareDialogBase/utils";
 import { mapWorkspaceUserToGrantee } from "../shareDialogMappers";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi/src";
 
+const GRANULAR_PERMISSIONS_DROPDOWN_BUTTON = ".s-granular-permission-button";
+
 export const labels: IShareDialogLabels = {
     accessTypeLabel: "lockControl label",
     accessRegimeLabel: "underLenientControl label",
@@ -123,7 +125,23 @@ export function isCurrentUserInGrantees(wrapper: ReactWrapper): boolean {
 }
 
 export function isGranularPermissionsDropdownButtonVisible(wrapper: ReactWrapper): boolean {
-    return wrapper.find(".s-granular-permission-button").hostNodes().length > 0;
+    return wrapper.find(GRANULAR_PERMISSIONS_DROPDOWN_BUTTON).hostNodes().length > 0;
+}
+
+export function clickGranularPermissionsDropdownButton(wrapper: ReactWrapper, selector: string): void {
+    const item = wrapper.find(selector);
+    item.find(GRANULAR_PERMISSIONS_DROPDOWN_BUTTON).hostNodes().simulate("click");
+    wrapper.update();
+}
+
+export function clickGranularPermissionsDropdownItem(wrapper: ReactWrapper, itemIndex: number): void {
+    wrapper.find(".s-granular-permission-item").at(itemIndex).simulate("click");
+    wrapper.update();
+}
+
+export function clickGranularPermissionsRemoveOption(wrapper: ReactWrapper): void {
+    wrapper.find(".s-granular-permission-remove").hostNodes().simulate("click");
+    wrapper.update();
 }
 
 export function getGranteeSelector(user: IAvailableUserAccessGrantee): string {

@@ -229,7 +229,9 @@ export function* saveAsDashboardHandler(
 
         yield put(savingActions.setSavingSuccess());
 
-        return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
+        const isOriginalDashboardLocked = saveAsCtx.dashboardFromState.isLocked ?? false;
+
+        return dashboardCopySaved(ctx, dashboard, isOriginalDashboardLocked, cmd.correlationId);
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));
         throw e;

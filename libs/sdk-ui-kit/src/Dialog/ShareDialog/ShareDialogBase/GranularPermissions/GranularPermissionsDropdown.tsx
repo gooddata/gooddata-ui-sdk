@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types";
+import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types";
 import { getGranularGranteeClassNameId } from "../utils";
 import { granularPermissionMessageLabels } from "../../../../locales";
 
@@ -21,6 +21,7 @@ interface IGranularPermissionsDropdownProps {
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
     className: string;
+    mode: DialogModeType;
 }
 
 export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownProps> = ({
@@ -32,6 +33,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
     onChange,
     onDelete,
     className,
+    mode,
 }) => {
     const intl = useIntl();
 
@@ -83,6 +85,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
                 onDelete={onDelete}
                 selectedPermission={selectedPermission}
                 handleSetSelectedPermission={handleSetSelectedPermission}
+                mode={mode}
             />
         </div>
     );

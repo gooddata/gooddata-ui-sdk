@@ -21,6 +21,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
         onApply,
         onCancel,
         onError,
+        onInteraction,
     } = props;
 
     const locale = useDashboardSelector(selectLocale);
@@ -59,6 +60,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
             labels={labels}
             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
+            onInteraction={onInteraction}
         />
     );
 };

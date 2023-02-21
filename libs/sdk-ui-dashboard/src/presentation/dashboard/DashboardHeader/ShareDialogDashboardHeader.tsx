@@ -12,6 +12,7 @@ import {
     changeSharing,
     selectCanManageWorkspace,
     selectDashboardPermissions,
+    useDashboardUserInteraction,
 } from "../../../model";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -20,6 +21,7 @@ import { messages } from "../../../locales";
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();
     const { addSuccess, addError } = useToastMessage();
+    const { shareDialogInteraction } = useDashboardUserInteraction();
     const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const currentUser = useDashboardSelector(selectCurrentUser);
@@ -68,6 +70,7 @@ const useShareDialogDashboardHeader = () => {
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
+        onInteractionShareDialog: shareDialogInteraction,
         isLockingSupported: isWorkspaceManager,
         isCurrentUserWorkspaceManager: isWorkspaceManager,
         dashboardPermissions,
@@ -87,6 +90,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         onCloseShareDialog,
         onApplyShareDialog,
         onErrorShareDialog,
+        onInteractionShareDialog,
         isLockingSupported,
         isCurrentUserWorkspaceManager,
         dashboardPermissions,
@@ -117,6 +121,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
             isLockingSupported={isLockingSupported}
             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
+            onInteraction={onInteractionShareDialog}
         />
     );
 };

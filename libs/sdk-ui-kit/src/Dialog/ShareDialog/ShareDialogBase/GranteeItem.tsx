@@ -181,6 +181,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 grantee={grantee}
                 onChange={onChange}
                 onDelete={onDelete}
+                mode={mode}
             />
         );
     } else if (isGranularGranteeGroup(grantee)) {
@@ -191,6 +192,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 grantee={grantee}
                 onChange={onChange}
                 onDelete={onDelete}
+                mode={mode}
             />
         );
     } else if (isGranteeUser(grantee)) {

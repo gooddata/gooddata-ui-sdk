@@ -7,6 +7,9 @@ export type {
     ISharingApplyPayload,
     IShareDialogLabels,
     CurrentUserPermissions,
+    ShareDialogInteractionType,
+    IShareDialogInteractionData,
+    ShareDialogInteractionGranteeData,
 } from "./types";
 
 export { ShareDialog } from "./ShareDialog";

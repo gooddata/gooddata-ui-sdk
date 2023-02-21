@@ -33,6 +33,9 @@ import {
     setUnderLenientControlCheckbox,
     isGranularPermissionsDropdownButtonVisible,
     isAdminInformationMessageVisible,
+    clickGranularPermissionsDropdownButton,
+    clickGranularPermissionsRemoveOption,
+    clickGranularPermissionsDropdownItem,
 } from "./testHelpers";
 
 describe("ShareDialog", () => {
@@ -322,7 +325,7 @@ describe("ShareDialog", () => {
             expect(isAdminInformationMessageVisible(wrapper)).toBe(true);
         });
 
-        it("should render admin information message when not supported", async () => {
+        it("should not render admin information message when not supported", async () => {
             const wrapper = await createComponent({ isCurrentUserWorkspaceManager: true }, [], [], [], [], {
                 canWorkspaceManagerSeeEverySharedObject: false,
             });
@@ -338,6 +341,205 @@ describe("ShareDialog", () => {
 
             await waitForComponentToPaint(wrapper);
             expect(isAdminInformationMessageVisible(wrapper)).toBe(false);
+        });
+    });
+
+    describe("interactions", () => {
+        it("should call interaction with SHARE_DIALOG_OPENED type", async () => {
+            const onInteraction = jest.fn();
+            await createComponent({ onInteraction });
+
+            expect(onInteraction).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_OPENED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_CLOSED type", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent({ onInteraction });
+
+            shareDialogCancel(wrapper);
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                2,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_CLOSED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_SAVED type", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent({ onInteraction }, [], [], [userAccessGrantee]);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
+
+            clickDeleteGranteeIcon(wrapper, granteeSelector);
+            shareDialogSubmit(wrapper);
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                2,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_SAVED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED type", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent({ onInteraction }, [], [], []);
+
+            clickAddGrantees(wrapper);
+            await waitForComponentToPaint(wrapper);
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                2,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                    numberOfAvailableGrantees: 1,
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_GRANTEE_ADDED type", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent(
+                { onInteraction },
+                [],
+                [],
+                [],
+                [availableUserAccessGrantee],
+                {
+                    supportsGranularAccessControl: true,
+                },
+            );
+
+            clickAddGrantees(wrapper);
+            await waitForComponentToPaint(wrapper);
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                3,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_GRANTEE_ADDED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                    granteeType: "user",
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED type", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
+                supportsGranularAccessControl: true,
+            });
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
+
+            clickGranularPermissionsDropdownButton(wrapper, granteeSelector);
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                2,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                    granteeType: "user",
+                    isExistingGrantee: true,
+                    isCurrentUserSelfUpdating: false,
+                    granteeEffectivePermission: "SHARE",
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_PERMISSIONS_CHANGED type", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent(
+                {
+                    onInteraction,
+                    currentUserPermissions: {
+                        canEditAffectedObject: true,
+                        canEditLockedAffectedObject: true,
+                        canShareAffectedObject: true,
+                        canShareLockedAffectedObject: true,
+                        canViewAffectedObject: true,
+                    },
+                },
+                [],
+                [],
+                [granularUserAccess],
+                [],
+                {
+                    supportsGranularAccessControl: true,
+                },
+            );
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
+
+            clickGranularPermissionsDropdownButton(wrapper, granteeSelector);
+            clickGranularPermissionsDropdownItem(wrapper, 0);
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                3,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_PERMISSIONS_CHANGED",
+                    currentUserPermission: "EDIT",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                    granteeType: "user",
+                    isExistingGrantee: true,
+                    isCurrentUserSelfUpdating: false,
+                    granteeEffectivePermission: "SHARE",
+                    granteeUpdatedPermission: "EDIT",
+                }),
+            );
+        });
+
+        it("should call interaction with SHARE_DIALOG_GRANTEE_REMOVED type and user grantee", async () => {
+            const onInteraction = jest.fn();
+            const wrapper = await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
+                supportsGranularAccessControl: true,
+            });
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
+
+            clickGranularPermissionsDropdownButton(wrapper, granteeSelector);
+            clickGranularPermissionsRemoveOption(wrapper);
+
+            expect(onInteraction).toHaveBeenNthCalledWith(
+                3,
+                expect.objectContaining({
+                    type: "SHARE_DIALOG_GRANTEE_REMOVED",
+                    currentUserPermission: "SHARE",
+                    isCurrentUserWorkspaceManager: false,
+                    isSharedObjectLocked: false,
+                    sharedObjectStatus: "private",
+                    granteeType: "user",
+                    isExistingGrantee: true,
+                    isCurrentUserSelfUpdating: false,
+                    granteeEffectivePermission: "SHARE",
+                }),
+            );
         });
     });
 });

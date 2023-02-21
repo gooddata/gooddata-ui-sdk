@@ -1,6 +1,14 @@
 // (C) 2021-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
-import { areObjRefsEqual, objRefToString, uriRef } from "@gooddata/sdk-model";
+import {
+    AccessGranularPermission,
+    areObjRefsEqual,
+    idRef,
+    IUser,
+    ObjRef,
+    objRefToString,
+    uriRef,
+} from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import {
     GranteeItem,
@@ -12,6 +20,7 @@ import {
 } from "./types";
 import differenceWith from "lodash/differenceWith";
 import partition from "lodash/partition";
+import { CurrentUserPermissions } from "../types";
 
 /**
  * @internal
@@ -143,4 +152,35 @@ export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): s
 export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
     const id = objRefToString(grantee.id).split("/").pop();
     return `gd-granular-grantee-item-id-${stringUtils.simplifyText(id)}`;
+};
+
+/**
+ * @internal
+ */
+export const getGranularPermissionFromUserPermissions = (
+    userPermissions: CurrentUserPermissions,
+): AccessGranularPermission | undefined => {
+    if (userPermissions.canEditAffectedObject || userPermissions.canEditLockedAffectedObject) {
+        return "EDIT";
+    } else if (userPermissions.canShareAffectedObject || userPermissions.canShareLockedAffectedObject) {
+        return "SHARE";
+    } else if (userPermissions.canViewAffectedObject) {
+        return "VIEW";
+    } else {
+        return undefined;
+    }
+};
+
+/**
+ * Decide whether specific grantee is the currently logged in user.
+ *
+ * In some cases, current user might have uriRef instead of idRef or vice versa. This would result in
+ * a false negative match. Method conveniently checks also user login to avoid such mismatch.
+ *
+ * @internal
+ */
+export const getIsGranteeCurrentUser = (granteeRef: ObjRef, currentUser: IUser) => {
+    return (
+        areObjRefsEqual(granteeRef, currentUser.ref) || areObjRefsEqual(granteeRef, idRef(currentUser.login))
+    );
 };
