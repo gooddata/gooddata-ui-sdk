@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "Vous ne pouvez pas configurer des autorisations inférieures aux autorisations des groupes d'utilisateurs qui incluent ce groupe.",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "Vous ne pouvez pas supprimer les autorisations de cet utilisateur dans cet espace de travail. Accédez à l'espace de travail parent pour effectuer la suppression.",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "Vous ne pouvez pas supprimer ou modifier les autorisations de cet utilisateur dans cet espace de travail. Accédez à l'espace de travail parent pour effectuer la modification.",
+    "shareDialog.share.granular.administrator.info": "<b>Remarque.</b> Vous et d'autres administrateurs disposez d'un accès complet à tous les tableaux de bord.",
     "sorting.dropdown.header": "Trier la perception",
     "sorting.type.alphabetical.asc": "A à Z",
     "sorting.type.alphabetical.desc": "Z à A",

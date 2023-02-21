@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "alle",
     "gs.visualizationsList.tabs.my": "door mij aangemaakt",
     "visualizationsList.noInsights": "Deze werkruimte bevat geen inzichten.",
+    "visualizationsList.create": "Inzicht maken",
     "visualizationsList.noUserInsights": "Geen inzichten gemaakt.",
     "visualizationsList.noVisualizationsFound": "Geen overeenkomstig inzicht.",
     "search_insights": "Alle doorzoeken…",

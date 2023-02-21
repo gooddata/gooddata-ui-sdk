@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "このグループを含んだユーザーグループの権限より低い権限は設定できません。",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "このワークスペースでのユーザーの権限を削除できません。権限を削除するには親ワークスペースから操作してください。",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "このワークスペースでのユーザーの権限の削除または変更はできません。権限の編集は親ワークスペースから操作してください。",
+    "shareDialog.share.granular.administrator.info": "<b>注：</b>あなたと他の管理者は、すべてのダッシュボードに完全にアクセスできます。",
     "sorting.dropdown.header": "インサイトの並べ替え",
     "sorting.type.alphabetical.asc": "A から Z",
     "sorting.type.alphabetical.desc": "Z から A",

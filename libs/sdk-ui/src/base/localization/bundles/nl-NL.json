@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "U kunt geen lagere instellingen instellen dan de machtigingen van gebruikersgroepen met deze groep.",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "U kunt geen machtigingen verwijderen voor deze gebruiker in deze werkruimte. Verwijder de machtigingen vanuit de bovenliggende werkruimte.",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "U kunt geen machtigingen verwijderen of wijzigen voor deze gebruiker in deze werkruimte. Bewerk de machtigingen vanuit de bovenliggende werkruimte.",
+    "shareDialog.share.granular.administrator.info": "<b>Let op.</b> U en andere beheerders hebben volledige toegang tot alle dashboards.",
     "sorting.dropdown.header": "Inzicht sorteren",
     "sorting.type.alphabetical.asc": "A tot Z",
     "sorting.type.alphabetical.desc": "Z tot A",

@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "alle",
     "gs.visualizationsList.tabs.my": "von mir erstellt",
     "visualizationsList.noInsights": "Dieser Workspace enthält keine Betrachtungen.",
+    "visualizationsList.create": "Betrachtung erstellen",
     "visualizationsList.noUserInsights": "Keine Betrachtungen erstellt.",
     "visualizationsList.noVisualizationsFound": "Keine übereinstimmende Betrachtung.",
     "search_insights": "Alle durchsuchen…",

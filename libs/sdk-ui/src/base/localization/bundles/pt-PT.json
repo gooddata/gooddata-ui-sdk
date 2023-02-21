@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "Não pode definir permissões inferiores às permissões de grupos de utilizador que incluam este grupo.",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "Não pode remover permissões deste utilizador nesta área de trabalho. Para remover as permissões, faça-o a partir da área de trabalho principal.",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "Não pode remover nem alterar permissões deste utilizador nesta área de trabalho. Para editar as permissões, faça-o a partir da área de trabalho principal.",
+    "shareDialog.share.granular.administrator.info": "<b>Nota.</b> O utilizador e os outros administradores têm acesso total a todos os dashboards.",
     "sorting.dropdown.header": "Ordenar insight",
     "sorting.type.alphabetical.asc": "A a Z",
     "sorting.type.alphabetical.desc": "Z a A",

@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "すべて",
     "gs.visualizationsList.tabs.my": "自分が作成",
     "visualizationsList.noInsights": "このワークスペースにはインサイトがありません。",
+    "visualizationsList.create": "インサイトを作成",
     "visualizationsList.noUserInsights": "作成されたインサイトはありません。",
     "visualizationsList.noVisualizationsFound": "一致する解析はありません。",
     "search_insights": "全検索…",

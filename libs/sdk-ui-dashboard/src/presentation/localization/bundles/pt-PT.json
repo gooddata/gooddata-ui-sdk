@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "todos",
     "gs.visualizationsList.tabs.my": "criadas por mim",
     "visualizationsList.noInsights": "Esta área de trabalho não contém quaisquer insights.",
+    "visualizationsList.create": "Criar insight",
     "visualizationsList.noUserInsights": "Nenhuns insights criados.",
     "visualizationsList.noVisualizationsFound": "Nenhum insight correspondente.",
     "search_insights": "Pesquisar todos os insights…",

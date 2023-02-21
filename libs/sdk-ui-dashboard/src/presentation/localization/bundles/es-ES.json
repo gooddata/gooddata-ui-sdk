@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "todo",
     "gs.visualizationsList.tabs.my": "creado por mí",
     "visualizationsList.noInsights": "Este espacio de trabajo no contiene perspectivas.",
+    "visualizationsList.create": "Crear perspectiva",
     "visualizationsList.noUserInsights": "No se ha creado ninguna perspectiva.",
     "visualizationsList.noVisualizationsFound": "No coincide ninguna perspectiva.",
     "search_insights": "Buscar perspectivas…",

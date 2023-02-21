@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "все",
     "gs.visualizationsList.tabs.my": "создано мной",
     "visualizationsList.noInsights": "Эта рабочая область не содержит анализов.",
+    "visualizationsList.create": "Создать анализ",
     "visualizationsList.noUserInsights": "Нет созданных анализов.",
     "visualizationsList.noVisualizationsFound": "Нет подходящего анализа.",
     "search_insights": "Поиск по всем анализам…",
