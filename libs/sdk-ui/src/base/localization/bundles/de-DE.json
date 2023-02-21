@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "Sie können keine niedrigeren Berechtigungen festlegen als die Berechtigungen von Benutzergruppen, die diese Gruppe enthalten.",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "Sie können diesem Benutzer in diesem Workspace keine Berechtigungen entziehen. Um die Berechtigungen zu entfernen, gehen Sie bitte zum übergeordneten Workspace.",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "Sie können Berechtigungen für diesen Benutzer in diesem Workspace nicht entfernen oder ändern. Um die Berechtigungen zu bearbeiten, gehen Sie bitte zum übergeordneten Workspace.",
+    "shareDialog.share.granular.administrator.info": "<b>Hinweis:</b> Sie und andere Administratoren haben vollen Zugriff auf alle Dashboards.",
     "sorting.dropdown.header": "Betrachtung sortieren",
     "sorting.type.alphabetical.asc": "A bis Z",
     "sorting.type.alphabetical.desc": "Z bis A",

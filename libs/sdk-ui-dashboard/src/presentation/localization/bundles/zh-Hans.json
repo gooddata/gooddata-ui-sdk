@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "全部",
     "gs.visualizationsList.tabs.my": "由我创建",
     "visualizationsList.noInsights": "该工作区不包含任何洞察。",
+    "visualizationsList.create": "创建洞察",
     "visualizationsList.noUserInsights": "未创建任何洞察。",
     "visualizationsList.noVisualizationsFound": "未找到匹配的洞察。",
     "search_insights": "搜索所有洞察…",

@@ -225,6 +225,7 @@
     "gs.visualizationsList.tabs.all": "tout",
     "gs.visualizationsList.tabs.my": "créées par moi",
     "visualizationsList.noInsights": "Cet espace de travail ne contient aucune perception.",
+    "visualizationsList.create": "Créer une perception",
     "visualizationsList.noUserInsights": "Aucune perception créée.",
     "visualizationsList.noVisualizationsFound": "Aucune perception correspondante.",
     "search_insights": "Rechercher tout…",

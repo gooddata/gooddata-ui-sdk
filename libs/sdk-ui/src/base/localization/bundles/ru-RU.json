@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "Вы не можете установить более низкие разрешения, чем разрешения от групп пользователей, включающих эту группу.",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "Вы не можете удалить разрешения для этого пользователя в этой рабочей области. Чтобы удалить разрешения, сделайте это из родительской рабочей области.",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "Вы не можете удалить или изменить разрешения для этого пользователя в этой рабочей области. Чтобы отредактировать разрешения, сделайте это из родительской рабочей области.",
+    "shareDialog.share.granular.administrator.info": "<b>Примечание.</b> Вы и другие администраторы имеете полный доступ ко всем дашбордам.",
     "sorting.dropdown.header": "Сортировка анализа",
     "sorting.type.alphabetical.asc": "От А до Я",
     "sorting.type.alphabetical.desc": "От Я до А",

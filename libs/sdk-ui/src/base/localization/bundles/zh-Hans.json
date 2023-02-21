@@ -306,6 +306,7 @@
     "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": "您不能设置比此用户组的用户组权限更低的权限。",
     "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": "您不能在此工作区中删除此用户的权限。 要删除权限，请从父工作区执行此操作。",
     "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": "您不能在此工作区中删除或更改此用户的权限。要编辑权限，请从父工作区执行此操作。",
+    "shareDialog.share.granular.administrator.info": "<b>注意！</b>您和其他管理员对所有控制面板都具有完全访问权限。",
     "sorting.dropdown.header": "排序洞察",
     "sorting.type.alphabetical.asc": "A 到 Z。",
     "sorting.type.alphabetical.desc": "Z到A",
