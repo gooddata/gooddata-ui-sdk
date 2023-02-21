@@ -122,7 +122,7 @@ export const selectIsEmbedded = createSelector(selectConfig, (state) => {
  * Returns whether the Dashboard is rendered in the export mode.
  * In export mode, some components can be hidden, or rendered differently.
  *
- * @internal
+ * @public
  */
 export const selectIsExport = createSelector(selectConfig, (state) => {
     return state.isExport ?? false;
