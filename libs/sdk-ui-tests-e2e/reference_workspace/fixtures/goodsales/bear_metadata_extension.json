@@ -58,7 +58,8 @@
         "attr.stage.iswon",
         "attr.activity.activitytype",
         "label.opportunity.id.url",
-        "attr.stagehistory.id"
+        "attr.stagehistory.id",
+        "attr.account.id"
     ],
     "objects": [
         {
@@ -10035,6 +10036,132 @@
                 }
             },
             "name": "analyticalDashboard_Target_board_aacFiou2qR4g"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_with_stage_name_and_atribute_filter_aauDDoj1dayS}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabE1LYTedta",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with stage name and atribute filter"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_with_stage_name_and_atribute_filter_aabE1LYTedta"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": ["{{{attr_account_id}}}/elements?id=2874"],
+                                    "displayForm": "{{{label_account_id_name}}}",
+                                    "filterElementsBy": [],
+                                    "localIdentifier": "e3f1e5ccfc18473aa0bfac975e3227a3",
+                                    "negativeSelection": false
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": ["{{{attr_stage_name}}}/elements?id=165679"],
+                                    "displayForm": "{{{label_stage_name_stagename}}}",
+                                    "filterElementsBy": [
+                                        {
+                                            "filterLocalIdentifier": "e3f1e5ccfc18473aa0bfac975e3227a3",
+                                            "over": {
+                                                "attributes": ["{{{attr_stagehistory_id}}}"]
+                                            }
+                                        },
+                                        {
+                                            "filterLocalIdentifier": "2fbc21d799be40418cd0b512373d570f",
+                                            "over": {
+                                                "attributes": ["{{{attr_stage_name}}}"]
+                                            }
+                                        }
+                                    ],
+                                    "localIdentifier": "2926df535d4b4679b7f7181015ec21c5",
+                                    "negativeSelection": false
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": ["{{{attr_stage_iswon}}}/elements?id=460492"],
+                                    "displayForm": "{{{label_stage_iswon}}}",
+                                    "filterElementsBy": [
+                                        {
+                                            "filterLocalIdentifier": "e3f1e5ccfc18473aa0bfac975e3227a3",
+                                            "over": {
+                                                "attributes": ["{{{attr_stagehistory_id}}}"]
+                                            }
+                                        }
+                                    ],
+                                    "localIdentifier": "2fbc21d799be40418cd0b512373d570f",
+                                    "negativeSelection": false
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aadE1xnkebKC",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aadE1xnkebKC"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aadE1xnkebKC}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_with_stage_name_and_atribute_filter_aabE1LYTedta}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Table_with_stage_name_and_atribute_filter_aabE1LYTedta}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aabE1L1nHMS8",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Dependent filter set"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Dependent_filter_set_aabE1L1nHMS8"
         },
         {
             "content": {

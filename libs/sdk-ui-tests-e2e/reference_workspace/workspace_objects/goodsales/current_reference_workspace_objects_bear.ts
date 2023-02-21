@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-10T08:51:37.648Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-02-21T11:45:25.538Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -62,14 +62,14 @@ export const ForecastCategory: IAttribute = newAttribute("label.opportunitysnaps
 export const IsActive: IAttribute = newAttribute("label.stage.isactive");
 /**
  * Attribute Title: Is Closed?
- * Attribute ID: attr.stage.isclosed
- */
-export const IsClosed: IAttribute = newAttribute("label.stage.isclosed");
-/**
- * Attribute Title: Is Closed?
  * Attribute ID: attr.activity.isclosed
  */
-export const IsClosed_1: IAttribute = newAttribute("label.activity.isclosed");
+export const IsClosed: IAttribute = newAttribute("label.activity.isclosed");
+/**
+ * Attribute Title: Is Closed?
+ * Attribute ID: attr.stage.isclosed
+ */
+export const IsClosed_1: IAttribute = newAttribute("label.stage.isclosed");
 /**
  * Attribute Title: Is Task?
  * Attribute ID: attr.activity.istask
@@ -3609,6 +3609,18 @@ export const Dashboards = {
      * Dashboard ID: aau4cNWWv9FB
      */ WidgetTooltips: "aau4cNWWv9FB",
     /**
+     * Dashboard Title: Insight on dashboard
+     * Dashboard ID: aacGJitR3ziX
+     */ InsightOnDashboard: "aacGJitR3ziX",
+    /**
+     * Dashboard Title: Header Tests
+     * Dashboard ID: aafGHSoODa6M
+     */ HeaderTests: "aafGHSoODa6M",
+    /**
+     * Dashboard Title: Drag drop and Move
+     * Dashboard ID: aacGKAPY3Ebg
+     */ DragDropAndMove: "aacGKAPY3Ebg",
+    /**
      * Dashboard Title: Date filter 2
      * Dashboard ID: aapz6JNxGF42
      */ DateFilter2: "aapz6JNxGF42",
@@ -3625,15 +3637,7 @@ export const Dashboards = {
      * Dashboard ID: aacFiou2qR4g
      */ TargetBoard: "aacFiou2qR4g",
     /**
-     * Dashboard Title: Insight on dashboard
-     * Dashboard ID: aacGJitR3ziX
-     */ InsightOnDashboard: "aacGJitR3ziX",
-    /**
-     * Dashboard Title: Header Tests
-     * Dashboard ID: aafGHSoODa6M
-     */ HeaderTests: "aafGHSoODa6M",
-    /**
-     * Dashboard Title: Drag drop and Move
-     * Dashboard ID: aacGKAPY3Ebg
-     */ DragDropAndMove: "aacGKAPY3Ebg",
+     * Dashboard Title: Dependent filter set
+     * Dashboard ID: aabE1L1nHMS8
+     */ DependentFilterSet: "aabE1L1nHMS8",
 };

@@ -158,12 +158,16 @@ export class AttributeFilter {
         return this;
     }
 
-    configureDependency(filteredItem: string) {
-        const testClass = getTestClassByTitle(filteredItem);
+    configureDependency(filteredItem: string | string[]) {
+        const filteredItems = Array.isArray(filteredItem) ? filteredItem : [filteredItem];
+
         this.selectConfiguration();
-        this.getDropdownElement()
-            .find(`.s-attribute-filter-dropdown-configuration-item${testClass}`)
-            .click({ scrollBehavior: false });
+        filteredItems.forEach((filteredItem) => {
+            const testClass = getTestClassByTitle(filteredItem);
+            this.getDropdownElement()
+                .find(`.s-attribute-filter-dropdown-configuration-item${testClass}`)
+                .click({ scrollBehavior: false });
+        });
 
         this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
         return this;
