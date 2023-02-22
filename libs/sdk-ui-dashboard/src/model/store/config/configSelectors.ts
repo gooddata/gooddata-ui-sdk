@@ -319,7 +319,7 @@ export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (s
  * @internal
  */
 export const selectEnableAnalyticalDashboardPermissions = createSelector(selectConfig, (state) => {
-    return state.settings?.enableAnalyticalDashboardPermissions ?? false;
+    return state.settings?.enableAnalyticalDashboardPermissions ?? true;
 });
 
 /**
