@@ -4,6 +4,7 @@ import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { DashboardMenu } from "../../tools/dashboardMenu";
+import { Dashboard } from "../../tools/dashboards";
 import { Widget } from "../../tools/widget";
 import { getProjectId } from "../../support/constants";
 
@@ -18,6 +19,7 @@ Cypress.on("uncaught:exception", (error) => {
 
 Cypress.Cookies.debug(true);
 
+const dashboard = new Dashboard();
 const editMode = new EditMode();
 const filterBar = new FilterBar();
 const widget = new Widget(0);
@@ -110,6 +112,95 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
 
         account.removeFilter();
         stageName.open().isAttributeItemFiltered(false).getValueList().should("have.length", 8);
+    });
+
+    it("Reset after change mode to edit or view", () => {
+        Navigation.visit("dashboard/dependent-filter-set");
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 We Answer"],
+            ["Stage Name", "Closed Won"],
+            ["Is Won?", "true"],
+        ]);
+
+        account.open().selectAttributeWithoutSearch("1-800 Postcards");
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 Postcards"],
+            ["Stage Name", "All"],
+            ["Is Won?", "All"],
+        ]);
+
+        editMode.edit().isInEditMode();
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 We Answer"],
+            ["Stage Name", "Closed Won"],
+            ["Is Won?", "true"],
+        ]);
+
+        account.open().selectAttributeWithoutSearch("1-800 Postcards");
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 Postcards"],
+            ["Stage Name", "All"],
+            ["Is Won?", "All"],
+        ]);
+
+        editMode.cancel().discard();
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 We Answer"],
+            ["Stage Name", "Closed Won"],
+            ["Is Won?", "true"],
+        ]);
+    });
+
+    it("Reset after parent filter change", () => {
+        Navigation.visit("dashboard/dependent-filter-set");
+
+        editMode.edit().isInEditMode();
+
+        stageName.open().configureDependency(["Account", "Is Won?"]);
+
+        stageName
+            .getValueList()
+            .should("deep.equal", [
+                "Interest",
+                "Discovery",
+                "Short List",
+                "Risk Assessment",
+                "Conviction",
+                "Negotiation",
+                "Closed Won",
+                "Closed Lost",
+            ]);
+    });
+
+    it("Send reset dasboard command ", () => {
+        Navigation.visit("dashboard/commands");
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 We Answer"],
+            ["Stage Name", "Closed Won"],
+            ["Is Won?", "true"],
+        ]);
+
+        account.open().selectAttributeWithoutSearch("1-800 Postcards");
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 Postcards"],
+            ["Stage Name", "All"],
+            ["Is Won?", "All"],
+        ]);
+
+        dashboard.getElement(".s-button-command.reset-dashboard").click();
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 We Answer"],
+            ["Stage Name", "Closed Won"],
+            ["Is Won?", "true"],
+        ]);
     });
 
     it("(SEPARATE) Export on View Mode", () => {
