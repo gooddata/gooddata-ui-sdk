@@ -109,7 +109,11 @@ export function runCypress(configParams = {}) {
         cypressProps["CYPRESS_TIGER_API_TOKEN"] = tigerApiToken;
     }
 
-    console.log("Going to run cypress with args: ", args);
+    console.log(
+        "Going to run cypress with args: ",
+        args,
+        cypressProps["CYPRESS_TIGER_API_TOKEN"].slice(0, 8),
+    );
     const cypressProcess = spawn("cypress", args, {
         env: {
             ...process.env,
