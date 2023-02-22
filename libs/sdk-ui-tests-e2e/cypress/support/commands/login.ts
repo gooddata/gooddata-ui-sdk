@@ -1,6 +1,8 @@
 // (C) 2021 GoodData Corporation
 
 import { getHost, getUsername, getPassword } from "../constants";
+import { Users } from "../../tools/users";
+import { getTigerAuthToken } from "../../tools/api";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -15,6 +17,10 @@ declare global {
 export default {};
 
 Cypress.Commands.add("login", () => {
+    if (getTigerAuthToken()) {
+        Users.switchToDefaultUser();
+    }
+
     if (!getUsername()) {
         return;
     }
