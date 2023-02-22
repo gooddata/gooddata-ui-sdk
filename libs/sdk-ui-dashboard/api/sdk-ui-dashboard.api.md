@@ -6113,7 +6113,7 @@ export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => Outp
 // @alpha (undocumented)
 export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget | IInsightWidget | undefined) => boolean>;
 
-// @internal
+// @public
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)

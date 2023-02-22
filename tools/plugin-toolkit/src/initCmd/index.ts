@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ActionOptions, TargetAppLanguage } from "../_base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import * as path from "path";
@@ -43,15 +43,20 @@ const BearBackendPackage = "@gooddata/sdk-backend-bear";
  * @param config - config for the initialization action
  */
 function modifyPackageJson(target: string, config: InitCmdActionConfig) {
-    const { name, backend } = config;
+    const { name, backend, packageManager } = config;
     const packageJsonFile = path.resolve(target, "package.json");
     const packageJson = readJsonSync(packageJsonFile);
-    const { peerDependencies, devDependencies } = packageJson;
+    const { peerDependencies, devDependencies, overrides } = packageJson;
     const unnecessaryBackendPkg = backend === "bear" ? TigerBackendPackage : BearBackendPackage;
 
     packageJson.name = name;
     delete peerDependencies[unnecessaryBackendPkg];
     delete devDependencies[unnecessaryBackendPkg];
+
+    if (overrides && packageManager === "yarn") {
+        delete packageJson.overrides;
+        packageJson.resolutions = overrides;
+    }
 
     writeAsJsonSync(packageJsonFile, packageJson);
 }
