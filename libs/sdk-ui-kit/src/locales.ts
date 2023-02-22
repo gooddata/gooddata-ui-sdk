@@ -21,10 +21,19 @@ export const granularPermissionMessageLabels = defineMessages({
 });
 
 export const granularPermissionMessageTooltips = defineMessages({
-    cannotChangeHigher: { id: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher" },
-    cannotRemoveFromParent: { id: "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent" },
-    noChangeAvailable: { id: "shareDialog.share.granular.grantee.tooltip.noChangeAvailable" },
+    cannotChangeHigherForUser: { id: "shareDialog.share.granular.granularUser.tooltip.cannotChangeHigher" },
+    cannotChangeHigherForGroup: {
+        id: "shareDialog.share.granular.granularGroup.tooltip.cannotChangeHigher",
+    },
+    cannotRemoveFromParentForUser: {
+        id: "shareDialog.share.granular.granularUser.tooltip.cannotRemoveFromParent",
+    },
+    cannotRemoveFromParentForGroup: {
+        id: "shareDialog.share.granular.granularGroup.tooltip.cannotRemoveFromParent",
+    },
+    noChangeAvailableForUser: { id: "shareDialog.share.granular.granularUser.tooltip.noChangeAvailable" },
+    noChangeAvailableForGroup: { id: "shareDialog.share.granular.granularGroup.tooltip.noChangeAvailable" },
     cannotGrantHigher: { id: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher" },
-    cannotGrantLowerForUser: { id: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser" },
-    cannotGrantLowerForGroup: { id: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup" },
+    cannotGrantLowerForUser: { id: "shareDialog.share.granular.granularUser.tooltip.cannotGrantLower" },
+    cannotGrantLowerForGroup: { id: "shareDialog.share.granular.granularGroup.tooltip.cannotGrantLower" },
 });

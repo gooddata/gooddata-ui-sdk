@@ -1564,8 +1564,13 @@
         "comment": "",
         "limit": 0
     },
-    "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher": {
+    "shareDialog.share.granular.granularUser.tooltip.cannotChangeHigher": {
         "value": "You cannot remove or change permissions for users with higher permissions than you have.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.granularGroup.tooltip.cannotChangeHigher": {
+        "value": "You cannot remove or change permissions for groups with higher permissions than you have.",
         "comment": "",
         "limit": 0
     },
@@ -1574,23 +1579,33 @@
         "comment": "",
         "limit": 0
     },
-    "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser": {
+    "shareDialog.share.granular.granularUser.tooltip.cannotGrantLower": {
         "value": "You cannot set lower permissions than are the permissions from user groups with this user.",
         "comment": "",
         "limit": 0
     },
-    "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": {
+    "shareDialog.share.granular.granularGroup.tooltip.cannotGrantLower": {
         "value": "You cannot set lower permissions than are the permissions from user groups that include this group.",
         "comment": "",
         "limit": 0
     },
-    "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": {
+    "shareDialog.share.granular.granularUser.tooltip.cannotRemoveFromParent": {
         "value": "You cannot remove permissions for this user in this workspace. To remove the permissions, do so from the parent workspace.",
         "comment": "",
         "limit": 0
     },
-    "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": {
+    "shareDialog.share.granular.granularGroup.tooltip.cannotRemoveFromParent": {
+        "value": "You cannot remove permissions for this user group in this workspace. To remove the permissions, do so from the parent workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.granularUser.tooltip.noChangeAvailable": {
         "value": "You cannot remove or change permissions for this user in this workspace. To edit the permissions, do so from the parent workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.granularGroup.tooltip.noChangeAvailable": {
+        "value": "You cannot remove or change permissions for this user group in this workspace. To edit the permissions, do so from the parent workspace.",
         "comment": "",
         "limit": 0
     },

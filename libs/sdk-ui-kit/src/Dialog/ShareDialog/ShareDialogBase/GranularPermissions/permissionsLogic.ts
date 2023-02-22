@@ -73,8 +73,8 @@ const getPermissionTypeItems = (
                 disableWithTooltip(
                     item,
                     isGranularGranteeUser(grantee)
-                        ? "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser"
-                        : "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup",
+                        ? granularPermissionMessageTooltips.cannotGrantLowerForUser.id
+                        : granularPermissionMessageTooltips.cannotGrantLowerForGroup.id,
                 );
             }
         });
@@ -114,13 +114,21 @@ export const getGranteePossibilities = (
         (granteeEffectivePermission === "EDIT" && !currentUserPermissions.canEditAffectedObject) ||
         (granteeEffectivePermission === "SHARE" && !currentUserPermissions.canShareAffectedObject)
     ) {
-        disableWithTooltip(change, granularPermissionMessageTooltips.cannotChangeHigher.id);
-        disableWithTooltip(remove, granularPermissionMessageTooltips.cannotChangeHigher.id);
+        const tooltipId = isGranularGranteeUser(grantee)
+            ? granularPermissionMessageTooltips.cannotChangeHigherForUser.id
+            : granularPermissionMessageTooltips.cannotChangeHigherForGroup.id;
+        disableWithTooltip(change, tooltipId);
+        disableWithTooltip(remove, tooltipId);
     }
 
     // cannot remove permission that is defined on the object in parent workspace
     if (grantee.permissions.length === 0 && grantee.inheritedPermissions.length !== 0) {
-        disableWithTooltip(remove, granularPermissionMessageTooltips.cannotRemoveFromParent.id);
+        disableWithTooltip(
+            remove,
+            isGranularGranteeUser(grantee)
+                ? granularPermissionMessageTooltips.cannotRemoveFromParentForUser.id
+                : granularPermissionMessageTooltips.cannotRemoveFromParentForGroup.id,
+        );
     }
 
     // disable all permissions change if all assignment options are disabled and also the Remove option is disabled
@@ -131,7 +139,12 @@ export const getGranteePossibilities = (
             (item) => !item.enabled || item.hidden || item.id === granteeEffectivePermission,
         )
     ) {
-        disableWithTooltip(change, granularPermissionMessageTooltips.noChangeAvailable.id);
+        disableWithTooltip(
+            change,
+            isGranularGranteeUser(grantee)
+                ? granularPermissionMessageTooltips.noChangeAvailableForUser.id
+                : granularPermissionMessageTooltips.noChangeAvailableForGroup.id,
+        );
     }
 
     return {

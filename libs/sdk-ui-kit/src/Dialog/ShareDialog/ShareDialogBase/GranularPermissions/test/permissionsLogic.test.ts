@@ -36,6 +36,8 @@ describe("permissions logic", () => {
     });
 
     describe("getGranteePossibilities", () => {
+        const granteeTypes = ["granularUser", "granularGroup"];
+
         const editUserPermissions: CurrentUserPermissions = {
             canEditAffectedObject: true,
             canEditLockedAffectedObject: true,
@@ -81,13 +83,6 @@ describe("permissions logic", () => {
         const granteeDirectViewIndirectShare = {
             permissions: ["VIEW"],
             inheritedPermissions: ["SHARE"],
-            type: "granularUser",
-        } as IGranularGrantee;
-
-        const groupDirectViewIndirectShare = {
-            permissions: ["VIEW"],
-            inheritedPermissions: ["SHARE"],
-            type: "granularGroup",
         } as IGranularGrantee;
 
         const granteeIndirectView = {
@@ -101,6 +96,13 @@ describe("permissions logic", () => {
             inheritedPermissions: ["SHARE"],
             type: "granularUser",
         } as IGranularGrantee;
+
+        function getMockGrantee(baseGrantee: Partial<IGranularGrantee>, type: string): IGranularGrantee {
+            return {
+                ...baseGrantee,
+                type,
+            } as IGranularGrantee;
+        }
 
         it("allows all changes for user with EDIT permission", () => {
             const locked = false;
@@ -182,93 +184,52 @@ describe("permissions logic", () => {
             });
         });
 
-        it("disables user's options lower that permissions obtained indirectly from a user group", () => {
-            const locked = false;
+        it.each(granteeTypes)(
+            "disables %s options lower that permissions obtained indirectly from a user group",
+            (type) => {
+                const locked = false;
 
-            const possibilities = getGranteePossibilities(
-                granteeDirectViewIndirectShare,
-                editUserPermissions,
-                locked,
-            );
+                const possibilities = getGranteePossibilities(
+                    getMockGrantee(granteeDirectViewIndirectShare, type),
+                    editUserPermissions,
+                    locked,
+                );
 
-            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
-                assign: {
-                    effective: "SHARE",
-                    items: [
-                        {
-                            id: "EDIT",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "SHARE",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "VIEW",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser",
-                        },
-                    ],
-                },
-                remove: {
-                    enabled: true,
-                    tooltip: "",
-                },
-                change: {
-                    enabled: true,
-                    tooltip: "",
-                },
-            });
-        });
-
-        it("disables group's options lower that permissions obtained indirectly from a user group", () => {
-            const locked = false;
-
-            const possibilities = getGranteePossibilities(
-                groupDirectViewIndirectShare,
-                editUserPermissions,
-                locked,
-            );
-
-            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
-                assign: {
-                    effective: "SHARE",
-                    items: [
-                        {
-                            id: "EDIT",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "SHARE",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "VIEW",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup",
-                        },
-                    ],
-                },
-                remove: {
-                    enabled: true,
-                    tooltip: "",
-                },
-                change: {
-                    enabled: true,
-                    tooltip: "",
-                },
-            });
-        });
+                expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
+                    assign: {
+                        effective: "SHARE",
+                        items: [
+                            {
+                                id: "EDIT",
+                                hidden: false,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                            {
+                                id: "SHARE",
+                                hidden: false,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                            {
+                                id: "VIEW",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: `shareDialog.share.granular.${type}.tooltip.cannotGrantLower`,
+                            },
+                        ],
+                    },
+                    remove: {
+                        enabled: true,
+                        tooltip: "",
+                    },
+                    change: {
+                        enabled: true,
+                        tooltip: "",
+                    },
+                });
+            },
+        );
 
         it("hides Edit & share when the object is locked", () => {
             const locked = true;
@@ -310,168 +271,192 @@ describe("permissions logic", () => {
             });
         });
 
-        it("disables all changes when the current user(VIEW) has lower permission than the grantee(EDIT)", () => {
-            const locked = false;
+        it.each(granteeTypes)(
+            "disables all changes when the current user(VIEW) has lower permission than the grantee(EDIT)",
+            (type) => {
+                const locked = false;
 
-            const possibilities = getGranteePossibilities(granteeDirectEdit, viewUserPermissions, locked);
+                const possibilities = getGranteePossibilities(
+                    getMockGrantee(granteeDirectEdit, type),
+                    viewUserPermissions,
+                    locked,
+                );
 
-            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
-                assign: {
-                    effective: "EDIT",
-                    items: [
-                        {
-                            id: "EDIT",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
-                        },
-                        {
-                            id: "SHARE",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
-                        },
-                        {
-                            id: "VIEW",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                    ],
-                },
-                remove: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher",
-                },
-                change: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher",
-                },
-            });
-        });
+                expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
+                    assign: {
+                        effective: "EDIT",
+                        items: [
+                            {
+                                id: "EDIT",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
+                            },
+                            {
+                                id: "SHARE",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
+                            },
+                            {
+                                id: "VIEW",
+                                hidden: false,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                        ],
+                    },
+                    remove: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.cannotChangeHigher`,
+                    },
+                    change: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.cannotChangeHigher`,
+                    },
+                });
+            },
+        );
 
-        it("disables removing permission from parent but allows to upgrade it in current workspace", () => {
-            const locked = true;
+        it.each(granteeTypes)(
+            "disables removing %s permission from parent but allows to upgrade it in current workspace",
+            (type) => {
+                const locked = true;
 
-            const possibilities = getGranteePossibilities(granteeIndirectView, editUserPermissions, locked);
+                const possibilities = getGranteePossibilities(
+                    getMockGrantee(granteeIndirectView, type),
+                    editUserPermissions,
+                    locked,
+                );
 
-            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
-                assign: {
-                    effective: "VIEW",
-                    items: [
-                        {
-                            id: "EDIT",
-                            hidden: true,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "SHARE",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "VIEW",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                    ],
-                },
-                remove: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent",
-                },
-                change: {
-                    enabled: true,
-                    tooltip: "",
-                },
-            });
-        });
+                expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
+                    assign: {
+                        effective: "VIEW",
+                        items: [
+                            {
+                                id: "EDIT",
+                                hidden: true,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                            {
+                                id: "SHARE",
+                                hidden: false,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                            {
+                                id: "VIEW",
+                                hidden: false,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                        ],
+                    },
+                    remove: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.cannotRemoveFromParent`,
+                    },
+                    change: {
+                        enabled: true,
+                        tooltip: "",
+                    },
+                });
+            },
+        );
 
-        it("disables all changes when neither upgrade nor remove is available", () => {
-            const locked = true;
+        it.each(granteeTypes)(
+            "disables all changes of a %s when neither upgrade nor remove is available",
+            (type) => {
+                const locked = true;
 
-            const possibilities = getGranteePossibilities(granteeIndirectShare, editUserPermissions, locked);
+                const possibilities = getGranteePossibilities(
+                    getMockGrantee(granteeIndirectShare, type),
+                    editUserPermissions,
+                    locked,
+                );
 
-            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
-                assign: {
-                    effective: "SHARE",
-                    items: [
-                        {
-                            id: "EDIT",
-                            hidden: true,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "SHARE",
-                            hidden: false,
-                            enabled: true,
-                            tooltip: "",
-                        },
-                        {
-                            id: "VIEW",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser",
-                        },
-                    ],
-                },
-                remove: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent",
-                },
-                change: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.noChangeAvailable",
-                },
-            });
-        });
+                expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
+                    assign: {
+                        effective: "SHARE",
+                        items: [
+                            {
+                                id: "EDIT",
+                                hidden: true,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                            {
+                                id: "SHARE",
+                                hidden: false,
+                                enabled: true,
+                                tooltip: "",
+                            },
+                            {
+                                id: "VIEW",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: `shareDialog.share.granular.${type}.tooltip.cannotGrantLower`,
+                            },
+                        ],
+                    },
+                    remove: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.cannotRemoveFromParent`,
+                    },
+                    change: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.noChangeAvailable`,
+                    },
+                });
+            },
+        );
 
-        it("disables all changes when all options are disabled due to overlapping conditions", () => {
-            const locked = false;
+        it.each(granteeTypes)(
+            "disables all changes when all options are disabled due to overlapping conditions",
+            (type) => {
+                const locked = false;
 
-            const possibilities = getGranteePossibilities(
-                granteeDirectEditIndirectEdit,
-                shareUserPermissions,
-                locked,
-            );
+                const possibilities = getGranteePossibilities(
+                    getMockGrantee(granteeDirectEditIndirectEdit, type),
+                    shareUserPermissions,
+                    locked,
+                );
 
-            expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
-                assign: {
-                    effective: "EDIT",
-                    items: [
-                        {
-                            id: "EDIT",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
-                        },
-                        {
-                            id: "SHARE",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser",
-                        },
-                        {
-                            id: "VIEW",
-                            hidden: false,
-                            enabled: false,
-                            tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser",
-                        },
-                    ],
-                },
-                remove: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher",
-                },
-                change: {
-                    enabled: false,
-                    tooltip: "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher",
-                },
-            });
-        });
+                expect(possibilities).toEqual<IGranteePermissionsPossibilities>({
+                    assign: {
+                        effective: "EDIT",
+                        items: [
+                            {
+                                id: "EDIT",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher",
+                            },
+                            {
+                                id: "SHARE",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: `shareDialog.share.granular.${type}.tooltip.cannotGrantLower`,
+                            },
+                            {
+                                id: "VIEW",
+                                hidden: false,
+                                enabled: false,
+                                tooltip: `shareDialog.share.granular.${type}.tooltip.cannotGrantLower`,
+                            },
+                        ],
+                    },
+                    remove: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.cannotChangeHigher`,
+                    },
+                    change: {
+                        enabled: false,
+                        tooltip: `shareDialog.share.granular.${type}.tooltip.cannotChangeHigher`,
+                    },
+                });
+            },
+        );
     });
 });
