@@ -118,8 +118,8 @@ rush build -t sdk-ui-tests-e2e && yarn build-scenarios && docker build --file Do
     --force-recreate --always-recreate-deps --renew-anon-volumes gooddata-ui-sdk-scenarios
 ```
 
-Apart from specifying HOST property in the `.env`, specify also `CYPRESS_HOST=http://localhost:9500` and run with
+and run with (by default runs in visual mode)
 
 ```
-yarn run-integrated
+CYPRESS_HOST=http://localhost:9500 yarn run-integrated
 ```

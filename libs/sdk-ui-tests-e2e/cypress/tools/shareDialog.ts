@@ -27,6 +27,11 @@ export class ShareDialog {
             .parents(".s-share-dialog-grantee-item");
     }
 
+    shareItemExistsForUserOrGroup(userOrGroup: string, exists = true) {
+        this.getItemForGivenUserOrGroup(userOrGroup).should(exists ? "exist" : "not.exist");
+        return this;
+    }
+
     hasPermissionSet(user: string, permission: string) {
         this.getItemForGivenUserOrGroup(user)
             .find(".s-granular-permission-button")

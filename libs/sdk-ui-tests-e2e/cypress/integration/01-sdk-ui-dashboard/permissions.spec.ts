@@ -8,6 +8,7 @@ import { getProjectId } from "../../support/constants";
 import { Users } from "../../tools/users";
 import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
+import { generateUUID } from "../../tools/utils";
 
 Cypress.on("uncaught:exception", (error) => {
     // eslint-disable-next-line no-console
@@ -33,8 +34,9 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
         });
     });
     describe("Basic viewer case", () => {
-        const username = "test-viewer";
-        const groupname = "test-viewers";
+        const guid = generateUUID();
+        const username = `test-viewer-${guid}`;
+        const groupname = `test-viewers-${guid}`;
 
         function deleteUserAndGroup(user: string, group: string) {
             Users.deleteUser(user);
@@ -119,7 +121,7 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
             shareDialog.dialogExists(true).addButtonIsActive().remove(username).save();
 
             topBar.enterSharing();
-            shareDialog.isEmpty().cancel();
+            shareDialog.shareItemExistsForUserOrGroup(username, false).cancel();
 
             // check that the user cannot access
             Users.switchToUser(username);
@@ -160,10 +162,11 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
     });
 
     describe("Basic multiple groups/users case", () => {
-        const firstUser = "test-viewer-1";
-        const firstGroup = "test-viewers-1";
-        const secondUser = "test-viewer-2";
-        const secondGroup = "test-viewers-2";
+        const guid = generateUUID();
+        const firstUser = `test-viewer-1-${guid}`;
+        const firstGroup = `test-viewers-1-${guid}`;
+        const secondUser = `test-viewer-2-${guid}`;
+        const secondGroup = `test-viewers-2-${guid}`;
 
         beforeEach(() => {
             cy.login();
