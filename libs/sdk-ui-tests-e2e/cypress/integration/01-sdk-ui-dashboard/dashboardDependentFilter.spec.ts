@@ -177,6 +177,20 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
             ]);
     });
 
+    it("Do not refresh after update again", () => {
+        Navigation.visit("dashboard/dependent-filter-set");
+
+        account.open().selectAttributesWithoutApply("1-800 Postcards");
+
+        filterBar.hasAttributeFiltersWithValue([
+            ["Account", "1-800 We Answer"],
+            ["Stage Name", "Closed Won"],
+            ["Is Won?", "true"],
+        ]);
+
+        account.getSelectedValueList().should("deep.equal", ["1-800 Postcards"]);
+    });
+
     it("Send reset dasboard command ", () => {
         Navigation.visit("dashboard/commands");
 

@@ -221,20 +221,21 @@ function updateNonResettingFilter(
         setConnectedPlaceholderValue,
     }: UpdateFilterProps,
 ): UpdateFilterType {
-    const elements = filterAttributeElements(filter);
-    const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
-    const isInverted = isNegativeAttributeFilter(filter);
+    if (limitingAttributesChanged || filtersChanged) {
+        const elements = filterAttributeElements(filter);
+        const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
+        const isInverted = isNegativeAttributeFilter(filter);
 
-    handler.changeSelection({ keys, isInverted });
-    handler.setLimitingAttributeFilters(limitingAttributeFilters);
-    handler.commitSelection();
+        handler.changeSelection({ keys, isInverted });
+        handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        handler.commitSelection();
 
-    const nextFilter = handler.getFilter();
-    setConnectedPlaceholderValue(nextFilter);
+        const nextFilter = handler.getFilter();
+        setConnectedPlaceholderValue(nextFilter);
 
-    if (limitingAttributesChanged) {
-        return "init-parent";
-    } else if (filtersChanged) {
+        if (limitingAttributesChanged) {
+            return "init-parent";
+        }
         return "init-self";
     }
 

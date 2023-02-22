@@ -49,11 +49,15 @@ export class AttributeFilter {
         return this;
     }
 
-    selectAttributeWithoutSearch(name?: string): AttributeFilter {
+    selectAttributesWithoutApply(name?: string) {
         this.clearAllValues();
         this.getDropdownElement()
             .find(`.s-attribute-filter-list-item[title="${name}"]`)
             .click({ force: true });
+    }
+
+    selectAttributeWithoutSearch(name?: string): AttributeFilter {
+        this.selectAttributesWithoutApply(name);
         this.apply();
         return this;
     }
@@ -71,6 +75,16 @@ export class AttributeFilter {
         cy.get(`.s-attribute-filter-list-item .input-label-text`).each(($li) => {
             return result.push($li.text());
         });
+        return cy.wrap(result);
+    }
+
+    getSelectedValueList() {
+        const result = [] as string[];
+        cy.get(`.s-attribute-filter-list-item.s-attribute-filter-list-item-selected .input-label-text`).each(
+            ($li) => {
+                return result.push($li.text());
+            },
+        );
         return cy.wrap(result);
     }
 
