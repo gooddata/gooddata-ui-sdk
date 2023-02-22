@@ -34,6 +34,7 @@ async function main() {
             TIGER_DATASOURCES_NAME,
             TIGER_DATASOURCES_PASSWORD,
             TIGER_API_TOKEN_NAME_PREFIX,
+            CYPRESS_HOST,
         } = process.env;
 
         if (!TEST_WORKSPACE_ID) {
@@ -76,7 +77,9 @@ async function main() {
             };
         }
 
-        let { HOST = "https://localhost:8443" } = process.env;
+        // when running locally, it is sometimes useful to override the HOST param specified in the
+        // .env with something else, like http://localhost:9500, so CYPRESS_HOST can be used
+        let HOST = CYPRESS_HOST || process.env.HOST || "https://localhost:8443";
 
         const { VISUAL_MODE = "true", CYPRESS_TEST_TAGS, FILTER } = process.env;
 
