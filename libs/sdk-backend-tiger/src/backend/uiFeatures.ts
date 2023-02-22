@@ -59,7 +59,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: true,
     enableDescriptions: true,
-    enableAnalyticalDashboardPermissions: false,
+    enableAnalyticalDashboardPermissions: true,
     enablePushpinGeoChart: true,
     enableKPIAttributeFilterRenaming: false,
     enableKPIDashboardExportPDF: true,
