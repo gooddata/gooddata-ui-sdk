@@ -28,7 +28,7 @@ interface IGranularPermissionsDropdownBodyProps {
     mode: DialogModeType;
 }
 
-const overlayAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
+const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () => void }> = ({
     disabled,
@@ -105,7 +105,7 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
             key="GranularPermissionsSelect"
             alignTo={`.${alignTo}`}
             alignPoints={overlayAlignPoints}
-            className="gd-granular-permissions-overlay"
+            className="s-granular-permissions-overlay"
             closeOnMouseDrag={true}
             closeOnOutsideClick={true}
             closeOnParentScroll={true}
