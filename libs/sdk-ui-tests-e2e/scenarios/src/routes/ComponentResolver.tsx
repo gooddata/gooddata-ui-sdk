@@ -77,6 +77,7 @@ export const SCENARIO_KEYS = {
     HEADER_SECTION: "dashboard/header",
     HEADER_LOCALIZATION: "dashboard/header-localization",
     DRAG_DROP_MOVE_WIDGET: "dashboard/drag-drop-widgets",
+    INSIGHT_VIEW_BASIC: "insight/basic-insight",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -114,6 +115,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.HEADER_SECTION, HeaderSectionScenario],
     [SCENARIO_KEYS.HEADER_LOCALIZATION, HeaderLocalizationScenario],
     [SCENARIO_KEYS.DRAG_DROP_MOVE_WIDGET, DragDropWidgetScenario],
+    [SCENARIO_KEYS.INSIGHT_VIEW_BASIC, BasicInsightScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

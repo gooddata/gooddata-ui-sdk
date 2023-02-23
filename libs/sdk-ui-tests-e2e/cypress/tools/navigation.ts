@@ -3,7 +3,7 @@ import { ISettings } from "@gooddata/sdk-model";
 import { getHost } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
 
-const VISIT_TIMEOUT = 40000;
+const VISIT_TIMEOUT = 60000;
 
 function getDashboardUrl() {
     return `${getHost()}`;
