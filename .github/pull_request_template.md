@@ -8,18 +8,19 @@ Description of changes.
 
 Supported PR commands:
 
-| Command                                               | Description                                                |
-| ----------------------------------------------------- | ---------------------------------------------------------- |
-| `ok to test`                                          | Re-run standard checks                                     |
-| `extended check sonar`                                | SonarQube tests                                            |
-| `extended check plugins`                              | Dashboard plugins tests                                    |
-| `extended test - backstop`                            | BackstopJS tests                                           |
-| **E2E Cypress tests commands - TIGER**                |                                                            |
-| `extended test - tiger-cypress - isolated <testName>` | Run isolated tests running against recorded Tiger backend. |
-| `extended test - tiger-cypress - record <testName>`   | Create a new recording for isolated Tiger tests.           |
-| **E2E Cypress tests commands - BEAR**                 |                                                            |
-| `extended test - cypress - isolated <testName>`       | Run isolated tests running against recorded Bear backend.  |
-| `extended test - cypress - record <testName>`         | Create a new recording for isolated Bear tests.            |
+| Command                                                 | Description                                                |
+| ------------------------------------------------------- | ---------------------------------------------------------- |
+| `ok to test`                                            | Re-run standard checks                                     |
+| `extended check sonar`                                  | SonarQube tests                                            |
+| `extended check plugins`                                | Dashboard plugins tests                                    |
+| `extended test - backstop`                              | BackstopJS tests                                           |
+| **E2E Cypress tests commands - TIGER**                  |                                                            |
+| `extended test - tiger-cypress - isolated <testName>`   | Run isolated tests running against recorded Tiger backend. |
+| `extended test - tiger-cypress - record <testName>`     | Create a new recording for isolated Tiger tests.           |
+| `extended test - tiger-cypress - integrated <testName>` | Run integrated tests against live backend                  |
+| **E2E Cypress tests commands - BEAR**                   |                                                            |
+| `extended test - cypress - isolated <testName>`         | Run isolated tests running against recorded Bear backend.  |
+| `extended test - cypress - record <testName>`           | Create a new recording for isolated Bear tests.            |
 
 `<testName>` in cypress commands is used to filter specfiles. Example, to run record with BEAR backend
 
