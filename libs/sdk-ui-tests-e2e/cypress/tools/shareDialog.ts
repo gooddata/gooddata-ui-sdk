@@ -28,7 +28,9 @@ export class ShareDialog {
     }
 
     shareItemExistsForUserOrGroup(userOrGroup: string, exists = true) {
-        this.getItemForGivenUserOrGroup(userOrGroup).should(exists ? "exist" : "not.exist");
+        this.getElement()
+            .contains(userOrGroup)
+            .should(exists ? "exist" : "not.exist");
         return this;
     }
 
