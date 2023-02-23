@@ -5,8 +5,10 @@ This project contains End-to-End tests for GoodData.UI components.
 ## Overview
 
 Tests in this library verify various go-through scenarios for GoodData.UI components. Tests are implemented using [Cypress](https://www.cypress.io/).
+There are two categories of tests: isolated and integrated. Isolated tests run against recorded backend responses, whereas integrated tests
+run against a live backend. Isolated tests run in the pre-merge phase and itegrated tests run in post-merge phase.
 
-## DEV Guide
+## DEV Guide for isolated tests
 
 ### Running tests locally
 
@@ -86,4 +88,38 @@ if (process.env.SDK_BACKEND === 'TIGER') {
 export const ExampleScenario: React.FC = () => {
     return <Dashboard dashboard={dashboardRef} />;
 };
+```
+
+## DEV Guide for integrated tests
+
+Provide all necessary info in the `.env` file:
+
+-   SDK_BACKEND=tiger
+-   FIXTURE_TYPE=goodsales
+-   CYPRESS_TEST_TAGS=post-merge_integrated_tiger
+-   HOST=https://staging-automation.anywhere.gooddata.com
+-   TIGER_API_TOKEN=
+
+Create reference workspace with `yarn create-ref-workspace` or make sure you have valid TEST_WORKSPACE_ID specified in the `.env` file.
+
+To run the tests locally, you would need to build the sdk and the scenarios against which the tests run and then run the tests, i.e.
+
+```
+rush build -t sdk-ui-tests-e2e && yarn build-scenarios && docker build --file Dockerfile_local -t \
+    tiger-ui-sdk-scenarios . && IMAGE_ID=tiger-ui-sdk-scenarios docker-compose -f docker-compose-integrated.yaml up \
+    --force-recreate --always-recreate-deps --renew-anon-volumes --exit-code-from integrated-tests --abort-on-container-exit
+```
+
+To debug tests in visual mode, you need to first build the scenarios and start them in docker compose
+
+```
+rush build -t sdk-ui-tests-e2e && yarn build-scenarios && docker build --file Dockerfile_local -t \
+    tiger-ui-sdk-scenarios . && IMAGE_ID=tiger-ui-sdk-scenarios docker-compose -f docker-compose-integrated.yaml up \
+    --force-recreate --always-recreate-deps --renew-anon-volumes gooddata-ui-sdk-scenarios
+```
+
+and run with (by default runs in visual mode)
+
+```
+CYPRESS_HOST=http://localhost:9500 yarn run-integrated
 ```

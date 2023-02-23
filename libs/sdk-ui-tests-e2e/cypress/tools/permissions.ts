@@ -21,21 +21,44 @@ export class DashboardAccess {
 
         Api.request("POST", url, body, { useVendorContentType: false });
     }
+
+    static assignGroupPermissionToDashboard(
+        workspaceId: string,
+        dashboardId: string,
+        groupId: string,
+        permission: string,
+    ) {
+        const url = `/api/v1/actions/workspaces/${workspaceId}/analyticalDashboards/${dashboardId}/managePermissions`;
+        const body = [
+            {
+                assigneeIdentifier: {
+                    id: groupId,
+                    type: "userGroup",
+                },
+                permissions: [permission],
+            },
+        ];
+
+        Api.request("POST", url, body, { useVendorContentType: false });
+    }
 }
 
 export class WorkspaceAccess {
-    static assignUserPermissionToWorkspace(workspaceId: string, userId: string, permission: string) {
+    static assignUserPermissionToWorkspace(
+        workspaceId: string,
+        usersAndPermissions: { user: string; permission: string }[],
+    ) {
         const url = `/api/v1/layout/workspaces/${workspaceId}/permissions`;
         const body = {
-            permissions: [
-                {
+            permissions: usersAndPermissions.map(({ user, permission }) => {
+                return {
                     assignee: {
-                        id: userId,
+                        id: user,
                         type: "user",
                     },
                     name: permission,
-                },
-            ],
+                };
+            }),
         };
 
         Api.request("PUT", url, body, { useVendorContentType: false });
