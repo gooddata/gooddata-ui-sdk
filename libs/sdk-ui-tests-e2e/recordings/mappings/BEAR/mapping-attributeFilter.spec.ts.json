@@ -1,0 +1,511 @@
+{
+    "mappings": [
+        {
+            "id": "145f130e-44ea-4f71-a7fa-fdb04b20031e",
+            "name": "gdc_account_login",
+            "request": {
+                "url": "/gdc/account/login",
+                "method": "POST"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"state\":\"/gdc/account/login/19002a37a5bfa61cc97260baae7ba86c\"}}",
+                "headers": {
+                    "x-gdc-request": "RwhPg4IHffMsOX1i",
+                    "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+                    "vary": "origin",
+                    "x-gdc-request-time": "42",
+                    "content-type": "application/json",
+                    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
+                    "p3p": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
+                    "pragma": "no-cache",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "145f130e-44ea-4f71-a7fa-fdb04b20031e"
+        },
+        {
+            "id": "cc3c4748-011e-4e96-ad50-4cf3cbcfef0c",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_identifiers",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/identifiers",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"identifierToUri\":[\"label.owner.department\"]}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"identifiers\":[{\"identifier\":\"label.owner.department\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\"}]}",
+                "headers": {
+                    "x-gdc-request": "dMjU6C0JETbU4iW2",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "10",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "cc3c4748-011e-4e96-ad50-4cf3cbcfef0c"
+        },
+        {
+            "id": "7c5818c3-7464-4533-87c7-e263e412550b",
+            "name": "gdc_account_profile_current",
+            "request": {
+                "url": "/gdc/account/profile/current",
+                "method": "GET"
+            },
+            "response": {
+                "status": 307,
+                "base64Body": "",
+                "headers": {
+                    "x-gdc-request": "7At1kY2YvIvAuG1k",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "5",
+                    "location": "/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "7c5818c3-7464-4533-87c7-e263e412550b"
+        },
+        {
+            "id": "6498757c-ae59-4471-80dc-5089577fc8d5",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_identifiers",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/identifiers",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"identifierToUri\":[\"label.product.id.name\"]}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"identifiers\":[{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"identifier\":\"label.product.id.name\"}]}",
+                "headers": {
+                    "x-gdc-request": "SfqlMLQyXSM4PeJw",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "24",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "6498757c-ae59-4471-80dc-5089577fc8d5"
+        },
+        {
+            "id": "5cd68362-6ebd-4796-9594-744a3bc9f026",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1086",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"attributeDisplayForm\":{\"content\":{\"default\":1,\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/43]\"},\"meta\":{\"updated\":\"2023-02-21 12:41:24\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"title\":\"Department\",\"deprecated\":\"0\",\"isProduction\":1,\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"summary\":\"\",\"category\":\"attributeDisplayForm\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"created\":\"2023-02-21 12:41:24\",\"identifier\":\"label.owner.department\",\"tags\":\"\"},\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086/elements\"}}}",
+                "headers": {
+                    "x-gdc-request": "d1ZkvnV2STdARTBe",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "24",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "5cd68362-6ebd-4796-9594-744a3bc9f026"
+        },
+        {
+            "id": "0c8e3ea0-c79a-46a1-908d-e44b0d030d1e",
+            "name": "gdc_account_profile_19002a37a5bfa61cc97260baae7ba86c",
+            "request": {
+                "url": "/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2022-08-01 16:05:07\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"731253109\",\"login\":\"stanislav.hacker@gooddata.com\",\"lastName\":\"Hacker\",\"firstName\":\"Standa\",\"created\":\"2021-12-10 13:14:15\",\"country\":null,\"companyName\":\"\",\"email\":\"stanislav.hacker@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"projects\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c/auditEvents\"}}}",
+                "headers": {
+                    "x-gdc-request": "tKsxm9vbfBghR94B",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "15",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "0c8e3ea0-c79a-46a1-908d-e44b0d030d1e"
+        },
+        {
+            "id": "3ce92ece-7236-4ce7-aa36-39e4e8e5ed32",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1052",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"attributeDisplayForm\":{\"meta\":{\"updated\":\"2023-02-21 12:41:23\",\"summary\":\"\",\"category\":\"attributeDisplayForm\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"created\":\"2023-02-21 12:41:23\",\"identifier\":\"label.product.id.name\",\"tags\":\"\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"title\":\"Product Name\",\"deprecated\":\"0\",\"isProduction\":1,\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\"},\"content\":{\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/210]\",\"default\":1},\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052/elements\"}}}",
+                "headers": {
+                    "x-gdc-request": "3dCAg9bZBQNxKO63",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "19",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "3ce92ece-7236-4ce7-aa36-39e4e8e5ed32"
+        },
+        {
+            "id": "cfc76256-a1d5-407b-bd59-cfd5de0d7daf",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1052_validelements",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052/validElements?limit=500&offset=0",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"validElementsRequest\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"validElements\":{\"paging\":{\"total\":\"7\",\"count\":7,\"offset\":\"0\"},\"elementsMeta\":{\"order\":\"asc\",\"attributeDisplayForm\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"filter\":\"\",\"attribute\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\"},\"items\":[{\"element\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\",\"title\":\"CompuSci\"}},{\"element\":{\"title\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"element\":{\"title\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"element\":{\"title\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"element\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\",\"title\":\"PhoenixSoft\"}},{\"element\":{\"title\":\"TouchAll\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=460491\"}},{\"element\":{\"title\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]}}",
+                "headers": {
+                    "x-gdc-request": "rdBpe2LHcfETI9mZ",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "282",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "cfc76256-a1d5-407b-bd59-cfd5de0d7daf"
+        },
+        {
+            "id": "a4f084f4-592c-42d7-b78b-2bd38b47add9",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1086_validelements",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086/validElements?limit=500&offset=0",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"validElementsRequest\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"validElements\":{\"elementsMeta\":{\"order\":\"asc\",\"attribute\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"filter\":\"\",\"attributeDisplayForm\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\"},\"paging\":{\"count\":2,\"offset\":\"0\",\"total\":\"2\"},\"items\":[{\"element\":{\"title\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"element\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\",\"title\":\"Inside Sales\"}}]}}",
+                "headers": {
+                    "x-gdc-request": "R9G0nhZ4TaBosRr6",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "302",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "a4f084f4-592c-42d7-b78b-2bd38b47add9"
+        },
+        {
+            "id": "0fd6109d-31e1-473e-ac57-6b093316c358",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1052_validelements",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052/validElements?limit=1&offset=0",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"validElementsRequest\":{\"includeTotalCountWithoutFilters\":true}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"validElements\":{\"items\":[{\"element\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\",\"title\":\"CompuSci\"}}],\"totalCountWithoutFilters\":\"7\",\"paging\":{\"count\":1,\"offset\":\"0\",\"total\":\"7\"},\"elementsMeta\":{\"order\":\"asc\",\"filter\":\"\",\"attributeDisplayForm\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"attribute\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\"}}}",
+                "headers": {
+                    "x-gdc-request": "ct8dTMfC4TnffvnS",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "173",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "0fd6109d-31e1-473e-ac57-6b093316c358"
+        },
+        {
+            "id": "4e88281e-8b75-436a-b1cd-e7f69764bdea",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1086_validelements",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086/validElements?limit=1&offset=0",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"validElementsRequest\":{\"includeTotalCountWithoutFilters\":true}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"validElements\":{\"paging\":{\"count\":1,\"offset\":\"0\",\"total\":\"2\"},\"elementsMeta\":{\"order\":\"asc\",\"attributeDisplayForm\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"filter\":\"\",\"attribute\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\"},\"items\":[{\"element\":{\"title\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}}],\"totalCountWithoutFilters\":\"2\"}}",
+                "headers": {
+                    "x-gdc-request": "Bs8opMqhVzfDRjrS",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "110",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "4e88281e-8b75-436a-b1cd-e7f69764bdea"
+        },
+        {
+            "id": "1a7f8ca4-bd7a-420e-ace3-0aa96263e75c",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1085",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"attribute\":{\"content\":{\"dimension\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/219\",\"displayForms\":[{\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086/elements\"},\"meta\":{\"updated\":\"2023-02-21 12:41:24\",\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"deprecated\":\"0\",\"isProduction\":1,\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"title\":\"Department\",\"created\":\"2023-02-21 12:41:24\",\"identifier\":\"label.owner.department\",\"tags\":\"\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"category\":\"attributeDisplayForm\",\"summary\":\"\"},\"content\":{\"default\":1,\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/43]\"}}],\"pk\":[{\"data\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/41\",\"type\":\"col\"}],\"fk\":[{\"data\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/151\",\"type\":\"col\",\"multivalue\":false}]},\"meta\":{\"updated\":\"2023-02-21 12:41:24\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"title\":\"Department\",\"deprecated\":\"0\",\"isProduction\":1,\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"summary\":\"\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"category\":\"attribute\",\"identifier\":\"attr.owner.department\",\"tags\":\"\",\"created\":\"2023-02-21 12:41:24\"}}}",
+                "headers": {
+                    "x-gdc-request": "8DBfBE5AVfczrPRQ",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "20",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "1a7f8ca4-bd7a-420e-ace3-0aa96263e75c"
+        },
+        {
+            "id": "27f3e40b-0267-424c-a4f8-081bbc70b156",
+            "name": "gdc_internal_projects",
+            "request": {
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=19002a37a5bfa61cc97260baae7ba86c&projectStates=ENABLED&userState=ENABLED",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":6,\"totalCount\":6},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/19002a37a5bfa61cc97260baae7ba86c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Nghi - clone \",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/j0ft1ank9wc11n0tf29bm745hows4fps\",\"projectUser\":\"/gdc/projects/j0ft1ank9wc11n0tf29bm745hows4fps/users/19002a37a5bfa61cc97260baae7ba86c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"NGHI-Auto\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/p9tbl9tegmpujhxxsov9bxfdn3o7t9xq\",\"projectUser\":\"/gdc/projects/p9tbl9tegmpujhxxsov9bxfdn3o7t9xq/users/19002a37a5bfa61cc97260baae7ba86c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/19002a37a5bfa61cc97260baae7ba86c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Feb 21, 2023, 08:43\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/rm6vqhj1nbt0lf904ga5ogfyj34k1upm\",\"projectUser\":\"/gdc/projects/rm6vqhj1nbt0lf904ga5ogfyj34k1upm/users/19002a37a5bfa61cc97260baae7ba86c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Feb 21, 2023, 12:41\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f\",\"projectUser\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f/users/19002a37a5bfa61cc97260baae7ba86c\"}}}]}}",
+                "headers": {
+                    "x-gdc-request": "omTWs4pl2GL0Fcev",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "16",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "27f3e40b-0267-424c-a4f8-081bbc70b156"
+        },
+        {
+            "id": "c246940f-d2c8-4901-a04b-6b54c1712633",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1051",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"attribute\":{\"meta\":{\"title\":\"Product\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"category\":\"attribute\",\"updated\":\"2023-02-21 12:41:25\",\"isProduction\":1,\"deprecated\":\"0\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"identifier\":\"attr.product.id\",\"tags\":\"\",\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"created\":\"2023-02-21 12:41:23\",\"summary\":\"\"},\"content\":{\"pk\":[{\"data\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/206\",\"type\":\"col\"}],\"displayForms\":[{\"content\":{\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"default\":1,\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/210]\"},\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052/elements\"},\"meta\":{\"created\":\"2023-02-21 12:41:23\",\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"tags\":\"\",\"summary\":\"\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"title\":\"Product Name\",\"category\":\"attributeDisplayForm\",\"isProduction\":1,\"updated\":\"2023-02-21 12:41:23\",\"deprecated\":\"0\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"identifier\":\"label.product.id.name\"}},{\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1053/elements\"},\"content\":{\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/208]\"},\"meta\":{\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"title\":\"Product\",\"category\":\"attributeDisplayForm\",\"deprecated\":\"0\",\"updated\":\"2023-02-21 12:41:23\",\"isProduction\":1,\"identifier\":\"label.product.id\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1053\",\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"tags\":\"\",\"created\":\"2023-02-21 12:41:23\",\"summary\":\"\"}}],\"fk\":[{\"multivalue\":false,\"type\":\"col\",\"data\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/146\"},{\"data\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/189\",\"type\":\"col\",\"multivalue\":false}],\"dimension\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/212\"}}}",
+                "headers": {
+                    "x-gdc-request": "Ao8pWgo9ED5olFyY",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "18",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "c246940f-d2c8-4901-a04b-6b54c1712633"
+        },
+        {
+            "id": "539b2761-33f6-4179-a5e7-ca857f2a944f",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_identifiers",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/identifiers",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"identifierToUri\":[\"attr.opportunitysnapshot.id\",\"label.product.id.name\"]}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"identifiers\":[{\"identifier\":\"attr.opportunitysnapshot.id\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1057\"},{\"identifier\":\"label.product.id.name\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\"}]}",
+                "headers": {
+                    "x-gdc-request": "sDvAEvMgq7eiOGY2",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "9",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "539b2761-33f6-4179-a5e7-ca857f2a944f"
+        },
+        {
+            "id": "6323b60c-dac5-4265-b75a-add095f773b3",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_identifiers",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/identifiers",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"identifierToUri\":[\"label.owner.department\",\"label.product.id.name\"]}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"identifiers\":[{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"identifier\":\"label.owner.department\"},{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"identifier\":\"label.product.id.name\"}]}",
+                "headers": {
+                    "x-gdc-request": "9nM5z1lu3UC4IPjM",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "7",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "6323b60c-dac5-4265-b75a-add095f773b3"
+        },
+        {
+            "id": "5c5a8e95-6956-46b9-93b5-578c4dff9f6e",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1052_validelements",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052/validElements?limit=500&offset=0&filter=CompuSci",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"validElementsRequest\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"validElements\":{\"items\":[{\"element\":{\"title\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}}],\"paging\":{\"total\":\"1\",\"offset\":\"0\",\"count\":1},\"elementsMeta\":{\"filter\":\"CompuSci\",\"attribute\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"attributeDisplayForm\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"order\":\"asc\"}}}",
+                "headers": {
+                    "x-gdc-request": "4nB6qBQ8MhBik857",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "54",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "5c5a8e95-6956-46b9-93b5-578c4dff9f6e"
+        },
+        {
+            "id": "87b7a742-47e4-4ece-95e5-3b3a920e3d65",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_objects_get",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/objects/get",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\"]}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"objects\":{\"items\":[{\"attributeDisplayForm\":{\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052/elements\"},\"content\":{\"default\":1,\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/210]\",\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\"},\"meta\":{\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"isProduction\":1,\"deprecated\":\"0\",\"title\":\"Product Name\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"created\":\"2023-02-21 12:41:23\",\"identifier\":\"label.product.id.name\",\"tags\":\"\",\"category\":\"attributeDisplayForm\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"summary\":\"\",\"updated\":\"2023-02-21 12:41:23\"}}},{\"attributeDisplayForm\":{\"meta\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"title\":\"Department\",\"deprecated\":\"0\",\"isProduction\":1,\"contributor\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"summary\":\"\",\"category\":\"attributeDisplayForm\",\"author\":\"/gdc/account/profile/19002a37a5bfa61cc97260baae7ba86c\",\"tags\":\"\",\"identifier\":\"label.owner.department\",\"created\":\"2023-02-21 12:41:24\",\"updated\":\"2023-02-21 12:41:24\"},\"content\":{\"default\":1,\"formOf\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"expression\":\"[/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/43]\"},\"links\":{\"elements\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086/elements\"}}}]}}",
+                "headers": {
+                    "x-gdc-request": "jqVXcMQzwo7Sd1F6",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "27",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "87b7a742-47e4-4ece-95e5-3b3a920e3d65"
+        },
+        {
+            "id": "88e5b878-ccc2-41d7-b85b-c84ee2a4940f",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executeafm_debug",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executeAfm/debug",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"execution\":{\"afm\":{\"attributes\":[{\"localIdentifier\":\"a1\",\"displayForm\":{\"identifier\":\"label.owner.department\"}}],\"filters\":[{\"expression\":{\"value\":\"(([/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051] IN ([/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678])) OVER [/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1057] TO [/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085])\"}}]}}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"reportDefinitionWithInlinedMetrics\":{\"content\":{\"format\":\"grid\",\"filters\":[{\"expression\":\"(([/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051] IN ([/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678])) OVER [/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1057] TO [/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085])\"}],\"grid\":{\"columns\":[],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}},\"meta\":{\"category\":\"reportDefinitionWithInlinedMetrics\",\"title\":\"Untitled\"}}}",
+                "headers": {
+                    "x-gdc-request": "3hcd5j43DrqBMFR3",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "34",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "88e5b878-ccc2-41d7-b85b-c84ee2a4940f"
+        },
+        {
+            "id": "ad27a4db-221a-44c5-afe2-9a6ff5c502b9",
+            "name": "gdc_md_c76e0537d0614abb0027f7c992656b964922506f_obj_1086_validelements",
+            "request": {
+                "url": "/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086/validElements?limit=500&offset=0",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"validElementsRequest\":{\"restrictiveDefinitionContent\":{\"format\":\"grid\",\"filters\":[{\"expression\":\"(([/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051] IN ([/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678])) OVER [/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1057] TO [/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085])\"}],\"grid\":{\"columns\":[],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}}}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"validElements\":{\"paging\":{\"total\":\"2\",\"count\":2,\"offset\":\"0\"},\"elementsMeta\":{\"attribute\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"filter\":\"\",\"order\":\"asc\",\"attributeDisplayForm\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\"},\"items\":[{\"element\":{\"title\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"element\":{\"title\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}}]}}",
+                "headers": {
+                    "x-gdc-request": "n1wFGTidNucM9fa6",
+                    "vary": "origin,X-GDC-VERSION",
+                    "x-gdc-request-time": "140",
+                    "content-type": "application/json;charset=UTF-8",
+                    "cache-control": "no-cache, no-store, must-revalidate",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+                }
+            },
+            "uuid": "ad27a4db-221a-44c5-afe2-9a6ff5c502b9"
+        }
+    ]
+}

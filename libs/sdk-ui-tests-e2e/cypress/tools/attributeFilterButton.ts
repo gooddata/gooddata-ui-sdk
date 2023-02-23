@@ -6,6 +6,10 @@ export class AttributeFilterButton {
         this.attributeFilterUniqueSelector = selector;
     }
 
+    getDropdownElement() {
+        return cy.get(".overlay.dropdown-body");
+    }
+
     open(): this {
         cy.get(this.attributeFilterUniqueSelector).click();
         return this;
@@ -91,6 +95,18 @@ export class AttributeFilterButton {
 
     searchElements(query: string): this {
         cy.get(".gd-input-search .gd-input-field").focus().type(query);
+        return this;
+    }
+
+    searchAndSelectFilterItem(attributeValue: string, only?: boolean) {
+        this.searchElements(attributeValue);
+        this.getDropdownElement()
+            .find(
+                only
+                    ? `.s-attribute-filter-list-item[title="${attributeValue}"] .gd-list-item-only`
+                    : `.s-attribute-filter-list-item[title="${attributeValue}"]`,
+            )
+            .click({ force: true });
         return this;
     }
 

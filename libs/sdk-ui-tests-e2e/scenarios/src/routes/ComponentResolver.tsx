@@ -36,6 +36,7 @@ import { InsightOnDashboardScenario } from "../components/Scenarios/Dashboard/In
 import { HeaderSectionScenario } from "../components/Scenarios/Dashboard/HeaderSectionScenario";
 import { HeaderLocalizationScenario } from "../components/Scenarios/Dashboard/HeaderSectionLocalizationScenario";
 import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAndDropWidgetScenario";
+import { AttributeFilterParentChildExampleScenario } from "../components/Scenarios/Filters/AttributeFilterParentChildExampleScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -66,6 +67,7 @@ export const SCENARIO_KEYS = {
     VIS_PIVOT_TABLE_ALL_TOTAL_AGG_MENU: "visualizations/pivot-table/pivot-table-all-total-aggregations-menu",
     VIS_PIVOT_TABLE_SIZING_RESET: "visualizations/pivot-table/sizing/pivot-table-complex-reset",
     VIS_PIVOT_TABLE_SIZING: "visualizations/pivot-table/sizing/pivot-table-sizing",
+    FILTERS_ATTRIBUTE_FILTER_PARENT_CHILD_EXAMPLE: "filters/attribute-filter-parent-child-example",
     FILTERS_ATTRIBUTE_FILTER_BUTTON: "filters/attribute-filter-button",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION: "filters/attribute-filter-button-with-selection",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
@@ -97,6 +99,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION, AttributeFilterButtonPreselectedScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD, AttributeFilterButtonParentChildScenario],
+    [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_PARENT_CHILD_EXAMPLE, AttributeFilterParentChildExampleScenario],
     [SCENARIO_KEYS.FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS, ParentChildFiltersWithPlaceholders],
     [SCENARIO_KEYS.DASHBOARD_FILTERING, DashboardFilteringScenario],
     [SCENARIO_KEYS.VIS_BAR_CHART_DRILL, BarChartDrillingScenario],
