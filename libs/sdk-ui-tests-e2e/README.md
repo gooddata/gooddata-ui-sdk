@@ -83,6 +83,7 @@ To run the tests against a mock backend follow these steps:
 
 ### Running things on Apple Silicon
 
+test
 Currently, our ECR images do not support ARM64 tags, so to run Docker things in this repo locally, search for
 `020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/` in this folder and remove it.
 This will make your docker use upstream images that do support ARM64 and thus your Mac will run them natively.
