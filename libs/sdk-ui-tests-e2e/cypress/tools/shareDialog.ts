@@ -7,7 +7,7 @@ export class ShareDialog {
     }
 
     getPermissionsDropdownElement() {
-        return cy.get(".gd-granular-permissions-overlay");
+        return cy.get(".s-granular-permissions-overlay");
     }
 
     dialogExists(exists = true) {
