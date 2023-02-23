@@ -58,3 +58,32 @@ _Note:_ this approach allows running only a single test at a time.
 Mappings are imported to wiremock for this particular test only and only this test is visible in cypress live controls.
 
 See `run_local_dev_isolated.js` for configuration options.
+
+### Dynamic import
+
+Dynamic import should be used in case test is written for both backends, instead of creating a scenario corresponding to each backend.
+
+_Example:_
+
+```
+import React from "react";
+import {Dashboard} from "@gooddata/sdk-ui-dashboard";
+
+let dashboardRef: string;
+
+if (process.env.SDK_BACKEND === 'TIGER') {
+    import("../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger")
+        .then((module) => {
+            dashboardRef = module.Dashboards.ExampleDashboard;
+
+        });
+} else if (process.env.SDK_BACKEND === 'BEAR') {
+    import("../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear")
+        .then((module) => {
+            dashboardRef = module.Dashboards.ExampleDashboard;
+        });
+}
+export const ExampleScenario: React.FC = () => {
+    return <Dashboard dashboard={dashboardRef} />;
+};
+```
