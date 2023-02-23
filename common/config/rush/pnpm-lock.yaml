@@ -3893,8 +3893,8 @@ packages:
       '@hapi/hoek': 9.2.1
     dev: false
 
-  /@sideway/formula/3.0.0:
-    resolution: {integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==}
+  /@sideway/formula/3.0.1:
+    resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==}
     dev: false
 
   /@sideway/pinpoint/2.0.0:
@@ -13557,7 +13557,7 @@ packages:
       '@hapi/hoek': 9.2.1
       '@hapi/topo': 5.1.0
       '@sideway/address': 4.1.4
-      '@sideway/formula': 3.0.0
+      '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
     dev: false
 
