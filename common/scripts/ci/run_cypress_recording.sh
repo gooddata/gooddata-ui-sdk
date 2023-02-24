@@ -75,7 +75,7 @@ trap "docker rmi --force $IMAGE_ID || true" EXIT
 pushd $E2E_TEST_DIR
 rm -rf ./recordings/mappings
 mkdir -p ./recordings/mappings/$SDK_BACKEND
-docker build --file Dockerfile_local -t $IMAGE_ID . || exit 1
+docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 echo "⭐️ 6/8 Run isolated recording against TEST_BACKEND=$TEST_BACKEND."
 MODE=record NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml up \
