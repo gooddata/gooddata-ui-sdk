@@ -30,7 +30,7 @@ export default defineConfig({
         viewportHeight: 800,
         defaultCommandTimeout: 60000,
         retries: {
-            runMode: 2,
+            runMode: 0,
             openMode: 0,
         },
         trashAssetsBeforeRuns: false,
