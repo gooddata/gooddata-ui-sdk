@@ -29,7 +29,7 @@ $_RUSHX libs/sdk-ui-tests-e2e build-scenarios
 export IMAGE_ID=${sdk_backend}-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER}
 trap "rm -f $E2E_TEST_DIR/.env; docker rmi --force $IMAGE_ID || true" EXIT
 
-docker build --file Dockerfile_local -t $IMAGE_ID . || exit 1
+docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml up \
   --abort-on-container-exit --exit-code-from isolated-tests \
