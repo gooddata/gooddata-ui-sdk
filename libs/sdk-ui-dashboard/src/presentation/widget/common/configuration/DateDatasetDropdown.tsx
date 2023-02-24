@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React from "react";
+// (C) 2007-2023 GoodData Corporation
+import React, { useState, useEffect } from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
@@ -107,6 +107,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
     } = props;
 
     const intl = useIntl();
+    const setScrollElement = useAutoscroll(autoOpen);
 
     const unrelatedDateDataSetId = unrelatedDateDataset ? unrelatedDateDataset.dataSet.id : null;
     let activeDateDataSetId: string;
@@ -153,13 +154,15 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                     : removeDateFromTitle(activeDateDataSetTitle);
 
                 return (
-                    <DropdownButton
-                        className={buttonClassName}
-                        value={buttonValue}
-                        isOpen={isOpen}
-                        onClick={toggleDropdown}
-                        disabled={isLoading}
-                    />
+                    <span ref={setScrollElement}>
+                        <DropdownButton
+                            className={buttonClassName}
+                            value={buttonValue}
+                            isOpen={isOpen}
+                            onClick={toggleDropdown}
+                            disabled={isLoading}
+                        />
+                    </span>
                 );
             }}
             className={className}
@@ -209,3 +212,14 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
         />
     );
 };
+
+function useAutoscroll(autoscroll: boolean) {
+    const [ref, setRef] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (ref && autoscroll) {
+            ref.scrollIntoView();
+        }
+    }, [ref, autoscroll]);
+    return setRef;
+}
