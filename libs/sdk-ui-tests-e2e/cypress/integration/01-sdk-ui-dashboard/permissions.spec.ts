@@ -19,11 +19,12 @@ Cypress.on("uncaught:exception", (error) => {
 Cypress.Cookies.debug(true);
 
 describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
+    const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
     describe("Basic case", () => {
         beforeEach(() => {
             cy.login();
             Users.switchToDefaultUser();
-            Api.setEarlyAccess(getProjectId(), "develop");
+            Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
             Navigation.visit("dashboard/dashboard-tiger-permissions");
         });
@@ -46,7 +47,7 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
         beforeEach(() => {
             cy.login();
             Users.switchToDefaultUser();
-            Api.setEarlyAccess(getProjectId(), "develop");
+            Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
             deleteUserAndGroup(username, groupname);
             Users.createGroup(groupname);
@@ -171,7 +172,7 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
         beforeEach(() => {
             cy.login();
             Users.switchToDefaultUser();
-            Api.setEarlyAccess(getProjectId(), "develop");
+            Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
             Users.deleteUser(firstUser);
             Users.deleteUser(secondUser);
