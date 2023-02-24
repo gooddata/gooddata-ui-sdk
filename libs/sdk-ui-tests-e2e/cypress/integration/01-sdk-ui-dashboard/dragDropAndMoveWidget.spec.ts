@@ -5,8 +5,6 @@ import { Widget } from "../../tools/widget";
 import { EditMode } from "../../tools/editMode";
 import { Dashboard } from "../../tools/dashboards";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
-import { DashboardMenu } from "../../tools/dashboardMenu";
-import { DashboardHeader } from "../../tools/dashboardHeader";
 
 const dashboard = new Dashboard();
 const editMode = new EditMode();

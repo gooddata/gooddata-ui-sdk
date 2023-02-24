@@ -37,6 +37,7 @@ import { HeaderSectionScenario } from "../components/Scenarios/Dashboard/HeaderS
 import { HeaderLocalizationScenario } from "../components/Scenarios/Dashboard/HeaderSectionLocalizationScenario";
 import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAndDropWidgetScenario";
 import { AttributeFilterParentChildExampleScenario } from "../components/Scenarios/Filters/AttributeFilterParentChildExampleScenario";
+import { BasicInsightScenario } from "../components/Scenarios/InsightView/BasicInsightScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
