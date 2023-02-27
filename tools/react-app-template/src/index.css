@@ -1,3 +1,15 @@
+:root {
+    --max-width: 600px;
+    --white: #fff;
+    --light-grey: #ebeff4;
+    --dark-grey: #464e56;
+    --code-grey: #f5f8fa;
+    --brand: #ed26b7;
+    --brand-hover: #cf119b;
+    --brand-blue: #2637ef;
+    --main-bg-color: brown;
+}
+
 html,
 body,
 #root {
@@ -5,91 +17,87 @@ body,
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #1c0d3f;
-    color: #f2f4f6;
+    color: var(--dark-grey);
     font-family: avenir, "Helvetica Neue", arial, sans-serif;
     text-rendering: optimizeLegibility;
 }
 
-a,
-a:active,
-a:visited {
-    transition: color 250ms ease-in-out;
-    color: #ed26b7;
-    text-decoration: none;
-    font-weight: bold;
+body {
+    background: var(--white) no-repeat top right url(assets/topology-bg.svg);
+    background-size: cover;
 }
 
-a:hover {
-    color: #fff;
-}
-
-.container {
-    height: 100%;
+.app {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    text-align: center;
+    max-width: calc(var(--max-width) + 3em);
+    margin: 0 auto;
+    padding: 0 1.5em;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-.header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 20px;
-}
-
-.logo {
-    margin-right: 10px;
-}
-
-.logo-link {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.app a,
+.app a:active,
+.app a:visited {
+    transition: color 0.2s;
+    color: var(--brand);
     text-decoration: none;
-    transition: opacity 250ms ease-in-out;
 }
 
-.logo-link:hover {
-    opacity: 0.7;
+.app a:hover {
+    color: var(--brand-hover);
+    text-decoration: underline;
 }
 
-.logo-link-image {
-    width: 32px;
-    height: 32px;
-    margin-right: 10px;
+.app h1 {
+    text-align: center;
+    font-size: 2.2em;
+    margin-top: 2em;
 }
 
-.logo-link-title {
-    font-size: 1.2em;
-    margin: 0;
-    color: #fff;
+.app p {
+    text-align: center;
+    margin-top: 4em;
 }
 
-.navigation {
+.app :not(pre) code {
+    font-family: monospace;
+    font-size: inherit;
+    color: var(--brand-blue);
+    background-color: rgba(38, 55, 239, 0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.3rem;
+}
+
+.app pre {
+    background: var(--code-grey);
+    border: 1px solid var(--light-grey);
+    padding: 1em;
+    overflow: auto;
+    margin-top: 2em;
+}
+
+.app figure {
+    border: 1px solid var(--light-grey);
+    height: calc(var(--max-width) * 0.6);
+    margin: 2em 0 0;
+    padding: 0 1em;
+    background: var(--white);
+}
+
+.app footer {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    border-top: 1px solid var(--light-grey);
+    padding: 1em 0 1em;
+    margin-top: 2em;
 }
 
-.navigation-link {
-    margin: 5px 10px;
-    font-size: 0.8em;
-}
-
-.content {
-    height: 100%;
-    background-color: #fff;
-    overflow: scroll;
-}
-
-.footer {
-    padding: 15px 20px;
-    font-size: 0.8em;
+@media (min-width: 600px) {
+    .app h1 {
+        font-size: 3.6em;
+        margin-top: 1em;
+    }
 }
