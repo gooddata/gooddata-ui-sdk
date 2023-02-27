@@ -34,6 +34,10 @@ export class DateFilter {
         return this;
     }
 
+    getDateButtonTitle() {
+        return cy.get(".s-date-filter-button").find(".s-date-filter-title");
+    }
+
     selectAbsoluteForm(): this {
         this.getElement(".s-absolute-form").click();
         return this;

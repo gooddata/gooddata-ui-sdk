@@ -1,5 +1,7 @@
 import * as Navigation from "../../tools/navigation";
-import { TopBar } from "../../tools/dashboards";
+
+import LocalizationApi from "../../tools/apiRequest/LocalizationApi";
+import { Chart } from "../../tools/chart";
 
 Cypress.Cookies.defaults({
     preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
@@ -12,11 +14,26 @@ Cypress.on("uncaught:exception", (error) => {
 
 Cypress.Cookies.debug(true);
 
-describe("Insight view setting via API", { tags: ["checklist_integrated_bear"] }, () => {
+const localizationApi = new LocalizationApi();
+
+const WORKSPACE_LEVEL = "workspaceSetting";
+const USER_LEVEL = "userSetting";
+
+describe("Insight view setting via API", { tags: ["checklist_integrated_tiger"] }, () => {
+    beforeEach(() => {
+        localizationApi.deleteLocaleSettingViaAPI(WORKSPACE_LEVEL);
+        localizationApi.deleteLocaleSettingViaAPI(USER_LEVEL);
+    });
+
     it("Locale setting is applied on InsightView", () => {
+        localizationApi.localeSettingViaAPI("ru-RU", WORKSPACE_LEVEL);
         cy.login();
         Navigation.visit("insight/basic-insight");
-        const topBar = new TopBar();
-        topBar.dashboardTitleExist().dashboardTitleHasValue("Tádsadhboard");
+        new Chart(".adi-chart-container").hasLegendSeriesName(1, "(значение отсутствует)");
+        // .hasAxisName("xaxis", "Sum of "); -- will be enabled after RAIL-4843 fixed
+    });
+
+    afterEach(() => {
+        localizationApi.deleteLocaleSettingViaAPI(WORKSPACE_LEVEL);
     });
 });

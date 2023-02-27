@@ -5,6 +5,8 @@ export const YAXIS_LABELS_SELECTOR =
 export const XAXIS_LABELS_SELECTOR =
     ".highcharts-xaxis-labels text[text-anchor = 'middle'], .highcharts-xaxis-labels text[text-anchor = 'end']";
 
+const LEGEND_SERIES_SELECTOR = ".viz-legend .series-name";
+
 export class Chart {
     constructor(private parentSelector: string) {}
 
@@ -92,5 +94,18 @@ export class Chart {
             return result.push($li.text());
         });
         return cy.wrap(result);
+    }
+
+    hasLegendSeriesName(index: number, value: string) {
+        cy.get(LEGEND_SERIES_SELECTOR).eq(index).contains(value);
+        return this;
+    }
+
+    hasAxisName(axisType: string, name: string) {
+        cy.get(`.highcharts-axis.highcharts-${axisType} text.highcharts-axis-title`).should(
+            "have.text",
+            name,
+        );
+        return this;
     }
 }
