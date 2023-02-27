@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -15,7 +15,7 @@ import {
     IResultHeader,
     IResultWarning,
 } from "@gooddata/sdk-model";
-import { IExportConfig, IExportResult } from "./export";
+import { IExportConfig, IExportResult, IExportBlobResult } from "./export";
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types
@@ -312,10 +312,20 @@ export interface IExecutionResult {
     /**
      * Asynchronously exports all data in this result.
      *
-     * @param options - customize how the result looks like (format etc)
+     * @param options - customize how the result looks like (format etc.)
      * @returns Promise of export result = uri of file with exported data
      */
     export(options: IExportConfig): Promise<IExportResult>;
+
+    /**
+     * Asynchronously exports all data in this result to a blob.
+     *
+     * Exported file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param options - customize how the result looks like (format etc.)
+     * @returns promise with object URL pointing to a Blob data of downloaded exported insight
+     */
+    exportToBlob(options: IExportConfig): Promise<IExportBlobResult>;
 
     /**
      * Tests if this execution result is same as the other result.

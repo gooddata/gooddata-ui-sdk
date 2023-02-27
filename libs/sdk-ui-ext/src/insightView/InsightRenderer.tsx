@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { render } from "react-dom";
@@ -6,7 +6,7 @@ import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
 import compose from "lodash/flowRight";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IExportBlobResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsightDefinition,
     insightProperties,
@@ -182,7 +182,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             return;
         }
 
-        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
+        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportBlobResult> => {
             if (exportConfig.title || !this.props.insight) {
                 return exportFunction(exportConfig);
             }

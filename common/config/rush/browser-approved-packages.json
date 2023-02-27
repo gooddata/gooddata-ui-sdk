@@ -531,6 +531,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "blob-polyfill",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "case-sensitive-paths-webpack-plugin",
       "allowedCategories": [ "tools" ]
     },

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { GdcExecuteAFM } from "../executeAfm/GdcExecuteAFM";
 
 /**
@@ -48,5 +48,24 @@ export namespace GdcExport {
      */
     export interface IExportResponse {
         uri: string;
+    }
+
+    /**
+     * Result of export is an object URL pointing to a Blob of downloaded data attached to the current
+     * window instance. The result also contains name of the downloaded file provided by the backend export
+     * service.
+     *
+     * {@link URL#revokeObjectURL} method must be used when object URL is no longer needed to release
+     * the blob memory.
+     *
+     * @public
+     */
+    export interface IExportBlobResponse {
+        /** URI from which can the export be fetched again */
+        uri: string;
+        /** Object URL pointing to the downloaded blob of exported data */
+        objectUrl: string;
+        /** Name of the exported file provided by the export service */
+        fileName?: string;
     }
 }

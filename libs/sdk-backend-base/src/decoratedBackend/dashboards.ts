@@ -9,6 +9,7 @@ import {
     IWidgetAlertCount,
     SupportedWidgetReferenceTypes,
     IWidgetReferences,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -77,6 +78,10 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string> {
         return this.decorated.exportDashboardToPdf(ref, filters);
+    }
+
+    exportDashboardToPdfBlob(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportBlobResult> {
+        return this.decorated.exportDashboardToPdfBlob(ref, filters);
     }
 
     createScheduledMail(

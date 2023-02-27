@@ -1,8 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IExecutionResult, IExportBlobResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
 import { ExportInsightWidget } from "../../commands";
@@ -25,10 +25,9 @@ import { PromiseFnReturnType } from "../../types/sagas";
 async function performExport(
     executionResult: IExecutionResult,
     config: IExtendedExportConfig,
-): Promise<string> {
+): Promise<IExportBlobResult> {
     const exporter = createExportFunction(executionResult);
-    const result = await exporter(config);
-    return result.uri;
+    return exporter(config);
 }
 
 function* validateIsExportable(
@@ -92,7 +91,7 @@ export function* exportInsightWidgetHandler(
     // executionResult must be defined at this point
     invariant(executionEnvelope?.executionResult);
 
-    const resultUri: PromiseFnReturnType<typeof performExport> = yield call(
+    const result: PromiseFnReturnType<typeof performExport> = yield call(
         performExport,
         executionEnvelope.executionResult,
         config,
@@ -100,8 +99,13 @@ export function* exportInsightWidgetHandler(
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
     const fullUri = ctx.backend.config.hostname
-        ? new URL(resultUri, ctx.backend.config.hostname).href
-        : resultUri;
+        ? new URL(result.uri, ctx.backend.config.hostname).href
+        : result.uri;
 
-    return insightWidgetExportResolved(ctx, fullUri, cmd.correlationId);
+    const sanitizedResult: IExportBlobResult = {
+        ...result,
+        uri: fullUri,
+    };
+
+    return insightWidgetExportResolved(ctx, sanitizedResult, cmd.correlationId);
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
 import { transformResultHeaders } from "@gooddata/sdk-backend-base";
@@ -11,6 +11,7 @@ import {
     IPreparedExecution,
     NoDataError,
     UnexpectedError,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
@@ -72,6 +73,28 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
+        const optionsForBackend = this.buildExportOptions(options);
+        return this.authApiCall((sdk) =>
+            sdk.report.exportResult(
+                this.definition.workspace,
+                this.execResponse.links.executionResult,
+                optionsForBackend,
+            ),
+        );
+    }
+
+    public async exportToBlob(options: IExportConfig): Promise<IExportBlobResult> {
+        const optionsForBackend = this.buildExportOptions(options);
+        return this.authApiCall((sdk) =>
+            sdk.report.exportResultToBlob(
+                this.definition.workspace,
+                this.execResponse.links.executionResult,
+                optionsForBackend,
+            ),
+        );
+    }
+
+    private buildExportOptions(options: IExportConfig): GdcExport.IExportConfig {
         const optionsForBackend: GdcExport.IExportConfig = {
             format: options.format,
             mergeHeaders: options.mergeHeaders,
@@ -83,13 +106,7 @@ export class BearExecutionResult implements IExecutionResult {
             optionsForBackend.afm = toAfmExecution(this.definition).execution.afm;
         }
 
-        return this.authApiCall((sdk) =>
-            sdk.report.exportResult(
-                this.definition.workspace,
-                this.execResponse.links.executionResult,
-                optionsForBackend,
-            ),
-        );
+        return optionsForBackend;
     }
 
     public equals(other: IExecutionResult): boolean {
