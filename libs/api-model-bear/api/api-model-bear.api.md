@@ -1037,6 +1037,11 @@ export namespace GdcExport {
         mergeHeaders?: boolean;
         title?: string;
     }
+    export interface IExportBlobResponse {
+        fileName?: string;
+        objectUrl: string;
+        uri: string;
+    }
     // (undocumented)
     export interface IExportConfig extends IBaseExportConfig {
         afm?: GdcExecuteAFM.IAfm;

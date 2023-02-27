@@ -56,6 +56,7 @@ import {
     IElementsQueryResult,
     IPagedResource,
     IEntitlements,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -363,6 +364,9 @@ function dummyExecutionResult(
             return fp === other.fingerprint();
         },
         export(_: IExportConfig): Promise<IExportResult> {
+            throw new NotSupported("...");
+        },
+        exportToBlob(_: IExportConfig): Promise<IExportBlobResult> {
             throw new NotSupported("...");
         },
         transform(): IPreparedExecution {

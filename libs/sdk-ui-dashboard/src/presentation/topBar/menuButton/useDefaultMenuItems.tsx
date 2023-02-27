@@ -59,7 +59,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 removeMessage(lastExportMessageId.current);
             }
             addSuccess(messages.messagesExportResultSuccess);
-            downloadFile(e.payload.resultUri);
+            downloadFile(e.payload.result);
         },
         onError: (err) => {
             if (lastExportMessageId.current) {

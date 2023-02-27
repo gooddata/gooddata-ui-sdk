@@ -25,6 +25,7 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     deleteWidgetAlerts: noop as any,
     deleteScheduledMail: noop as any,
     exportDashboardToPdf: noop as any,
+    exportDashboardToPdfBlob: noop as any,
     getDashboard: noop as any,
     getDashboardWidgetAlertsForCurrentUser: noop as any,
     getDashboardWithReferences: noop as any,
