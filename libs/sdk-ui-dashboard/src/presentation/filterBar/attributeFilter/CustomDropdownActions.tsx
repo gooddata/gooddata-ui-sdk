@@ -1,8 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2023 GoodData Corporation
+import React, { useMemo } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
-import { ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, isAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
@@ -14,6 +14,7 @@ import {
     selectIsKPIDashboardDependentFiltersEnabled,
     useDashboardSelector,
 } from "../../../model";
+import { useAttributes } from "../../../_staging/sharedHooks/useAttributes";
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
@@ -28,13 +29,31 @@ function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef) {
     const filterDisplayForm = dfMap.get(filterDisplayFormRef);
     invariant(filterDisplayForm);
 
-    const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
-    const filterAttribute = attrMap.get(filterDisplayForm.attribute);
+    const attributesMap = useDashboardSelector(selectAllCatalogAttributesMap);
+
+    const displayFormRef = useMemo(() => {
+        return [filterDisplayFormRef];
+    }, [filterDisplayFormRef]);
+
+    const { attributes } = useAttributes(displayFormRef);
+
+    if (!attributes) {
+        return false;
+    }
+
+    const attributeByDisplayForm = attributes?.find((attribute) =>
+        areObjRefsEqual(attribute.ref, filterDisplayForm.attribute),
+    );
+
+    const filterAttribute = attributesMap.get(filterDisplayForm.attribute) || attributeByDisplayForm;
     invariant(filterAttribute);
 
+    const hasMultipleDisplayForms = isAttributeMetadataObject(filterAttribute)
+        ? filterAttribute.displayForms.length > 1
+        : filterAttribute.attribute.displayForms.length > 1;
+
     const canConfigureDependentFilters = isDependentFiltersEnabled && allAttributeFilters.length > 1;
-    const canConfigureDisplayForm =
-        isDisplayFormSelectionEnabled && filterAttribute.attribute.displayForms.length > 1;
+    const canConfigureDisplayForm = isDisplayFormSelectionEnabled && hasMultipleDisplayForms;
 
     return isEditMode && (canConfigureDependentFilters || canConfigureDisplayForm);
 }
