@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import { AbstractExecutionFactory } from "../toolkit/execution";
 import {
@@ -25,6 +25,7 @@ import {
     NotImplemented,
     IExplainProvider,
     ExplainType,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
 import {
@@ -188,6 +189,10 @@ class CustomExecutionResult implements IExecutionResult {
     };
 
     public export = (_options: IExportConfig): Promise<IExportResult> => {
+        throw new NotSupported("exports from custom backend are not supported");
+    };
+
+    public exportToBlob = (_options: IExportConfig): Promise<IExportBlobResult> => {
         throw new NotSupported("exports from custom backend are not supported");
     };
 }

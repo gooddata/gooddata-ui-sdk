@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
@@ -41,7 +41,7 @@ export const useInsightExport = (config: {
                     },
                     uuid(),
                 ),
-            ).then((result) => result.payload.resultUri),
+            ).then((result) => result.payload.result),
         [widgetRef],
     );
 
