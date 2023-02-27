@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { GdcExport, GdcFilterContext, sanitizeFiltersForExport } from "@gooddata/api-model-bear";
 import { ApiResponse, XhrModule } from "../xhr";
 import { handleHeadPolling, IPollingOptions } from "../util";
@@ -20,6 +20,20 @@ export class DashboardModule {
         filters: GdcFilterContext.FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
     ): Promise<GdcExport.IExportResponse> {
+        return this.exportToPdfBlob(projectId, dashboardUri, filters, pollingOptions).then((result) => {
+            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
+            return {
+                uri: result.uri,
+            };
+        });
+    }
+
+    public async exportToPdfBlob(
+        projectId: string,
+        dashboardUri: string,
+        filters: GdcFilterContext.FilterContextItem[] = [],
+        pollingOptions: IPollingOptions = {},
+    ): Promise<GdcExport.IExportBlobResponse> {
         const sanitizedFilters = sanitizeFiltersForExport(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
@@ -34,9 +48,12 @@ export class DashboardModule {
     private async pollPdfFile(
         response: ApiResponse,
         pollingOptions: IPollingOptions,
-    ): Promise<GdcExport.IExportResponse> {
+    ): Promise<GdcExport.IExportBlobResponse> {
         const data: GdcExport.IExportResponse = response.getData();
-        return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, pollingOptions);
+        return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, {
+            ...pollingOptions,
+            blobContentType: "application/pdf",
+        });
     }
 
     private getDashboardExportPayload(

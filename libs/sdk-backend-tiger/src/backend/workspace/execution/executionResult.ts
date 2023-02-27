@@ -18,6 +18,7 @@ import {
     NoDataError,
     UnexpectedError,
     TimeoutError,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -28,6 +29,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter";
 import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter";
 import { resolveCustomOverride } from "./utils";
+import { parseNameFromContentDisposition } from "../../../utils/downloadFile";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
@@ -106,9 +108,19 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
+        return this.exportToBlob(options).then((result) => {
+            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
+            return {
+                uri: result.uri,
+            };
+        });
+    }
+
+    public async exportToBlob(options: IExportConfig): Promise<IExportBlobResult> {
         const isXlsx = options.format?.toUpperCase() === "XLSX";
+        const format = isXlsx ? TabularExportRequestFormatEnum.XLSX : TabularExportRequestFormatEnum.CSV;
         const payload: TabularExportRequest = {
-            format: isXlsx ? TabularExportRequestFormatEnum.XLSX : TabularExportRequestFormatEnum.CSV,
+            format,
             executionResult: this.resultId,
             fileName: options.title ?? "default",
             settings: isXlsx
@@ -126,10 +138,14 @@ export class TigerExecutionResult implements IExecutionResult {
                 tabularExportRequest: payload,
             });
 
-            return await this.handleExportResultPolling(client, {
-                workspaceId: this.workspace,
-                exportId: tabularExport?.data?.exportResult,
-            });
+            return await this.handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: tabularExport?.data?.exportResult,
+                },
+                format,
+            );
         });
     }
 
@@ -163,15 +179,24 @@ export class TigerExecutionResult implements IExecutionResult {
     private async handleExportResultPolling(
         client: ITigerClient,
         payload: ActionsApiGetTabularExportRequest,
-    ): Promise<IExportResult> {
+        format: TabularExportRequestFormatEnum,
+    ): Promise<IExportBlobResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getTabularExport(payload, {
                 transformResponse: (x) => x,
+                responseType: "blob",
             });
 
             if (result?.status === 200) {
+                const type =
+                    format === "XLSX"
+                        ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        : "text/csv";
+                const blob = new Blob([result?.data as any], { type });
                 return {
                     uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
                 };
             }
 

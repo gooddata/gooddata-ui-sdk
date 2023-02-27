@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IDataView,
     IExecutionFactory,
@@ -9,6 +9,7 @@ import {
     ExplainConfig,
     IExplainProvider,
     ExplainType,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -163,6 +164,9 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         return this.decorated.export(options);
     }
 
+    public exportToBlob(options: IExportConfig): Promise<IExportBlobResult> {
+        return this.decorated.exportToBlob(options);
+    }
     public readAll(): Promise<IDataView> {
         return this.decorated.readAll();
     }
