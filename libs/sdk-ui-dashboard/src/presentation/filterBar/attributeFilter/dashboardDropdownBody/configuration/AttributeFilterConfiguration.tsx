@@ -8,6 +8,7 @@ import {
     selectOtherContextAttributeFilters,
     selectFilterContextAttributeFilters,
     selectSupportsElementsQueryParentFiltering,
+    selectSettings,
 } from "../../../../../model";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList";
@@ -19,16 +20,19 @@ import { useConnectingAttributes } from "./hooks/useConnectingAttributes";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes";
+import { AttributeTitleRenaming } from "./title/AttributeTitleRenaming";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
     filterRef?: ObjRef;
     filterByText: string;
     displayValuesAsText: string;
+    titleText: string;
+    resetTitleText: string;
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
-    const { filterRef, filterByText, displayValuesAsText, closeHandler } = props;
+    const { filterRef, filterByText, displayValuesAsText, titleText, resetTitleText, closeHandler } = props;
     const theme = useTheme();
 
     useEffect(() => {
@@ -36,6 +40,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             closeHandler();
         };
     }, [closeHandler]);
+
+    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
@@ -56,12 +62,17 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     invariant(currentFilter, "Cannot find current filter in the filter context store.");
 
     const {
+        title,
+        defaultAttributeFilterTitle,
         parents,
         onParentSelect,
         onConnectingAttributeChanged,
         showDisplayFormPicker,
         filterDisplayForms,
         onDisplayFormSelect,
+        showResetTitle,
+        onTitleUpdate,
+        onTitleReset,
     } = useAttributeFilterParentFiltering();
 
     const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
@@ -89,6 +100,16 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration sdk-edit-mode-on">
             <ConfigurationPanelHeader />
+            {enableKPIAttributeFilterRenaming && (
+                <AttributeTitleRenaming
+                    categoryTitle={titleText}
+                    resetTitleText={resetTitleText}
+                    onClick={onTitleReset}
+                    onChange={onTitleUpdate}
+                    showResetTitle={showResetTitle}
+                    attributeTitle={title ?? defaultAttributeFilterTitle}
+                />
+            )}
             {isDependentFiltersEnabled && parents.length > 0 ? (
                 <ConfigurationCategory categoryTitle={filterByText} />
             ) : null}

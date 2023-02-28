@@ -21,6 +21,7 @@ import {
     SetAttributeFilterParents,
     ChangeFilterContextSelection,
     SetAttributeFilterDisplayForm,
+    SetAttributeFilterTitle,
 } from "./filters";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -136,6 +137,9 @@ export {
     SetAttributeFilterDisplayForm,
     SetAttributeFilterDisplayFormPayload,
     setAttributeFilterDisplayForm,
+    SetAttributeFilterTitle,
+    SetAttributeFilterTitlePayload,
+    setAttributeFilterTitle,
 } from "./filters";
 
 export {
@@ -409,6 +413,7 @@ export type DashboardCommands =
     | SaveScheduledEmail
     | ChangeSharing
     | SetAttributeFilterDisplayForm
+    | SetAttributeFilterTitle
     //alpha
     | Drill
     | DrillDown

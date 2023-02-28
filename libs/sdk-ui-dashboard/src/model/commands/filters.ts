@@ -707,3 +707,56 @@ export function setAttributeFilterDisplayForm(
         },
     };
 }
+
+/**
+ * Payload of the {@link SetAttributeFilterTitle} command.
+ * @beta
+ */
+export interface SetAttributeFilterTitlePayload {
+    /**
+     * Local identifier of the filter to rename.
+     */
+    filterLocalId: string;
+    /**
+     * Title of the filter.
+     */
+    title?: string;
+}
+
+/**
+ * Command for changing attribute filter title.
+ * @beta
+ */
+export interface SetAttributeFilterTitle extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE";
+    readonly payload: SetAttributeFilterTitlePayload;
+}
+
+/**
+ * Creates the {@link SetAttributeFilterTitle} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided title as a selected
+ * title for the attribute filter.
+ *
+ *
+ * @beta
+ * @param filterLocalId - local identifier of the filter the display form is changed for
+ * @param title - newly added title
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change filter title command
+ */
+export function setAttributeFilterTitle(
+    filterLocalId: string,
+    title?: string,
+    correlationId?: string,
+): SetAttributeFilterTitle {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
+        correlationId,
+        payload: {
+            filterLocalId,
+            title,
+        },
+    };
+}

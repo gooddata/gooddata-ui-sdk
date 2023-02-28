@@ -73,6 +73,11 @@ export interface IDashboardAttributeFilter {
          * @beta
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Custom title of the attribute filter. If specified has priority over the default attribute filter title.
+         */
+        title?: string;
     };
 }
 

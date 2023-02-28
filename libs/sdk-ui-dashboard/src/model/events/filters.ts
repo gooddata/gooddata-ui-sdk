@@ -369,6 +369,35 @@ export function attributeFilterParentChanged(
     };
 }
 
+export interface DashboardAttributeTitleChangedPayload {
+    /**
+     * The updated definition of the dashboard attribute filter.
+     *
+     * The definition of parents represents the new state.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+export interface DashboardAttributeTitleChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED";
+    readonly payload: DashboardAttributeTitleChangedPayload;
+}
+
+export function attributeDisplayTitleChanged(
+    ctx: DashboardContext,
+    filter: IDashboardAttributeFilter,
+    correlationId?: string,
+): DashboardAttributeTitleChanged {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
 export interface DashboardAttributeDisplayFormChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
