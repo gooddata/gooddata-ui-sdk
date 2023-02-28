@@ -39,4 +39,5 @@ Supported PR commands:
 -   [ ] `extended test - cypress - record` to record new mapping files (Bear BE)
 -   [ ] `extended test - tiger-cypress - isolated` passes
 -   [ ] `extended test - cypress - isolated` passes
+-   [ ] `extended test - tiger-cypress - integrated` passes
 -   [ ] `rush change` [was run if applicable](https://github.com/gooddata/gooddata-ui-sdk/blob/master/docs/contributing.md#how-do-i-describe-my-changes-for-the-changelog)
