@@ -223,6 +223,10 @@ export const DefaultDashboardAttributeFilter = (
         };
     }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText, titleText, resetTitleText]);
 
+    if (!attributes) {
+        return null;
+    }
+
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
             <AttributeFilterButton
