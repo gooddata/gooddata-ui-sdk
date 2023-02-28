@@ -32,3 +32,4 @@ services:
             - VISUAL_MODE=false
             - SDK_BACKEND
             - CYPRESS_TEST_TAGS
+            - NO_COLOR
