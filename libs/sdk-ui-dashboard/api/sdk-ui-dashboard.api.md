@@ -2369,7 +2369,7 @@ export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonP
 export const DefaultCancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 
 // @alpha
-export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
+export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element | null;
 
 // @internal (undocumented)
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;

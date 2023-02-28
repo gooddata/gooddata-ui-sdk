@@ -1,8 +1,13 @@
 // (C) 2019-2023 GoodData Corporation
-import React, { useMemo } from "react";
+import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
-import { areObjRefsEqual, isAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IAttributeMetadataObject,
+    isAttributeMetadataObject,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
@@ -14,9 +19,8 @@ import {
     selectIsKPIDashboardDependentFiltersEnabled,
     useDashboardSelector,
 } from "../../../model";
-import { useAttributes } from "../../../_staging/sharedHooks/useAttributes";
 
-function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef) {
+function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const allAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
 
@@ -30,12 +34,6 @@ function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef) {
     invariant(filterDisplayForm);
 
     const attributesMap = useDashboardSelector(selectAllCatalogAttributesMap);
-
-    const displayFormRef = useMemo(() => {
-        return [filterDisplayFormRef];
-    }, [filterDisplayFormRef]);
-
-    const { attributes } = useAttributes(displayFormRef);
 
     if (!attributes) {
         return false;
@@ -70,6 +68,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
     cancelText: string;
     applyText: string;
     filterDisplayFormRef: ObjRef;
+    attributes?: IAttributeMetadataObject[];
 }
 
 /**
@@ -84,10 +83,11 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     cancelText,
     applyText,
     filterDisplayFormRef,
+    attributes,
 }) => {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
-    const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef);
+    const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
 
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
