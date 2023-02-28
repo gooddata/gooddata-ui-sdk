@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     areObjRefsEqual,
@@ -9,6 +9,8 @@ import {
     isDateFilter,
     isSimpleMeasure,
     measureFilters,
+    IAttributeMetadataObject,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 export function getUnrelatedDateDataset(
@@ -40,4 +42,8 @@ export function getDateOptionsDisabledForInsight(insight: IInsightDefinition): b
 
 export function removeDateFromTitle(title: string): string {
     return title.trim().replace(/^Date \((.*)\)$/, "$1");
+}
+
+export function getAttributeByDisplayForm(attributes: IAttributeMetadataObject[], displayForm: ObjRef) {
+    return attributes.find((attribute) => areObjRefsEqual(attribute.ref, displayForm));
 }

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useEffect, useMemo } from "react";
 import { ConfigurationCategory } from "./ConfigurationCategory";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader";
@@ -18,7 +18,7 @@ import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFi
 import { useConnectingAttributes } from "./hooks/useConnectingAttributes";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useAttributes } from "./hooks/useAttributes";
+import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;

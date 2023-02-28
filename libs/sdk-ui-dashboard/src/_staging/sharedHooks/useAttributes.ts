@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import {
     queryAttributeByDisplayForm,
     QueryAttributeByDisplayForm,
     useDashboardQueryProcessing,
-} from "../../../../../../model";
+} from "../../model";
 
 /**
  * @internal
