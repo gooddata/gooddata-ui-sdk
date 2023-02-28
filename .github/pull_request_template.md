@@ -21,6 +21,7 @@ Supported PR commands:
 | **E2E Cypress tests commands - BEAR**                   |                                                            |
 | `extended test - cypress - isolated <testName>`         | Run isolated tests running against recorded Bear backend.  |
 | `extended test - cypress - record <testName>`           | Create a new recording for isolated Bear tests.            |
+| `extended test - cypress - integrated <testName>`       | Run integrated tests against live backend                  |
 
 `<testName>` in cypress commands is used to filter specfiles. Example, to run record with BEAR backend
 
