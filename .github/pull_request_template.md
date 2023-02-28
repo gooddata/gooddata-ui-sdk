@@ -21,6 +21,7 @@ Supported PR commands:
 | **E2E Cypress tests commands - BEAR**                   |                                                            |
 | `extended test - cypress - isolated <testName>`         | Run isolated tests running against recorded Bear backend.  |
 | `extended test - cypress - record <testName>`           | Create a new recording for isolated Bear tests.            |
+| `extended test - cypress - integrated <testName>`       | Run integrated tests against live backend                  |
 
 `<testName>` in cypress commands is used to filter specfiles. Example, to run record with BEAR backend
 
@@ -39,4 +40,5 @@ Supported PR commands:
 -   [ ] `extended test - cypress - record` to record new mapping files (Bear BE)
 -   [ ] `extended test - tiger-cypress - isolated` passes
 -   [ ] `extended test - cypress - isolated` passes
+-   [ ] `extended test - tiger-cypress - integrated` passes
 -   [ ] `rush change` [was run if applicable](https://github.com/gooddata/gooddata-ui-sdk/blob/master/docs/contributing.md#how-do-i-describe-my-changes-for-the-changelog)
