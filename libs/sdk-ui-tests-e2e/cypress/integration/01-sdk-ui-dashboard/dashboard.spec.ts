@@ -14,7 +14,7 @@ Cypress.on("uncaught:exception", (error) => {
 
 Cypress.Cookies.debug(true);
 
-describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
+describe("Dashboard", { tags: ["pre-merge_isolated_bear", "post-merge_integrated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
             cy.login();
