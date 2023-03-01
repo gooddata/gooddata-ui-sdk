@@ -36,6 +36,7 @@ import {
     useAttributeFilterParentFiltering,
 } from "./AttributeFilterParentFilteringContext";
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
+import { useAttributes } from "../../../_staging/sharedHooks/useAttributes";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -44,7 +45,9 @@ import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
  *
  * @alpha
  */
-export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
+export const DefaultDashboardAttributeFilter = (
+    props: IDashboardAttributeFilterProps,
+): JSX.Element | null => {
     const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
@@ -74,6 +77,12 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
             onClose();
         }
     }, [onClose]);
+
+    const attributeFilterRef = useMemo(() => {
+        return [filterRef];
+    }, [filterRef]);
+
+    const { attributes } = useAttributes(attributeFilterRef);
 
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
@@ -116,6 +125,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                             onDeleteButtonClick={() => {
                                 handleRemoveAttributeFilter();
                             }}
+                            attributes={attributes}
                         />
                     )}
                 </>
@@ -127,6 +137,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
         saveText,
         filter.attributeFilter.displayForm,
         applyText,
+        attributes,
         handleRemoveAttributeFilter,
     ]);
 
@@ -159,8 +170,12 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
         };
     }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText]);
 
+    if (!attributes) {
+        return null;
+    }
+
     return (
-        <AttributeFilterParentFilteringProvider filter={filter}>
+        <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
             <AttributeFilterButton
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}

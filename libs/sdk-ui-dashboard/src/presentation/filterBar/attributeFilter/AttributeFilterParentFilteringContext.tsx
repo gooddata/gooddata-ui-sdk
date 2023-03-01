@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useContext, useMemo, useCallback } from "react";
-import { filterObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { filterObjRef, IAttributeMetadataObject, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { selectOtherContextAttributeFilters, useDashboardSelector } from "../../../model";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
 import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration";
@@ -32,6 +32,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
  */
 export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
+    attributes: IAttributeMetadataObject[];
 };
 
 /**
@@ -40,7 +41,7 @@ export type IAttributeFilterParentFilteringProviderProps = {
 export const AttributeFilterParentFilteringProvider: React.FC<
     IAttributeFilterParentFilteringProviderProps
 > = (props) => {
-    const { children, filter: currentFilter } = props;
+    const { children, filter: currentFilter, attributes } = props;
 
     const attributeFilter = useMemo(
         () => dashboardAttributeFilterToAttributeFilter(currentFilter),
@@ -71,7 +72,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
-    } = useDisplayFormConfiguration(currentFilter);
+    } = useDisplayFormConfiguration(currentFilter, attributes);
 
     const onConfigurationSave = useCallback(() => {
         onParentFiltersChange();

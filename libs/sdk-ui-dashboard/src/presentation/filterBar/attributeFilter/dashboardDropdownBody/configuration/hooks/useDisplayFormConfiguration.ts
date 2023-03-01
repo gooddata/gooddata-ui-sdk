@@ -1,5 +1,10 @@
-// (C) 2022 GoodData Corporation
-import { areObjRefsEqual, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+// (C) 2022-2023 GoodData Corporation
+import {
+    areObjRefsEqual,
+    IAttributeMetadataObject,
+    IDashboardAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import { useState, useCallback } from "react";
 import {
     useDashboardSelector,
@@ -9,7 +14,10 @@ import {
     useDashboardCommandProcessing,
 } from "../../../../../../model";
 
-export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFilter) {
+export function useDisplayFormConfiguration(
+    currentFilter: IDashboardAttributeFilter,
+    attributes: IAttributeMetadataObject[],
+) {
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
 
     const { run: changeDisplayForm, status: displayFormChangeStatus } = useDashboardCommandProcessing({
@@ -24,14 +32,20 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
         () => {
             const currentDisplayForm = currentFilter.attributeFilter.displayForm;
 
-            const availableDisplayForms =
-                catalogAttributes.find((attribute) =>
+            const availableDisplayForms = catalogAttributes.find((attribute) =>
+                attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
+            )?.displayForms;
+
+            const attributeAvailableDisplayForms =
+                attributes.find((attribute) =>
                     attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
-                )?.displayForms || [];
+                )?.displayForms ?? [];
+
+            const result = availableDisplayForms ?? attributeAvailableDisplayForms;
 
             return {
                 selectedDisplayForm: currentDisplayForm,
-                availableDisplayForms,
+                availableDisplayForms: result,
             };
         },
     );

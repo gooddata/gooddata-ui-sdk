@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
 import { batchActions } from "redux-batched-actions";
+import flatMap from "lodash/flatMap";
 
 import { SetAttributeFilterDisplayForm } from "../../../commands/filters";
 import { attributeDisplayFormChanged } from "../../../events/filters";
@@ -14,6 +15,10 @@ import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors";
+import { IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { query } from "../../../store/_infra/queryCall";
+import { queryAttributeByDisplayForm } from "../../../../model/queries";
+import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
@@ -21,11 +26,20 @@ export function* changeAttributeDisplayFormHandler(
 ): SagaIterator<void> {
     const { filterLocalId, displayForm } = cmd.payload;
 
-    const displayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+    const catalogDisplayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
     );
 
-    const displayFormData = displayFormsMap.get(displayForm);
+    const attributes: IAttributeMetadataObject[] = yield call(
+        query,
+        queryAttributeByDisplayForm([displayForm]),
+    );
+
+    const attributeDisplayFormsMap = newDisplayFormMap([...flatMap(attributes, (a) => a.displayForms)]);
+
+    const displayFormData =
+        catalogDisplayFormsMap.get(displayForm) || attributeDisplayFormsMap.get(displayForm);
+
     invariant(
         displayFormData,
         "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter with display form not available in the catalog.",
