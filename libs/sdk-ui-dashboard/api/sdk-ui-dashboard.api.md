@@ -1116,7 +1116,6 @@ export interface DashboardConfig {
     hideSaveAsNewButton?: boolean;
     // @internal
     hideShareButton?: boolean;
-    // @internal
     initialRenderMode?: RenderMode;
     isEmbedded?: boolean;
     isExport?: boolean;
