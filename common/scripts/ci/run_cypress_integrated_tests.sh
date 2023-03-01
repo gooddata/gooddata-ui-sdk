@@ -17,7 +17,6 @@ fi
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 SDK_BACKEND=${SDK_BACKEND:-BEAR}
-HOST=${TEST_BACKEND:-}
 CYPRESS_TEST_TAGS=post-merge_integrated_${sdk_backend}
 FIXTURE_TYPE=goodsales
 FILTER=${FILTER:-}
@@ -40,6 +39,7 @@ else
     exit 1
 fi
 
+export HOST=$TEST_BACKEND
 $_RUSH install
 $_RUSH build -t sdk-ui-tests-e2e
 $_RUSHX libs/sdk-ui-tests-e2e create-ref-workspace

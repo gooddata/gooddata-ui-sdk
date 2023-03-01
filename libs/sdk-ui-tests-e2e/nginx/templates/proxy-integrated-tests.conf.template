@@ -7,3 +7,15 @@ location ^~ /api {
     proxy_pass $TEST_BACKEND;
     proxy_set_header Origin $TEST_BACKEND;
 }
+
+location ^~ /gdc {
+    proxy_pass $TEST_BACKEND;
+    proxy_set_header x-forwarded-host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Referer $TEST_BACKEND;
+    proxy_set_header Origin "";
+    # need to strip http(s) from TEST_BACKEND, see domain-strip.conf.template
+    proxy_set_header Host $testBackendDomain;
+    proxy_cookie_domain $testBackendDomain $host;
+    proxy_cookie_flags ~ nosecure samesite=lax;
+}

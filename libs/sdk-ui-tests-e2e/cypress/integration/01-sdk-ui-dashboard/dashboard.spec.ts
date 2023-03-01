@@ -14,7 +14,23 @@ Cypress.on("uncaught:exception", (error) => {
 
 Cypress.Cookies.debug(true);
 
-describe("Dashboard", { tags: ["pre-merge_isolated_bear", "post-merge_integrated_bear"] }, () => {
+describe("Dashboard2", { tags: ["post-merge_integrated_bear"] }, () => {
+    describe("TopBar rendering2", () => {
+        beforeEach(() => {
+            cy.login();
+
+            Navigation.visit("dashboard/dashboard");
+        });
+
+        it("should render topBar2", () => {
+            const dashboard = new Dashboard();
+
+            dashboard.topBarExist();
+        });
+    });
+});
+
+describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
             cy.login();

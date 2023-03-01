@@ -1,0 +1,4 @@
+map "$TEST_BACKEND" $testBackendDomain {
+    default                    "";
+    "~^https?://(?<suffix>.*)$"  $suffix;
+}
