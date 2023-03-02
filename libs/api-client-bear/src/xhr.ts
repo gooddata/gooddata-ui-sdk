@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -107,9 +107,9 @@ export class ApiNetworkError extends ApiError {}
 
 export class ApiResponse<T = any> {
     public response: Response;
-    public responseBody: string;
+    public responseBody: string | ArrayBuffer;
 
-    constructor(response: Response, responseBody: string) {
+    constructor(response: Response, responseBody: string | ArrayBuffer) {
         this.response = response;
         this.responseBody = responseBody;
     }
@@ -122,16 +122,23 @@ export class ApiResponse<T = any> {
         return this.getDataInner();
     }
 
+    public getRawData(): string | ArrayBuffer {
+        return this.responseBody;
+    }
+
     public getHeaders(): Response {
         return this.response;
     }
 
     private getDataInner(): T {
-        try {
-            return JSON.parse(this.responseBody) as T;
-        } catch (error) {
-            throw new Error("Cannot parse responseBody.");
+        if (typeof this.responseBody === "string") {
+            try {
+                return JSON.parse(this.responseBody) as T;
+            } catch (error) {
+                throw new Error("Cannot parse responseBody.");
+            }
         }
+        throw new Error("ArrayBuffer ResponseBody cannot be parsed to requested type.");
     }
 }
 
@@ -185,7 +192,7 @@ export class XhrModule {
             return this.continueAfterTokenRequest(url, settings);
         }
 
-        let response;
+        let response: Response;
         try {
             // TODO: We should clean up the settings at this point to be pure `RequestInit` object
             response = await this.fetch(url, settings);
@@ -194,7 +201,9 @@ export class XhrModule {
         }
 
         // Fetch URL and resolve body promise (if left unresolved, the body isn't even shown in chrome-dev-tools)
-        const responseBody = await response.text();
+        const responseBody = settings.arrayBufferResponseBody
+            ? await response.arrayBuffer()
+            : await response.text();
 
         if (response.status === 401) {
             // if 401 is in login-request, it means wrong user/password (we wont continue)
@@ -218,7 +227,11 @@ export class XhrModule {
             // (for example validElements returns 303 first with new url which may then return 202 to poll on)
             let responseJson;
             try {
-                responseJson = JSON.parse(responseBody);
+                // If body was parsed as ArrayBuffer, decode it to text. We need to check
+                // if body does not contain JSON response with "uri" used for polling. Before polled task
+                // resolves, request to the task returns JSON body with "uri". When the task resolves,
+                // a binary body is returned.
+                responseJson = JSON.parse(this.responseBodyAsString(responseBody));
             } catch (err) {
                 responseJson = {};
             }
@@ -245,7 +258,7 @@ export class XhrModule {
         }
 
         // throws on 400, 500, etc.
-        throw new ApiResponseError(response.statusText, response, responseBody);
+        throw new ApiResponseError(response.statusText, response, this.responseBodyAsString(responseBody));
     }
 
     /**
@@ -412,5 +425,10 @@ export class XhrModule {
             this.logDeprecatedRestApiCall(deprecatedVersionDetails);
             shouldLogDeprecatedRestApiCall = false;
         }
+    }
+
+    private responseBodyAsString(responseBody: string | ArrayBuffer): string {
+        const decoder = new TextDecoder("utf-8");
+        return responseBody instanceof ArrayBuffer ? decoder.decode(responseBody) : responseBody;
     }
 }

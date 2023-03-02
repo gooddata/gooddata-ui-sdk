@@ -21,6 +21,7 @@ import {
     SupportedDashboardReferenceTypes,
     UnexpectedError,
     TimeoutError,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -67,6 +68,7 @@ import includes from "lodash/includes";
 import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter";
 import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter";
+import { parseNameFromContentDisposition } from "../../../utils/downloadFile";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -339,6 +341,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboardRef: ObjRef,
         filters?: FilterContextItem[],
     ): Promise<string> => {
+        return this.exportDashboardToPdfBlob(dashboardRef, filters).then((result) => {
+            URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
+            return result.uri;
+        });
+    };
+
+    public exportDashboardToPdfBlob = async (
+        dashboardRef: ObjRef,
+        filters?: FilterContextItem[],
+    ): Promise<IExportBlobResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
         // skip all time date filter from stored filters, when missing, it's correctly
@@ -377,14 +389,20 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportResultPolling(
         client: ITigerClient,
         payload: { exportId: string; workspaceId: string },
-    ): Promise<string> {
+    ): Promise<IExportBlobResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getExportedFile(payload, {
                 transformResponse: (x) => x,
+                responseType: "blob",
             });
 
             if (result?.status === 200) {
-                return result?.config?.url || "";
+                const blob = new Blob([result?.data as any], { type: "application/pdf" });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
             }
 
             await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));

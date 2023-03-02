@@ -72,7 +72,7 @@ export {
     FilterWithResolvableElements,
 } from "./workspace/attributes/elements";
 
-export { IExportConfig, IExportResult } from "./workspace/execution/export";
+export { IExportConfig, IExportResult, IExportBlobResult } from "./workspace/execution/export";
 
 export { IWorkspaceStylingService } from "./workspace/styling";
 export {

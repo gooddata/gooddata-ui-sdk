@@ -1,10 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import isObject from "lodash/isObject";
 import omitBy from "lodash/fp/omitBy";
 import { delay } from "./utils/promise";
 import { ApiResponse, ApiResponseError } from "./xhr";
+import { parseFileNameFromContentDisposition } from "./utils/export";
 
 /**
  * Omit nil or empty object/array values of the object. Keep booleans & numbers.
@@ -32,9 +33,14 @@ export const getQueryEntries = (obj: any): any => {
 };
 
 export interface IPollingOptions {
+    /** The number of performed polling attempts */
     attempts?: number;
+    /** Maximum number of polling attempts */
     maxAttempts?: number;
+    /** Milliseconds delay between each polling attempts */
     pollStep?: number;
+    /** Type of data Blob referenced by returned Object URL. If blobContentType is not specified, blob object URL is generated and returned.  */
+    blobContentType?: string;
 }
 
 /**
@@ -53,7 +59,6 @@ export const handlePolling = (
     isPollingDone: (response: any) => boolean,
     options: IPollingOptions = {},
 ): Promise<any> => {
-    // TODO
     const { attempts = 0, maxAttempts = 50, pollStep = 5000 } = options;
 
     return xhrRequest(uri)
@@ -89,16 +94,28 @@ export const handleHeadPolling = (
     isPollingDone: (responseHeaders: Response, response: ApiResponse) => boolean,
     options: IPollingOptions = {},
 ): Promise<any> => {
-    const { attempts = 0, maxAttempts = 50, pollStep = 5000 } = options;
+    const { attempts = 0, maxAttempts = 50, pollStep = 5000, blobContentType } = options;
 
-    return xhrRequest(uri).then((response: any) => {
+    return xhrRequest(uri, {
+        arrayBufferResponseBody: blobContentType !== undefined,
+    }).then((response: any) => {
         if (attempts > maxAttempts) {
             return Promise.reject(new Error("Export timeout!!!"));
         }
-        const responseHeaders = response.getHeaders();
-        if (isPollingDone(responseHeaders, response)) {
-            if (responseHeaders.status === 200) {
-                return Promise.resolve({ uri });
+        const fetchResponse = response.getHeaders();
+        if (isPollingDone(fetchResponse, response)) {
+            if (fetchResponse.status === 200) {
+                if (options.blobContentType) {
+                    const blob = new Blob([response.getRawData()], { type: options.blobContentType });
+                    return Promise.resolve({
+                        uri,
+                        objectUrl: URL.createObjectURL(blob),
+                        fileName: parseFileNameFromContentDisposition(fetchResponse),
+                    });
+                }
+                return Promise.resolve({
+                    uri,
+                });
             }
             return Promise.reject(new ApiResponseError(response.statusText, response, response.getData()));
         } else {

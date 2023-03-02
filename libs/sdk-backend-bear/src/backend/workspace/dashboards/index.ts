@@ -13,6 +13,7 @@ import {
     SupportedDashboardReferenceTypes,
     IDashboardReferences,
     IGetScheduledMailOptions,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -286,6 +287,17 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const convertedFilters = filters?.map(fromSdkModel.convertFilterContextItem);
         return this.authCall((sdk) =>
             sdk.dashboard.exportToPdf(this.workspace, dashboardUri, convertedFilters).then((res) => res.uri),
+        );
+    };
+
+    public exportDashboardToPdfBlob = async (
+        dashboardRef: ObjRef,
+        filters?: FilterContextItem[],
+    ): Promise<IExportBlobResult> => {
+        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
+        const convertedFilters = filters?.map(fromSdkModel.convertFilterContextItem);
+        return this.authCall((sdk) =>
+            sdk.dashboard.exportToPdfBlob(this.workspace, dashboardUri, convertedFilters).then((res) => res),
         );
     };
 

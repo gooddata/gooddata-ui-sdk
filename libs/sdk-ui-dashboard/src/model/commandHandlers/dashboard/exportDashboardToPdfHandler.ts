@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
@@ -15,14 +15,15 @@ import { invalidArgumentsProvided } from "../../events/general";
 import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors";
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils";
 import { PromiseFnReturnType } from "../../types/sagas";
+import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
 
 function exportDashboardToPdf(
     ctx: DashboardContext,
     dashboardRef: ObjRef,
     filters: FilterContextItem[] | undefined,
-): Promise<string> {
+): Promise<IExportBlobResult> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).dashboards().exportDashboardToPdf(dashboardRef, filters);
+    return backend.workspace(workspace).dashboards().exportDashboardToPdfBlob(dashboardRef, filters);
 }
 
 export function* exportDashboardToPdfHandler(
@@ -42,7 +43,7 @@ export function* exportDashboardToPdfHandler(
 
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
 
-    const resultUri: PromiseFnReturnType<typeof exportDashboardToPdf> = yield call(
+    const result: PromiseFnReturnType<typeof exportDashboardToPdf> = yield call(
         exportDashboardToPdf,
         ctx,
         dashboardRef,
@@ -51,8 +52,13 @@ export function* exportDashboardToPdfHandler(
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
     const fullUri = ctx.backend.config.hostname
-        ? new URL(resultUri, ctx.backend.config.hostname).href
-        : resultUri;
+        ? new URL(result.uri, ctx.backend.config.hostname).href
+        : result.uri;
 
-    return dashboardExportToPdfResolved(ctx, fullUri, cmd.correlationId);
+    const sanitizedResult: IExportBlobResult = {
+        ...result,
+        uri: fullUri,
+    };
+
+    return dashboardExportToPdfResolved(ctx, sanitizedResult, cmd.correlationId);
 }

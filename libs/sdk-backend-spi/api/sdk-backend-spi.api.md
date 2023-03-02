@@ -773,6 +773,7 @@ export interface IExecutionResult {
     readonly dimensions: IDimensionDescriptor_2[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
+    exportToBlob(options: IExportConfig): Promise<IExportBlobResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
@@ -798,6 +799,13 @@ export type IExplainResult = {
     ["OPT_QT_SVG"]: string;
     ["SQL"]: string;
 };
+
+// @public
+export interface IExportBlobResult {
+    fileName?: string;
+    objectUrl: string;
+    uri: string;
+}
 
 // @public
 export interface IExportConfig {
@@ -1737,6 +1745,7 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<string>;
+    exportDashboardToPdfBlob(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<IExportBlobResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert_2[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard_2>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;

@@ -14,6 +14,7 @@ import {
     SupportedWidgetReferenceTypes,
     UnexpectedResponseError,
     walkLayout,
+    IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -312,6 +313,17 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<string> {
         return Promise.resolve("/example/export.pdf");
+    }
+
+    public exportDashboardToPdfBlob(
+        _ref: ObjRef,
+        _filters?: FilterContextItem[],
+    ): Promise<IExportBlobResult> {
+        return Promise.resolve({
+            uri: "/example/export.pdf",
+            objectUrl: "blob:/01345454545454",
+            fileName: "export.pdf",
+        });
     }
 
     //

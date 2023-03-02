@@ -212,7 +212,8 @@
          * your PR branch, and in this situation "rush change" will also automatically invoke "git fetch"
          * to retrieve the latest activity for the remote master branch.
          */
-        "url": "git@github.com:gooddata/gooddata-ui-sdk.git"
+        "url": "git@github.com:gooddata/gooddata-ui-sdk.git",
+        "defaultBranch": "master" // branch used when "rush change" is called (current rush default value is "main")
     },
 
     /**

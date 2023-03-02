@@ -1,13 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { useCallback, useRef } from "react";
-import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { isProtectedDataError, IExportBlobResult } from "@gooddata/sdk-backend-spi";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { messages } from "../../../locales";
 
 type ExportHandler = (
-    exportFunction: (config: IExtendedExportConfig) => Promise<string>,
+    exportFunction: (config: IExtendedExportConfig) => Promise<IExportBlobResult>,
     exportConfig: IExtendedExportConfig,
 ) => Promise<void>;
 
@@ -22,14 +22,13 @@ export const useExportHandler = (): ExportHandler => {
                 { duration: 0 },
             );
 
-            const exportResultUri = await exportFunction(exportConfig);
+            const exportResult = await exportFunction(exportConfig);
 
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
             addSuccess(messages.messagesExportResultSuccess);
-
-            downloadFile(exportResultUri);
+            downloadFile(exportResult);
         } catch (err) {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
