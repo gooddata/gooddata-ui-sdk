@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { CaseReducer, AnyAction } from "@reduxjs/toolkit";
-import { IAttributeElement, ObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef, IAttributeMetadataObject, IMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { ILoadElementsOptions, AsyncOperationStatus } from "../../../types";
@@ -17,6 +17,7 @@ export interface AttributeFilterState {
     };
     attribute: {
         data?: IAttributeMetadataObject;
+        dataSet?: IMetadataObject;
         status: AsyncOperationStatus;
         error?: GoodDataSdkError;
     };

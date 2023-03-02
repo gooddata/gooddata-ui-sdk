@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import invariant from "ts-invariant";
 import compact from "lodash/compact";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -9,6 +9,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -46,6 +47,7 @@ import {
     AttributeFilterHandlerStore,
     createAttributeFilterHandlerStore,
     selectAttribute,
+    selectAttributeDataSet,
     selectElements,
     selectElementsTotalCount,
     selectElementsTotalCountWithCurrentSettings,
@@ -153,6 +155,10 @@ export class AttributeFilterReduxBridge {
 
     getAttribute = (): IAttributeMetadataObject | undefined => {
         return this.redux.select(selectAttribute);
+    };
+
+    getAttributeDataSet = (): IMetadataObject | undefined => {
+        return this.redux.select(selectAttributeDataSet);
     };
 
     getAttributeStatus = (): AsyncOperationStatus => {

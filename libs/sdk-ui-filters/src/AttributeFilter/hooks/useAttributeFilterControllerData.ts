@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useState, useEffect } from "react";
 import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
 import { isLimitingAttributeFiltersEmpty } from "../utils";
@@ -20,6 +20,7 @@ export function useAttributeFilterControllerData(
     const isInitializing = initStatus === "loading";
 
     const attribute = handlerState.attribute.data;
+    const attributeDataSet = handlerState.attribute.dataSet;
 
     const initialElementsPageStatus = handlerState.elements.initialPageLoad.status;
     const initialElementsPageError = handlerState.elements.initialPageLoad.error;
@@ -70,6 +71,7 @@ export function useAttributeFilterControllerData(
 
     return {
         attribute,
+        attributeDataSet,
 
         offset,
         limit,

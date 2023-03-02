@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import { IAttributeMetadataObject } from "@gooddata/sdk-model";
+// (C) 2022-2023 GoodData Corporation
+import { IAttributeMetadataObject, IMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     AsyncOperationStatus,
@@ -38,6 +38,14 @@ export interface IAttributeLoader {
      * Returns undefined, if the attribute is not loaded yet.
      */
     getAttribute(): IAttributeMetadataObject | undefined;
+
+    /**
+     * Returns the corresponding attribute data set.
+     *
+     * @remarks
+     * Returns undefined, if the attribute is not loaded yet.
+     */
+    getAttributeDataSet(): IMetadataObject | undefined;
 
     /**
      * Returns error, if it was thrown during the attribute filter load, undefined otherwise.

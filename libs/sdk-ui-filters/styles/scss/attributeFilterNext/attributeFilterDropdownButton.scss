@@ -203,7 +203,14 @@
     }
 }
 
+.gd-attribute-filter-details {
+    width: 220px;
+    word-wrap: break-word;
+}
+
 .gd-attribute-filter-dropdown-button-title__next {
+    display: flex;
+    justify-content: space-between;
     overflow: hidden;
     color: variables.$gd-color-link;
 
@@ -321,5 +328,36 @@
     .gd-attribute-filter-dropdown-simple-button-selection-count {
         flex: 1 0 auto;
         padding-left: 5px;
+    }
+}
+
+.gd-attribute-filter-tooltip-content {
+    display: block;
+    overflow: hidden;
+    max-width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;
+    pointer-events: auto;
+    padding: 12px 0 12px 12px;
+
+    h3 {
+        font-weight: 500;
+        line-height: 23px;
+        margin: 0;
+        font-size: 14px;
+        color: variables.$gd-color-text;
+    }
+    p {
+        text-transform: capitalize;
+        color: variables.$gd-color-text;
+    }
+
+    h4 {
+        margin: 13px 0 0;
+        padding-right: 5px;
+        font-size: 10px;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: variables.$gd-color-state-blank;
     }
 }

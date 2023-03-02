@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -37,6 +37,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
         onApply,
         fullscreenOnMobile,
         isCommittedSelectionInverted,
+        attributeDataSet,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -66,6 +67,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                         isOpen={isOpen}
                         selectedItemsCount={committedSelectionElements.length}
                         onClick={toggleDropdown}
+                        dataSet={attributeDataSet}
                     />
                 </div>
             )}

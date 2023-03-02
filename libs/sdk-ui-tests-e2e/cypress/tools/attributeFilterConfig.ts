@@ -1,5 +1,7 @@
 // (C) 2022 GoodData Corporation
 
+import { Button } from "./Button";
+
 export class AttributeFilterConfiguration {
     constructor(private parentSelector: string) {}
 
@@ -61,5 +63,17 @@ export class AttributeFilterConfiguration {
             .find(".gd-button-text")
             .should("have.text", displayFormTitle);
         return this;
+    }
+
+    changeAttributeTitle(title: string) {
+        const inputTitle = title ? title : "{backspace}";
+        cy.get(".s-configuration-attribute-filter-title .gd-input-field")
+            .clear({ force: true })
+            .type(inputTitle, { force: true });
+        return this;
+    }
+
+    getSaveButton() {
+        return new Button(".gd-attribute-filter-apply-button__next.s-save");
     }
 }

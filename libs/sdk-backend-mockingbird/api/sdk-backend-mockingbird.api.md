@@ -31,6 +31,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinition } from '@gooddata/sdk-model';
+import { IMetadataObject } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -208,6 +209,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     };
     userManagement?: IUserManagement;
     attributeElementsFiltering?: AttributeElementsFiltering;
+    attributeDataSet?: Record<string, IMetadataObject>;
 };
 
 // @internal

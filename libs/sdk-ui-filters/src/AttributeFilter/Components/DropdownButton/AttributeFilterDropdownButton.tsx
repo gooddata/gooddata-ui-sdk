@@ -1,9 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { AttributeFilterDetails } from "./Details/AttributeFilterDetails";
+import { IMetadataObject } from "@gooddata/sdk-model";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
@@ -89,6 +91,27 @@ export interface IAttributeFilterDropdownButtonProps {
     icon?: ReactNode;
 
     /**
+     * If true, the button supports AttributeFilter tooltip.
+     *
+     * @beta
+     */
+    shouldDisplayAttributeTooltip?: boolean;
+
+    /**
+     * Default title of the AttributeFilter.
+     *
+     * @beta
+     */
+    defaultAttributeFilterTitle?: string;
+
+    /**
+     * Data set of the corresponding attribute.
+     *
+     * @beta
+     */
+    dataSet?: IMetadataObject;
+
+    /**
      * Callback to open or close AttributeFilter dropdown.
      *
      * @beta
@@ -119,6 +142,9 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         isLoaded,
         isDraggable,
         icon,
+        defaultAttributeFilterTitle,
+        shouldDisplayAttributeTooltip,
+        dataSet,
         onClick,
     } = props;
 
@@ -148,6 +174,8 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         buttonSubtitle = intl.formatMessage({ id: "filtering" });
     }
 
+    const shouldDisplayTooltip = shouldDisplayAttributeTooltip && isOpen;
+
     return (
         <div
             className={cx(
@@ -172,6 +200,13 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     >
                         {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
                     </ShortenedText>
+                    {shouldDisplayTooltip && (
+                        <AttributeFilterDetails
+                            title={title}
+                            defaultAttributeFilterTitle={defaultAttributeFilterTitle}
+                            dataSet={dataSet}
+                        />
+                    )}
                 </div>
                 <div className="gd-attribute-filter-dropdown-button-subtitle__next">
                     <span

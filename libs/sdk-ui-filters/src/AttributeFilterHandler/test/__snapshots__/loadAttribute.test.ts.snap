@@ -30,6 +30,38 @@ Object {
 }
 `;
 
+exports[`AttributeFilterHandler getAttributeDataSet() should return the attribute data set after successful initialization 1`] = `
+Object {
+  "deprecated": false,
+  "description": "",
+  "id": "dataSet1",
+  "production": true,
+  "ref": Object {
+    "uri": "dataSet1",
+  },
+  "title": "Dataset",
+  "type": "dataSet",
+  "unlisted": false,
+  "uri": "dataSet1",
+}
+`;
+
+exports[`AttributeFilterHandler getAttributeDataSet() should return the attribute data set after successful loadAttribute() call 1`] = `
+Object {
+  "deprecated": false,
+  "description": "",
+  "id": "dataSet1",
+  "production": true,
+  "ref": Object {
+    "uri": "dataSet1",
+  },
+  "title": "Dataset",
+  "type": "dataSet",
+  "unlisted": false,
+  "uri": "dataSet1",
+}
+`;
+
 exports[`AttributeFilterHandler getAttributeError() should return error 1`] = `[Error: NOT_FOUND]`;
 
 exports[`AttributeFilterHandler getAttributeStatus() should return proper status for failed load: after the load 1`] = `"canceled"`;
@@ -93,6 +125,19 @@ Array [
       "uri": "/gdc/md/referenceworkspace/obj/1054",
     },
     "correlation": "success",
+    "dataSet": Object {
+      "deprecated": false,
+      "description": "",
+      "id": "dataSet1",
+      "production": true,
+      "ref": Object {
+        "uri": "dataSet1",
+      },
+      "title": "Dataset",
+      "type": "dataSet",
+      "unlisted": false,
+      "uri": "dataSet1",
+    },
   },
 ]
 `;

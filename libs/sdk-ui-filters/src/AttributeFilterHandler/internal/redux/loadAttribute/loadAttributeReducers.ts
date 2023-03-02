@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { IAttributeMetadataObject, IMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import identity from "lodash/identity";
 
@@ -13,13 +13,15 @@ const loadAttributeStart: AttributeFilterReducer<PayloadAction<{ correlation: Co
     state.attribute.status = "loading";
     state.attribute.error = undefined;
     state.attribute.data = undefined;
+    state.attribute.dataSet = undefined;
 };
 
 const loadAttributeSuccess: AttributeFilterReducer<
-    PayloadAction<{ attribute: IAttributeMetadataObject; correlation: Correlation }>
+    PayloadAction<{ attribute: IAttributeMetadataObject; dataSet: IMetadataObject; correlation: Correlation }>
 > = (state, action) => {
     state.attribute.status = "success";
     state.attribute.data = action.payload.attribute;
+    state.attribute.dataSet = action.payload.dataSet;
 };
 
 const loadAttributeError: AttributeFilterReducer<

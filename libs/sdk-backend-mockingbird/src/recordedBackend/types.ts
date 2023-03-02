@@ -32,6 +32,7 @@ import {
     IMeasure,
     Identifier,
     IAvailableAccessGrantee,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 
 /**
@@ -128,6 +129,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify how attribute elements should be filtered when using limiting measures or filters.
      */
     attributeElementsFiltering?: AttributeElementsFiltering;
+
+    /**
+     * Specify responses to the getAttributeDatasetMeta calls. The key of the map MUST be created using the {@link objRefsToStringKey} function.
+     */
+    attributeDataSet?: Record<string, IMetadataObject>;
 };
 
 /**

@@ -37,6 +37,7 @@ import { HeaderSectionScenario } from "../components/Scenarios/Dashboard/HeaderS
 import { HeaderLocalizationScenario } from "../components/Scenarios/Dashboard/HeaderSectionLocalizationScenario";
 import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAndDropWidgetScenario";
 import { AttributeFilterParentChildExampleScenario } from "../components/Scenarios/Filters/AttributeFilterParentChildExampleScenario";
+import { DashboardAttributeFilterRenaming } from "../components/Scenarios/Dashboard/DashboardAttributeFilterRenaming";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -73,6 +74,7 @@ export const SCENARIO_KEYS = {
     FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
     FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS: "filters/parent-child-filters-with-placeholder",
     FILTERS_ATTRIBUTE_FILTER_CONFIG: "filters/attribute-filter-config",
+    FILTERS_ATTRIBUTE_FILTER_BUTTON_RENAMING: "filters/attribute-filter-button-renaming",
     INSIGHT_ON_DASHBOARD: "dashboard/insight",
     HEADER_SECTION: "dashboard/header",
     HEADER_LOCALIZATION: "dashboard/header-localization",
@@ -114,6 +116,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.HEADER_SECTION, HeaderSectionScenario],
     [SCENARIO_KEYS.HEADER_LOCALIZATION, HeaderLocalizationScenario],
     [SCENARIO_KEYS.DRAG_DROP_MOVE_WIDGET, DragDropWidgetScenario],
+    [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_RENAMING, DashboardAttributeFilterRenaming],
 ]);
 
 const ComponentResolver: React.FC = () => {

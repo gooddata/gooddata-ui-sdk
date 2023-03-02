@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
+    IMetadataObject,
     IAttributeMetadataObject,
     ObjRef,
 } from "@gooddata/sdk-model";
@@ -18,6 +19,11 @@ export type AttributeFilterControllerData = {
      * Loaded attribute.
      */
     attribute: IAttributeMetadataObject;
+
+    /**
+     * Data set of current attribute.
+     */
+    attributeDataSet: IMetadataObject;
 
     /**
      * Current offset used for the attribute element loading.

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IMultiSelectAttributeFilterHandler, AsyncOperationStatus } from "../../AttributeFilterHandler";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -7,6 +7,7 @@ import {
     IAttributeFilter,
     IAttributeMetadataObject,
     IMeasure,
+    IMetadataObject,
     IRelativeDateFilter,
     SortDirection,
 } from "@gooddata/sdk-model";
@@ -24,6 +25,7 @@ export interface IUseAttributeFilterHandlerStateResult {
     };
     attribute: {
         data?: IAttributeMetadataObject;
+        dataSet?: IMetadataObject;
         status: AsyncOperationStatus;
         error?: GoodDataSdkError;
     };
@@ -87,6 +89,7 @@ export const useAttributeFilterHandlerState = (
         },
         attribute: {
             data: handler.getAttribute(),
+            dataSet: handler.getAttributeDataSet(),
             status: handler.getAttributeStatus(),
             error: handler.getAttributeError(),
         },

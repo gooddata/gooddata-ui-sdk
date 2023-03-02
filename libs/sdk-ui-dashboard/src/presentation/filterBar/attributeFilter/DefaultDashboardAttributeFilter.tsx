@@ -30,6 +30,7 @@ import {
     useDashboardDispatch,
     selectLocale,
     useDashboardSelector,
+    selectIsInEditMode,
     selectSettings,
 } from "../../../model";
 import {
@@ -52,6 +53,7 @@ export const DefaultDashboardAttributeFilter = (
     const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
     const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -92,9 +94,23 @@ export const DefaultDashboardAttributeFilter = (
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
             useAutoOpenAttributeFilterDropdownButton(props, !!autoOpen);
             useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
-            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
+
+            const { defaultAttributeFilterTitle, displayFormChangeStatus } =
+                useAttributeFilterParentFiltering();
+
+            const shouldDisplayAttributeTooltip =
+                isEditMode && enableKPIAttributeFilterRenaming && displayFormChangeStatus !== "running";
+
+            return (
+                <AttributeFilterDropdownButton
+                    {...props}
+                    isDraggable={isDraggable}
+                    shouldDisplayAttributeTooltip={shouldDisplayAttributeTooltip}
+                    defaultAttributeFilterTitle={defaultAttributeFilterTitle}
+                />
+            );
         };
-    }, [isDraggable, autoOpen, onCloseFilter]);
+    }, [isDraggable, autoOpen, isEditMode, enableKPIAttributeFilterRenaming, onCloseFilter]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {

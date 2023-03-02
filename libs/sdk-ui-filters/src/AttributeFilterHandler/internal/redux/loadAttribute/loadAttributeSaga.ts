@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, select, takeLatest, SagaReturnType, cancelled } from "redux-saga/effects";
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";
@@ -7,6 +7,7 @@ import { actions } from "../store/slice";
 import { getAttributeFilterContext, PromiseFnReturnType } from "../common/sagas";
 import { selectAttributeFilterDisplayForm } from "../filter/filterSelectors";
 import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm";
+import { loadAttributeDataSetMeta } from "./loadAttributeDataSetMeta";
 
 /**
  * @internal
@@ -49,7 +50,13 @@ export function* loadAttributeSaga(
             displayFormRef,
         );
 
-        yield put(actions.loadAttributeSuccess({ attribute, correlation }));
+        const attributeDataSet: PromiseFnReturnType<typeof loadAttributeDataSetMeta> = yield call(
+            loadAttributeDataSetMeta,
+            context,
+            attribute.ref,
+        );
+
+        yield put(actions.loadAttributeSuccess({ attribute, dataSet: attributeDataSet, correlation }));
 
         return attribute;
     } catch (error) {

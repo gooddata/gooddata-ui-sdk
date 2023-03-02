@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
 import {
@@ -17,7 +17,6 @@ import compact from "lodash/compact";
 import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,
-    NotSupported,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 
@@ -118,8 +117,19 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         return compact(await Promise.all(refs.map(loader)));
     };
 
-    public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
-        throw new NotSupported("not supported");
+    public async getAttributeDatasetMeta(displayFormRef: ObjRef): Promise<IMetadataObject> {
+        const key = objRefToString(displayFormRef);
+        const response = this.config.attributeDataSet?.[key];
+
+        if (!response) {
+            throw new UnexpectedResponseError(
+                `No corresponding data set for attribute with key ${key}`,
+                404,
+                {},
+            );
+        }
+
+        return response;
     }
 
     private sanitizeAttribute(attribute: IAttributeMetadataObject): IAttributeMetadataObject {

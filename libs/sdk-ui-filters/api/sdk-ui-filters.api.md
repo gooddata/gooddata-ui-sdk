@@ -29,6 +29,7 @@ import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
+import { IMetadataObject } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPlaceholder } from '@gooddata/sdk-ui';
 import { IRankingFilter } from '@gooddata/sdk-model';
@@ -88,6 +89,7 @@ export type AttributeFilterControllerCallbacks = {
 // @public
 export type AttributeFilterControllerData = {
     attribute: IAttributeMetadataObject;
+    attributeDataSet: IMetadataObject;
     offset: number;
     limit: number;
     isFiltering: boolean;
@@ -547,6 +549,8 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
+    dataSet?: IMetadataObject;
+    defaultAttributeFilterTitle?: string;
     icon?: ReactNode;
     isDraggable?: boolean;
     isFiltering?: boolean;
@@ -555,6 +559,7 @@ export interface IAttributeFilterDropdownButtonProps {
     isOpen?: boolean;
     onClick?: () => void;
     selectedItemsCount?: number;
+    shouldDisplayAttributeTooltip?: boolean;
     subtitle?: string;
     title?: string;
 }
@@ -691,6 +696,7 @@ export interface IAttributeFilterStatusBarProps {
 export interface IAttributeLoader {
     cancelAttributeLoad(): void;
     getAttribute(): IAttributeMetadataObject | undefined;
+    getAttributeDataSet(): IMetadataObject | undefined;
     getAttributeError(): GoodDataSdkError | undefined;
     getAttributeStatus(): AsyncOperationStatus;
     loadAttribute(correlation?: Correlation): void;

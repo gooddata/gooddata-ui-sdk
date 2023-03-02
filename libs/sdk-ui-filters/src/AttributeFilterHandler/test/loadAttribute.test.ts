@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { newTestAttributeFilterHandler } from "./fixtures";
 import { waitForAsync } from "./testUtils";
 
@@ -22,6 +22,27 @@ describe("AttributeFilterHandler", () => {
         await waitForAsync();
 
         expect(attributeFilterHandler.getAttribute()).toMatchSnapshot();
+    });
+
+    it("getAttributeDataSet() should return the attribute data set after successful initialization", async () => {
+        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+
+        attributeFilterHandler.init();
+
+        await waitForAsync();
+
+        expect(attributeFilterHandler.getAttributeDataSet()).toMatchSnapshot();
+    });
+
+    it("getAttributeDataSet() should return the attribute data set after successful loadAttribute() call", async () => {
+        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+
+        attributeFilterHandler.init();
+        await waitForAsync();
+        attributeFilterHandler.loadAttribute();
+        await waitForAsync();
+
+        expect(attributeFilterHandler.getAttributeDataSet()).toMatchSnapshot();
     });
 
     it("loadAttribute() should trigger onLoadAttributeStart() callback", async () => {

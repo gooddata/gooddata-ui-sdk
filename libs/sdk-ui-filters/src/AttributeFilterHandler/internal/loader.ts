@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { v4 as uuid } from "uuid";
 import invariant from "ts-invariant";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -9,6 +9,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -115,6 +116,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     getAttribute = (): IAttributeMetadataObject | undefined => {
         return this.bridge.getAttribute();
+    };
+
+    getAttributeDataSet = (): IMetadataObject | undefined => {
+        return this.bridge.getAttributeDataSet();
     };
 
     getAttributeError = (): GoodDataSdkError | undefined => {

@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { objRefsToStringKey, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     ElementsQueryOptionsElementsSpecification,
     IElementsQueryAttributeFilter,
@@ -16,6 +16,7 @@ import {
     newRelativeDateFilter,
     newNegativeAttributeFilter,
     IAttributeElement,
+    uriRef,
 } from "@gooddata/sdk-model";
 
 import { IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory";
@@ -47,6 +48,19 @@ export const limitingDateFilters: IRelativeDateFilter[] = [
 ];
 
 const backend = recordedBackend(ReferenceRecordings.Recordings, {
+    attributeDataSet: {
+        [objRefsToStringKey([idRef("/gdc/md/referenceworkspace/obj/1054")])]: {
+            deprecated: false,
+            description: "",
+            production: true,
+            title: "Dataset",
+            unlisted: false,
+            type: "dataSet",
+            ref: uriRef("dataSet1"),
+            uri: "dataSet1",
+            id: "dataSet1",
+        },
+    },
     attributeElementsFiltering: {
         attributeFilters: {
             [attributeIdentifier(ReferenceMd.Product.Name)]: (_element, index) => {
