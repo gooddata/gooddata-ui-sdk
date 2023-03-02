@@ -256,6 +256,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             notIn: string[];
             textFilter?: boolean;
+            title?: string;
         };
     }
     // (undocumented)
@@ -265,6 +266,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             in: string[];
             textFilter?: boolean;
+            title?: string;
         };
     }
     // (undocumented)
