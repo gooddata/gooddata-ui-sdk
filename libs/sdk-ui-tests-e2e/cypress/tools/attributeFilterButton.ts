@@ -17,7 +17,7 @@ export class AttributeFilterButton {
 
     openConfiguration(): this {
         cy.wait(300);
-        cy.get(".s-attribute-filter-dropdown-configuration-button").click();
+        cy.get(".s-configuration-button").click();
         return this;
     }
 
@@ -147,6 +147,20 @@ export class AttributeFilterButton {
 
     isActive(): this {
         cy.get(`${this.attributeFilterUniqueSelector}`).should("have.class", "is-active");
+        return this;
+    }
+
+    expectDetailsIcon(expect = true) {
+        cy.get(`${this.attributeFilterUniqueSelector}`)
+            .find(".s-attribute-filter-tooltip-icon")
+            .should(expect ? "exist" : "not.exist");
+        return this;
+    }
+
+    hoverDetailsIcon() {
+        cy.get(`${this.attributeFilterUniqueSelector}`)
+            .find(".s-attribute-filter-tooltip-icon")
+            .trigger("mouseover");
         return this;
     }
 }

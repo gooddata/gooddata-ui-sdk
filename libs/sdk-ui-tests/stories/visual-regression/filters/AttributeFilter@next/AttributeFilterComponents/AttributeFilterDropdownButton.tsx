@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React, { ReactNode } from "react";
 
+import { BackstopConfig } from "../../../../_infra/backstopScenario";
 import { FilterStories } from "../../../../_infra/storyGroups";
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
@@ -20,6 +21,23 @@ interface AttributeFilterDropdownButtonExamplesProps {
 }
 
 const AttributeIcon = <Icon.Attribute />;
+
+const dropdownButtonWithTooltip: BackstopConfig = {
+    default: {},
+    hover: { hoverSelector: ".s-attribute-filter-tooltip-icon", postInteractionWait: 1000 },
+};
+
+const TooltipContentComponent: React.FC = () => {
+    return (
+        <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
+            <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>
+            <h4> Type </h4>
+            <p className="s-attribute-filter-tooltip-item-name">{attributeTitle}</p>
+            <h4> Dataset </h4>
+            <p className="s-attribute-filter-tooltip-item-dataset">{attributeTitle}</p>
+        </div>
+    );
+};
 
 const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownButtonExamplesProps> = (
     props,
@@ -96,7 +114,7 @@ const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownBut
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterDropdownButton shortened title</h4>
-                    <div style={{ width: 100 }}>
+                    <div style={{ width: 120 }}>
                         <AttributeFilterDropdownButton
                             isOpen={false}
                             title={"Long Attribute name"}
@@ -108,6 +126,22 @@ const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownBut
                             isDraggable={isDraggable}
                             icon={icon}
                             onClick={action("onClick")}
+                        />
+                    </div>
+                    <h4>AttributeFilterDropdownButton opened with tooltip</h4>
+                    <div style={{ width: 120 }}>
+                        <AttributeFilterDropdownButton
+                            isOpen={true}
+                            title={attributeTitle}
+                            subtitle={"All"}
+                            selectedItemsCount={3}
+                            isFiltering={false}
+                            isLoaded={true}
+                            isLoading={false}
+                            isDraggable={isDraggable}
+                            icon={icon}
+                            onClick={action("onClick")}
+                            TooltipContentComponent={TooltipContentComponent}
                         />
                     </div>
                 </div>
@@ -130,3 +164,57 @@ storiesOf(`${FilterStories}@next/Components/AttributeFilterDropdownButton`)
         { screenshot: true },
     )
     .add("themed", () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />), { screenshot: true });
+
+storiesOf(`${FilterStories}@next/Components/AttributeFilterDropdownButton/with tooltip`)
+    .add(
+        "full-featured",
+        () => {
+            return (
+                <div className="screenshot-target">
+                    <h4>AttributeFilterDropdownButton opened with tooltip</h4>
+                    <div style={{ width: 120 }}>
+                        <IntlWrapper>
+                            <AttributeFilterDropdownButton
+                                isOpen={true}
+                                title={attributeTitle}
+                                subtitle={"All"}
+                                selectedItemsCount={3}
+                                isFiltering={false}
+                                isLoaded={true}
+                                isLoading={false}
+                                onClick={action("onClick")}
+                                TooltipContentComponent={TooltipContentComponent}
+                            />
+                        </IntlWrapper>
+                    </div>
+                </div>
+            );
+        },
+        { screenshots: dropdownButtonWithTooltip },
+    )
+    .add(
+        "themed",
+        () => {
+            return wrapWithTheme(
+                <div className="screenshot-target">
+                    <h4>AttributeFilterDropdownButton opened with tooltip</h4>
+                    <div style={{ width: 120 }}>
+                        <IntlWrapper>
+                            <AttributeFilterDropdownButton
+                                isOpen={true}
+                                title={attributeTitle}
+                                subtitle={"All"}
+                                selectedItemsCount={3}
+                                isFiltering={false}
+                                isLoaded={true}
+                                isLoading={false}
+                                onClick={action("onClick")}
+                                TooltipContentComponent={TooltipContentComponent}
+                            />
+                        </IntlWrapper>
+                    </div>
+                </div>,
+            );
+        },
+        { screenshots: dropdownButtonWithTooltip },
+    );

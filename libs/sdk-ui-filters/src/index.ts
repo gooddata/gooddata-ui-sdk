@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /**
  * This package provides several React components related to filters.
  *
@@ -171,6 +171,9 @@ export {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
     AttributeFilterStatusBar,
+    AttributeDatasetInfo,
+    IAttributeDatasetInfoProps,
+    AttributeFilterButtonToolip,
     EmptyElementsSearchBar,
     IAttributeDisplayFormSelectProps,
     IAttributeFilterAllValuesFilteredResultProps,

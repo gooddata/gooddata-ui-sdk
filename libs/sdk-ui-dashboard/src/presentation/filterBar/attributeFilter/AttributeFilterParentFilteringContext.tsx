@@ -6,6 +6,7 @@ import {
     IDashboardAttributeFilter,
     IAttributeMetadataObject,
     areObjRefsEqual,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import {
     selectAllCatalogDisplayFormsMap,
@@ -28,6 +29,7 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
         showDisplayFormPicker: boolean;
         showResetTitle: boolean;
         defaultAttributeFilterTitle?: string;
+        attributeFilterDisplayForm: ObjRef;
     };
 
 export const AttributeFilterParentFiltering = React.createContext<IAttributeFilterParentFiltering>(
@@ -84,6 +86,8 @@ export const AttributeFilterParentFilteringProvider: React.FC<
     const attributeByDisplayForm = memoizedAttributes.find((attribute) =>
         areObjRefsEqual(attribute.ref, filterDisplayForm.attribute),
     );
+
+    const attributeFilterDisplayForm = filterDisplayForm.attribute;
 
     const defaultAttributeFilterTitle =
         catalogDisplayFormsMap.get(filterDisplayForm.attribute)?.title ?? attributeByDisplayForm?.title;
@@ -155,6 +159,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 onTitleChange,
                 onTitleUpdate,
                 onTitleReset,
+                attributeFilterDisplayForm,
             }}
         >
             {children}

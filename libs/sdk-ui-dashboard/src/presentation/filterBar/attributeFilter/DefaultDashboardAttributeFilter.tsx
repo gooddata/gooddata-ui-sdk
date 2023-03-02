@@ -10,6 +10,7 @@ import {
     IAttributeFilterElementsSelectProps,
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
+    AttributeDatasetInfo,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -31,6 +32,7 @@ import {
     selectLocale,
     useDashboardSelector,
     selectSettings,
+    selectIsInEditMode,
 } from "../../../model";
 import {
     AttributeFilterParentFilteringProvider,
@@ -38,6 +40,7 @@ import {
 } from "./AttributeFilterParentFilteringContext";
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes";
+import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -52,6 +55,7 @@ export const DefaultDashboardAttributeFilter = (
     const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
     const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -68,6 +72,7 @@ export const DefaultDashboardAttributeFilter = (
 
     const intl = useIntl();
 
+    const shouldDisplayAttributeTooltip = isEditMode && enableKPIAttributeFilterRenaming;
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
     const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
@@ -92,9 +97,39 @@ export const DefaultDashboardAttributeFilter = (
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
             useAutoOpenAttributeFilterDropdownButton(props, !!autoOpen);
             useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
-            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
+
+            const { isOpen, title } = props;
+            const { defaultAttributeFilterTitle, displayFormChangeStatus, attributeFilterDisplayForm } =
+                useAttributeFilterParentFiltering();
+
+            const { attributeDataSet } = useAttributeDataSet(attributeFilterDisplayForm);
+
+            const displayAttributeTooltip =
+                shouldDisplayAttributeTooltip && displayFormChangeStatus !== "running";
+
+            const CustomTooltipComponent = useMemo(() => {
+                if (displayAttributeTooltip && attributeDataSet && isOpen) {
+                    return function TooltipComponent() {
+                        return (
+                            <AttributeDatasetInfo
+                                title={title}
+                                defaultAttributeFilterTitle={defaultAttributeFilterTitle}
+                                attributeDataSet={attributeDataSet}
+                            />
+                        );
+                    };
+                }
+            }, [displayAttributeTooltip, defaultAttributeFilterTitle, attributeDataSet, isOpen, title]);
+
+            return (
+                <AttributeFilterDropdownButton
+                    {...props}
+                    isDraggable={isDraggable}
+                    TooltipContentComponent={CustomTooltipComponent}
+                />
+            );
         };
-    }, [isDraggable, autoOpen, onCloseFilter]);
+    }, [isDraggable, autoOpen, shouldDisplayAttributeTooltip, onCloseFilter]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
