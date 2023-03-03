@@ -318,7 +318,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertDashboard(result.data, filterContext);
+        /**
+         * Getting the dashboard again to get the shareStatus of the dashboard
+         * When NAS-4822 is completed, we can add `metainclude: ["accessInfo"],` to the payload above
+         * and return just `convertDashboard(result.data, filterContext);` below
+         */
+        const { id, type } = result.data.data;
+        return this.getDashboard(idRef(id, type));
     };
 
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {
