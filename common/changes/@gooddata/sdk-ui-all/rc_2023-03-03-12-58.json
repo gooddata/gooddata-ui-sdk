@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Export permissions have been made more granular and the EXPORT permission now includes both EXPORT_TABULAR and EXPORT_PDF. Export permissions can also be set individually to allow exports to certain formats only.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
