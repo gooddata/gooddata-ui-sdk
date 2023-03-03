@@ -1161,6 +1161,7 @@ export namespace GdcFilterContext {
             negativeSelection: boolean;
             attributeElements: string[];
             localIdentifier?: string;
+            title?: string;
             filterElementsBy?: Array<{
                 filterLocalIdentifier: string;
                 over: {

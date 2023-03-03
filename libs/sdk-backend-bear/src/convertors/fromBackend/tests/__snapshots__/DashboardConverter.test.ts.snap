@@ -86,6 +86,7 @@ Object {
           "filterElementsBy": Array [],
           "localIdentifier": "parent",
           "negativeSelection": false,
+          "title": undefined,
         },
       },
       Object {
@@ -113,6 +114,7 @@ Object {
           ],
           "localIdentifier": "child",
           "negativeSelection": false,
+          "title": undefined,
         },
       },
       Object {

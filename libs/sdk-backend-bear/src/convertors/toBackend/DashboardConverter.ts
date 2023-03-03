@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { layoutWidgets, UnexpectedError, NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -215,6 +215,7 @@ export const convertFilterContextItem = (
             displayForm,
             negativeSelection,
             localIdentifier,
+            title,
             filterElementsBy = [],
         },
     } = filterContextItem;
@@ -244,6 +245,7 @@ export const convertFilterContextItem = (
             displayForm: displayFormUri,
             localIdentifier,
             filterElementsBy: convertedAttributeFilterParents,
+            title,
         },
     };
 };

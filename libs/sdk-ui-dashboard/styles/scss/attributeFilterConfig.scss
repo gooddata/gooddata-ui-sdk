@@ -41,7 +41,31 @@
         text-transform: uppercase;
     }
 
+    .configuration-category-title {
+        display: flex;
+        justify-content: space-between;
+
+        h3 {
+            flex-grow: 2;
+        }
+
+        .attribute-filter-renaming-title-reset {
+            padding: 15px 12px 0 0;
+            font-size: 13px;
+            font-weight: 400;
+
+            &.disabled {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .configuration-attribute-filter-title {
+        padding: 0 10px 10px;
+    }
+
     .configuration-category {
+        flex-grow: 2;
         margin-bottom: -5px;
         padding: 10px 10px 0;
 

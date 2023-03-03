@@ -30,12 +30,14 @@ import {
     useDashboardDispatch,
     selectLocale,
     useDashboardSelector,
+    selectSettings,
 } from "../../../model";
 import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
 } from "./AttributeFilterParentFilteringContext";
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
+import { useAttributes } from "../../../_staging/sharedHooks/useAttributes";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -44,10 +46,13 @@ import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
  *
  * @alpha
  */
-export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
+export const DefaultDashboardAttributeFilter = (
+    props: IDashboardAttributeFilterProps,
+): JSX.Element | null => {
     const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
+    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
@@ -68,12 +73,20 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
     const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
     const filterByText = intl.formatMessage({ id: "attributesDropdown.filterBy" });
+    const titleText = intl.formatMessage({ id: "attributesDropdown.title" });
+    const resetTitleText = intl.formatMessage({ id: "attributesDropdown.title.reset" });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
             onClose();
         }
     }, [onClose]);
+
+    const attributeFilterRef = useMemo(() => {
+        return [filterRef];
+    }, [filterRef]);
+
+    const { attributes } = useAttributes(attributeFilterRef);
 
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
@@ -85,14 +98,26 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
-            const { onConfigurationSave, configurationChanged, displayFormChanged, onConfigurationClose } =
-                useAttributeFilterParentFiltering();
+            const {
+                title,
+                configurationChanged,
+                displayFormChanged,
+                titleChanged,
+                onConfigurationSave,
+                onConfigurationClose,
+            } = useAttributeFilterParentFiltering();
+
+            const isTitleDefined = !!title && title.length > 0;
 
             return (
                 <>
                     {isConfigurationOpen ? (
                         <CustomConfigureAttributeFilterDropdownActions
-                            isSaveDisabled={!(configurationChanged || displayFormChanged)}
+                            isSaveDisabled={
+                                isTitleDefined
+                                    ? !(configurationChanged || displayFormChanged || titleChanged)
+                                    : true
+                            }
                             onSaveButtonClick={() => {
                                 onConfigurationSave();
                                 setIsConfigurationOpen(false);
@@ -116,6 +141,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                             onDeleteButtonClick={() => {
                                 handleRemoveAttributeFilter();
                             }}
+                            attributes={attributes}
                         />
                     )}
                 </>
@@ -127,6 +153,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
         saveText,
         filter.attributeFilter.displayForm,
         applyText,
+        attributes,
         handleRemoveAttributeFilter,
     ]);
 
@@ -150,6 +177,8 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                             filterRef={filterRef}
                             filterByText={filterByText}
                             displayValuesAsText={displayValuesAsText}
+                            titleText={titleText}
+                            resetTitleText={resetTitleText}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -157,11 +186,16 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                 </>
             );
         };
-    }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText]);
+    }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText, titleText, resetTitleText]);
+
+    if (!attributes) {
+        return null;
+    }
 
     return (
-        <AttributeFilterParentFilteringProvider filter={filter}>
+        <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
             <AttributeFilterButton
+                title={enableKPIAttributeFilterRenaming ? filter.attributeFilter.title : undefined}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
                 onApply={(newFilter) => {
@@ -169,6 +203,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                         attributeFilterToDashboardAttributeFilter(
                             newFilter,
                             filter.attributeFilter.localIdentifier,
+                            filter.attributeFilter.title,
                         ),
                     );
                 }}

@@ -795,6 +795,7 @@ export interface IDashboardAttributeFilter {
         attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
+        title?: string;
     };
 }
 
