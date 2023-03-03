@@ -17,6 +17,7 @@ fi
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 SDK_BACKEND=${SDK_BACKEND:-BEAR}
+HOST=${TEST_BACKEND:-}
 CYPRESS_TEST_TAGS=post-merge_integrated_${sdk_backend}
 FIXTURE_TYPE=goodsales
 FILTER=${FILTER:-}
