@@ -20,18 +20,68 @@ import {
     selectCanEditLockedDashboardPermission,
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
+    selectCanManageWorkspace,
+    selectCanManageAnalyticalDashboard,
+    selectSupportsHierarchicalWorkspacesCapability,
 } from "../../../../model";
+
+/**
+ * Decide whether the user has the right to edit dashboard.
+ * If dashboard permissions are enabled then use them, otherwise fallback to workspace permissions
+ *
+ * @internal
+ */
+export const hasEditDashboardPermission = createSelector(
+    selectEnableAnalyticalDashboardPermissions,
+    selectCanEditDashboardPermission,
+    selectCanManageAnalyticalDashboard,
+    (dashboardPermissionsEnabled, canEditDashboardPermission, canManageAnalyticalDashboard) => {
+        if (dashboardPermissionsEnabled) {
+            return canEditDashboardPermission;
+        }
+        return canManageAnalyticalDashboard;
+    },
+);
+
+/**
+ * Decide whether the user has the right to edit locked dashboard.
+ * If dashboard permissions are enabled then use them, otherwise fallback to workspace permissions
+ *
+ * @internal
+ */
+export const hasEditLockedDashboardPermission = createSelector(
+    selectEnableAnalyticalDashboardPermissions,
+    selectCanEditLockedDashboardPermission,
+    selectCanManageWorkspace,
+    selectSupportsHierarchicalWorkspacesCapability,
+    (
+        dashboardPermissionsEnabled,
+        canEditLockedDashboardPermission,
+        canManageWorkspace,
+        hierarchicalWorkspacesSupported,
+    ) => {
+        if (dashboardPermissionsEnabled) {
+            return canEditLockedDashboardPermission;
+        }
+        // editing locked dashboard is always disabled when hierarchical workspaces are supported (Tiger)
+        return canManageWorkspace && !hierarchicalWorkspacesSupported;
+    },
+);
 
 /**
  * @internal
  */
 export const selectCanEnterEditMode = createSelector(
     selectDashboardEditModeDevRollout,
-    selectCanEditDashboardPermission,
-    selectCanEditLockedDashboardPermission,
+    hasEditDashboardPermission,
+    hasEditLockedDashboardPermission,
     selectDashboardLockStatus,
-    (isEditModeEnabled, canEditDashboardPermission, canEditLockedDashboardPermission, isLocked) =>
-        isEditModeEnabled && canEditDashboardPermission && (!isLocked || canEditLockedDashboardPermission),
+    selectIsReadOnly,
+    (isEditModeEnabled, hasEditDashboardPermission, hasEditLockedDashboardPermission, isLocked, isReadOnly) =>
+        isEditModeEnabled &&
+        !isReadOnly &&
+        hasEditDashboardPermission &&
+        (!isLocked || hasEditLockedDashboardPermission),
 );
 
 /**

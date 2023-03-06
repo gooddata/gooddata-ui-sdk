@@ -171,7 +171,6 @@ export interface DashboardConfig {
     allowCreateInsightRequest?: boolean;
 
     /**
-     * @internal
      * Specify which render mode will be use d for initial rendering.
      *
      * @remarks

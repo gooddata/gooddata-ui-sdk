@@ -100,7 +100,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
-    } = useDisplayFormConfiguration(currentFilter);
+    } = useDisplayFormConfiguration(currentFilter, attributes);
 
     const {
         title,
