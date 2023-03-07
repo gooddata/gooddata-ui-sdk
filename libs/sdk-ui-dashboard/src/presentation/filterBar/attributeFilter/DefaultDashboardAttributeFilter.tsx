@@ -170,6 +170,10 @@ export const DefaultDashboardAttributeFilter = (
         };
     }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText]);
 
+    if (!attributes) {
+        return null;
+    }
+
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
             <AttributeFilterButton
