@@ -32,7 +32,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
  */
 export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
-    attributes: IAttributeMetadataObject[];
+    attributes?: IAttributeMetadataObject[];
 };
 
 /**
@@ -47,6 +47,10 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         () => dashboardAttributeFilterToAttributeFilter(currentFilter),
         [currentFilter],
     );
+
+    const memoizedAttributes = useMemo(() => {
+        return attributes ?? [];
+    }, [attributes]);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -72,7 +76,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
-    } = useDisplayFormConfiguration(currentFilter, attributes);
+    } = useDisplayFormConfiguration(currentFilter, memoizedAttributes);
 
     const onConfigurationSave = useCallback(() => {
         onParentFiltersChange();
