@@ -47,7 +47,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
  */
 export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
-    attributes: IAttributeMetadataObject[];
+    attributes?: IAttributeMetadataObject[];
 };
 
 /**
@@ -63,6 +63,10 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         [currentFilter],
     );
 
+    const memoizedAttributes = useMemo(() => {
+        return attributes ?? [];
+    }, [attributes]);
+
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
     }, [attributeFilter]);
@@ -77,7 +81,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
     const filterDisplayForm = attributeFilterDisplayFormsMap.get(currentFilter.attributeFilter.displayForm);
     invariant(filterDisplayForm);
 
-    const attributeByDisplayForm = attributes.find((attribute) =>
+    const attributeByDisplayForm = memoizedAttributes.find((attribute) =>
         areObjRefsEqual(attribute.ref, filterDisplayForm.attribute),
     );
 
@@ -100,7 +104,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
-    } = useDisplayFormConfiguration(currentFilter, attributes);
+    } = useDisplayFormConfiguration(currentFilter, memoizedAttributes);
 
     const {
         title,
