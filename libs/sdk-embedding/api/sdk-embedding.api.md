@@ -419,6 +419,7 @@ export namespace EmbeddedKpiDashboard {
         RemoveFilterContext = "removeFilterContext",
         Save = "saveDashboard",
         SaveAsDashboard = "saveAsDashboard",
+        SetApiToken = "setApiToken",
         SetFilterContext = "setFilterContext",
         SetFilterParents = "setFilterParents",
         SetSize = "setSize",
@@ -439,6 +440,7 @@ export namespace EmbeddedKpiDashboard {
         FilterAdded = "filterAdded",
         FilterContextChanged = "filterContextChanged",
         InsightSaved = "visualizationSaved",
+        ListeningForApiToken = "listeningForApiToken",
         ListeningForDrillableItems = "listeningForDrillableItems",
         LoadingStarted = "loadingStarted",
         NoPermissions = "noPermissions",
@@ -557,6 +559,9 @@ export namespace EmbeddedKpiDashboard {
     export function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandData;
     export function isCancelEditCommandData(obj: unknown): obj is CancelEditCommandData;
     export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData;
+    export interface ISetApiTokenBody {
+        token: string;
+    }
     export interface ISetFilterParentsAttributeFilter {
         // (undocumented)
         attributeFilter: {
@@ -589,6 +594,7 @@ export namespace EmbeddedKpiDashboard {
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData;
     export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData;
     export function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCommandData;
+    export function isSetApiTokenCommandData(obj: unknown): obj is SetApiTokenCommandData;
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData;
     export function isSetFilterParentsCommandData(obj: unknown): obj is SetFilterParentsCommandData;
     export function isSetSizeCommandData(obj: unknown): obj is SetSizeCommandData;
@@ -620,6 +626,8 @@ export namespace EmbeddedKpiDashboard {
     export type SaveDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Save, IKdSaveCommandBody>;
     // (undocumented)
     export type SaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Save, IKdSaveCommandBody>;
+    export type SetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken, ISetApiTokenBody>;
+    export type SetApiTokenCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetApiToken, ISetApiTokenBody>;
     export type SetFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterContextFinished, IKdAvailableCommands>;

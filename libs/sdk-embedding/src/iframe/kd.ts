@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import isObject from "lodash/isObject";
 import {
     IGdcMessageEvent,
@@ -112,6 +112,11 @@ export namespace EmbeddedKpiDashboard {
          * The command open delete existed dashboard dialog
          */
         OpenDeleteDashboardDialog = "openDeleteDashboardDialog",
+
+        /**
+         * The command to set API token
+         */
+        SetApiToken = "setApiToken",
     }
 
     /**
@@ -264,6 +269,12 @@ export namespace EmbeddedKpiDashboard {
          * Type represent that the insight was saved.
          */
         InsightSaved = "visualizationSaved",
+
+        /**
+         * Type represents that KD is listening and waiting for API token to set up SDK backend instance.
+         * KD will not continue with initialization until the token is set.
+         */
+        ListeningForApiToken = "listeningForApiToken",
     }
 
     /**
@@ -1357,5 +1368,54 @@ export namespace EmbeddedKpiDashboard {
         obj: unknown,
     ): obj is OpenDeleteDashboardDialogCommandData {
         return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenDeleteDashboardDialog;
+    }
+
+    /**
+     * Set API token command body sent by outer application
+     *
+     * @public
+     */
+    export interface ISetApiTokenBody {
+        /**
+         * API token value - used to set up SDK backend instance
+         */
+        token: string;
+    }
+
+    /**
+     * Sets API token.
+     *
+     * Contract:
+     *
+     * -  received value is set as API token into the backend instance that will be used by KD for all
+     *      the subsequent backend calls. If the token is invalid, the subsequent backend calls will
+     *      start to fail.
+     *
+     * @public
+     */
+    export type SetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken, ISetApiTokenBody>;
+
+    /**
+     * Data type of set API token command
+     *
+     * Note: The main event data was wrapped to application and product data structure
+     * @remarks See {@link EmbeddedKpiDashboard.ISetApiTokenBody}
+     *
+     * @public
+     */
+    export type SetApiTokenCommandData = IGdcKdMessageEnvelope<
+        GdcKdCommandType.SetApiToken,
+        ISetApiTokenBody
+    >;
+
+    /**
+     * Type-guard checking whether an object is an instance of {@link EmbeddedKpiDashboard.SetApiTokenCommandData}
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isSetApiTokenCommandData(obj: unknown): obj is SetApiTokenCommandData {
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetApiToken;
     }
 }
