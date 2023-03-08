@@ -369,6 +369,10 @@ export function attributeFilterParentChanged(
     };
 }
 
+/**
+ * Payload of the {@link DashboardAttributeTitleChanged} event.
+ * @beta
+ */
 export interface DashboardAttributeTitleChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
@@ -378,6 +382,11 @@ export interface DashboardAttributeTitleChangedPayload {
     readonly filter: IDashboardAttributeFilter;
 }
 
+/**
+ * This event is emitted when the attribute filter title change.
+ *
+ * @beta
+ */
 export interface DashboardAttributeTitleChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED";
     readonly payload: DashboardAttributeTitleChangedPayload;
@@ -397,6 +406,16 @@ export function attributeDisplayTitleChanged(
         },
     };
 }
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeTitleChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardAttributeFilterTitleChanged = eventGuard<DashboardAttributeTitleChanged>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
+);
 
 export interface DashboardAttributeDisplayFormChangedPayload {
     /**

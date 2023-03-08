@@ -53,11 +53,16 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const attributeFilterTitleResetClicked = useCallback(() => {
+        eventDispatch(userInteractionTriggered("attributeFilterTitleResetClicked"));
+    }, []);
+
     return {
         poweredByGDLogoClicked,
         kpiAlertDialogClosed,
         kpiAlertDialogOpened,
         descriptionTooltipOpened,
         shareDialogInteraction,
+        attributeFilterTitleResetClicked,
     };
 };

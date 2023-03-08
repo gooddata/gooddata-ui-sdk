@@ -2,7 +2,11 @@
 import { useState, useCallback } from "react";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-import { setAttributeFilterTitle, useDashboardCommandProcessing } from "../../../../../../model";
+import {
+    setAttributeFilterTitle,
+    useDashboardCommandProcessing,
+    useDashboardUserInteraction,
+} from "../../../../../../model";
 
 export function useTitleConfiguration(
     currentFilter: IDashboardAttributeFilter,
@@ -13,6 +17,8 @@ export function useTitleConfiguration(
         successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });
+
+    const userInteraction = useDashboardUserInteraction();
 
     const originalTitle = currentFilter.attributeFilter.title ?? defaultAttributeFilterTitle;
 
@@ -33,6 +39,7 @@ export function useTitleConfiguration(
 
     const onTitleReset = useCallback(() => {
         setTitle(undefined);
+        userInteraction.attributeFilterTitleResetClicked();
     }, []);
 
     const onConfigurationClose = useCallback(() => {
