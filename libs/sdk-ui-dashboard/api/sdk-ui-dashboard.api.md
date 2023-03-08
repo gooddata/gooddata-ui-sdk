@@ -2022,7 +2022,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet;
 
 // @beta
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -2073,7 +2073,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @beta (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE";
 
 // @beta
 export interface DashboardRenamed extends IDashboardEvent {
@@ -5044,6 +5044,19 @@ export interface QueryAttributeByDisplayForm extends IDashboardQuery {
 
 // @alpha
 export function queryAttributeByDisplayForm(displayForms: ObjRef[], correlationId?: string): QueryAttributeByDisplayForm;
+
+// @internal (undocumented)
+export interface QueryAttributeDataSet extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly displayForm: ObjRef;
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE";
+}
+
+// @internal
+export function queryAttributeDataSet(displayForm: ObjRef, correlationId?: string): QueryAttributeDataSet;
 
 // @internal
 export type QueryCache<TQuery extends IDashboardQuery, TResult> = {

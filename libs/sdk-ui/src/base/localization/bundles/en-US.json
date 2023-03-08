@@ -1454,6 +1454,16 @@
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
         "limit": 0
     },
+    "attributesDropdown.details.type": {
+        "value": "Attribute",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.details.dataset": {
+        "value": "Dataset",
+        "comment": "",
+        "limit": 0
+    },
     "shareDialog.share.grantee.title": {
         "value": "Share with users and groups",
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",

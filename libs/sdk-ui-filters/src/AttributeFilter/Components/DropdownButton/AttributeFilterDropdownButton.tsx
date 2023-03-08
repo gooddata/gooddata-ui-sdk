@@ -1,9 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { AttributeFilterButtonToolip } from "./AttributeFilterButtonTooltip";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
@@ -89,6 +90,13 @@ export interface IAttributeFilterDropdownButtonProps {
     icon?: ReactNode;
 
     /**
+     * Customize content of the attribute filter tooltip component.
+     *
+     * @beta
+     */
+    TooltipContentComponent?: React.ComponentType;
+
+    /**
      * Callback to open or close AttributeFilter dropdown.
      *
      * @beta
@@ -119,6 +127,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         isLoaded,
         isDraggable,
         icon,
+        TooltipContentComponent,
         onClick,
     } = props;
 
@@ -172,6 +181,11 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     >
                         {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
                     </ShortenedText>
+                    {TooltipContentComponent && isLoaded ? (
+                        <AttributeFilterButtonToolip>
+                            <TooltipContentComponent />
+                        </AttributeFilterButtonToolip>
+                    ) : null}
                 </div>
                 <div className="gd-attribute-filter-dropdown-button-subtitle__next">
                     <span

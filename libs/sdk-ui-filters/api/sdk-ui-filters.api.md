@@ -21,6 +21,7 @@ import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
@@ -52,6 +53,9 @@ export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDate
 // @public
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
 
+// @internal (undocumented)
+export const AttributeDatasetInfo: React_2.FC<IAttributeDatasetInfoProps>;
+
 // @internal
 export const AttributeDisplayFormSelect: React_2.FC<IAttributeDisplayFormSelectProps>;
 
@@ -69,6 +73,9 @@ export const AttributeFilterAllValuesFilteredResult: React_2.FC<IAttributeFilter
 
 // @public
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
+
+// @beta
+export const AttributeFilterButtonToolip: React_2.FC;
 
 // @internal (undocumented)
 export const AttributeFilterConfigurationButton: React_2.VFC<IAttributeFilterConfigurationButtonProps>;
@@ -255,6 +262,16 @@ export const getLocalizedIcuDateFormatPattern: (locale: string) => any;
 
 // @beta (undocumented)
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
+
+// @internal (undocumented)
+export interface IAttributeDatasetInfoProps {
+    // (undocumented)
+    attributeDataSet?: IDataSetMetadataObject;
+    // (undocumented)
+    defaultAttributeFilterTitle?: string;
+    // (undocumented)
+    title?: string;
+}
 
 // @internal
 export interface IAttributeDisplayFormSelectProps {
@@ -557,6 +574,7 @@ export interface IAttributeFilterDropdownButtonProps {
     selectedItemsCount?: number;
     subtitle?: string;
     title?: string;
+    TooltipContentComponent?: React_2.ComponentType;
 }
 
 // @beta

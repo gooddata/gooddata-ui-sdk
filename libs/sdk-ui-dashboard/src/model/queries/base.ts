@@ -11,7 +11,8 @@ export type DashboardQueryType =
     | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS"
     | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT"
     | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES"
-    | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE";
+    | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE"
+    | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE";
 
 /**
  * Base type for all dashboard queries. A dashboard query encapsulates how complex, read-only dashboard-specific logic

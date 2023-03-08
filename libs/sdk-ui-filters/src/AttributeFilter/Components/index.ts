@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 export {
     AttributeFilterDropdownButton,
     IAttributeFilterDropdownButtonProps,
 } from "./DropdownButton/AttributeFilterDropdownButton";
+export { AttributeFilterButtonToolip } from "./DropdownButton/AttributeFilterButtonTooltip";
 export {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
@@ -71,6 +72,7 @@ export {
     AttributeFilterConfigurationButton,
     IAttributeFilterConfigurationButtonProps,
 } from "./Addons/AttributeFilterConfigurationButton";
+export { AttributeDatasetInfo, IAttributeDatasetInfoProps } from "./Addons/AttributeDatasetInfo";
 export {
     AttributeFilterDeleteButton,
     IAttributeFilterDeleteButtonProps,
