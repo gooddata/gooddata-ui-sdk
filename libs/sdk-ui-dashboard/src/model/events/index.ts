@@ -27,6 +27,7 @@ import {
     DashboardAttributeFilterRemoved,
     DashboardAttributeFilterSelectionChanged,
     DashboardDateFilterSelectionChanged,
+    DashboardAttributeTitleChanged,
     DashboardFilterContextChanged,
 } from "./filters";
 import {
@@ -175,9 +176,11 @@ export {
     DashboardFilterContextChangedPayload,
     DashboardAttributeFilterParentChanged,
     DashboardAttributeFilterParentChangedPayload,
+    DashboardAttributeTitleChangedPayload,
     DashboardAttributeFilterRemoved,
     DashboardAttributeFilterRemovedPayload,
     DashboardAttributeFilterSelectionChanged,
+    DashboardAttributeTitleChanged,
     DashboardDateFilterSelectionChangedPayload,
     DashboardAttributeFilterMoved,
     DashboardAttributeFilterMovedPayload,
@@ -188,6 +191,7 @@ export {
     isDashboardAttributeFilterParentChanged,
     isDashboardAttributeFilterRemoved,
     isDashboardAttributeFilterSelectionChanged,
+    isDashboardAttributeFilterTitleChanged,
     isDashboardDateFilterSelectionChanged,
     isDashboardFilterContextChanged,
 } from "./filters";
@@ -442,6 +446,7 @@ export type DashboardEvents =
     | DashboardAttributeFilterRemoved
     | DashboardAttributeFilterMoved
     | DashboardAttributeFilterSelectionChanged
+    | DashboardAttributeTitleChanged
     | DashboardAttributeFilterParentChanged
     | DashboardFilterContextChanged
     | DashboardLayoutSectionAdded
