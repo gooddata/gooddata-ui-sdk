@@ -132,6 +132,10 @@
     flex-direction: column;
 }
 
+.gd-attribute-filter-dropdown_button-title-content__next {
+    display: flex;
+}
+
 .gd-is-mobile {
     .gd-attribute-filter-dropdown-button-content__next {
         padding-right: 20px;
@@ -217,8 +221,6 @@
 }
 
 .gd-attribute-filter-dropdown-button-title__next {
-    display: flex;
-    justify-content: space-between;
     overflow: hidden;
     color: variables.$gd-color-link;
 
@@ -260,10 +262,6 @@
         transition: attributeFilterVariables.$transition-length;
     }
 
-    &:only-child::after {
-        display: inline-block;
-    }
-
     .drag-preview &::after {
         display: none;
     }
@@ -275,6 +273,10 @@
     font-weight: bold;
     text-overflow: ellipsis;
     color: variables.$gd-color-dark;
+
+    &:only-child::after {
+        display: inline-block;
+    }
 
     .overlay & {
         flex: 1 1 auto;
