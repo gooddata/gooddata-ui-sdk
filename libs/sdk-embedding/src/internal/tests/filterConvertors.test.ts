@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import {
     transformFilterContext,
@@ -91,6 +91,51 @@ describe("filter convertors", () => {
             },
         },
     };
+    const positiveAttributeMultiSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+        positiveAttributeFilter: {
+            in: ["uri1", "uri2"],
+            displayForm: {
+                uri: "dfuri",
+            },
+            selectionMode: "multi",
+        },
+    };
+    const positiveAttributeSingleSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+        positiveAttributeFilter: {
+            in: ["uri1"],
+            displayForm: {
+                uri: "dfuri",
+            },
+            selectionMode: "single",
+        },
+    };
+    const positiveAttributeSingleSelectionFilterWithMultipleValues: EmbeddedGdc.IPositiveAttributeFilter = {
+        positiveAttributeFilter: {
+            in: ["uri1", "uri2"],
+            displayForm: {
+                uri: "dfuri",
+            },
+            selectionMode: "single",
+        },
+    };
+    const negativeAttributeSingleSelectionFilter: EmbeddedGdc.INegativeAttributeFilter = {
+        negativeAttributeFilter: {
+            notIn: ["uri1"],
+            displayForm: {
+                uri: "dfuri",
+            },
+            selectionMode: "single",
+        },
+    };
+    const negativeAttributeMultiSelectionFilter: EmbeddedGdc.INegativeAttributeFilter = {
+        negativeAttributeFilter: {
+            notIn: ["uri1"],
+            displayForm: {
+                uri: "dfuri",
+            },
+            selectionMode: "multi",
+        },
+    };
 
     it("should return false if have any item is not the filter item", () => {
         expect(isValidFiltersFormat([absoluteDateFilter, {}])).toBe(false);
@@ -151,6 +196,13 @@ describe("filter convertors", () => {
 
     it("should check the attribute filter item format", () => {
         expect(isValidFiltersFormat([negativeAttributeFilter, positiveAttributeFilter])).toBe(true);
+        expect(
+            isValidFiltersFormat([
+                positiveAttributeSingleSelectionFilter,
+                positiveAttributeMultiSelectionFilter,
+                negativeAttributeMultiSelectionFilter,
+            ]),
+        ).toBe(true);
     });
 
     it("should return false when attribute filter item is missing uri and identifier", () => {
@@ -159,6 +211,14 @@ describe("filter convertors", () => {
 
     it("should return false when positive attribute filter item without filter values", () => {
         expect(isValidFiltersFormat([positiveAttributeFilterWithoutValue])).toBe(false);
+    });
+
+    it("should return false when positive attribute single select filter item has multiple values", () => {
+        expect(isValidFiltersFormat([positiveAttributeSingleSelectionFilterWithMultipleValues])).toBe(false);
+    });
+
+    it("should return false when negative attribute filter has single selection mode", () => {
+        expect(isValidFiltersFormat([negativeAttributeSingleSelectionFilter])).toBe(false);
     });
 
     describe("ranking filter", () => {

@@ -1614,6 +1614,7 @@ export interface INegativeAttributeFilter {
 export interface INegativeAttributeFilterBody {
     displayForm: ObjRef;
     notIn: IAttributeElements;
+    selectionMode?: "single" | "multi";
 }
 
 // @public
@@ -1809,6 +1810,7 @@ export interface IPositiveAttributeFilter {
 export interface IPositiveAttributeFilterBody {
     displayForm: ObjRef;
     in: IAttributeElements;
+    selectionMode?: "single" | "multi";
 }
 
 // @public
@@ -3147,13 +3149,13 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | s
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | LocalIdRef | string, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
-export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[]): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[], selectionMode?: "single" | "multi"): INegativeAttributeFilter;
 
 // @public
 export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[]): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[], selectionMode?: "single" | "multi"): IPositiveAttributeFilter;
 
 // @public
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;

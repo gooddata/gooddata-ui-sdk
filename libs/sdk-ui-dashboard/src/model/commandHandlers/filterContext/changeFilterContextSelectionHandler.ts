@@ -38,6 +38,7 @@ import {
     getAttributeElementsItems,
     attributeElementsIsEmpty,
     isSingleSelectionFilter,
+    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -55,6 +56,9 @@ function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterCon
                 negativeSelection: isNegativeAttributeFilter(filter),
                 displayForm: filterObjRef(filter),
                 attributeElements: filterAttributeElements(filter),
+                selectionMode: isPositiveAttributeFilter(filter)
+                    ? filter.positiveAttributeFilter.selectionMode
+                    : filter.negativeAttributeFilter.selectionMode,
             },
         };
     } else if (isAbsoluteDateFilter(filter)) {

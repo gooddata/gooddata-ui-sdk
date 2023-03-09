@@ -56,6 +56,12 @@ export interface IPositiveAttributeFilterBody {
      * the using URI will likely have better performance on the backend.
      */
     in: IAttributeElements;
+
+    /**
+     * Selection mode which defines how many elements can be in attributeElements.
+     * Default value is 'multi' if property is missing.
+     */
+    selectionMode?: "single" | "multi";
 }
 
 /**
@@ -95,6 +101,12 @@ export interface INegativeAttributeFilterBody {
      * the using URI will likely have better performance on the backend.
      */
     notIn: IAttributeElements;
+
+    /**
+     * Selection mode which defines how many elements can be in attributeElements.
+     * Default value is 'multi' if property is missing.
+     */
+    selectionMode?: "single" | "multi";
 }
 
 /**

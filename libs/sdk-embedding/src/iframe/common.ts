@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isObject from "lodash/isObject";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
@@ -265,6 +265,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             in: string[];
             textFilter?: boolean;
+            selectionMode?: AttributeFilterItemSelectionMode;
         };
     }
 
@@ -273,6 +274,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             notIn: string[];
             textFilter?: boolean;
+            selectionMode?: AttributeFilterItemSelectionMode;
         };
     }
 
@@ -311,6 +313,7 @@ export namespace EmbeddedGdc {
     export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
     export type ILocalIdentifierQualifier = GdcExecuteAFM.ILocalIdentifierQualifier;
     export type ObjQualifier = GdcExecuteAFM.ObjQualifier;
+    export type AttributeFilterItemSelectionMode = "single" | "multi";
     export interface IRemoveDateFilterItem {
         dataSet: ObjQualifier;
     }
