@@ -26,7 +26,7 @@ export function useTitleConfiguration(
 
     const onTitleChange = useCallback(() => {
         if (title !== originalTitle) {
-            const updatedTitle = title !== defaultAttributeFilterTitle ? title : undefined;
+            const updatedTitle = title !== defaultAttributeFilterTitle ? title?.trim() : undefined;
             changeTitle(currentFilter.attributeFilter.localIdentifier!, updatedTitle);
         }
     }, [title, currentFilter, defaultAttributeFilterTitle, changeTitle]);
