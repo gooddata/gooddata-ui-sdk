@@ -2,6 +2,36 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.12.0",
+      "tag": "@gooddata/sdk-ui-all_v8.12.0",
+      "date": "Thu, 09 Mar 2023 08:43:20 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Dashboard component and dashboard plugins now supports edit mode."
+          },
+          {
+            "comment": "Insights and dashboard widgets now allow to specify description in form of tooltips."
+          },
+          {
+            "comment": "Analytical dashboards created in GoodData Cloud are now created as private visible only to the creator and to all organization and workspace administrators. SDK allows granular sharing of any dashboard with selected users and user groups. Dashboard permissions can be managed via SPI library and are fully integrated into the Dashboard component."
+          },
+          {
+            "comment": "Export permissions have been made more granular and the EXPORT permission now includes both EXPORT_TABULAR and EXPORT_PDF. Export permissions can also be set individually to allow exports to certain formats only."
+          },
+          {
+            "comment": "Improved GoodData Cloud formatting of date attributes based on locale user setting and defined formatting pattern."
+          },
+          {
+            "comment": "Add support for PDF export for GoodData Cloud."
+          },
+          {
+            "comment": "Support Geo Pushpin chart for GoodData Cloud."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.11.0",
       "tag": "@gooddata/sdk-ui-all_v8.11.0",
       "date": "Thu, 20 Oct 2022 09:18:18 GMT",
