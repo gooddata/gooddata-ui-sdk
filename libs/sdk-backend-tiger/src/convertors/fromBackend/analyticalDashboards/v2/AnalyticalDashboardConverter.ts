@@ -28,6 +28,7 @@ import { isInheritedObject } from "../../ObjectInheritance";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
 import { getShareStatus, stripQueryParams } from "../../utils";
+import { sanitizeSingleSelectionFilter } from "../common/singleSelectionFilter";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -135,7 +136,7 @@ export function convertFilterContextFromBackend(
 export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV2.IFilterContext,
 ): FilterContextItem[] {
-    return cloneWithSanitizedIds(content.filters);
+    return sanitizeSingleSelectionFilter(cloneWithSanitizedIds(content.filters));
 }
 
 export function convertDashboardPlugin(plugin: JsonApiDashboardPluginOutDocument): IDashboardPlugin {

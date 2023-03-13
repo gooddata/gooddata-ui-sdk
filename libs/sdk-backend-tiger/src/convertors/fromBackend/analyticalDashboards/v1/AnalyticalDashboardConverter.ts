@@ -22,6 +22,7 @@ import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../ObjectInheritance";
 import { getShareStatus, stripQueryParams } from "../../utils";
+import { sanitizeSingleSelectionFilter } from "../common/singleSelectionFilter";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
@@ -117,5 +118,5 @@ export function convertFilterContextFromBackend(
 export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV1.IFilterContext,
 ): FilterContextItem[] {
-    return cloneWithSanitizedIds(content.filterContext.filters);
+    return sanitizeSingleSelectionFilter(cloneWithSanitizedIds(content.filterContext.filters));
 }
