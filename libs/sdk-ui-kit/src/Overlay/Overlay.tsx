@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -11,8 +11,6 @@ import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
 import { v4 as uuid } from "uuid";
-// eslint-disable-next-line import/no-unassigned-import
-import "element-closest-polyfill";
 
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities";

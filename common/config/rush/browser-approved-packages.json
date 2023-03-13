@@ -635,10 +635,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "element-closest-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "enzyme",
       "allowedCategories": [ "production", "tools" ]
     },

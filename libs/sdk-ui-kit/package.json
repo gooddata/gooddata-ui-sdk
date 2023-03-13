@@ -77,7 +77,6 @@
         "custom-event": "^1.0.1",
         "date-fns": "^2.22.1",
         "debounce-promise": "^3.1.2",
-        "element-closest-polyfill": "^1.0.0",
         "fixed-data-table-2": "^1.2.0",
         "lodash": "^4.17.19",
         "moment-timezone": "^0.5.35",
