@@ -134,6 +134,8 @@ export {
     isAllTimeDateFilter,
     attributeElementsIsEmpty,
     attributeElementsCount,
+    updateAttributeElementsItems,
+    getAttributeElementsItems,
     isPositiveAttributeFilter,
     isNegativeAttributeFilter,
     isDateFilter,

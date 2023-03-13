@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
@@ -29,7 +29,8 @@ export function* addAttributeFilterHandler(
     ctx: DashboardContext,
     cmd: AddAttributeFilter,
 ): SagaIterator<void> {
-    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters } = cmd.payload;
+    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters, selectionMode } =
+        cmd.payload;
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreAttributeFilters> = yield select(
         selectCanAddMoreAttributeFilters,
@@ -94,6 +95,7 @@ export function* addAttributeFilterHandler(
                 initialIsNegativeSelection,
                 initialSelection,
                 parentFilters,
+                selectionMode,
             }),
             filterContextActions.addAttributeFilterDisplayForm(displayFormMetadata),
         ]),

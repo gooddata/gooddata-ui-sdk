@@ -22,6 +22,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     IAttributeDisplayFormMetadataObject,
+    DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes";
 
@@ -219,6 +220,7 @@ export interface IAddAttributeFilterPayload {
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
     readonly initialSelection?: IAttributeElements;
     readonly initialIsNegativeSelection?: boolean;
+    readonly selectionMode?: DashboardAttributeFilterSelectionMode;
 }
 
 const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilterPayload>> = (
@@ -227,12 +229,12 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
 ) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters } =
+    const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters, selectionMode } =
         action.payload;
 
     const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
 
-    const isNegative = initialIsNegativeSelection || !hasSelection;
+    const isNegative = selectionMode !== "single" && (initialIsNegativeSelection || !hasSelection);
 
     const filter: IDashboardAttributeFilter = {
         attributeFilter: {
@@ -241,6 +243,7 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
             negativeSelection: isNegative,
             localIdentifier: generateFilterLocalIdentifier(),
             filterElementsBy: parentFilters ? [...parentFilters] : undefined,
+            ...(selectionMode !== undefined ? { selectionMode } : {}),
         },
     };
 
