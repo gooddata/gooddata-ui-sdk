@@ -264,6 +264,9 @@ export enum ComputeRatioRule {
     SINGLE_MEASURE_ONLY = 1
 }
 
+// @beta
+export type DashboardAttributeFilterSelectionMode = "single" | "multi";
+
 // @alpha
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
@@ -421,6 +424,9 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
+
+// @alpha
+export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -796,6 +802,7 @@ export interface IDashboardAttributeFilter {
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
         title?: string;
+        selectionMode?: DashboardAttributeFilterSelectionMode;
     };
 }
 
@@ -2345,6 +2352,9 @@ export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
 
+// @alpha
+export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
+
 // @public
 export function isObjRef(obj: unknown): obj is ObjRef;
 
@@ -2403,6 +2413,9 @@ export function isRgbColor(obj: unknown): obj is IRgbColor;
 
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
+
+// @alpha
+export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
 
 // @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;

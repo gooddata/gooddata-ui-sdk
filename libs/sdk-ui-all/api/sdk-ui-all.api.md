@@ -12,6 +12,7 @@ import { BuiltInWidgetTypes } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { catalogItemMetadataObject } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
 import { DataColumnType } from '@gooddata/sdk-model';
@@ -290,6 +291,8 @@ export { CatalogItem }
 export { catalogItemMetadataObject }
 
 export { CatalogItemType }
+
+export { DashboardAttributeFilterSelectionMode }
 
 export { DashboardDateFilterConfigMode }
 
