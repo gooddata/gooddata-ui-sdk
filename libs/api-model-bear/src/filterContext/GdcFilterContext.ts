@@ -11,6 +11,7 @@ export namespace GdcFilterContext {
     export type RelativeType = "relative";
     export type AbsoluteType = "absolute";
     export type DateFilterType = RelativeType | AbsoluteType;
+    export type AttributeFilterSelectionMode = "single" | "multi";
 
     export interface IFilterContext {
         meta: GdcMetadata.IObjectMeta;
@@ -49,6 +50,7 @@ export namespace GdcFilterContext {
                     attributes: Array<string>;
                 };
             }>;
+            selectionMode?: AttributeFilterSelectionMode;
         };
     }
 

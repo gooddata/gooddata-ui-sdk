@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { sanitizeFiltersForExport } from "../utils";
 import {
     absoluteDateFilter,
     attributeFilter,
+    singleSelectionAttributeFilter,
     relativeDateFilter,
     dateFilterWithUndefinedRange,
     dependentAttributeFilter,
@@ -11,7 +12,10 @@ import {
 describe("dashboard export utils", () => {
     describe("sanitizeFiltersForExport", () => {
         it("should leave valid attribute filter as it is", () => {
-            expect(sanitizeFiltersForExport([attributeFilter])).toEqual([attributeFilter]);
+            expect(sanitizeFiltersForExport([attributeFilter, singleSelectionAttributeFilter])).toEqual([
+                attributeFilter,
+                singleSelectionAttributeFilter,
+            ]);
         });
 
         it("should remove localIdentifier and filterElementsBy props from attribute filter", () => {

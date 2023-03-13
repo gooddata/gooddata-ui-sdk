@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     idRef,
     localIdRef,
@@ -37,6 +37,18 @@ export const dashboardFilterContext: IFilterContext = {
                 },
                 negativeSelection: false,
             },
+        },
+        {
+            attributeFilter: {
+                attributeElements: { uris: ["/gdc/md/attrId"] },
+                displayForm: {
+                    uri: "/gdc/md/displayForm",
+                },
+                negativeSelection: false,
+                selectionMode: "single",
+            },
+        },
+        {
             dateFilter: {
                 granularity: "GDC.time.month",
                 type: "relative",
@@ -63,6 +75,8 @@ export const dashboardTempFilterContext: ITempFilterContext = {
                 },
                 negativeSelection: false,
             },
+        },
+        {
             dateFilter: {
                 granularity: "GDC.time.month",
                 type: "relative",

@@ -390,6 +390,31 @@ Object {
     "content": Object {
       "filters": Array [
         Object {
+          "attributeFilter": Object {
+            "attributeElements": Array [
+              "/gdc/md/attrId",
+            ],
+            "displayForm": "/gdc/md/displayForm",
+            "filterElementsBy": Array [],
+            "localIdentifier": undefined,
+            "negativeSelection": false,
+            "title": undefined,
+          },
+        },
+        Object {
+          "attributeFilter": Object {
+            "attributeElements": Array [
+              "/gdc/md/attrId",
+            ],
+            "displayForm": "/gdc/md/displayForm",
+            "filterElementsBy": Array [],
+            "localIdentifier": undefined,
+            "negativeSelection": false,
+            "selectionMode": "single",
+            "title": undefined,
+          },
+        },
+        Object {
           "dateFilter": Object {
             "attribute": "/attrId",
             "dataSet": "/dataSet",
@@ -416,6 +441,18 @@ Object {
   "tempFilterContext": Object {
     "created": "2020-05-05 00:00:00",
     "filters": Array [
+      Object {
+        "attributeFilter": Object {
+          "attributeElements": Array [
+            "/gdc/md/attrId",
+          ],
+          "displayForm": "/gdc/md/displayForm",
+          "filterElementsBy": Array [],
+          "localIdentifier": undefined,
+          "negativeSelection": false,
+          "title": undefined,
+        },
+      },
       Object {
         "dateFilter": Object {
           "attribute": "/attrId",

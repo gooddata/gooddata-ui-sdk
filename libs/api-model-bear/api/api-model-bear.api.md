@@ -1150,6 +1150,8 @@ export namespace GdcFilterContext {
     // (undocumented)
     export type AbsoluteType = "absolute";
     // (undocumented)
+    export type AttributeFilterSelectionMode = "single" | "multi";
+    // (undocumented)
     export type DateFilterType = RelativeType | AbsoluteType;
     // (undocumented)
     export type FilterContextItem = IAttributeFilter | IDateFilter;
@@ -1168,6 +1170,7 @@ export namespace GdcFilterContext {
                     attributes: Array<string>;
                 };
             }>;
+            selectionMode?: AttributeFilterSelectionMode;
         };
     }
     // (undocumented)

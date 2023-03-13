@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import omitBy from "lodash/omitBy";
 import isUndefined from "lodash/isUndefined";
 import { GdcFilterContext } from "./GdcFilterContext";
@@ -27,7 +27,7 @@ function sanitizeAttributeFilter(
     filter: GdcFilterContext.IAttributeFilter,
 ): GdcFilterContext.IAttributeFilter {
     const {
-        attributeFilter: { displayForm, negativeSelection, attributeElements },
+        attributeFilter: { displayForm, negativeSelection, attributeElements, selectionMode },
     } = filter;
 
     return {
@@ -35,6 +35,7 @@ function sanitizeAttributeFilter(
             displayForm,
             negativeSelection,
             attributeElements,
+            selectionMode,
         },
     };
 }

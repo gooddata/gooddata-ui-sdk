@@ -217,6 +217,7 @@ export const convertFilterContextItem = (
             localIdentifier,
             title,
             filterElementsBy = [],
+            selectionMode,
         },
     } = filterContextItem;
     const displayFormUri = refToUri(displayForm);
@@ -246,6 +247,7 @@ export const convertFilterContextItem = (
             localIdentifier,
             filterElementsBy: convertedAttributeFilterParents,
             title,
+            ...(selectionMode !== undefined ? { selectionMode } : {}),
         },
     };
 };
