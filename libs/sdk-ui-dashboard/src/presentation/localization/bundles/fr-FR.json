@@ -208,6 +208,8 @@
     "attributesDropdown.save": "Enregistrer",
     "attributesDropdown.filterBy": "Filtrer par",
     "attributesDropdown.displayValuesAs": "Affichage des valeurs",
+    "attributesDropdown.title": "Titre",
+    "attributesDropdown.title.reset": "Réinitialiser",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> ne peut pas être filtré par <strong>{parentTitle}</strong>. Il n'existe aucune connexion entre les attributs du filtre dans le modèle de données.",
     "attributesDropdown.removeTooltip": "Retirer du tableau de bord",
     "layout.header.characters.left": "{currentCharactersCount}/{maximumCharactersCount} caractères restant",
