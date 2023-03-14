@@ -22742,7 +22742,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-sE/nKZt0eVQD3UGmmdE0rDIzcXI38a03pDyBlZsUuimzPy8zw6q3MPoSMwS9iTkkIa2IMci6CoBgKCQt1epJxg==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-AxqLpadsSsZUDaX0OjRqVbIqEKFVyEm7rMspvfapG+NC0s1oN4/ZXn/J0d4ZB2a9pk8B+EfzeewEv0dzLLYcWQ==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
