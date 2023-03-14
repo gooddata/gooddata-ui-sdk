@@ -3048,6 +3048,8 @@ export interface IButtonBarProps {
     // (undocumented)
     cancelButtonProps: ICancelButtonProps;
     // (undocumented)
+    childContentPosition?: "left" | "right";
+    // (undocumented)
     DefaultButtonBar: CustomButtonBarComponent;
     // (undocumented)
     editButtonProps: IEditButtonProps;
