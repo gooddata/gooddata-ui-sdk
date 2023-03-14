@@ -2,8 +2,6 @@
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
 import { CancelableOptions } from "@gooddata/sdk-backend-spi";
-// eslint-disable-next-line import/no-unassigned-import
-import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
 
 import { getAttributeFilterContext } from "../common/sagas";
 import { selectElementsForm } from "../common/selectors";

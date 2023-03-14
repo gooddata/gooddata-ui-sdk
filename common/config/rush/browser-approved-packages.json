@@ -503,10 +503,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "abortcontroller-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "async",
       "allowedCategories": [ "production" ]
     },
