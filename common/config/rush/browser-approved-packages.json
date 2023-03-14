@@ -83,10 +83,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@formatjs/intl-pluralrules",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@gooddata/api-client-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
