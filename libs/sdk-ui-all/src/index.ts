@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /* eslint-disable import/export */
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
@@ -57,6 +57,7 @@ import {
     DateFilterType,
     FilterContextItem,
     IDashboardAttributeFilter,
+    DashboardAttributeFilterSelectionMode,
     IDashboardAttributeFilterParent,
     IDashboardAttributeFilterReference,
     IDashboardDateFilter,
@@ -352,6 +353,7 @@ export {
     DateFilterType,
     FilterContextItem,
     IDashboardAttributeFilter,
+    DashboardAttributeFilterSelectionMode,
     IDashboardAttributeFilterParent,
     IDashboardAttributeFilterReference,
     IDashboardDateFilter,

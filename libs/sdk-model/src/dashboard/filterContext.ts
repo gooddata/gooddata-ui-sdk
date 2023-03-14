@@ -2,7 +2,7 @@
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig";
-import { IAttributeElements } from "../execution/filter";
+import { IAttributeElements, isAttributeElementsByRef } from "../execution/filter";
 import { isObjRef, ObjRef } from "../objRef";
 import { IDashboardObjectIdentity } from "./common";
 
@@ -42,6 +42,12 @@ export interface IDashboardAttributeFilterParent {
 }
 
 /**
+ * Attribute filter selection mode value
+ * @beta
+ */
+export type DashboardAttributeFilterSelectionMode = "single" | "multi";
+
+/**
  * Attribute filter of the filter context
  * @public
  */
@@ -78,6 +84,13 @@ export interface IDashboardAttributeFilter {
          * Custom title of the attribute filter. If specified has priority over the default attribute filter title.
          */
         title?: string;
+
+        /**
+         * Selection mode which defines how many elements can be in attributeElements.
+         * Default value is 'multi' if property is missing.
+         * @beta
+         */
+        selectionMode?: DashboardAttributeFilterSelectionMode;
     };
 }
 
@@ -87,6 +100,32 @@ export interface IDashboardAttributeFilter {
  */
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter {
     return !isEmpty(obj) && !!(obj as IDashboardAttributeFilter).attributeFilter;
+}
+
+/**
+ * Returns true when given filter has selection mode set to single
+ * @alpha
+ */
+export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean {
+    return filter.attributeFilter.selectionMode === "single";
+}
+
+/**
+ * Returns true when given filter has negative selection
+ * @alpha
+ */
+export function isNegativeAttributeFilter(filter: IDashboardAttributeFilter) {
+    return !!filter.attributeFilter.negativeSelection;
+}
+
+/**
+ * Returns count of selected elements
+ * @alpha
+ */
+export function getSelectedElementsCount(filter: IDashboardAttributeFilter) {
+    return isAttributeElementsByRef(filter.attributeFilter.attributeElements)
+        ? filter.attributeFilter.attributeElements.uris.length
+        : filter.attributeFilter.attributeElements.values.length;
 }
 
 /**

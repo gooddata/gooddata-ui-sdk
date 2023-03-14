@@ -41,6 +41,7 @@ export const convertFilterContextItem = (
                 localIdentifier,
                 title,
                 filterElementsBy = [],
+                selectionMode,
             },
         } = filterContextItem;
 
@@ -63,6 +64,7 @@ export const convertFilterContextItem = (
                 localIdentifier,
                 filterElementsBy: convertedFilterElementsBy,
                 title,
+                ...(selectionMode !== undefined ? { selectionMode } : {}),
             },
         };
     }
