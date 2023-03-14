@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     isAttributeDescriptor,
     isTotalDescriptor,
@@ -6,7 +6,6 @@ import {
     isResultAttributeHeader,
     IResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import CustomEventPolyfill from "custom-event";
 import findIndex from "lodash/findIndex";
 import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";
 import {
@@ -122,7 +121,7 @@ export function fireDrillEvent(
 
     if (shouldDispatchPostMessage !== false) {
         target.dispatchEvent(
-            new CustomEventPolyfill("drill", {
+            new CustomEvent("drill", {
                 detail: drillEventData,
                 bubbles: true,
             }),

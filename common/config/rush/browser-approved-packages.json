@@ -595,10 +595,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "custom-event",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "cypress",
       "allowedCategories": [ "production", "tools" ]
     },

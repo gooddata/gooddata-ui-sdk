@@ -1,7 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import debounce from "lodash/debounce";
 import cloneDeep from "lodash/cloneDeep";
-import CustomEvent from "custom-event";
 import invariant from "ts-invariant";
 import {
     ChartElementType,

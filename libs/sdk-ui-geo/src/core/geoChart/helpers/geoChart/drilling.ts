@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     DataViewFacade,
     getDrillIntersection,
@@ -14,7 +14,6 @@ import { AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from 
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import without from "lodash/without";
 import omit from "lodash/omit";
-import CustomEvent from "custom-event";
 
 function getDrillIntersectionForGeoChart(
     drillableItems: IHeaderPredicate[],

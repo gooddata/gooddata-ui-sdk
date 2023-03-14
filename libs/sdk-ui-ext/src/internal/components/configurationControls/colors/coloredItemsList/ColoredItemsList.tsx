@@ -1,6 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import CustomEvent from "custom-event";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
