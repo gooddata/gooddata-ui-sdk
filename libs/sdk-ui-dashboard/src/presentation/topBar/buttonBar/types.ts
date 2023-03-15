@@ -13,6 +13,8 @@ import {
  */
 export interface IButtonBarProps {
     buttons?: React.ReactNode;
+    // positioning the children's content for ButtonBar to 'left' (default) or 'right'
+    childContentPosition?: "left" | "right";
     shareButtonProps: IShareButtonProps;
     DefaultButtonBar: CustomButtonBarComponent;
     cancelButtonProps: ICancelButtonProps;
