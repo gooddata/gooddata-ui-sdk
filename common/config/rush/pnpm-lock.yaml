@@ -23403,7 +23403,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-reCLuK5LO2GpCgwZLfI4TPGUloUv/Uftk6yVSFz31K3vSxaIgdk6jYKzgAi7uFjFIpDiWp7YkkbQgjzUGkEoXw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-P8pGeUUAcSmJkQSRkBKbVQxDFeCEXbK8ED5yO3JzGXCyyphXSvZCRuuihKx6/OkygaKgu8a5URRrPIYY+rcgQw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
