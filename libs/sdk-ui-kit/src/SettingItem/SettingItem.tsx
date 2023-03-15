@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -75,7 +75,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
         <div className={cx(className, "gd-setting-item-container", { divider: hasDivider })}>
             <div className="gd-setting-item-title">
                 <span className="title">{title}</span>
-                {titleTooltipText && (
+                {titleTooltipText ? (
                     <BubbleHoverTrigger>
                         <span className="icon-circle-question gd-icon-circle-question" />
                         <Bubble
@@ -85,17 +85,17 @@ export const SettingItem: React.FC<ISettingItem> = ({
                             {titleTooltipText}
                         </Bubble>
                     </BubbleHoverTrigger>
-                )}
+                ) : null}
             </div>
             <div className="gd-setting-item-state">
-                {isLoading && <span className={cx("gd-spinner middle")} />}
+                {isLoading ? <span className={cx("gd-spinner middle")} /> : null}
                 {!isLoading && (
                     <>
                         <div className="gd-setting-item-value">{value}</div>
                         <div className="gd-setting-item-action">
                             <BubbleHoverTrigger>
                                 {getActionElement(actionType, actionValue, isDisableAction, onAction)}
-                                {actionTooltipText && (
+                                {actionTooltipText ? (
                                     <Bubble
                                         className={cx(className, "bubble-primary")}
                                         alignPoints={
@@ -104,7 +104,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
                                     >
                                         {actionTooltipText}
                                     </Bubble>
-                                )}
+                                ) : null}
                             </BubbleHoverTrigger>
                         </div>
                     </>

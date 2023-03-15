@@ -1,17 +1,15 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { ExportDialog } from "../ExportDialog";
-import { Overlay } from "../../Overlay";
 
 describe("ExportDialog", () => {
-    it("should render content", () => {
-        const wrapper = mount(
-            <ExportDialog className="exportDialogTest" containerClassName="containerTestClass" />,
-        );
+    it("should render content with provided classnames", () => {
+        render(<ExportDialog className="exportDialogTest" containerClassName="containerTestClass" />);
 
-        expect(wrapper.find(Overlay)).toHaveLength(1);
-        expect(wrapper.find(".exportDialogTest")).toHaveLength(1);
-        expect(wrapper.find(".containerTestClass").hostNodes()).toHaveLength(1);
+        expect(screen.getByText("Export")).toBeInTheDocument();
+        expect(document.getElementsByClassName("gd-overlay-content")).toHaveLength(1);
+        expect(document.getElementsByClassName("exportDialogTest")).toHaveLength(1);
+        expect(document.getElementsByClassName("containerTestClass")).toHaveLength(1);
     });
 });

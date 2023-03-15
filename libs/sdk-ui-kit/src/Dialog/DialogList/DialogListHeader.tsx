@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React, { useCallback } from "react";
 import cx from "classnames";
@@ -42,7 +42,7 @@ export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
         disabled: buttonDisabled,
     });
 
-    const onClick = useCallback(() => !buttonDisabled && onButtonClick?.(), [buttonDisabled]);
+    const onClick = useCallback(() => !buttonDisabled && onButtonClick?.(), [buttonDisabled, onButtonClick]);
 
     return (
         <div role="dialog-list-header" className={headerClassNames}>

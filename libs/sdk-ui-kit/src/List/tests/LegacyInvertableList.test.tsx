@@ -1,17 +1,13 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { withIntl } from "@gooddata/sdk-ui";
 import first from "lodash/first";
 import times from "lodash/times";
 import assign from "lodash/assign";
 import noop from "lodash/noop";
-import { mount } from "enzyme";
-
-import { withIntl } from "@gooddata/sdk-ui";
-
-import { LegacyInvertableList, ILegacyInvertableListProps } from "../LegacyInvertableList";
-import { LegacyMultiSelectList } from "../LegacyMultiSelectList";
 import { customMessages } from "./customDictionary";
-import { Message } from "../../Messages";
+import { LegacyInvertableList, ILegacyInvertableListProps } from "../LegacyInvertableList";
 
 interface IItem {
     title: string;
@@ -45,7 +41,7 @@ describe("LegacyInvertableList", () => {
             undefined,
             customMessages,
         );
-        return mount(<Wrapped {...opts} />);
+        return render(<Wrapped {...opts} />);
     }
 
     beforeEach(() => {
@@ -58,58 +54,44 @@ describe("LegacyInvertableList", () => {
     });
 
     it("should select all as empty inverted selection", () => {
-        const wrapper = renderList({
+        renderList({
             items: [firstItem, secondItem],
             onSelect: onSelectStub,
         });
 
-        wrapper.find(".s-select_all").simulate("click");
+        fireEvent.click(screen.getByText("Select all"));
+
         expect(onSelectStub).toHaveBeenCalledTimes(1);
         expect(onSelectStub).toHaveBeenCalledWith([], true);
     });
 
     it("should select none as empty selection", () => {
-        const wrapper = renderList({
+        renderList({
             items: [firstItem, secondItem],
             onSelect: onSelectStub,
         });
 
-        wrapper.find(".s-clear").simulate("click");
+        fireEvent.click(screen.getByText("Clear"));
+
         expect(onSelectStub).toHaveBeenCalledTimes(1);
         expect(onSelectStub).toHaveBeenCalledWith([], false);
     });
 
     it("should select one as inverted selection with one item", () => {
-        const wrapper = renderList({
+        renderList({
             items: [firstItem, secondItem],
             onSelect: onSelectStub,
         });
 
-        wrapper.find(".gd-list-item").first().simulate("click");
+        fireEvent.click(screen.getByText("Item 1").closest("div"));
+
         expect(onSelectStub).toHaveBeenCalledTimes(1);
         expect(onSelectStub).toHaveBeenCalledWith([firstItem], true);
     });
 
-    it("should send information to render component if search string is not present", () => {
-        const wrapper = renderList({
-            items: [firstItem, secondItem],
-        });
-
-        expect(wrapper.find(LegacyMultiSelectList).props().isSearching).toBeFalsy();
-    });
-
-    it("should send information to render component if search string is present", () => {
-        const wrapper = renderList({
-            items: [firstItem, secondItem],
-            searchString: "hello",
-        });
-
-        expect(wrapper.find(LegacyMultiSelectList).props().isSearching).toBeTruthy();
-    });
-
     describe("max selection size", () => {
         it("should not allow more items to be checked once maximum selection size is reached", () => {
-            const wrapper = renderList({
+            renderList({
                 items,
                 selection: items.slice(0, 3),
                 isInverted: false,
@@ -117,12 +99,13 @@ describe("LegacyInvertableList", () => {
                 maxSelectionSize: 3,
             });
 
-            wrapper.find(".gd-list-item").at(3).simulate("click");
+            fireEvent.click(screen.getByText("Item 4").closest("div"));
+
             expect(onSelectStub).not.toHaveBeenCalled();
         });
 
         it("should not allow more items to be unchecked once maximum inverted selection size is reached", () => {
-            const wrapper = renderList({
+            renderList({
                 items,
                 selection: items.slice(0, 3),
                 isInverted: true,
@@ -130,7 +113,8 @@ describe("LegacyInvertableList", () => {
                 maxSelectionSize: 3,
             });
 
-            wrapper.find(".gd-list-item").at(3).simulate("click");
+            fireEvent.click(screen.getByText("Item 4").closest("div"));
+
             expect(onSelectStub).not.toHaveBeenCalled();
         });
     });
@@ -159,21 +143,23 @@ describe("LegacyInvertableList", () => {
 
         describe("select all", () => {
             it("should add to the normal selection until limit is reached", () => {
-                const wrapper = renderList(assign(options, { isInverted: false }));
+                renderList(assign(options, { isInverted: false }));
 
-                wrapper.find(".s-select_all").simulate("click");
+                fireEvent.click(screen.getByText("Select all"));
+
                 expect(onSelectStub).toHaveBeenCalledWith([...selection, first(visibleItems)], false);
             });
 
             it("should remove visible items from inverted selection", () => {
-                const wrapper = renderList(assign(options, { isInverted: true }));
+                renderList(assign(options, { isInverted: true }));
 
-                wrapper.find(".s-select_all").simulate("click");
+                fireEvent.click(screen.getByText("Select all"));
+
                 expect(onSelectStub).toHaveBeenCalledWith(items.slice(6, 8), true);
             });
 
             it("should trigger inverted selection if selection contains all items", () => {
-                const wrapper = renderList(
+                renderList(
                     assign(options, {
                         isInverted: false,
                         items: [visibleItems[0]],
@@ -183,48 +169,52 @@ describe("LegacyInvertableList", () => {
                     }),
                 );
 
-                wrapper.find(".s-select_all").simulate("click");
+                fireEvent.click(screen.getByText("Select all"));
+
                 expect(onSelectStub).toHaveBeenCalledWith([], true);
             });
         });
 
         describe("select none", () => {
             it("should remove visible items from normal selection", () => {
-                const wrapper = renderList({
+                renderList({
                     ...options,
                     isInverted: false,
                 });
 
-                wrapper.find(".s-clear").simulate("click");
+                fireEvent.click(screen.getByText("Clear"));
+
                 expect(onSelectStub).toHaveBeenCalledWith(items.slice(6, 8), false);
             });
 
             it("should add visible items to inverted selection until limit is reached", () => {
-                const wrapper = renderList({
+                renderList({
                     ...options,
                     isInverted: true,
                 });
 
-                wrapper.find(".s-clear").simulate("click");
+                fireEvent.click(screen.getByText("Clear"));
+
                 expect(onSelectStub).toHaveBeenCalledWith([...selection, visibleItems[0]], true);
             });
         });
     });
 
     describe("maximum selection size warning", () => {
-        it("should not be displayed when there is no selection", () => {
-            const wrapper = renderList({ items });
-
-            expect(wrapper.find(".gd-list-limitExceeded")).toHaveLength(0);
-        });
-
         it("should be displayed when maximum size limit is hit", () => {
-            const wrapper = renderList({
+            renderList({
                 items,
                 maxSelectionSize: 4,
                 selection: items.slice(0, 4),
             });
-            expect(wrapper.find(Message)).toHaveLength(1);
+
+            expect(screen.queryByText("Sorry, you have exceeded the limit (4).")).toBeInTheDocument();
+        });
+
+        it("should not be displayed when there is no selection", () => {
+            renderList({ items });
+
+            expect(screen.queryByText("Sorry, you have exceeded the limit (4).")).not.toBeInTheDocument();
         });
     });
 });

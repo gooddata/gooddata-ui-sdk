@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -125,7 +125,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.invalid" });
         }
         return undefined;
-    }, [validName, emptyDefinition, validDefinition]);
+    }, [validName, emptyDefinition, validDefinition, onInvalidDefinition, stylingItem?.ref, intl]);
 
     const getFinalStylingItem = (
         original: IStylingPickerItem<T>,
@@ -156,7 +156,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             submitOnEnterKey={false}
         >
             <div className="gd-styling-editor-dialog-header">
-                {showBackButton && (
+                {showBackButton ? (
                     <div className="gd-styling-editor-dialog-header-back-button">
                         <Button
                             className={
@@ -168,7 +168,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                             }}
                         />
                     </div>
-                )}
+                ) : null}
                 <Typography tagName="h2" className="gd-styling-editor-dialog-header-title">
                     {title}
                 </Typography>
@@ -178,6 +178,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                     <label className="gd-styling-editor-dialog-content-form-input">
                         {intl.formatMessage({ id: "stylingEditor.dialog.name" })}
                         <input
+                            aria-label="Styling item name"
                             className="gd-input-field s-input-field"
                             type="text"
                             value={nameField}
@@ -187,6 +188,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                     <label className="gd-styling-editor-dialog-content-form-textarea">
                         {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
                         <textarea
+                            aria-label="Styling item definition"
                             className="gd-input-field s-textarea-field"
                             wrap={"off"}
                             value={definitionField}

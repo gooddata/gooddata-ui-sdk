@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React, { useLayoutEffect, useRef, useState } from "react";
+// (C) 2007-2023 GoodData Corporation
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import isNumber from "lodash/isNumber";
 
@@ -33,7 +33,7 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
     const [fontSize, setFontSize] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>();
 
-    const adjustFontSize = () => {
+    const adjustFontSize = useCallback(() => {
         if (!containerRef.current) {
             return;
         }
@@ -49,7 +49,8 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
             const size = Math.floor(currentFontSize * ratio);
             setFontSize(size);
         }
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useLayoutEffect(() => {
         const handleWindowResize = debounce(() => {
@@ -60,6 +61,7 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
         windowInstance.addEventListener("resize", handleWindowResize);
 
         return () => windowInstance.removeEventListener("resize", handleWindowResize);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [windowResizeRefreshDelay]);
 
     useLayoutEffect(() => {
@@ -72,7 +74,7 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
             // then adjust the font again
             adjustFontSize();
         }
-    }, [fontSize]);
+    }, [fontSize, adjustFontSize]);
 
     return (
         <Tag

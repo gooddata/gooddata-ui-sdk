@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -14,9 +14,9 @@ const initialRgbColor: ColorFormats.RGB = {
     b: 0,
 };
 
-const defaultStyle: React.CSSProperties = {
-    backgroundColor: "hsl(0, 100%, 50%)",
-    borderColor: null,
+const defaultStyle: Record<string, unknown> = {
+    "background-color": "hsl(0, 100%, 50%)",
+    "border-color": null,
 };
 
 function renderComponent(options?: Partial<IColorPickerProps>) {

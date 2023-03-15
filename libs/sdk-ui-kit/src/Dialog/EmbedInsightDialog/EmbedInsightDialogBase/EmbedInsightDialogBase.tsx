@@ -50,12 +50,12 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
     const onCopyButtonClick = useCallback(() => {
         copy(code);
         onCopyCode(code, "button", embedTab);
-    }, [code, onCopyCode]);
+    }, [code, onCopyCode, embedTab]);
 
     const onAreaCopy = useCallback(() => {
         copy(code);
         onCopyCode(code, "keyboard", embedTab);
-    }, [code, onCopyCode]);
+    }, [code, onCopyCode, embedTab]);
 
     return (
         <ConfirmDialogBase

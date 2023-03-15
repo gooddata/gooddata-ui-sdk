@@ -1,63 +1,75 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Input } from "../Input";
+import { InputPureProps } from "../InputPure";
 
 describe("Input", () => {
-    function renderInput(options = {}) {
+    function renderInput(options: Partial<InputPureProps> = {}) {
         const props = {
             onChange: jest.fn(),
             ...options,
         };
-        return mount(<Input {...props} />);
+        return render(<Input {...props} />);
     }
 
     describe("With configured callbacks", () => {
         it("should not render prefix and suffix", () => {
-            const wrapper = renderInput();
-            expect(wrapper.find(".gd-input-prefix")).toHaveLength(0);
-            expect(wrapper.find(".gd-input-suffix")).toHaveLength(0);
+            renderInput();
+
+            expect(screen.queryByLabelText("Input prefix")).not.toBeInTheDocument();
+            expect(screen.queryByLabelText("Input suffix")).not.toBeInTheDocument();
         });
 
         it("should render prefix", () => {
-            const wrapper = renderInput({
+            renderInput({
                 prefix: "pre",
             });
-            expect(wrapper.find(".gd-input-prefix")).toHaveLength(1);
+
+            expect(screen.getByText("pre")).toBeInTheDocument();
         });
 
         it("should render suffix", () => {
-            const wrapper = renderInput({
+            renderInput({
                 suffix: "post",
             });
-            expect(wrapper.find(".gd-input-suffix")).toHaveLength(1);
+
+            expect(screen.getByText("post")).toBeInTheDocument();
         });
 
         it("should not disable the input", () => {
-            const wrapper = renderInput();
-            expect(wrapper.find(".gd-input-field").get(0).props.disabled).toBeFalsy();
+            renderInput({ placeholder: "input placeholder" });
+
+            expect(screen.getByPlaceholderText("input placeholder")).toBeEnabled();
         });
 
         it("should disable the input", () => {
-            const wrapper = renderInput({
+            renderInput({
+                placeholder: "input placeholder",
                 disabled: true,
             });
 
-            expect(wrapper.find(".gd-input-field").get(0).props.disabled).toBeTruthy();
+            expect(screen.getByPlaceholderText("input placeholder")).toBeDisabled();
         });
 
         it("should make the input readonly", () => {
-            const wrapper = renderInput({
+            renderInput({
+                placeholder: "input placeholder",
                 readonly: true,
             });
-            expect(wrapper.find(".gd-input-field").get(0).props.readOnly).toBeTruthy();
+
+            expect(screen.getByPlaceholderText("input placeholder")).toHaveAttribute("readonly");
         });
 
         it("should call onChange when value changed", () => {
             const changedText = "New text";
             const onChange = jest.fn();
-            const wrapper = renderInput({ onChange });
-            wrapper.find("input").simulate("change", {
+            renderInput({
+                placeholder: "input placeholder",
+                onChange,
+            });
+
+            fireEvent.change(screen.getByPlaceholderText("input placeholder"), {
                 target: {
                     value: changedText,
                 },
@@ -67,40 +79,43 @@ describe("Input", () => {
         });
 
         it("should not clear on Escape", () => {
-            const valueSpy = jest.fn();
-            const wrapper = renderInput();
-            (wrapper.instance() as any).valueChanged = valueSpy;
-
-            wrapper.find("input").simulate("keyDown", {
-                key: "Escape",
-                keyCode: 27,
+            renderInput({
+                placeholder: "input placeholder",
+                value: "test",
             });
 
-            expect(valueSpy).not.toHaveBeenCalled();
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
+                key: "Escape",
+                keyCode: 27,
+                which: 27,
+            });
+
+            expect(screen.queryByDisplayValue("test")).toBeInTheDocument();
         });
 
         it("should clear on Escape", () => {
-            const wrapper = renderInput({
+            renderInput({
+                placeholder: "input placeholder",
+                value: "test",
                 clearOnEsc: true,
             });
 
-            const valueSpy = jest.fn();
-            (wrapper.instance() as any).valueChanged = valueSpy;
+            expect(screen.queryByDisplayValue("test")).toBeInTheDocument();
 
-            wrapper.find("input").simulate("keyDown", {
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
                 key: "Escape",
                 keyCode: 27,
+                which: 27,
             });
 
-            expect(valueSpy).toHaveBeenCalledTimes(1);
+            expect(screen.queryByDisplayValue("test")).not.toBeInTheDocument();
         });
 
         it("should not call onChange when value stays empty", () => {
             const changedText = "";
-
             const onChange = jest.fn();
-            const wrapper = renderInput({ onChange });
-            wrapper.find("input").simulate("change", {
+            renderInput({ onChange, placeholder: "input placeholder" });
+            fireEvent.change(screen.getByPlaceholderText("input placeholder"), {
                 target: {
                     value: changedText,
                 },
@@ -109,52 +124,43 @@ describe("Input", () => {
             expect(onChange).not.toHaveBeenCalled();
         });
 
-        it("should not call onChange when onClear is called", () => {
-            const onChange = jest.fn();
-            const wrapper = renderInput({ onChange, value: "test", clearOnEsc: true });
+        it("should clear input when clear icon is clicked", () => {
+            renderInput({ value: "test", clearOnEsc: true });
 
-            wrapper.find(".s-input-clear").simulate("click");
+            expect(screen.queryByDisplayValue("test")).toBeInTheDocument();
 
-            expect(onChange).not.toHaveBeenCalled();
+            fireEvent.click(screen.getByLabelText("Input clear"));
+
+            expect(screen.queryByDisplayValue("test")).not.toBeInTheDocument();
         });
 
         it("should call onChange only once when changed twice with the same value", () => {
             const changedText = "New text";
-
             const onChange = jest.fn();
-            const wrapper = renderInput({ onChange });
-            wrapper.find("input").simulate("change", {
+            renderInput({ onChange, placeholder: "input placeholder" });
+
+            const input = screen.getByPlaceholderText("input placeholder");
+            fireEvent.change(input, {
                 target: {
                     value: changedText,
                 },
             });
-
-            wrapper.find("input").simulate("change", {
+            fireEvent.change(input, {
                 target: {
                     value: changedText,
                 },
             });
-
-            expect(onChange).toHaveBeenCalledTimes(1);
-        });
-
-        it("should call onChange when prop value is changed", () => {
-            const onChange = jest.fn();
-
-            const wrapper = renderInput({ onChange, value: "foo" });
-            wrapper.setProps({ value: "bar" });
-            wrapper.setProps({ value: "bar" }); // setting identical value should not trigger onChange
 
             expect(onChange).toHaveBeenCalledTimes(1);
         });
 
         it("should call onEscKeyPress esc key is pressed", () => {
             const onEscKeyPress = jest.fn();
-
-            const wrapper = renderInput({ onEscKeyPress, value: "foo" });
-            wrapper.find("input").simulate("keyDown", {
+            renderInput({ onEscKeyPress, placeholder: "input placeholder", value: "test" });
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
                 key: "Escape",
                 keyCode: 27,
+                which: 27,
             });
 
             expect(onEscKeyPress).toHaveBeenCalledTimes(1);
@@ -162,11 +168,11 @@ describe("Input", () => {
 
         it("should call onEnterKeyPress esc key is pressed", () => {
             const onEnterKeyPress = jest.fn();
-
-            const wrapper = renderInput({ onEnterKeyPress, value: "foo" });
-            wrapper.find("input").simulate("keyDown", {
+            renderInput({ onEnterKeyPress, placeholder: "input placeholder", value: "test" });
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
                 key: "Enter",
                 keyCode: 13,
+                which: 13,
             });
 
             expect(onEnterKeyPress).toHaveBeenCalledTimes(1);

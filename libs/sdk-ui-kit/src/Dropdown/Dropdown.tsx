@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { v4 as uuid } from "uuid";
 import noop from "lodash/noop";
@@ -167,7 +167,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         return () => {
             mountRef.current = true;
         };
-    }, [isOpen]);
+    }, [isOpen, onOpenStateChanged]);
 
     const renderButtonProps = {
         isOpen: isOpen,

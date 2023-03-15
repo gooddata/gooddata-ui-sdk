@@ -1,5 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { DialogBase } from "./DialogBase";
 import noop from "lodash/noop";
 import { IExportDialogBaseProps, IExportDialogBaseState } from "./typings";
@@ -36,6 +37,7 @@ export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
 
     public render(): JSX.Element {
         const {
+            className,
             displayCloseButton,
             isPositive,
             isSubmitDisabled,
@@ -71,7 +73,7 @@ export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
 
         return (
             <ConfirmDialogBase
-                className="gd-export-dialog"
+                className={cx("gd-export-dialog", className)}
                 displayCloseButton={displayCloseButton}
                 isPositive={isPositive}
                 isSubmitDisabled={isSubmitDisabled}

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { useMemo, useCallback } from "react";
 import differenceBy from "lodash/differenceBy";
 import intersectionBy from "lodash/intersectionBy";
@@ -106,7 +106,15 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
         }
 
         return "partial";
-    }, [isInverted, isSelectionEmpty, totalItemsCount, loadedSelectedItems, isSearch, loadedUnselectedItems]);
+    }, [
+        isInverted,
+        isSelectionEmpty,
+        totalItemsCount,
+        loadedSelectedItems,
+        isSearch,
+        loadedUnselectedItems,
+        itemsInSelection.length,
+    ]);
 
     const getIsItemSelected = useCallback(
         (item: T) => {
@@ -205,8 +213,6 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
             }
         },
         [
-            items,
-            selectionState,
             loadedUnselectedItems,
             loadedSelectedItems,
             selectItems,

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "../../../Bubble";
@@ -44,6 +44,7 @@ export const GranteeRemoveIcon: React.FC<IGranteeRemoveIconProps> = (props) => {
             <span
                 className="gd-grantee-item-icon gd-grantee-icon-trash gd-grantee-item-icon-right s-gd-grantee-item-delete"
                 onClick={onClick}
+                aria-label="Share dialog grantee delete"
             />
             <Bubble className="bubble-primary" alignPoints={alignPoints}>
                 {mode === "ShareGrantee" ? (

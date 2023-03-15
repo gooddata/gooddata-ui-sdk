@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import NativeListener from "react-native-listener";
@@ -131,11 +131,23 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
     }
 
     renderPrefix(prefix: string): React.ReactNode {
-        return prefix ? <span className="gd-input-prefix">{prefix}</span> : false;
+        return prefix ? (
+            <span className="gd-input-prefix" aria-label="Input prefix">
+                {prefix}
+            </span>
+        ) : (
+            false
+        );
     }
 
     renderSuffix(suffix: string): React.ReactNode {
-        return suffix ? <span className="gd-input-suffix">{suffix}</span> : false;
+        return suffix ? (
+            <span className="gd-input-suffix" aria-label="Input suffix">
+                {suffix}
+            </span>
+        ) : (
+            false
+        );
     }
 
     renderLabel(label: string): React.ReactNode {
@@ -151,7 +163,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             // react events use delegation and don't bubble, click on clear needs to be kept local
             // to avoid handling by overlay close handler and others
             <NativeListener onClick={this.onClear}>
-                <span className="gd-input-icon-clear gd-icon-clear s-input-clear" />
+                <span className="gd-input-icon-clear gd-icon-clear s-input-clear" aria-label="Input clear" />
             </NativeListener>
         ) : (
             false

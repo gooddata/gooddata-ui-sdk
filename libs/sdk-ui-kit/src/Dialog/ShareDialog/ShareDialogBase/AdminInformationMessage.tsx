@@ -21,7 +21,7 @@ export const AdminInformationMessage: React.FC<IAdminInformationMessageProps> = 
             className="gd-granular-permissions-admin-information s-granular-permissions-admin-information"
             onClose={onClose}
         >
-            <span>
+            <span aria-label="Share dialog admin information message">
                 <FormattedMessage
                     id="shareDialog.share.granular.administrator.info"
                     values={{ b: (chunks: string) => <strong>{chunks}</strong> }}

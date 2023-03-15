@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { ColorPreview } from "./ColorPreview";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -24,6 +24,7 @@ export const StylingExample = (props: IStylingExampleProps) => {
             <div className="gd-styling-example-label">
                 <div className="gd-styling-example-label-name">{name}</div>
                 <div
+                    aria-label="Styling example action"
                     className="gd-styling-example-label-action s-gd-styling-example-label-action"
                     onClick={onClick}
                 >

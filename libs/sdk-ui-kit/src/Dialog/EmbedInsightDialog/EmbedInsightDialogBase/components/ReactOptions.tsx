@@ -19,7 +19,7 @@ export const ReactOptions = (props: IReactOptionsProps) => {
             const opt: IReactOptions = { ...option, componentType };
             onChange(opt);
         },
-        [option],
+        [option, onChange],
     );
 
     const onLanguageChanged = useCallback(
@@ -27,7 +27,7 @@ export const ReactOptions = (props: IReactOptionsProps) => {
             const opt: IReactOptions = { ...option, codeType };
             onChange(opt);
         },
-        [option],
+        [option, onChange],
     );
 
     return (

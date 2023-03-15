@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -68,7 +68,7 @@ export const EllipsisText: React.FC<IEllipsisTextProps> = (props) => {
                     <span>{text}</span>
                 )}
             </div>
-            {overflowIndex && (
+            {overflowIndex ? (
                 <button
                     className="gd-ellipsis-text-button"
                     onClick={() => setCollapsed((isCollapsed) => !isCollapsed)}
@@ -77,7 +77,7 @@ export const EllipsisText: React.FC<IEllipsisTextProps> = (props) => {
                         ? intl.formatMessage({ id: "descriptionPanel.button.more" })
                         : intl.formatMessage({ id: "descriptionPanel.button.less" })}
                 </button>
-            )}
+            ) : null}
         </div>
     );
 };

@@ -27,37 +27,37 @@ export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
     const onDisplayTitleChange = useCallback(() => {
         const opt = { ...option, displayTitle: !option.displayTitle };
         onChange(opt);
-    }, [option]);
+    }, [option, onChange]);
 
     const onCustomTitleChange = useCallback(() => {
         const opt = { ...option, customTitle: !option.customTitle };
         onChange(opt);
-    }, [option]);
+    }, [option, onChange]);
 
     const onAllowLocaleChange = useCallback(() => {
         const opt = { ...option, allowLocale: !option.allowLocale };
         onChange(opt);
-    }, [option]);
+    }, [option, onChange]);
 
     const onLocaleValueChange = useCallback(
         (locale) => {
             const opt = { ...option, locale };
             onChange(opt);
         },
-        [option],
+        [option, onChange],
     );
 
     const onCustomHeightChange = useCallback(() => {
         const opt = { ...option, customHeight: !option.customHeight };
         onChange(opt);
-    }, [option]);
+    }, [option, onChange]);
 
     const onCustomHeightValueChange = useCallback(
         (height, unit) => {
             const opt = { ...option, height, unit };
             onChange(opt);
         },
-        [option],
+        [option, onChange],
     );
 
     return (
