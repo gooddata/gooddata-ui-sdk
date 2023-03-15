@@ -446,7 +446,7 @@ export function attributeDisplayFormChanged(
     };
 }
 
-export interface DashboardAttributeSelectionModeChangeddPayload {
+export interface DashboardAttributeSelectionModeChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -457,7 +457,7 @@ export interface DashboardAttributeSelectionModeChangeddPayload {
 
 export interface DashboardAttributeSelectionModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED";
-    readonly payload: DashboardAttributeSelectionModeChangeddPayload;
+    readonly payload: DashboardAttributeSelectionModeChangedPayload;
 }
 
 export function attributeSelectionModeChanged(

@@ -441,7 +441,7 @@ const changeAttributeTitle: FilterContextReducer<PayloadAction<IChangeAttributeT
 
 export interface IChangeAttributeSelectionModePayload {
     readonly filterLocalId: string;
-    readonly selectionMode: "single" | "multi";
+    readonly selectionMode: DashboardAttributeFilterSelectionMode;
 }
 
 /**

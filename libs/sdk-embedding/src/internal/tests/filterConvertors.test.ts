@@ -118,15 +118,7 @@ describe("filter convertors", () => {
             selectionMode: "single",
         },
     };
-    const negativeAttributeSingleSelectionFilter: EmbeddedGdc.INegativeAttributeFilter = {
-        negativeAttributeFilter: {
-            notIn: ["uri1"],
-            displayForm: {
-                uri: "dfuri",
-            },
-            selectionMode: "single",
-        },
-    };
+
     const negativeAttributeMultiSelectionFilter: EmbeddedGdc.INegativeAttributeFilter = {
         negativeAttributeFilter: {
             notIn: ["uri1"],
@@ -215,10 +207,6 @@ describe("filter convertors", () => {
 
     it("should return false when positive attribute single select filter item has multiple values", () => {
         expect(isValidFiltersFormat([positiveAttributeSingleSelectionFilterWithMultipleValues])).toBe(false);
-    });
-
-    it("should return false when negative attribute filter has single selection mode", () => {
-        expect(isValidFiltersFormat([negativeAttributeSingleSelectionFilter])).toBe(false);
     });
 
     describe("ranking filter", () => {

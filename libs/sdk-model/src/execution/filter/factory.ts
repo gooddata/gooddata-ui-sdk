@@ -32,13 +32,11 @@ import { DateAttributeGranularity } from "../../base/dateGranularities";
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param inValues - values to filter for; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
- * @param selectionMode - selection mode which defines how many elements can be in attributeElements, default value is 'multi' if property is missing.
  * @public
  */
 export function newPositiveAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
     inValues: IAttributeElements | string[],
-    selectionMode?: "single" | "multi",
 ): IPositiveAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -52,7 +50,6 @@ export function newPositiveAttributeFilter(
         positiveAttributeFilter: {
             displayForm: objRef,
             in: inObject,
-            ...(selectionMode !== undefined ? { selectionMode } : {}),
         },
     };
 }
@@ -70,13 +67,11 @@ export function newPositiveAttributeFilter(
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param notInValues - values to filter out; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
- * @param selectionMode - selection mode which defines how many elements can be in attributeElements, default value is 'multi' if property is missing.
  * @public
  */
 export function newNegativeAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
     notInValues: IAttributeElements | string[],
-    selectionMode?: "single" | "multi",
 ): INegativeAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -92,7 +87,6 @@ export function newNegativeAttributeFilter(
         negativeAttributeFilter: {
             displayForm: objRef,
             notIn: notInObject,
-            ...(selectionMode !== undefined ? { selectionMode } : {}),
         },
     };
 }

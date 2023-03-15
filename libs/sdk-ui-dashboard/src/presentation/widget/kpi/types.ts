@@ -1,9 +1,9 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, IWidgetAlert, IKpiWidget } from "@gooddata/sdk-model";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types";
+import { OnFiredDashboardDrillEvent } from "../../../types";
 
 ///
 /// Component props
@@ -84,7 +84,7 @@ export interface IDashboardKpiProps {
      *
      * @alpha
      */
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
 
     /**
      * Called when user triggers a drill on a visualization.

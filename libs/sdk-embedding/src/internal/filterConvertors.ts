@@ -105,7 +105,7 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
 
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
 
-        const validSelectionMode = selectionMode === "single" ? false : true;
+        const validSelectionMode = selectionMode !== "multi" ? false : true;
         // attributeElements could be empty in case of setting All Value
         return (
             (isString(uri) || isString(identifier)) && Array.isArray(attributeElements) && validSelectionMode

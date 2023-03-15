@@ -30,7 +30,6 @@ Object {
     "filterElementsBy": undefined,
     "localIdentifier": Any<String>,
     "negativeSelection": true,
-    "selectionMode": "multi",
   },
 }
 `;

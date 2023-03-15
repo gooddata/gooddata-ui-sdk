@@ -15,66 +15,25 @@ import partition from "lodash/partition";
 import uniqBy from "lodash/uniqBy";
 import compact from "lodash/compact";
 import {
-    isAttributeFilter,
     objRefToString,
-    filterObjRef,
-    isRelativeDateFilter,
     isUriRef,
-    filterAttributeElements,
-    isNegativeAttributeFilter,
-    isAbsoluteDateFilter,
-    isAllTimeDateFilter,
-    DateFilterGranularity,
-    FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
-    newAbsoluteDashboardDateFilter,
-    newAllTimeDashboardDateFilter,
-    newRelativeDashboardDateFilter,
     updateAttributeElementsItems,
     getAttributeElementsItems,
     attributeElementsIsEmpty,
     isSingleSelectionFilter,
-    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     IUpdateAttributeFilterSelectionPayload,
     IUpsertDateFilterPayload,
 } from "../../store/filterContext/filterContextReducers";
-import { IDashboardFilter } from "../../../types";
 import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver";
-
-function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
-    if (isAttributeFilter(filter)) {
-        return {
-            attributeFilter: {
-                negativeSelection: isNegativeAttributeFilter(filter),
-                displayForm: filterObjRef(filter),
-                attributeElements: filterAttributeElements(filter),
-                selectionMode: isPositiveAttributeFilter(filter)
-                    ? filter.positiveAttributeFilter.selectionMode
-                    : filter.negativeAttributeFilter.selectionMode,
-            },
-        };
-    } else if (isAbsoluteDateFilter(filter)) {
-        return newAbsoluteDashboardDateFilter(filter.absoluteDateFilter.from, filter.absoluteDateFilter.to);
-    } else if (isAllTimeDateFilter(filter)) {
-        return newAllTimeDashboardDateFilter();
-    } else if (isRelativeDateFilter(filter)) {
-        return newRelativeDashboardDateFilter(
-            filter.relativeDateFilter.granularity as DateFilterGranularity,
-            filter.relativeDateFilter.from,
-            filter.relativeDateFilter.to,
-        );
-    }
-
-    throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
-}
 
 export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,
@@ -82,15 +41,7 @@ export function* changeFilterContextSelectionHandler(
 ): SagaIterator<void> {
     const { filters, resetOthers } = cmd.payload;
 
-    const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
-        if (isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter)) {
-            return filter;
-        } else {
-            return dashboardFilterToFilterContextItem(filter);
-        }
-    });
-
-    const uniqueFilters = uniqBy(normalizedFilters, (filter) => {
+    const uniqueFilters = uniqBy(filters, (filter) => {
         const identification = isDashboardAttributeFilter(filter)
             ? filter.attributeFilter.displayForm
             : filter.dateFilter.dataSet;

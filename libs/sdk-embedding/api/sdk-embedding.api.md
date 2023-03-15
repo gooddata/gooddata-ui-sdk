@@ -258,7 +258,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             notIn: string[];
             textFilter?: boolean;
-            selectionMode?: AttributeFilterItemSelectionMode;
+            selectionMode?: "multi";
         };
     }
     // (undocumented)

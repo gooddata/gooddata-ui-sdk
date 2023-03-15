@@ -432,11 +432,11 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
+export function changeFilterContextSelection(filters: FilterContextItem[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @public
 export interface ChangeFilterContextSelectionPayload {
-    filters: (IDashboardFilter | FilterContextItem)[];
+    filters: FilterContextItem[];
     resetOthers: boolean;
 }
 
@@ -1399,7 +1399,7 @@ export interface DashboardDrillToDashboardResolved extends IDashboardEvent {
 export interface DashboardDrillToDashboardResolvedPayload {
     readonly drillDefinition: IDrillToDashboard;
     readonly drillEvent: IDashboardDrillEvent;
-    readonly filters: IDashboardFilter[];
+    readonly filters: FilterContextItem[];
 }
 
 // @alpha
@@ -3449,7 +3449,7 @@ export interface IDashboardKpiProps {
     // @alpha
     onError?: OnError;
     // @alpha
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
     // @alpha
     workspace?: string;
 }
@@ -3468,7 +3468,7 @@ export interface IDashboardLayoutProps {
     // (undocumented)
     onError?: OnError;
     // (undocumented)
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
 }
 
 // @public
@@ -3570,7 +3570,7 @@ export interface IDashboardWidgetProps {
     // @alpha (undocumented)
     onError?: OnError;
     // @alpha (undocumented)
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
     // @alpha
     onWidgetClicked?: () => void;
     // @alpha (undocumented)

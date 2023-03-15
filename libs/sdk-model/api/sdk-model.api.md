@@ -1614,7 +1614,6 @@ export interface INegativeAttributeFilter {
 export interface INegativeAttributeFilterBody {
     displayForm: ObjRef;
     notIn: IAttributeElements;
-    selectionMode?: "single" | "multi";
 }
 
 // @public
@@ -1810,7 +1809,6 @@ export interface IPositiveAttributeFilter {
 export interface IPositiveAttributeFilterBody {
     displayForm: ObjRef;
     in: IAttributeElements;
-    selectionMode?: "single" | "multi";
 }
 
 // @public
@@ -1995,6 +1993,9 @@ export interface IRgbColorValue {
     // (undocumented)
     r: number;
 }
+
+// @alpha
+export function isAbsoluteDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean;
 
 // @public
 export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter;
@@ -2394,6 +2395,9 @@ export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOpe
 
 // @public
 export function isRankingFilter(obj: unknown): obj is IRankingFilter;
+
+// @alpha
+export function isRelativeDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean;
 
 // @public
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter;
@@ -3149,13 +3153,13 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | s
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | LocalIdRef | string, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
-export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[], selectionMode?: "single" | "multi"): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
 export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[], selectionMode?: "single" | "multi"): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[]): IPositiveAttributeFilter;
 
 // @public
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;

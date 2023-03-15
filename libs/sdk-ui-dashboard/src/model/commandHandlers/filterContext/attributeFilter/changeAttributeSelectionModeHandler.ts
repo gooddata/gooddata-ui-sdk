@@ -27,8 +27,6 @@ export function* changeAttributeSelectionModeHandler(
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
     }
 
-    // TODO:  add correct validation
-
     yield put(
         filterContextActions.changeSelectionMode({
             filterLocalId,
