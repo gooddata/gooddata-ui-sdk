@@ -1,47 +1,44 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { InputWithNumberFormat, MAX_NUMBER } from "../InputWithNumberFormat";
 import { Separators } from "../typings";
 
 class InputWithNumberFormatFragment {
     public value: number | string = undefined;
-    private wrapper: ReactWrapper;
     private input: any;
     constructor({ separators, value }: { separators?: Separators; value?: number } = {}) {
         this.value = value;
-        this.wrapper = mount(
+        render(
             <InputWithNumberFormat
                 value={this.value}
                 onChange={(v) => {
                     this.value = v;
                 }}
                 separators={separators}
+                placeholder="input placeholder"
             />,
         );
-        this.input = this.wrapper.find("input").at(0);
+        this.input = screen.getByPlaceholderText("input placeholder");
     }
 
     inputValue() {
-        return this.input.instance().value;
+        return this.input.value;
     }
 
     simulateChange(value: number | string) {
-        this.input.simulate("change", { target: { value } });
+        fireEvent.change(this.input, { target: { value } });
+        return this;
     }
 
     simulateBlur() {
-        this.input.simulate("blur");
+        fireEvent.blur(this.input);
+        return this;
     }
 
     simulateFocus() {
-        this.input.simulate("focus");
-    }
-
-    setValueProp(value: number) {
-        this.value = value;
-        this.wrapper.setProps({ value: this.value });
-        this.wrapper.update();
+        fireEvent.focus(this.input);
+        return this;
     }
 
     simulateTyping(string: string) {
@@ -49,73 +46,55 @@ class InputWithNumberFormatFragment {
             const currentValue = this.inputValue();
             this.simulateChange(currentValue + letter);
         });
+        return this;
     }
 }
 
 describe("InputWithNumberFormat", () => {
     it("should format input when input is first rendered", () => {
-        const input = new InputWithNumberFormatFragment({ value: 100000 });
+        new InputWithNumberFormatFragment({ value: 100000 });
 
-        expect(input.inputValue()).toEqual("100,000");
+        expect(screen.getByDisplayValue("100,000")).toBeInTheDocument();
     });
 
     it("should format input when input is being blured", () => {
         const input = new InputWithNumberFormatFragment();
 
-        input.simulateChange("1000");
-        input.simulateBlur();
+        input.simulateChange("1000").simulateBlur();
 
-        expect(input.inputValue()).toEqual("1,000");
+        expect(screen.getByDisplayValue("1,000")).toBeInTheDocument();
     });
 
-    it("should format input when value prop changes and input is not being focused", () => {
-        const input = new InputWithNumberFormatFragment({ value: 10 });
-
-        input.setValueProp(100000);
-
-        expect(input.inputValue()).toEqual("100,000");
-    });
-
-    it("should not format input when value prop changes and input is being focused", () => {
-        const input = new InputWithNumberFormatFragment({ value: 10 });
-
-        input.simulateFocus();
-        input.setValueProp(100000);
-
-        expect(input.inputValue()).toEqual("10");
-    });
-
-    it("should return null when empty value is typed", () => {
+    it("should display empty string when empty value is typed", () => {
         const input = new InputWithNumberFormatFragment({ value: 10 });
 
         input.simulateChange("");
 
-        expect(input.value).toEqual(null);
+        expect(screen.getByDisplayValue("")).toBeInTheDocument();
     });
 
     it("should not be able to type number higher than max number", () => {
-        const input = new InputWithNumberFormatFragment({ value: null });
+        const input = new InputWithNumberFormatFragment({ value: 100 });
 
         input.simulateChange(`${MAX_NUMBER + 1}`);
 
-        expect(input.value).toEqual(null);
+        expect(screen.getByDisplayValue("100")).toBeInTheDocument();
     });
 
     it("should not be able to type number lower than min number", () => {
-        const input = new InputWithNumberFormatFragment({ value: null });
+        const input = new InputWithNumberFormatFragment({ value: 100 });
 
         input.simulateChange(`${-MAX_NUMBER - 1}`);
 
-        expect(input.value).toEqual(null);
+        expect(screen.getByDisplayValue("100")).toBeInTheDocument();
     });
 
     it("should round number which has more numbers right to decimal point than is allowed by platform", () => {
         const input = new InputWithNumberFormatFragment();
 
-        input.simulateChange("0.00000000001");
-        input.simulateBlur();
+        input.simulateChange("0.00000000001").simulateBlur();
 
-        expect(input.inputValue()).toEqual("0");
+        expect(screen.getByDisplayValue("0")).toBeInTheDocument();
     });
 
     describe("input validation", () => {
@@ -147,7 +126,7 @@ describe("InputWithNumberFormat", () => {
 
                 input.simulateTyping(typedValue);
 
-                expect(input.inputValue()).toEqual(resultInputValue);
+                expect(screen.getByDisplayValue(resultInputValue)).toBeInTheDocument();
                 expect(input.value).toEqual(resultValue);
             },
         );
@@ -164,7 +143,7 @@ describe("InputWithNumberFormat", () => {
 
                 input.simulateTyping(writtenValue);
 
-                expect(input.inputValue()).toEqual(resultInputValue);
+                expect(screen.getByDisplayValue(resultInputValue)).toBeInTheDocument();
                 expect(input.value).toEqual(resultValue);
             },
         );

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import {
     components as ReactSelectComponents,
@@ -33,7 +33,7 @@ export const LoadingMessageRenderer = (): JSX.Element => {
 
 export const NoOptionsMessageRenderer = (props: NoticeProps): JSX.Element => {
     return (
-        <div className="s-gd-share-dialog-no-option">
+        <div className="s-gd-share-dialog-no-option" aria-label="Share dialog no match">
             <ReactSelectComponents.NoOptionsMessage {...props} />
         </div>
     );
@@ -42,7 +42,9 @@ export const NoOptionsMessageRenderer = (props: NoticeProps): JSX.Element => {
 export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JSX.Element => {
     return (
         <ReactSelectComponents.MenuList {...props}>
-            <div className="s-gd-share-dialog-menu">{props.children}</div>
+            <div className="s-gd-share-dialog-menu" aria-label="Share dialog menu list">
+                {props.children}
+            </div>
         </ReactSelectComponents.MenuList>
     );
 };
@@ -69,7 +71,10 @@ const OptionContentRenderer = (item: ISelectOption): JSX.Element => {
 
 export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): JSX.Element => {
     return (
-        <div className={`gd-share-dialog-option-error s-gd-share-dialog-option-error`}>
+        <div
+            className={`gd-share-dialog-option-error s-gd-share-dialog-option-error`}
+            aria-label="Share dialog error"
+        >
             <span className="gd-share-dialog-option-error-content">{errorOption.label}</span>
         </div>
     );

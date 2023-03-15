@@ -70,6 +70,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
                     },
                 )}
                 onClick={handleClick}
+                aria-label="Share dialog granular permissions button"
             >
                 <div className="s-granular-permission-button-title gd-granular-permission-button-title">
                     {buttonValue}

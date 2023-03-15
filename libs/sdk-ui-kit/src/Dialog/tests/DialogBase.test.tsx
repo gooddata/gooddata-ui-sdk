@@ -1,43 +1,41 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
-import { mount } from "enzyme";
+// (C) 2007-2023 GoodData Corporation
+import React, { ReactNode } from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { DialogBase } from "../DialogBase";
 import { Input } from "../../Form/Input";
+import { IDialogBaseProps } from "../typings";
 
-function renderDialog(options: any, children?: any) {
-    return mount(<DialogBase {...options}>{children}</DialogBase>);
+function renderDialog(options: Partial<IDialogBaseProps>, children?: ReactNode) {
+    return render(<DialogBase {...options}>{children ?? "Dialog content"}</DialogBase>);
 }
 
 describe("Dialog", () => {
     describe("close button", () => {
         it("should not be rendered by default", () => {
-            const wrapper = renderDialog({});
-            expect(wrapper.find(".gd-dialog-close")).toHaveLength(0);
+            renderDialog({});
+            expect(screen.queryByRole("button")).not.toBeInTheDocument();
         });
 
         it("should be rendered when receiving `displayCloseButton` flag", () => {
-            const wrapper = renderDialog({
+            renderDialog({
                 displayCloseButton: true,
             });
 
-            expect(wrapper.find(".gd-dialog-close")).toHaveLength(1);
+            expect(screen.getByRole("button")).toBeInTheDocument();
         });
     });
 
     describe("submit", () => {
         it("should call `onSubmit` when enter is pressed", () => {
             const onSubmit = jest.fn();
-
-            const wrapper = renderDialog({
+            renderDialog({
                 onSubmit,
             });
 
-            wrapper.simulate("keyDown", {
+            fireEvent.keyDown(screen.getByText("Dialog content"), {
                 key: "Enter",
                 keyCode: 13,
-                target: {
-                    tagName: "div",
-                },
+                which: 13,
             });
 
             expect(onSubmit).toHaveBeenCalledTimes(1);
@@ -50,22 +48,18 @@ describe("Dialog", () => {
             'should %s "onSubmit" when submitOnEnterKey is %s',
             (_actionText, submitOnEnterKey, expectedCalledTimes) => {
                 const onSubmit = jest.fn();
-
-                const wrapper = renderDialog(
+                renderDialog(
                     {
                         submitOnEnterKey,
                         onSubmit,
                     },
-                    [<Input key="A123" />],
+                    <Input key="A123" placeholder="input text" />,
                 );
 
-                wrapper.find(".gd-input-field").simulate("keyDown", {
+                fireEvent.keyDown(screen.getByPlaceholderText("input text"), {
                     key: "Enter",
                     keyCode: 13,
-                    target: {
-                        tagName: "input",
-                        type: "text",
-                    },
+                    which: 13,
                 });
 
                 expect(onSubmit).toHaveBeenCalledTimes(expectedCalledTimes);
@@ -76,17 +70,14 @@ describe("Dialog", () => {
     describe("cancel", () => {
         it("should call `onCancel` when escape is pressed", () => {
             const onCancel = jest.fn();
-
-            const wrapper = renderDialog({
+            renderDialog({
                 onCancel,
             });
 
-            wrapper.simulate("keyDown", {
+            fireEvent.keyDown(screen.getByText("Dialog content"), {
                 key: "Escape",
                 keyCode: 27,
-                target: {
-                    tagName: "div",
-                },
+                which: 27,
             });
 
             expect(onCancel).toHaveBeenCalledTimes(1);

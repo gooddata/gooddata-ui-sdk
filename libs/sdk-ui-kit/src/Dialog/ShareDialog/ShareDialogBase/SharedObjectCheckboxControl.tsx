@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -35,6 +35,7 @@ export const SharedObjectCheckboxControl: React.FC<ISharedObjectCheckboxControlP
                 className="input-checkbox"
                 checked={isChecked}
                 onChange={handleOnChange}
+                aria-label={name}
             />
             <span className="input-label-text">{label}</span>
         </label>

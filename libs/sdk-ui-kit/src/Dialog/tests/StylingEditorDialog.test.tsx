@@ -1,14 +1,8 @@
-// (C) 2022 GoodData Corporation
-import { ITheme } from "@gooddata/sdk-model";
-
-import { mount } from "enzyme";
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
-import {
-    IStylingEditorDialogProps,
-    StylingEditorDialog,
-    StylingExample,
-    IStylingPickerItem,
-} from "../StylingEditorDialog";
+import { ITheme } from "@gooddata/sdk-model";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { IStylingEditorDialogProps, StylingEditorDialog, IStylingPickerItem } from "../StylingEditorDialog";
 
 describe("Styling editor dialog", () => {
     const theme = (color: string): IStylingPickerItem<ITheme> => {
@@ -26,7 +20,7 @@ describe("Styling editor dialog", () => {
 
     const referenceTheme = (color: string) => JSON.stringify(theme(color).content, null, 4);
 
-    const getWrapper = (customProps: Partial<IStylingEditorDialogProps<ITheme>> = {}) => {
+    const renderEditor = (customProps: Partial<IStylingEditorDialogProps<ITheme>> = {}) => {
         const defaultProps = {
             title: "Dialog title",
             link: {
@@ -38,81 +32,111 @@ describe("Styling editor dialog", () => {
             examples: [theme("green"), theme("blue")],
             exampleToColorPreview: () => ["#313441", "#FFFFFF", "#14B2E2", "#464E56", "#94A1AD", "#E2E7EC"],
         };
-        return mount(<StylingEditorDialog {...defaultProps} {...customProps} />);
+        return render(<StylingEditorDialog {...defaultProps} {...customProps} />);
     };
 
     it("should render content", () => {
-        const wrapper = getWrapper();
-        expect(wrapper.find(".s-input-field").html()).toContain("Theme red");
-        expect(wrapper.find(".s-textarea-field").html()).toContain(referenceTheme("red"));
-        expect(wrapper.find(StylingExample).at(0)).toExist();
-        expect(wrapper.find(StylingExample).at(1)).toExist();
-        expect(wrapper.find(StylingExample).at(2)).not.toExist();
+        renderEditor();
+
+        expect(screen.getByDisplayValue("Theme red")).toBeInTheDocument();
+        expect(screen.getByDisplayValue(/palette/).innerHTML).toContain(referenceTheme("red"));
+        expect(screen.getAllByLabelText("Styling example action")).toHaveLength(2);
     });
 
     it("should insert examples into fields", () => {
-        const wrapper = getWrapper();
-        wrapper.find(".s-gd-styling-example-label-action").at(0).simulate("click");
-        expect(wrapper.find(".s-input-field").html()).toContain("Theme green");
-        expect(wrapper.find(".s-textarea-field").html()).toContain(referenceTheme("green"));
+        renderEditor();
+        const examples = screen.getAllByLabelText("Styling example action");
 
-        wrapper.find(".s-gd-styling-example-label-action").at(1).simulate("click");
-        expect(wrapper.find(".s-input-field").html()).toContain("Theme blue");
-        expect(wrapper.find(".s-textarea-field").html()).toContain(referenceTheme("blue"));
+        fireEvent.click(examples.at(0));
+        expect(screen.getByDisplayValue("Theme green")).toBeInTheDocument();
+        expect(screen.getByDisplayValue(/palette/).innerHTML).toContain(referenceTheme("green"));
+
+        fireEvent.click(examples.at(1));
+        expect(screen.getByDisplayValue("Theme blue")).toBeInTheDocument();
+        expect(screen.getByDisplayValue(/palette/).innerHTML).toContain(referenceTheme("blue"));
     });
 
     it("should not render examples if not provided", () => {
-        const wrapper = getWrapper({ examples: undefined });
-        expect(wrapper.find(".s-gd-styling-editor-dialog-content-examples")).not.toExist();
+        renderEditor({ examples: undefined });
+
+        expect(screen.queryByLabelText("Styling example action")).not.toBeInTheDocument();
     });
 
-    // it("should render empty fields if stylingItem not provided", () => {
-    //     const wrapper = getWrapper({ stylingItem: undefined });
-    //     expect(wrapper.find(".s-input-field").hostNodes()).toHaveValue("");
-    //     expect(wrapper.find(".s-textarea-field").hostNodes()).toHaveValue("");
-    // });
+    it("should render empty fields if stylingItem not provided", () => {
+        renderEditor({ stylingItem: undefined });
+
+        expect(screen.getByLabelText("Styling item name")).toHaveTextContent("");
+        expect(screen.getByLabelText("Styling item definition")).toHaveTextContent("");
+    });
 
     it("should disable save if no changes are provided (ignore white-spacing)", () => {
-        const wrapper = getWrapper();
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).toContain("disabled");
-        wrapper.find(".s-textarea-field").simulate("change", {
+        renderEditor();
+        const saveButton = screen.getByText("Save").closest("button");
+
+        expect(saveButton).toHaveClass("disabled");
+
+        fireEvent.change(screen.getByLabelText("Styling item definition"), {
             target: { value: JSON.stringify(theme("red").content) },
         });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).toContain("disabled");
+
+        expect(saveButton).toHaveClass("disabled");
     });
 
-    it("should disable save if no Name or Definition is provided", () => {
-        const wrapper = getWrapper({ stylingItem: undefined });
-        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "{}" } });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).toContain("disabled");
-        wrapper.find(".s-input-field").simulate("change", { target: { value: "Name" } });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).not.toContain("disabled");
-        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "" } });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).toContain("disabled");
+    it("should disable save if no Name or Definition is provided", async () => {
+        renderEditor({ stylingItem: undefined });
+        const textarea = screen.getByLabelText("Styling item definition");
+        const saveButton = screen.getByText("Save").closest("button");
+
+        fireEvent.change(textarea, {
+            target: { value: "{}" },
+        });
+        expect(saveButton).toHaveClass("disabled");
+
+        fireEvent.change(screen.getByLabelText("Styling item name"), {
+            target: { value: "name" },
+        });
+        expect(saveButton).not.toHaveClass("disabled");
+
+        fireEvent.change(textarea, {
+            target: { value: "" },
+        });
+        expect(saveButton).toHaveClass("disabled");
     });
 
     it("should disable save if Definition is invalid JSON", () => {
-        const wrapper = getWrapper();
-        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "invalid {}" } });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).toContain("disabled");
-        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "{}" } });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).not.toContain("disabled");
+        renderEditor();
+        const textarea = screen.getByLabelText("Styling item definition");
+        const saveButton = screen.getByText("Save").closest("button");
+
+        fireEvent.change(textarea, {
+            target: { value: "invalid {}" },
+        });
+        expect(saveButton).toHaveClass("disabled");
+
+        fireEvent.change(textarea, {
+            target: { value: "{}" },
+        });
+        expect(saveButton).not.toHaveClass("disabled");
     });
 
     it("should enable save after click Post Example", () => {
-        const wrapper = getWrapper({ stylingItem: undefined });
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).toContain("disabled");
-        wrapper.find(".s-gd-styling-example-label-action").at(0).simulate("click");
-        expect(wrapper.find(".s-dialog-submit-button").first().html()).not.toContain("disabled");
+        renderEditor({ stylingItem: undefined });
+        const saveButton = screen.getByText("Save").closest("button");
+
+        expect(saveButton).toHaveClass("disabled");
+        fireEvent.click(screen.getAllByLabelText("Styling example action").at(0));
+        expect(saveButton).not.toHaveClass("disabled");
     });
 
     it("should render progress indicator if flag provided", () => {
-        const wrapper = getWrapper({ showProgressIndicator: true });
-        expect(wrapper.find(".s-gd-styling-editor-spinner")).toExist();
+        renderEditor({ showProgressIndicator: true });
+
+        expect(document.querySelector(".s-gd-styling-editor-spinner")).toBeInTheDocument();
     });
 
     it("should disable Submit button if flag provided", () => {
-        const wrapper = getWrapper({ disableSubmit: true });
-        expect(wrapper.find(".s-dialog-submit-button.disabled")).toExist();
+        renderEditor({ disableSubmit: true });
+
+        expect(screen.getByText("Save").closest("button")).toHaveClass("disabled");
     });
 });

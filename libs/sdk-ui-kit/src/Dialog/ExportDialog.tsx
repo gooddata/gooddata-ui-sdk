@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { Overlay } from "../Overlay";
 import { IAlignPoint } from "../typings/positioning";
@@ -12,6 +12,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  */
 export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
     const {
+        className,
         displayCloseButton,
         isPositive,
         isSubmitDisabled,
@@ -42,6 +43,7 @@ export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
             containerClassName={containerClassName}
         >
             <ExportDialogBase
+                className={className}
                 displayCloseButton={displayCloseButton}
                 isPositive={isPositive}
                 isSubmitDisabled={isSubmitDisabled}

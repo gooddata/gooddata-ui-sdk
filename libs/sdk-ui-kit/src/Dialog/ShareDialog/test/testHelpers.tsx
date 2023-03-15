@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { noop } from "lodash";
 import {
@@ -17,15 +17,10 @@ import {
     IWorkspaceUserGroup,
     AccessGranteeDetail,
     IAvailableAccessGrantee,
-    IAvailableUserAccessGrantee,
 } from "@gooddata/sdk-model";
 import { ShareDialog } from "../ShareDialog";
-import { groupAll, defaultUser } from "../ShareDialogBase/test/GranteeMock";
-import { getGranteeItemTestId } from "../ShareDialogBase/utils";
-import { mapWorkspaceUserToGrantee } from "../shareDialogMappers";
+import { defaultUser } from "../ShareDialogBase/test/GranteeMock";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi/src";
-
-const GRANULAR_PERMISSIONS_DROPDOWN_BUTTON = ".s-granular-permission-button";
 
 export const labels: IShareDialogLabels = {
     accessTypeLabel: "lockControl label",
@@ -70,7 +65,7 @@ export const createComponent = async (
     grantees: AccessGranteeDetail[] = [],
     availableGrantees: IAvailableAccessGrantee[] = [],
     capabilities: IBackendCapabilities = defaultRecordedBackendCapabilities,
-): Promise<ReactWrapper> => {
+) => {
     const config: RecordedBackendConfig = {
         userManagement: {
             users: {
@@ -85,141 +80,98 @@ export const createComponent = async (
             },
         },
     };
-
     const backend = recordedBackend(ReferenceRecordings.Recordings, config, capabilities);
-
     const props: IShareDialogProps = { ...defaultProps, ...customProps, backend };
+    const wrapper = render(<ShareDialog {...props} />);
 
-    const wrapper = mount(<ShareDialog {...props} />);
-
-    await waitForComponentToPaint(wrapper);
+    await waitForComponentToPaint();
 
     return wrapper;
 };
 
-export function isDialogVisible(wrapper: ReactWrapper): boolean {
-    return wrapper.find(".s-gd-share-dialog").hostNodes().length === 1;
-}
-
-export const waitForComponentToPaint = async (wrapper: ReactWrapper): Promise<void> => {
-    // this prevent  Warning: An update to null inside a test was not wrapped in act(...)
-    // https://github.com/enzymejs/enzyme/issues/2073
+export const waitForComponentToPaint = async (): Promise<void> => {
     await act(async () => {
         await new Promise((resolve) => setTimeout(resolve));
-        wrapper.update();
     });
 };
 
-export function isGroupAllVisible(wrapper: ReactWrapper): boolean {
-    const className = getGranteeItemTestId(groupAll);
-    return wrapper.find(`.${className}`).hostNodes().length === 1;
+export function getShareDialog() {
+    return screen.queryByText("Share with users and groups");
 }
 
-export function isOwnerVisible(wrapper: ReactWrapper, isActive: boolean): boolean {
+export function getGroupAll() {
+    return screen.queryAllByText("All users");
+}
+
+export function getOwner(isActive: boolean) {
     const selector = isActive ? ".s-share-dialog-owner" : ".s-share-dialog-inactive-owner";
-    return wrapper.find(selector).hostNodes().length === 1;
+    return document.querySelector(selector);
 }
 
-export function isCurrentUserInGrantees(wrapper: ReactWrapper): boolean {
-    return wrapper.find(".s-share-dialog-current-user").hostNodes().length === 1;
+export function getCurrentUser() {
+    return screen.queryByText(/(You)/);
 }
 
-export function isGranularPermissionsDropdownButtonVisible(wrapper: ReactWrapper): boolean {
-    return wrapper.find(GRANULAR_PERMISSIONS_DROPDOWN_BUTTON).hostNodes().length > 0;
+export function getGranularPermissionsDropdownButton(granteeName: string) {
+    const granteeItem = getGranteeItem(granteeName);
+    return within(granteeItem).getByLabelText("Share dialog granular permissions button");
 }
 
-export function clickGranularPermissionsDropdownButton(wrapper: ReactWrapper, selector: string): void {
-    const item = wrapper.find(selector);
-    item.find(GRANULAR_PERMISSIONS_DROPDOWN_BUTTON).hostNodes().simulate("click");
-    wrapper.update();
+export function clickGranularPermissionsDropdownButton(granteeName: string) {
+    fireEvent.click(getGranularPermissionsDropdownButton(granteeName));
 }
 
-export function clickGranularPermissionsDropdownItem(wrapper: ReactWrapper, itemIndex: number): void {
-    wrapper.find(".s-granular-permission-item").at(itemIndex).simulate("click");
-    wrapper.update();
+export function clickGranularPermissionsDropdownItem(text: string): void {
+    fireEvent.click(screen.getByText(text));
 }
 
-export function clickGranularPermissionsRemoveOption(wrapper: ReactWrapper): void {
-    wrapper.find(".s-granular-permission-remove").hostNodes().simulate("click");
-    wrapper.update();
+export function getGrantee(name: string) {
+    return screen.queryByText(name);
 }
 
-export function getGranteeSelector(user: IAvailableUserAccessGrantee): string {
-    const grantee = mapWorkspaceUserToGrantee(user, defaultUser);
-    return `.${getGranteeItemTestId(grantee)}`;
+export function getGranteeItem(name: string) {
+    return getGrantee(name).parentElement.parentElement; // whole grantee item is two divs above the text
 }
 
-export function getGroupAllSelector(): string {
-    return `.${getGranteeItemTestId(groupAll)}`;
+export function clickDeleteGranteeIcon(name: string) {
+    const granteeItem = getGranteeItem(name);
+    fireEvent.mouseOver(granteeItem); // delete icon is visible only when mouse is over item
+    const deleteIcon = within(granteeItem).getByLabelText("Share dialog grantee delete");
+    fireEvent.click(deleteIcon);
 }
 
-export function clickDeleteGranteeIcon(wrapper: ReactWrapper, selector: string): void {
-    const item = wrapper.find(selector);
-    item.simulate("mouseover"); // delete icon is visible just when mouse is over item
-    item.find(".s-gd-grantee-item-delete").hostNodes().simulate("click");
-    wrapper.update();
+export function shareDialogSubmit() {
+    fireEvent.click(screen.getByText("Save"));
 }
 
-export function isGranteeVisible(wrapper: ReactWrapper, selector: string): boolean {
-    return wrapper.find(selector).hostNodes().length === 1;
+export function shareDialogCancel(): void {
+    fireEvent.click(screen.getByText("Cancel"));
 }
 
-export function shareDialogSubmit(wrapper: ReactWrapper): void {
-    wrapper.find(".s-dialog-submit-button").hostNodes().simulate("click");
+export function clickAddGrantees(): void {
+    fireEvent.click(screen.getByText("Add"));
 }
 
-export function shareDialogCancel(wrapper: ReactWrapper): void {
-    wrapper.find(".s-dialog-cancel-button").hostNodes().simulate("click");
+export function clickBack(): void {
+    fireEvent.click(document.querySelector(".s-share-dialog-navigate-back"));
 }
 
-export function clickAddGrantees(wrapper: ReactWrapper): void {
-    wrapper.find(".s-add-users-or-groups").hostNodes().simulate("click");
-    wrapper.update();
+export function clickOnOption(name: string) {
+    fireEvent.click(getGrantee(name));
 }
 
-export function clickBack(wrapper: ReactWrapper): void {
-    wrapper.find(".s-share-dialog-navigate-back").hostNodes().simulate("click");
-    wrapper.update();
+export function getEmptyListMessage() {
+    return screen.queryByText("No user or group selected.");
 }
 
-export function getGroupAllOptionSelector(): string {
-    return `.${getGranteeItemTestId(groupAll, "option")}`;
+export function clickLockCheckbox() {
+    fireEvent.click(screen.getByLabelText("shared-dialog-lock"));
 }
 
-export function getUserOptionSelector(user: IAvailableUserAccessGrantee): string {
-    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, defaultUser), "option")}`;
+export function clickUnderLenientControlCheckbox() {
+    fireEvent.click(screen.getByLabelText("shared-accessRegimeLabel-control"));
 }
 
-export function clickOnOption(wrapper: ReactWrapper, selector: string): void {
-    wrapper.find(selector).simulate("click");
-}
-
-export function isSelectionEmpty(wrapper: ReactWrapper): boolean {
-    return wrapper.find(".s-gd-share-dialog-grantee-list-empty-selection").hostNodes().length === 1;
-}
-
-export function isDialogOnShareGranteesPage(wrapper: ReactWrapper): boolean {
-    return wrapper.find(".s-gd-share-grantees").hostNodes().length === 1;
-}
-
-export function checkLockCheckbox(wrapper: ReactWrapper): void {
-    wrapper
-        .find(".s-shared-object-lock")
-        .find(".input-checkbox")
-        .hostNodes()
-        .simulate("change", { target: { checked: true } });
-    wrapper.update();
-}
-
-export function setUnderLenientControlCheckbox(wrapper: ReactWrapper, value: boolean): void {
-    wrapper
-        .find(".s-shared-object-under-lenient-control")
-        .find(".input-checkbox")
-        .hostNodes()
-        .simulate("change", { target: { checked: value } });
-    wrapper.update();
-}
-
-export function isAdminInformationMessageVisible(wrapper: ReactWrapper): boolean {
-    return wrapper.find(".s-granular-permissions-admin-information").hostNodes().length === 1;
+export function getAdminInformationMessage() {
+    return screen.queryByLabelText("Share dialog admin information message");
 }

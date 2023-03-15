@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -178,6 +178,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                     <label className="gd-styling-editor-dialog-content-form-input">
                         {intl.formatMessage({ id: "stylingEditor.dialog.name" })}
                         <input
+                            aria-label="Styling item name"
                             className="gd-input-field s-input-field"
                             type="text"
                             value={nameField}
@@ -187,6 +188,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                     <label className="gd-styling-editor-dialog-content-form-textarea">
                         {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
                         <textarea
+                            aria-label="Styling item definition"
                             className="gd-input-field s-textarea-field"
                             wrap={"off"}
                             value={definitionField}
