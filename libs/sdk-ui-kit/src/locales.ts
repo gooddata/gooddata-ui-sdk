@@ -4,13 +4,25 @@ import { defineMessages } from "react-intl";
 //NOTE: Follow-up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
 
 export const dialogHeadlineLabels = defineMessages({
-    definition: { id: "embedInsightDialog.headLine.byDefinition" },
-    reference: { id: "embedInsightDialog.headLine.byReference" },
+    embedInsight: { id: "embedInsightDialog.headLine.embedInsight" },
 });
 
 export const dialogChangeMessageLabels = defineMessages({
-    definition: { id: "embedInsightDialog.headLine.byDefinition.tooltip" },
-    reference: { id: "embedInsightDialog.headLine.byReference.tooltip" },
+    definition: { id: "embedInsightDialog.componentType.byDefinition.tooltip" },
+    reference: { id: "embedInsightDialog.componentType.byReference.tooltip" },
+    customTitle: { id: "embedInsightDialog.webComponents.customTitle.tooltip" },
+    disabledCustomTitle: { id: "embedInsightDialog.webComponents.customTitle.disabled.tooltip" },
+    locale: { id: "embedInsightDialog.webComponents.locale.tooltip" },
+});
+
+export const dialogEmptyInsightMessageLabels = defineMessages({
+    reference: { id: "embedInsightDialog.emptyInsight.byReference" },
+    definition: { id: "embedInsightDialog.emptyInsight.byDefinition" },
+});
+
+export const dialogEmbedTabLabels = defineMessages({
+    react: { id: "embedDialog.tab.react" },
+    webComponents: { id: "embedDialog.tab.webComponents" },
 });
 
 export const granularPermissionMessageLabels = defineMessages({

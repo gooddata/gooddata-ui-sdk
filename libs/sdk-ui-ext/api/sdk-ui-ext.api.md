@@ -5,6 +5,7 @@
 ```ts
 
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
+import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -20,7 +21,6 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
-import { InsightCodeType } from '@gooddata/sdk-ui-kit';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -93,23 +93,29 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     backend?: IAnalyticalBackend;
     // (undocumented)
-    codeType: InsightCodeType;
-    // (undocumented)
     colorPalette?: IColorPalette;
     // (undocumented)
     executionConfig?: IExecutionConfig;
     // (undocumented)
     insight: IInsight;
     // (undocumented)
-    integrationDocLink?: string;
-    // (undocumented)
     locale?: string;
     // (undocumented)
     onClose: () => void;
     // (undocumented)
-    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType, codeType: EmbedType) => void;
+    // (undocumented)
+    openSaveInsightDialog: () => void;
+    // (undocumented)
+    reactIntegrationDocLink?: string;
+    // (undocumented)
+    saveInsightDocLink?: string;
     // (undocumented)
     settings?: IUserWorkspaceSettings;
+    // (undocumented)
+    webComponentIntegrationDocLink?: string;
+    // (undocumented)
+    workspaceId?: string;
 }
 
 // @alpha

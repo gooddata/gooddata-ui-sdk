@@ -1,23 +1,25 @@
-// (C) 2022 GoodData Corporation
-import { IntlWrapper } from "@gooddata/sdk-ui";
+// (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IColorPalette, IExecutionConfig, IInsight } from "@gooddata/sdk-model";
 import {
-    CodeOptionType,
-    CodeLanguageType,
     EmbedInsightDialogBase,
     InsightCodeType,
-    IOptionsByDefinition,
     Overlay,
-    getDefaultEmbedCodeOptions,
+    getDefaultEmbedTypeOptions,
     getHeightWithUnitsForEmbedCode,
-    IOptionsByReference,
     IAlignPoint,
     CopyCodeOriginType,
+    EmbedOptionsType,
+    EmbedType,
+    IReactOptions,
+    IWebComponentsOptions,
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
 import { insightViewCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator";
+import { getWebComponentsCodeGenerator } from "../../../utils/embeddingCodeGenerator/getWebComponentsCodeGenerator";
 
 const INSIGHT_VIEW_PROPERTIES_LINK =
     "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";
@@ -26,93 +28,125 @@ const INSIGHT_VIEW_PROPERTIES_LINK =
  * @internal
  */
 export interface IEmbedInsightDialogProps {
-    codeType: InsightCodeType;
     insight: IInsight;
     locale?: string;
     backend?: IAnalyticalBackend;
-    integrationDocLink?: string;
+    reactIntegrationDocLink?: string;
+    webComponentIntegrationDocLink?: string;
+    saveInsightDocLink?: string;
     settings?: IUserWorkspaceSettings;
     colorPalette?: IColorPalette;
     executionConfig?: IExecutionConfig;
+    workspaceId?: string;
 
+    openSaveInsightDialog: () => void;
     onClose: () => void;
-    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType, codeType: EmbedType) => void;
 }
 
 /**
  * @internal
  */
 export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) => {
+    const { locale, openSaveInsightDialog, onClose, onCopyCode } = props;
+
     const {
-        locale,
-        insight,
-        backend,
-        settings,
-        colorPalette,
-        executionConfig,
-        codeType,
+        code,
+        documentationLink,
         integrationDocLink,
-        onClose,
-        onCopyCode,
-    } = props;
-    const [codeLang, setCodeLang] = useState<CodeLanguageType>("ts");
-    const [codeOption, setCodeOption] = useState<CodeOptionType>(getDefaultEmbedCodeOptions(codeType));
-
-    useEffect(() => {
-        setCodeOption(getDefaultEmbedCodeOptions(codeType));
-    }, [codeType]);
-
-    const onLanguageChange = useCallback((codeLanguage: CodeLanguageType) => {
-        setCodeLang(codeLanguage);
-    }, []);
-
-    const code = useMemo(() => {
-        const inputBase = {
-            insight,
-            settings,
-            backend,
-            colorPalette,
-            executionConfig,
-            codeLang,
-        };
-
-        return codeOption.type === "definition"
-            ? generateCodeByDefinition({
-                  ...inputBase,
-                  codeOption,
-              })
-            : generateCodeByReference({
-                  ...inputBase,
-                  codeOption,
-              });
-    }, [codeOption, insight, settings, backend, colorPalette, executionConfig, codeLang]);
-
-    const onCodeOptionChange = useCallback((codeOpt: IOptionsByDefinition) => {
-        setCodeOption(codeOpt);
-    }, []);
-
-    const documentationLink = useMemo(
-        () => getLinkToPropertiesDocumentation(codeType, insight),
-        [codeType, insight],
-    );
+        currentTab,
+        codeOption,
+        onTabChange,
+        onOptionsChange,
+    } = useEmbedInsightDialog(props);
 
     return (
         <IntlWrapper locale={locale}>
             <ModalOverlay>
                 <EmbedInsightDialogBase
                     code={code}
-                    codeLanguage={codeLang}
-                    codeOption={codeOption}
                     propertiesLink={documentationLink}
                     integrationDocLink={integrationDocLink}
+                    openSaveInsightDialog={openSaveInsightDialog}
                     onClose={onClose}
                     onCopyCode={onCopyCode}
-                    onCodeLanguageChange={onLanguageChange}
-                    onCodeOptionChange={onCodeOptionChange}
+                    embedTab={currentTab}
+                    onTabChange={onTabChange}
+                    embedTypeOptions={codeOption}
+                    onOptionsChange={onOptionsChange}
                 />
             </ModalOverlay>
         </IntlWrapper>
     );
+};
+
+const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
+    const {
+        insight,
+        backend,
+        settings,
+        colorPalette,
+        executionConfig,
+        reactIntegrationDocLink,
+        webComponentIntegrationDocLink,
+        workspaceId,
+    } = props;
+    const [currentTab, setCurrentTab] = useState<EmbedType>("react");
+    const [codeOption, setCodeOption] = useState<EmbedOptionsType>(getDefaultEmbedTypeOptions(currentTab));
+
+    useEffect(() => {
+        setCodeOption(getDefaultEmbedTypeOptions(currentTab));
+    }, [currentTab]);
+
+    const code = useMemo(() => {
+        if (!insight.insight.identifier) {
+            return null;
+        }
+        const inputBase = {
+            insight,
+            settings,
+            backend,
+            colorPalette,
+            executionConfig,
+            workspaceId,
+        };
+        return codeOption.type === "react"
+            ? generateCodeByReact({
+                  ...inputBase,
+                  codeOption: codeOption,
+              })
+            : generateCodeByWebComponents({
+                  ...inputBase,
+                  codeOption,
+              });
+    }, [codeOption, insight, settings, backend, colorPalette, executionConfig, workspaceId]);
+
+    const documentationLink = useMemo(() => {
+        if (codeOption.type === "react") {
+            return getLinkToPropertiesDocumentation(codeOption.componentType, insight);
+        }
+        return getLinkToPropertiesDocumentation("definition", insight);
+    }, [insight, codeOption]);
+
+    const integrationDocLink = useMemo(() => {
+        return currentTab === "react" ? reactIntegrationDocLink : webComponentIntegrationDocLink;
+    }, [currentTab, reactIntegrationDocLink, webComponentIntegrationDocLink]);
+
+    const onTabChange = useCallback((selectedTab: EmbedType) => {
+        setCurrentTab(selectedTab);
+    }, []);
+
+    const onOptionsChange = useCallback((opt: EmbedOptionsType) => setCodeOption(opt), []);
+
+    return {
+        code,
+        documentationLink,
+        integrationDocLink,
+        currentTab,
+        codeOption,
+        onTabChange,
+        onOptionsChange,
+    };
 };
 
 const getLinkToPropertiesDocumentation = (
@@ -129,47 +163,42 @@ const getLinkToPropertiesDocumentation = (
     return INSIGHT_VIEW_PROPERTIES_LINK;
 };
 
-interface ICodeGenInput<TOptions extends CodeOptionType> {
+interface ICodeGenInput<TOptions extends EmbedOptionsType> {
     codeOption: TOptions;
     insight: IInsight;
     settings: IUserWorkspaceSettings;
     backend: IAnalyticalBackend;
     colorPalette: IColorPalette;
     executionConfig: IExecutionConfig | undefined;
-    codeLang: CodeLanguageType;
+    workspaceId?: string;
 }
 
-const generateCodeByReference = (input: ICodeGenInput<IOptionsByReference>) => {
-    const { backend, codeLang, codeOption, colorPalette, executionConfig, insight, settings } = input;
+const generateCodeByReact = (input: ICodeGenInput<IReactOptions>) => {
+    const { backend, codeOption, colorPalette, executionConfig, insight, settings } = input;
     const height = getHeightWithUnitsForEmbedCode(codeOption);
-    return insightViewCodeGenerator(insight, {
+    const generateCodeConfig = {
         context: {
             settings,
             backend,
             colorPalette,
             executionConfig,
         },
-        language: codeLang,
+        language: codeOption.codeType,
         height,
-        omitChartProps: codeOption.displayTitle ? [] : ["showTitle"],
-    });
+        omitChartProps: codeOption.displayConfiguration ? [] : ["config"],
+    };
+
+    if (codeOption.componentType === "definition") {
+        const descriptor = FullVisualizationCatalog.forInsight(insight);
+        return descriptor.getEmbeddingCode?.(insight, generateCodeConfig);
+    }
+    return insightViewCodeGenerator(insight, generateCodeConfig);
 };
 
-const generateCodeByDefinition = (input: ICodeGenInput<IOptionsByDefinition>) => {
-    const { backend, codeLang, codeOption, colorPalette, executionConfig, insight, settings } = input;
-    const height = getHeightWithUnitsForEmbedCode(codeOption);
-    const descriptor = FullVisualizationCatalog.forInsight(insight);
-    return descriptor.getEmbeddingCode?.(insight, {
-        context: {
-            settings,
-            backend,
-            colorPalette,
-            executionConfig,
-        },
-        language: codeLang,
-        height,
-        omitChartProps: codeOption.includeConfiguration ? [] : ["config"],
-    });
+const generateCodeByWebComponents = (input: ICodeGenInput<IWebComponentsOptions>) => {
+    const { codeOption, insight, workspaceId } = input;
+    const height = getHeightWithUnitsForEmbedCode(codeOption) as string;
+    return getWebComponentsCodeGenerator(workspaceId, insight, { ...codeOption, height });
 };
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cc cc" }];

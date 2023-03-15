@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
@@ -10,12 +10,13 @@ export interface IToggleSwitchProps {
     label: string;
     questionMarkMessage?: string;
     checked?: boolean;
+    disabled?: boolean;
     className?: string;
     onChange: () => void;
 }
 
 export const ToggleSwitch: React.VFC<IToggleSwitchProps> = (props) => {
-    const { id, label, checked, questionMarkMessage, className, onChange } = props;
+    const { id, label, checked, disabled, questionMarkMessage, className, onChange } = props;
 
     const css = cx("toggle-wrapper-revers-label", className);
 
@@ -29,6 +30,7 @@ export const ToggleSwitch: React.VFC<IToggleSwitchProps> = (props) => {
                     name={id}
                     checked={checked}
                     onChange={onChange}
+                    disabled={disabled}
                 />
                 <span className="input-label-text toggle-switch" />
             </label>
