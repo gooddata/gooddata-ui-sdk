@@ -1,4 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
+import { AnyAction } from "@reduxjs/toolkit";
 import { DashboardContext } from "../../types/commonTypes";
 import { changeRenderMode, SaveDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
@@ -34,6 +35,9 @@ import { selectSettings } from "../../store/config/configSelectors";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors";
+import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils";
+import { listedDashboardsActions } from "../../store/listedDashboards";
+import { accessibleDashboardsActions } from "../../store/accessibleDashboards";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -206,17 +210,24 @@ function* save(
         dashboard.layout!,
     );
 
-    const batch = batchActions(
-        [
-            metaActions.setMeta({ dashboard }),
-            filterContextActions.updateFilterContextIdentity({
-                filterContextIdentity: dashboardFilterContextIdentity(dashboard),
-            }),
-            layoutActions.updateWidgetIdentities(identityMapping),
-            layoutActions.clearLayoutHistory(),
-        ],
-        saveActionName,
-    );
+    const actions: AnyAction[] = [
+        metaActions.setMeta({ dashboard }),
+        filterContextActions.updateFilterContextIdentity({
+            filterContextIdentity: dashboardFilterContextIdentity(dashboard),
+        }),
+        layoutActions.updateWidgetIdentities(identityMapping),
+        layoutActions.clearLayoutHistory(),
+    ];
+
+    if (saveCtx.persistedDashboard === undefined) {
+        const listedDashboard = createListedDashboard(dashboard);
+        actions.push(
+            listedDashboardsActions.addListedDashboard(listedDashboard),
+            accessibleDashboardsActions.addAccessibleDashboard(listedDashboard),
+        );
+    }
+
+    const batch = batchActions(actions, saveActionName);
 
     return {
         batch,
