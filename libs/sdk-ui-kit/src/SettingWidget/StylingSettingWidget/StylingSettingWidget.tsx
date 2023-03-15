@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import noop from "lodash/noop";
@@ -107,7 +107,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
     const handleCancel = useCallback(() => {
         setCurrentItemRef(selectedItemRef);
         onCancel?.();
-    }, [selectedItemRef]);
+    }, [onCancel, selectedItemRef]);
 
     const handleApply = useCallback(() => {
         onApply?.(currentItemRef);

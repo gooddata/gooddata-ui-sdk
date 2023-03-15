@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -139,14 +139,14 @@ describe("StylingPicker", () => {
 
     it("should not render Actions menu if no onItemEdit and onItemDelete provided", () => {
         renderComponent({});
-        expect(screen.queryByRole("button", { name: /\.\.\./i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: /\.\.\./ })).not.toBeInTheDocument();
     });
 
     it("should call onItemEdit when list item menu is clicked", async () => {
         const onItemEdit = jest.fn();
         renderComponent({ onItemEdit });
 
-        await userEvent.click(screen.getAllByRole("button", { name: /\.\.\./i })[0]);
+        await userEvent.click(screen.getAllByRole("button", { name: /\.\.\./ })[0]);
         await userEvent.click(screen.getByText("Edit"));
         await waitFor(() => {
             expect(onItemEdit).toHaveBeenCalled();
@@ -158,7 +158,7 @@ describe("StylingPicker", () => {
         const onItemDelete = jest.fn();
         renderComponent({ onItemDelete });
 
-        await userEvent.click(screen.getAllByRole("button", { name: /\.\.\./i })[0]);
+        await userEvent.click(screen.getAllByRole("button", { name: /\.\.\./ })[0]);
         await userEvent.click(screen.getByText("Delete"));
         await waitFor(() => {
             expect(onItemDelete).toBeCalledWith(expect.objectContaining(customItemsMock[0].ref));
@@ -187,6 +187,6 @@ describe("StylingPicker", () => {
         const onItemEdit = jest.fn();
         const onItemDelete = jest.fn();
         renderComponent({ onItemEdit, onItemDelete });
-        expect(screen.queryByRole("button", { name: /\.\.\./i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: /\.\.\./ })).not.toBeInTheDocument();
     });
 });

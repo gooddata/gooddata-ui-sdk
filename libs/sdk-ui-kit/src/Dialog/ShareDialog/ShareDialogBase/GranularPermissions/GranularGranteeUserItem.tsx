@@ -85,9 +85,9 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{label}</div>
-                {renderSubtitle && (
+                {renderSubtitle ? (
                     <div className="gd-grantee-content-label gd-grantee-content-email">{email}</div>
-                )}
+                ) : null}
             </div>
             <GranteeUserIcon />
         </div>

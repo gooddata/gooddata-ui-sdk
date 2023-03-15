@@ -13,5 +13,9 @@ module.exports = {
         "../../.eslintrc.react.js",
         "plugin:jest-dom/recommended",
     ],
+    rules: {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+    },
     parserOptions: { tsconfigRootDir: __dirname },
 };

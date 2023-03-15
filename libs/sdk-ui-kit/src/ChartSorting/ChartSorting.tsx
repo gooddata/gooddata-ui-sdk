@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useState, useCallback, useMemo } from "react";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
@@ -46,7 +46,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
 
     const handleApply = useCallback(() => {
         onApply(currentSelectedSort);
-    }, [currentSelectedSort]);
+    }, [onApply, currentSelectedSort]);
 
     const onSelect = (item: ISortItem[]) => {
         setCurrentSort(item);

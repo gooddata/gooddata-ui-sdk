@@ -125,7 +125,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.invalid" });
         }
         return undefined;
-    }, [validName, emptyDefinition, validDefinition]);
+    }, [validName, emptyDefinition, validDefinition, onInvalidDefinition, stylingItem?.ref, intl]);
 
     const getFinalStylingItem = (
         original: IStylingPickerItem<T>,
@@ -156,7 +156,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             submitOnEnterKey={false}
         >
             <div className="gd-styling-editor-dialog-header">
-                {showBackButton && (
+                {showBackButton ? (
                     <div className="gd-styling-editor-dialog-header-back-button">
                         <Button
                             className={
@@ -168,7 +168,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                             }}
                         />
                     </div>
-                )}
+                ) : null}
                 <Typography tagName="h2" className="gd-styling-editor-dialog-header-title">
                     {title}
                 </Typography>

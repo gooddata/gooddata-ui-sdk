@@ -97,13 +97,13 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 isLeniencyControlSupported={isLeniencyControlSupported}
                 onUnderLenientControlChange={onUnderLenientControlChange}
             />
-            {isMetadataObjectLockingSupported && (
+            {isMetadataObjectLockingSupported ? (
                 <SharedObjectLockControl
                     isLocked={isLockedNow}
                     isLockingSupported={isLockingSupported}
                     onLockChange={onLockChange}
                 />
-            )}
+            ) : null}
         </ConfirmDialogBase>
     );
 };

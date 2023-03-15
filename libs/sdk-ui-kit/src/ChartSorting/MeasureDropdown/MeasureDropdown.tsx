@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
@@ -139,13 +139,13 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
         (item: IMeasureSortItem) => {
             const direction = sortDirection(currentItem);
 
-            if (item.id === "aggregation" && availableSorts.attributeSort.areaSortEnabled) {
+            if (item.id === "aggregation" && areaSortEnabled) {
                 onSelect(newAttributeAreaSort(item.localIdentifier, direction));
             } else {
                 onSelect(newMeasureSort(item.localIdentifier, direction));
             }
         },
-        [currentItem, onSelect],
+        [currentItem, onSelect, areaSortEnabled],
     );
 
     return (

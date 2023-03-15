@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { IntlShape } from "react-intl";
 import {
@@ -183,14 +183,14 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
             const newCurrentItem = buildSortItem(selectedSortType, availableSorts);
             onSelect(newCurrentItem);
         },
-        [currentSortItem, onSelect, availableSorts],
+        [onSelect, availableSorts],
     );
 
     const measureSelectHandler = useCallback(
         (newCurrentItem: ISortItem) => {
             onSelect(newCurrentItem);
         },
-        [currentSortItem, onSelect],
+        [onSelect],
     );
 
     const sortTypeItems = getSortTypeItems(availableSorts, bucketItems, intl);

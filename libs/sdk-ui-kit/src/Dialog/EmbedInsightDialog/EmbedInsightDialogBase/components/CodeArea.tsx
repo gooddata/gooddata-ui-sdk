@@ -21,7 +21,7 @@ export const CodeArea: React.VFC<ICodeAreaProps> = (props) => {
 
     const onAreaCopyCode = useCallback(() => {
         onCopyCode(code);
-    }, [code]);
+    }, [code, onCopyCode]);
 
     return (
         <div className="embed-insight-dialog-code-content">

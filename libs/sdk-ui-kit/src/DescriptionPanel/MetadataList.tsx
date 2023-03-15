@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
@@ -25,7 +25,7 @@ export interface IMetadataListProps {
  */
 export const MetadataList: React.FC<IMetadataListProps> = ({ title, list }) => (
     <div className="gd-metadata-list">
-        {title && <div className="gd-metadata-list-title">{title}</div>}
+        {title ? <div className="gd-metadata-list-title">{title}</div> : null}
         {list?.map((element, index) => (
             <div className="gd-metadata-list-element" key={index}>
                 <span title={element.title}>{element.title}</span>

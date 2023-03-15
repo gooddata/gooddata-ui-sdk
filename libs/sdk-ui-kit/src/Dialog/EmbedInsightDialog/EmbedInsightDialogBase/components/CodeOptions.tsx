@@ -25,19 +25,19 @@ export const CodeOptions: React.VFC<ICodeOptionsProps> = (props) => {
     const onDisplayConfigurationChange = useCallback(() => {
         const opt = { ...option, displayConfiguration: !option.displayConfiguration };
         onChange(opt);
-    }, [option]);
+    }, [option, onChange]);
 
     const onCustomHeightChange = useCallback(() => {
         const opt = { ...option, customHeight: !option.customHeight };
         onChange(opt);
-    }, [option]);
+    }, [option, onChange]);
 
     const onHeightValueChange = useCallback(
         (height, unit) => {
             const opt = { ...option, height, unit };
             onChange(opt);
         },
-        [option],
+        [option, onChange],
     );
 
     return (

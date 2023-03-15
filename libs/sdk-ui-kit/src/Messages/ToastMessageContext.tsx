@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { createContext, useCallback, useState } from "react";
 import { IMessage, IMessageDefinition } from "./typings";
 
@@ -46,23 +46,26 @@ export const ToastMessageContextProvider: React.FC = ({ children }) => {
         setMessages([]);
     }, []);
 
-    const addMessage = useCallback((message: IMessageDefinition) => {
-        const id = (++idCounter).toString(10);
-        const newMessage = {
-            ...message,
-            id,
-        };
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+    const addMessage = useCallback(
+        (message: IMessageDefinition) => {
+            const id = (++idCounter).toString(10);
+            const newMessage = {
+                ...message,
+                id,
+            };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-        const duration = message.duration ?? DEFAULT_DURATION;
-        if (duration) {
-            setTimeout(() => {
-                removeMessage(newMessage.id);
-            }, duration);
-        }
+            const duration = message.duration ?? DEFAULT_DURATION;
+            if (duration) {
+                setTimeout(() => {
+                    removeMessage(newMessage.id);
+                }, duration);
+            }
 
-        return id;
-    }, []);
+            return id;
+        },
+        [removeMessage],
+    );
 
     return (
         <ToastMessageContext.Provider value={{ messages, removeMessage, removeAllMessages, addMessage }}>
