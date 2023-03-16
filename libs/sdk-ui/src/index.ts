@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 /**
  * This package provides base functionality useful for building React visualizations on top of GoodData.
  *
@@ -12,8 +12,7 @@
  *
  * @packageDocumentation
  */
-// eslint-disable-next-line import/no-unassigned-import
-import "./polyfills";
+
 // new exports
 
 export * from "./base";

@@ -68,7 +68,6 @@
         "@gooddata/sdk-ui-kit": "^8.13.0-alpha.12",
         "@gooddata/util": "^8.13.0-alpha.12",
         "@reduxjs/toolkit": ">=1.5.1 <1.8.0",
-        "abortcontroller-polyfill": "^1.7.5",
         "classnames": "^2.3.1",
         "date-fns": "^2.22.1",
         "downshift": "^3.4.7",

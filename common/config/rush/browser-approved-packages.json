@@ -83,10 +83,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@formatjs/intl-pluralrules",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@gooddata/api-client-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -503,10 +499,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "abortcontroller-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "async",
       "allowedCategories": [ "production" ]
     },
@@ -599,10 +591,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "custom-event",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "cypress",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -632,10 +620,6 @@
     },
     {
       "name": "downshift",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "element-closest-polyfill",
       "allowedCategories": [ "production" ]
     },
     {
@@ -891,10 +875,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "react-app-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "react-content-loader",
       "allowedCategories": [ "production" ]
     },
@@ -1056,10 +1036,6 @@
     },
     {
       "name": "stylelint-config-prettier",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "svg-classlist-polyfill",
       "allowedCategories": [ "production" ]
     },
     {

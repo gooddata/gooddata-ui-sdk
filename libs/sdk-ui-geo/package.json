@@ -70,7 +70,6 @@
         "@gooddata/sdk-ui-theme-provider": "^8.13.0-alpha.12",
         "@gooddata/sdk-ui-vis-commons": "^8.13.0-alpha.12",
         "classnames": "^2.3.1",
-        "custom-event": "^1.0.1",
         "lodash": "^4.17.19",
         "mapbox-gl": "^2.6.1",
         "react-intl": "^5.23.0",

@@ -1,8 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
-import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
-
+import "@babel/polyfill";
 import App from "./App";
 import { AppProviders } from "./contexts";
 
