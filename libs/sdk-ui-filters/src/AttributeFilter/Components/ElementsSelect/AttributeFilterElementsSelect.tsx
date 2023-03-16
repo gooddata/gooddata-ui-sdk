@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
@@ -51,7 +51,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
 
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
-    const { fullscreenOnMobile } = useAttributeFilterContext();
+    const { fullscreenOnMobile, selectionMode } = useAttributeFilterContext();
     const {
         ElementsSelectLoadingComponent,
         ElementsSelectItemComponent,
@@ -76,6 +76,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                 className="gd-attribute-filter-elements-select__next"
                 adaptiveWidth
                 adaptiveHeight={isAdaptiveHeight}
+                isSingleSelect={selectionMode === "single"}
                 items={items}
                 totalItemsCount={totalItemsCountWithCurrentSettings}
                 itemHeight={itemHeight}

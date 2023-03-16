@@ -2189,6 +2189,8 @@ export interface IInvertableSelectProps<T> {
     // (undocumented)
     isLoadingNextPage?: boolean;
     // (undocumented)
+    isSingleSelect?: boolean;
+    // (undocumented)
     itemHeight?: number;
     // (undocumented)
     items: T[];

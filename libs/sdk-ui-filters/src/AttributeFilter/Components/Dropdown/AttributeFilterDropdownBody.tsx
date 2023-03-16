@@ -1,10 +1,11 @@
-// (C) 2022 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2022-2023 GoodData Corporation
+import React, { useMemo, useCallback } from "react";
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
 import { IAttributeFilterDropdownBodyProps } from "./types";
 import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
+import { IAttributeElement } from "@gooddata/sdk-model";
 
 /**
  * Component showing a list of elements and controls for manipulating the selection.
@@ -40,6 +41,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         parentFilterAttributes,
         isFilteredByParentFilters,
         fullscreenOnMobile,
+        selectionMode,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
@@ -48,6 +50,16 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
 
     const usedWidth = isMobile && fullscreenOnMobile ? "100%" : width;
     const style = { width: usedWidth };
+
+    const onSelectWithPotentialClose = useCallback(
+        (selectedItems: IAttributeElement[], isInverted: boolean) => {
+            onSelect(selectedItems, isInverted);
+            if (selectionMode === "single") {
+                onApplyButtonClick();
+            }
+        },
+        [onSelect, onApplyButtonClick, selectionMode],
+    );
 
     return (
         <div className="gd-attribute-filter-dropdown-body__next" style={style}>
@@ -58,7 +70,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 items={elements}
                 onLoadNextPage={onLoadNextElementsPage}
                 onSearch={onSearch}
-                onSelect={onSelect}
+                onSelect={onSelectWithPotentialClose}
                 nextPageSize={nextElementsPageSize}
                 searchString={searchString}
                 selectedItems={workingSelectionElements}

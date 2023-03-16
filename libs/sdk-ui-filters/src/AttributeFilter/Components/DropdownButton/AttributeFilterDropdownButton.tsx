@@ -48,6 +48,12 @@ export interface IAttributeFilterDropdownButtonProps {
     selectedItemsCount?: number;
 
     /**
+     *
+     * @beta
+     */
+    showSelectionCount?: boolean;
+
+    /**
      * If true, the AttributeFilter dropdown is open.
      *
      * @beta

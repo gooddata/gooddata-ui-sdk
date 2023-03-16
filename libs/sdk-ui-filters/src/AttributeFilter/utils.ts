@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
@@ -6,10 +6,12 @@ import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
+    attributeElementsCount,
     attributeElementsIsEmpty,
     filterAttributeElements,
     IAttributeElement,
     isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { IAttributeFilterBaseProps } from "./types";
 
@@ -77,6 +79,7 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         hiddenElements,
         staticElements,
         backend,
+        selectionMode = "multi",
     } = props;
 
     invariant(
@@ -124,6 +127,13 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         ),
         "Hidden elements are not supported by the current backend implementation.",
     );
+
+    if (selectionMode === "single" && filter) {
+        invariant(
+            isPositiveAttributeFilter(filter) && attributeElementsCount(filterAttributeElements(filter)) < 2,
+            "Provided 'filter' property is not compatible with given selectionMode. It needs to be positive filter with max one item selected in attribute elements",
+        );
+    }
 
     if (identifier) {
         console.warn(

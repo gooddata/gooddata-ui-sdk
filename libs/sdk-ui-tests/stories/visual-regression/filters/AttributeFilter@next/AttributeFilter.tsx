@@ -254,4 +254,60 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 },
             },
         },
+    )
+    .add(
+        "single selection filter",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [ElementUris.WonderKid],
+                        })}
+                        onApply={action("on-apply")}
+                        selectionMode="single"
+                        titleWithSelection={true}
+                        fullscreenOnMobile
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    )
+    .add(
+        "single selection filter - themed",
+        () => {
+            return wrapWithTheme(
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [ElementUris.WonderKid],
+                        })}
+                        onApply={action("on-apply")}
+                        selectionMode="single"
+                        titleWithSelection={true}
+                        fullscreenOnMobile
+                    />
+                </div>,
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
     );

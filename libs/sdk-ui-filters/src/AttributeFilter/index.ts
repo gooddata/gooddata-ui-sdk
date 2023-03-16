@@ -19,6 +19,7 @@ export {
     AttributeFilterElementsSelect,
     AttributeFilterElementsSelectError,
     AttributeFilterElementsSelectItem,
+    SingleSelectionAttributeFilterElementsSelectItem,
     AttributeFilterElementsSelectLoading,
     AttributeFilterEmptyAttributeResult,
     AttributeFilterEmptyResult,

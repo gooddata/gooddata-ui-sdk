@@ -1,6 +1,12 @@
 // (C) 2019-2023 GoodData Corporation
 
-import { IAttributeElement, IAttributeFilter, Identifier, ObjRef } from "@gooddata/sdk-model";
+import {
+    DashboardAttributeFilterSelectionMode,
+    IAttributeElement,
+    IAttributeFilter,
+    Identifier,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { AttributeFiltersOrPlaceholders, ILocale, IPlaceholder, GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -22,7 +28,11 @@ import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/Stat
 /**
  * @public
  */
-export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean) => void;
+export type OnApplyCallbackType = (
+    filter: IAttributeFilter,
+    isInverted: boolean,
+    selectionMode?: DashboardAttributeFilterSelectionMode,
+) => void;
 
 /**
  * @public
@@ -165,6 +175,16 @@ export interface IAttributeFilterCoreProps {
      * Customize, whether the filter should take the entire screen on mobile devices.
      */
     fullscreenOnMobile?: boolean;
+
+    /**
+     * Customize, how many elements can be selected by filter.
+     *
+     * @remarks
+     * If filter is set as single selection then if `filter` definition is provided it needs to be positive filter with max one selected item.
+     *
+     *
+     */
+    selectionMode?: DashboardAttributeFilterSelectionMode;
 
     /**
      * Specify function which will be called when user clicks 'Apply' button.

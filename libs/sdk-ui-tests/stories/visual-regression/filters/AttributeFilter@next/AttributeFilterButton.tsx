@@ -202,4 +202,30 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                 },
             },
         },
+    )
+    .add(
+        "single selection",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilterButton
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [ElementUris.WonderKid],
+                        })}
+                        onApply={action("on-apply")}
+                        selectionMode="single"
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
     );
