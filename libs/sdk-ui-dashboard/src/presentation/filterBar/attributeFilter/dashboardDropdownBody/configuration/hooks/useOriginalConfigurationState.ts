@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useMemo } from "react";
 import invariant from "ts-invariant";
 
@@ -15,6 +15,7 @@ export function useOriginalConfigurationState(
         return neighborFilters.map((neighborFilter) => {
             const neighborFilterLocalId = neighborFilter.attributeFilter.localIdentifier;
             const neighborFilterDisplayForm = neighborFilter.attributeFilter.displayForm;
+            const neighborFilterTitle = neighborFilter.attributeFilter.title;
 
             const isSelected =
                 filterElementsBy?.some((by) => by.filterLocalIdentifier === neighborFilterLocalId) || false;
@@ -34,6 +35,7 @@ export function useOriginalConfigurationState(
                 isSelected,
                 overAttributes: overAttributes,
                 selectedConnectingAttribute: overAttributes?.[0],
+                title: neighborFilterTitle,
             };
         });
     }, [neighborFilters, filterElementsBy]);

@@ -208,6 +208,8 @@
     "attributesDropdown.save": "Сохранить",
     "attributesDropdown.filterBy": "Фильтровать по",
     "attributesDropdown.displayValuesAs": "Отображать значения как",
+    "attributesDropdown.title": "Заголовок",
+    "attributesDropdown.title.reset": "Сброс",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> нельзя фильтровать по <strong>{parentTitle}</strong>. В модели данных нет связи между атрибутами фильтра.",
     "attributesDropdown.removeTooltip": "Удалить с дашборда",
     "layout.header.characters.left": "осталось символов: {currentCharactersCount}/{maximumCharactersCount}",

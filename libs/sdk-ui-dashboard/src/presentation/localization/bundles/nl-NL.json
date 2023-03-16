@@ -208,6 +208,8 @@
     "attributesDropdown.save": "Opslaan",
     "attributesDropdown.filterBy": "Filteren volgens",
     "attributesDropdown.displayValuesAs": "Waarden weergeven als",
+    "attributesDropdown.title": "titel",
+    "attributesDropdown.title.reset": "Reset",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kan niet worden gefilterd op <strong>{parentTitle}</strong>. Er is geen verbinding tussen de filterattributen in het gegevensmodel.",
     "attributesDropdown.removeTooltip": "Verwijderen van dashboard",
     "layout.header.characters.left": "Nog {currentCharactersCount} / {maximumCharactersCount} tekens",

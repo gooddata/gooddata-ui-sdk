@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 
 import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
@@ -8,6 +8,7 @@ import {
     selectSupportsElementsQueryParentFiltering,
     IDashboardAttributeFilterParentItem,
     IConnectingAttribute,
+    selectSettings,
 } from "../../../../../../model";
 
 interface IConfigurationParentItemsProps {
@@ -29,6 +30,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
         attributes,
     } = props;
 
+    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
     const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
 
     if (!isDependentFiltersEnabled || parents.length < 1) {
@@ -46,7 +48,11 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
                         onClick={setParents}
                         onConnectingAttributeSelect={onConnectingAttributeChanged}
                         connectingAttributes={connectingAttributes[index]}
-                        title={attributes[index].title}
+                        title={
+                            enableKPIAttributeFilterRenaming
+                                ? item.title ?? attributes[index].title
+                                : attributes[index].title
+                        }
                     />
                 );
             })}

@@ -174,13 +174,15 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         >
             {icon ? <div className="gd-attribute-filter-dropdown-button-icon__next">{icon}</div> : null}
             <div className="gd-attribute-filter-dropdown-button-content__next">
-                <div className="gd-attribute-filter-dropdown-button-title__next">
-                    <ShortenedText
-                        tooltipAlignPoints={ALIGN_POINT}
-                        className={"s-attribute-filter-button-title"}
-                    >
-                        {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
-                    </ShortenedText>
+                <div className="gd-attribute-filter-dropdown_button-title-content__next">
+                    <div className="gd-attribute-filter-dropdown-button-title__next">
+                        <ShortenedText
+                            tooltipAlignPoints={ALIGN_POINT}
+                            className={"s-attribute-filter-button-title"}
+                        >
+                            {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
+                        </ShortenedText>
+                    </div>
                     {TooltipContentComponent && isLoaded ? (
                         <AttributeFilterButtonToolip>
                             <TooltipContentComponent />
