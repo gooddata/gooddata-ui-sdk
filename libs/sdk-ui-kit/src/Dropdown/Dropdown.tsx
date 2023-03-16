@@ -167,7 +167,8 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         return () => {
             mountRef.current = true;
         };
-    }, [isOpen, onOpenStateChanged]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen]);
 
     const renderButtonProps = {
         isOpen: isOpen,
