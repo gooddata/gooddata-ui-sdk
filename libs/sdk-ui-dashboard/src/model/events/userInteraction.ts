@@ -89,7 +89,7 @@ export type ShareDialogInteractionPayload = UserInteractionPayloadWithDataBase<
  * @beta
  */
 export interface BareUserInteractionPayload {
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked";
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "attributeFilterTitleResetClicked";
 }
 
 /**
