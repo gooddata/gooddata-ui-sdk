@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React, { useEffect, useRef } from "react";
 
@@ -13,6 +13,7 @@ export interface IScrollableItemProps {
     bottomMargin?: number;
     isElementInvisibleCheck?: isElementInvisibleType;
     tagName?: React.ElementType;
+    onItemScrolled?: () => void;
 }
 
 /**
@@ -27,6 +28,7 @@ export const ScrollableItem: React.FunctionComponent<IScrollableItemProps> = (pr
         isElementInvisibleCheck,
         className,
         children,
+        onItemScrolled,
         tagName: TagName = "div",
     } = props;
 
@@ -34,8 +36,11 @@ export const ScrollableItem: React.FunctionComponent<IScrollableItemProps> = (pr
         if (scrollIntoView) {
             const element = item.current;
             scroll.scrollIntoView(element, bottomMargin, isElementInvisibleCheck);
+            if (onItemScrolled) {
+                onItemScrolled();
+            }
         }
-    }, [bottomMargin, isElementInvisibleCheck, scroll, scrollIntoView, item]);
+    }, [bottomMargin, isElementInvisibleCheck, scroll, scrollIntoView, item, onItemScrolled]);
 
     return (
         <TagName className={className} ref={item}>

@@ -1,5 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
@@ -12,6 +12,7 @@ import {
     IDateDataset,
     IAlignPoint,
     ShortenedText,
+    ScrollableItem,
 } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import { removeDateFromTitle } from "./utils";
@@ -107,7 +108,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
     } = props;
 
     const intl = useIntl();
-    const setScrollElement = useAutoscroll(autoOpen);
+    const { onItemScroll, closeOnParentScroll } = useAutoScroll(autoOpen);
 
     const unrelatedDateDataSetId = unrelatedDateDataset ? unrelatedDateDataset.dataSet.id : null;
     let activeDateDataSetId: string;
@@ -154,7 +155,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                     : removeDateFromTitle(activeDateDataSetTitle);
 
                 return (
-                    <span ref={setScrollElement}>
+                    <ScrollableItem scrollIntoView={autoOpen} onItemScrolled={onItemScroll}>
                         <DropdownButton
                             className={buttonClassName}
                             value={buttonValue}
@@ -162,11 +163,11 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                             onClick={toggleDropdown}
                             disabled={isLoading}
                         />
-                    </span>
+                    </ScrollableItem>
                 );
             }}
             className={className}
-            closeOnParentScroll
+            closeOnParentScroll={closeOnParentScroll}
             closeOnMouseDrag
             alignPoints={alignPoints}
             renderBody={({ closeDropdown }) => {
@@ -213,13 +214,26 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
     );
 };
 
-function useAutoscroll(autoscroll: boolean) {
-    const [ref, setRef] = useState<HTMLElement | null>(null);
+/**
+ * Purpose of this hook is keep value of closeOnParentScroll derived from autoOpen
+ * We need set closeOnParentScroll to false and after item scrolled return to true
+ * otherwise dropdown is immediately closed when item is scrolled to view
+ */
+export function useAutoScroll(autoOpen: boolean) {
+    const [closeOnParentScroll, setCloseOnParentScroll] = useState<boolean>(!autoOpen);
 
     useEffect(() => {
-        if (ref && autoscroll) {
-            ref.scrollIntoView();
-        }
-    }, [ref, autoscroll]);
-    return setRef;
+        setCloseOnParentScroll(!autoOpen);
+    }, [autoOpen]);
+
+    const onItemScroll = useCallback(() => {
+        setTimeout(() => {
+            setCloseOnParentScroll(true);
+        }, 300);
+    }, []);
+
+    return {
+        onItemScroll,
+        closeOnParentScroll,
+    };
 }

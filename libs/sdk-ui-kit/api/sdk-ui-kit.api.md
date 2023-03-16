@@ -3346,6 +3346,8 @@ export interface IScrollableItemProps {
     // (undocumented)
     isElementInvisibleCheck?: isElementInvisibleType;
     // (undocumented)
+    onItemScrolled?: () => void;
+    // (undocumented)
     scrollIntoView: boolean;
     // (undocumented)
     tagName?: React_2.ElementType;
