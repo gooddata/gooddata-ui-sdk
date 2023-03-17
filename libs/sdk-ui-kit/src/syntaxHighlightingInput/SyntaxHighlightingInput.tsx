@@ -1,5 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect } from "react";
 import cx from "classnames";
 import CodeMirror from "codemirror";
 // eslint-disable-next-line import/no-unassigned-import
@@ -55,25 +55,22 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
     const ref = useRef<HTMLDivElement>();
     const view = useRef<CodeMirror.Editor>();
 
-    const reportCursorPosition = useCallback(
-        (editor: CodeMirror.Editor): void => {
-            if (onCursor) {
-                const from = editor.getCursor("from");
-                const to = editor.getCursor("to");
-                const currentValue = editor.getValue();
+    const reportCursorPosition = (editor: CodeMirror.Editor): void => {
+        if (onCursor) {
+            const from = editor.getCursor("from");
+            const to = editor.getCursor("to");
+            const currentValue = editor.getValue();
 
-                onCursor(
-                    findCursorIndexAcrossMultipleLines(currentValue, from.line, from.ch),
-                    findCursorIndexAcrossMultipleLines(currentValue, to.line, to.ch),
-                );
-            }
-        },
-        [onCursor],
-    );
+            onCursor(
+                findCursorIndexAcrossMultipleLines(currentValue, from.line, from.ch),
+                findCursorIndexAcrossMultipleLines(currentValue, to.line, to.ch),
+            );
+        }
+    };
 
-    const handleOnChange = useCallback((): void => {
+    const handleOnChange = (): void => {
         onChange(view.current.getValue());
-    }, [onChange]);
+    };
 
     useEffect(() => {
         (CodeMirror as any).defineSimpleMode("syntaxHighlight", formatting);
@@ -92,7 +89,8 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
             view.current.off("change", handleOnChange);
             view.current.off("cursorActivity", reportCursorPosition);
         };
-    }, [customOptions, formatting, handleOnChange, reportCursorPosition, value]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         const cursor = view.current.getCursor();
