@@ -76,6 +76,18 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                         isLoading={false}
                         onClick={action("onClick")}
                     />
+                    <h4>AttributeFilterSimpleDropdownButton long subtitle without item count</h4>
+                    <AttributeFilterSimpleDropdownButtonWithSelection
+                        isOpen={false}
+                        title={attributeTitle}
+                        subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                        selectedItemsCount={3}
+                        showSelectionCount={false}
+                        isFiltering={false}
+                        isLoaded={true}
+                        isLoading={false}
+                        onClick={action("onClick")}
+                    />
                     <h4>AttributeFilterSimpleDropdownButton shortened title</h4>
                     <div style={{ width: 100 }}>
                         <AttributeFilterSimpleDropdownButtonWithSelection

@@ -127,6 +127,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         isOpen,
         title,
         selectedItemsCount,
+        showSelectionCount = true,
         subtitle,
         isFiltering,
         isLoading,
@@ -202,7 +203,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     >
                         {buttonSubtitle}
                     </span>
-                    {displayItemCount ? (
+                    {showSelectionCount && displayItemCount ? (
                         <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${selectedItemsCount})`}</span>
                     ) : null}
                 </div>
