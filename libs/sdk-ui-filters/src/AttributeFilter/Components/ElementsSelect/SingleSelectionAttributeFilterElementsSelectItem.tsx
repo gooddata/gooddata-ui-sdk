@@ -1,13 +1,10 @@
 // (C) 2023 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
-import { IAttributeElement } from "@gooddata/sdk-model";
 import { IAttributeFilterElementsSelectItemProps } from "./types";
 import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
-
-function getElementTitle(element: IAttributeElement) {
-    return element.title || "(empty value)";
-}
+import { getElementTitle } from "../../utils";
+import { useIntl } from "react-intl";
 
 /**
  * Renders elements selection list item as a single select list item.
@@ -18,6 +15,7 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
     IAttributeFilterElementsSelectItemProps
 > = (props) => {
     const { item, onSelectOnly, isSelected, fullscreenOnMobile = false } = props;
+    const intl = useIntl();
 
     // Modify item click behavior to select only this particular item.
     const onItemClick = useCallback(
@@ -28,7 +26,7 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
         [onSelectOnly],
     );
 
-    const itemTitle = getElementTitle(item);
+    const itemTitle = useMemo(() => getElementTitle(item, intl), [item, intl]);
 
     const isMobile = useMediaQuery("mobileDevice");
 
@@ -40,7 +38,7 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
             onClick={onItemClick}
             title={itemTitle}
         >
-            {itemTitle ?? "(empty value)"}
+            {itemTitle}
             {isSelected && isMobile && fullscreenOnMobile ? (
                 <CustomizableCheckmark className="gd-customizable-checkmark-mobile-navigation" />
             ) : null}

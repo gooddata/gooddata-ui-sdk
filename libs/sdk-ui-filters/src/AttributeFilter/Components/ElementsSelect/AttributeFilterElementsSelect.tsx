@@ -96,7 +96,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                 nextPageItemPlaceholdersCount={nextPageSize}
                 onLoadNextPage={onLoadNextPage}
                 renderItem={(props) => {
-                    return <ElementsSelectItemComponent {...props} />;
+                    return <ElementsSelectItemComponent {...props} fullscreenOnMobile={fullscreenOnMobile} />;
                 }}
                 renderError={() => {
                     return <ElementsSelectErrorComponent error={error} />;

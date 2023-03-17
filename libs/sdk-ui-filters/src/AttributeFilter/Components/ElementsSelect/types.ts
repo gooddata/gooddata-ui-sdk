@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -158,4 +158,11 @@ export interface IAttributeFilterElementsSelectItemProps {
      * @beta
      */
     onSelectOnly: () => void;
+
+    /**
+     * Shown as fullscreen on mobile
+     *
+     * @beta
+     */
+    fullscreenOnMobile?: boolean;
 }

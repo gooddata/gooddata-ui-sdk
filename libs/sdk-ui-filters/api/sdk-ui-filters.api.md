@@ -607,6 +607,7 @@ export interface IAttributeFilterElementsSelectErrorProps {
 
 // @beta
 export interface IAttributeFilterElementsSelectItemProps {
+    fullscreenOnMobile?: boolean;
     isSelected: boolean;
     item: IAttributeElement;
     onDeselect: () => void;
@@ -1224,6 +1225,9 @@ export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
 
 // @public
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
+
+// @beta
+export const SingleSelectionAttributeFilterElementsSelectItem: React_2.VFC<IAttributeFilterElementsSelectItemProps>;
 
 // @public (undocumented)
 export type Unsubscribe = () => void;
