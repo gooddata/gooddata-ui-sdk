@@ -21,7 +21,8 @@ export const CodeArea: React.VFC<ICodeAreaProps> = (props) => {
 
     const onAreaCopyCode = useCallback(() => {
         onCopyCode(code);
-    }, [code, onCopyCode]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [code]);
 
     return (
         <div className="embed-insight-dialog-code-content">
