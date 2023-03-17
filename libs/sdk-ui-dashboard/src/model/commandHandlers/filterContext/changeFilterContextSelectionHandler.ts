@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
@@ -34,9 +34,16 @@ import {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
+    updateAttributeElementsItems,
+    getAttributeElementsItems,
+    attributeElementsIsEmpty,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
-import { IUpsertDateFilterPayload } from "../../store/filterContext/filterContextReducers";
+import {
+    IUpdateAttributeFilterSelectionPayload,
+    IUpsertDateFilterPayload,
+} from "../../store/filterContext/filterContextReducers";
 import { IDashboardFilter } from "../../../types";
 import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver";
@@ -143,11 +150,9 @@ function* getAttributeFiltersUpdateActions(
 
         if (dashboardFilter) {
             updateActions.push(
-                filterContextActions.updateAttributeFilterSelection({
-                    elements: attributeFilter.attributeFilter.attributeElements,
-                    filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
-                    negativeSelection: attributeFilter.attributeFilter.negativeSelection,
-                }),
+                filterContextActions.updateAttributeFilterSelection(
+                    getAttributeFilterSelectionPayload(attributeFilter, dashboardFilter),
+                ),
             );
             handledLocalIds.add(dashboardFilter.attributeFilter.localIdentifier!);
         }
@@ -203,3 +208,38 @@ function* getDateFilterUpdateActions(
 
     return [];
 }
+
+const getAttributeFilterSelectionPayload = (
+    incomingFilter: IDashboardAttributeFilter,
+    currentFilter: IDashboardAttributeFilter,
+): IUpdateAttributeFilterSelectionPayload => {
+    const { attributeElements, negativeSelection } = incomingFilter.attributeFilter;
+
+    const attributeFilterSelectionPayload: IUpdateAttributeFilterSelectionPayload = {
+        elements: attributeElements,
+        filterLocalId: currentFilter.attributeFilter.localIdentifier!,
+        negativeSelection: negativeSelection,
+    };
+
+    if (isSingleSelectionFilter(currentFilter)) {
+        if (negativeSelection) {
+            return {
+                ...attributeFilterSelectionPayload,
+                elements: updateAttributeElementsItems(attributeElements, []),
+                negativeSelection: false,
+            };
+        }
+
+        if (!attributeElementsIsEmpty(attributeElements)) {
+            const attributeElementsValues = getAttributeElementsItems(attributeElements);
+            const singleSelectAttributeElements = [attributeElementsValues[0]];
+
+            return {
+                ...attributeFilterSelectionPayload,
+                elements: updateAttributeElementsItems(attributeElements, singleSelectAttributeElements),
+            };
+        }
+    }
+
+    return attributeFilterSelectionPayload;
+};

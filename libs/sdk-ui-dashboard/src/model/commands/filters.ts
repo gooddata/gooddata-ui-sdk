@@ -15,6 +15,7 @@ import {
     DateFilterType,
     FilterContextItem,
     IDashboardAttributeFilterParent,
+    DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "../../types";
@@ -232,6 +233,12 @@ export interface AddAttributeFilterPayload {
      * XXX: not needed in the initial version; would be good for API completeness
      */
     readonly initialIsNegativeSelection?: boolean;
+
+    /**
+     * Selection mode which defines how many elements can be in attributeElements.
+     * Default value is 'multi' if property is missing.
+     */
+    readonly selectionMode?: DashboardAttributeFilterSelectionMode;
 }
 
 /**
@@ -254,13 +261,15 @@ export interface AddAttributeFilter extends IDashboardCommand {
  * @param index - specify index among the attribute filters at which the new filter should be placed.
  *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
- *  events that will be emitted during the command processing
+ *  events that will be emitted during the command processing.
+ * @param selectionMode - single or multi value selection mode of the filter.
  * @beta
  */
 export function addAttributeFilter(
     displayForm: ObjRef,
     index: number,
     correlationId?: string,
+    selectionMode?: DashboardAttributeFilterSelectionMode,
 ): AddAttributeFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
@@ -268,6 +277,7 @@ export function addAttributeFilter(
         payload: {
             displayForm,
             index,
+            selectionMode,
         },
     };
 }

@@ -16,6 +16,7 @@ import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
+import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
@@ -172,7 +173,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 }
 
 // @beta
-export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string): AddAttributeFilter;
+export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode): AddAttributeFilter;
 
 // @internal (undocumented)
 export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): JSX.Element;
@@ -186,6 +187,7 @@ export interface AddAttributeFilterPayload {
     readonly initialIsNegativeSelection?: boolean;
     readonly initialSelection?: IAttributeElements;
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+    readonly selectionMode?: DashboardAttributeFilterSelectionMode;
 }
 
 // @internal (undocumented)

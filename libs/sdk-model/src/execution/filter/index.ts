@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { ObjRef, ObjRefInScope } from "../../objRef";
@@ -526,6 +526,50 @@ export function attributeElementsCount(attributeElements: IAttributeElements): n
     }
 
     return attributeElements.values.length;
+}
+
+/**
+ * Gets the items from the {@link IAttributeElements}.
+ *
+ * @param attributeElements - object to get items from
+ * @returns the array of items
+ * @internal
+ */
+export function getAttributeElementsItems(attributeElements: IAttributeElements): string[] {
+    invariant(attributeElements, "attribute elements must be specified");
+
+    if (isAttributeElementsByRef(attributeElements)) {
+        return attributeElements.uris;
+    }
+
+    return attributeElements.values;
+}
+
+/**
+ * Updates the items in the {@link IAttributeElements}.
+ *
+ * @param attributeElements - object to update items in
+ * @param newItems - new items to put into attributeElements
+ * @returns updated attributeElements object with new item values
+ * @internal
+ */
+export function updateAttributeElementsItems(
+    attributeElements: IAttributeElements,
+    newItems: string[],
+): IAttributeElements {
+    invariant(attributeElements, "attribute elements must be specified");
+
+    if (isAttributeElementsByRef(attributeElements)) {
+        return {
+            ...attributeElements,
+            uris: newItems,
+        };
+    }
+
+    return {
+        ...attributeElements,
+        values: newItems,
+    };
 }
 
 /**

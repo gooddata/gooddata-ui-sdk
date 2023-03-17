@@ -425,6 +425,9 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
+// @internal
+export function getAttributeElementsItems(attributeElements: IAttributeElements): string[];
+
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
@@ -3291,6 +3294,9 @@ export function totalIsNative(total: ITotal): boolean;
 
 // @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
+
+// @internal
+export function updateAttributeElementsItems(attributeElements: IAttributeElements, newItems: string[]): IAttributeElements;
 
 // @public
 export type Uri = string;
