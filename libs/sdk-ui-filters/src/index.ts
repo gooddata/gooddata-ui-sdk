@@ -172,6 +172,7 @@ export {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
     AttributeFilterStatusBar,
+    SingleSelectionAttributeFilterStatusBar,
     AttributeDatasetInfo,
     IAttributeDatasetInfoProps,
     AttributeFilterButtonToolip,

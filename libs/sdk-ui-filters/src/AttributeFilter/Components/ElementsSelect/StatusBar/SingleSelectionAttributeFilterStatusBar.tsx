@@ -1,6 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2023 GoodData Corporation
 import React from "react";
-import { IAttributeFilterStatusBarProps } from "../..";
+import { IAttributeFilterStatusBarProps } from "./AttributeFilterStatusBar";
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus";
 
 /**

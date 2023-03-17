@@ -1229,6 +1229,9 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
 // @beta
 export const SingleSelectionAttributeFilterElementsSelectItem: React_2.VFC<IAttributeFilterElementsSelectItemProps>;
 
+// @beta
+export const SingleSelectionAttributeFilterStatusBar: React_2.FC<IAttributeFilterStatusBarProps>;
+
 // @public (undocumented)
 export type Unsubscribe = () => void;
 

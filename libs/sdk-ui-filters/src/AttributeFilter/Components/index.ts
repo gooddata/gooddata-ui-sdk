@@ -60,6 +60,7 @@ export {
     AttributeFilterStatusBar,
     IAttributeFilterStatusBarProps,
 } from "./ElementsSelect/StatusBar/AttributeFilterStatusBar";
+export { SingleSelectionAttributeFilterStatusBar } from "./ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar";
 export { AttributeFilterError, IAttributeFilterErrorProps } from "./AttributeFilterError";
 export { AttributeFilterLoading } from "./AttributeFilterLoading";
 
