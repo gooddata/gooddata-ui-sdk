@@ -1,6 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render } from "@testing-library/react";
 
 import { AreaChart } from "../AreaChart";
 import { IChartConfig } from "../../../interfaces";
@@ -9,14 +9,27 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { CoreAreaChart } from "../CoreAreaChart";
 
-function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
-    return mount(<AreaChart config={config} workspace="test" backend={dummyBackend()} measures={measures} />);
+function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
+    return render(
+        <AreaChart config={config} workspace="test" backend={dummyBackend()} measures={measures} />,
+    );
 }
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CoreAreaChart", () => ({
+    CoreAreaChart: jest.fn(() => null),
+}));
+
 describe("AreaChart", () => {
-    it("should render with custom SDK", () => {
-        const wrapper = renderChart([ReferenceMd.Amount]);
-        expect(wrapper.find(CoreAreaChart)).toHaveLength(1);
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it("should render with custom SDK", async () => {
+        renderChart([ReferenceMd.Amount]);
+        expect(CoreAreaChart).toHaveBeenCalled();
     });
 
     describe("Stacking", () => {
@@ -26,21 +39,31 @@ describe("AreaChart", () => {
         };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([ReferenceMd.Amount], config);
-            expect(wrapper.find(CoreAreaChart).prop("config")).toEqual({
-                stacking: true,
-                stackMeasures: true,
-                stackMeasuresToPercent: true,
-            });
+            renderChart([ReferenceMd.Amount], config);
+            expect(CoreAreaChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stacking: true,
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                }),
+                expect.anything(),
+            );
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([ReferenceMdExt.AmountWithRatio], config);
-            expect(wrapper.find(CoreAreaChart).prop("config")).toEqual({
-                stacking: true,
-                stackMeasures: false,
-                stackMeasuresToPercent: false,
-            });
+            renderChart([ReferenceMdExt.AmountWithRatio], config);
+            expect(CoreAreaChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stacking: true,
+                        stackMeasures: false,
+                        stackMeasuresToPercent: false,
+                    },
+                }),
+                expect.anything(),
+            );
         });
     });
 });

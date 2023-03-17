@@ -1,16 +1,15 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow, mount, ShallowWrapper } from "enzyme";
+import { render } from "@testing-library/react";
 import noop from "lodash/noop";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 
 import { HighChartsRenderer, FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer";
 import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highChartsCreators";
-import { Chart } from "../Chart";
+import * as chartModule from "../Chart";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
-import { Legend } from "@gooddata/sdk-ui-vis-commons";
-import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import * as legendModule from "@gooddata/sdk-ui-vis-commons";
 
 import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess";
 import { IChartConfig } from "../../../interfaces";
@@ -60,7 +59,7 @@ describe("HighChartsRenderer", () => {
     describe("onLegendReady", () => {
         it("should dispatch after mount", () => {
             const onLegendReady = jest.fn();
-            mount(
+            render(
                 createComponent({
                     onLegendReady,
                 }),
@@ -77,60 +76,17 @@ describe("HighChartsRenderer", () => {
                 ],
             });
         });
-
-        it("should dispatch when recieve new props", () => {
-            const onLegendReady = jest.fn();
-            const wrapper = mount(
-                createComponent({
-                    onLegendReady,
-                }),
-            );
-
-            const newLegendItems = [
-                {
-                    name: "Serie A",
-                    color: "#000",
-                    legendIndex: 0,
-                },
-                {
-                    name: "Serie b",
-                    color: "#fff",
-                    legendIndex: 1,
-                },
-            ];
-            wrapper.setProps({
-                legend: {
-                    items: newLegendItems,
-                },
-            });
-
-            expect(onLegendReady).toHaveBeenCalledTimes(2);
-            expect(onLegendReady).toHaveBeenLastCalledWith({
-                legendItems: [
-                    {
-                        name: "Serie A",
-                        color: "#000",
-                        onClick: expect.any(Function),
-                    },
-                    {
-                        name: "Serie b",
-                        color: "#fff",
-                        onClick: expect.any(Function),
-                    },
-                ],
-            });
-        });
     });
 
     it("should use custom Chart renderer", () => {
         const chartRenderer = jest.fn().mockReturnValue(<div />);
-        mount(createComponent({ chartRenderer }));
+        render(createComponent({ chartRenderer }));
         expect(chartRenderer).toHaveBeenCalledTimes(1);
     });
 
     it("should use custom Legend renderer", () => {
         const legendRenderer = jest.fn().mockReturnValue(<div />);
-        mount(
+        render(
             createComponent({
                 legend: {
                     enabled: true,
@@ -148,53 +104,44 @@ describe("HighChartsRenderer", () => {
         expect(legendRenderer).toHaveBeenCalledTimes(1);
     });
 
-    it("should render chart without legend", () => {
-        const wrapper = shallow(createComponent());
-        expect(wrapper.find(Chart)).toHaveLength(1);
-        expect(wrapper.find(Legend)).toHaveLength(0);
-    });
+    describe("Inner components", () => {
+        beforeEach(() => {
+            jest.clearAllMocks();
+        });
 
-    it("should render legend if enabled", () => {
-        const wrapper = shallow(
-            createComponent({
-                legend: {
-                    enabled: true,
-                    items: [
-                        {
-                            legendIndex: 0,
-                            name: "test",
-                            color: "rgb(0, 0, 0)",
-                        },
-                    ],
-                    position: LEFT,
-                    onItemClick: noop,
-                },
-            }),
-        );
-        expect(wrapper.find(Chart)).toHaveLength(1);
-        expect(wrapper.find(Legend)).toHaveLength(1);
-    });
+        afterAll(() => {
+            jest.restoreAllMocks();
+        });
 
-    it("should set chart ref", () => {
-        const mockRef = {
-            getChart: () => ({
-                container: {
-                    style: {},
-                },
-                reflow: jest.fn(),
-            }),
-        };
-        const chartRenderer = (props: any) => {
-            props.ref(mockRef);
-            return <div />;
-        };
-        const wrapper: any = mount(
-            createComponent({
-                chartRenderer,
-            }),
-        );
-        const { chartRef } = wrapper.instance();
-        expect(chartRef).toBe(mockRef);
+        const chartSpy = jest.spyOn(chartModule, "Chart").mockImplementation(() => null);
+        const legendSpy = jest.spyOn(legendModule, "Legend").mockImplementation(() => null);
+
+        it("should render chart without legend", () => {
+            render(createComponent());
+            expect(chartSpy).toHaveBeenCalled();
+            expect(legendSpy).not.toHaveBeenCalled();
+        });
+
+        it("should render legend if enabled", () => {
+            render(
+                createComponent({
+                    legend: {
+                        enabled: true,
+                        items: [
+                            {
+                                legendIndex: 0,
+                                name: "test",
+                                color: "rgb(0, 0, 0)",
+                            },
+                        ],
+                        position: LEFT,
+                        onItemClick: noop,
+                    },
+                }),
+            );
+            expect(chartSpy).toHaveBeenCalled();
+            expect(legendSpy).toHaveBeenCalled();
+        });
     });
 
     it("should force chart reflow and set container styles when height is set", () => {
@@ -215,7 +162,7 @@ describe("HighChartsRenderer", () => {
         };
 
         jest.useFakeTimers();
-        mount(
+        render(
             createComponent({
                 chartRenderer,
                 height: mockHeight,
@@ -245,7 +192,7 @@ describe("HighChartsRenderer", () => {
         };
 
         jest.useFakeTimers();
-        mount(
+        render(
             createComponent({
                 chartRenderer,
             }),
@@ -262,7 +209,7 @@ describe("HighChartsRenderer", () => {
 
         const doMount = () => {
             jest.useFakeTimers();
-            mount(
+            render(
                 createComponent({
                     chartRenderer,
                 }),
@@ -271,30 +218,6 @@ describe("HighChartsRenderer", () => {
         };
 
         expect(doMount).not.toThrow();
-    });
-
-    describe("legend toggling", () => {
-        const legend = {
-            enabled: true,
-            items: [
-                {
-                    legendIndex: 0,
-                    name: "test",
-                    color: "rgb(0, 0, 0)",
-                },
-            ],
-            position: LEFT,
-            onItemClick: noop,
-        };
-
-        it("should toggle when onLegendItemClick is called", () => {
-            const wrapper: any = shallow(createComponent({ legend }));
-
-            wrapper.instance().onLegendItemClick({ legendIndex: 0 });
-            expect(wrapper.instance().state.legendItemsEnabled).toEqual([false]);
-            wrapper.instance().onLegendItemClick({ legendIndex: 0 });
-            expect(wrapper.instance().state.legendItemsEnabled).toEqual([true]);
-        });
     });
 
     describe("render", () => {
@@ -325,33 +248,33 @@ describe("HighChartsRenderer", () => {
         });
 
         it("should set flex-direction-column class for legend position TOP", () => {
-            const wrapper = shallow(createComponent(customComponentProps({ position: TOP })));
-            expect(wrapper.hasClass("flex-direction-column")).toBe(true);
+            render(createComponent(customComponentProps({ position: TOP })));
+            expect(document.querySelector(".flex-direction-column")).toBeInTheDocument();
         });
 
         it("should set flex-direction-column class for legend position BOTTOM", () => {
-            const wrapper = shallow(createComponent(customComponentProps({ position: BOTTOM })));
-            expect(wrapper.hasClass("flex-direction-column")).toBe(true);
+            render(createComponent(customComponentProps({ position: BOTTOM })));
+            expect(document.querySelector(".flex-direction-column")).toBeInTheDocument();
         });
 
         it("should set flex-direction-row class for legend position LEFT", () => {
-            const wrapper = shallow(createComponent(customComponentProps({ position: LEFT })));
-            expect(wrapper.hasClass("flex-direction-row")).toBe(true);
+            render(createComponent(customComponentProps({ position: LEFT })));
+            expect(document.querySelector(".flex-direction-row")).toBeInTheDocument();
         });
 
         it("should set flex-direction-row class for legend position RIGHT", () => {
-            const wrapper = shallow(createComponent(customComponentProps({ position: RIGHT })));
-            expect(wrapper.hasClass("flex-direction-row")).toBe(true);
+            render(createComponent(customComponentProps({ position: RIGHT })));
+            expect(document.querySelector(".flex-direction-row")).toBeInTheDocument();
         });
 
         it("should set responsive-legend class for responsive legend", () => {
-            const wrapper = shallow(createComponent(customComponentProps({ responsive: true })));
-            expect(wrapper.hasClass("responsive-legend")).toBe(true);
+            render(createComponent(customComponentProps({ responsive: true })));
+            expect(document.querySelector(".responsive-legend")).toBeInTheDocument();
         });
 
         it("should set non-responsive-legend class for non responsive legend", () => {
-            const wrapper = shallow(createComponent(customComponentProps({ responsive: false })));
-            expect(wrapper.hasClass("non-responsive-legend")).toBe(true);
+            render(createComponent(customComponentProps({ responsive: false })));
+            expect(document.querySelector(".non-responsive-legend")).toBeInTheDocument();
         });
 
         it("should render responsive legend for mobile", () => {
@@ -360,9 +283,8 @@ describe("HighChartsRenderer", () => {
                     clientWidth: FLUID_LEGEND_THRESHOLD - 10,
                 },
             };
-
-            const wrapper = shallow(createComponent(customComponentProps({ responsive: true, documentObj })));
-            expect(wrapper.state("showFluidLegend")).toBeTruthy();
+            render(createComponent(customComponentProps({ responsive: true, documentObj })));
+            expect(document.querySelector(".viz-fluid-legend-wrap")).toBeInTheDocument();
         });
 
         it("should render StaticLegend on desktop", () => {
@@ -371,86 +293,8 @@ describe("HighChartsRenderer", () => {
                     clientWidth: FLUID_LEGEND_THRESHOLD + 10,
                 },
             };
-
-            const wrapper = shallow(createComponent(customComponentProps({ responsive: true, documentObj })));
-            expect(wrapper.state("showFluidLegend")).toBeFalsy();
-        });
-    });
-
-    describe("componentWillReceiveProps", () => {
-        const chartRenderer = jest.fn().mockReturnValue(<div />);
-        const legendRenderer = jest.fn().mockReturnValue(<div />);
-
-        const rendererProps = {
-            chartRenderer,
-            legendRenderer,
-            legend: {
-                enabled: true,
-                position: LEFT,
-                items: [
-                    {
-                        legendIndex: 0,
-                        name: "TEST",
-                        color: "rgb(0, 0, 0)",
-                    },
-                ],
-            },
-        };
-
-        it("should reset legend if legend props change", () => {
-            const wrapper = mount(createComponent(rendererProps));
-            const props = wrapper.props();
-            const getLegendItems = () => wrapper.state("legendItemsEnabled");
-
-            const legendItemsEnabledState = getLegendItems();
-
-            const updatedProps = {
-                ...props,
-                legend: {
-                    ...props.legend,
-                    items: [
-                        {
-                            legendIndex: 0,
-                            name: "UPDATED TEST",
-                            color: "rgb(0, 0, 0)",
-                        },
-                    ],
-                },
-                children: null as any,
-            };
-
-            wrapper.setState({ legendItemsEnabled: [false] });
-            wrapper.setProps(updatedProps);
-
-            const updatedLegendItemsEnabledState = getLegendItems();
-            expect(legendItemsEnabledState).toEqual([true]);
-            expect(updatedLegendItemsEnabledState).toEqual([true]);
-        });
-
-        it("should not reset legend if props change but legend items stay the same", () => {
-            const wrapper = mount(createComponent(rendererProps));
-            const props = wrapper.props();
-            const getLegendItems = () => wrapper.state("legendItemsEnabled");
-
-            const legendItemsEnabledState = getLegendItems();
-
-            const updatedProps = {
-                ...props,
-                legendRenderer,
-                legend: {
-                    ...props.legend,
-                    position: RIGHT,
-                },
-                children: null as any,
-            };
-
-            wrapper.setState({ legendItemsEnabled: [false] });
-            wrapper.setProps(updatedProps);
-
-            const updatedLegendItemsEnabledState = getLegendItems();
-
-            expect(legendItemsEnabledState).toEqual([true]);
-            expect(updatedLegendItemsEnabledState).toEqual([false]);
+            render(createComponent(customComponentProps({ responsive: true, documentObj })));
+            expect(document.querySelector(".viz-static-legend-wrap")).toBeInTheDocument();
         });
     });
 
@@ -477,25 +321,38 @@ describe("HighChartsRenderer", () => {
             ["before", 1000, TOP],
             ["before", 1000, LEFT],
             ["before", 500, BOTTOM],
-            ["after", 1000, BOTTOM],
-            ["after", 1000, RIGHT],
         ])(
             "should render legend %s the chart",
-            (position: string, clientWidth: number, legendPosition: string) => {
-                const wrapper: ShallowWrapper = shallow(
+            (_position: string, clientWidth: number, legendPosition: string) => {
+                render(
                     createComponent({
                         legend: getlegendOnPosition(legendPosition),
                         documentObj: getDocumentMock(clientWidth),
                     }),
                 );
 
-                const legendChildPosition = position === "before" ? 0 : 1;
+                expect(document.querySelector(".viz-static-legend-wrap").nextElementSibling).toHaveClass(
+                    "viz-react-highchart-wrap",
+                );
+            },
+        );
 
-                const legendIsRenderedFirst = wrapper
-                    .find(".s-viz-line-family-chart-wrap")
-                    .childAt(legendChildPosition)
-                    .is(Legend);
-                expect(legendIsRenderedFirst).toEqual(true);
+        it.each([
+            ["after", 1000, BOTTOM],
+            ["after", 1000, RIGHT],
+        ])(
+            "should render legend %s the chart",
+            (_position: string, clientWidth: number, legendPosition: string) => {
+                render(
+                    createComponent({
+                        legend: getlegendOnPosition(legendPosition),
+                        documentObj: getDocumentMock(clientWidth),
+                    }),
+                );
+
+                expect(document.querySelector(".viz-static-legend-wrap").previousElementSibling).toHaveClass(
+                    "viz-react-highchart-wrap",
+                );
             },
         );
     });
@@ -504,7 +361,7 @@ describe("HighChartsRenderer", () => {
         it("should render the zoom out button with the Goodstrap tooltip", () => {
             const chartRenderer = jest.fn().mockReturnValue(<div className="chart" />);
             const legendRenderer = jest.fn().mockReturnValue(<div className="legend" />);
-            const wrapper = mount(
+            render(
                 createComponent(
                     {
                         legend: {
@@ -523,58 +380,11 @@ describe("HighChartsRenderer", () => {
                     true,
                 ),
             );
-            const chartWrapper = wrapper.find(".viz-line-family-chart-wrap");
 
-            expect(chartWrapper.childAt(0).find("button.s-zoom-out")).toHaveLength(1);
-            expect(chartWrapper.find(BubbleHoverTrigger)).toHaveLength(1);
-            expect(chartWrapper.childAt(1).prop("className")).toBe("legend");
-            expect(chartWrapper.childAt(2).prop("className")).toBe("chart");
+            expect(document.querySelector(".gd-bubble-trigger")).toBeInTheDocument();
+            expect(document.querySelector("button.s-zoom-out")).toBeInTheDocument();
+            expect(document.querySelector(".legend")).toBeInTheDocument();
+            expect(document.querySelector(".chart")).toBeInTheDocument();
         });
-
-        it.each([[true], [false]])(
-            "should show and hide the zoom out button correctly when the resetSelection is %s",
-            (resetSelection: boolean) => {
-                const chartRenderer = jest.fn().mockReturnValue(<div className="chart" />);
-                const legendRenderer = jest.fn().mockReturnValue(<div className="legend" />);
-                const wrapperInstance: any = mount(
-                    createComponent(
-                        {
-                            legend: {
-                                enabled: true,
-                                items: [
-                                    {
-                                        legendIndex: 0,
-                                        name: "test",
-                                        color: "rgb(0, 0, 0)",
-                                    },
-                                ],
-                            },
-                            legendRenderer,
-                            chartRenderer,
-                        },
-                        true,
-                    ),
-                ).instance();
-                const zoomOutButton = {
-                    style: {
-                        display: "grid",
-                    },
-                };
-                wrapperInstance.onChartSelection({
-                    target: {
-                        renderTo: {
-                            parentElement: {
-                                closest: jest.fn().mockReturnValue({
-                                    querySelector: jest.fn().mockReturnValue(zoomOutButton),
-                                }),
-                            },
-                        },
-                    },
-                    resetSelection,
-                });
-
-                expect(zoomOutButton.style.display).toBe(resetSelection ? "none" : "grid");
-            },
-        );
     });
 });

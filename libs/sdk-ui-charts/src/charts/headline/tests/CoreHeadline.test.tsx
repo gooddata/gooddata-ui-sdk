@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { testUtils } from "@gooddata/util";
 import { CoreHeadline } from "../CoreHeadline";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
@@ -8,11 +8,23 @@ import { ICoreChartProps } from "../../../interfaces/chartProps";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../__mocks__/recordings";
 
-describe("Headline", () => {
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../internal/HeadlineTransformation", () => ({
+    __esModule: true,
+    default: jest.fn(() => null),
+}));
+
+describe("CoreHeadline", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    const afterRender = jest.fn();
+
     function createComponent(props: ICoreChartProps) {
-        return mount<Partial<ICoreChartProps>>(
-            <CoreHeadline {...props} afterRender={jest.fn()} drillableItems={[]} />,
-        );
+        return render(<CoreHeadline {...props} afterRender={afterRender} drillableItems={[]} />);
     }
 
     const singleMeasureHeadline = recordedDataFacade(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
@@ -24,44 +36,44 @@ describe("Headline", () => {
     describe("one measure", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", () => {
             const drillEventCallback = jest.fn();
-            const wrapper = createComponent({
+            createComponent({
                 execution: singleMeasureExec,
                 onDrill: drillEventCallback,
             });
 
             return testUtils.delay().then(() => {
-                wrapper.update();
-                const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
-                const wrapperProps = wrapper.props();
-                expect(renderedHeadlineTrans.props()).toMatchObject({
-                    dataView: {
-                        definition: singleMeasureExec.definition,
-                    },
-                    onAfterRender: wrapperProps.afterRender,
-                    drillableItems: wrapperProps.drillableItems,
-                    onDrill: drillEventCallback,
-                });
+                expect(HeadlineTransformation).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        dataView: expect.objectContaining({
+                            definition: singleMeasureExec.definition,
+                        }),
+                        onAfterRender: afterRender,
+                        drillableItems: [],
+                        onDrill: drillEventCallback,
+                    }),
+                    {},
+                );
             });
         });
     });
 
     describe("two measures", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", () => {
-            const wrapper = createComponent({
+            createComponent({
                 execution: twoMeasureExec,
             });
 
             return testUtils.delay().then(() => {
-                wrapper.update();
-                const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
-                const wrapperProps = wrapper.props();
-                expect(renderedHeadlineTrans.props()).toMatchObject({
-                    dataView: {
-                        definition: twoMeasureExec.definition,
-                    },
-                    onAfterRender: wrapperProps.afterRender,
-                    drillableItems: wrapperProps.drillableItems,
-                });
+                expect(HeadlineTransformation).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        dataView: expect.objectContaining({
+                            definition: singleMeasureExec.definition,
+                        }),
+                        onAfterRender: afterRender,
+                        drillableItems: [],
+                    }),
+                    {},
+                );
             });
         });
     });

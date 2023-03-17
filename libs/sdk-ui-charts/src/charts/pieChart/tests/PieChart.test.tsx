@@ -1,22 +1,31 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { PieChart } from "../PieChart";
 import { newAttributeSort, MeasureGroupIdentifier, newTwoDimensional } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CorePieChart } from "../CorePieChart";
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CorePieChart", () => ({
+    CorePieChart: jest.fn(() => null),
+}));
+
 describe("PieChart", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it("should render with custom SDK", () => {
-        const wrapper = mount(
-            <PieChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />,
-        );
-        expect(wrapper.find(CorePieChart)).toHaveLength(1);
+        render(<PieChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />);
+        expect(CorePieChart).toHaveBeenCalled();
     });
 
     it("should render pie chart and convert the buckets to AFM", () => {
-        const wrapper = mount(
+        render(
             <PieChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -28,8 +37,15 @@ describe("PieChart", () => {
 
         const expectedDims = newTwoDimensional([MeasureGroupIdentifier], [ReferenceMd.Product.Name]);
 
-        expect(wrapper.find(CorePieChart)).toHaveLength(1);
-        expect(wrapper.find(CorePieChart).prop("execution")).toBeDefined();
-        expect(wrapper.find(CorePieChart).prop("execution").definition.dimensions).toEqual(expectedDims);
+        expect(CorePieChart).toHaveBeenCalledWith(
+            expect.objectContaining({
+                execution: expect.objectContaining({
+                    definition: expect.objectContaining({
+                        dimensions: expectedDims,
+                    }),
+                }),
+            }),
+            expect.anything(),
+        );
     });
 });

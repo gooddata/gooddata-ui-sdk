@@ -1,6 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { ComboChart } from "../ComboChart";
 import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -8,10 +8,17 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { CoreComboChart } from "../CoreComboChart";
 import { IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CoreComboChart", () => ({
+    CoreComboChart: jest.fn(() => null),
+}));
+
 // need to turn off ratio in the ReferenceMdExt.AmountWithRatio
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
-        const wrapper = mount(
+        render(
             <ComboChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -19,11 +26,11 @@ describe("ComboChart", () => {
                 secondaryMeasures={[ReferenceMd.Won]}
             />,
         );
-        expect(wrapper.find(CoreComboChart)).toHaveLength(1);
+        expect(CoreComboChart).toHaveBeenCalled();
     });
 
     it("should render CoreComboChart", () => {
-        const wrapper = mount(
+        render(
             <ComboChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -31,7 +38,7 @@ describe("ComboChart", () => {
                 secondaryMeasures={[ReferenceMd.Won]}
             />,
         );
-        expect(wrapper.find(CoreComboChart)).toHaveLength(1);
+        expect(CoreComboChart).toHaveBeenCalled();
     });
 
     describe("Stacking", () => {
@@ -40,7 +47,7 @@ describe("ComboChart", () => {
             secondaryMeasures: IMeasure[],
             config?: IChartConfig,
         ) {
-            return mount(
+            return render(
                 <ComboChart
                     config={config}
                     workspace="foo"
@@ -54,19 +61,31 @@ describe("ComboChart", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([ReferenceMd.Amount], [], config);
-            const configProps = wrapper.find(CoreComboChart).prop("config");
+            renderChart([ReferenceMd.Amount], [], config);
 
-            expect(configProps.stackMeasures).toBeTruthy();
-            expect(configProps.stackMeasuresToPercent).toBeTruthy();
+            expect(CoreComboChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                }),
+                expect.anything(),
+            );
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([ReferenceMdExt.AmountWithRatio], [], config);
-            const configProps = wrapper.find(CoreComboChart).prop("config");
+            renderChart([ReferenceMdExt.AmountWithRatio], [], config);
 
-            expect(configProps.stackMeasures).toBeFalsy();
-            expect(configProps.stackMeasuresToPercent).toBeFalsy();
+            expect(CoreComboChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stackMeasures: false,
+                        stackMeasuresToPercent: false,
+                    },
+                }),
+                expect.anything(),
+            );
         });
 
         it.each([
@@ -75,19 +94,27 @@ describe("ComboChart", () => {
         ])(
             "should ignore computeRatio when %s measure bucket has multiple items",
             (_name: any, primaryMeasures: any, secondaryMeasures: any) => {
-                const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
-                const execution = wrapper.find(CoreComboChart).prop("execution");
+                renderChart(primaryMeasures, secondaryMeasures, config);
                 const expectedMeasures = [
                     ReferenceMd.Amount,
                     modifySimpleMeasure(ReferenceMdExt.AmountWithRatio, (m) => m.noRatio()),
                 ];
 
-                expect(execution.definition.measures).toEqual(expectedMeasures);
+                expect(CoreComboChart).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        execution: expect.objectContaining({
+                            definition: expect.objectContaining({
+                                measures: expectedMeasures,
+                            }),
+                        }),
+                    }),
+                    expect.anything(),
+                );
             },
         );
 
         it("should ignore computeRatio when dual axis is OFF and # of measures > 1", () => {
-            const wrapper = renderChart(
+            renderChart(
                 [ReferenceMdExt.AmountWithRatio],
                 [
                     modifyMeasure(ReferenceMdExt.AmountWithRatio, (m) =>
@@ -99,7 +126,6 @@ describe("ComboChart", () => {
                     dualAxis: false,
                 },
             );
-            const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
                 modifySimpleMeasure(ReferenceMdExt.AmountWithRatio, (m) => m.noRatio()),
                 modifySimpleMeasure(ReferenceMdExt.AmountWithRatio, (m) =>
@@ -107,18 +133,35 @@ describe("ComboChart", () => {
                 ),
             ];
 
-            expect(execution.definition.measures).toEqual(expectedMeasures);
+            expect(CoreComboChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    execution: expect.objectContaining({
+                        definition: expect.objectContaining({
+                            measures: expectedMeasures,
+                        }),
+                    }),
+                }),
+                expect.anything(),
+            );
         });
 
         it("should apply computeRatio when dual axis is OFF and # of measures = 1", () => {
-            const wrapper = renderChart([], [ReferenceMdExt.AmountWithRatio], {
+            renderChart([], [ReferenceMdExt.AmountWithRatio], {
                 ...config,
                 dualAxis: false,
             });
-            const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasure = [ReferenceMdExt.AmountWithRatio];
 
-            expect(execution.definition.measures).toEqual(expectedMeasure);
+            expect(CoreComboChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    execution: expect.objectContaining({
+                        definition: expect.objectContaining({
+                            measures: expectedMeasure,
+                        }),
+                    }),
+                }),
+                expect.anything(),
+            );
         });
     });
 });

@@ -1,22 +1,31 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { BubbleChart } from "../BubbleChart";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreBubbleChart } from "../CoreBubbleChart";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CoreBubbleChart", () => ({
+    CoreBubbleChart: jest.fn(() => null),
+}));
+
 describe("BubbleChart", () => {
-    it("should render with custom SDK", () => {
-        const wrapper = mount(
-            <BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={ReferenceMd.Amount} />,
-        );
-        expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
-    it("should render scatter plot and convert the buckets to AFM", () => {
-        const wrapper = mount(
+    it("should render with custom SDK", () => {
+        render(<BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={ReferenceMd.Amount} />);
+        expect(CoreBubbleChart).toHaveBeenCalled();
+    });
+
+    it("should render bubble chart and convert the buckets to AFM", () => {
+        render(
             <BubbleChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -30,8 +39,15 @@ describe("BubbleChart", () => {
 
         const expectedDims = newTwoDimensional([ReferenceMd.Product.Name], [MeasureGroupIdentifier]);
 
-        expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
-        expect(wrapper.find(CoreBubbleChart).prop("execution")).toBeDefined();
-        expect(wrapper.find(CoreBubbleChart).prop("execution").definition.dimensions).toEqual(expectedDims);
+        expect(CoreBubbleChart).toHaveBeenCalledWith(
+            expect.objectContaining({
+                execution: expect.objectContaining({
+                    definition: expect.objectContaining({
+                        dimensions: expectedDims,
+                    }),
+                }),
+            }),
+            expect.anything(),
+        );
     });
 });

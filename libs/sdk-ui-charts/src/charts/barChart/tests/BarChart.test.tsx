@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render } from "@testing-library/react";
 import { BarChart } from "../BarChart";
 import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -13,20 +13,31 @@ import {
 } from "@gooddata/sdk-model";
 import { CoreBarChart } from "../CoreBarChart";
 
-function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
-    return mount(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
+function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
+    return render(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
 }
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CoreBarChart", () => ({
+    CoreBarChart: jest.fn(() => null),
+}));
+
 describe("BarChart", () => {
-    it("should render with custom SDK", () => {
-        const wrapper = renderChart([]);
-        expect(wrapper.find(CoreBarChart)).toHaveLength(1);
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
-    it("should render column chart and create correct stacking dimensions", () => {
+    it("should render with custom SDK", () => {
+        renderChart([]);
+        expect(CoreBarChart).toHaveBeenCalled();
+    });
+
+    it("should render bar chart and create correct stacking dimensions", () => {
         // note: this test was previously verifying that AFM is created correctly; that is pointless now as the
         //  transformation is tested elsewhere. the important thing to test is that dimensions are built as expected.
-        const wrapper = mount(
+        render(
             <BarChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -37,36 +48,50 @@ describe("BarChart", () => {
             />,
         );
 
-        const exceptedDimensions = newTwoDimensional(
+        const expectedDimensions = newTwoDimensional(
             [ReferenceMd.Region],
             [ReferenceMd.Product.Name, MeasureGroupIdentifier],
         );
 
-        expect(wrapper.find(CoreBarChart)).toHaveLength(1);
-        expect(wrapper.find(CoreBarChart).prop("execution")).toBeDefined();
-
-        const definition = wrapper.find(CoreBarChart).prop("execution").definition;
-
-        expect(definition.dimensions).toEqual(exceptedDimensions);
+        expect(CoreBarChart).toHaveBeenCalledWith(
+            expect.objectContaining({
+                execution: expect.objectContaining({
+                    definition: expect.objectContaining({
+                        dimensions: expectedDimensions,
+                    }),
+                }),
+            }),
+            expect.anything(),
+        );
     });
 
     describe("Stacking", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([ReferenceMd.Amount], config);
-            expect(wrapper.find(CoreBarChart).prop("config")).toEqual({
-                stackMeasures: true,
-                stackMeasuresToPercent: true,
-            });
+            renderChart([ReferenceMd.Amount], config);
+            expect(CoreBarChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                }),
+                expect.anything(),
+            );
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([ReferenceMdExt.AmountWithRatio], config);
-            expect(wrapper.find(CoreBarChart).prop("config")).toEqual({
-                stackMeasures: false,
-                stackMeasuresToPercent: false,
-            });
+            renderChart([ReferenceMdExt.AmountWithRatio], config);
+            expect(CoreBarChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stackMeasures: false,
+                        stackMeasuresToPercent: false,
+                    },
+                }),
+                expect.anything(),
+            );
         });
     });
 });
