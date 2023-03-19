@@ -107,6 +107,7 @@ async function main() {
             sdkBackend: SDK_BACKEND,
             updateSnapshots,
             tagsFilter: CYPRESS_TEST_TAGS.split(","),
+            workingDir: "./",
             config: `baseUrl=${host}`,
         });
     } else {
@@ -133,6 +134,7 @@ async function main() {
                 workspaceId,
                 sdkBackend: SDK_BACKEND,
                 tagsFilter: CYPRESS_TEST_TAGS.split(","),
+                workingDir: "./",
                 config: `baseUrl=${host},specPattern=cypress/**/${FILTER}`,
             });
         });

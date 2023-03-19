@@ -26,41 +26,6 @@ export async function wiremockStartRecording(wiremockHost, appHost) {
     });
 }
 
-export async function wiremockStopRecording(wiremockHost) {
-    const commonSnapshotParams = {
-        captureHeaders: {
-            "X-GDC-TEST-NAME": {},
-        },
-        requestBodyPattern: {
-            matcher: "equalToJson",
-            ignoreArrayOrder: false,
-            ignoreExtraElements: false,
-        },
-    };
-
-    // persist execution results requests with scenarios
-    const responseScenarios = await axios.post(`http://${wiremockHost}/__admin/recordings/snapshot`, {
-        repeatsAsScenarios: true,
-        filters: {
-            urlPattern: ".*executionResults.*",
-        },
-        persist: false,
-        ...commonSnapshotParams,
-    });
-
-    // persist other requests without scenarios
-    const responsePlain = await axios.post(`http://${wiremockHost}/__admin/recordings/snapshot`, {
-        repeatsAsScenarios: false,
-        filters: {
-            urlPattern: "((?!executionResults).)*",
-        },
-        persist: false,
-        ...commonSnapshotParams,
-    });
-
-    return [...responsePlain.data.mappings, ...responseScenarios.data.mappings];
-}
-
 export async function wiremockMockLogRequests(wiremockHost) {
     return axios.post(`http://${wiremockHost}/__admin/mappings`, {
         request: {
@@ -93,19 +58,6 @@ export async function wiremockImportMappings(wiremockHost, mappingsFile) {
     const importReq = await axios.post(`http://${wiremockHost}/__admin/mappings/import`, json);
     process.stdout.write(
         `Wiremock mappings imported from file ${mappingsFile} (status: ${importReq.status}) \n`,
-    );
-}
-
-export async function wiremockExportMappings(filename, mappings) {
-    fs.writeFileSync(
-        filename,
-        JSON.stringify(
-            {
-                mappings,
-            },
-            null,
-            2,
-        ) + "\n",
     );
 }
 

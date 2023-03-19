@@ -5,13 +5,14 @@
 import { spawn, execSync } from "child_process";
 
 const DEFAULT_CONFIG = {
-    specFilesFilter: "",
+    specFilesFilter: [],
     tagsFilter: [],
     workspaceId: "",
     childWorkspaceId: "",
     customCypressConfig: {},
     updateSnapshots: false,
     deleteCypressResults: true,
+    recording: false,
 };
 
 export function runCypress(configParams = {}) {
@@ -20,6 +21,7 @@ export function runCypress(configParams = {}) {
     const {
         visual,
         appHost,
+        backendHost,
         mockServer,
         authorization,
         specFilesFilter,
@@ -36,11 +38,14 @@ export function runCypress(configParams = {}) {
         tigerPermissionDatasourcePassword,
         tigerApiToken,
         tigerApiTokenNamePrefix,
+        recording,
+        workingDir,
     } = { ...DEFAULT_CONFIG, ...configParams };
 
     const cypressProps = {
         CYPRESS_HOST: appHost,
         CYPRESS_TEST_WORKSPACE_ID: workspaceId,
+        CYPRESS_BACKEND_HOST: backendHost,
     };
 
     cypressProps["CYPRESS_updateSnapshots"] = updateSnapshots;
@@ -70,19 +75,44 @@ export function runCypress(configParams = {}) {
         cypressProps["CYPRESS_SDK_BACKEND"] = sdkBackend;
     }
 
-    const args = [visual ? "open" : "run"];
-    if (!visual && specFilesFilter !== "") {
-        args.push("--spec", `./**/*${specFilesFilter}*`);
+    if (recording) {
+        cypressProps["CYPRESS_IS_RECORDING"] = recording;
     }
+
+    cypressProps["CYPRESS_WORKING_DIR"] = workingDir
+        ? workingDir
+        : "/gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e";
+
+    const args = [visual ? "open" : "run", "--e2e"];
+
+    if (!visual && specFilesFilter.length > 0) {
+        args.push("--spec", specFilesFilter.map((x) => `./**/*${x}*`).join(","));
+    }
+
     if (tagsFilter && tagsFilter.length > 0) {
         args.push("--env", `grepTags="${tagsFilter.join(" ")}"`);
     }
 
-    if (config) {
-        args.push("--config", config);
-    }
     if (browser) {
         args.push("--browser", browser);
+    }
+
+    const { CURRENTS_PROJECT_ID, CURRENTS_CI_BUILD_ID, RUN_PARALLEL } = process.env;
+
+    let cypressCommand = "cypress";
+
+    if (RUN_PARALLEL === "true") {
+        console.log("Going to run paralle test");
+        args.push("--record");
+        args.push("--parallel");
+        args.push("--ci-build-id", CURRENTS_CI_BUILD_ID);
+        cypressCommand = "currents";
+    }
+
+    if (config) {
+        args.push("--config", config + (CURRENTS_PROJECT_ID ? `,projectId=${CURRENTS_PROJECT_ID}` : ""));
+    } else if (CURRENTS_PROJECT_ID) {
+        args.push("--config", `projectId=${CURRENTS_PROJECT_ID}`);
     }
 
     if (deleteCypressResults) {
@@ -110,7 +140,7 @@ export function runCypress(configParams = {}) {
     }
 
     console.log("Going to run cypress with args: ", args);
-    const cypressProcess = spawn("cypress", args, {
+    const cypressProcess = spawn(cypressCommand, args, {
         env: {
             ...process.env,
             ...cypressProps,
