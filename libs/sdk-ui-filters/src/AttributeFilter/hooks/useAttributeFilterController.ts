@@ -99,6 +99,7 @@ export const useAttributeFilterController = (
         onApply,
         setConnectedPlaceholderValue,
         resetOnParentFilterChange,
+        selectionMode,
     });
     const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue, selectionMode });
 
@@ -148,6 +149,7 @@ function useInitOrReload(
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
         onApply: OnApplyCallbackType;
         resetOnParentFilterChange: boolean;
+        selectionMode: DashboardAttributeFilterSelectionMode;
     },
 ) {
     const {
@@ -157,6 +159,7 @@ function useInitOrReload(
         resetOnParentFilterChange,
         setConnectedPlaceholderValue,
         onApply,
+        selectionMode,
     } = props;
     useEffect(() => {
         if (limitingAttributeFilters.length > 0) {
@@ -187,6 +190,7 @@ function useInitOrReload(
             filtersChanged,
             setConnectedPlaceholderValue,
             onApply,
+            selectionMode,
         };
 
         const change = resetOnParentFilterChange
@@ -200,6 +204,7 @@ function useInitOrReload(
         handler,
         onApply,
         setConnectedPlaceholderValue,
+        selectionMode,
     ]);
 }
 
@@ -210,6 +215,7 @@ type UpdateFilterProps = {
     filtersChanged: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
     onApply: OnApplyCallbackType;
+    selectionMode: DashboardAttributeFilterSelectionMode;
 };
 
 type UpdateFilterType = "init-parent" | "init-self" | undefined;
@@ -254,10 +260,11 @@ function updateAutomaticResettingFilter(
         filtersChanged,
         setConnectedPlaceholderValue,
         onApply,
+        selectionMode,
     }: UpdateFilterProps,
 ): UpdateFilterType {
     if (limitingAttributesChanged) {
-        handler.changeSelection({ keys: [], isInverted: true });
+        handler.changeSelection({ keys: [], isInverted: selectionMode !== "single" });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
         // the next lines are to apply selection to the state of the parent component to make the
         // new attribute filter state persistent
