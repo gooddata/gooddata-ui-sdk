@@ -38,6 +38,8 @@ import { HeaderLocalizationScenario } from "../components/Scenarios/Dashboard/He
 import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAndDropWidgetScenario";
 import { AttributeFilterParentChildExampleScenario } from "../components/Scenarios/Filters/AttributeFilterParentChildExampleScenario";
 import { DashboardAttributeFilterRenaming } from "../components/Scenarios/Dashboard/DashboardAttributeFilterRenaming";
+import { SingleSelectionAttributeFilterParentChildScenario } from "../components/Scenarios/Filters/SingleSelectionAttributeFilterParentChildScenario";
+import { SingleSelectionAttributeFilterButtonScenario } from "../components/Scenarios/Filters/SingleSelectionAttributeFilterButtonScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -73,6 +75,9 @@ export const SCENARIO_KEYS = {
     FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION: "filters/attribute-filter-button-with-selection",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
     FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS: "filters/parent-child-filters-with-placeholder",
+    FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_PARENT_CHILD:
+        "filters/single-selection-attribute-filter-parent-child",
+    FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_BUTTON: "filters/single-selection-attribute-filter-button",
     FILTERS_ATTRIBUTE_FILTER_CONFIG: "filters/attribute-filter-config",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_RENAMING: "filters/attribute-filter-button-renaming",
     INSIGHT_ON_DASHBOARD: "dashboard/insight",
@@ -117,6 +122,14 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.HEADER_LOCALIZATION, HeaderLocalizationScenario],
     [SCENARIO_KEYS.DRAG_DROP_MOVE_WIDGET, DragDropWidgetScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_RENAMING, DashboardAttributeFilterRenaming],
+    [
+        SCENARIO_KEYS.FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_PARENT_CHILD,
+        SingleSelectionAttributeFilterParentChildScenario,
+    ],
+    [
+        SCENARIO_KEYS.FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_BUTTON,
+        SingleSelectionAttributeFilterButtonScenario,
+    ],
 ]);
 
 const ComponentResolver: React.FC = () => {
