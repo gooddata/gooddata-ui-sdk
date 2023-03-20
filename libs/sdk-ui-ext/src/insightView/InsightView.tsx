@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import {
@@ -156,6 +156,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
         }
 
         return backend.withTelemetry("InsightView", telemetryProps);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentInsightVisualizationUrl, backend]);
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
