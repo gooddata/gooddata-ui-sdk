@@ -13,6 +13,26 @@
             color: var(--gd-palette-complementary-6, #94a1ad);
         }
     }
+
+    &.gd-list-item {
+        &:hover {
+            background-color: variables.$is-focused-background;
+
+            &.is-selected {
+                color: variables.$gd-color-text;
+                background-color: variables.$is-selected-focused-background;
+            }
+
+            .input-label-text {
+                color: var(--gd-palette-complementary-9, inherit);
+            }
+        }
+
+        &.is-selected {
+            font-weight: bold;
+            color: variables.$gd-color-text;
+        }
+    }
 }
 
 .gd-attribute-filter-list-empty-item .input-checkbox-label {
@@ -38,26 +58,6 @@ div.gd-empty-item-bubble {
 
 .gd-attribute-filter-elements-select__next.gd-list {
     margin: 0;
-
-    .gd-list-item {
-        &:hover {
-            background-color: variables.$is-focused-background;
-
-            &.is-selected {
-                color: variables.$gd-color-text;
-                background-color: variables.$is-selected-focused-background;
-            }
-
-            .input-label-text {
-                color: var(--gd-palette-complementary-9, inherit);
-            }
-        }
-
-        &.is-selected {
-            font-weight: bold;
-            color: variables.$gd-color-text;
-        }
-    }
 
     .gd-list-item.gd-attribute-filter-list-empty-item {
         &:hover {

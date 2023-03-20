@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -53,7 +53,16 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
 export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
     IAttributeFilterDropdownButtonProps
 > = (props) => {
-    const { isOpen, subtitle, title, selectedItemsCount, onClick, isLoading, isFiltering } = props;
+    const {
+        isOpen,
+        subtitle,
+        title,
+        selectedItemsCount,
+        onClick,
+        isLoading,
+        isFiltering,
+        showSelectionCount = true,
+    } = props;
     const intl = useIntl();
 
     let buttonTitle = `${title}: ${subtitle}`;
@@ -78,7 +87,7 @@ export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
         { "gd-icon-navigatedown": !isOpen },
     );
 
-    const selectionSize = selectedItemsCount !== 0 ? `(${selectedItemsCount})` : undefined;
+    const selectionSize = showSelectionCount ? `(${selectedItemsCount})` : undefined;
 
     return (
         <div className="gd-attribute-filter-dropdown-simple-button__next">

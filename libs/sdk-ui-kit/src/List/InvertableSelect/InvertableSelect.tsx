@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import Measure from "react-measure";
@@ -110,6 +110,7 @@ export interface IInvertableSelectProps<T> {
     height?: number;
     adaptiveWidth?: boolean;
     adaptiveHeight?: boolean;
+    isSingleSelect?: boolean;
 
     items: T[];
     totalItemsCount?: number;
@@ -152,6 +153,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         height,
         adaptiveWidth,
         adaptiveHeight,
+        isSingleSelect = false,
 
         items,
         totalItemsCount,
@@ -235,7 +237,9 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                                 return (
                                     <div className="gd-invertable-select-list" ref={measureRef}>
                                         <AsyncList
-                                            className={cx(["is-multiselect", className])}
+                                            className={cx(className, {
+                                                "is-multiselect": !isSingleSelect,
+                                            })}
                                             width={adaptiveWidth ? contentRect?.client.width : width}
                                             height={
                                                 adaptiveHeight

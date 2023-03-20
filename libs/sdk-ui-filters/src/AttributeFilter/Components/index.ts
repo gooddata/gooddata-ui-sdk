@@ -29,6 +29,7 @@ export {
     IAttributeFilterElementsSelectErrorProps,
 } from "./ElementsSelect/AttributeFilterElementsSelectError";
 export { AttributeFilterElementsSelectItem } from "./ElementsSelect/AttributeFilterElementsSelectItem";
+export { SingleSelectionAttributeFilterElementsSelectItem } from "./ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem";
 export {
     AttributeFilterElementsSelectLoading,
     IAttributeFilterElementsSelectLoadingProps,
@@ -59,6 +60,7 @@ export {
     AttributeFilterStatusBar,
     IAttributeFilterStatusBarProps,
 } from "./ElementsSelect/StatusBar/AttributeFilterStatusBar";
+export { SingleSelectionAttributeFilterStatusBar } from "./ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar";
 export { AttributeFilterError, IAttributeFilterErrorProps } from "./AttributeFilterError";
 export { AttributeFilterLoading } from "./AttributeFilterLoading";
 

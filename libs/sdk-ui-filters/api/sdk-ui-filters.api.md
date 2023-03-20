@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
@@ -483,7 +484,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -501,6 +502,7 @@ export interface IAttributeFilterCoreProps {
     parentFilters?: AttributeFiltersOrPlaceholders;
     // @internal (undocumented)
     resetOnParentFilterChange?: boolean;
+    selectionMode?: DashboardAttributeFilterSelectionMode;
     staticElements?: IAttributeElement[];
     title?: string;
     workspace?: string;
@@ -572,6 +574,8 @@ export interface IAttributeFilterDropdownButtonProps {
     isOpen?: boolean;
     onClick?: () => void;
     selectedItemsCount?: number;
+    // (undocumented)
+    showSelectionCount?: boolean;
     subtitle?: string;
     title?: string;
     TooltipContentComponent?: React_2.ComponentType;
@@ -603,6 +607,7 @@ export interface IAttributeFilterElementsSelectErrorProps {
 
 // @beta
 export interface IAttributeFilterElementsSelectItemProps {
+    fullscreenOnMobile?: boolean;
     isSelected: boolean;
     item: IAttributeElement;
     onDeselect: () => void;
@@ -1125,7 +1130,7 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
 // @public (undocumented)
-export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean) => void;
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode) => void;
 
 // @public
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;
@@ -1220,6 +1225,12 @@ export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
 
 // @public
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
+
+// @beta
+export const SingleSelectionAttributeFilterElementsSelectItem: React_2.VFC<IAttributeFilterElementsSelectItemProps>;
+
+// @beta
+export const SingleSelectionAttributeFilterStatusBar: React_2.FC<IAttributeFilterStatusBarProps>;
 
 // @public (undocumented)
 export type Unsubscribe = () => void;

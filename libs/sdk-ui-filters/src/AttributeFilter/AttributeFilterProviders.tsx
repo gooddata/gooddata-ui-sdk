@@ -4,7 +4,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterComponentsProvider } from "./Context/AttributeFilterComponentsContext";
 import { AttributeFilterContextProvider } from "./Context/AttributeFilterContext";
 import { IAttributeFilterBaseProps } from "./types";
-import { AttributeFilterDefaultComponents as DefaultComponents } from "./AttributeFilterDefaultComponents";
+import { getAttributeFilterDefaultComponents } from "./AttributeFilterDefaultComponents";
 
 /**
  * @internal
@@ -27,6 +27,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         hiddenElements,
         staticElements,
         fullscreenOnMobile = false,
+        selectionMode = "multi",
         onApply,
         onError,
         ErrorComponent,
@@ -43,6 +44,8 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         EmptyResultComponent,
         StatusBarComponent,
     } = props;
+
+    const DefaultComponents = getAttributeFilterDefaultComponents(props);
 
     return (
         <IntlWrapper locale={locale}>
@@ -88,6 +91,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     hiddenElements={hiddenElements}
                     staticElements={staticElements}
                     fullscreenOnMobile={fullscreenOnMobile}
+                    selectionMode={selectionMode}
                 >
                     {children}
                 </AttributeFilterContextProvider>

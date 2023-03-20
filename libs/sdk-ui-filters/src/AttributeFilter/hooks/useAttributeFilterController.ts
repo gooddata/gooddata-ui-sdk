@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
 import {
+    DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
     IAttributeElement,
     IAttributeFilter,
@@ -66,6 +67,8 @@ export const useAttributeFilterController = (
         staticElements,
 
         elementsOptions,
+
+        selectionMode = "multi",
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -97,7 +100,7 @@ export const useAttributeFilterController = (
         setConnectedPlaceholderValue,
         resetOnParentFilterChange,
     });
-    const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue });
+    const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue, selectionMode });
 
     return {
         ...attributeFilterControllerData,
@@ -304,9 +307,10 @@ function useCallbacks(
     props: {
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
         onApply: OnApplyCallbackType;
+        selectionMode: DashboardAttributeFilterSelectionMode;
     },
 ) {
-    const { onApply: onApplyInput, setConnectedPlaceholderValue } = props;
+    const { onApply: onApplyInput, setConnectedPlaceholderValue, selectionMode } = props;
     const onSelect = useCallback(
         (selectedItems: IAttributeElement[], isInverted: boolean) => {
             const attributeFilter = handler.getFilter();
@@ -349,8 +353,8 @@ function useCallbacks(
         const isInverted = handler.getCommittedSelection()?.isInverted;
 
         setConnectedPlaceholderValue(nextFilter);
-        onApplyInput?.(nextFilter, isInverted);
-    }, [onApplyInput, setConnectedPlaceholderValue, handler]);
+        onApplyInput?.(nextFilter, isInverted, selectionMode);
+    }, [onApplyInput, setConnectedPlaceholderValue, handler, selectionMode]);
 
     return {
         onApply,

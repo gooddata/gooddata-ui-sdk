@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import { IAttributeFilterCustomComponentProps } from "./types";
+// (C) 2022-2023 GoodData Corporation
+import { IAttributeFilterBaseProps, IAttributeFilterCustomComponentProps } from "./types";
 import { AttributeFilterLoading } from "./Components/AttributeFilterLoading";
 import { AttributeFilterError } from "./Components/AttributeFilterError";
 import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton";
@@ -13,6 +13,10 @@ import { AttributeFilterElementsSelectLoading } from "./Components/ElementsSelec
 import { AttributeFilterEmptyResult } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult";
 import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar";
 import { AttributeFilterElementsActions } from "./Components/ElementsSelect/AttributeFilterElementsActions";
+import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem";
+import { SingleSelectionAttributeFilterElementsSelectActions } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsActions";
+import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar";
+import { SingleSelectionAttributeFilterDropdownActions } from "./Components/Dropdown/SingleSelectionAttributeFilterDropdownActions";
 
 /**
  * @internal
@@ -33,4 +37,23 @@ export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomCo
     StatusBarComponent: AttributeFilterStatusBar,
     FilterError: AttributeFilterError,
     FilterLoading: AttributeFilterLoading,
+};
+
+/**
+ * @internal
+ */
+export const getAttributeFilterDefaultComponents = ({
+    selectionMode,
+}: IAttributeFilterBaseProps): Required<IAttributeFilterCustomComponentProps> => {
+    return {
+        ...AttributeFilterDefaultComponents,
+        ...(selectionMode === "single"
+            ? {
+                  ElementsSelectItemComponent: SingleSelectionAttributeFilterElementsSelectItem,
+                  ElementsSelectActionsComponent: SingleSelectionAttributeFilterElementsSelectActions,
+                  StatusBarComponent: SingleSelectionAttributeFilterStatusBar,
+                  DropdownActionsComponent: SingleSelectionAttributeFilterDropdownActions,
+              }
+            : {}),
+    };
 };

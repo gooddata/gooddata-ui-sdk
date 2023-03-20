@@ -113,6 +113,20 @@ const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownBut
                         icon={icon}
                         onClick={action("onClick")}
                     />
+                    <h4>AttributeFilterDropdownButton long subtitle without item count</h4>
+                    <AttributeFilterDropdownButton
+                        isOpen={false}
+                        title={attributeTitle}
+                        subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                        selectedItemsCount={3}
+                        showSelectionCount={false}
+                        isFiltering={false}
+                        isLoaded={true}
+                        isLoading={false}
+                        isDraggable={isDraggable}
+                        icon={icon}
+                        onClick={action("onClick")}
+                    />
                     <h4>AttributeFilterDropdownButton shortened title</h4>
                     <div style={{ width: 120 }}>
                         <AttributeFilterDropdownButton
