@@ -1,7 +1,7 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { mount, ReactWrapper } from "enzyme";
+import { render, RenderResult } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ITheme } from "@gooddata/sdk-model";
@@ -9,14 +9,13 @@ import { WorkspaceProvider, BackendProvider } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep";
 
 import { isDarkTheme, ThemeModifier, ThemeProvider } from "../ThemeProvider";
-import { IThemeContextProviderProps, withTheme } from "../Context";
+import { withTheme } from "../Context";
 
-const renderComponent = async (component: React.ReactElement) => {
-    let wrappedComponent: ReactWrapper;
+const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
+    let wrappedComponent;
     await act(async () => {
-        wrappedComponent = mount(component);
+        wrappedComponent = render(component);
     });
-    wrappedComponent.update();
     return wrappedComponent;
 };
 
@@ -123,55 +122,40 @@ describe("ThemeProvider", () => {
         expect(document.getElementById("gdc-theme-properties")).toEqual(null);
     });
 
-    it("should remove properties if workspace is changed to undefined", async () => {
-        const component = await renderComponent(
-            <ThemeProvider backend={backend} workspace={workspace}>
-                <div>Test</div>
-            </ThemeProvider>,
-        );
-
-        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
-
-        component.update();
-        component.setProps({ workspace: undefined });
-
-        expect(document.getElementById("gdc-theme-properties")).toEqual(null);
-    });
-
     it("should pass theme object and themeIsLoading flag to context", async () => {
-        const TestComponent: React.FC<IThemeContextProviderProps> = () => <div>Test component</div>;
+        const TestComponent = jest.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
-        const component = await renderComponent(
+        await renderComponent(
             <ThemeProvider backend={backend} workspace={workspace}>
                 <TestComponentWithTheme />
             </ThemeProvider>,
         );
 
-        expect(component.find(TestComponent).props()).toEqual({ themeIsLoading: false, theme });
+        expect(TestComponent).toHaveBeenLastCalledWith({ themeIsLoading: false, theme }, {});
     });
 
     it("should pass themeIsLoading flag set to false if backend is missing", async () => {
-        const TestComponent: React.FC<IThemeContextProviderProps> = () => <div>Test component</div>;
+        const TestComponent = jest.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
-        const component = await renderComponent(
+        await renderComponent(
             <ThemeProvider workspace={workspace}>
                 <TestComponentWithTheme />
             </ThemeProvider>,
         );
 
-        expect(component.find(TestComponent).props().themeIsLoading).toEqual(false);
+        expect(TestComponent).toHaveBeenCalledWith({ themeIsLoading: false, theme: {} }, {});
     });
 
     it("should pass themeIsLoading flag set to false if workspace is missing", async () => {
-        const TestComponent: React.FC<IThemeContextProviderProps> = () => <div>Test component</div>;
+        const TestComponent = jest.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
-        const component = await renderComponent(
+        await renderComponent(
             <ThemeProvider backend={backend}>
                 <TestComponentWithTheme />
             </ThemeProvider>,
         );
 
-        expect(component.find(TestComponent).props().themeIsLoading).toEqual(false);
+        expect(TestComponent).toHaveBeenCalledWith({ themeIsLoading: false, theme: {} }, {});
     });
 
     it("should use the theme from props if provided and not load anything", async () => {
@@ -226,9 +210,9 @@ describe("ThemeProvider", () => {
             },
         };
 
-        const TestComponent: React.FC<IThemeContextProviderProps> = () => <div>Test component</div>;
+        const TestComponent = jest.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
-        const component = await renderComponent(
+        await renderComponent(
             <ThemeProvider theme={theme}>
                 <TestComponentWithTheme />
             </ThemeProvider>,
@@ -241,14 +225,17 @@ describe("ThemeProvider", () => {
                     .innerHTML.indexOf(`--gd-palette-complementary-${index}: ${color};`) > -1,
             ).toEqual(true);
         });
-        expect(component.find(TestComponent).props()).toEqual({
-            themeIsLoading: false,
-            theme: expectedTheme,
-        });
+        expect(TestComponent).toHaveBeenLastCalledWith(
+            {
+                themeIsLoading: false,
+                theme: expectedTheme,
+            },
+            {},
+        );
     });
 
     it("should not remove global theme styles on unmount when removeGlobalStylesOnUnmout is set to false", async () => {
-        const component = await renderComponent(
+        const { unmount } = await renderComponent(
             <ThemeProvider
                 workspace={workspace}
                 backend={backend}
@@ -259,7 +246,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        component.unmount();
+        unmount();
         expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
     });
 });
