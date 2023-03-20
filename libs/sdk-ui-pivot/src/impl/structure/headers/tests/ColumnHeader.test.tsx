@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 
 import ColumnHeader from "../ColumnHeader";
 import HeaderCell from "../HeaderCell";
@@ -25,6 +25,7 @@ const getColumnHeader = (
         getTableDescriptor: () => table,
         column: {
             addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
             getSort: jest.fn(),
             getColDef: jest.fn(() => ({
                 type,
@@ -51,35 +52,48 @@ const getColumnHeader = (
     return <ColumnHeader {...extendedProps} />;
 };
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../HeaderCell", () => ({
+    __esModule: true,
+    ...jest.requireActual("../HeaderCell"),
+    default: jest.fn(() => null),
+}));
+
 describe("ColumnHeader renderer", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it("should render HeaderCell", () => {
-        const component = shallow(getColumnHeader());
-        expect(component.find(HeaderCell)).toHaveLength(1);
+        render(getColumnHeader());
+        expect(HeaderCell).toHaveBeenCalled();
     });
 
     it("should pass enableSorting to HeaderCell", () => {
-        const component = shallow(getColumnHeader({ enableSorting: true }));
-        expect(component.find(HeaderCell).props()).toHaveProperty("enableSorting", true);
+        render(getColumnHeader({ enableSorting: true }));
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: true }), {});
     });
 
     it("should disable sorting if ColumnHeader is displaying a column attribute (use cse of no measures)", () => {
-        const component = shallow(
+        render(
             getColumnHeader(
                 { enableSorting: true },
                 { type: "COLUMN_ATTRIBUTE_COLUMN", colGroupId: "cg_0" },
                 TableDescriptor.for(SingleColumn, "empty value"),
             ),
         );
-        expect(component.find(HeaderCell).props()).toHaveProperty("enableSorting", false);
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: false }), {});
     });
 
     it("should alignment left if this is an attribute", () => {
-        const component = shallow(getColumnHeader({}, { colGroupId: "r_0" }));
-        expect(component.find(HeaderCell).props()).toHaveProperty("textAlign", "left");
+        render(getColumnHeader({}, { colGroupId: "r_0" }));
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "left" }), {});
     });
 
     it("should alignment right if this is a measure", () => {
-        const component = shallow(getColumnHeader({}, { colGroupId: "c_0" }));
-        expect(component.find(HeaderCell).props()).toHaveProperty("textAlign", "right");
+        render(getColumnHeader({}, { colGroupId: "c_0" }));
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "right" }), {});
     });
 });

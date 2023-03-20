@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { AgGridReact } from "@ag-grid-community/react";
 
 import ApiWrapper from "../agApiWrapper";
@@ -60,7 +60,7 @@ describe("agGridApiWrapper", () => {
             ],
         };
 
-        return mount(<AgGridReact modules={AllCommunityModules} {...gridOptions} {...customProps} />);
+        return render(<AgGridReact modules={AllCommunityModules} {...gridOptions} {...customProps} />);
     }
 
     async function renderGridReady() {

@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import { mount } from "enzyme";
+// (C) 2019-2023 GoodData Corporation
+import { render } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
@@ -22,8 +22,20 @@ import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace"
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { TableDescriptor } from "../../tableDescriptor";
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../AggregationsSubMenu", () => ({
+    __esModule: true,
+    default: jest.fn(() => null),
+}));
+
+const intlMock = createIntlMock({
+    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Tooltip 1",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Tooltip 2",
+});
+
 describe("AggregationsMenu", () => {
-    const intlMock = createIntlMock();
     const attributeColumnId = "c_0";
     const fixture = recordedDataFacade(
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
@@ -36,8 +48,8 @@ describe("AggregationsMenu", () => {
     const onMenuOpenedChange = jest.fn();
     const onAggregationSelect = jest.fn();
 
-    function render(customProps: Partial<IAggregationsMenuProps> = {}) {
-        return mount(
+    function renderComponent(customProps: Partial<IAggregationsMenuProps> = {}) {
+        return render(
             <AggregationsMenu
                 intl={intlMock}
                 isMenuOpened={true}
@@ -54,31 +66,36 @@ describe("AggregationsMenu", () => {
             />,
         );
     }
+    const tableHeaderSelector = ".s-table-header-menu";
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
     it("should render opened main menu", () => {
-        const wrapper = render();
-        const menu = wrapper.find(".s-table-header-menu");
+        renderComponent();
+        const menu = document.querySelector(tableHeaderSelector);
 
-        expect(menu.length).toBe(1);
-        expect(menu.hasClass("gd-pivot-table-header-menu--open")).toBe(true);
+        expect(menu).toBeInTheDocument();
+        expect(menu).toHaveClass("gd-pivot-table-header-menu--open");
     });
 
     it("should render main menu with all total items", () => {
-        const wrapper = render();
+        renderComponent();
 
-        expect(wrapper.find(".s-menu-aggregation").length).toBe(AVAILABLE_TOTALS.length);
+        expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(AVAILABLE_TOTALS.length);
     });
 
     it("should render main menu with only available total items", () => {
-        const wrapper = render({ availableTotalTypes: ["sum", "avg"] });
+        renderComponent({ availableTotalTypes: ["sum", "avg"] });
 
-        expect(wrapper.find(".s-menu-aggregation").length).toBe(2);
+        expect(document.querySelectorAll(".s-menu-aggregation")).toHaveLength(2);
     });
 
     it("should render main menu with submenu with only available total items", () => {
-        const wrapper = render({ availableTotalTypes: ["sum", "avg"], showSubmenu: true });
+        renderComponent({ availableTotalTypes: ["sum", "avg"], showSubmenu: true });
 
-        expect(wrapper.find(".s-menu-aggregation").length).toBe(2);
+        expect(document.querySelectorAll(".s-menu-aggregation")).toHaveLength(2);
     });
 
     it('should render "sum" as only selected item in main menu', () => {
@@ -94,45 +111,53 @@ describe("AggregationsMenu", () => {
                 measureIdentifier: measureLocalId(ReferenceMd.Amount),
             },
         ];
-        const wrapper = render({ getTotals: () => totals });
+        renderComponent({ getTotals: () => totals });
 
-        expect(wrapper.find(".is-checked").length).toBe(1);
-        expect(wrapper.find(".s-menu-aggregation-sum .is-checked").length).toBe(1);
+        expect(document.querySelectorAll(".is-checked")).toHaveLength(1);
+        expect(document.querySelectorAll(".s-menu-aggregation-sum .is-checked")).toHaveLength(1);
     });
 
     it("should render closed main menu when isMenuOpen is set to false", () => {
-        const wrapper = render({ isMenuOpened: false });
+        renderComponent({ isMenuOpened: false });
 
-        expect(wrapper.find(".s-table-header-menu").hasClass("gd-pivot-table-header-menu--open")).toBe(false);
+        const tableHeader = document.querySelector(tableHeaderSelector);
+        expect(tableHeader).not.toHaveClass("gd-pivot-table-header-menu--open");
+        expect(tableHeader).toHaveClass("gd-pivot-table-header-menu--show");
     });
 
     it("should render visible main menu button", () => {
-        const wrapper = render();
+        renderComponent();
 
-        expect(wrapper.find(".s-table-header-menu").hasClass("gd-pivot-table-header-menu--show")).toBe(true);
+        const tableHeader = document.querySelector(tableHeaderSelector);
+        expect(tableHeader).toHaveClass("gd-pivot-table-header-menu--open");
+        expect(tableHeader).toHaveClass("gd-pivot-table-header-menu--show");
     });
 
     it("should render invisible visible main menu button", () => {
-        const wrapper = render({ isMenuButtonVisible: false });
+        renderComponent({ isMenuButtonVisible: false });
 
-        expect(wrapper.find(".s-table-header-menu").hasClass("gd-pivot-table-header-menu--hide")).toBe(true);
+        const tableHeader = document.querySelector(tableHeaderSelector);
+        expect(tableHeader).toHaveClass("gd-pivot-table-header-menu--open");
+        expect(tableHeader).toHaveClass("gd-pivot-table-header-menu--hide");
     });
 
     it("should render submenu with correct props", () => {
-        const wrapper = render({
+        renderComponent({
             isMenuButtonVisible: false,
             showSubmenu: true,
         });
-        const subMenu = wrapper.find(".s-menu-aggregation-sum").find(AggregationsSubMenu);
 
-        expect(subMenu.props()).toMatchObject({
-            totalType: "sum",
-            rowAttributeDescriptors: [
-                expect.objectContaining({ attributeHeader: expect.anything() }),
-                expect.objectContaining({ attributeHeader: expect.anything() }),
-            ],
-            columnTotals: [],
-        });
+        expect(AggregationsSubMenu).toHaveBeenCalledWith(
+            expect.objectContaining({
+                totalType: "sum",
+                rowAttributeDescriptors: [
+                    expect.objectContaining({ attributeHeader: expect.anything() }),
+                    expect.objectContaining({ attributeHeader: expect.anything() }),
+                ],
+                columnTotals: [],
+            }),
+            {},
+        );
     });
 
     it("should not render any submenu when there is no row attribute", () => {
@@ -142,24 +167,24 @@ describe("AggregationsMenu", () => {
         );
         const tableDescriptor = TableDescriptor.for(fixture, "empty value");
 
-        const wrapper = render({
+        renderComponent({
             showSubmenu: true,
             getTableDescriptor: () => tableDescriptor,
         });
 
-        expect(wrapper.find(AggregationsSubMenu).length).toBe(0);
+        expect(AggregationsSubMenu).toHaveBeenCalledTimes(0);
     });
 
     it("should not disable any item when there is no measure value filter set", () => {
         const defWithAttrFilter = defWithFilters(emptyDef("testWorkspace"), [
             newPositiveAttributeFilter(idRef("some-identifier"), ["e1", "e2"]),
         ]);
-        const wrapper = render({
+        renderComponent({
             showSubmenu: true,
             getExecutionDefinition: () => defWithAttrFilter,
         });
-        expect(wrapper.find(".is-disabled").length).toBe(0);
-        expect(wrapper.find(AggregationsSubMenu).length).toBe(6);
+        expect(document.querySelectorAll(".is-disabled")).toHaveLength(0);
+        expect(AggregationsSubMenu).toHaveBeenCalledTimes(6);
     });
 
     it("should disable native totals when there is at least one measure value filter set", () => {
@@ -167,12 +192,12 @@ describe("AggregationsMenu", () => {
             newMeasureValueFilter(localIdRef("some-localIdentifier"), "GREATER_THAN", 10),
         ]);
 
-        const wrapper = render({
+        renderComponent({
             showSubmenu: true,
             getExecutionDefinition: () => defWithMeasureValueFilter,
         });
-        expect(wrapper.find(".is-disabled").length).toBe(1);
-        expect(wrapper.find(AggregationsSubMenu).length).toBe(5);
+        expect(document.querySelectorAll(".is-disabled")).toHaveLength(1);
+        expect(AggregationsSubMenu).toHaveBeenCalledTimes(5);
     });
 
     it("should disable native totals when there is ranking filter set", () => {
@@ -180,17 +205,17 @@ describe("AggregationsMenu", () => {
             newRankingFilter(localIdRef("some-localIdentifier"), "TOP", 3),
         ]);
 
-        const wrapper = render({
+        renderComponent({
             showSubmenu: true,
             getExecutionDefinition: () => defWithRankingFilter,
         });
-        expect(wrapper.find(".is-disabled").length).toBe(1);
-        expect(wrapper.find(AggregationsSubMenu).length).toBe(5);
+        expect(document.querySelectorAll(".is-disabled")).toHaveLength(1);
+        expect(AggregationsSubMenu).toHaveBeenCalledTimes(5);
     });
 
     it("should close on scroll", () => {
         const onMenuOpenedChange = jest.fn();
-        render({ onMenuOpenedChange });
+        renderComponent({ onMenuOpenedChange });
         window.dispatchEvent(new Event("scroll"));
         expect(onMenuOpenedChange).toHaveBeenCalledWith({ opened: false, source: "SCROLL" });
     });

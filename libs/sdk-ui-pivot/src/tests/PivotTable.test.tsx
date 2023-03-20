@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import { PivotTable, pivotTableMenuForCapabilities } from "../PivotTable";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IMeasure } from "@gooddata/sdk-model";
@@ -22,7 +22,7 @@ describe("PivotTable", () => {
     };
 
     function renderShallowComponent(customProps = {}) {
-        return shallow(
+        return render(
             <PivotTable
                 backend={dummyBackend()}
                 workspace="testWorkspace"
@@ -33,8 +33,8 @@ describe("PivotTable", () => {
     }
 
     it("should render with custom SDK", () => {
-        const wrapper = renderShallowComponent();
-        expect(wrapper).toHaveLength(1);
+        renderShallowComponent();
+        expect(document.querySelector(".gd-table-component")).toBeInTheDocument();
     });
 });
 
