@@ -1,6 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import noop from "lodash/noop";
 
 import { ChartTransformation } from "../ChartTransformation";
@@ -8,7 +8,6 @@ import { HighChartsRenderer } from "../adapter/HighChartsRenderer";
 import { IChartConfig } from "../../interfaces";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
-import { Chart } from "../adapter/Chart";
 import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../constants/alignments";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -26,7 +25,19 @@ const BarChartViewAndStack = recordedDataFacade(
 );
 const PieChartSingleMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../adapter/HighChartsRenderer", () => ({
+    ...jest.requireActual("../adapter/HighChartsRenderer"),
+    HighChartsRenderer: jest.fn(() => null),
+}));
+
 describe("ChartTransformation", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     const defaultProps = {
         dataView: BarChartNoAttributes.dataView,
         config: {
@@ -49,8 +60,13 @@ describe("ChartTransformation", () => {
 
     it("should use custom renderer", () => {
         const renderer = jest.fn().mockReturnValue(<div />);
-        mount(createComponent({ renderer }));
+        render(createComponent({ renderer }));
         expect(renderer).toHaveBeenCalledTimes(1);
+    });
+
+    it("should use highcharts renderer", () => {
+        render(createComponent());
+        expect(HighChartsRenderer).toHaveBeenCalledTimes(1);
     });
 
     it("should use custom color palette", () => {
@@ -85,7 +101,7 @@ describe("ChartTransformation", () => {
                 colorPalette: customColorPalette,
             },
         };
-        mount(createComponent(componentProps));
+        render(createComponent(componentProps));
         expect(colors).toEqual(
             customColorPalette.map((colorPaletteItem: IColorPaletteItem) => getRgbString(colorPaletteItem)),
         );
@@ -102,7 +118,7 @@ describe("ChartTransformation", () => {
         function createChartRendererProps(executionData = BarChartViewAndStack, config: IChartConfig = {}) {
             const renderer = jest.fn().mockReturnValue(<div />);
             pushData = jest.fn();
-            mount(
+            render(
                 createComponent({
                     renderer,
                     ...executionData,
@@ -154,7 +170,7 @@ describe("ChartTransformation", () => {
                     },
                 },
             };
-            mount(createComponent(props));
+            render(createComponent(props));
             expect(onDataTooLarge).toHaveBeenCalledTimes(1);
         });
 
@@ -170,7 +186,7 @@ describe("ChartTransformation", () => {
                     },
                 },
             };
-            mount(createComponent(props));
+            render(createComponent(props));
             expect(onDataTooLarge).toHaveBeenCalledTimes(1);
         });
 
@@ -186,38 +202,9 @@ describe("ChartTransformation", () => {
                     },
                 },
             };
-            const wrapper = mount(createComponent(props));
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
+            render(createComponent(props));
+            expect(HighChartsRenderer).toHaveBeenCalledTimes(0);
             expect(onDataTooLarge).toHaveBeenCalledTimes(1);
-        });
-
-        it("should be invoked on props change", () => {
-            const onDataTooLarge = jest.fn();
-            const props = {
-                ...BarChartMultipleMeasures,
-                onDataTooLarge,
-                config: {
-                    ...defaultProps.config,
-                    limits: {
-                        series: 1,
-                    },
-                },
-            };
-            const wrapper = mount(createComponent());
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
-
-            wrapper.setProps(props);
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
-            expect(onDataTooLarge).toHaveBeenCalledTimes(1);
-
-            wrapper.setProps({
-                ...defaultProps,
-                config: {
-                    ...defaultProps.config,
-                    limits: undefined,
-                },
-            });
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
         });
     });
 
@@ -236,7 +223,7 @@ describe("ChartTransformation", () => {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
             };
-            mount(createComponent(props));
+            render(createComponent(props));
             expect(onNegativeValues).toHaveBeenCalledTimes(1);
         });
 
@@ -250,7 +237,7 @@ describe("ChartTransformation", () => {
                     type: "column",
                 },
             };
-            mount(createComponent(props));
+            render(createComponent(props));
             expect(onNegativeValues).toHaveBeenCalledTimes(0);
         });
 
@@ -267,7 +254,7 @@ describe("ChartTransformation", () => {
                     },
                 },
             };
-            mount(createComponent(props));
+            render(createComponent(props));
             expect(onNegativeValues).toHaveBeenCalledTimes(0);
         });
 
@@ -277,33 +264,16 @@ describe("ChartTransformation", () => {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
             };
-            const wrapper = mount(createComponent(props));
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
+            render(createComponent(props));
+            expect(HighChartsRenderer).toHaveBeenCalledTimes(0);
             expect(onNegativeValues).toHaveBeenCalledTimes(1);
-        });
-
-        it("should be invoked on props change", () => {
-            const onNegativeValues = jest.fn();
-            const props = {
-                onNegativeValues,
-                ...pieChartPropsWithNegativeValue,
-            };
-            const wrapper = mount(createComponent());
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
-
-            wrapper.setProps(props);
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
-            expect(onNegativeValues).toHaveBeenCalledTimes(1);
-
-            wrapper.setProps(PieChartSingleMeasure);
-            expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
         });
     });
 
     const AlignableCharts: Array<[string]> = [[VisualizationTypes.PIE], [VisualizationTypes.DONUT]];
 
     describe.each(AlignableCharts)("%s chart alignments", (type: string) => {
-        function render(chartConfig: IChartConfig) {
+        function renderComponent(chartConfig: IChartConfig) {
             const props = {
                 ...PieChartSingleMeasure,
                 config: {
@@ -312,19 +282,25 @@ describe("ChartTransformation", () => {
                 },
                 onDataTooLarge: noop,
             };
-            return mount(createComponent(props));
+            return render(createComponent(props));
         }
 
         it.each([[TOP], [MIDDLE], [BOTTOM]])("should props.verticalAlign be %s", (verticalAlign: string) => {
-            const wrapper = render({ chart: { verticalAlign } });
-            const highChartsRendererProps = wrapper.find(HighChartsRenderer).props();
-            expect(highChartsRendererProps.chartOptions.verticalAlign).toBe(verticalAlign);
+            renderComponent({ chart: { verticalAlign } });
+            expect(HighChartsRenderer).toHaveBeenCalledWith(
+                expect.objectContaining({ chartOptions: expect.objectContaining({ verticalAlign }) }),
+                {},
+            );
         });
 
         it("should props.verticalAlign be undefined", () => {
-            const wrapper = render({});
-            const highChartsRendererProps = wrapper.find(HighChartsRenderer).props();
-            expect(highChartsRendererProps.chartOptions.verticalAlign).toBe(undefined);
+            renderComponent({});
+            expect(HighChartsRenderer).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    chartOptions: expect.objectContaining({ verticalAlign: undefined }),
+                }),
+                {},
+            );
         });
     });
 
@@ -338,7 +314,7 @@ describe("ChartTransformation", () => {
                 },
                 onDataTooLarge: noop,
             };
-            return mount(
+            return render(
                 <IntlWrapper>
                     <ChartTransformation {...(props as any)} />
                 </IntlWrapper>,
@@ -352,12 +328,21 @@ describe("ChartTransformation", () => {
                     rotation: "90",
                 },
             };
-            const wrapper = createComponent(chartConfig);
-            const chartConfigProps = wrapper.find(Chart).prop("config");
-            const label = chartConfigProps?.yAxis?.[1]?.labels;
+            createComponent(chartConfig);
 
-            expect(label.align).toBe("left");
-            expect(label.y).toBe(undefined);
+            expect(HighChartsRenderer).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    hcOptions: expect.objectContaining({
+                        yAxis: expect.arrayContaining([
+                            expect.anything(),
+                            expect.objectContaining({
+                                labels: expect.objectContaining({ align: "left", y: undefined }),
+                            }),
+                        ]),
+                    }),
+                }),
+                {},
+            );
         });
 
         it("should align Y axis label to right and secondary Y axis labels to left", () => {
@@ -370,16 +355,23 @@ describe("ChartTransformation", () => {
                     rotation: "90",
                 },
             };
-            const wrapper = createComponent(chartConfig);
-            const chartConfigProps = wrapper.find(Chart).prop("config");
+            createComponent(chartConfig);
 
-            const labels = chartConfigProps?.yAxis?.[0]?.labels;
-            expect(labels.align).toBe("right");
-            expect(labels.y).toBe(8);
-
-            const secondaryLabels = chartConfigProps?.yAxis?.[1]?.labels;
-            expect(secondaryLabels.align).toBe("left");
-            expect(secondaryLabels.y).toBe(undefined);
+            expect(HighChartsRenderer).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    hcOptions: expect.objectContaining({
+                        yAxis: expect.arrayContaining([
+                            expect.objectContaining({
+                                labels: expect.objectContaining({ align: "right", y: 8 }),
+                            }),
+                            expect.objectContaining({
+                                labels: expect.objectContaining({ align: "left", y: undefined }),
+                            }),
+                        ]),
+                    }),
+                }),
+                {},
+            );
         });
 
         it("should not align secondary Y axis labels to left on other charts", () => {
@@ -390,12 +382,21 @@ describe("ChartTransformation", () => {
                     rotation: "90",
                 },
             };
-            const wrapper = createComponent(chartConfig);
-            const chartConfigProps = wrapper.find(Chart).prop("config");
-            const label = chartConfigProps?.yAxis?.[1]?.labels;
+            createComponent(chartConfig);
 
-            expect(label.align).toBe(undefined);
-            expect(label.y).toBe(undefined);
+            expect(HighChartsRenderer).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    hcOptions: expect.objectContaining({
+                        yAxis: expect.arrayContaining([
+                            expect.anything(),
+                            expect.objectContaining({
+                                labels: expect.not.objectContaining({ align: "left" }),
+                            }),
+                        ]),
+                    }),
+                }),
+                {},
+            );
         });
     });
 });

@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render } from "@testing-library/react";
 import { ColumnChart } from "../ColumnChart";
 import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -13,20 +13,31 @@ import {
 import { CoreColumnChart } from "../CoreColumnChart";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 
-function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
-    return mount(
+function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
+    return render(
         <ColumnChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />,
     );
 }
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CoreColumnChart", () => ({
+    CoreColumnChart: jest.fn(() => null),
+}));
+
 describe("ColumnChart", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it("should render with custom SDK", () => {
-        const wrapper = renderChart([]);
-        expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
+        renderChart([]);
+        expect(CoreColumnChart).toHaveBeenCalled();
     });
 
     it("should render column chart and convert the buckets to AFM", () => {
-        const wrapper = mount(
+        render(
             <ColumnChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -42,28 +53,45 @@ describe("ColumnChart", () => {
             [ReferenceMd.Product.Name, MeasureGroupIdentifier],
         );
 
-        expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
-        expect(wrapper.find(CoreColumnChart).prop("execution")).toBeDefined();
-        expect(wrapper.find(CoreColumnChart).prop("execution").definition.dimensions).toEqual(expectedDims);
+        expect(CoreColumnChart).toHaveBeenCalledWith(
+            expect.objectContaining({
+                execution: expect.objectContaining({
+                    definition: expect.objectContaining({
+                        dimensions: expectedDims,
+                    }),
+                }),
+            }),
+            expect.anything(),
+        );
     });
 
     describe("Stacking", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([ReferenceMd.Amount], config);
-            expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
-                stackMeasures: true,
-                stackMeasuresToPercent: true,
-            });
+            renderChart([ReferenceMd.Amount], config);
+            expect(CoreColumnChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                }),
+                expect.anything(),
+            );
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([ReferenceMdExt.AmountWithRatio], config);
-            expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
-                stackMeasures: false,
-                stackMeasuresToPercent: false,
-            });
+            renderChart([ReferenceMdExt.AmountWithRatio], config);
+            expect(CoreColumnChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    config: {
+                        stackMeasures: false,
+                        stackMeasuresToPercent: false,
+                    },
+                }),
+                expect.anything(),
+            );
         });
     });
 });

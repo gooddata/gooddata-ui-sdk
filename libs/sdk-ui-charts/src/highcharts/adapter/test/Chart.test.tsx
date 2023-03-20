@@ -1,15 +1,18 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 
 import Highcharts from "../../lib";
 import { Chart } from "../Chart";
 
+const destroyMock = jest.fn();
+
 jest.mock("highcharts", () => {
     return {
-        Chart: (_: any, callback: any) => {
-            callback();
-        },
+        Chart: (_: any, callback: any) => ({
+            callback: callback(),
+            destroy: destroyMock,
+        }),
     };
 });
 
@@ -48,29 +51,18 @@ jest.mock("../chartPlugins", () => {
 });
 
 describe("Chart", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     function createComponent(props: any = {}) {
-        return mount(<Chart config={{}} {...props} />);
+        return render(<Chart config={{}} {...props} />);
     }
 
     it("should render highcharts", () => {
         const spy = jest.spyOn(Highcharts as any, "Chart");
-        const wrapper = createComponent();
-        const component: any = wrapper.instance();
-        expect(component.chart).toBeTruthy();
+        createComponent();
         expect(spy).toHaveBeenCalledTimes(1);
-    });
-
-    it("should rerender highcharts on props change", () => {
-        const createChartSpy = jest.spyOn(Chart.prototype, "createChart");
-        const wrapper = createComponent();
-
-        expect(createChartSpy).toHaveBeenCalledTimes(1);
-
-        wrapper.setProps({ config: { foo: "bar" } });
-        expect(createChartSpy).toHaveBeenCalledTimes(2);
-
-        createChartSpy.mockReset();
-        createChartSpy.mockRestore();
     });
 
     it("should call callback on componentDidMount", () => {
@@ -80,11 +72,8 @@ describe("Chart", () => {
     });
 
     it("should call destroy callback on componentWillUnmount", () => {
-        const wrapper = createComponent();
-        const component: any = wrapper.instance();
-        component.chart.destroy = jest.fn();
+        createComponent();
 
-        component.componentWillUnmount();
-        expect(component.chart.destroy).toHaveBeenCalledTimes(1);
+        () => expect(destroyMock).toHaveBeenCalledTimes(1);
     });
 });

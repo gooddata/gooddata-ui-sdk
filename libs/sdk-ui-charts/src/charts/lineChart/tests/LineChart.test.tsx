@@ -1,22 +1,31 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { LineChart } from "../LineChart";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 import { CoreLineChart } from "../CoreLineChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../CoreLineChart", () => ({
+    CoreLineChart: jest.fn(() => null),
+}));
+
 describe("LineChart", () => {
-    it("should render with custom SDK", () => {
-        const wrapper = mount(
-            <LineChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />,
-        );
-        expect(wrapper.find(CoreLineChart)).toHaveLength(1);
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
-    it("should render pie chart and convert the buckets to AFM", () => {
-        const wrapper = mount(
+    it("should render with custom SDK", () => {
+        render(<LineChart workspace="foo" backend={dummyBackend()} measures={[ReferenceMd.Amount]} />);
+        expect(CoreLineChart).toHaveBeenCalled();
+    });
+
+    it("should render line chart and convert the buckets to AFM", () => {
+        render(
             <LineChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -32,8 +41,15 @@ describe("LineChart", () => {
             [ReferenceMd.DateDatasets.Created.QuarterYear.USShort, MeasureGroupIdentifier],
         );
 
-        expect(wrapper.find(CoreLineChart)).toHaveLength(1);
-        expect(wrapper.find(CoreLineChart).prop("execution")).toBeDefined();
-        expect(wrapper.find(CoreLineChart).prop("execution").definition.dimensions).toEqual(expectedDims);
+        expect(CoreLineChart).toHaveBeenCalledWith(
+            expect.objectContaining({
+                execution: expect.objectContaining({
+                    definition: expect.objectContaining({
+                        dimensions: expectedDims,
+                    }),
+                }),
+            }),
+            expect.anything(),
+        );
     });
 });
