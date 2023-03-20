@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 
@@ -17,15 +17,13 @@ describe("HeaderCell renderer", () => {
     const getTableDescriptor = () => tableDescriptor;
 
     it("should render text for the cell", () => {
-        const component = shallow(
-            <HeaderCell displayText="Header" getTableDescriptor={getTableDescriptor} />,
-        );
-        expect(component.text()).toEqual("Header");
+        render(<HeaderCell displayText="Header" getTableDescriptor={getTableDescriptor} />);
+        expect(screen.getByText("Header")).toBeInTheDocument();
     });
 
     describe("Sorting in HeaderCell", () => {
         it("should render default sorting", () => {
-            const component = mount(
+            render(
                 <HeaderCell
                     displayText="Header"
                     enableSorting={true}
@@ -33,18 +31,14 @@ describe("HeaderCell renderer", () => {
                     getTableDescriptor={getTableDescriptor}
                 />,
             );
-            const headerCellLabel = component.find(".s-header-cell-label");
-            expect(headerCellLabel).toHaveLength(1);
+            fireEvent.mouseEnter(screen.getByText("Header"));
 
-            headerCellLabel.simulate("mouseEnter");
-            expect(component.state("currentSortDirection")).toEqual("asc");
-            expect(component.find(".s-sort-direction-arrow")).toHaveLength(1);
-            expect(component.find(".s-sorted-asc")).toHaveLength(1);
+            expect(document.querySelector(".s-sort-direction-arrow.s-sorted-asc")).toBeInTheDocument();
         });
 
         it("should call onSortChanged when clicked on label", () => {
             const onSortClick = jest.fn();
-            const component = mount(
+            render(
                 <HeaderCell
                     displayText="Header"
                     enableSorting={true}
@@ -53,15 +47,14 @@ describe("HeaderCell renderer", () => {
                     getTableDescriptor={getTableDescriptor}
                 />,
             );
-            const cellLabel = component.find(".s-header-cell-label");
+            fireEvent.click(screen.getByText("Header"));
 
-            cellLabel.simulate("click");
             expect(onSortClick).toHaveBeenCalledWith("asc");
         });
 
         it("should call onSortChanged with next sort direction", () => {
             const onSortClick = jest.fn();
-            const component = mount(
+            render(
                 <HeaderCell
                     displayText="Header"
                     enableSorting={true}
@@ -70,9 +63,8 @@ describe("HeaderCell renderer", () => {
                     getTableDescriptor={getTableDescriptor}
                 />,
             );
-            const cellLabel = component.find(".s-header-cell-label");
+            fireEvent.click(screen.getByText("Header"));
 
-            cellLabel.simulate("click");
             expect(onSortClick).toHaveBeenCalledWith("desc");
         });
     });

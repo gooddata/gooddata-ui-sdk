@@ -1,7 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import { shallow, mount } from "enzyme";
+// (C) 2019-2023 GoodData Corporation
+import { render, screen } from "@testing-library/react";
 import React from "react";
-import { LoadingComponent } from "@gooddata/sdk-ui";
 import { createLoadingRenderer } from "../loadingRenderer";
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import noop from "lodash/noop";
@@ -24,8 +23,8 @@ describe("RowLoadingElement", () => {
             value: 123,
             valueFormatted: noop,
         } as any;
-        const wrapper = shallow(<LoadingRenderer {...props} />);
-        expect(wrapper.find(LoadingComponent)).toHaveLength(1);
+        render(<LoadingRenderer {...props} />);
+        expect(document.querySelector(".s-loading")).toBeInTheDocument();
     });
 
     it("should show formatted value for existing data", async () => {
@@ -35,8 +34,8 @@ describe("RowLoadingElement", () => {
             value: Math.PI,
             formatValue: (value: number) => value.toFixed(2),
         } as any;
-        const wrapper = shallow(<LoadingRenderer {...props} />);
-        expect(wrapper.html()).toEqual('<span class="s-value s-loading-done">3.14</span>');
+        render(<LoadingRenderer {...props} />);
+        expect(screen.getByText("3.14")).toBeInTheDocument();
     });
 
     describe("'LoadingComponent' color property", () => {
@@ -50,7 +49,7 @@ describe("RowLoadingElement", () => {
             theme: ITheme,
             LoadingRenderer: (params: ICellRendererParams) => JSX.Element,
         ) =>
-            mount(
+            render(
                 <ThemeProvider theme={theme}>
                     <LoadingRenderer {...props} />
                 </ThemeProvider>,
@@ -64,8 +63,8 @@ describe("RowLoadingElement", () => {
                 },
             };
 
-            const wrapper = mountWithTheme(theme, LoadingRenderer);
-            expect(wrapper.find(LoadingComponent).props().color).toEqual("#f00");
+            const { container } = mountWithTheme(theme, LoadingRenderer);
+            expect(container.querySelector("g")).toHaveStyle("fill: #f00");
         });
 
         it("should set the color from the complementary palette defined in theme", async () => {
@@ -80,8 +79,8 @@ describe("RowLoadingElement", () => {
                 },
             };
 
-            const wrapper = mountWithTheme(theme, LoadingRenderer);
-            expect(wrapper.find(LoadingComponent).props().color).toEqual("#0f0");
+            const { container } = mountWithTheme(theme, LoadingRenderer);
+            expect(container.querySelector("g")).toHaveStyle("fill: #0f0");
         });
     });
 });

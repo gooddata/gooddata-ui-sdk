@@ -1,13 +1,14 @@
-// (C) 2007-2018 GoodData Corporation
-import { mount } from "enzyme";
+// (C) 2007-2023 GoodData Corporation
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu";
 import { IColumnTotal } from "../aggregationsMenuTypes";
 import { uriRef } from "@gooddata/sdk-model";
 
+const intlMock = createIntlMock();
+
 describe("AggregationsSubMenu", () => {
-    const intlMock = createIntlMock();
     const attributeHeaders = [
         {
             attributeHeader: {
@@ -41,9 +42,9 @@ describe("AggregationsSubMenu", () => {
         },
     ];
 
-    function render(customProps: Partial<IAggregationsSubMenuProps> = {}) {
+    function renderComponent(customProps: Partial<IAggregationsSubMenuProps> = {}) {
         const onAggregationSelect = jest.fn();
-        return mount(
+        return render(
             <AggregationsSubMenu
                 intl={intlMock}
                 totalType="sum"
@@ -59,22 +60,21 @@ describe("AggregationsSubMenu", () => {
     }
 
     it("should render closed submenu when isMenuOpened is set to false", () => {
-        const wrapper = render({ isMenuOpened: false });
+        renderComponent({ isMenuOpened: false });
 
-        expect(wrapper.find(".gd-aggregation-menu-item-inner").length).toBe(0);
+        expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(0);
     });
 
     it('should render submenu with attributes, first attribute as "All rows"', () => {
-        const wrapper = render({
+        renderComponent({
             intl: createIntlMock({
                 "visualizations.menu.aggregations.all-rows": "all rows",
             }),
         });
-        const items = wrapper.find(".gd-aggregation-menu-item-inner");
 
-        expect(items.length).toBe(2);
-        expect(items.at(0).text()).toBe("all rows");
-        expect(items.at(1).text()).toBe("within Department");
+        expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(2);
+        expect(screen.getByText("all rows")).toBeInTheDocument();
+        expect(screen.getByText("within Department")).toBeInTheDocument();
     });
 
     it("should render both attributes as selected", () => {
@@ -84,16 +84,16 @@ describe("AggregationsSubMenu", () => {
                 attributes: ["1st_attr_df_local_identifier", "2nd_attr_df_local_identifier"],
             },
         ];
-        const wrapper = render({ columnTotals });
+        renderComponent({ columnTotals });
 
-        expect(wrapper.find(".is-checked").length).toBe(2);
+        expect(document.querySelectorAll(".is-checked")).toHaveLength(2);
     });
 
     it("should call onAggregationSelect callback when clicked on submenu item", () => {
         const onAggregationSelect = jest.fn();
-        const wrapper = render({ onAggregationSelect });
+        renderComponent({ onAggregationSelect });
 
-        wrapper.find(".gd-aggregation-menu-item-inner").at(1).simulate("click");
+        fireEvent.click(screen.getByText("within Department"));
 
         expect(onAggregationSelect).toHaveBeenCalledTimes(1);
         expect(onAggregationSelect).toHaveBeenCalledWith({
