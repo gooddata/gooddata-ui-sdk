@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
@@ -69,7 +69,11 @@ export default class ColorOverlay extends React.PureComponent<IColorOverlayProps
                 closeOnParentScroll={true}
                 closeOnMouseDrag={true}
             >
-                <div onMouseOver={this.stopScrollingPropagation} onMouseOut={this.startScrollingPropagation}>
+                <div
+                    onMouseOver={this.stopScrollingPropagation}
+                    onMouseOut={this.startScrollingPropagation}
+                    aria-label="Color overlay content"
+                >
                     {this.props.children}
                 </div>
             </Overlay>
