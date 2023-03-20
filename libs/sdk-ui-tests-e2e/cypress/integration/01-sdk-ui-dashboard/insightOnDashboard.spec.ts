@@ -52,7 +52,7 @@ describe("Insights on dashboard", () => {
             .clearSearch();
     });
 
-    it("should keep the panel after clearing search", () => {
+    it("should keep the panel after clearing search", { tags: ["checklist_integrated_bear"] }, () => {
         insightCatalog
             .waitForCatalogReload()
             .clickTab("all")
