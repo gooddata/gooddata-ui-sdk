@@ -1,31 +1,45 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { render } from "@testing-library/react";
 
 import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer";
+import { IGeoData } from "../../../../src/GeoChart";
+import { createIntlMock } from "@gooddata/sdk-ui";
 
-function createComponent(customProps: Partial<IGeoChartRendererProps> = {}): ShallowWrapper {
+const intl = createIntlMock();
+
+function createComponent(customProps: Partial<IGeoChartRendererProps> = {}) {
     const chartProps: IGeoChartRendererProps = {
         ...customProps,
+        intl,
     } as any;
-    return shallow(<GeoChartRenderer {...chartProps} />, { disableLifecycleMethods: true });
+    return render(<GeoChartRenderer {...chartProps} />);
 }
 
+jest.mock("mapbox-gl", () => ({
+    ...jest.requireActual("mapbox-gl"),
+    Map: jest.fn(() => ({
+        addControl: jest.fn(),
+        on: jest.fn(),
+        remove: jest.fn(),
+    })),
+}));
+
 describe("GeoChartRenderer", () => {
-    const geoData = {};
+    const geoData: IGeoData = { location: { data: [], name: "test", index: 0 } };
     it("should render component", () => {
-        const wrapper = createComponent({ geoData });
-        expect(wrapper.hasClass("s-gd-geo-chart-renderer")).toBe(true);
+        createComponent({ geoData });
+        expect(document.querySelector(".s-gd-geo-chart-renderer")).toBeInTheDocument();
     });
 
     it("should render GeoChartRenderer component in export mode", () => {
-        const wrapper = createComponent({
+        createComponent({
             config: {
                 isExportMode: true,
                 mapboxToken: "",
             },
             geoData,
         });
-        expect(wrapper.hasClass("s-isExportMode")).toBe(true);
+        expect(document.querySelector(".s-isExportMode")).toBeInTheDocument();
     });
 });

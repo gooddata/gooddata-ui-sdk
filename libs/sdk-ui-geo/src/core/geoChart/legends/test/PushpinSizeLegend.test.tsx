@@ -1,14 +1,16 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import PushpinSizeLegend, { IPushpinSizeLegendProps } from "../PushpinSizeLegend";
 
-function createComponent(customProps: IPushpinSizeLegendProps): ShallowWrapper {
+function createComponent(customProps: IPushpinSizeLegendProps) {
     const legendProps = {
         ...customProps,
     };
-    return shallow(<PushpinSizeLegend {...legendProps} />);
+    return render(<PushpinSizeLegend {...legendProps} />);
 }
+
+const componentSelector = ".s-pushpin-size-legend";
 
 describe("PushpinSizeLegend", () => {
     it("should render component with max, average and min value", () => {
@@ -21,12 +23,13 @@ describe("PushpinSizeLegend", () => {
             isSmall: false,
             showMiddleCircle: true,
         };
-        const wrapper = createComponent(props);
-        expect(wrapper.hasClass("s-pushpin-size-legend")).toBe(true);
-        expect(wrapper.find(".metric-name").text()).toContain("population");
-        expect(wrapper.find(".pushpin-size-legend-circle").at(0).find(".circle-value").text()).toEqual("4");
-        expect(wrapper.find(".pushpin-size-legend-circle").at(1).find(".circle-value").text()).toEqual("10");
-        expect(wrapper.find(".pushpin-size-legend-circle").at(2).find(".circle-value").text()).toEqual("20");
+        createComponent(props);
+
+        expect(document.querySelector(componentSelector)).toBeInTheDocument();
+        expect(screen.queryByText("population:")).toBeInTheDocument();
+        expect(screen.queryByText("4")).toBeInTheDocument();
+        expect(screen.queryByText("10")).toBeInTheDocument();
+        expect(screen.queryByText("20")).toBeInTheDocument();
     });
 
     it("should not render component when Size contains all null values", () => {
@@ -39,8 +42,8 @@ describe("PushpinSizeLegend", () => {
             isSmall: false,
             showMiddleCircle: true,
         };
-        const wrapper = createComponent(props);
-        expect(wrapper.hasClass("s-pushpin-size-legend")).toBe(false);
+        createComponent(props);
+        expect(document.querySelector(componentSelector)).not.toBeInTheDocument();
     });
 
     it("should not render component when min value is equal to max value", () => {
@@ -53,8 +56,8 @@ describe("PushpinSizeLegend", () => {
             isSmall: false,
             showMiddleCircle: true,
         };
-        const wrapper = createComponent(props);
-        expect(wrapper.hasClass("s-pushpin-size-legend")).toBe(false);
+        createComponent(props);
+        expect(document.querySelector(componentSelector)).not.toBeInTheDocument();
     });
 
     it("should not render middle circle if showMiddleCircle is false regardless of isSmall", () => {
@@ -67,9 +70,10 @@ describe("PushpinSizeLegend", () => {
             isSmall: true,
             showMiddleCircle: false,
         };
-        const wrapper = createComponent(props);
-        expect(wrapper.find(".pushpin-size-legend-circle").at(0).find(".circle-value").text()).toEqual("4");
-        expect(wrapper.find(".pushpin-size-legend-circle").at(1).find(".circle-value").text()).toEqual("20");
+        createComponent(props);
+        expect(screen.queryByText("4")).toBeInTheDocument();
+        expect(screen.queryByText("10")).not.toBeInTheDocument();
+        expect(screen.queryByText("20")).toBeInTheDocument();
     });
 
     it("should render middle circle if showMiddleCircle is true regardless of isSmall", () => {
@@ -82,7 +86,9 @@ describe("PushpinSizeLegend", () => {
             isSmall: true,
             showMiddleCircle: true,
         };
-        const wrapper = createComponent(props);
-        expect(wrapper.find(".pushpin-size-legend-circle").at(1).find(".circle-value").text()).toEqual("10");
+        createComponent(props);
+        expect(screen.queryByText("4")).toBeInTheDocument();
+        expect(screen.queryByText("10")).toBeInTheDocument();
+        expect(screen.queryByText("20")).toBeInTheDocument();
     });
 });

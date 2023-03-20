@@ -1,19 +1,36 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { ShallowWrapper, shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import { GeoChartOptionsWrapper } from "../GeoChartOptionsWrapper";
-import { IGeoChartInnerProps } from "../GeoChartInner";
+import { IGeoChartInnerProps, GeoChartInner } from "../GeoChartInner";
 import { RecShortcuts } from "../../../../__mocks__/recordings";
 import { createIntlMock, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IGeoConfig } from "../../../GeoChart";
 
-const intl = createIntlMock();
+/**
+ * This mock enables us to test props as parameters of the called chart function
+ */
+jest.mock("../GeoChartInner", () => ({
+    GeoChartInner: jest.fn(() => null),
+}));
+
+const intl = createIntlMock({
+    "visualization.ErrorDescriptionGeneric": "Error 1",
+    "visualization.ErrorMessageNotFound": "Error 2",
+    "visualization.ErrorMessageGeneric": "Error 3",
+    "visualization.ErrorDescriptionNotFound": "Error 4",
+    "visualization.ErrorDescriptionUnauthorized": "Error 5",
+});
 
 describe("GeoChartOptionsWrapper", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     function renderComponent(
         customProps: Partial<IGeoChartInnerProps> = {},
         customConfig: Partial<IGeoConfig> = {},
-    ): ShallowWrapper {
+    ) {
         const { dv } = RecShortcuts.LocationOnlySmall;
         const defaultProps: Partial<IGeoChartInnerProps> = {
             config: {
@@ -24,8 +41,9 @@ describe("GeoChartOptionsWrapper", () => {
             execution: dv.result().transform(),
             intl,
         };
-        return shallow(<GeoChartOptionsWrapper {...(defaultProps as any)} {...customProps} />);
+        return render(<GeoChartOptionsWrapper {...(defaultProps as any)} {...customProps} />);
     }
+    const geoChartOptions = "geoChartOptions";
 
     it("should return geoChartOptions in props with location bucket", async () => {
         const { dv } = RecShortcuts.LocationOnlySmall;
@@ -37,9 +55,8 @@ describe("GeoChartOptionsWrapper", () => {
             },
             dataView: dv.dataView,
         };
-        const wrapper = renderComponent(props);
-        const geoChartOptions = "geoChartOptions";
-        expect(wrapper.props()[geoChartOptions]).toMatchSnapshot();
+        renderComponent(props);
+        expect((GeoChartInner as any).mock.calls[0][0][geoChartOptions]).toMatchSnapshot();
     });
 
     it("should return geoChartOptions with full buckets", async () => {
@@ -51,9 +68,8 @@ describe("GeoChartOptionsWrapper", () => {
             },
             dataView: dv.dataView,
         };
-        const wrapper = renderComponent(props);
-        const geoChartOptions = "geoChartOptions";
-        expect(wrapper.props()[geoChartOptions]).toMatchSnapshot();
+        renderComponent(props);
+        expect((GeoChartInner as any).mock.calls[0][0][geoChartOptions]).toMatchSnapshot();
     });
 
     it("should call onDataTooLarge", () => {
