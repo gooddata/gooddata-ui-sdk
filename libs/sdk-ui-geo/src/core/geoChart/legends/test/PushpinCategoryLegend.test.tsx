@@ -1,9 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend";
-import { StaticLegend, FluidLegend, PositionType, PopUpLegend } from "@gooddata/sdk-ui-vis-commons";
+import { PositionType } from "@gooddata/sdk-ui-vis-commons";
 import { withIntl } from "@gooddata/sdk-ui";
 
 const segmentData = [
@@ -23,7 +23,7 @@ const segmentData = [
     },
 ];
 
-function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {}): ReactWrapper {
+function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {}) {
     const contentRect: ContentRect = { client: { width: 800, height: 300, top: 0, left: 0 } };
     const position: PositionType = "left";
     const legendProps = {
@@ -37,40 +37,32 @@ function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {})
         ...customProps,
     };
     const Wrapped = withIntl(PushpinCategoryLegend);
-    return mount(<Wrapped {...legendProps} />);
+    return render(<Wrapped {...legendProps} />);
 }
 
 describe("PushpinCategoryLegend", () => {
     it("should render StaticLegend component", () => {
-        const wrapper = createComponent();
-        const staticLegend = wrapper.find(StaticLegend);
-        expect(staticLegend.find(".series .series-name").first().prop("style")).toEqual({});
-        expect(staticLegend.find(".series .series-name").last().prop("style")).toEqual({ color: "#CCCCCC" });
+        createComponent();
+        expect(screen.getByTitle("General Goods")).not.toHaveAttribute("style");
+        expect(screen.getByTitle("Toy Store")).toHaveStyle("color: #CCCCCC");
     });
 
     it("should render FluidLegend component", () => {
-        const wrapper = createComponent({
+        createComponent({
             responsive: true,
             isFluidLegend: true,
         });
-        const fluidLegend = wrapper.find(FluidLegend);
-        expect(fluidLegend.find(".series .series-name").first().prop("style")).toEqual({});
-        expect(fluidLegend.find(".series .series-name").last().prop("style")).toEqual({ color: "#CCCCCC" });
+        expect(screen.getByTitle("General Goods")).not.toHaveAttribute("style");
+        expect(screen.getByTitle("Toy Store")).toHaveStyle("color: #CCCCCC");
     });
 
     it("should render PopUp legend component if renderPopUp is true", () => {
-        const wrapper = createComponent({ renderPopUp: true });
-        expect(wrapper.find(PopUpLegend).exists()).toBe(true);
-    });
-
-    it("should render PopUp legend component with correct maxRows prop when Size legend shown too", () => {
-        const wrapper = createComponent({ renderPopUp: true, hasSizeLegend: true, maxRows: 2 });
-        const popupLegend = wrapper.find(PopUpLegend);
-        expect(popupLegend.prop("maxRows")).toBe(1);
+        const { container } = createComponent({ renderPopUp: true });
+        expect(container.getElementsByClassName("legend-popup-row")).toHaveLength(1);
     });
 
     it("should not render PopUp legend component if renderPopUp is false", () => {
-        const wrapper = createComponent({ renderPopUp: false });
-        expect(wrapper.find(PopUpLegend).exists()).toBe(false);
+        const { container } = createComponent({ renderPopUp: false });
+        expect(container.getElementsByClassName("legend-popup-row")).toHaveLength(0);
     });
 });

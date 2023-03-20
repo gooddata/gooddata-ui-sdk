@@ -23075,7 +23075,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-n/GRAHKe7+m+jqHDzd56bGWBsuegyVMvTJQNTsxexOfEsxzFDIVNkXD2uFJAEzQ5IT27yXx17veEfr57vU/21A==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-4wdC3LsFLNgI1zcA0x/RnE9I1ykgKmiANkDEi4YZmPhepwmz2fF90XD7lOeM1plzD2X/84J1Z/LvIIUS0y0HZw==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
@@ -23085,22 +23085,23 @@ packages:
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
-      '@types/enzyme': 3.10.11
+      '@testing-library/jest-dom': 5.16.4
+      '@testing-library/react': 12.1.5_react-dom@17.0.2+react@17.0.2
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
       '@types/mapbox-gl': 2.6.3
+      '@types/node': 16.11.26
       '@types/react': 17.0.44
       '@types/react-dom': 17.0.15
       '@types/react-measure': 2.0.5
+      '@types/testing-library__jest-dom': 5.14.5
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.45.0_e30006dd713619262e58476c57150ca3
       '@typescript-eslint/parser': 5.45.0_eslint@8.25.0+typescript@4.0.2
-      '@wojtekmaj/enzyme-adapter-react-17': 0.6.7_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.5.1
       custom-event: 1.0.1
       dependency-cruiser: 10.9.0
-      enzyme: 3.11.0
       eslint: 8.25.0
       eslint-plugin-header: 3.1.1_eslint@8.25.0
       eslint-plugin-import: 2.26.0_eslint@8.25.0
@@ -23113,7 +23114,6 @@ packages:
       eslint-plugin-sonarjs: 0.16.0_eslint@8.25.0
       eslint-plugin-tsdoc: 0.2.15
       jest: 27.5.1_ts-node@10.7.0
-      jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
       lodash: 4.17.21
       mapbox-gl: 2.8.0

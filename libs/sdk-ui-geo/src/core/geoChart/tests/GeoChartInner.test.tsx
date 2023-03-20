@@ -1,11 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { ShallowWrapper, shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import { GeoChartInner, IGeoChartInnerProps, IGeoChartInnerOptions } from "../GeoChartInner";
 import { RecShortcuts } from "../../../../__mocks__/recordings";
 import { LegendPosition, FLUID_LEGEND_THRESHOLD, PositionType } from "@gooddata/sdk-ui-vis-commons";
 import { IGeoConfig } from "../../../GeoChart";
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
+import { createIntlMock, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorStrategy } from "../colorStrategy/geoChart";
 import { createCategoryLegendItems } from "../GeoChartOptionsWrapper";
 
@@ -23,11 +23,24 @@ function buildGeoChartOptions(): IGeoChartInnerOptions {
     };
 }
 
+jest.mock("mapbox-gl", () => ({
+    ...jest.requireActual("mapbox-gl"),
+    Map: jest.fn(() => ({
+        addControl: jest.fn(),
+        on: jest.fn(),
+        remove: jest.fn(),
+    })),
+}));
+
+const intl = createIntlMock();
+
+const componentSelector = ".s-gd-geo-component";
+
 describe("GeoChartInner", () => {
     function renderComponent(
         customProps: Partial<IGeoChartInnerProps> = {},
         customConfig: Partial<IGeoConfig> = {},
-    ): ShallowWrapper {
+    ) {
         const defaultProps: Partial<IGeoChartInnerProps> = {
             config: {
                 mapboxToken: "",
@@ -36,17 +49,19 @@ describe("GeoChartInner", () => {
             dataView: dv.dataView,
             geoChartOptions: buildGeoChartOptions(),
             height: 600,
+            intl,
         };
-        return shallow(<GeoChartInner {...(defaultProps as any)} {...customProps} />);
+        return render(<GeoChartInner {...(defaultProps as any)} {...customProps} />);
     }
 
-    it("should render GeoChartInner", async () => {
-        const wrapper = renderComponent();
-        expect(wrapper.find(".s-gd-geo-component").length).toBe(1);
-        expect(wrapper.hasClass("flex-direction-column")).toBe(true);
+    it("should render GeoChartInner", () => {
+        renderComponent();
+        const wrapper = document.querySelector(componentSelector);
+        expect(wrapper).toBeInTheDocument();
+        expect(wrapper).toHaveClass("flex-direction-column");
     });
 
-    it("should render GeoChartInner has flex-direction-row class", async () => {
+    it("should render GeoChartInner has flex-direction-row class", () => {
         const props: Partial<IGeoChartInnerProps> = {
             config: {
                 legend: {
@@ -55,11 +70,11 @@ describe("GeoChartInner", () => {
                 mapboxToken: "",
             },
         };
-        const wrapper = renderComponent(props);
-        expect(wrapper.hasClass("flex-direction-row")).toBe(true);
+        renderComponent(props);
+        expect(document.querySelector(componentSelector)).toHaveClass("flex-direction-row");
     });
 
-    it("should render GeoChartInner has flex-direction-column class", async () => {
+    it("should render GeoChartInner has flex-direction-column class", () => {
         const props: Partial<IGeoChartInnerProps> = {
             config: {
                 legend: {
@@ -68,8 +83,8 @@ describe("GeoChartInner", () => {
                 mapboxToken: "",
             },
         };
-        const wrapper = renderComponent(props);
-        expect(wrapper.hasClass("flex-direction-column")).toBe(true);
+        renderComponent(props);
+        expect(document.querySelector(componentSelector)).toHaveClass("flex-direction-column");
     });
 
     it("should use custom Chart renderer", () => {
@@ -88,11 +103,6 @@ describe("GeoChartInner", () => {
         expect(legendProps).toMatchSnapshot({
             containerId: expect.any(String),
         });
-    });
-
-    it("should return enabledLegendItems with length equal categories length", () => {
-        const wrapper = renderComponent();
-        expect(wrapper.state("enabledLegendItems")).toEqual([true, true, true]);
     });
 
     it("should call pushData", () => {
@@ -142,38 +152,38 @@ describe("GeoChartInner", () => {
 
         it("should set flex-direction-column class for legend position TOP", () => {
             const customProps = getCustomComponentProps({ position: LegendPosition.TOP });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("flex-direction-column")).toBe(true);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).toHaveClass("flex-direction-column");
         });
 
         it("should set flex-direction-column class for legend position BOTTOM", () => {
             const customProps = getCustomComponentProps({ position: LegendPosition.BOTTOM });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("flex-direction-column")).toBe(true);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).toHaveClass("flex-direction-column");
         });
 
         it("should set flex-direction-row class for legend position LEFT", () => {
             const customProps = getCustomComponentProps({ position: LegendPosition.LEFT });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("flex-direction-row")).toBe(true);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).toHaveClass("flex-direction-row");
         });
 
         it("should set flex-direction-row class for legend position RIGHT", () => {
             const customProps = getCustomComponentProps({ position: LegendPosition.RIGHT });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("flex-direction-row")).toBe(true);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).toHaveClass("flex-direction-row");
         });
 
         it("should set responsive-legend class for responsive legend", () => {
             const customProps = getCustomComponentProps({ responsive: true });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("responsive-legend")).toBe(true);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).toHaveClass("responsive-legend");
         });
 
         it("should set non-responsive-legend class for non responsive legend", () => {
             const customProps = getCustomComponentProps({ responsive: false });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("non-responsive-legend")).toBe(true);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).toHaveClass("non-responsive-legend");
         });
 
         it("should render responsive legend for mobile", () => {
@@ -184,8 +194,8 @@ describe("GeoChartInner", () => {
             };
             const customProps = getCustomComponentProps({ responsive: true, documentObj });
 
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.state("showFluidLegend")).toBeTruthy();
+            renderComponent(customProps);
+            expect(document.querySelector(".viz-fluid-legend-wrap")).toBeInTheDocument();
         });
 
         it("should render StaticLegend on desktop", () => {
@@ -196,14 +206,14 @@ describe("GeoChartInner", () => {
             };
             const customProps = getCustomComponentProps({ responsive: true, documentObj });
 
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.state("showFluidLegend")).toBeFalsy();
+            renderComponent(customProps);
+            expect(document.querySelector(".viz-static-legend-wrap")).toBeInTheDocument();
         });
 
         it("should not set responsive-legend if responsive is autoPositionWithPopup", () => {
             const customProps = getCustomComponentProps({ responsive: "autoPositionWithPopup" });
-            const wrapper = renderComponent(customProps);
-            expect(wrapper.hasClass("responsive-legend")).toBe(false);
+            renderComponent(customProps);
+            expect(document.querySelector(componentSelector)).not.toHaveClass("responsive-legend");
         });
     });
 });

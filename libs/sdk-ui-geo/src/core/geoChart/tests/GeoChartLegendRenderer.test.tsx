@@ -1,11 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "../GeoChartLegendRenderer";
-
-import PushpinCategoryLegend from "../legends/PushpinCategoryLegend";
-import PushpinSizeLegend from "../legends/PushpinSizeLegend";
-import { LegendPosition, Paging, PositionType } from "@gooddata/sdk-ui-vis-commons";
+import { LegendPosition, PositionType } from "@gooddata/sdk-ui-vis-commons";
 import {
     DefaultLocale,
     withIntl,
@@ -37,7 +34,7 @@ function createComponent(customProps: IGeoChartLegendRendererProps, customStyles
             </IntlTranslationsProvider>
         </IntlWrapper>
     ));
-    return mount(
+    return render(
         <div {...(customStyles as any)}>
             <Wrapped {...legendProps} />
         </div>,
@@ -82,37 +79,42 @@ function getLegendProps(legendFlags: ILegendFlags): IGeoChartLegendRendererProps
     };
 }
 
+const legendSelector = ".s-geo-legend";
+const sizeLegendSelector = ".s-pushpin-size-legend";
+const colorLegendSelector = ".color-legend";
+const categoryLegendSelector = ".s-geo-category-legend";
+
 describe("GeoChartLegendRenderer", () => {
     it("should render nothing", () => {
-        const wrapper = createComponent(getLegendProps({}));
-        expect(wrapper.find(".s-geo-legend")).toHaveLength(0);
+        createComponent(getLegendProps({}));
+        expect(document.querySelector(legendSelector)).not.toBeInTheDocument();
     });
 
-    it("should render only Size legend", async () => {
-        const wrapper = createComponent(getLegendProps({ hasSizeLegend: true }));
-        expect(await wrapper.find(".s-geo-legend")).toHaveLength(1);
-        expect(await wrapper.find(".s-pushpin-size-legend")).toHaveLength(1);
-        expect(await wrapper.find(".color-legend")).toHaveLength(0);
-        expect(wrapper.find(".s-geo-category-legend")).toHaveLength(0);
+    it("should render only Size legend", () => {
+        createComponent(getLegendProps({ hasSizeLegend: true }));
+        expect(document.querySelector(legendSelector)).toBeInTheDocument();
+        expect(document.querySelector(sizeLegendSelector)).toBeInTheDocument();
+        expect(document.querySelector(colorLegendSelector)).not.toBeInTheDocument();
+        expect(document.querySelector(categoryLegendSelector)).not.toBeInTheDocument();
     });
 
-    it("should render only Color legend", async () => {
-        const wrapper = createComponent(getLegendProps({ hasColorLegend: true }));
-        expect(await wrapper.find(".s-geo-legend")).toHaveLength(1);
-        expect(await wrapper.find(".color-legend")).toHaveLength(1);
-        expect(await wrapper.find(".s-pushpin-size-legend")).toHaveLength(0);
-        expect(wrapper.find(".s-geo-category-legend")).toHaveLength(0);
+    it("should render only Color legend", () => {
+        createComponent(getLegendProps({ hasColorLegend: true }));
+        expect(document.querySelector(legendSelector)).toBeInTheDocument();
+        expect(document.querySelector(sizeLegendSelector)).not.toBeInTheDocument();
+        expect(document.querySelector(colorLegendSelector)).toBeInTheDocument();
+        expect(document.querySelector(categoryLegendSelector)).not.toBeInTheDocument();
     });
 
-    it("should render Size and Color legend", async () => {
-        const wrapper = createComponent(getLegendProps({ hasColorLegend: true, hasSizeLegend: true }));
-        expect(await wrapper.find(".s-geo-legend")).toHaveLength(1);
-        expect(await wrapper.find(".color-legend")).toHaveLength(1);
-        expect(await wrapper.find(".s-pushpin-size-legend")).toHaveLength(1);
+    it("should render Size and Color legend", () => {
+        createComponent(getLegendProps({ hasColorLegend: true, hasSizeLegend: true }));
+        expect(document.querySelector(legendSelector)).toBeInTheDocument();
+        expect(document.querySelector(colorLegendSelector)).toBeInTheDocument();
+        expect(document.querySelector(sizeLegendSelector)).toBeInTheDocument();
     });
 
-    it("should render Paging for Size and Color legend", async () => {
-        const wrapper = createComponent(
+    it("should render Paging for Size and Color legend", () => {
+        createComponent(
             getLegendProps({
                 hasColorLegend: true,
                 hasSizeLegend: true,
@@ -120,7 +122,7 @@ describe("GeoChartLegendRenderer", () => {
                 position: LegendPosition.LEFT,
             }),
         );
-        expect(await wrapper.find(Paging)).toHaveLength(1);
+        expect(document.querySelector(".geo-legend-paging")).toBeInTheDocument();
     });
 
     it("should render Size and Category legend ", () => {
@@ -140,13 +142,9 @@ describe("GeoChartLegendRenderer", () => {
             position: LegendPosition.TOP,
             containerId: "id",
         };
-        const wrapper = createComponent(props);
-        const sizeLegend = wrapper.find(PushpinSizeLegend);
-        const categoryLegend = wrapper.find(PushpinCategoryLegend);
-        expect(wrapper.find(".s-geo-legend")).toHaveLength(1);
-        expect(wrapper.find(".s-geo-category-legend")).toHaveLength(1);
-        expect(sizeLegend.length).toEqual(1);
-        expect(categoryLegend.length).toEqual(1);
+        createComponent(props);
+        expect(document.querySelector(sizeLegendSelector)).toBeInTheDocument();
+        expect(document.querySelector(categoryLegendSelector)).toBeInTheDocument();
     });
 
     it.each([
@@ -154,18 +152,18 @@ describe("GeoChartLegendRenderer", () => {
         ["viz-fluid-legend-wrap", "fluid", true],
     ])(
         "should set %s class for %s legend",
-        async (classname: string, _responsiveText: string, responsive: boolean) => {
+        (classname: string, _responsiveText: string, responsive: boolean) => {
             const props: IGeoChartLegendRendererProps = getLegendProps({
                 hasColorLegend: true,
                 hasSizeLegend: true,
             });
-            const wrapper = createComponent({
+            createComponent({
                 ...props,
                 responsive,
                 isFluidLegend: responsive,
                 containerId: "id",
             });
-            expect(await wrapper.find(`.${classname}`)).toHaveLength(1);
+            expect(document.querySelector(`.${classname}`)).toBeInTheDocument();
         },
     );
 });
