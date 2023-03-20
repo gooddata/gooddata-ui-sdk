@@ -27,11 +27,7 @@ describe(
                 .searchAndSelectFilterItem("CompuSci", true)
                 .clickApply();
 
-            parentChildFilters
-                .getChildFilter()
-                .open()
-                .searchAndSelectFilterItem("Direct Sales", true)
-                .clickApply();
+            parentChildFilters.getChildFilter().open().searchAndSelectFilterItem("Direct Sales");
 
             cy.get(".f-parent .count").should("have.text", "1");
             cy.get(".f-child .count").should("have.text", "1");
