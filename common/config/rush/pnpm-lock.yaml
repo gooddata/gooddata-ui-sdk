@@ -23662,7 +23662,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-j7tJ/8/EAVXQ09J0ly8UewwrEBQccfUYqgdt3RtTS+xZOVeyh1qEW1z8HIEErqcgSP+ubEtU1kEZ7V9z6fkKCg==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-63rnJmIutr3oaEGrmYLxlmaTN7ftiR8zjFC9mcY0xjJhmC6c4bMx/0EUv6BKYCMbI8zezBF2g46oXDyrb/KZdg==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
@@ -23672,19 +23672,20 @@ packages:
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
-      '@types/enzyme': 3.10.11
+      '@testing-library/jest-dom': 5.16.4
+      '@testing-library/react': 12.1.5_react-dom@17.0.2+react@17.0.2
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
+      '@types/node': 16.11.26
       '@types/react': 17.0.44
       '@types/react-dom': 17.0.15
       '@types/react-measure': 2.0.5
+      '@types/testing-library__jest-dom': 5.14.5
       '@typescript-eslint/eslint-plugin': 5.45.0_e30006dd713619262e58476c57150ca3
       '@typescript-eslint/parser': 5.45.0_eslint@8.25.0+typescript@4.0.2
-      '@wojtekmaj/enzyme-adapter-react-17': 0.6.7_fae758709a8810ba97b4c03852dde4d0
       classnames: 2.3.1
       concurrently: 6.5.1
       dependency-cruiser: 10.9.0
-      enzyme: 3.11.0
       eslint: 8.25.0
       eslint-plugin-header: 3.1.1_eslint@8.25.0
       eslint-plugin-import: 2.26.0_eslint@8.25.0
@@ -23697,7 +23698,6 @@ packages:
       eslint-plugin-sonarjs: 0.16.0_eslint@8.25.0
       eslint-plugin-tsdoc: 0.2.15
       jest: 27.5.1_ts-node@10.7.0
-      jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
       lodash: 4.17.21
       prettier: 2.5.1

@@ -1,19 +1,20 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
-import { ColorLegend, IColorLegendProps, ColorBoxes, ColorLabels } from "../ColorLegend";
+import { render, screen } from "@testing-library/react";
+import { ColorLegend, IColorLegendProps } from "../ColorLegend";
 import range from "lodash/range";
 
 describe("ColorLegend", () => {
-    function renderLegend(props: IColorLegendProps): ReactWrapper {
-        return mount(<ColorLegend {...props} />);
+    function renderLegend(props: IColorLegendProps) {
+        return render(<ColorLegend {...props} />);
     }
 
     it("should not render color legend with empty data", () => {
-        const wrapper = renderLegend({ data: [], numericSymbols: ["k", "M", "G"], position: "top" });
+        renderLegend({ data: [], numericSymbols: ["k", "M", "G"], position: "top" });
 
-        expect(wrapper.find(ColorBoxes).length).toEqual(0);
-        expect(wrapper.find(ColorLabels).length).toEqual(0);
+        expect(screen.queryByLabelText("Color legend")).not.toBeInTheDocument();
+        expect(screen.queryByLabelText("Color boxes")).not.toBeInTheDocument();
+        expect(screen.queryByLabelText("Color labels")).not.toBeInTheDocument();
     });
 
     it("should render color legend", () => {
@@ -25,12 +26,15 @@ describe("ColorLegend", () => {
             },
         }));
         const numericSymbols = ["k", "M", "G"];
-        const wrapper = renderLegend({ data, numericSymbols, position: "top" });
+        renderLegend({ data, numericSymbols, position: "top" });
 
-        expect(wrapper.find(ColorLegend).length).toEqual(1);
-        expect(wrapper.find(ColorBoxes).length).toEqual(1);
-        expect(wrapper.find(ColorLabels).length).toEqual(1);
-        expect(wrapper.find(".labels span").length).toEqual(11); // 7 label text; 4 space
-        expect(wrapper.find(".boxes span").length).toEqual(6);
+        const boxes = screen.getByLabelText("Color boxes");
+        const labels = screen.getByLabelText("Color labels");
+        expect(screen.getByLabelText("Color legend")).toBeInTheDocument();
+        expect(boxes).toBeInTheDocument();
+        expect(labels).toBeInTheDocument();
+
+        expect(labels.querySelectorAll("span")).toHaveLength(11); // 7 label text; 4 space
+        expect(boxes.querySelectorAll("span")).toHaveLength(6);
     });
 });

@@ -1,12 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { FluidLegend } from "../FluidLegend";
-import LegendItem from "../LegendItem";
 
 describe("FluidLegend", () => {
-    function render(customProps: any = {}) {
+    function renderComponent(customProps: any = {}) {
         const props = {
             enableBorderRadius: false,
             series: [],
@@ -14,7 +13,7 @@ describe("FluidLegend", () => {
             containerWidth: 500,
             ...customProps,
         };
-        return mount(<FluidLegend {...props} />);
+        return render(<FluidLegend {...props} />);
     }
 
     it("should render items", () => {
@@ -36,7 +35,7 @@ describe("FluidLegend", () => {
             },
         ];
 
-        const wrapper = render({ series });
-        expect(wrapper.find(LegendItem)).toHaveLength(3);
+        renderComponent({ series });
+        expect(screen.getAllByLabelText("Legend item")).toHaveLength(3);
     });
 });

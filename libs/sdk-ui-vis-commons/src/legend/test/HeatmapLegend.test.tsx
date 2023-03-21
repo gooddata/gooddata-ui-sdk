@@ -1,12 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { HeatmapLegend, IHeatmapLegendProps } from "../HeatmapLegend";
 import { IHeatmapLegendItem, IColorLegendSize } from "../types";
 
 describe("HeatmapLegend", () => {
-    function renderLegend(props: IHeatmapLegendProps): ReactWrapper {
-        return mount(<HeatmapLegend {...props} />);
+    function renderLegend(props: IHeatmapLegendProps) {
+        return render(<HeatmapLegend {...props} />);
     }
 
     const defaultNumericSymbols = ["k", "M", "G"];
@@ -43,9 +43,9 @@ describe("HeatmapLegend", () => {
             numericSymbols: string[],
             position: string,
         ) => {
-            const wrapper = renderLegend({ series, numericSymbols, size, position });
+            renderLegend({ series, numericSymbols, size, position });
 
-            expect(wrapper.find(".color-legend").length).toEqual(1);
+            expect(screen.getByLabelText("Color legend")).toBeInTheDocument();
         },
     );
 });

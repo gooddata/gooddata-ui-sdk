@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { messages } from "../locales";
@@ -24,7 +24,7 @@ export class LegendAxisIndicatorClass extends React.PureComponent<
         );
 
         return (
-            <div style={style} className="series-axis-indicator">
+            <div style={style} className="series-axis-indicator" aria-label="Legend axis indicator">
                 <div className="series-text">
                     {intl.formatMessage(messages[labelKey], values)}
                     {intl.formatMessage(messages["colon"])}

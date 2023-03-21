@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import LegendItem from "./LegendItem";
 import { LegendAxisIndicator } from "./LegendAxisIndicator";
@@ -12,7 +12,9 @@ export interface ILegendListProps {
     onItemClick: (item: any) => void;
 }
 
-export const LegendSeparator = (): JSX.Element => <div className="legend-separator" />;
+export const LegendSeparator = (): JSX.Element => (
+    <div className="legend-separator" aria-label="Legend separator" />
+);
 
 export class LegendList extends React.PureComponent<ILegendListProps> {
     public render() {

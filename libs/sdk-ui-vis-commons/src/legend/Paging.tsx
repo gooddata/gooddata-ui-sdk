@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -69,7 +69,7 @@ export const Paging = (props: IPagingProps): React.ReactElement => {
     const { page, pagesCount, buttonsOrientation = "upDown", showNextPage, showPrevPage } = props;
 
     return (
-        <div className="paging">
+        <div className="paging" aria-label="Paging">
             {renderPagingButton("prev", buttonsOrientation, showPrevPage, page === 1)}
             <FormattedMessage
                 id="visualizations.of"

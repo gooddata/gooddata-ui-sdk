@@ -1,13 +1,13 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 
 import { Paging, IPagingProps } from "../Paging";
 import { withIntl } from "@gooddata/sdk-ui";
 
 describe("Paging", () => {
-    function render(customProps: Partial<IPagingProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IPagingProps> = {}) {
         const props: IPagingProps = {
             page: 1,
             pagesCount: 2,
@@ -16,19 +16,20 @@ describe("Paging", () => {
             ...customProps,
         };
         const Wrapped = withIntl(Paging);
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it("should render Paging", () => {
-        const pagingComponent = render();
-        expect(pagingComponent.find(".paging")).toHaveLength(1);
-        expect(pagingComponent.find(".paging span").text()).toBe("1 of 2");
+        renderComponent();
+        expect(screen.getByLabelText("Paging")).toBeInTheDocument();
+        expect(screen.getByText("1")).toBeInTheDocument();
+        expect(screen.getByText("of 2")).toBeInTheDocument();
     });
 
     it("should call showNextPage", async () => {
         const showNextPage = jest.fn();
-        const pagingComponent = render({ showNextPage });
-        pagingComponent.find("button.gd-icon-chevron-down").simulate("click");
+        renderComponent({ showNextPage });
+        fireEvent.click(screen.getAllByRole("button")[1]);
         expect(showNextPage).toHaveBeenCalledTimes(1);
     });
 });

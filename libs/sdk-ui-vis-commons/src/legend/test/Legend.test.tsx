@@ -1,11 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
 import { ILegendProps, Legend } from "../Legend";
-import { HeatmapLegend } from "../HeatmapLegend";
-import { PopUpLegend } from "../PopUpLegend/PopUpLegend";
 
 describe("Legend", () => {
     const series = [
@@ -40,32 +38,32 @@ describe("Legend", () => {
 
         const Wrapped = withIntl(Legend);
 
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it("should render StaticLegend on desktop", () => {
-        const legend = createComponent({
+        createComponent({
             showFluidLegend: false,
         });
-        expect(legend.find(".viz-static-legend-wrap")).toHaveLength(1);
+        expect(document.querySelector(".viz-static-legend-wrap")).toBeInTheDocument();
     });
 
     it("should render fluid legend on mobile", () => {
-        const legend = createComponent({
+        createComponent({
             showFluidLegend: true,
             responsive: true,
         });
-        expect(legend.find(".viz-fluid-legend-wrap")).toHaveLength(1);
+        expect(document.querySelector(".viz-fluid-legend-wrap")).toBeInTheDocument();
     });
 
     it("should render heat map legend when type is heatmap", () => {
-        const wrapper = createComponent({ heatmapLegend: true });
-        expect(wrapper.find(HeatmapLegend).length).toEqual(1);
+        createComponent({ heatmapLegend: true });
+        expect(screen.getByLabelText("Color legend")).toBeInTheDocument();
     });
 
     it("should render pop up legend when is set `autoPositionWithPopup`", () => {
         const responsiveWithPopup = "autoPositionWithPopup";
-        const wrapper = createComponent({ responsive: responsiveWithPopup, maximumRows: 1 });
-        expect(wrapper.find(PopUpLegend).length).toEqual(1);
+        createComponent({ responsive: responsiveWithPopup, maximumRows: 1 });
+        expect(screen.getByLabelText("Pop up legend")).toBeInTheDocument();
     });
 });
