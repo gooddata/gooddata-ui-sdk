@@ -1,14 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend";
 import { withIntl } from "@gooddata/sdk-ui";
-import LegendItem from "../LegendItem";
 import { IPushpinCategoryLegendItem } from "../types";
 
 describe("PopUpLegend", () => {
-    function render(customProps: Partial<IPopUpLegendProps> = {}) {
+    function renderComponent(customProps: Partial<IPopUpLegendProps> = {}) {
         const props: IPopUpLegendProps = {
             enableBorderRadius: false,
             series: [],
@@ -20,7 +19,7 @@ describe("PopUpLegend", () => {
         };
         const Wrapped = withIntl(PopUpLegend);
 
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it("should render items", () => {
@@ -48,7 +47,7 @@ describe("PopUpLegend", () => {
             },
         ];
 
-        const popUpLegend = render({ series });
-        expect(popUpLegend.find(LegendItem)).toHaveLength(3);
+        renderComponent({ series });
+        expect(screen.getAllByLabelText("Legend item")).toHaveLength(3);
     });
 });

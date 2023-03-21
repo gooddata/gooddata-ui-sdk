@@ -1,15 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
-import { ILegendListProps, LegendList, LegendSeparator } from "../LegendList";
-import LegendItem from "../LegendItem";
+import { render, screen } from "@testing-library/react";
+import { ILegendListProps, LegendList } from "../LegendList";
 import noop from "lodash/noop";
-import { LegendAxisIndicator } from "../LegendAxisIndicator";
 import { withIntl } from "@gooddata/sdk-ui";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers";
 
 describe("LegendList", () => {
-    function render(customProps: Partial<ILegendListProps> = {}) {
+    function renderComponent(customProps: Partial<ILegendListProps> = {}) {
         const props: ILegendListProps = {
             enableBorderRadius: false,
             series: [],
@@ -19,7 +17,7 @@ describe("LegendList", () => {
 
         const Wrapped = withIntl(LegendList);
 
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it("should render legend items, indicators and separator", () => {
@@ -57,10 +55,10 @@ describe("LegendList", () => {
 
         expect(series).toHaveLength(6);
 
-        const wrapper = render({ series });
+        renderComponent({ series });
 
-        expect(wrapper.find(LegendItem)).toHaveLength(3);
-        expect(wrapper.find(LegendSeparator)).toHaveLength(1);
-        expect(wrapper.find(LegendAxisIndicator)).toHaveLength(2);
+        expect(screen.getAllByLabelText("Legend item")).toHaveLength(3);
+        expect(screen.getAllByLabelText("Legend separator")).toHaveLength(1);
+        expect(screen.getAllByLabelText("Legend axis indicator")).toHaveLength(2);
     });
 });

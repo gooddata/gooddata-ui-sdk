@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import unescape from "lodash/unescape";
 import { ITheme } from "@gooddata/sdk-model";
@@ -38,7 +38,7 @@ class LegendItem extends React.Component<ILegendItemProps> {
         };
 
         return (
-            <div style={style} className="series-item" onClick={onItemClick}>
+            <div style={style} className="series-item" onClick={onItemClick} aria-label="Legend item">
                 <div className="series-icon" style={iconStyle} />
                 <div className="series-name" style={nameStyle} title={unescape(item.name)}>
                     {item.name}

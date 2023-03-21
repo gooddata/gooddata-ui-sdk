@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import {
@@ -42,7 +42,7 @@ interface ILegendBoxesProps {
 export function ColorLabels(colorLabelProps: IColorLabelsProps): JSX.Element {
     const { labels } = colorLabelProps;
     return (
-        <div className="labels">
+        <div className="labels" aria-label="Color labels">
             {labels.map((item: IColorLegendLabel): JSX.Element => {
                 const { key, label, style } = item;
                 return (
@@ -58,7 +58,7 @@ export function ColorLabels(colorLabelProps: IColorLabelsProps): JSX.Element {
 export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
     const { boxes } = colorBoxProps;
     return (
-        <div className="boxes">
+        <div className="boxes" aria-label="Color boxes">
             {boxes.map((box: IColorLegendBox): JSX.Element => {
                 const classes = cx("box", box.class);
                 const { key, style } = box;
@@ -112,7 +112,7 @@ export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
     const { boxes, labels } = config;
 
     return (
-        <div className={classes}>
+        <div className={classes} aria-label="Color legend">
             {title ? (
                 <LegendWithTitle title={title} position={position}>
                     <LegendBoxes renderLabelsFirst={renderLabelsFirst} boxes={boxes} labels={labels} />

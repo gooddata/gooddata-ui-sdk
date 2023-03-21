@@ -1,14 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { getPagingValues, IStaticLegendProps, StaticLegend } from "../StaticLegend";
 import { withIntl } from "@gooddata/sdk-ui";
-import LegendItem from "../LegendItem";
 import { IPushpinCategoryLegendItem } from "../types";
 
 describe("StaticLegend", () => {
-    function render(customProps: Partial<IStaticLegendProps> = {}) {
+    function renderComponent(customProps: Partial<IStaticLegendProps> = {}) {
         const props: IStaticLegendProps = {
             enableBorderRadius: false,
             series: [],
@@ -19,7 +18,7 @@ describe("StaticLegend", () => {
         };
         const Wrapped = withIntl(StaticLegend);
 
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it("should render items", () => {
@@ -47,11 +46,11 @@ describe("StaticLegend", () => {
             },
         ];
 
-        const topLegend = render({ series, position: "top" });
-        expect(topLegend.find(LegendItem)).toHaveLength(3);
+        renderComponent({ series, position: "top" });
+        expect(screen.getAllByLabelText("Legend item")).toHaveLength(3);
 
-        const rightLegend = render({ series, position: "right" });
-        expect(rightLegend.find(LegendItem)).toHaveLength(3);
+        renderComponent({ series, position: "right" });
+        expect(screen.getAllByLabelText("Legend item")).toHaveLength(6);
     });
 });
 

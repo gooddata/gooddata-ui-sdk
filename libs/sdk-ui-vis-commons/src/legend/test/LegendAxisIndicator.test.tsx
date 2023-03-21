@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { ILegendAxisIndicatorProps, LegendAxisIndicator } from "../LegendAxisIndicator";
 import { withIntl } from "@gooddata/sdk-ui";
 
@@ -8,7 +8,7 @@ describe("LegendAxisIndicator", () => {
     function createComponent(props: ILegendAxisIndicatorProps) {
         const Wrapped = withIntl(LegendAxisIndicator);
 
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it.each([
@@ -18,9 +18,9 @@ describe("LegendAxisIndicator", () => {
         ["combo", ["area", "right"], "Area (Right):"],
     ])(
         "should render legend indicator when labelKey=%s",
-        (labelKey: string, data: string[], expected: string) => {
-            const wrapper = createComponent({ labelKey, data });
-            expect(wrapper.find(".series-text").text()).toEqual(expected);
+        (labelKey: string, data: string[], text: string) => {
+            createComponent({ labelKey, data });
+            expect(screen.getByText(text)).toBeInTheDocument();
         },
     );
 });

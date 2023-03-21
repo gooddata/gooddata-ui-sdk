@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import LegendItem from "../LegendItem";
 
 describe("LegendItem", () => {
@@ -11,7 +11,7 @@ describe("LegendItem", () => {
     };
 
     function createComponent(props: any = {}) {
-        return mount(<LegendItem {...props} />);
+        return render(<LegendItem {...props} />);
     }
 
     it("should render item", () => {
@@ -20,10 +20,11 @@ describe("LegendItem", () => {
             chartType: "bar",
             onItemClick: jest.fn(),
         };
-        const wrapper = createComponent(props);
-        expect(wrapper.find(".series-item").text()).toEqual("Foo");
+        createComponent(props);
+        const legendItem = screen.getByText("Foo");
 
-        wrapper.find(".series-item").simulate("click");
+        expect(legendItem).toBeInTheDocument();
+        fireEvent.click(legendItem);
         expect(props.onItemClick).toHaveBeenCalled();
     });
 
@@ -39,10 +40,12 @@ describe("LegendItem", () => {
                 },
                 enableBorderRadius,
             };
-            const component = createComponent(props);
-            const seriesIconStyle = component.find(".series-icon").get(0).props.style;
+            createComponent(props);
 
-            expect(seriesIconStyle).toEqual({ backgroundColor: "red", borderRadius: expected });
+            expect(screen.getByLabelText("Legend item")).toHaveStyle(`
+                background-color: red
+                border-radius: ${expected}
+            `);
         },
     );
 });

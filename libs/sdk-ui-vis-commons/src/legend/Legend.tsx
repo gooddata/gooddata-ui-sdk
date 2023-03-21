@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import Measure, { Rect } from "react-measure";
 import cx from "classnames";
@@ -93,7 +93,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         const { enableBorderRadius } = this.props;
 
         return (
-            <Measure client={true}>
+            <Measure client={true} aria-label="Fluid legend">
                 {({ measureRef, contentRect }: any) => {
                     const usedWidth = contentRect.client?.width ? Math.floor(contentRect.client.width) : 0;
                     return (
