@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import invariant from "ts-invariant";
 import isNil from "lodash/isNil";
 import {

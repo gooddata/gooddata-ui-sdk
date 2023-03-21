@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022 GoodData Corporation
 import { FilterContextItem, IKpiWidget, ScreenSize, widgetRef } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { OnError } from "@gooddata/sdk-ui";
@@ -6,6 +6,7 @@ import React from "react";
 import { DashboardItem } from "../../presentationComponents";
 import { DashboardKpi } from "../kpi";
 import { selectAlertByWidgetRef, useDashboardSelector, useWidgetSelection } from "../../../model";
+import { IDashboardFilter } from "../../../types";
 
 interface IDefaultDashboardKpiWidgetProps {
     kpiWidget: IKpiWidget;
@@ -13,7 +14,7 @@ interface IDefaultDashboardKpiWidgetProps {
     dashboardItemClasses: string;
 
     onError?: OnError;
-    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
 }
 
 export const DefaultDashboardKpiWidget: React.FC<IDefaultDashboardKpiWidgetProps> = (props) => {

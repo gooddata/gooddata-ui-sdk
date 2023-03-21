@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -23,6 +23,7 @@ import {
     OnError,
 } from "@gooddata/sdk-ui";
 
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
 import {
     selectDrillableItems,
     selectCanCreateScheduledMail,
@@ -74,7 +75,7 @@ interface IKpiExecutorProps {
      * the filters ignored for execution)
      */
     allFilters?: IDashboardFilter[];
-    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     onDrill?: OnFiredDashboardDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;
@@ -349,7 +350,14 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
                     }}
                     onApplyAlertFiltersClick={
                         onFiltersChange
-                            ? () => onFiltersChange(alert?.filterContext?.filters ?? [], true)
+                            ? () =>
+                                  onFiltersChange(
+                                      filterContextItemsToDashboardFiltersByWidget(
+                                          alert?.filterContext?.filters ?? [],
+                                          kpiWidget,
+                                      ),
+                                      true,
+                                  )
                             : undefined
                     }
                     isAlertLoading={isAlertExecutionLoading}

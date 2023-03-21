@@ -63,10 +63,13 @@ describe("drill to dashboard handler", () => {
 
         expect(event.payload.filters).toEqual([
             {
-                attributeFilter: {
-                    attributeElements: { uris: ["/gdc/md/referenceworkspace/obj/1054"] },
-                    displayForm: { uri: "/gdc/md/referenceworkspace/obj/1055" },
-                    negativeSelection: true,
+                negativeAttributeFilter: {
+                    displayForm: {
+                        uri: "/example/md/mock/123",
+                    },
+                    notIn: {
+                        uris: ["/example/md/mock/124"],
+                    },
                 },
             },
         ]);

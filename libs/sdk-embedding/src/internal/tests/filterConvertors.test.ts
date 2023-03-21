@@ -100,6 +100,14 @@ describe("filter convertors", () => {
             selectionMode: "multi",
         },
     };
+    const positiveAttributeSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+        positiveAttributeFilter: {
+            in: ["uri1", "uri2"],
+            displayForm: {
+                uri: "dfuri",
+            },
+        },
+    };
     const positiveAttributeSingleSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1"],
@@ -118,14 +126,12 @@ describe("filter convertors", () => {
             selectionMode: "single",
         },
     };
-
     const negativeAttributeMultiSelectionFilter: EmbeddedGdc.INegativeAttributeFilter = {
         negativeAttributeFilter: {
             notIn: ["uri1"],
             displayForm: {
                 uri: "dfuri",
             },
-            selectionMode: "multi",
         },
     };
 
@@ -193,6 +199,7 @@ describe("filter convertors", () => {
                 positiveAttributeSingleSelectionFilter,
                 positiveAttributeMultiSelectionFilter,
                 negativeAttributeMultiSelectionFilter,
+                positiveAttributeSelectionFilter,
             ]),
         ).toBe(true);
     });

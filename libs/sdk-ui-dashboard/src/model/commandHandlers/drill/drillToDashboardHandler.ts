@@ -3,7 +3,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
-import isString from "lodash/isString";
 import invariant from "ts-invariant";
 import { DashboardContext } from "../../types/commonTypes";
 import { DrillToDashboard } from "../../commands/drill";
@@ -18,7 +17,10 @@ import {
 } from "../../store/filterContext/filterContextSelectors";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
 import { IDashboardFilter } from "../../../types";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../converters";
+import {
+    dashboardAttributeFilterToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
+} from "../../../converters";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
@@ -35,14 +37,11 @@ import {
     measureFilters,
     isDateFilter,
     IInsightWidget,
-    FilterContextItem,
-    IDashboardDateFilter,
     IFilter,
-    IFilterableWidget,
     IAttributeFilter,
-    filterAttributeElements,
-    filterObjRef,
-    isNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newAllTimeFilter,
+    IDateFilter,
 } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
@@ -72,14 +71,12 @@ export function* drillToDashboardHandler(
     invariant(insight);
 
     const shouldUseDateFilter = !!widget.dateDataSet && !isDateFilterDisabled(insight);
-    const dateFilter: IDashboardDateFilter | undefined = shouldUseDateFilter
-        ? yield select(selectDrillingDateFilter, widget)
-        : undefined;
+    const dateFilter = shouldUseDateFilter ? yield select(selectDrillingDateFilter, widget) : undefined;
 
     // get proper attr filters
     const isDrillingToSelf = areObjRefsEqual(ctx.dashboardRef, cmd.payload.drillDefinition.target);
 
-    const dashboardFilters: IDashboardAttributeFilter[] = isDrillingToSelf
+    const dashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
           yield select(selectAllAttributeFilters)
         : // if drilling to other, resolve widget filter ignores
@@ -88,18 +85,14 @@ export function* drillToDashboardHandler(
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
         selectCatalogDateAttributes,
     );
-    const drillIntersectionFilters = convertIntersectionToDashboardAttributeFilters(
+    const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection!,
         dateAttributes.map((dA) => dA.attribute.ref),
         ctx.backend.capabilities.supportsElementUris ?? true,
     );
 
     // concat everything, order is important – drill filters must go first
-    const resultingFilters: FilterContextItem[] = compact([
-        dateFilter,
-        ...drillIntersectionFilters,
-        ...dashboardFilters,
-    ]);
+    const resultingFilters = compact([dateFilter, ...drillIntersectionFilters, ...dashboardFilters]);
 
     // put end event
     return drillToDashboardResolved(
@@ -111,80 +104,29 @@ export function* drillToDashboardHandler(
     );
 }
 
-function numberOrStringToNumber(input: number | string): number {
-    return isString(input) ? Number.parseInt(input) : input;
-}
-
-function dashboardDateFilterByWidget(
-    filter: IDashboardDateFilter,
-    widget: Partial<IFilterableWidget>,
-): IDashboardDateFilter {
-    if (filter.dateFilter.type === "relative") {
-        return {
-            dateFilter: {
-                type: "relative",
-                granularity: filter.dateFilter.granularity,
-                dataSet: widget.dateDataSet!,
-                from: numberOrStringToNumber(filter.dateFilter.from!),
-                to: numberOrStringToNumber(filter.dateFilter.to!),
-            },
-        };
-    } else {
-        return {
-            dateFilter: {
-                type: "absolute",
-                granularity: "GDC.time.date",
-                dataSet: widget.dateDataSet!,
-                from: numberOrStringToNumber(filter.dateFilter.from!),
-                to: numberOrStringToNumber(filter.dateFilter.to!),
-            },
-        };
-    }
-}
-
-function selectDrillingDateFilter(state: DashboardState, widget: IInsightWidget): IDashboardDateFilter {
+function selectDrillingDateFilter(state: DashboardState, widget: IInsightWidget): IDateFilter {
     const globalDateFilter = selectFilterContextDateFilter(state);
 
     return globalDateFilter
-        ? dashboardDateFilterByWidget(globalDateFilter, widget)
-        : {
-              dateFilter: {
-                  type: "relative",
-                  dataSet: widget.dateDataSet!,
-                  granularity: "GDC.time.date",
-              },
-          };
+        ? dashboardDateFilterToDateFilterByWidget(globalDateFilter, widget)
+        : newAllTimeFilter(widget.dateDataSet!);
 }
 
 function selectAllAttributeFilters(state: DashboardState): IDashboardAttributeFilter[] {
     return selectFilterContextAttributeFilters(state);
 }
 
-function attributeFilterToDashboardAttributeFilter(filter: IAttributeFilter): IDashboardAttributeFilter {
-    const attributeElements = filterAttributeElements(filter);
-    const displayForm = filterObjRef(filter);
-    return {
-        attributeFilter: {
-            attributeElements,
-            displayForm,
-            negativeSelection: isNegativeAttributeFilter(filter),
-        },
-    };
-}
-
 function* getWidgetAwareAttributeFilters(
     ctx: DashboardContext,
     widget: IInsightWidget,
-): SagaIterator<IDashboardAttributeFilter[]> {
+): SagaIterator<IAttributeFilter[]> {
     const filterContextItems: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
 
     const filters = filterContextItems.map(dashboardAttributeFilterToAttributeFilter);
 
-    const resolvedFiltersForWidget = yield call(getResolvedFiltersForWidget, ctx, widget, filters);
-
-    return resolvedFiltersForWidget.map(attributeFilterToDashboardAttributeFilter);
+    return yield call(getResolvedFiltersForWidget, ctx, widget, filters);
 }
 
 function isDateFilterDisabled(insight: IInsight): boolean {
@@ -224,32 +166,24 @@ function filterIntersection(
     return ref ? !dateDataSetsAttributesRefs.some((ddsRef) => areObjRefsEqual(ddsRef, ref)) : false;
 }
 
-function convertIntersectionToDashboardAttributeFilters(
+function convertIntersectionToAttributeFilters(
     intersection: IDrillEventIntersectionElement[],
     dateDataSetsAttributesRefs: ObjRef[],
     backendSupportsElementUris: boolean,
-): IDashboardAttributeFilter[] {
+): IAttributeFilter[] {
     return intersection
         .map((i) => i.header)
         .filter((i: DrillEventIntersectionElementHeader) => filterIntersection(i, dateDataSetsAttributesRefs))
         .filter(isDrillIntersectionAttributeItem)
-        .map((h: IDrillIntersectionAttributeItem): IDashboardAttributeFilter => {
+        .map((h: IDrillIntersectionAttributeItem): IAttributeFilter => {
             if (backendSupportsElementUris) {
-                return {
-                    attributeFilter: {
-                        displayForm: h.attributeHeader.ref,
-                        negativeSelection: false,
-                        attributeElements: { uris: [h.attributeHeaderItem.uri] },
-                    },
-                };
+                return newPositiveAttributeFilter(h.attributeHeader.ref, {
+                    uris: [h.attributeHeaderItem.uri],
+                });
             } else {
-                return {
-                    attributeFilter: {
-                        displayForm: h.attributeHeader.ref,
-                        negativeSelection: false,
-                        attributeElements: { uris: [h.attributeHeaderItem.name] },
-                    },
-                };
+                return newPositiveAttributeFilter(h.attributeHeader.ref, {
+                    uris: [h.attributeHeaderItem.name],
+                });
             }
         });
 }

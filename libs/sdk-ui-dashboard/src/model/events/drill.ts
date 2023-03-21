@@ -12,7 +12,12 @@ import { ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { DashboardContext, FiltersInfo } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
-import { IDashboardDrillEvent, IDrillDownDefinition, DashboardDrillContext } from "../../types";
+import {
+    IDashboardDrillEvent,
+    IDrillDownDefinition,
+    DashboardDrillContext,
+    IDashboardFilter,
+} from "../../types";
 import { eventGuard } from "./util";
 
 /**
@@ -465,7 +470,7 @@ export interface DashboardDrillToDashboardResolvedPayload {
     /**
      * Drill intersection filters that can be applied to the target dashboard.
      */
-    readonly filters: FilterContextItem[];
+    readonly filters: (IDashboardFilter | FilterContextItem)[];
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -494,7 +499,7 @@ export interface DashboardDrillToDashboardResolved extends IDashboardEvent {
  */
 export function drillToDashboardResolved(
     ctx: DashboardContext,
-    filters: FilterContextItem[],
+    filters: (IDashboardFilter | FilterContextItem)[],
     drillDefinition: IDrillToDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,

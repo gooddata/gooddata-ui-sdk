@@ -1,9 +1,9 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 
-import { OnFiredDashboardDrillEvent } from "../../../types";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types";
 import { ObjRef, ObjRefInScope, FilterContextItem, ScreenSize } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget } from "../../../model";
 
@@ -97,7 +97,7 @@ export interface IDashboardWidgetProps {
     /**
      * @alpha
      */
-    onFiltersChange?: (filters: FilterContextItem[], resetOthers?: boolean) => void;
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
 
     /**
      * Callback that the component MUST call when the widget is clicked.

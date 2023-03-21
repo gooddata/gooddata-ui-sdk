@@ -18,6 +18,7 @@ import {
     DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
+import { IDashboardFilter } from "../../types";
 
 /**
  * Payload type for {@link ChangeDateFilterSelection} command.
@@ -624,7 +625,7 @@ export interface ChangeFilterContextSelectionPayload {
     /**
      * Filters to apply to the current dashboard filter context.
      */
-    filters: FilterContextItem[];
+    filters: (IDashboardFilter | FilterContextItem)[];
     /**
      * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
      */
@@ -661,7 +662,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  * @returns change filter selection command
  */
 export function changeFilterContextSelection(
-    filters: FilterContextItem[],
+    filters: (IDashboardFilter | FilterContextItem)[],
     resetOthers: boolean = false,
     correlationId?: string,
 ): ChangeFilterContextSelection {

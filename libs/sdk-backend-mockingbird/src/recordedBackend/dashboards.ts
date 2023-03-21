@@ -301,10 +301,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             {
                 negativeAttributeFilter: {
                     displayForm: {
-                        uri: "/gdc/md/referenceworkspace/obj/1055",
+                        uri: "/example/md/mock/123",
                     },
                     notIn: {
-                        uris: ["/gdc/md/referenceworkspace/obj/1054"],
+                        uris: ["/example/md/mock/124"],
                     },
                 },
             },
