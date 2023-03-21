@@ -115,6 +115,7 @@ describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         widget.getKPI().clickValue();
         kpiConfiguration.toggleMeasureDropdown();
+        cy.wait(1000); //input too fast make input string vanished
         kpiMeasureDropdown.find("abc").noMatchingData();
     });
 });

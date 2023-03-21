@@ -96,7 +96,7 @@ describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         it("Check attribute value when drilling in bubble chart", () => {
             Navigation.visit("dashboard/dashboard-target");
-            new Widget(2).getChart().waitLoaded().clickSeriesPoint(1, 0);
+            new Widget(2).getChart().scrollIntoView().waitLoaded().clickSeriesPoint(1, 0);
 
             drillModal.getTable().getColumnValues(0).should("deep.equal", ["2011"]);
         });
