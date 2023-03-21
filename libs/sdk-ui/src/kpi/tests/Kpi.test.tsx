@@ -1,10 +1,9 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { newMeasure } from "@gooddata/sdk-model";
-import { mount } from "enzyme";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
-import { LoadingComponent } from "../../base/react/LoadingComponent";
-import { createDummyPromise } from "../../base/react/tests/toolkit";
+// import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { FormattedNumber } from "../FormattedNumber";
 import { Kpi } from "../Kpi";
 
@@ -12,32 +11,40 @@ const testCustomFormat = "$#,#.##";
 const testMeasure = newMeasure("m1", (m) => m.localId("m1").format(testCustomFormat));
 const testWorkspace = "dummyWorkspace";
 
-describe("Kpi", () => {
-    it("should render loading indicator", () => {
-        const wrapper = mount(
-            <Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />,
-        );
+/**
+ * This mock enables us to test props as parameters of the called component
+ */
+jest.mock("../FormattedNumber", () => ({
+    FormattedNumber: jest.fn(() => null),
+}));
 
-        expect(wrapper.find(LoadingComponent)).toHaveLength(1);
+describe("Kpi", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it("should render loading indicator", () => {
+        render(<Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />);
+
+        expect(document.querySelector(".s-loading")).toBeInTheDocument();
     });
 
     it("should render formatted number when loaded", async () => {
-        const wrapper = mount(
-            <Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />,
-        );
+        render(<Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />);
 
-        await createDummyPromise({ delay: 100 });
-        wrapper.update();
-        expect(wrapper.find(FormattedNumber)).toHaveLength(1);
+        await waitFor(() => {
+            expect(FormattedNumber).toHaveBeenCalled();
+        });
     });
 
     it("should propagate custom measure format", async () => {
-        const wrapper = mount(
-            <Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />,
-        );
+        render(<Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />);
 
-        await createDummyPromise({ delay: 100 });
-        wrapper.update();
-        expect(wrapper.find(FormattedNumber).prop("format")).toBe(testCustomFormat);
+        await waitFor(() => {
+            expect(FormattedNumber).toHaveBeenCalledWith(
+                expect.objectContaining({ format: testCustomFormat }),
+                {},
+            );
+        });
     });
 });

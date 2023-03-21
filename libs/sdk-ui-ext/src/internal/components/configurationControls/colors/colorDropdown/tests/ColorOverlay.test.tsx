@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
-import { Overlay } from "@gooddata/sdk-ui-kit";
+import * as uiKit from "@gooddata/sdk-ui-kit";
 
 import ColorOverlay, { IColorOverlayProps, DropdownVersionType } from "../ColorOverlay";
 
@@ -15,17 +15,23 @@ const defaultProps: IColorOverlayProps = {
 
 function createComponent(customProps: Partial<IColorOverlayProps> = {}) {
     const props: IColorOverlayProps = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<IColorOverlayProps>(<ColorOverlay {...props} />);
+    return render(<ColorOverlay {...props} />);
 }
 
 describe("ColorOverlay", () => {
+    beforeEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it("should render ColorOverlay control", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(ColorOverlay).length).toBe(1);
+        createComponent();
+        expect(screen.getByLabelText("Color overlay content")).toBeInTheDocument();
     });
 
     it("ColorOverlay should be aligned to top left or bottom left", () => {
-        const wrapper = createComponent();
+        const overlaySpy = jest.spyOn(uiKit, "Overlay").mockImplementation(() => null);
+
+        createComponent();
 
         const expectAlignPoints = [
             {
@@ -44,12 +50,16 @@ describe("ColorOverlay", () => {
             },
         ];
 
-        expect(wrapper.find(Overlay).prop("alignTo")).toEqual(defaultProps.alignTo);
-        expect(wrapper.find(Overlay).prop("alignPoints")).toEqual(expectAlignPoints);
+        expect(overlaySpy).toHaveBeenCalledWith(
+            expect.objectContaining({ alignPoints: expectAlignPoints, alignTo: defaultProps.alignTo }),
+            {},
+        );
     });
 
     it("ColorOverlay should be aligned to center left or bottom left ", () => {
-        const wrapper = createComponent({ dropdownVersion: DropdownVersionType.ColorPicker });
+        const overlaySpy = jest.spyOn(uiKit, "Overlay").mockImplementation(() => null);
+
+        createComponent({ dropdownVersion: DropdownVersionType.ColorPicker });
 
         const expectAlignPoints = [
             {
@@ -74,7 +84,10 @@ describe("ColorOverlay", () => {
                 },
             },
         ];
-        expect(wrapper.find(Overlay).prop("alignTo")).toEqual(defaultProps.alignTo);
-        expect(wrapper.find(Overlay).prop("alignPoints")).toEqual(expectAlignPoints);
+
+        expect(overlaySpy).toHaveBeenCalledWith(
+            expect.objectContaining({ alignPoints: expectAlignPoints, alignTo: defaultProps.alignTo }),
+            {},
+        );
     });
 });
