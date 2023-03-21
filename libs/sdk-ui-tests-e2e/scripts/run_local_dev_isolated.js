@@ -133,7 +133,7 @@ async function main() {
                 workspaceId,
                 sdkBackend: SDK_BACKEND,
                 tagsFilter: CYPRESS_TEST_TAGS.split(","),
-                config: `baseUrl=${host},specPattern=**/${FILTER}`,
+                config: `baseUrl=${host},specPattern=cypress/**/${FILTER}`,
             });
         });
         await wiremockReset(mockServer);
