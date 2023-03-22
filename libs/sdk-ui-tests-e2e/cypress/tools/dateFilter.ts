@@ -20,7 +20,8 @@ export type RelativePreset =
     | "hidden-relative-preset-2"
     | "relative-this-week"
     | "relative-last-week"
-    | "relative-this-2-weeks";
+    | "relative-this-2-weeks"
+    | "this-week";
 
 export type AbsolutePreset =
     | "christmas-2011"

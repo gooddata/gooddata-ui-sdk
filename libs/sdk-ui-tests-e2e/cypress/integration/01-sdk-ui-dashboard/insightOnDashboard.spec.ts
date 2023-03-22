@@ -62,7 +62,7 @@ describe("Insights on dashboard", () => {
     });
 
     it("Should show no data message if insight has no data", { tags: ["pre-merge_isolated_tiger"] }, () => {
-        new DateFilter().open().selectAbsoluteForm().apply();
+        new DateFilter().open().selectRelativePreset("this-week").apply();
         widget.waitChartLoaded().getChart().hasNoDataForFilter();
     });
 
