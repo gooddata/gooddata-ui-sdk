@@ -115,6 +115,7 @@ async function main() {
 
         const TESTS_DIR = "./cypress/integration";
         const files = getFilterSpecFiles(TESTS_DIR, specFilesFilter);
+        process.stdout.write(`files: ${files}`)
         execSync(`rm -rf ./cypress/results`);
 
         if (!fs.existsSync(`./recordings/mappings/${SDK_BACKEND}`)) {
