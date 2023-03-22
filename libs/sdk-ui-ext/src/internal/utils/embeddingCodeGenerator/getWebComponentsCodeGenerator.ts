@@ -10,7 +10,7 @@ const LOCALE = "<locale>";
 const CUSTOM_HEIGHT = "<customHeight>";
 const CUSTOM_TITLE = "Custom insight title";
 const WEB_COMPONENTS_EMBED_CODE = `<!-- Load the library... -->
-<script type="module" src="https://${HOST_NAME}/components/${WORKSPACE_ID}?auth=sso"></script>
+<script type="module" src="https://${HOST_NAME}/components/${WORKSPACE_ID}.js?auth=sso"></script>
 <!-- ...and embed an insight -->
 
 <gd-insight\n    insight="${INSIGHT_ID}"${INSIGHT_TITLE}${LOCALE}${CUSTOM_HEIGHT}
@@ -21,7 +21,10 @@ export const getWebComponentsCodeGenerator = (
     insight: IInsight,
     codeOption: IWebComponentsOptions,
 ) => {
-    const { displayTitle, customTitle, customHeight, height, locale, allowLocale } = codeOption;
+    const { displayTitle, customTitle, height, locale, allowLocale } = codeOption;
+    // when the heigh is number, we should add the `px` unit to the height. Otherwise, the unit already added to the height.
+    // Ex: style="height: 400px" instead of style="height: 400"
+    const customHeightValue = `${height}${typeof height === "number" ? "px" : ""}`;
     return WEB_COMPONENTS_EMBED_CODE.replace(HOST_NAME, window.location.hostname)
         .replace(WORKSPACE_ID, workspaceId)
         .replace(INSIGHT_ID, insight.insight.identifier)
@@ -30,5 +33,5 @@ export const getWebComponentsCodeGenerator = (
             displayTitle ? `\n    title="${customTitle ? CUSTOM_TITLE : insight.insight.title}"` : "",
         )
         .replace(LOCALE, allowLocale ? `\n    locale="${locale}"` : "")
-        .replace(CUSTOM_HEIGHT, customHeight ? `\n    style="${height}"` : "");
+        .replace(CUSTOM_HEIGHT, `\n    style="height: ${customHeightValue}"`);
 };
