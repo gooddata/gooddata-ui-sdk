@@ -12,7 +12,7 @@ export const getFilterSpecFiles = function (dirPath, specFilesFilter) {
         if (stat.isDirectory()) {
             arrayOfFiles = arrayOfFiles.concat(getFilterSpecFiles(dirPath + "/" + file, specFilesFilter));
         }
-        process.stdout.write(`file name`)
+        process.stdout.write(`file name: ${file}`)
         if (stat.isFile && (specFilesFilter === "" || specFilesFilter.includes(path.basename(file))
             || specFilesFilter.includes(path.basename(file).replace(".spec.ts", "")))) {
             arrayOfFiles.push(dirPath + "/" + file);
