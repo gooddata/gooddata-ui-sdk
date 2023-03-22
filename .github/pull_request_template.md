@@ -12,7 +12,6 @@ Supported PR commands:
 | ------------------------------------------------------- | ---------------------------------------------------------- |
 | `ok to test`                                            | Re-run standard checks                                     |
 | `extended check sonar`                                  | SonarQube tests                                            |
-| `extended check plugins`                                | Dashboard plugins tests                                    |
 | `extended test - backstop`                              | BackstopJS tests                                           |
 | **E2E Cypress tests commands - TIGER**                  |                                                            |
 | `extended test - tiger-cypress - isolated <testName>`   | Run isolated tests running against recorded Tiger backend. |
