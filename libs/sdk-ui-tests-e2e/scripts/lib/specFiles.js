@@ -12,7 +12,9 @@ export const getFilterSpecFiles = function (dirPath, specFilesFilter) {
         if (stat.isDirectory()) {
             arrayOfFiles = arrayOfFiles.concat(getFilterSpecFiles(dirPath + "/" + file, specFilesFilter));
         }
-        if (stat.isFile && (specFilesFilter === "" || specFilesFilter.includes(path.basename(file)))) {
+        process.stdout.write(`file name`)
+        if (stat.isFile && (specFilesFilter === "" || specFilesFilter.includes(path.basename(file))
+            || specFilesFilter.includes(path.basename(file).replace(".spec.ts", "")))) {
             arrayOfFiles.push(dirPath + "/" + file);
         }
     });
