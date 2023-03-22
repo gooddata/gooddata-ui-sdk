@@ -21,7 +21,7 @@ const clearSelection = (filter: IDashboardAttributeFilter) => {
     return filter;
 };
 
-export function sanitizeSingleSelectionFilter(filters: FilterContextItem[]): FilterContextItem[] {
+export function sanitizeSelectionMode(filters: FilterContextItem[]): FilterContextItem[] {
     return filters.map((filter) => {
         if (isDashboardAttributeFilter(filter) && isSingleSelectionFilter(filter)) {
             const validFilter = filter;
@@ -43,6 +43,15 @@ export function sanitizeSingleSelectionFilter(filters: FilterContextItem[]): Fil
                 clearSelection(validFilter);
             }
             return validFilter;
+        }
+        if (isDashboardAttributeFilter(filter)) {
+            return {
+                ...filter,
+                attributeFilter: {
+                    ...filter.attributeFilter,
+                    selectionMode: filter.attributeFilter.selectionMode ?? "multi",
+                },
+            };
         }
         return filter;
     });

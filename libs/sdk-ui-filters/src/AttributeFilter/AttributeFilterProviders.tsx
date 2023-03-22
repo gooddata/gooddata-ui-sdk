@@ -28,6 +28,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         staticElements,
         fullscreenOnMobile = false,
         selectionMode = "multi",
+        selectFirst = false,
         onApply,
         onError,
         ErrorComponent,
@@ -92,6 +93,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     staticElements={staticElements}
                     fullscreenOnMobile={fullscreenOnMobile}
                     selectionMode={selectionMode}
+                    selectFirst={selectFirst}
                 >
                     {children}
                 </AttributeFilterContextProvider>

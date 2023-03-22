@@ -9,7 +9,7 @@ import { AttributeFilterController } from "../hooks/types";
  * @beta
  */
 export type IAttributeFilterContext = AttributeFilterController &
-    Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode">;
+    Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst">;
 
 export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
 
@@ -25,13 +25,15 @@ export const useAttributeFilterContext = (): IAttributeFilterContext => useConte
  * @internal
  */
 export const AttributeFilterContextProvider: React.FC<IAttributeFilterCoreProps> = (props) => {
-    const { children, fullscreenOnMobile, title: titleInput, selectionMode } = props;
+    const { children, fullscreenOnMobile, title: titleInput, selectionMode, selectFirst } = props;
 
     const controller = useAttributeFilterController(props);
     const title = titleInput ?? controller?.attribute?.title ?? "";
 
     return (
-        <AttributeFilterContext.Provider value={{ ...controller, fullscreenOnMobile, title, selectionMode }}>
+        <AttributeFilterContext.Provider
+            value={{ ...controller, fullscreenOnMobile, title, selectionMode, selectFirst }}
+        >
             {children}
         </AttributeFilterContext.Provider>
     );

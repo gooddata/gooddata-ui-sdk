@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -27,6 +27,7 @@ export interface IConfigurationParentItemProps {
     onConnectingAttributeSelect: (localIdentifier: string, targetRef: ObjRef) => void;
     connectingAttributes: IConnectingAttribute[];
     title: string;
+    disabled: boolean;
 }
 
 export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (props) => {
@@ -37,6 +38,7 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
         connectingAttributes,
         onConnectingAttributeSelect,
         title,
+        disabled,
     } = props;
 
     const isCircularDependency = useDashboardSelector(
@@ -73,12 +75,13 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
 
     return (
         <React.Fragment>
-            <div className={activeItemClasses} onClick={onSelect} title={title}>
+            <div className={activeItemClasses} onClick={() => !disabled && onSelect()} title={title}>
                 <label className="input-checkbox-label configuration-item-title">
                     <input
                         type="checkbox"
                         className="input-checkbox s-checkbox"
                         checked={isSelected}
+                        disabled={disabled}
                         readOnly
                     />
                     <span className="input-label-text">{title}</span>

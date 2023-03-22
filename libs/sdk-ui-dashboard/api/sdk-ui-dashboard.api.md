@@ -6390,14 +6390,14 @@ export interface SetAttributeFilterSelectionMode extends IDashboardCommand {
 }
 
 // @beta
-export function setAttributeFilterSelectionMode(filterLocalId: string, selectionMode: "single" | "multi"): SetAttributeFilterSelectionMode;
+export function setAttributeFilterSelectionMode(filterLocalId: string, selectionMode: DashboardAttributeFilterSelectionMode): SetAttributeFilterSelectionMode;
 
 // @beta (undocumented)
 export interface SetAttributeFilterSelectionModePayload {
     // (undocumented)
     filterLocalId: string;
     // (undocumented)
-    selectionMode: "single" | "multi";
+    selectionMode: DashboardAttributeFilterSelectionMode;
 }
 
 // @beta

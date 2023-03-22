@@ -484,7 +484,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -502,6 +502,7 @@ export interface IAttributeFilterCoreProps {
     parentFilters?: AttributeFiltersOrPlaceholders;
     // @internal (undocumented)
     resetOnParentFilterChange?: boolean;
+    selectFirst?: boolean;
     selectionMode?: DashboardAttributeFilterSelectionMode;
     staticElements?: IAttributeElement[];
     title?: string;

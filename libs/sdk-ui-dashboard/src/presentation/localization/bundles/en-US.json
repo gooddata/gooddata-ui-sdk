@@ -1156,6 +1156,21 @@
         "comment": "",
         "limit": 0
     },
+    "attributesDropdown.selectionMode": {
+        "value": "Selection",
+        "comment": "Dropdown subsection title.",
+        "limit": 0
+    },
+    "attributesDropdown.selectionMode.multi": {
+        "value": "Multiple values",
+        "comment": "Input selection choice.",
+        "limit": 0
+    },
+    "attributesDropdown.selectionMode.single": {
+        "value": "Single value",
+        "comment": "Input selection choice.",
+        "limit": 0
+    },
     "attributesDropdown.noConnectionMessage": {
         "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",

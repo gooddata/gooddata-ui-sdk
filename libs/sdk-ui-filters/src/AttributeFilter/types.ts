@@ -187,6 +187,14 @@ export interface IAttributeFilterCoreProps {
     selectionMode?: DashboardAttributeFilterSelectionMode;
 
     /**
+     * Specify if first available element should be automatically selected for empty selection.
+     *
+     * @remarks
+     * By default, the value is "false". Works only for `selectionMode` "single" and if current selection is empty.
+     */
+    selectFirst?: boolean;
+
+    /**
      * Specify function which will be called when user clicks 'Apply' button.
      *
      * @remarks

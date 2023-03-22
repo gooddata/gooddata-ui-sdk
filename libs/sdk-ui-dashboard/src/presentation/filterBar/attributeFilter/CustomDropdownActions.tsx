@@ -4,6 +4,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
 import {
     areObjRefsEqual,
+    DashboardAttributeFilterSelectionMode,
     IAttributeMetadataObject,
     isAttributeMetadataObject,
     ObjRef,
@@ -23,7 +24,8 @@ import {
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
+    const { enableKPIAttributeFilterRenaming, enableSingleSelectionFilter } =
+        useDashboardSelector(selectSettings);
     const allAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
 
     const isDependentFiltersEnabled = useDashboardSelector(selectIsKPIDashboardDependentFiltersEnabled);
@@ -56,7 +58,10 @@ function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAt
 
     return (
         isEditMode &&
-        (canConfigureDependentFilters || canConfigureDisplayForm || enableKPIAttributeFilterRenaming)
+        (canConfigureDependentFilters ||
+            canConfigureDisplayForm ||
+            enableKPIAttributeFilterRenaming ||
+            enableSingleSelectionFilter)
     );
 }
 
@@ -73,6 +78,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
     applyText: string;
     filterDisplayFormRef: ObjRef;
     attributes?: IAttributeMetadataObject[];
+    filterSelectionMode?: DashboardAttributeFilterSelectionMode;
 }
 
 /**
@@ -88,10 +94,18 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     applyText,
     filterDisplayFormRef,
     attributes,
+    filterSelectionMode,
 }) => {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
+
+    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
+    const isSingleSelect = enableSingleSelectionFilter && filterSelectionMode === "single";
+
+    if (!isEditMode && isSingleSelect) {
+        return null;
+    }
 
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
@@ -106,21 +120,23 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                     <AttributeFilterConfigurationButton onConfiguration={onConfigurationButtonClick} />
                 ) : null}
             </div>
-            <div className="gd-attribute-filter-dropdown-actions-right-content__next">
-                <Button
-                    className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
-                    onClick={onCancelButtonClick}
-                    value={cancelText}
-                    title={cancelText}
-                />
-                <Button
-                    disabled={isApplyDisabled}
-                    className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                    onClick={onApplyButtonClick}
-                    value={applyText}
-                    title={applyText}
-                />
-            </div>
+            {!isSingleSelect ? (
+                <div className="gd-attribute-filter-dropdown-actions-right-content__next">
+                    <Button
+                        className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
+                        onClick={onCancelButtonClick}
+                        value={cancelText}
+                        title={cancelText}
+                    />
+                    <Button
+                        disabled={isApplyDisabled}
+                        className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                        onClick={onApplyButtonClick}
+                        value={applyText}
+                        title={applyText}
+                    />
+                </div>
+            ) : null}
         </div>
     );
 };
