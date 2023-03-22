@@ -189,6 +189,8 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     // (undocumented)
+    export type AttributeFilterItemSelectionMode = "single" | "multi";
+    // (undocumented)
     export type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
     // (undocumented)
     export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
@@ -256,6 +258,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             notIn: string[];
             textFilter?: boolean;
+            selectionMode?: "multi";
         };
     }
     // (undocumented)
@@ -265,6 +268,7 @@ export namespace EmbeddedGdc {
             displayForm: ObjQualifier;
             in: string[];
             textFilter?: boolean;
+            selectionMode?: AttributeFilterItemSelectionMode;
         };
     }
     // (undocumented)

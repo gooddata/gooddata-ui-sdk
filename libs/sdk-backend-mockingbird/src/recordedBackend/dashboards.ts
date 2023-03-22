@@ -297,7 +297,18 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public getResolvedFiltersForWidget(_widget: IWidget, _filters: IFilter[]): Promise<IFilter[]> {
-        throw new NotSupported("recorded backend does not support this call");
+        return Promise.resolve([
+            {
+                negativeAttributeFilter: {
+                    displayForm: {
+                        uri: "/example/md/mock/123",
+                    },
+                    notIn: {
+                        uris: ["/example/md/mock/124"],
+                    },
+                },
+            },
+        ]);
     }
 
     public getScheduledMailsForDashboard(

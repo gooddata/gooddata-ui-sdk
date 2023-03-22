@@ -15,38 +15,38 @@ import partition from "lodash/partition";
 import uniqBy from "lodash/uniqBy";
 import compact from "lodash/compact";
 import {
-    isAttributeFilter,
     objRefToString,
-    filterObjRef,
-    isRelativeDateFilter,
     isUriRef,
-    filterAttributeElements,
-    isNegativeAttributeFilter,
-    isAbsoluteDateFilter,
-    isAllTimeDateFilter,
-    DateFilterGranularity,
-    FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
-    newAbsoluteDashboardDateFilter,
-    newAllTimeDashboardDateFilter,
-    newRelativeDashboardDateFilter,
     updateAttributeElementsItems,
     getAttributeElementsItems,
     attributeElementsIsEmpty,
     isSingleSelectionFilter,
+    FilterContextItem,
+    DateFilterGranularity,
+    isAttributeFilter,
+    isNegativeAttributeFilter,
+    filterObjRef,
+    filterAttributeElements,
+    isAbsoluteDateFilter,
+    newAbsoluteDashboardDateFilter,
+    isAllTimeDateFilter,
+    newAllTimeDashboardDateFilter,
+    isRelativeDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     IUpdateAttributeFilterSelectionPayload,
     IUpsertDateFilterPayload,
 } from "../../store/filterContext/filterContextReducers";
-import { IDashboardFilter } from "../../../types";
 import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver";
+import { IDashboardFilter } from "./../../../types";
 
 function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
     if (isAttributeFilter(filter)) {
@@ -55,6 +55,7 @@ function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterCon
                 negativeSelection: isNegativeAttributeFilter(filter),
                 displayForm: filterObjRef(filter),
                 attributeElements: filterAttributeElements(filter),
+                selectionMode: "multi",
             },
         };
     } else if (isAbsoluteDateFilter(filter)) {

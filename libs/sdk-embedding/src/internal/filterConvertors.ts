@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
@@ -86,21 +86,30 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
 
     if (EmbeddedGdc.isPositiveAttributeFilter(filterItem)) {
         const {
-            positiveAttributeFilter: { displayForm, in: attributeElements },
+            positiveAttributeFilter: { displayForm, in: attributeElements, selectionMode = "multi" },
         } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
+
+        const validSelectionMode = selectionMode === "single" ? attributeElements.length <= 1 : true;
+
         return (
             (isString(uri) || isString(identifier)) &&
             Array.isArray(attributeElements) &&
-            attributeElements.length !== 0
+            attributeElements.length !== 0 &&
+            validSelectionMode
         );
     } else {
         const {
-            negativeAttributeFilter: { displayForm, notIn: attributeElements },
+            negativeAttributeFilter: { displayForm, notIn: attributeElements, selectionMode = "multi" },
         } = filterItem;
+
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
+
+        const validSelectionMode = selectionMode !== "multi" ? false : true;
         // attributeElements could be empty in case of setting All Value
-        return (isString(uri) || isString(identifier)) && Array.isArray(attributeElements);
+        return (
+            (isString(uri) || isString(identifier)) && Array.isArray(attributeElements) && validSelectionMode
+        );
     }
 }
 

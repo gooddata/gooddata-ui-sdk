@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import {
     changeAttributeFilterSelection,
@@ -22,8 +22,9 @@ import {
 import {
     idRef,
     attributeDisplayFormRef,
-    newNegativeAttributeFilter,
-    newRelativeDateFilter,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { useDashboardLoader } from "@gooddata/sdk-ui-loaders";
 import { LoadingComponent } from "@gooddata/sdk-ui";
@@ -86,14 +87,25 @@ const MyCustomWidget: CustomDashboardWidgetComponent = () => {
         resetDateFilter();
     };
 
+    const negativeDashboardAttributeFilter: IDashboardAttributeFilter = {
+        attributeFilter: {
+            displayForm: Md.RestaurantCategory.attribute.displayForm,
+            negativeSelection: true,
+            attributeElements: {
+                uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2196/elements?id=1"],
+            },
+        },
+    };
+
+    const relativeDashboardDateFilter: IDashboardDateFilter = newRelativeDashboardDateFilter(
+        "GDC.time.year",
+        -10,
+        0,
+    );
+
     const changeMultipleFilters = () => {
         // set the restaurant category filter and date filter using a single command
-        changeFilterContextSelectionCmd([
-            newNegativeAttributeFilter(Md.RestaurantCategory, {
-                uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2196/elements?id=1"],
-            }),
-            newRelativeDateFilter(Md.DateDatasets.Date, "GDC.time.year", -10, 0),
-        ]);
+        changeFilterContextSelectionCmd([negativeDashboardAttributeFilter, relativeDashboardDateFilter]);
     };
 
     return (

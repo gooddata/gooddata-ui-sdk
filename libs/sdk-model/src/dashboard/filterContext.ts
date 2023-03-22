@@ -179,6 +179,22 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 }
 
 /**
+ * Returns true when given date filter has type set to relative.
+ * @alpha
+ */
+export function isRelativeDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean {
+    return dateFilter.dateFilter.type === "relative";
+}
+
+/**
+ * Returns true when given date filter has type set to absolute.
+ * @alpha
+ */
+export function isAbsoluteDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean {
+    return dateFilter.dateFilter.type === "absolute";
+}
+
+/**
  * Creates a new relative dashboard date filter.
  *
  * @param granularity - granularity of the filters (month, year, etc.)

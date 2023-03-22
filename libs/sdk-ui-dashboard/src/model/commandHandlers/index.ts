@@ -19,6 +19,7 @@ import { moveAttributeFilterHandler } from "./filterContext/attributeFilter/move
 import { changeAttributeFilterSelectionHandler } from "./filterContext/attributeFilter/changeAttributeFilterSelectionHandler";
 import { setAttributeFilterParentsHandler } from "./filterContext/attributeFilter/setAttributeFilterParentHandler";
 import { changeAttributeTitleHandler } from "./filterContext/attributeFilter/changeAttributeTitleHandler";
+import { changeAttributeSelectionModeHandler } from "./filterContext/attributeFilter/changeAttributeSelectionModeHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
@@ -99,6 +100,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS": setAttributeFilterParentsHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM": changeAttributeDisplayFormHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE": changeAttributeTitleHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE": changeAttributeSelectionModeHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,

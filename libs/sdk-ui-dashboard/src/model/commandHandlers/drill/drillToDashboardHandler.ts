@@ -18,8 +18,8 @@ import {
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
 import { IDashboardFilter } from "../../../types";
 import {
-    dashboardDateFilterToDateFilterByWidget,
     dashboardAttributeFilterToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
 } from "../../../converters";
 import {
     DrillEventIntersectionElementHeader,
@@ -29,10 +29,7 @@ import {
 } from "@gooddata/sdk-ui";
 import {
     areObjRefsEqual,
-    IAttributeFilter,
-    IDateFilter,
-    newAllTimeFilter,
-    newPositiveAttributeFilter,
+    IDashboardAttributeFilter,
     ObjRef,
     IInsight,
     insightMeasures,
@@ -40,6 +37,11 @@ import {
     measureFilters,
     isDateFilter,
     IInsightWidget,
+    IFilter,
+    IAttributeFilter,
+    newPositiveAttributeFilter,
+    newAllTimeFilter,
+    IDateFilter,
 } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
@@ -110,10 +112,8 @@ function selectDrillingDateFilter(state: DashboardState, widget: IInsightWidget)
         : newAllTimeFilter(widget.dateDataSet!);
 }
 
-function selectAllAttributeFilters(state: DashboardState): IAttributeFilter[] {
-    const filterContextItems = selectFilterContextAttributeFilters(state);
-
-    return filterContextItems.map(dashboardAttributeFilterToAttributeFilter);
+function selectAllAttributeFilters(state: DashboardState): IDashboardAttributeFilter[] {
+    return selectFilterContextAttributeFilters(state);
 }
 
 function* getWidgetAwareAttributeFilters(
@@ -147,7 +147,7 @@ function getResolvedFiltersForWidget(
     ctx: DashboardContext,
     widget: IInsightWidget,
     filters: IDashboardFilter[],
-) {
+): Promise<IFilter[]> {
     return ctx.backend.workspace(ctx.workspace).dashboards().getResolvedFiltersForWidget(widget, filters);
 }
 

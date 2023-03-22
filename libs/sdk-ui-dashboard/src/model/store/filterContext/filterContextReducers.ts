@@ -439,6 +439,31 @@ const changeAttributeTitle: FilterContextReducer<PayloadAction<IChangeAttributeT
     (findFilter as IDashboardAttributeFilter).attributeFilter.title = title;
 };
 
+export interface IChangeAttributeSelectionModePayload {
+    readonly filterLocalId: string;
+    readonly selectionMode: DashboardAttributeFilterSelectionMode;
+}
+
+/**
+ * Changes the selection mode for the filter given by its local identifier.
+ */
+const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSelectionModePayload>> = (
+    state,
+    action,
+) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { filterLocalId, selectionMode } = action.payload;
+
+    const findFilter = state.filterContextDefinition.filters.find(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+
+    invariant(findFilter, "Attempt to change selection mode of a non-existing filter");
+
+    (findFilter as IDashboardAttributeFilter).attributeFilter.selectionMode = selectionMode;
+};
+
 //
 //
 //
@@ -457,4 +482,5 @@ export const filterContextReducers = {
     upsertDateFilter,
     changeAttributeDisplayForm,
     changeAttributeTitle,
+    changeSelectionMode,
 };

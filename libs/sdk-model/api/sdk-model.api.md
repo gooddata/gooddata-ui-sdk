@@ -1994,6 +1994,9 @@ export interface IRgbColorValue {
     r: number;
 }
 
+// @alpha
+export function isAbsoluteDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean;
+
 // @public
 export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter;
 
@@ -2392,6 +2395,9 @@ export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOpe
 
 // @public
 export function isRankingFilter(obj: unknown): obj is IRankingFilter;
+
+// @alpha
+export function isRelativeDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean;
 
 // @public
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter;
