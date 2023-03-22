@@ -26,6 +26,12 @@ export class Chart {
         return this;
     }
 
+    waitComputed() {
+        cy.get(".adi-computing-inner").should("not.exist");
+        this.getElement().find(".visualization-container-measure-wrap").should("exist");
+        return this;
+    }
+
     getHighchartsContainer() {
         return cy.get(this.parentSelector).find(".highcharts-container");
     }
