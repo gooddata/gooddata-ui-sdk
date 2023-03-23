@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 import { IInsight, newInsightDefinition } from "@gooddata/sdk-model";
-import { IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
+import { IWebComponentsOptions, getHeightWithUnitsForEmbedCode } from "@gooddata/sdk-ui-kit";
 import { getWebComponentsCodeGenerator } from "../getWebComponentsCodeGenerator";
 
 describe("getWebComponentsCodeGenerator", () => {
@@ -15,7 +15,11 @@ describe("getWebComponentsCodeGenerator", () => {
                 title: "Insight title",
             },
         };
-        return getWebComponentsCodeGenerator("workspaceId", mockInsight, config);
+        const height = getHeightWithUnitsForEmbedCode(config) as string;
+        return getWebComponentsCodeGenerator("workspaceId", mockInsight, {
+            ...config,
+            height,
+        } as IWebComponentsOptions);
     };
     beforeAll(() => {
         delete window.location;
@@ -78,7 +82,8 @@ describe("getWebComponentsCodeGenerator", () => {
             allowLocale: true,
             locale: "en-US",
             customHeight: true,
-            height: "600px",
+            height: "600",
+            unit: "px",
             customTitle: true,
             displayTitle: true,
         });

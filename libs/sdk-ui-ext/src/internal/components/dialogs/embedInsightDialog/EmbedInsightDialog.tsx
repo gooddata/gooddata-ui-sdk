@@ -99,7 +99,9 @@ const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
     }, [currentTab]);
 
     const code = useMemo(() => {
-        if (!insight.insight.identifier) {
+        const isReactDefinitionCode =
+            codeOption.type === "react" && codeOption.componentType === "definition";
+        if (!insight.insight.identifier && !isReactDefinitionCode) {
             return null;
         }
         const inputBase = {
