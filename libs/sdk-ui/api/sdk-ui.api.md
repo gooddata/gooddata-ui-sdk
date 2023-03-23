@@ -396,6 +396,7 @@ export const ErrorCodes: {
     CANCELLED: string;
     DYNAMIC_SCRIPT_LOAD_ERROR: string;
     TIMEOUT_ERROR: string;
+    VISUALIZATION_CLASS_UNKNOWN: string;
 };
 
 // @public
