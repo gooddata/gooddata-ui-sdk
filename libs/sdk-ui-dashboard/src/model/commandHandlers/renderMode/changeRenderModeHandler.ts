@@ -36,7 +36,8 @@ export function* changeRenderModeHandler(
                 ctx,
                 resetDashboardCommand(correlationId),
             );
-            yield put(batchActions([data.batch, renderModeActions.setRenderMode(renderMode), data.reset]));
+            yield put(batchActions([data.batch, renderModeActions.setRenderMode(renderMode)]));
+            yield put(data.reset);
         } else {
             yield put(batchActions([renderModeActions.setRenderMode(renderMode)]));
         }
