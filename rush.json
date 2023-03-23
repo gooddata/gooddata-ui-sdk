@@ -309,12 +309,6 @@
             "shouldPublish": false
         },
         {
-            "packageName": "@gooddata/dashboard-plugin-tests",
-            "projectFolder": "tools/dashboard-plugin-tests",
-            "reviewCategory": "tools",
-            "shouldPublish": false
-        },
-        {
             "packageName": "@gooddata/sdk-ui-loaders",
             "projectFolder": "libs/sdk-ui-loaders",
             "reviewCategory": "production",
