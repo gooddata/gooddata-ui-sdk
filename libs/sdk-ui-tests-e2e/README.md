@@ -115,7 +115,7 @@ For Bear
 
 -   SDK_BACKEND=BEAR
 -   FIXTURE_TYPE=goodsales
--   CYPRESS_TEST_TAGS=post-merge_integrated_tiger
+-   CYPRESS_TEST_TAGS=post-merge_integrated_bear
 -   USER_NAME=bear@gooddata.com
 -   PASSWORD=
 -   AUTH_TOKEN=

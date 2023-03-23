@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
@@ -27,6 +27,10 @@ import AttributeFilterWithStaticElementsSRCJS from "./AttributeFilterWithStaticE
 import AttributeFilterWithHiddenElements from "./AttributeFilterWithHiddenElements";
 import AttributeFilterWithHiddenElementsSRC from "./AttributeFilterWithHiddenElements?raw";
 import AttributeFilterWithHiddenElementsSRCJS from "./AttributeFilterWithHiddenElements?rawJS";
+
+import SingleSelectionAttributeFilter from "./SingleSelectionAttributeFilter";
+import SingleSelectionAttributeFilterSRC from "./SingleSelectionAttributeFilter?raw";
+import SingleSelectionAttributeFilterSRCJS from "./SingleSelectionAttributeFilter?rawJS";
 
 const AttributeFilterComponent = (): JSX.Element => (
     <div>
@@ -152,6 +156,20 @@ const AttributeFilterComponent = (): JSX.Element => (
             for={AttributeFilterWithHiddenElements}
             source={AttributeFilterWithHiddenElementsSRC}
             sourceJS={AttributeFilterWithHiddenElementsSRCJS}
+        />
+
+        <h2 id="hidden-elements">Single selection filter</h2>
+
+        <p>
+            This example shows how to use attribute filter as single selection. The attribute filter will
+            require positive filter with max. one selected item as input and will allow to select only one
+            item at the same time.
+        </p>
+
+        <ExampleWithSource
+            for={SingleSelectionAttributeFilter}
+            source={SingleSelectionAttributeFilterSRC}
+            sourceJS={SingleSelectionAttributeFilterSRCJS}
         />
     </div>
 );

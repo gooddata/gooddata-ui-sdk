@@ -100,7 +100,7 @@ async function main() {
 
         const specFilesFilter = FILTER ? { specFilesFilter: FILTER.split(",") } : {};
         const isVisualMode = VISUAL_MODE === "true";
-        const visualModeFilter = FILTER && isVisualMode ? `,specPattern=**/${FILTER}` : "";
+        const visualModeFilter = FILTER && isVisualMode ? `,specPattern=cypress/**/${FILTER}` : "";
 
         const cypressProcess = runCypress({
             visual: isVisualMode,
