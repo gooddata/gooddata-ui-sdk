@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
@@ -60,6 +60,11 @@ function getKpiResultInner(
 ): IKpiResult | undefined {
     const series = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
     const primarySeries = series?.firstForMeasure(primaryMeasure);
+
+    if (secondaryMeasure && result?.meta().measureDescriptors().length !== 2) {
+        return undefined;
+    }
+
     const secondarySeries = secondaryMeasure ? series?.firstForMeasure(secondaryMeasure) : undefined;
 
     return primarySeries
