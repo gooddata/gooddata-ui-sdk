@@ -135,6 +135,10 @@
 .gd-attribute-filter-dropdown_button-title-content__next {
     display: flex;
     justify-content: space-between;
+
+    .gd-list-item-tooltip {
+        line-height: 15px;
+    }
 }
 
 .gd-is-mobile {

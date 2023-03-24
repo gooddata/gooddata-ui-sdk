@@ -385,6 +385,7 @@ const clearAttributeFiltersSelection: FilterContextReducer<
 export interface IChangeAttributeDisplayFormPayload {
     readonly filterLocalId: string;
     readonly displayForm: ObjRef;
+    readonly supportsElementUris?: boolean;
 }
 
 /**
@@ -396,7 +397,7 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 ) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const { filterLocalId, displayForm } = action.payload;
+    const { filterLocalId, displayForm, supportsElementUris } = action.payload;
 
     const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
@@ -404,9 +405,20 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 
     invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
 
-    (
-        state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
-    ).attributeFilter.displayForm = { ...displayForm };
+    const currentFilter = state.filterContextDefinition.filters[
+        currentFilterIndex
+    ] as IDashboardAttributeFilter;
+
+    currentFilter.attributeFilter.displayForm = { ...displayForm };
+
+    if (!supportsElementUris) {
+        currentFilter.attributeFilter.negativeSelection = true;
+        currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
+            currentFilter.attributeFilter.attributeElements,
+        )
+            ? { uris: [] }
+            : { values: [] };
+    }
 };
 
 export interface IUpdateConnectingAttributesOnFilterAddedPayload {

@@ -25,6 +25,11 @@ export function* changeAttributeDisplayFormHandler(
     cmd: SetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
     const { filterLocalId, displayForm } = cmd.payload;
+    const {
+        backend: {
+            capabilities: { supportsElementUris },
+        },
+    } = ctx;
 
     const catalogDisplayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
@@ -70,6 +75,7 @@ export function* changeAttributeDisplayFormHandler(
             filterContextActions.changeAttributeDisplayForm({
                 filterLocalId,
                 displayForm,
+                supportsElementUris,
             }),
         ]),
     );
