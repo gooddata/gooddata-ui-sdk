@@ -1,12 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import range from "lodash/range";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect";
-import { VirtualizedSelectMenu } from "../../Select/VirtualizedSelectMenu";
-import { SelectHeading } from "../../Select/SelectHeading";
-import { SelectOption } from "../../Select/SelectOption";
-import { SelectSeparator } from "../../Select/SelectSeparator";
 import { getRelativeDateFilterItems, DAY, WEEK_US, MONTH, QUARTER, YEAR } from "../utils";
 import { IMessageTranslator } from "../../utils/Translations/Translators";
 import { DynamicSelectItem } from "../types";
@@ -61,44 +57,39 @@ describe("DynamicSelect", () => {
             getItems: (inputString: string) =>
                 getRelativeDateFilterItems(inputString, "GDC.time.date", mockTranslator),
         };
-        return mount(<DynamicSelect {...defaultProps} {...props} />);
+        return render(<DynamicSelect {...defaultProps} {...props} />);
     };
 
     it("should render an input", () => {
-        const mounted = mountDynamicSelect();
+        mountDynamicSelect();
 
-        const input = mounted.find("input");
-        expect(input).toExist();
+        expect(screen.getByRole("textbox")).toBeInTheDocument();
     });
 
     it("should highlight current period by default", () => {
-        const mounted = mountDynamicSelect();
+        mountDynamicSelect();
 
-        const input = mounted.find("input");
-        input.simulate("focus");
+        fireEvent.focus(screen.getByRole("textbox"));
 
-        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
-
-        expect(selectOption).toExist();
-        expect(selectOption).toHaveText("today");
+        const option = screen.getByText("today");
+        expect(option).toBeInTheDocument();
+        expect(option).toHaveClass("gd-select-option-is-focused");
     });
 
     it("should pre-fill input and highlight the active item", () => {
-        const mounted = mountDynamicSelect({
+        mountDynamicSelect({
             value: -1,
         });
 
-        const input = mounted.find("input");
-        expect(input).toHaveValue("yesterday");
+        expect(screen.getByDisplayValue("yesterday")).toBeInTheDocument();
     });
 
     it("should pre-fill input and highlight the active item for value=0 (RAIL-1519)", () => {
-        const mounted = mountDynamicSelect({
+        mountDynamicSelect({
             value: 0,
         });
 
-        const input = mounted.find("input");
-        expect(input).toHaveValue("today");
+        expect(screen.getByDisplayValue("today")).toBeInTheDocument();
     });
 
     it.each([
@@ -109,57 +100,44 @@ describe("DynamicSelect", () => {
     ])(
         'should render menu and items on input value "%s"',
         (inputValue, optionCount: number, separatorCount: number, noMatchHeadingCount: number) => {
-            const mounted = mountDynamicSelect();
-            const input = mounted.find("input");
-            input.simulate("change", { target: { value: inputValue } });
+            const { container } = mountDynamicSelect();
 
-            const menu = mounted.find(VirtualizedSelectMenu);
-            expect(menu).toExist();
+            fireEvent.change(screen.getByRole("textbox"), { target: { value: inputValue } });
 
-            const selectOptions = mounted.find(SelectOption);
-            expect(selectOptions).toHaveLength(optionCount);
-
-            const separator = mounted.find(SelectSeparator);
-            expect(separator).toHaveLength(separatorCount);
-
-            const heading = mounted.find(SelectHeading);
-            expect(heading).toHaveLength(noMatchHeadingCount);
+            expect(container.querySelectorAll(".gd-select-option")).toHaveLength(optionCount);
+            expect(container.querySelectorAll(".gd-select-separator")).toHaveLength(separatorCount);
+            expect(container.querySelectorAll(".gd-select-heading")).toHaveLength(noMatchHeadingCount);
         },
     );
 
     it("should highlight first option when filtered", () => {
-        const mounted = mountDynamicSelect();
-        const input = mounted.find("input");
-        input.simulate("change", { target: { value: "to" } });
+        mountDynamicSelect();
 
-        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
+        fireEvent.change(screen.getByRole("textbox"), { target: { value: "to" } });
 
-        expect(selectOption).toExist();
-        expect(selectOption).toHaveText("today");
+        const option = screen.getByText("today");
+        expect(option).toBeInTheDocument();
+        expect(option).toHaveClass("gd-select-option-is-focused");
     });
 
     it("should highlight current period after input is cleared", () => {
-        const mounted = mountDynamicSelect();
-        const input = mounted.find("input");
-        input.simulate("change", { target: { value: "days" } });
-        mounted.update();
-        input.simulate("change", { target: { value: "" } });
+        mountDynamicSelect();
 
-        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
+        const input = screen.getByRole("textbox");
+        fireEvent.change(input, { target: { value: "to" } });
+        fireEvent.change(input, { target: { value: "" } });
 
-        expect(selectOption).toExist();
-        expect(selectOption).toHaveText("today");
+        const option = screen.getByText("today");
+        expect(option).toBeInTheDocument();
+        expect(option).toHaveClass("gd-select-option-is-focused");
     });
 
     it("should call onChange when option is selected after searching for white-space string", () => {
         const onChange = jest.fn();
-        const mounted = mountDynamicSelect({ onChange });
+        mountDynamicSelect({ onChange });
 
-        const input = mounted.find("input");
-        input.simulate("change", { target: { value: "   " } });
-
-        const selectOption = mounted.find(SelectOption).last();
-        selectOption.simulate("click");
+        fireEvent.change(screen.getByRole("textbox"), { target: { value: "   " } });
+        fireEvent.click(screen.getByText("12 days ahead"));
 
         expect(onChange).toHaveBeenCalledTimes(1);
         expect(onChange).toHaveBeenLastCalledWith(12);
@@ -167,23 +145,22 @@ describe("DynamicSelect", () => {
 
     it("should not call onChange when blurred", () => {
         const onChange = jest.fn();
-        const mounted = mountDynamicSelect({ onChange, value: 1 });
+        mountDynamicSelect({ onChange, value: 1 });
 
-        const input = mounted.find("input");
-        input.simulate("change", { target: { value: "" } });
-        input.simulate("blur");
+        const input = screen.getByRole("textbox");
+        fireEvent.change(input, { target: { value: "" } });
+        fireEvent.blur(input);
 
         expect(onChange).toHaveBeenCalledTimes(0);
     });
 
     it("should call onChange when option is selected after searching for non-white-space string", () => {
         const onChange = jest.fn();
-        const mounted = mountDynamicSelect({ onChange });
-        const input = mounted.find("input");
-        input.simulate("change", { target: { value: "tod" } });
+        mountDynamicSelect({ onChange });
 
-        const selectOption = mounted.find(SelectOption).first();
-        selectOption.simulate("click");
+        const input = screen.getByRole("textbox");
+        fireEvent.change(input, { target: { value: "tod" } });
+        fireEvent.click(screen.getByText("today"));
 
         expect(onChange).toHaveBeenCalledTimes(1);
         expect(onChange).toHaveBeenLastCalledWith(0);
@@ -191,26 +168,25 @@ describe("DynamicSelect", () => {
 
     it("should move the highlight on arrow press", () => {
         const onChange = jest.fn();
-        const mounted = mountDynamicSelect({ onChange });
+        mountDynamicSelect({ onChange });
 
-        const input = mounted.find("input");
-        input.simulate("click");
-        input.simulate("keyDown", { key: "ArrowDown" });
+        const input = screen.getByRole("textbox");
+        fireEvent.click(input);
+        fireEvent.keyDown(input, { key: "ArrowDown", keyCode: 40, which: 40 });
 
-        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
-
-        expect(selectOption).toExist();
-        expect(selectOption).toHaveText("tomorrow");
+        const option = screen.getByText("tomorrow");
+        expect(option).toBeInTheDocument();
+        expect(option).toHaveClass("gd-select-option-is-focused");
     });
 
     it("should select the highlighted item on Enter", () => {
         const onChange = jest.fn();
-        const mounted = mountDynamicSelect({ onChange });
+        mountDynamicSelect({ onChange });
 
-        const input = mounted.find("input");
-        input.simulate("click");
-        input.simulate("keyDown", { key: "ArrowDown" });
-        input.simulate("keyDown", { key: "Enter" });
+        const input = screen.getByRole("textbox");
+        fireEvent.click(input);
+        fireEvent.keyDown(input, { key: "ArrowDown", keyCode: 40, which: 40 });
+        fireEvent.keyDown(input, { key: "Enter", keyCode: 13, which: 13 });
 
         expect(onChange).toHaveBeenCalledTimes(1);
         expect(onChange).toHaveBeenLastCalledWith(1);

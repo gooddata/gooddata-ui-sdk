@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import noop from "lodash/noop";
 import { newMeasureValueFilter, IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -24,76 +24,76 @@ const renderComponent = (props?: Partial<IMeasureValueFilterDropdownProps>) => {
         filter: emptyFilter,
     };
     const Wrapped = withIntl(MeasureValueFilterDropdown);
-    return new MVFDropdownFragment(mount(<Wrapped {...defaultProps} {...props} />));
+    return render(<Wrapped {...defaultProps} {...props} />);
 };
+
+const component = new MVFDropdownFragment();
 
 describe("Measure value filter dropdown", () => {
     it("should render single value input when comparison type operator is selected", () => {
-        const component = renderComponent();
+        renderComponent();
 
         component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
-        expect(component.getRangeFromInput().length).toEqual(0);
-        expect(component.getRangeToInput().length).toEqual(0);
-        expect(component.getComparisonValueInput().length).toEqual(1);
+        expect(component.getRangeFromInput()).not.toBeInTheDocument();
+        expect(component.getRangeToInput()).not.toBeInTheDocument();
+        expect(component.getComparisonValueInput()).toBeInTheDocument();
     });
 
     it("should render from and to inputs when range type operator is selected", () => {
-        const component = renderComponent();
+        renderComponent();
 
         component.openOperatorDropdown().selectOperator("BETWEEN");
 
-        expect(component.getRangeFromInput().length).toEqual(1);
-        expect(component.getRangeToInput().length).toEqual(1);
-        expect(component.getComparisonValueInput().length).toEqual(0);
+        expect(component.getRangeFromInput()).toBeInTheDocument();
+        expect(component.getRangeToInput()).toBeInTheDocument();
+        expect(component.getComparisonValueInput()).not.toBeInTheDocument();
     });
 
     it("should have All operator preselected and no inputs rendered if there is no filter provided", () => {
-        const component = renderComponent();
+        renderComponent();
 
         expect(component.getSelectedOperatorTitle()).toEqual("All");
-        expect(component.getRangeFromInput().length).toEqual(0);
-        expect(component.getRangeToInput().length).toEqual(0);
-        expect(component.getComparisonValueInput().length).toEqual(0);
+        expect(component.getRangeFromInput()).not.toBeInTheDocument();
+        expect(component.getRangeToInput()).not.toBeInTheDocument();
+        expect(component.getComparisonValueInput()).not.toBeInTheDocument();
     });
 
     it("should have given operator preselected and values filled if filter is provided", () => {
         const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
-        const component = renderComponent({ filter });
+        renderComponent({ filter });
 
         expect(component.getSelectedOperatorTitle()).toEqual("Less than");
-        expect(component.getComparisonValueInput().props().value).toEqual("100");
+        expect(component.getComparisonValueInput().value).toEqual("100");
     });
 
     it("should have selected operator highlighted in operator dropdown", () => {
         const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
-        const component = renderComponent({ filter });
+        renderComponent({ filter });
 
-        expect(component.openOperatorDropdown().getOperator("LESS_THAN").hasClass("is-selected")).toEqual(
-            true,
-        );
+        expect(component.openOperatorDropdown().getOperator("LESS_THAN")).toHaveClass("is-selected");
     });
 
     it("should have empty from and to inputs when filter is empty when using percentage with between operator", () => {
-        const component = renderComponent({ usePercentage: true });
+        renderComponent({ usePercentage: true });
 
         component.openOperatorDropdown().selectOperator("BETWEEN");
 
-        expect(component.getRangeFromInputValue()).toEqual("");
-        expect(component.getRangeToInputValue()).toEqual("");
+        expect(component.getRangeFromInput().value).toEqual("");
+        expect(component.getRangeToInput().value).toEqual("");
     });
 
     it("should have empty from and to inputs when filter is empty when using percentage with not between operator", () => {
-        const component = renderComponent({ usePercentage: true });
+        renderComponent({ usePercentage: true });
 
         component.openOperatorDropdown().selectOperator("NOT_BETWEEN");
 
-        expect(component.getRangeFromInputValue()).toEqual("");
-        expect(component.getRangeToInputValue()).toEqual("");
+        expect(component.getRangeFromInput().value).toEqual("");
+        expect(component.getRangeToInput().value).toEqual("");
     });
 
     it("should render an input suffix for comparison value input field to display percentage sign if the measure is native percent", () => {
-        const component = renderComponent({ usePercentage: true });
+        renderComponent({ usePercentage: true });
 
         component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
@@ -101,7 +101,7 @@ describe("Measure value filter dropdown", () => {
     });
 
     it("should render an input suffix for each range value input field to display percentage sign if the measure is native percent", () => {
-        const component = renderComponent({ usePercentage: true });
+        renderComponent({ usePercentage: true });
 
         component.openOperatorDropdown().selectOperator("BETWEEN");
 
@@ -109,25 +109,26 @@ describe("Measure value filter dropdown", () => {
     });
 
     it("should render disabled operator button if enableOperatorSelection is false", () => {
-        const component = renderComponent({ enableOperatorSelection: false });
+        renderComponent({ enableOperatorSelection: false });
 
-        expect(component.getOperatorDropdownButton().hasClass("disabled")).toEqual(true);
+        expect(component.getOperatorDropdownButton()).toHaveClass("disabled");
     });
 
     describe("warning message", () => {
         it("should not render warning message if not provided", () => {
-            const component = renderComponent();
+            renderComponent();
 
-            expect(component.getWarningMessage().length).toEqual(0);
+            expect(component.getWarningMessage()).not.toBeInTheDocument();
         });
 
         it("should render low severity warning message if string provided", () => {
             const warningMessage = "The filter uses actual measure values, not percentage.";
-            const component = renderComponent({ warningMessage });
+            renderComponent({ warningMessage });
+            const messageElement = component.getWarningMessage();
 
-            expect(component.getWarningMessage().length).toEqual(1);
-            expect(component.getWarningMessageText()).toEqual(warningMessage);
-            expect(component.getWarningMessageBySeverity("low").exists()).toEqual(true);
+            expect(messageElement).toBeInTheDocument();
+            expect(messageElement.textContent).toEqual(warningMessage);
+            expect(component.getWarningMessageBySeverity("low")).toBeInTheDocument();
         });
 
         it("should render low severity warning message if low severity warning message object provided", () => {
@@ -135,11 +136,12 @@ describe("Measure value filter dropdown", () => {
                 severity: "low",
                 text: "The filter uses actual measure values, not percentage.",
             };
-            const component = renderComponent({ warningMessage });
+            renderComponent({ warningMessage });
+            const messageElement = component.getWarningMessage();
 
-            expect(component.getWarningMessage().length).toEqual(1);
-            expect(component.getWarningMessageText()).toEqual(warningMessage.text);
-            expect(component.getWarningMessageBySeverity("low").exists()).toEqual(true);
+            expect(messageElement).toBeInTheDocument();
+            expect(messageElement.textContent).toEqual(warningMessage.text);
+            expect(component.getWarningMessageBySeverity("low")).toBeInTheDocument();
         });
 
         it("should render medium severity warning message if medium severity warning message object provided", () => {
@@ -147,11 +149,12 @@ describe("Measure value filter dropdown", () => {
                 severity: "medium",
                 text: "The filter uses actual measure values, not percentage.",
             };
-            const component = renderComponent({ warningMessage });
+            renderComponent({ warningMessage });
+            const messageElement = component.getWarningMessage();
 
-            expect(component.getWarningMessage().length).toEqual(1);
-            expect(component.getWarningMessageText()).toEqual(warningMessage.text);
-            expect(component.getWarningMessageBySeverity("medium").exists()).toEqual(true);
+            expect(messageElement).toBeInTheDocument();
+            expect(messageElement.textContent).toEqual(warningMessage.text);
+            expect(component.getWarningMessageBySeverity("medium")).toBeInTheDocument();
         });
 
         it("should render high severity warning message if high severity warning message object provided", () => {
@@ -159,40 +162,40 @@ describe("Measure value filter dropdown", () => {
                 severity: "high",
                 text: "The filter uses actual measure values, not percentage.",
             };
-            const component = renderComponent({ warningMessage });
+            renderComponent({ warningMessage });
+            const messageElement = component.getWarningMessage();
 
-            expect(component.getWarningMessage().length).toEqual(1);
-            expect(component.getWarningMessageText()).toEqual(warningMessage.text);
-            expect(component.getWarningMessageBySeverity("high").exists()).toEqual(true);
+            expect(messageElement).toBeInTheDocument();
+            expect(messageElement.textContent).toEqual(warningMessage.text);
+            expect(component.getWarningMessageBySeverity("high")).toBeInTheDocument();
         });
     });
 
     describe("tooltip", () => {
-        const component = renderComponent();
-
-        const hasTooltipClass = (operator: string) =>
-            component.openOperatorDropdown().getOperator(operator).find(".tooltip-bubble").exists();
-
         it.each`
-            operator                      | showTooltip
-            ${"BETWEEN"}                  | ${true}
-            ${"NOT_BETWEEN"}              | ${true}
-            ${"GREATER_THAN_OR_EQUAL_TO"} | ${false}
-            ${"LESS_THAN"}                | ${false}
-            ${"LESS_THAN_OR_EQUAL_TO"}    | ${false}
-            ${"EQUAL_TO"}                 | ${false}
-            ${"NOT_EQUAL_TO"}             | ${false}
-            ${"GREATER_THAN"}             | ${false}
-            ${"ALL"}                      | ${false}
-        `("should return $showTooltip when operator is $operator", ({ operator, showTooltip }) => {
-            expect(hasTooltipClass(operator)).toEqual(showTooltip);
+            operator                      | length
+            ${"BETWEEN"}                  | ${1}
+            ${"NOT_BETWEEN"}              | ${1}
+            ${"GREATER_THAN_OR_EQUAL_TO"} | ${0}
+            ${"LESS_THAN"}                | ${0}
+            ${"LESS_THAN_OR_EQUAL_TO"}    | ${0}
+            ${"EQUAL_TO"}                 | ${0}
+            ${"NOT_EQUAL_TO"}             | ${0}
+            ${"GREATER_THAN"}             | ${0}
+            ${"ALL"}                      | ${0}
+        `("should return $showTooltip when operator is $operator", ({ operator, length }) => {
+            renderComponent();
+
+            component.openOperatorDropdown();
+
+            expect(component.getOperatorBubbles(operator)).toHaveLength(length);
         });
     });
 
     describe("onApply callback", () => {
         it("should be called with comparison type measure value filter when comparison operator is selected and value is filled", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
+            renderComponent({ onApply });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
 
@@ -207,7 +210,7 @@ describe("Measure value filter dropdown", () => {
 
         it("should be called with range type measure value filter when range operator is selected and both values are filled", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
+            renderComponent({ onApply });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 100, 200);
 
@@ -224,7 +227,7 @@ describe("Measure value filter dropdown", () => {
         it("should be called with null value when All operator is applied", () => {
             const onApply = jest.fn();
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
-            const component = renderComponent({ filter, onApply });
+            renderComponent({ filter, onApply });
 
             component.openOperatorDropdown().selectOperator("ALL").clickApply();
 
@@ -233,7 +236,7 @@ describe("Measure value filter dropdown", () => {
 
         it("should be called with raw value when the measure is displayed as percentage with a comparison type measure value filter", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, usePercentage: true });
+            renderComponent({ onApply, usePercentage: true });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 1);
 
@@ -248,7 +251,7 @@ describe("Measure value filter dropdown", () => {
 
         it("should be called with raw value when the measure is displayed as percentage with a range type measure value filter", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, usePercentage: true });
+            renderComponent({ onApply, usePercentage: true });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 1, 2);
 
@@ -265,7 +268,7 @@ describe("Measure value filter dropdown", () => {
         it("should be called with null value when All operator is applied when the measure is displayed as percentage", () => {
             const onApply = jest.fn();
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
-            const component = renderComponent({ filter, onApply, usePercentage: true });
+            renderComponent({ filter, onApply, usePercentage: true });
 
             component.openOperatorDropdown().selectOperator("ALL").clickApply();
 
@@ -274,7 +277,7 @@ describe("Measure value filter dropdown", () => {
 
         it("should compensate for JavaScript division result precision problem for comparison filter", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, usePercentage: true });
+            renderComponent({ onApply, usePercentage: true });
 
             component
                 .openOperatorDropdown()
@@ -288,7 +291,7 @@ describe("Measure value filter dropdown", () => {
 
         it("should compensate for JavaScript division result precision problem for range filter", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, usePercentage: true });
+            renderComponent({ onApply, usePercentage: true });
 
             component
                 .openOperatorDropdown()
@@ -304,23 +307,23 @@ describe("Measure value filter dropdown", () => {
         it("should compensate for JavaScript multiplication result precision problem for comparison filter", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 46.001);
 
-            const component = renderComponent({ filter, usePercentage: true });
+            renderComponent({ filter, usePercentage: true });
 
-            expect(component.getComparisonValueInput().props().value).toEqual("4,600.1");
+            expect(component.getComparisonValueInput().value).toEqual("4,600.1");
         });
 
         it("should compensate for JavaScript multiplication result precision problem for range filter", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "NOT_BETWEEN", 1.11, 4.44);
-            const component = renderComponent({ filter, usePercentage: true });
+            renderComponent({ filter, usePercentage: true });
 
-            expect(component.getRangeFromInput().props().value).toEqual("111");
-            expect(component.getRangeToInput().props().value).toEqual("444");
+            expect(component.getRangeFromInput().value).toEqual("111");
+            expect(component.getRangeToInput().value).toEqual("444");
         });
 
         describe("apply button", () => {
             it("should enable apply button when operator is changed to all from comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.openOperatorDropdown().selectOperator("ALL");
 
@@ -329,7 +332,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should enable apply button when value changes with comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setComparisonValue("1000");
 
@@ -338,7 +341,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should disable apply button when value is empty with comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setComparisonValue("");
 
@@ -347,7 +350,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should disable apply button when value is equal to prop value with comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setComparisonValue("100").setComparisonValue("10");
 
@@ -356,7 +359,7 @@ describe("Measure value filter dropdown", () => {
 
             it('should enable apply button when "from" value changes', () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setRangeFrom("100");
 
@@ -365,7 +368,7 @@ describe("Measure value filter dropdown", () => {
 
             it('should enable apply button when "to" value changes', () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setRangeTo("100");
 
@@ -374,7 +377,7 @@ describe("Measure value filter dropdown", () => {
 
             it('should disable apply button when "to" value is empty', () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setRangeTo("");
 
@@ -383,7 +386,7 @@ describe("Measure value filter dropdown", () => {
 
             it('should disable apply button when "from" value is empty', () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setRangeFrom("");
 
@@ -392,7 +395,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should disable apply button when value is equal to prop value with range operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.setRangeTo("100").setRangeTo("10");
 
@@ -401,7 +404,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should enable apply button when operator is changed but value is same with comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
@@ -410,7 +413,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should enable apply button when operator is changed but value is same with range operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
-                const component = renderComponent({ filter });
+                renderComponent({ filter });
 
                 component.openOperatorDropdown().selectOperator("NOT_BETWEEN");
 
@@ -420,18 +423,18 @@ describe("Measure value filter dropdown", () => {
             it("should enable apply button when operator and value is unchanged, but treat-null-values-as checkbox has been toggled", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 10);
 
-                const component = renderComponent({ filter, displayTreatNullAsZeroOption: true });
+                renderComponent({ filter, displayTreatNullAsZeroOption: true });
 
                 expect(component.isApplyButtonDisabled()).toEqual(true);
 
-                component.toggleTreatNullAsCheckbox();
+                component.clickTreatNullAsCheckbox();
 
                 expect(component.isApplyButtonDisabled()).toEqual(false);
             });
 
             it("should disable apply button when value in percentage mode is equivalent but not equal to prop value with comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 42.123);
-                const component = renderComponent({ filter, usePercentage: true });
+                renderComponent({ filter, usePercentage: true });
 
                 component.setComparisonValue("0").setComparisonValue("4212.3");
 
@@ -440,7 +443,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should enable apply button when value in percentage mode is equal but not equivalent to prop value with comparison operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 42.123);
-                const component = renderComponent({ filter, usePercentage: true });
+                renderComponent({ filter, usePercentage: true });
 
                 component.setComparisonValue("4200").setComparisonValue("42.123");
 
@@ -449,7 +452,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should disable apply button when values in percentage mode are equivalent but not equal to prop values with range operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 24.123, 42.246);
-                const component = renderComponent({ filter, usePercentage: true });
+                renderComponent({ filter, usePercentage: true });
 
                 component.setRangeFrom("0").setRangeFrom("2412.3");
                 component.setRangeTo("0").setRangeTo("4224.6");
@@ -459,7 +462,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should enable apply button when values in percentage mode are equal but not equivalent to prop values with range operator", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 24.123, 42.246);
-                const component = renderComponent({ filter, usePercentage: true });
+                renderComponent({ filter, usePercentage: true });
 
                 component.setRangeFrom("2400").setRangeFrom("24.123");
                 component.setRangeTo("4200").setRangeTo("42.246");
@@ -469,7 +472,7 @@ describe("Measure value filter dropdown", () => {
 
             it("should handle the change from comparison to range filter", () => {
                 const onApply = jest.fn();
-                const component = renderComponent({ usePercentage: true, onApply });
+                renderComponent({ usePercentage: true, onApply });
 
                 const expectedComparisonFilter = newMeasureValueFilter(
                     localIdRef("myMeasure"),
@@ -503,7 +506,7 @@ describe("Measure value filter dropdown", () => {
         it("should be able to press enter to apply when apply button is enabled", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
             const onApply = jest.fn();
-            const component = renderComponent({ filter, onApply });
+            renderComponent({ filter, onApply });
 
             component.setComparisonValue("20").pressEnterInComparisonInput();
 
@@ -513,7 +516,7 @@ describe("Measure value filter dropdown", () => {
         it("should not be able to press enter to apply when apply button is disabled", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
             const onApply = jest.fn();
-            const component = renderComponent({ filter, onApply });
+            renderComponent({ filter, onApply });
 
             component.pressEnterInComparisonInput();
 
@@ -524,7 +527,7 @@ describe("Measure value filter dropdown", () => {
     describe("onCancel feedback", () => {
         it("should be called when cancelled", () => {
             const onCancel = jest.fn();
-            const component = renderComponent({ onCancel });
+            renderComponent({ onCancel });
 
             component.openOperatorDropdown().selectOperator("BETWEEN").setRangeFrom("100").clickCancel();
 
@@ -538,13 +541,13 @@ describe("Measure value filter dropdown", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
 
-            const component = renderComponent({
+            renderComponent({
                 filter,
                 onApply,
                 displayTreatNullAsZeroOption: true,
             });
 
-            component.toggleTreatNullAsCheckbox().clickApply();
+            component.clickTreatNullAsCheckbox().clickApply();
 
             expect(onApply).toBeCalledWith(expectedFilter);
         });
@@ -554,13 +557,13 @@ describe("Measure value filter dropdown", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
 
-            const component = renderComponent({
+            renderComponent({
                 filter,
                 onApply,
                 displayTreatNullAsZeroOption: true,
             });
 
-            component.toggleTreatNullAsCheckbox().clickApply();
+            component.clickTreatNullAsCheckbox().clickApply();
 
             expect(onApply).toBeCalledWith(expectedFilter);
         });
@@ -576,13 +579,13 @@ describe("Measure value filter dropdown", () => {
             );
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
 
-            const component = renderComponent({
+            renderComponent({
                 filter: filterWithTreatNullValuesAsZero,
                 onApply,
                 displayTreatNullAsZeroOption: true,
             });
 
-            component.toggleTreatNullAsCheckbox().clickApply();
+            component.clickTreatNullAsCheckbox().clickApply();
 
             expect(onApply).toBeCalledWith(expectedFilter);
         });
@@ -590,23 +593,23 @@ describe("Measure value filter dropdown", () => {
 
     describe("treat-null-values-as checkbox", () => {
         it("should not be displayed by default", () => {
-            const component = renderComponent();
+            renderComponent();
 
-            expect(component.getTreatNullAsCheckbox().exists()).toEqual(false);
+            expect(component.getTreatNullAsCheckbox()).not.toBeInTheDocument();
         });
 
         it("should not be displayed when all operator is selected", () => {
-            const component = renderComponent({ displayTreatNullAsZeroOption: true });
+            renderComponent({ displayTreatNullAsZeroOption: true });
 
-            expect(component.getTreatNullAsCheckbox().exists()).toEqual(false);
+            expect(component.getTreatNullAsCheckbox()).not.toBeInTheDocument();
         });
 
         it("should be displayed when enabled by 'displayOptionTreatNullValuesAs' prop and all operator is not selected", () => {
-            const component = renderComponent({ displayTreatNullAsZeroOption: true });
+            renderComponent({ displayTreatNullAsZeroOption: true });
 
             component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
-            expect(component.getTreatNullAsCheckbox().exists()).toEqual(true);
+            expect(component.getTreatNullAsCheckbox()).toBeInTheDocument();
         });
 
         describe("checked state", () => {
@@ -615,39 +618,39 @@ describe("Measure value filter dropdown", () => {
             ) => renderComponent({ displayTreatNullAsZeroOption: true, ...props });
 
             it("should be checked when passed filter is empty and 'treatNullAsZeroDefaultValue' property is truthy", () => {
-                const component = renderComponentWithTreatNullAsZeroOption({
+                renderComponentWithTreatNullAsZeroOption({
                     treatNullAsZeroDefaultValue: true,
                     filter: emptyFilter,
                 });
 
                 component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
-                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(true);
+                expect(component.getTreatNullAsCheckbox().checked).toEqual(true);
             });
 
             it("should not be checked when passed filter is empty and 'treatNullAsZeroDefaultValue' property is set to false", () => {
-                const component = renderComponentWithTreatNullAsZeroOption({
+                renderComponentWithTreatNullAsZeroOption({
                     treatNullAsZeroDefaultValue: false,
                     filter: emptyFilter,
                 });
 
                 component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
-                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(false);
+                expect(component.getTreatNullAsCheckbox().checked).toEqual(false);
             });
 
             it("should be checked when passed filter has a condition with 'treatNullValuesAsZero' property set to true", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
-                const component = renderComponentWithTreatNullAsZeroOption({ filter });
+                renderComponentWithTreatNullAsZeroOption({ filter });
 
-                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(true);
+                expect(component.getTreatNullAsCheckbox().checked).toEqual(true);
             });
 
             it("should not be checked when passed filter has a condition without 'treatNullValuesAsZero' property even if 'treatNullAsZeroDefaultValue' property is truthy", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
-                const component = renderComponentWithTreatNullAsZeroOption({ filter });
+                renderComponentWithTreatNullAsZeroOption({ filter });
 
-                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(false);
+                expect(component.getTreatNullAsCheckbox().checked).toEqual(false);
             });
         });
     });

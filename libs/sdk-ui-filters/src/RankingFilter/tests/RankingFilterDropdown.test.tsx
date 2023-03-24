@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render } from "@testing-library/react";
 import noop from "lodash/noop";
 import { withIntl } from "@gooddata/sdk-ui";
 import { newRankingFilter } from "@gooddata/sdk-model";
@@ -23,8 +23,10 @@ const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
         onCancel: noop,
     };
     const Wrapped = withIntl(RankingFilterDropdown);
-    return new RankingFilterDropdownFragment(mount(<Wrapped {...defaultProps} {...props} />));
+    return render(<Wrapped {...defaultProps} {...props} />);
 };
+
+const component = new RankingFilterDropdownFragment();
 
 describe("RankingFilterDropdown", () => {
     describe("prepareRankingFilterState", () => {
@@ -56,31 +58,31 @@ describe("RankingFilterDropdown", () => {
 
     describe("Filter", () => {
         it("should set correct OperatorDropdown value", () => {
-            const component = renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: Mock.filterWithRichSetting });
 
             expect(component.getOperator()).toEqual("Bottom");
         });
 
         it("should set correct ValueDropdown value", () => {
-            const component = renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: Mock.filterWithRichSetting });
 
             expect(component.getValue()).toEqual("100");
         });
 
         it("should set MeasureDropdown to first measure", () => {
-            const component = renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: Mock.filterWithRichSetting });
 
             expect(component.getMeasure()).toEqual("Measure 3");
         });
 
         it("should set AttributeDropdown to first attribute", () => {
-            const component = renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: Mock.filterWithRichSetting });
 
             expect(component.getAttribute()).toEqual("Attribute 1");
         });
 
         it("should set AttributeDropdown to 'All' when no attributes provided", () => {
-            const component = renderComponent({ filter: Mock.defaultFilter });
+            renderComponent({ filter: Mock.defaultFilter });
 
             expect(component.getAttribute()).toEqual("All");
         });
@@ -88,32 +90,28 @@ describe("RankingFilterDropdown", () => {
 
     describe("Buttons", () => {
         it("should toggle apply button disabled class when operator changed", () => {
-            const component = renderComponent();
-
+            renderComponent();
             expect(component.isApplyButtonDisabled()).toEqual(true);
             component.openOperatorDropdown().setOperator("BOTTOM");
             expect(component.isApplyButtonDisabled()).toEqual(false);
         });
 
         it("should toggle apply button disabled class when value changed", () => {
-            const component = renderComponent();
-
+            renderComponent();
             expect(component.isApplyButtonDisabled()).toEqual(true);
             component.setValue("100");
             expect(component.isApplyButtonDisabled()).toEqual(false);
         });
 
         it("should toggle apply button disabled class when measure changed", () => {
-            const component = renderComponent();
-
+            renderComponent();
             expect(component.isApplyButtonDisabled()).toEqual(true);
             component.openMeasureDropdown().setMeasureItem("Measure 2");
             expect(component.isApplyButtonDisabled()).toEqual(false);
         });
 
         it("should toggle apply button disabled class when attribute changed", () => {
-            const component = renderComponent();
-
+            renderComponent();
             expect(component.isApplyButtonDisabled()).toEqual(true);
             component.openAttributeDropdown().setAttributeItem("Attribute 2");
             expect(component.isApplyButtonDisabled()).toEqual(false);
@@ -121,8 +119,7 @@ describe("RankingFilterDropdown", () => {
 
         it("should call onApply with attributes when Apply button clicked", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
-
+            renderComponent({ onApply });
             component.openOperatorDropdown().setOperator("BOTTOM");
             component.setValue("100");
             component.openMeasureDropdown().setMeasureItem("Measure 3");
@@ -141,8 +138,7 @@ describe("RankingFilterDropdown", () => {
 
         it("should call onApply without attributes when Apply button clicked", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
-
+            renderComponent({ onApply });
             component.openOperatorDropdown().setOperator("BOTTOM");
             component.setValue("100");
             component.openMeasureDropdown().setMeasureItem("Measure 3");
@@ -160,8 +156,7 @@ describe("RankingFilterDropdown", () => {
 
         it("should call onCancel when Cancel button clicked", () => {
             const onCancel = jest.fn();
-            const component = renderComponent({ onCancel });
-
+            renderComponent({ onCancel });
             component.clickCancel();
 
             expect(onCancel).toHaveBeenCalled();
@@ -171,9 +166,8 @@ describe("RankingFilterDropdown", () => {
     describe("AttributeDropdown", () => {
         it("should call onDropDownItemMouseOver on item mouseOver", () => {
             const onDropDownItemMouseOver = jest.fn();
-            const component = renderComponent({ onDropDownItemMouseOver });
-
-            component.openAttributeDropdown().getAttributeItem("Attribute 1").simulate("mouseOver");
+            renderComponent({ onDropDownItemMouseOver });
+            fireEvent.mouseOver(component.openAttributeDropdown().getAttributeItem("Attribute 1"));
 
             expect(onDropDownItemMouseOver).toHaveBeenCalled();
             expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ uri: "attribute1" });
@@ -181,55 +175,52 @@ describe("RankingFilterDropdown", () => {
 
         it("should call onDropDownItemMouseOut on item mouseOut", () => {
             const onDropDownItemMouseOut = jest.fn();
-            const component = renderComponent({ onDropDownItemMouseOut });
+            renderComponent({ onDropDownItemMouseOut });
 
-            component.openAttributeDropdown().getAttributeItem("Attribute 1").simulate("mouseOut");
+            fireEvent.mouseOut(component.openAttributeDropdown().getAttributeItem("Attribute 1"));
 
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
 
         it("should call onDropDownItemMouseOut on dropdown close", () => {
             const onDropDownItemMouseOut = jest.fn();
-            const component = renderComponent({ onDropDownItemMouseOut });
-
+            renderComponent({ onDropDownItemMouseOut });
             component.openAttributeDropdown().setAttributeItem("Attribute 2");
 
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
 
         it("should not have disabled items when customGranularitySelection is not provided", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.openAttributeDropdown();
 
-            expect(component.getAttributeDropdownBody().find("button.disabled")).toHaveLength(0);
+            expect(component.getAttributeDropdownDisabledButtons()).toHaveLength(0);
         });
 
         it("should not have disabled items when customGranularitySelection 'enable' property is true", () => {
             const customGranularitySelection = { enable: true, warningMessage: "warning" };
-            const component = renderComponent({ customGranularitySelection });
+            renderComponent({ customGranularitySelection });
 
             component.openAttributeDropdown();
 
-            expect(component.getAttributeDropdownBody().find("button.disabled")).toHaveLength(0);
+            expect(component.getAttributeDropdownDisabledButtons()).toHaveLength(0);
         });
 
         it("should have disabled items when customGranularitySelection 'enable' property is false", () => {
             const customGranularitySelection = { enable: false, warningMessage: "warning" };
-            const component = renderComponent({ customGranularitySelection });
-
+            renderComponent({ customGranularitySelection });
             component.openAttributeDropdown();
 
-            expect(component.getAttributeDropdownBody().find("button.disabled")).toHaveLength(5);
+            expect(component.getAttributeDropdownDisabledButtons()).toHaveLength(5);
         });
     });
 
     describe("MeasureDropdown", () => {
         it("should call onDropDownItemMouseOver on item mouseOver", () => {
             const onDropDownItemMouseOver = jest.fn();
-            const component = renderComponent({ onDropDownItemMouseOver });
+            renderComponent({ onDropDownItemMouseOver });
 
-            component.openMeasureDropdown().getMeasureItem("Measure 1").simulate("mouseOver");
+            fireEvent.mouseOver(component.openMeasureDropdown().getMeasureItem("Measure 1"));
 
             expect(onDropDownItemMouseOver).toHaveBeenCalled();
             expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ localIdentifier: "measure1" });
@@ -237,16 +228,16 @@ describe("RankingFilterDropdown", () => {
 
         it("should call onDropDownItemMouseOut on item mouseOut", () => {
             const onDropDownItemMouseOut = jest.fn();
-            const component = renderComponent({ onDropDownItemMouseOut });
+            renderComponent({ onDropDownItemMouseOut });
 
-            component.openMeasureDropdown().getMeasureItem("Measure 1").simulate("mouseOut");
+            fireEvent.mouseOut(component.openMeasureDropdown().getMeasureItem("Measure 1"));
 
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
 
         it("should call onDropDownItemMouseOut on dropdown close", () => {
             const onDropDownItemMouseOut = jest.fn();
-            const component = renderComponent({ onDropDownItemMouseOut });
+            renderComponent({ onDropDownItemMouseOut });
 
             component.openMeasureDropdown().setMeasureItem("Measure 2");
 
@@ -256,71 +247,64 @@ describe("RankingFilterDropdown", () => {
 
     describe("ValueDropdown", () => {
         it("should render 8 default items when input value is empty", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("");
 
-            expect(component.getValueDropdown().find(".s-rf-value-dropdown-item").hostNodes()).toHaveLength(
-                8,
-            );
+            expect(component.getValueDropdownItems()).toHaveLength(8);
         });
 
         it("should render list item with input value as text", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("100");
 
-            expect(component.getValueDropdown().text()).toEqual("100");
+            expect(component.getValueDropdown().textContent).toEqual("100");
         });
 
         it("should render list items with matching items", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("1");
 
             // items with label 10, 15, 100
-            expect(component.getValueDropdown().text()).toEqual("1015100");
+            expect(component.getValueDropdown().textContent).toEqual("1015100");
         });
 
         it("should not render list items when none matches the entered value", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("42");
 
             expect(component.isValueDropdownVisible()).toBe(false);
         });
 
         it("should render error message when input value lower than 1", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("-100");
 
-            expect(component.getValueDropdown().text()).toEqual("Input value should be a positive number.");
+            expect(component.getValueDropdown().textContent).toEqual(
+                "Input value should be a positive number.",
+            );
         });
 
         it("should render error message when input value larger than 999999", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("1000000");
 
-            expect(component.getValueDropdown().text()).toEqual("Input value too large.");
+            expect(component.getValueDropdown().textContent).toEqual("Input value too large.");
         });
 
         it("should render error message when input value is string without numbers", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.changeInputValue("test");
 
-            expect(component.getValueDropdown().text()).toEqual("Input value should be a positive number.");
+            expect(component.getValueDropdown().textContent).toEqual(
+                "Input value should be a positive number.",
+            );
         });
 
         it("should set custom value via input blur handler", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
-
+            renderComponent({ onApply });
             component.setValueByBlur("42");
             component.clickApply();
-
             expect(component.getValue()).toEqual("42");
             expect(onApply).toHaveBeenCalledWith({
                 rankingFilter: {
@@ -332,8 +316,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should set one of the default values via input blur handler", () => {
-            const component = renderComponent();
-
+            renderComponent();
             component.setValueByBlur("10");
 
             expect(component.getValue()).toEqual("10");
@@ -342,7 +325,7 @@ describe("RankingFilterDropdown", () => {
 
         it("should set custom value via input change handler", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
+            renderComponent({ onApply });
 
             expect(component.isApplyButtonDisabled()).toBe(true);
 
@@ -364,7 +347,7 @@ describe("RankingFilterDropdown", () => {
         it.each([["0"], ["1000000"], ["test"]])(
             "should not set value via input blur handler when invalid value '%s' is entered",
             (invalidValue) => {
-                const component = renderComponent();
+                renderComponent();
                 component.setValueByBlur(invalidValue);
                 expect(component.getValue()).toEqual("10");
                 expect(component.isApplyButtonDisabled()).toBe(true);
@@ -372,7 +355,7 @@ describe("RankingFilterDropdown", () => {
         );
 
         it("should have set non default value", () => {
-            const component = renderComponent({
+            renderComponent({
                 filter: newRankingFilter(Mock.measure1Ref, "TOP", 42),
             });
             expect(component.getValue()).toEqual("42");
@@ -381,8 +364,7 @@ describe("RankingFilterDropdown", () => {
 
     describe("AttributeDropdown button", () => {
         it("should be disabled when only one attribute item provided", () => {
-            const component = renderComponent({ attributeItems: [Mock.attributeItems[0]] });
-
+            renderComponent({ attributeItems: [Mock.attributeItems[0]] });
             expect(component.isAttributeButtonDisabled()).toEqual(true);
         });
     });
@@ -402,7 +384,7 @@ describe("RankingFilterDropdown", () => {
                 "Bottom 10 out of Date based on Measure 2",
             ],
         ])("should render expected preview for %s", (_, filter, expectedPreview) => {
-            const component = renderComponent({
+            renderComponent({
                 filter,
             });
             expect(component.getPreview()).toEqual(expectedPreview);

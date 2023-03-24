@@ -1,3 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DateFilterFormWrapper should match snapshot 1`] = `"<div class=\\"foo gd-date-filter-form-wrapper gd-date-filter-form-wrapper-desktop\\"><div class=\\"gd-date-filter-form-wrapper-inner\\">content</div></div>"`;
+exports[`DateFilterFormWrapper should match snapshot 1`] = `
+<div>
+  <div
+    class="foo gd-date-filter-form-wrapper gd-date-filter-form-wrapper-desktop"
+  >
+    <div
+      class="gd-date-filter-form-wrapper-inner"
+    >
+      content
+    </div>
+  </div>
+</div>
+`;

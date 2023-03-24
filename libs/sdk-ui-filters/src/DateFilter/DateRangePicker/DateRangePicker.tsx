@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import {
@@ -48,7 +48,7 @@ interface IDateRangePickerState {
     selectedInput: string;
 }
 
-interface IDateRangePickerProps {
+export interface IDateRangePickerProps {
     range: IDateRange;
     onRangeChange: (newRange: IDateRange) => void;
     errors?: IExtendedDateFilterErrors["absoluteForm"];

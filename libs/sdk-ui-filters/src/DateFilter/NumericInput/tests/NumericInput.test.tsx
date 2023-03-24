@@ -1,65 +1,77 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
-
 import { NumericInput } from "../NumericInput";
-import { childGetter, clickOn, pressButtonOn } from "../../tests/utils";
-
-const getInput = childGetter("input");
-const getInputValue = (numericInput: ShallowWrapper) => getInput(numericInput).prop("value");
-
-const getIncrementButton = childGetter({ arrowDirection: "increment" });
-const getDecrementButton = childGetter({ arrowDirection: "decrement" });
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;
 
+const getIncrementButton = () => {
+    return screen.getAllByRole("button", { hidden: true })[0];
+};
+
+const getDecrementButton = () => {
+    return screen.getAllByRole("button", { hidden: true })[1];
+};
+
+const getInput = () => {
+    return screen.getByRole("textbox");
+};
+
 describe("NumericInput", () => {
     it("should display the value passed", () => {
-        const rendered = shallow(<NumericInput onChange={noop} value={42} />);
+        render(<NumericInput onChange={noop} value={42} />);
 
-        expect(getInputValue(rendered)).toEqual(42);
+        expect(screen.getByDisplayValue("42")).toBeInTheDocument();
     });
 
     it("should disable the increment button when max is reached", () => {
-        const rendered = shallow(<NumericInput onChange={noop} max={5} value={5} />);
+        render(<NumericInput onChange={noop} max={5} value={5} />);
 
-        expect(getIncrementButton(rendered).prop("disabled")).toBeTruthy();
+        expect(getIncrementButton()).toBeDisabled();
     });
 
     it("should disable the increment button when max is exceeded", () => {
-        const rendered = shallow(<NumericInput onChange={noop} max={5} value={50} />);
+        render(<NumericInput onChange={noop} max={5} value={50} />);
 
-        expect(getIncrementButton(rendered).prop("disabled")).toBeTruthy();
+        expect(getIncrementButton()).toBeDisabled();
     });
 
     it("should disable the decrement button when min is reached", () => {
-        const rendered = shallow(<NumericInput onChange={noop} min={5} value={5} />);
+        render(<NumericInput onChange={noop} min={5} value={5} />);
 
-        expect(getDecrementButton(rendered).prop("disabled")).toBeTruthy();
+        expect(getDecrementButton()).toBeDisabled();
     });
 
     it("should disable the decrement button when min is exceeded", () => {
-        const rendered = shallow(<NumericInput onChange={noop} min={5} value={0} />);
+        render(<NumericInput onChange={noop} min={5} value={0} />);
 
-        expect(getDecrementButton(rendered).prop("disabled")).toBeTruthy();
+        expect(getDecrementButton()).toBeDisabled();
     });
 
     it("should not react to up arrow when max is reached", () => {
         const onChange = jest.fn();
-        const rendered = shallow(<NumericInput onChange={onChange} max={5} value={5} />);
+        render(<NumericInput onChange={onChange} max={5} value={5} />);
 
-        pressButtonOn(UP_ARROW_CODE, getInput(rendered));
+        fireEvent.keyDown(getInput(), {
+            key: "Up",
+            keyCode: UP_ARROW_CODE,
+            which: UP_ARROW_CODE,
+        });
 
         expect(onChange).not.toBeCalled();
     });
 
     it("should not react to down arrow when min is reached", () => {
         const onChange = jest.fn();
-        const rendered = shallow(<NumericInput onChange={onChange} min={5} value={5} />);
+        render(<NumericInput onChange={onChange} min={5} value={5} />);
 
-        pressButtonOn(DOWN_ARROW_CODE, getInput(rendered));
+        fireEvent.keyDown(getInput(), {
+            key: "Down",
+            keyCode: DOWN_ARROW_CODE,
+            which: DOWN_ARROW_CODE,
+        });
 
         expect(onChange).not.toBeCalled();
     });
@@ -75,12 +87,12 @@ describe("NumericInput", () => {
         ["decrement", "", -1, getDecrementButton],
         ["decrement", 1, 0, getDecrementButton],
     ])(
-        "should %s the value from %p to %i when the %s button is clicked",
+        "should %s the value from %p to %i when the appropriate button is clicked",
         (_, from: number, to: number, buttonGetter: any) => {
             const onChange = jest.fn();
-            const rendered = shallow(<NumericInput onChange={onChange} value={from} />);
+            render(<NumericInput onChange={onChange} value={from} />);
 
-            clickOn(buttonGetter(rendered));
+            fireEvent.click(buttonGetter());
 
             expect(onChange).toBeCalledWith(to);
         },
@@ -96,49 +108,57 @@ describe("NumericInput", () => {
         "should %s %i to %i on click with min %p and max %p",
         (_, from: number, to: number, min: number, max: number, buttonGetter: any) => {
             const onChange = jest.fn();
-            const rendered = shallow(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
+            render(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
 
-            clickOn(buttonGetter(rendered));
+            fireEvent.click(buttonGetter());
 
             expect(onChange).toBeCalledWith(to);
         },
     );
 
     it.each([
-        ["increment", 5, 6, UP_ARROW_CODE],
-        ["increment", -5, -4, UP_ARROW_CODE],
-        ["increment", "", 1, UP_ARROW_CODE],
-        ["increment", -1, 0, UP_ARROW_CODE],
+        ["increment", 5, 6, UP_ARROW_CODE, "Up"],
+        ["increment", -5, -4, UP_ARROW_CODE, "Up"],
+        ["increment", "", 1, UP_ARROW_CODE, "Up"],
+        ["increment", -1, 0, UP_ARROW_CODE, "Up"],
 
-        ["decrement", 5, 4, DOWN_ARROW_CODE],
-        ["decrement", -5, -6, DOWN_ARROW_CODE],
-        ["decrement", "", -1, DOWN_ARROW_CODE],
-        ["decrement", 1, 0, DOWN_ARROW_CODE],
+        ["decrement", 5, 4, DOWN_ARROW_CODE, "Down"],
+        ["decrement", -5, -6, DOWN_ARROW_CODE, "Down"],
+        ["decrement", "", -1, DOWN_ARROW_CODE, "Down"],
+        ["decrement", 1, 0, DOWN_ARROW_CODE, "Down"],
     ])(
         "should %s the value from %p to %i when the %s arrow is pressed",
-        (_, from: number, to: number, arrowCode: number) => {
+        (_, from: number, to: number, arrowCode: number, key: string) => {
             const onChange = jest.fn();
-            const rendered = shallow(<NumericInput onChange={onChange} value={from} />);
+            render(<NumericInput onChange={onChange} value={from} />);
 
-            pressButtonOn(arrowCode, getInput(rendered));
+            fireEvent.keyDown(getInput(), {
+                key,
+                keyCode: arrowCode,
+                which: arrowCode,
+            });
 
             expect(onChange).toBeCalledWith(to);
         },
     );
 
     it.each([
-        ["increment", -7, 0, 0, 5, UP_ARROW_CODE],
-        ["increment", -7, 0, 0, undefined, UP_ARROW_CODE],
+        ["increment", -7, 0, 0, 5, UP_ARROW_CODE, "Up"],
+        ["increment", -7, 0, 0, undefined, UP_ARROW_CODE, "Up"],
 
-        ["decrement", 7, 5, 0, 5, DOWN_ARROW_CODE],
-        ["decrement", 7, 5, undefined, 5, DOWN_ARROW_CODE],
+        ["decrement", 7, 5, 0, 5, DOWN_ARROW_CODE, "Down"],
+        ["decrement", 7, 5, undefined, 5, DOWN_ARROW_CODE, "Down"],
     ])(
         "should %s %i to %i on arrow press with min %p and max %p",
-        (_, from: number, to: number, min: number, max: number, arrowCode: number) => {
+        (_, from: number, to: number, min: number, max: number, arrowCode: number, key: string) => {
             const onChange = jest.fn();
-            const rendered = shallow(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
+            render(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
 
-            pressButtonOn(arrowCode, getInput(rendered));
+            fireEvent.keyDown(getInput(), {
+                key,
+                keyCode: arrowCode,
+                which: arrowCode,
+            });
 
             expect(onChange).toBeCalledWith(to);
         },

@@ -1,23 +1,23 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper";
 
 describe("DateFilterFormWrapper", () => {
     it("should render children", () => {
-        const Content = <div>content</div>;
-        const wrapper = shallow(<DateFilterFormWrapper isMobile={false}>{Content}</DateFilterFormWrapper>);
-        expect(wrapper.contains(Content)).toEqual(true);
+        const Content = <div>test content</div>;
+        render(<DateFilterFormWrapper isMobile={false}>{Content}</DateFilterFormWrapper>);
+        expect(screen.getByText("test content")).toBeInTheDocument();
     });
 
     it("should correctly propagate className to wrapper", () => {
         const className = "foo";
-        const wrapper = shallow(
+        render(
             <DateFilterFormWrapper isMobile={false} className={className}>
-                content
+                test content
             </DateFilterFormWrapper>,
         );
-        expect(wrapper.hasClass(className)).toEqual(true);
+        expect(screen.getByText("test content").parentElement).toHaveClass(className);
     });
 
     it("should match snapshot", () => {
@@ -26,6 +26,6 @@ describe("DateFilterFormWrapper", () => {
                 content
             </DateFilterFormWrapper>
         );
-        expect(mount(component).html()).toMatchSnapshot();
+        expect(render(component).container).toMatchSnapshot();
     });
 });

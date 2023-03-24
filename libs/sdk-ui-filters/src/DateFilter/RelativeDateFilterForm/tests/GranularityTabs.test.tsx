@@ -1,24 +1,23 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { GranularityTabs, IGranularityTabsProps } from "../GranularityTabs";
-import { clickOn } from "../../tests/utils";
-import { GranularityIntlKey } from "../../constants/i18n";
+import { withIntl } from "@gooddata/sdk-ui";
 
-const granularityTuple: Array<[DateFilterGranularity, GranularityIntlKey]> = [
-    ["GDC.time.date", "day"],
-    ["GDC.time.week_us", "week"],
-    ["GDC.time.month", "month"],
-    ["GDC.time.quarter", "quarter"],
-    ["GDC.time.year", "year"],
+const granularityTuple: Array<[DateFilterGranularity, string]> = [
+    ["GDC.time.date", "Days"],
+    ["GDC.time.week_us", "Weeks"],
+    ["GDC.time.month", "Months"],
+    ["GDC.time.quarter", "Quarters"],
+    ["GDC.time.year", "Years"],
 ];
 
 const availableGranularities: DateFilterGranularity[] = granularityTuple.map((tuple) => tuple[0]);
 
-const classGranularities: GranularityIntlKey[] = granularityTuple.map((tuple) => tuple[1]);
+const granularityNames: string[] = granularityTuple.map((tuple) => tuple[1]);
 
 const createTabs = (props?: Partial<IGranularityTabsProps>) => {
     const defaultProps: IGranularityTabsProps = {
@@ -26,44 +25,41 @@ const createTabs = (props?: Partial<IGranularityTabsProps>) => {
         onSelectedGranularityChange: noop,
         selectedGranularity: "GDC.time.date",
     };
-    return shallow(<GranularityTabs {...defaultProps} {...props} />);
+    const Wrapped = withIntl(GranularityTabs);
+    return render(<Wrapped {...defaultProps} {...props} />);
 };
 
 describe("GranularityTabs", () => {
     describe("should render", () => {
-        const rendered = createTabs();
-        it.each(classGranularities)("a tab %s", (classGranularity: string) => {
-            expect(rendered).toContainExactlyOneMatchingElement(`.s-granularity-${classGranularity}`);
+        it.each(granularityNames)("a tab %s", (granularity: string) => {
+            createTabs();
+            expect(screen.getByText(granularity)).toBeInTheDocument();
         });
     });
 
     describe("should fire onSelectedGranularityChange", () => {
         const onSelectedGranularityChange = jest.fn();
-        const rendered = createTabs({
-            onSelectedGranularityChange,
-        });
         it.each(granularityTuple)(
             "with parameter %s when tab %s is clicked",
-            (granularity: string, classGranularity: string) => {
-                const tab = rendered.find(`.s-granularity-${classGranularity}`);
-                clickOn(tab);
-                expect(onSelectedGranularityChange).toHaveBeenLastCalledWith(granularity);
+            (value: string, name: string) => {
+                createTabs({
+                    onSelectedGranularityChange,
+                });
+                const tab = screen.getByText(name);
+                fireEvent.click(tab);
+                expect(onSelectedGranularityChange).toHaveBeenLastCalledWith(value);
             },
         );
     });
 
     describe("should highlight selectedGranularity", () => {
-        const onSelectedGranularityChange = jest.fn();
-        const rendered = createTabs({
-            onSelectedGranularityChange,
-        });
         it.each(
             // reversed so that the first value is not selected by default
             [...granularityTuple].reverse(),
-        )("%s", (granularity: string, classGranularity: string) => {
-            rendered.setProps({ selectedGranularity: granularity });
-            const tab = rendered.find(`.s-granularity-${classGranularity}`);
-            expect(tab).toHaveProp("selected", true);
+        )("%s", (value: DateFilterGranularity, name: string) => {
+            createTabs({ selectedGranularity: value });
+
+            expect(screen.getByText(name)).toHaveClass("is-active");
         });
     });
 });

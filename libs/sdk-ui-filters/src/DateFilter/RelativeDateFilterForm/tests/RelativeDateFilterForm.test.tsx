@@ -1,14 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm";
-import { clickOn } from "../../tests/utils";
-import { GranularityTabs } from "../GranularityTabs";
-import { RelativeRangePicker } from "../../RelativeRangePicker/RelativeRangePicker";
+import * as granularityTabsModule from "../GranularityTabs";
+import * as rangePickerModule from "../../RelativeRangePicker/RelativeRangePicker";
 
 const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",
@@ -32,39 +31,63 @@ const createForm = (props?: Partial<IRelativeDateFilterFormProps>) => {
         selectedFilterOption: relativeFormOption,
         isMobile: false,
     };
-    return mount(
+    return render(
         <IntlWrapper locale="en-US">
             <RelativeDateFilterForm {...defaultProps} {...props} />
         </IntlWrapper>,
     );
 };
 
+/**
+ * These mocks enable us to test props as parameters of the called components
+ */
+// jest.mock("../GranularityTabs", () => ({
+//     GranularityTabs: jest.fn(() => null),
+// }));
+// jest.mock("../../RelativeRangePicker/RelativeRangePicker", () => ({
+//     RelativeRangePicker: jest.fn(() => null),
+// }));
+
 describe("RelativeDateFilterForm", () => {
+    beforeEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it("should render granularity tabs and relative range picker and pass them props", () => {
-        const rendered = createForm();
-        const tabs = rendered.find(GranularityTabs);
-        expect(tabs).toExist();
-        expect(tabs).toHaveProp("availableGranularities", availableGranularities);
-        expect(tabs).toHaveProp("selectedGranularity", relativeFormOption.granularity);
-        const rangePicker = rendered.find(RelativeRangePicker);
-        expect(rangePicker).toExist();
-        expect(rangePicker).toHaveProp("selectedFilterOption", relativeFormOption);
+        const granularityTabsMock = jest
+            .spyOn(granularityTabsModule, "GranularityTabs")
+            .mockImplementation(() => null);
+        const rangePickerMock = jest
+            .spyOn(rangePickerModule, "RelativeRangePicker")
+            .mockImplementation(() => null);
+        createForm();
+
+        expect(granularityTabsMock).toHaveBeenCalledWith(
+            expect.objectContaining({
+                availableGranularities,
+                selectedGranularity: relativeFormOption.granularity,
+            }),
+            {},
+        );
+        expect(rangePickerMock).toHaveBeenCalledWith(
+            expect.objectContaining({
+                selectedFilterOption: relativeFormOption,
+            }),
+            {},
+        );
     });
 
     it('should render "from" and "to" inputs', () => {
-        const rendered = createForm();
-        const fromInput = rendered.find(".s-relative-range-picker-from input");
-        expect(fromInput).toExist();
-        const toInput = rendered.find(".s-relative-range-picker-to input");
-        expect(toInput).toExist();
+        createForm();
+        expect(screen.getByPlaceholderText("from")).toBeInTheDocument();
+        expect(screen.getByPlaceholderText("to")).toBeInTheDocument();
     });
 
     it("should fire onSelectedFilterOptionChange when granularity or inputs change", () => {
         const onSelectedFilterOptionChange = jest.fn();
-        const rendered = createForm({ onSelectedFilterOptionChange });
+        createForm({ onSelectedFilterOptionChange });
 
-        const lastTab = rendered.find("div.s-granularity-year");
-        clickOn(lastTab);
+        fireEvent.click(screen.getByText("Years"));
         expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
             granularity: "GDC.time.year",
             localIdentifier: "relativeForm",
@@ -73,30 +96,26 @@ describe("RelativeDateFilterForm", () => {
             visible: true,
         });
 
-        const fromInput = rendered.find(".s-relative-range-picker-from input");
-        fromInput.simulate("change", { target: { value: "-3" } });
-        const fromFirstOption = rendered.find(".gd-select-option").first();
-        fromFirstOption.simulate("click");
-
-        expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
-            granularity: "GDC.time.date",
-            localIdentifier: "relativeForm",
-            type: "relativeForm",
-            from: -3,
-            name: "",
-            visible: true,
-        });
-
-        const toInput = rendered.find(".s-relative-range-picker-to input");
-        toInput.simulate("change", { target: { value: "2" } });
-        const toFirstOption = rendered.find(".gd-select-option").first();
-        toFirstOption.simulate("click");
+        fireEvent.change(screen.getByPlaceholderText("to"), { target: { value: "2" } });
+        fireEvent.click(screen.getByText("2 days ahead"));
 
         expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
             granularity: "GDC.time.date",
             localIdentifier: "relativeForm",
             type: "relativeForm",
             to: 2,
+            name: "",
+            visible: true,
+        });
+
+        fireEvent.change(screen.getByPlaceholderText("from"), { target: { value: "-3" } });
+        fireEvent.click(screen.getByText("3 days ago"));
+
+        expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
+            granularity: "GDC.time.date",
+            localIdentifier: "relativeForm",
+            type: "relativeForm",
+            from: -3,
             name: "",
             visible: true,
         });

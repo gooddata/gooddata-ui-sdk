@@ -1,26 +1,23 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 
 import { ArrowButton } from "../ArrowButton";
-import { childGetter, clickOn } from "../../tests/utils";
-
-const getButton = childGetter("button");
 
 describe("ArrowButton", () => {
     describe("when not disabled", () => {
         it("should not disable the button", () => {
-            const rendered = shallow(<ArrowButton onClick={noop} arrowDirection="increment" />);
+            render(<ArrowButton onClick={noop} arrowDirection="increment" />);
 
-            expect(getButton(rendered).prop("disabled")).toBeFalsy();
+            expect(screen.getByRole("button", { hidden: true })).not.toBeDisabled();
         });
 
         it("should call the onClick handler when clicked", () => {
             const onClick = jest.fn();
-            const rendered = shallow(<ArrowButton onClick={onClick} arrowDirection="increment" />);
+            render(<ArrowButton onClick={onClick} arrowDirection="increment" />);
 
-            clickOn(getButton(rendered));
+            fireEvent.click(screen.getByRole("button", { hidden: true }));
 
             expect(onClick).toBeCalled();
         });
@@ -28,20 +25,16 @@ describe("ArrowButton", () => {
 
     describe("when disabled", () => {
         it("should disable the button", () => {
-            const rendered = shallow(
-                <ArrowButton onClick={noop} arrowDirection="increment" disabled={true} />,
-            );
+            render(<ArrowButton onClick={noop} arrowDirection="increment" disabled={true} />);
 
-            expect(getButton(rendered).prop("disabled")).toBeTruthy();
+            expect(screen.getByRole("button", { hidden: true })).toBeDisabled();
         });
 
         it("should not call the onClick handler when clicked", () => {
             const onClick = jest.fn();
-            const rendered = shallow(
-                <ArrowButton onClick={onClick} arrowDirection="increment" disabled={true} />,
-            );
+            render(<ArrowButton onClick={onClick} arrowDirection="increment" disabled={true} />);
 
-            clickOn(getButton(rendered));
+            fireEvent.click(screen.getByRole("button", { hidden: true }));
 
             expect(onClick).not.toBeCalled();
         });
