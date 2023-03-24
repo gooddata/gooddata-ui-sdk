@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useEffect, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -174,7 +174,11 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 executionsHandler.onSuccess(result.result(), result.warnings());
             }
         }
-    }, [result]);
+    }, [result, executionsHandler]);
+
+    const kpiResult = useMemo(() => {
+        return getKpiResult(result, primaryMeasure!, secondaryMeasure, separators);
+    }, [primaryMeasure, result, secondaryMeasure, separators]);
 
     return (
         <DashboardItemKpi
@@ -220,7 +224,7 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 return (
                     <KpiRenderer
                         kpi={kpiWidget}
-                        kpiResult={getKpiResult(result, primaryMeasure!, secondaryMeasure, separators)}
+                        kpiResult={kpiResult}
                         filters={kpiDataResult?.effectiveFilters ?? []}
                         separators={separators}
                         enableCompactSize={enableCompactSize}

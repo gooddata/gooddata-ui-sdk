@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { useCallback } from "react";
 import { IResultWarning, ObjRef } from "@gooddata/sdk-model";
 import { IPushData, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
@@ -20,14 +20,14 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
         (error) => {
             setError(widgetRef, error);
         },
-        [widgetRef],
+        [setError, widgetRef],
     );
 
     const onSuccess = useCallback(
         (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined) => {
             setData(widgetRef, executionResult, warnings);
         },
-        [widgetRef],
+        [setData, widgetRef],
     );
 
     const onPushData = useCallback(
@@ -36,7 +36,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
                 onSuccess(data.dataView.result, data.dataView.warnings);
             }
         },
-        [widgetRef, onSuccess],
+        [onSuccess],
     );
 
     const onLoadingChanged = useCallback<OnLoadingChanged>(
@@ -45,7 +45,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
                 startLoading(widgetRef);
             }
         },
-        [widgetRef],
+        [startLoading, widgetRef],
     );
 
     return {
