@@ -25,8 +25,8 @@ export const getDefaultEmbedTypeOptions = (embedType: EmbedType): EmbedOptionsTy
     return {
         type: "webComponents",
         displayTitle: true,
-        customTitle: true,
-        allowLocale: true,
+        customTitle: false,
+        allowLocale: false,
         locale: DEFAULT_LOCALE,
         customHeight: true,
     };
