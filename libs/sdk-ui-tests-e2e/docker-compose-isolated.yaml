@@ -2,7 +2,12 @@ version: "3.7"
 services:
     isolated-tests:
         image: cypress/included:10.10.0
-        entrypoint: node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER
+        entrypoint:
+            [
+                "bash",
+                "-c",
+                "npm install -g @currents/cli@^3.0.0 && node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER",
+            ]
         volumes:
             - ../../:/gooddata-ui-sdk-e2e:rw
         working_dir: /gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e
@@ -22,6 +27,13 @@ services:
             - TIGER_API_TOKEN
             - SDK_BACKEND
             - CYPRESS_TEST_TAGS
+            - NO_COLOR
+            - ZUUL_PIPELINE=$ZUUL_PIPELINE
+            - COMMIT_INFO_MESSAGE=$DOCKER_BUILD_URL
+            - CURRENTS_CI_BUILD_ID
+            - CURRENTS_PROJECT_ID
+            - CYPRESS_RECORD_KEY
+            - RUN_PARALLEL
 
     gooddata-ui-sdk-scenarios:
         image: $IMAGE_ID

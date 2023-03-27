@@ -146,3 +146,18 @@ and run with (by default runs in visual mode)
 ```
 CYPRESS_HOST=http://localhost:9500 yarn run-integrated
 ```
+
+### Parallelization
+
+By default, cypress is running in serial mode. To enable parallelization, [Currents](https://currents.dev/readme/getting-started/you-first-cypress-run) is integrated into cypress.
+To use Currents, `RUN_PARALLEL` must be set to `true` and following environemnts must be set
+
+```
+export CURRENTS_PROJECT_ID
+export CYPRESS_RECORD_KEY
+export CURRENTS_CI_BUILD_ID
+```
+
+-   `CURRENTS_PROJECT_ID` is unique for each UI-app respository, for development purpose is `6DJDTB`
+-   `CYPRESS_RECORD_KEY` key/token to access currents project, stored in `secret/v2/data-special/cypress-parallel-record-key`
+-   `CURRENTS_CI_BUILD_ID` unique ID for each currents run. All cypress executions that involve in the same currents run must have the same `CURRENTS_CI_BUILD_ID`

@@ -1,4 +1,9 @@
 #!/bin/bash
+if [[ "$RUN_PARALLEL" == true ]]; then
+    : "${CURRENTS_CI_BUILD_ID:?}"
+    : "${CURRENTS_PROJECT_ID:?}"
+    : "${CYPRESS_RECORD_KEY:?}"
+fi
 
 set -e
 
