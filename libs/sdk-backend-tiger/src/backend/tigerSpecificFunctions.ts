@@ -38,6 +38,8 @@ import {
     JsonApiCustomApplicationSettingOutWithLinks,
     JsonApiCustomApplicationSettingOutTypeEnum,
     ScanSqlResponse,
+    HierarchyObjectIdentification,
+    IdentifierDuplications,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -434,6 +436,16 @@ export type TigerSpecificFunctions = {
      *
      */
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
+
+    /**
+     * Check if entities are not overrides by entities from parents workspaces
+     * @param entities - All i and types for check
+     * @returns IdentifierDuplications[]
+     */
+    checkEntityOverrides?: (
+        workspaceId: string,
+        entities: Array<HierarchyObjectIdentification>,
+    ) => Promise<Array<IdentifierDuplications>>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1336,6 +1348,23 @@ export const buildTigerSpecificFunctions = (
                 return sdk.scanModel.scanSql({ dataSourceId, scanSqlRequest: { sql } }).then((response) => {
                     return response.data as ScanSqlResult;
                 });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    checkEntityOverrides: async (
+        workspaceId: string,
+        hierarchyObjectIdentification: Array<HierarchyObjectIdentification>,
+    ) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.actions
+                    .checkEntityOverrides({ workspaceId, hierarchyObjectIdentification })
+                    .then((response) => {
+                        return response.data as Array<IdentifierDuplications>;
+                    });
             });
         } catch (error: any) {
             throw convertApiError(error);
