@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -80,7 +80,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
 
         useEffect(() => {
             setInputValue(formatDate(value, dateFormat));
-        }, [value]);
+        }, [value, dateFormat]);
 
         // make sure it contains appropriate time if enabled
         const adjustDate = (selectedDate: Date) => {

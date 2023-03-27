@@ -1,12 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Select, ISelectProps } from "../Select";
 import { SelectMenu, ISelectMenuProps } from "../SelectMenu";
-import { SelectHeading } from "../SelectHeading";
-import { SelectOption } from "../SelectOption";
-import { SelectButton } from "../SelectButton";
-import { SelectSeparator } from "../SelectSeparator";
 import { ISelectItemOption, ISelectItemSeparator, ISelectItemHeading, ISelectItem } from "../types";
 import { getSelectableItems } from "../utils";
 
@@ -22,62 +18,37 @@ describe("Select", () => {
         const defaultProps = {
             items: sampleItems,
         };
-        return mount(<Select {...defaultProps} {...props} />);
+        return render(<Select {...defaultProps} {...props} />);
     };
 
     it("should render a select button with first option selected by default", () => {
-        const mountedSelect = mountSelect();
-        const selectButton = mountedSelect.find(SelectButton);
-        expect(selectButton.length).toBe(1);
-        expect(selectButton.text()).toBe(optionFirst.label);
+        mountSelect();
+        expect(screen.getByText("First")).toBeInTheDocument();
     });
 
-    it("should render menu and items on button click", () => {
-        const mountedSelect = mountSelect();
-        const selectButton = mountedSelect.find(SelectButton);
-        selectButton.simulate("click");
-        const selectMenu = mountedSelect.find(SelectMenu);
-        expect(selectMenu.length).toBe(1);
-        const selectOptions = mountedSelect.find(SelectOption);
-        expect(selectOptions.length).toBe(2);
-        const separator = mountedSelect.find(SelectSeparator);
-        expect(separator.length).toBe(1);
-        const heading = mountedSelect.find(SelectHeading);
-        expect(heading.length).toBe(1);
+    it("should render menu and items on button click and highlight selected item", () => {
+        const { container } = mountSelect();
+
+        fireEvent.click(screen.getByText("First"));
+
+        const firstItemOccurances = screen.getAllByText("First");
+        expect(screen.getByText("heading")).toBeInTheDocument();
+        expect(screen.getByText("Last")).toBeInTheDocument();
+        expect(firstItemOccurances).toHaveLength(2);
+        expect(firstItemOccurances[1]).toHaveClass("gd-select-option-is-selected");
+        expect(container.querySelectorAll(".gd-select-separator")).toHaveLength(1);
     });
 
     it("should call onChange when option is selected", () => {
         const onChange = jest.fn();
-        const mountedSelect = mountSelect({ onChange });
-        const selectButton = mountedSelect.find(SelectButton);
-        selectButton.simulate("click");
+        mountSelect({ onChange });
 
         // First option is selected by default
-        const lastOption = mountedSelect.find(SelectOption).last();
-        lastOption.simulate("click");
+        fireEvent.click(screen.getByText("First"));
+        fireEvent.click(screen.getByText("Last"));
 
         expect(onChange).toHaveBeenCalledTimes(1);
         expect(onChange.mock.calls[0][0]).toBe(optionLast);
-    });
-
-    it("should display the selected option", () => {
-        const mountedSelect = mountSelect();
-        mountedSelect.setProps({
-            value: optionLast.value,
-        });
-        const selectButton = mountedSelect.find(SelectButton);
-        expect(selectButton.text()).toBe(optionLast.label);
-    });
-
-    it("should highlight the selected option", () => {
-        const mountedSelect = mountSelect();
-        mountedSelect.setProps({
-            value: optionLast.value,
-        });
-        const selectButton = mountedSelect.find(SelectButton);
-        selectButton.simulate("click");
-        const lastOption = mountedSelect.find(SelectOption).last();
-        expect(lastOption.prop("isSelected")).toBe(true);
     });
 
     describe("SelectMenu", () => {
@@ -91,9 +62,10 @@ describe("Select", () => {
                 optionClassName: "optionClassName",
                 selectedItem: optionLast,
             };
-            const mountedSelectMenu = mount(<SelectMenu {...props} />);
-            expect(mountedSelectMenu.find("div.menuClassName").length).toBe(1);
-            expect(mountedSelectMenu.find("div.optionClassName").length).toBe(2);
+            const { container } = render(<SelectMenu {...props} />);
+            expect(container.querySelector("div.menuClassName")).toBeInTheDocument();
+            expect(screen.getByText("First")).toHaveClass("optionClassName");
+            expect(screen.getByText("Last")).toHaveClass("optionClassName");
         });
     });
 

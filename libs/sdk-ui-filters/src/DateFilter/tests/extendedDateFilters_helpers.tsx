@@ -1,14 +1,13 @@
-// (C) 2007-2022 GoodData Corporation
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+// (C) 2007-2023 GoodData Corporation
+import React, { useState } from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { platformDateFormat } from "../constants/Platform";
 import moment = require("moment");
 import addDate from "date-fns/add";
 import formatDate from "date-fns/format";
 import noop from "lodash/noop";
 import { IDateFilterProps, DateFilter } from "../DateFilter";
-import { IDateFilterOptionsByType } from "../interfaces";
+import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 export const defaultDateFilterOptions: IDateFilterOptionsByType = {
@@ -192,9 +191,6 @@ const dateButtonFilterTitle = ".s-date-filter-title";
 const dateFilterButtonText = ".s-button-text";
 const dateFilterSelectedItem = ".gd-filter-list-item-selected";
 
-const applyButton = "button.s-date-filter-apply";
-const cancelButton = "button.s-date-filter-cancel";
-
 const dateFilterBody = ".s-extended-date-filters-body";
 
 const excludeCurrentPeriodCheckbox = ".s-exclude-current-period input";
@@ -215,67 +211,65 @@ const defaultDateFormat: string = "MM/dd/yyyy";
 export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) => {
     const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
-    return mount(<DateFilter {...props} />);
+    return render(<DateFilter {...props} />);
 };
 
-// common wrapper methods
+/**
+ * Use this component renderer if you need to check some state changes regarding apply handler
+ */
+export const createDateFilterWithState = (customProps: Partial<IDateFilterProps> = {}) => {
+    const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
-export type WrapperType = ReactWrapper<any, Readonly<unknown>, React.Component<unknown, unknown, any>>;
-
-export const clickDateFilterButton = (wrapper: WrapperType) => {
-    wrapper.find(dateFilterButton).simulate("click");
+    return render(<DateFilterWithState {...props} />);
 };
 
-export const clickApplyButton = (wrapper: WrapperType) => {
-    wrapper.find(applyButton).simulate("click");
-    wrapper.update();
+export const DateFilterWithState = (customProps: Partial<IDateFilterProps> = {}) => {
+    const [selectedFilterOption, setSelectedFilterOption] = useState(
+        customProps.selectedFilterOption ?? defaultProps.selectedFilterOption,
+    );
+    const [excludeCurrentPeriod, setExcludeCurrentPeriod] = useState(
+        customProps.excludeCurrentPeriod ?? defaultProps.excludeCurrentPeriod,
+    );
+    const handleApply = (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => {
+        setSelectedFilterOption(selectedFilterOption);
+        setExcludeCurrentPeriod(excludeCurrentPeriod);
+        customProps.onApply?.(selectedFilterOption, excludeCurrentPeriod);
+    };
+
+    return (
+        <DateFilter
+            {...defaultProps}
+            {...customProps}
+            selectedFilterOption={selectedFilterOption}
+            excludeCurrentPeriod={excludeCurrentPeriod}
+            onApply={handleApply}
+        />
+    );
 };
 
-export const isApplyButtonDisabled = (wrapper: WrapperType) => {
-    return wrapper.find(applyButton).hasClass("disabled");
-};
+// common methods
 
-export const clickCancelButton = (wrapper: WrapperType) => {
-    wrapper.find(cancelButton).simulate("click");
-    wrapper.update();
-};
+export const clickDateFilterButton = () => fireEvent.click(document.querySelector(dateFilterButton));
 
-export const getDateFilterButtonText = (wrapper: WrapperType) => {
-    const text = wrapper.find(dateFilterButtonText);
-    return text.text();
-};
+const getApplyButton = () => screen.getByText("Apply");
 
-export const setPropsFromOnApply = (
-    wrapper: WrapperType,
-    onApply: jest.Mock<any, any>,
-    indexOfCall: number,
-) => {
-    const selectedFilterOption = onApply.mock.calls[indexOfCall][0];
-    const excludeCurrentPeriod = onApply.mock.calls[indexOfCall][1];
-    wrapper.setProps({ selectedFilterOption, excludeCurrentPeriod });
-};
+export const clickApplyButton = () => fireEvent.click(getApplyButton());
+
+export const isApplyButtonDisabled = () => getApplyButton().parentElement.classList.contains("disabled");
+
+export const clickCancelButton = () => fireEvent.click(screen.getByText("Cancel"));
+
+export const getDateFilterButtonText = () => document.querySelector(dateFilterButtonText).textContent;
 
 // config
 
-export const getFilterTitle = (wrapper: WrapperType) => {
-    const text = wrapper.find(dateButtonFilterTitle);
-    return text.text();
-};
+export const getFilterTitle = () => document.querySelector(dateButtonFilterTitle).textContent;
 
-export const isDateFilterBodyVisible = (wrapper: WrapperType) => {
-    const body = wrapper.find(dateFilterBody);
-    return body.exists();
-};
+export const isDateFilterBodyVisible = () => !!document.querySelector(dateFilterBody);
 
-export const isDateFilterVisible = (wrapper: WrapperType) => {
-    const body = wrapper.find(dateFilterButton);
-    return body.exists();
-};
+export const isDateFilterVisible = () => !!document.querySelector(dateFilterButton);
 
-export const getSelectedItemText = (wrapper: WrapperType) => {
-    const item = wrapper.find(dateFilterSelectedItem);
-    return item.text();
-};
+export const getSelectedItemText = () => document.querySelector(dateFilterSelectedItem).textContent;
 
 // relative presets
 
@@ -298,37 +292,35 @@ const getAbsoluteFilterSelectorClass = (filter: string) => {
     return `button.s-absolute-preset-${filter}`;
 };
 
-export const clickAllTime = (wrapper: WrapperType) => {
-    wrapper.find(allTimeButton).simulate("click");
-};
+export const clickAllTime = () => fireEvent.click(document.querySelector(allTimeButton));
 
-export const clickStaticFilter = (wrapper: WrapperType, filter: string) => {
+export const clickStaticFilter = (filter: string) => {
     const filterSelector = getStaticFilterSelectorClass(filter);
-    wrapper.find(filterSelector).simulate("click");
+    fireEvent.click(document.querySelector(filterSelector));
 };
 
-export const getAllStaticItemsLabels = (wrapper: WrapperType): string[] => {
-    const staticItems = wrapper
-        .find("button.gd-filter-list-item")
-        .filterWhere((item) => item.html().includes("s-relative-preset-"));
-    return staticItems.map((x) => x.text());
+export const getAllStaticItemsLabels = (): string[] => {
+    const labels: string[] = [];
+    document
+        .querySelectorAll("[class*='s-relative-preset-']")
+        .forEach((item) => labels.push(item.textContent));
+    return labels;
 };
 
 // absolute presets
-export const clickAbsoluteFilter = (wrapper: WrapperType, filter: string) => {
+export const clickAbsoluteFilter = (filter: string) => {
     const filterSelector = getAbsoluteFilterSelectorClass(filter);
-    wrapper.find(filterSelector).simulate("click");
+    fireEvent.click(document.querySelector(filterSelector));
 };
 
 // Absolute filter form
-export const clickAbsoluteFormFilter = (wrapper: WrapperType) => {
-    wrapper.find(absoluteFormButton).simulate("click");
+export const clickAbsoluteFormFilter = () => fireEvent.click(document.querySelector(absoluteFormButton));
+
+export const openAbsoluteFormFilter = () => {
+    clickDateFilterButton();
+    clickAbsoluteFormFilter();
 };
 
-export const openAbsoluteFormFilter = (wrapper: WrapperType) => {
-    clickDateFilterButton(wrapper);
-    clickAbsoluteFormFilter(wrapper);
-};
 export const dateToAbsoluteInputFormat = (dateString: string, dateFormat: string = defaultDateFormat) => {
     return formatDate(new Date(dateString), dateFormat);
 };
@@ -347,78 +339,65 @@ export const getMonthAgo = (dateFormat: string = defaultDateFormat) => {
 };
 
 // Relative filter form
-export const clickRelativeFormFilter = (wrapper: WrapperType) => {
-    wrapper.find(relativeFormButton).simulate("click");
+export const clickRelativeFormFilter = () => {
+    fireEvent.click(document.querySelector(relativeFormButton));
 };
 
-export const openRelativeFormFilter = (wrapper: WrapperType) => {
-    clickDateFilterButton(wrapper);
-    clickRelativeFormFilter(wrapper);
+export const openRelativeFormFilter = () => {
+    clickDateFilterButton();
+    clickRelativeFormFilter();
 };
 
-export const getRelativeFormInputFromValue = (wrapper: WrapperType) => {
-    const input = wrapper.find(relativeFormInputFrom);
-    return input.prop("value");
-};
+export const getRelativeFormInputFromValue = () =>
+    (document.querySelector(relativeFormInputFrom) as HTMLInputElement).value;
 
-export const getRelativeFormInputToValue = (wrapper: WrapperType) => {
-    const input = wrapper.find(relativeFormInputTo);
-    return input.prop("value");
-};
+export const getRelativeFormInputToValue = () =>
+    (document.querySelector(relativeFormInputTo) as HTMLInputElement).value;
 
-export const setRelativeFormInputs = (wrapper: WrapperType, from: string, to: string) => {
+export const setRelativeFormInputs = (from: string, to: string) => {
     // it is necessary set value TO first and than FROM because strange menu opening in RelativeDateFilter copoment
     // if FROM is set first than in TO is problem to select menu item  (is not visible)
-    writeToRelativeFormInputTo(wrapper, to);
-    writeToRelativeFormInputFrom(wrapper, from);
+    writeToRelativeFormInputTo(to);
+    writeToRelativeFormInputFrom(from);
 };
 
-const writeToRelativeFormInputTo = (wrapper: WrapperType, value: string) => {
-    const input = wrapper.find(relativeFormInputTo);
-    input.simulate("change", { target: { value } });
+const writeToRelativeFormInputTo = (value: string) => {
+    const input = document.querySelector(relativeFormInputTo);
+    fireEvent.change(input, { target: { value } });
 
-    const menuItem = wrapper.find(".s-select-item-focused");
-    menuItem.simulate("click");
+    const menuItem = document.querySelector(".s-select-item-focused");
+    fireEvent.click(menuItem);
 };
 
-const writeToRelativeFormInputFrom = (wrapper: WrapperType, value: string) => {
-    const input = wrapper.find(relativeFormInputFrom);
-    input.simulate("change", { target: { value } });
+const writeToRelativeFormInputFrom = (value: string) => {
+    const input = document.querySelector(relativeFormInputFrom);
+    fireEvent.change(input, { target: { value } });
 
-    const menuItem = wrapper.find(".s-select-item-focused");
-    menuItem.simulate("click");
+    const menuItem = document.querySelector(".s-select-item-focused");
+    fireEvent.click(menuItem);
 };
 
-export const clickRelativeFormGranularity = (wrapper: WrapperType, granularity: string) => {
-    const tab = wrapper.find(relativeFormGranularityTab(granularity));
-    tab.simulate("click");
+export const clickRelativeFormGranularity = (granularity: string) => {
+    const tab = document.querySelector(relativeFormGranularityTab(granularity));
+    fireEvent.click(tab);
 };
 
-export const isRelativeFormGranularitySelected = (wrapper: WrapperType, granularity: string) => {
-    const tab = wrapper.find(relativeFormGranularityTab(granularity));
-    return tab.hasClass("is-active");
+export const isRelativeFormGranularitySelected = (granularity: string) => {
+    const tab = document.querySelector(relativeFormGranularityTab(granularity));
+    return tab.classList.contains("is-active");
 };
 
-export const isRelativeFormVisible = (wrapper: WrapperType) => {
-    return wrapper.find(relativeFormPicker).exists();
-};
+export const isRelativeFormVisible = () => !!document.querySelector(relativeFormPicker);
 
-export const isRelativeFormSelectMenuVisible = (wrapper: WrapperType) => {
-    return wrapper.find(relativeFormSelectMenu).exists();
-};
+export const isRelativeFormSelectMenuVisible = () => !!document.querySelector(relativeFormSelectMenu);
 
 // exclude
 
-export const isExcludeCurrentPeriodEnabled = (wrapper: WrapperType) => {
-    const checkBox = wrapper.find(excludeCurrentPeriodCheckbox);
-    return !checkBox.prop("disabled");
+export const getExcludeCurrentPeriodCheckbox = (): HTMLInputElement =>
+    document.querySelector(excludeCurrentPeriodCheckbox);
+
+export const clickExcludeCurrentPeriodCheckBox = () => {
+    fireEvent.click(getExcludeCurrentPeriodCheckbox());
 };
 
-export const setExcludeCurrentPeriodCheckBox = (wrapper: WrapperType, value: boolean) => {
-    wrapper.find(excludeCurrentPeriodCheckbox).simulate("change", { target: { checked: value } });
-};
-
-export const isExcludeCurrentPeriodChecked = (wrapper: WrapperType) => {
-    const checkBox = wrapper.find(excludeCurrentPeriodCheckbox);
-    return checkBox.prop("checked");
-};
+export const isExcludeCurrentPeriodChecked = () => getExcludeCurrentPeriodCheckbox().checked;

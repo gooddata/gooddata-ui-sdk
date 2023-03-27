@@ -1,15 +1,14 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
 import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody";
-import { ExcludeCurrentPeriodToggle } from "../../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
-import { EditModeMessage } from "../EditModeMessage";
 import {
     DateFilterButtonLocalized,
     IDateFilterButtonLocalizedProps,
 } from "../../DateFilterButtonLocalized/DateFilterButtonLocalized";
 import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
 
 describe("ExtendedDateFilterBody", () => {
     const allTime: IAllTimeDateFilterOption = {
@@ -28,45 +27,49 @@ describe("ExtendedDateFilterBody", () => {
         return <DateFilterButtonLocalized {...defaultProps} {...props} />;
     };
 
-    const mockProps: IDateFilterBodyProps = {
-        filterOptions: {},
-        dateFilterButton: createDateFilterButton(),
-        dateFormat: DEFAULT_DATE_FORMAT,
-        selectedFilterOption: allTime,
-        onSelectedFilterOptionChange: jest.fn(),
+    const renderDateFilterBody = (props?: Partial<IDateFilterBodyProps>) => {
+        const mockProps: IDateFilterBodyProps = {
+            filterOptions: {},
+            dateFilterButton: createDateFilterButton(),
+            dateFormat: DEFAULT_DATE_FORMAT,
+            selectedFilterOption: allTime,
+            onSelectedFilterOptionChange: jest.fn(),
 
-        excludeCurrentPeriod: false,
-        isExcludeCurrentPeriodEnabled: false,
-        onExcludeCurrentPeriodChange: jest.fn(),
+            excludeCurrentPeriod: false,
+            isExcludeCurrentPeriodEnabled: false,
+            onExcludeCurrentPeriodChange: jest.fn(),
 
-        availableGranularities: [],
-        isEditMode: false,
-        isMobile: false,
-        isTimeForAbsoluteRangeEnabled: true,
+            availableGranularities: [],
+            isEditMode: false,
+            isMobile: false,
+            isTimeForAbsoluteRangeEnabled: true,
 
-        onApplyClick: jest.fn(),
-        onCancelClick: jest.fn(),
-        closeDropdown: jest.fn(),
+            onApplyClick: jest.fn(),
+            onCancelClick: jest.fn(),
+            closeDropdown: jest.fn(),
+        };
+        const Wrapped = withIntl(DateFilterBody);
+        return render(<Wrapped {...mockProps} {...props} />);
     };
 
     it("should pass the isExcludeCurrentPeriodEnabled=true to Exclude button", () => {
-        const rendered = shallow(<DateFilterBody {...mockProps} isExcludeCurrentPeriodEnabled={true} />);
-        expect(rendered.find(ExcludeCurrentPeriodToggle)).not.toBeDisabled();
+        renderDateFilterBody({ isExcludeCurrentPeriodEnabled: true });
+        expect(screen.getByRole("checkbox", { name: "Exclude open period" })).not.toBeDisabled();
     });
 
     it("should pass the isExcludeCurrentPeriodEnabled=false to Exclude button", () => {
-        const rendered = shallow(<DateFilterBody {...mockProps} isExcludeCurrentPeriodEnabled={false} />);
-        expect(rendered.find(ExcludeCurrentPeriodToggle)).toBeDisabled();
+        renderDateFilterBody({ isExcludeCurrentPeriodEnabled: false });
+        expect(screen.getByRole("checkbox", { name: "Exclude open period" })).toBeDisabled();
     });
 
     it("should display edit mode message in edit mode", () => {
-        const rendered = shallow(<DateFilterBody {...mockProps} isEditMode={true} />);
-        expect(rendered.find(EditModeMessage)).toExist();
+        renderDateFilterBody({ isEditMode: true });
+        expect(screen.queryByText("Set default date filter for viewers:")).toBeInTheDocument();
     });
 
     it("should not display edit mode message in normal mode", () => {
-        const rendered = shallow(<DateFilterBody {...mockProps} isEditMode={false} />);
-        expect(rendered.find(EditModeMessage)).not.toExist();
+        renderDateFilterBody({ isEditMode: false });
+        expect(screen.queryByText("Set default date filter for viewers:")).not.toBeInTheDocument();
     });
 
     describe("calculateHeight", () => {
@@ -75,30 +78,25 @@ describe("ExtendedDateFilterBody", () => {
             (window.innerHeight as number) = y;
         };
 
-        const getBodyWrapper = (component: ShallowWrapper) => {
-            return component.find(".gd-extended-date-filter-body-wrapper");
+        const getBodyWrapper = () => {
+            return document.querySelector(".gd-extended-date-filter-body-wrapper");
         };
 
-        const getBodyScroller = (component: ShallowWrapper) => {
-            return component.find(".gd-extended-date-filter-body-scrollable");
+        const getBodyScroller = () => {
+            return document.querySelector(".gd-extended-date-filter-body-scrollable");
         };
 
         it("should not resize body wrapper and scroller", () => {
-            const rendered = shallow(<DateFilterBody {...mockProps} isEditMode={false} />);
-            expect(getBodyWrapper(rendered).props().style).toEqual({});
-            expect(getBodyScroller(rendered).props().style).toEqual({});
+            renderDateFilterBody({ isEditMode: false });
+            expect(getBodyWrapper()).not.toHaveAttribute("style");
+            expect(getBodyScroller()).not.toHaveAttribute("style");
         });
 
         it("should resize body wrapper and scroller in horizontal mobile layout", () => {
             resizeWindow(896, 414);
-            const rendered = shallow(<DateFilterBody {...mockProps} isEditMode={false} />);
-            expect(getBodyWrapper(rendered).props().style).toEqual({
-                display: "block",
-                height: "323px",
-            });
-            expect(getBodyScroller(rendered).props().style).toEqual({
-                minHeight: "323px",
-            });
+            renderDateFilterBody({ isEditMode: false });
+            expect(getBodyWrapper()).toHaveStyle("display: block; height: 323px");
+            expect(getBodyScroller()).toHaveStyle("min-height: 323px");
         });
     });
 });

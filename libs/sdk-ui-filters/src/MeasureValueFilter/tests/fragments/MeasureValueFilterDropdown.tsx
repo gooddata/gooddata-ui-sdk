@@ -1,97 +1,88 @@
-// (C) 2019 GoodData Corporation
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ReactWrapper } from "enzyme";
+// (C) 2019-2023 GoodData Corporation
+import { fireEvent, screen } from "@testing-library/react";
 import { stringUtils } from "@gooddata/util";
-
-const CLASS_APPLY_BUTTON = ".s-mvf-dropdown-apply";
-const CLASS_CANCEL_BUTTON = ".s-mvf-dropdown-cancel";
 
 const CLASS_OPERATOR_DROPDOWN_BUTTON = ".s-mvf-operator-dropdown-button";
 const CLASS_OPERATOR_DROPDOWN_BODY = ".s-mvf-operator-dropdown-body";
 
 export default class MeasureValueFilterFragment {
-    private component: ReactWrapper = null;
+    public getOperatorDropdown = (): HTMLElement => document.querySelector(CLASS_OPERATOR_DROPDOWN_BODY);
 
-    constructor(component: ReactWrapper) {
-        this.component = component;
-    }
+    public getOperatorDropdownButton = () => document.querySelector(CLASS_OPERATOR_DROPDOWN_BUTTON);
 
-    public getOperatorDropdownButton = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BUTTON).hostNodes();
-    public isOperatorDropdownOpen = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BODY).exists();
+    public isOperatorDropdownOpen = () => !!this.getOperatorDropdown();
+
+    public getApplyButton = () => screen.getByText("Apply").parentElement;
 
     public clickApply = () => {
-        this.component.find(CLASS_APPLY_BUTTON).hostNodes().simulate("click");
+        fireEvent.click(this.getApplyButton());
         return this;
     };
 
     public clickCancel = () => {
-        this.component.find(CLASS_CANCEL_BUTTON).hostNodes().simulate("click");
+        fireEvent.click(screen.getByText("Cancel"));
         return this;
     };
 
     public openOperatorDropdown = () => {
         if (!this.isOperatorDropdownOpen()) {
-            this.getOperatorDropdownButton().simulate("click");
+            fireEvent.click(this.getOperatorDropdownButton());
         }
         return this;
     };
 
     public getOperator = (operator: string) =>
-        this.component.find(`.s-mvf-operator-${stringUtils.simplifyText(operator)}`).hostNodes();
+        document.querySelector(`.s-mvf-operator-${stringUtils.simplifyText(operator)}`);
+
+    public getOperatorBubbles = (operator: string) =>
+        document.querySelectorAll(`.s-mvf-operator-${stringUtils.simplifyText(operator)} .tooltip-bubble`);
 
     public selectOperator = (operator: string) => {
-        this.getOperator(operator).simulate("click");
+        fireEvent.click(this.getOperator(operator));
         return this;
     };
 
-    public getComparisonValueInput = () => this.component.find(".s-mvf-comparison-value-input input");
+    public getComparisonValueInput = (): HTMLInputElement =>
+        document.querySelector(".s-mvf-comparison-value-input input");
 
     public setComparisonValue = (value: string) => {
-        this.getComparisonValueInput().simulate("change", { target: { value } });
+        fireEvent.change(this.getComparisonValueInput(), { target: { value } });
         return this;
     };
 
-    public getRangeFromInput = () => this.component.find(".s-mvf-range-from-input input");
-
-    public getRangeFromInputValue = () => this.getRangeFromInput().props().value;
+    public getRangeFromInput = (): HTMLInputElement =>
+        document.querySelector(".s-mvf-range-from-input input");
 
     public setRangeFrom = (value: string) => {
-        this.getRangeFromInput().simulate("change", { target: { value } });
+        fireEvent.change(this.getRangeFromInput(), { target: { value } });
         return this;
     };
 
-    public getRangeToInput = () => this.component.find(".s-mvf-range-to-input input");
-
-    public getRangeToInputValue = () => this.getRangeToInput().props().value;
+    public getRangeToInput = (): HTMLInputElement => document.querySelector(".s-mvf-range-to-input input");
 
     public setRangeTo = (value: string) => {
-        this.getRangeToInput().simulate("change", { target: { value } });
+        fireEvent.change(this.getRangeToInput(), { target: { value } });
         return this;
     };
 
-    public isApplyButtonDisabled = () => {
-        return this.component.find(CLASS_APPLY_BUTTON).at(0).prop("disabled");
-    };
+    public isApplyButtonDisabled = () => this.getApplyButton().classList.contains("disabled");
 
     public pressEnterInComparisonInput = () =>
-        this.getComparisonValueInput().simulate("keydown", { keyCode: 13 });
+        fireEvent.keyDown(this.getComparisonValueInput(), { keyCode: 13 });
 
-    public getSelectedOperatorTitle = () => this.getOperatorDropdownButton().text();
+    public getSelectedOperatorTitle = () => this.getOperatorDropdownButton().textContent;
 
-    public getInputSuffixes = () => this.component.find(".gd-input-suffix");
+    public getInputSuffixes = () => document.querySelectorAll(".gd-input-suffix");
 
-    public getWarningMessage = () => this.component.find(".s-mvf-warning-message");
+    public getWarningMessage = () => document.querySelector(".s-mvf-warning-message");
 
     public getWarningMessageBySeverity = (severity: string) =>
-        this.component.find(`.s-mvf-warning-message-${severity}`);
+        document.querySelector(`.s-mvf-warning-message-${severity}`);
 
-    public getWarningMessageText = () => this.getWarningMessage().text();
-
-    public toggleTreatNullAsCheckbox = () => {
-        const isChecked = this.getTreatNullAsCheckbox().props().checked;
-        this.getTreatNullAsCheckbox().simulate("change", { target: { checked: !isChecked } });
+    public clickTreatNullAsCheckbox = () => {
+        fireEvent.click(this.getTreatNullAsCheckbox());
         return this;
     };
 
-    public getTreatNullAsCheckbox = () => this.component.find(".s-treat-null-values-as-zero .input-checkbox");
+    public getTreatNullAsCheckbox = (): HTMLInputElement => screen.queryByRole("checkbox", { hidden: true }); //this.component.find(".s-treat-null-values-as-zero .input-checkbox");
 }

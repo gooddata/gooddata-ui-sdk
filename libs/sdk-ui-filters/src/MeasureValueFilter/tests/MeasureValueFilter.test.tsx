@@ -1,13 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { withIntl } from "@gooddata/sdk-ui";
 import { IMeasureValueFilter, newMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 
 import { MeasureValueFilter, IMeasureValueFilterProps } from "../MeasureValueFilter";
-import { MeasureValueFilterDropdown } from "../MeasureValueFilterDropdown";
-import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {
@@ -25,37 +23,36 @@ const renderComponent = (props?: Partial<IMeasureValueFilterProps>) => {
         buttonTitle: "My measure",
     };
     const Wrapped = withIntl(MeasureValueFilter);
-    return mount(<Wrapped {...defaultProps} {...props} />);
+    return render(<Wrapped {...defaultProps} {...props} />);
 };
+
+const DROPDOWN_BODY = ".s-mvf-dropdown-body";
 
 describe("Measure value filter", () => {
     it("should render a button with provided title", () => {
-        const component = renderComponent({ buttonTitle: "Test title" });
+        renderComponent({ buttonTitle: "Test title" });
 
-        expect(component.find(".s-mvf-dropdown-button").text()).toEqual("Test title");
+        expect(screen.getByText("Test title")).toBeInTheDocument();
     });
 
     it("should open and close the dropdown on button click", () => {
-        const component = renderComponent();
+        renderComponent();
+        const button = screen.getByText("My measure");
+        expect(document.querySelector(DROPDOWN_BODY)).not.toBeInTheDocument();
 
-        expect(component.find(MeasureValueFilterDropdown).exists()).toEqual(false);
+        fireEvent.click(button);
+        expect(document.querySelector(DROPDOWN_BODY)).toBeInTheDocument();
 
-        component.find(".s-mvf-dropdown-button").simulate("click");
-        expect(component.find(MeasureValueFilterDropdown).exists()).toEqual(true);
-
-        component.find(".s-mvf-dropdown-button").simulate("click");
-        expect(component.find(MeasureValueFilterDropdown).exists()).toEqual(false);
+        fireEvent.click(button);
+        expect(document.querySelector(DROPDOWN_BODY)).not.toBeInTheDocument();
     });
 
     it("should call onCancel when Cancel button clicked", () => {
         const onCancel = jest.fn();
-        const component = renderComponent({ onCancel });
+        renderComponent({ onCancel });
 
-        component.find(".s-mvf-dropdown-button").simulate("click");
-
-        const dropdown = component.find(MeasureValueFilterDropdown);
-        const dropdownFragment = new MVFDropdownFragment(dropdown);
-        dropdownFragment.clickCancel();
+        fireEvent.click(screen.getByText("My measure"));
+        fireEvent.click(screen.getByText("Cancel"));
 
         expect(onCancel).toHaveBeenCalled();
     });
@@ -65,14 +62,15 @@ describe("Measure value filter", () => {
         const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
         const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 123);
 
-        const component = renderComponent({ onApply, filter });
+        renderComponent({ onApply, filter });
 
-        component.find(".s-mvf-dropdown-button").simulate("click");
-
-        const dropdown = component.find(MeasureValueFilterDropdown);
-        const dropdownFragment = new MVFDropdownFragment(dropdown);
-        dropdownFragment.setComparisonValue("123");
-        dropdownFragment.clickApply();
+        fireEvent.click(screen.getByText("My measure"));
+        fireEvent.change(screen.getByDisplayValue(100), {
+            target: {
+                value: 123,
+            },
+        });
+        fireEvent.click(screen.getByText("Apply"));
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
     });

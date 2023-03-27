@@ -1,13 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { withIntl } from "@gooddata/sdk-ui";
-import { mount } from "enzyme";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import { IRankingFilterProps, RankingFilter } from "../RankingFilter";
 
 import * as Mock from "./mocks";
 
-const DROPDOWN_BUTTON = ".s-rf-dropdown-button";
 const DROPDOWN_BODY = ".s-rf-dropdown-body";
 
 const renderComponent = (props?: Partial<IRankingFilterProps>) => {
@@ -20,25 +19,26 @@ const renderComponent = (props?: Partial<IRankingFilterProps>) => {
         buttonTitle: "Ranking Filter",
     };
     const Wrapped = withIntl(RankingFilter);
-    return mount(<Wrapped {...defaultProps} {...props} />);
+    return render(<Wrapped {...defaultProps} {...props} />);
 };
 
 describe("RankingFilter", () => {
     it("should render a button with provided title", () => {
-        const component = renderComponent({ buttonTitle: "My title" });
+        renderComponent({ buttonTitle: "My title" });
 
-        expect(component.find(DROPDOWN_BUTTON).text()).toEqual("My title");
+        expect(screen.getByText("My title")).toBeInTheDocument();
     });
 
     it("should open and close dropdown on button click", () => {
-        const component = renderComponent();
+        renderComponent();
 
-        expect(component.find(DROPDOWN_BODY).exists()).toEqual(false);
+        const button = screen.getByText("Ranking Filter");
+        expect(document.querySelector(DROPDOWN_BODY)).not.toBeInTheDocument();
 
-        component.find(DROPDOWN_BUTTON).simulate("click");
-        expect(component.find(DROPDOWN_BODY).exists()).toEqual(true);
+        fireEvent.click(button);
+        expect(document.querySelector(DROPDOWN_BODY)).toBeInTheDocument();
 
-        component.find(DROPDOWN_BUTTON).simulate("click");
-        expect(component.find(DROPDOWN_BODY).exists()).toEqual(false);
+        fireEvent.click(button);
+        expect(document.querySelector(DROPDOWN_BODY)).not.toBeInTheDocument();
     });
 });

@@ -12,5 +12,9 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "../../.eslintrc.react.js",
     ],
+    rules: {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+    },
     parserOptions: { tsconfigRootDir: __dirname },
 };
