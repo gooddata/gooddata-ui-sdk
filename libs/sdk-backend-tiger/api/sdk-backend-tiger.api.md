@@ -19,11 +19,13 @@ import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
+import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
@@ -380,6 +382,7 @@ export type TigerSpecificFunctions = {
     deleteWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<void>;
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
+    checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
 };
 
 // @public
