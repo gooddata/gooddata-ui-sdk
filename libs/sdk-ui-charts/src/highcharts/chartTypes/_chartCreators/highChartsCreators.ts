@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import merge from "lodash/merge";
 import invariant from "ts-invariant";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
@@ -26,6 +26,7 @@ import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
 import { HighchartsOptions } from "../../lib";
+import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfiguration";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,
@@ -42,6 +43,7 @@ const chartConfigurationMap = {
     [VisualizationTypes.FUNNEL]: getFunnelConfiguration,
     [VisualizationTypes.HEATMAP]: getHeatmapConfiguration,
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration,
+    [VisualizationTypes.WATERFALL]: getWaterfallConfiguration,
 };
 
 export function getHighchartsOptions(

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import compact from "lodash/compact";
 import {
     bucketAttributes,
@@ -38,6 +38,13 @@ function getPieDonutFunnelDimensions(insight: IInsightDefinition): IDimension[] 
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
 
     return viewByAttributes.length
+        ? newTwoDimensional([MeasureGroupIdentifier], viewByAttributes)
+        : newTwoDimensional([], [MeasureGroupIdentifier]);
+}
+
+function getWaterfallDimensions(insight: IInsightDefinition): IDimension[] {
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
+    return viewByAttributes?.length > 0
         ? newTwoDimensional([MeasureGroupIdentifier], viewByAttributes)
         : newTwoDimensional([], [MeasureGroupIdentifier]);
 }
@@ -147,6 +154,9 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
 
         case VisualizationTypes.BUBBLE:
             return getBubbleDimensions(insight);
+
+        case VisualizationTypes.WATERFALL:
+            return getWaterfallDimensions(insight);
     }
     return [];
 }

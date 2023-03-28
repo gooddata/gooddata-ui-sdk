@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import last from "lodash/last";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -21,6 +21,7 @@ import { ScatterPlotDescriptor } from "./pluggableVisualizations/scatterPlot/Sca
 import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDescriptor";
 import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor";
 import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor";
+import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -132,6 +133,7 @@ const DefaultVisualizations = {
     treemap: TreemapDescriptor,
     funnel: FunnelChartDescriptor,
     pushpin: GeoPushpinChartDescriptor,
+    waterfall: WaterfallChartDescriptor,
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -19,6 +19,7 @@ export const titles = defineMessages({
     measures_xirr: { id: "dashboard.bucket.measures_title.xirr" },
     measures_bubble: { id: "dashboard.bucket.measures_title.bubble" },
     measures_bullet: { id: "dashboard.bucket.measures_title.bullet" },
+    measures_waterfall: { id: "dashboard.bucket.measures_title.waterfall" },
     secondary_measures_headline: { id: "dashboard.bucket.secondary_measures_title.headline" },
     secondary_measures_scatter: { id: "dashboard.bucket.secondary_measures_title.scatter" },
     secondary_measures_combo: { id: "dashboard.bucket.secondary_measures_title.combo" },
@@ -43,6 +44,7 @@ export const titles = defineMessages({
     view_bullet: { id: "dashboard.bucket.view_title.bullet" },
     view_heatmap: { id: "dashboard.bucket.view_title.heatmap" },
     view_combo: { id: "dashboard.bucket.view_title.combo" },
+    view_waterfall: { id: "dashboard.bucket.view_title.waterfall" },
     stack_column: { id: "dashboard.bucket.stack_title.column" },
     stack_bar: { id: "dashboard.bucket.stack_title.bar" },
     stack_area: { id: "dashboard.bucket.stack_title.area" },

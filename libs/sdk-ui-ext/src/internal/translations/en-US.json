@@ -329,6 +329,11 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.view_title.waterfall": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.view_title.bar": {
         "value": "View by",
         "comment": "",
@@ -551,6 +556,11 @@
         "translate": false
     },
     "dashboard.bucket.measures_title.table._measure": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.waterfall": {
         "value": "Measures",
         "comment": "",
         "limit": 0

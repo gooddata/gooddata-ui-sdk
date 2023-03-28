@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import noop from "lodash/noop";
 import isString from "lodash/isString";
 import merge from "lodash/merge";
@@ -887,6 +887,7 @@ function getHoverStyles({ type }: any, config: any) {
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
+        case VisualizationTypes.WATERFALL:
         case VisualizationTypes.BULLET:
         case VisualizationTypes.FUNNEL:
             seriesMapFn = barSeriesMapFn;

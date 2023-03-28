@@ -184,6 +184,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
                 uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
             },
         },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:waterfall",
+                orderIndex: 21,
+                iconSelected: "local:waterfall.selected",
+                url: "local:waterfall",
+                title: "Waterfall",
+                identifier: "gdc.visualization.waterfall",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glas/obj/21",
+            },
+        },
     ],
     (cls) => cls.visualizationClass.orderIndex,
 );

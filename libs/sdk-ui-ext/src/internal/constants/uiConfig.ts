@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization";
 
 import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket";
@@ -349,6 +349,20 @@ export const DEFAULT_PIE_UICONFIG: IUiConfig = {
     },
     ...defaultRootUiConfigProperties,
     ...enabledOpenAsReportConfig,
+};
+
+export const DEFAULT_WATERFALL_UI_CONFIG: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+        },
+        view: {
+            ...viewBase,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...disabledExportConfig,
 };
 
 export const PIE_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
