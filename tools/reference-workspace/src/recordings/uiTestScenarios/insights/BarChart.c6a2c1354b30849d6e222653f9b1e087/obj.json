@@ -1,0 +1,83 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Ratio of Won and Lost",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": [
+                                        "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                                        "m_acugFHNJgsBy"
+                                    ],
+                                    "operator": "ratio"
+                                }
+                            },
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "stack" }
+        ],
+        "filters": [],
+        "identifier": "BarChart.c6a2c1354b30849d6e222653f9b1e087",
+        "properties": {
+            "controls": {
+                "enableReversedStacking": true,
+                "secondary_xaxis": { "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"] },
+                "stackMeasures": true
+            }
+        },
+        "sorts": [],
+        "title": "BarChart - reversed three measures and one viewBy with top axis and stackMeasures",
+        "uri": "BarChart.c6a2c1354b30849d6e222653f9b1e087",
+        "visualizationUrl": "local:bar"
+    }
+}
