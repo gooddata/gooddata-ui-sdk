@@ -128,10 +128,21 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         "Hidden elements are not supported by the current backend implementation.",
     );
 
-    if (selectionMode === "single" && filter) {
+    const isSingleSelect = selectionMode === "single";
+    const hasEmptyParentFilters = isEmpty(parentFilters);
+    const isPositiveWithMaxOneElement = filter
+        ? isPositiveAttributeFilter(filter) && attributeElementsCount(filterAttributeElements(filter)) < 2
+        : true;
+
+    if (isSingleSelect) {
         invariant(
-            isPositiveAttributeFilter(filter) && attributeElementsCount(filterAttributeElements(filter)) < 2,
-            "Provided 'filter' property is not compatible with given selectionMode. It needs to be positive filter with max one item selected in attribute elements",
+            isPositiveWithMaxOneElement,
+            "Provided 'filter' property is not compatible with given single selection mode. It needs to be positive filter with max one item selected in attribute elements",
+        );
+
+        invariant(
+            hasEmptyParentFilters,
+            "Parent filtering can not be used together with single selection mode. Use only one of these properties at the same time.",
         );
     }
 

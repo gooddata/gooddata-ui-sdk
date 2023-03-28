@@ -2,13 +2,7 @@
 import React, { useState } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import {
-    idRef,
-    newPositiveAttributeFilter,
-    newNegativeAttributeFilter,
-    IAttributeFilter,
-    modifyMeasure,
-} from "@gooddata/sdk-model";
+import { idRef, newPositiveAttributeFilter, IAttributeFilter, modifyMeasure } from "@gooddata/sdk-model";
 
 import * as Md from "../../../md/full";
 
@@ -33,35 +27,23 @@ const SingleSelectionAttributeFilterBasicUsage = () => {
     );
 };
 
-const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
     m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
 
-const SingleSelectionAttributeFilterParentChildFiltering: React.FC = () => {
-    const [parentFilter, setParentFilter] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(Md.LocationState, {
-            uris: [],
-        }),
-    );
-
+const SingleSelectionAttributeFilterConnectedToVisualization: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>(
-        newPositiveAttributeFilter(Md.LocationCity, { uris: [] }),
+        newPositiveAttributeFilter(Md.LocationCity, {
+            uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2208/elements?id=6340130"],
+        }),
     );
 
     return (
         <div>
-            <h4>Single selection Attribute filter - parent filtering</h4>
-            <AttributeFilter filter={parentFilter} onApply={setParentFilter} />
-            <AttributeFilter
-                filter={filter}
-                selectionMode="single"
-                parentFilters={parentFilter ? [parentFilter] : []}
-                parentFilterOverAttribute={idRef(locationIdAttributeIdentifier)}
-                onApply={setFilter}
-            />
+            <h4>Single selection Attribute filter - connected to visualization</h4>
+            <AttributeFilter filter={filter} selectionMode="single" onApply={setFilter} />
             <div style={{ height: 300 }}>
-                <BarChart measures={[TotalSales]} viewBy={Md.LocationCity} filters={[filter, parentFilter]} />
+                <BarChart measures={[TotalSales]} viewBy={Md.LocationCity} filters={[filter]} />
             </div>
         </div>
     );
@@ -71,7 +53,7 @@ export const SingleSelectionAttributeFilter = () => {
     return (
         <div>
             <SingleSelectionAttributeFilterBasicUsage />
-            <SingleSelectionAttributeFilterParentChildFiltering />
+            <SingleSelectionAttributeFilterConnectedToVisualization />
         </div>
     );
 };
