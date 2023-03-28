@@ -157,6 +157,7 @@ function* createDashboardSaveContext(
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
         ...dashboardDescriptor,
+        createdBy: persistedDashboard?.createdBy,
         title: cmd.payload.title ?? dashboardDescriptor.title,
         ...dashboardIdentity,
         filterContext: {

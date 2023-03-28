@@ -232,6 +232,7 @@ export interface IDashboard<TWidget = IDashboardWidget>
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
     extends IDashboardBase,
         IAccessControlAware,
+        Readonly<IAuditableUsers>,
         Partial<IDashboardObjectIdentity> {
     readonly type: "IDashboard";
 
