@@ -373,7 +373,8 @@ const clearAttributeFiltersSelection: FilterContextReducer<
             currentFilterIndex
         ] as IDashboardAttributeFilter;
 
-        currentFilter.attributeFilter.negativeSelection = true;
+        const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
+        currentFilter.attributeFilter.negativeSelection = isMultiSelect;
         currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
             currentFilter.attributeFilter.attributeElements,
         )
@@ -410,9 +411,10 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     ] as IDashboardAttributeFilter;
 
     currentFilter.attributeFilter.displayForm = { ...displayForm };
+    const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
 
     if (!supportsElementUris) {
-        currentFilter.attributeFilter.negativeSelection = true;
+        currentFilter.attributeFilter.negativeSelection = isMultiSelect;
         currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
             currentFilter.attributeFilter.attributeElements,
         )
