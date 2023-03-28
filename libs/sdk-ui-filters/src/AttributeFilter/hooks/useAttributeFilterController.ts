@@ -181,13 +181,13 @@ function useInitOrReload(
             limitingAttributeFilters,
             handler.getLimitingAttributeFilters(),
         );
-        const filtersChanged = !isEqual(filter, handler.getFilter());
+        const filterChanged = !isEqual(filter, handler.getFilter());
 
         const props: UpdateFilterProps = {
             filter,
             limitingAttributeFilters,
             limitingAttributesChanged,
-            filtersChanged,
+            filterChanged,
             setConnectedPlaceholderValue,
             onApply,
             selectionMode,
@@ -212,7 +212,7 @@ type UpdateFilterProps = {
     filter: IAttributeFilter;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingAttributesChanged: boolean;
-    filtersChanged: boolean;
+    filterChanged: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
     onApply: OnApplyCallbackType;
     selectionMode: DashboardAttributeFilterSelectionMode;
@@ -226,11 +226,11 @@ function updateNonResettingFilter(
         filter,
         limitingAttributeFilters,
         limitingAttributesChanged,
-        filtersChanged,
+        filterChanged,
         setConnectedPlaceholderValue,
     }: UpdateFilterProps,
 ): UpdateFilterType {
-    if (limitingAttributesChanged || filtersChanged) {
+    if (limitingAttributesChanged || filterChanged) {
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
@@ -257,7 +257,7 @@ function updateAutomaticResettingFilter(
         filter,
         limitingAttributeFilters,
         limitingAttributesChanged,
-        filtersChanged,
+        filterChanged,
         setConnectedPlaceholderValue,
         onApply,
         selectionMode,
@@ -280,7 +280,7 @@ function updateAutomaticResettingFilter(
         return "init-parent";
     }
 
-    if (filtersChanged) {
+    if (filterChanged) {
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
