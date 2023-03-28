@@ -1,8 +1,8 @@
 {
-    "id": "0618d92d-15bd-4784-baba-22e2a0e0f7c3",
-    "name": "api_v1_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements",
+    "id": "e5ba5645-1c81-4a55-8a2e-8f5f53789d83",
+    "name": "api_v1_actions_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?offset=0&limit=2",
+        "url": "/api/v1/actions/workspaces/2b7da2afb0d34f4397481c4d2a2d50b0/execution/collectLabelElements?offset=6&limit=2",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -15,7 +15,7 @@
         },
         "bodyPatterns": [
             {
-                "equalToJson": "{\"label\":\"label.f_account.account.accountid\"}",
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
                 "ignoreArrayOrder": false,
                 "ignoreExtraElements": false
             }
@@ -23,12 +23,17 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"label.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"1000Bulbs.com\",\"primaryTitle\":\"1000Bulbs.com\"},{\"title\":\"101 Financial\",\"primaryTitle\":\"101 Financial\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":0,\"next\":\"https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?limit=2&offset=2\"}}",
+        "body": "{\"primaryLabel\":{\"id\":\"attr.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"1-800 We Answer\",\"primaryTitle\":\"1-800 We Answer\"},{\"title\":\"1-888-OhioComp\",\"primaryTitle\":\"1-888-OhioComp\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":6,\"next\":\"https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/2b7da2afb0d34f4397481c4d2a2d50b0/execution/collectLabelElements?limit=2&offset=8\"}}",
         "headers": {
-            "Date": "Wed, 11 Jan 2023 07:56:34 GMT",
+            "Date": "Mon, 27 Mar 2023 09:33:30 GMT",
             "Content-Type": "application/json",
-            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-            "X-GDC-TRACE-ID": "6af4b72eb40dfc93",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "X-GDC-TRACE-ID": "58e6825deb3a080d",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
@@ -40,7 +45,7 @@
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
         }
     },
-    "uuid": "0618d92d-15bd-4784-baba-22e2a0e0f7c3",
+    "uuid": "e5ba5645-1c81-4a55-8a2e-8f5f53789d83",
     "persistent": true,
-    "insertionIndex": 4
+    "insertionIndex": 5
 }

@@ -35,25 +35,31 @@ function createBackend(): IAnalyticalBackend {
      *
      * Does not work without the protocol within the `localhost` value.
      */
-    const hostname = (process.env.CI && "https://tiger") ?? "https://localhost";
-    const backend = tigerFactory({ hostname: `${hostname}:8442` });
+
+    let hostname = (process.env.CI && "https://tiger") ?? "https://localhost";
+    if (process.env.HOST) {
+        hostname = process.env.HOST;
+    }
+    let port = process.env.HOST ? "" : ":8442";
+    let backend = tigerFactory({ hostname: `${hostname}${port}` });
+    let authProvider;
 
     if (process.env.GD_TIGER_REC) {
         const credentials = config();
-
         invariant(
             credentials.parsed?.TIGER_API_TOKEN,
             "You have started integrated tests in recording mode - this mode requires " +
                 "credentials in order to log into platform. The credentials must be stored in .env file located " +
                 "in sdk-backend-tiger directory. This a dotenv file and should contain TIGER_API_TOKEN.",
         );
-
-        const authProvider = new TigerTokenAuthProvider(credentials.parsed.TIGER_API_TOKEN);
-
-        return backend.withAuthentication(authProvider);
+        authProvider = new TigerTokenAuthProvider(credentials.parsed.TIGER_API_TOKEN);
+    } else if (process.env.TIGER_API_TOKEN) {
+        authProvider = new TigerTokenAuthProvider(process.env.TIGER_API_TOKEN);
+    } else {
+        authProvider = new NoLoginAuthProvider();
     }
 
-    return backend.withAuthentication(new NoLoginAuthProvider());
+    return backend.withAuthentication(authProvider);
 }
 
 export function testBackend(): IAnalyticalBackend {
@@ -66,5 +72,57 @@ export function testBackend(): IAnalyticalBackend {
 
 export function testWorkspace(): string {
     // UI SDK Reference workspace ID
-    return "4dc4e033e611421791adea58d34d958c";
+    const workspace: string = process.env.WORKSPACE_ID ?? getRecordingsWorkspaceId();
+    return workspace;
+}
+
+function getRecordingsWorkspaceId() {
+    return "2b7da2afb0d34f4397481c4d2a2d50b0";
+}
+
+export function sanitizeKeyWithNewValue(result: object, key: string, newValue: string) {
+    const fixtureContent = JSON.stringify(result);
+    const newResult = JSON.parse(fixtureContent, (k, v) => (k === key ? newValue : v));
+    return newResult;
+}
+
+function sanitizeWorkspaceId(result: object) {
+    if (process.env.WORKSPACE_ID) {
+        const workspace: string = process.env.WORKSPACE_ID;
+        const dataString = JSON.stringify(result, null, 2).replace(
+            new RegExp(workspace, "g"),
+            getRecordingsWorkspaceId(),
+        );
+        return JSON.parse(dataString);
+    }
+    return result;
+}
+
+export function sanitizeWorkspace(result: object, key: string, newValue: string) {
+    const newResult = sanitizeKeyWithNewValue(result, key, newValue);
+    return sanitizeWorkspaceId(newResult);
+}
+
+export function sortToOrder(json: any) {
+    for (let i = 0; i < json.items.length; i++) {
+        const currentObject = json.items[i];
+        for (const [objectKeys, objectValues] of Object.entries(currentObject)) {
+            sortByKey(currentObject, objectKeys, objectValues, "id");
+            if (typeof objectValues === "object" && !Array.isArray(objectValues)) {
+                for (const [keys, values] of Object.entries(currentObject[objectKeys])) {
+                    sortByKey(currentObject[objectKeys], keys, values, "id");
+                    sortByKey(currentObject[objectKeys], keys, values, "granularity");
+                }
+            }
+        }
+    }
+    return json;
+}
+
+function sortByKey(object: any, key: any, value: any, sortBy: string) {
+    if (Array.isArray(value) && value.length >= 2) {
+        if (Object.keys(object[key][0]).includes(sortBy)) {
+            object[key].sort((a: any, b: any) => a.id.localeCompare(b.id));
+        }
+    }
 }

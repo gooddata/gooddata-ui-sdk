@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`tiger insights should load empty insights for out-of-range page 1`] = `
-InMemoryPaging {
+Object {
   "allItems": Array [
     Object {
       "insight": Object {
@@ -14,47 +14,732 @@ InMemoryPaging {
                     "measureDefinition": Object {
                       "filters": Array [],
                       "item": Object {
-                        "identifier": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                        "identifier": "metric_has_null_value",
                         "type": "measure",
                       },
                     },
                   },
-                  "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
-                  "title": "# of Activities",
+                  "localIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                  "title": "Metric has null value",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "f107b852334c4730abc4e11608530bb2",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "9bd8d6e1d80f4f15965be8a7926c590f",
+                  "title": "_Timeline [EOP]",
                 },
               },
             ],
             "localIdentifier": "measures",
           },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_product.product",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "204473a01e6442f8a10822ff15b7a0d2",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "positiveAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "f_owner.region_id",
+                "type": "displayForm",
+              },
+              "in": Object {
+                "values": Array [
+                  "",
+                  "East Coast",
+                ],
+              },
+            },
+          },
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2000-08-07 00:00",
+              "to": "2022-09-07 23:59",
+            },
+          },
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "attr.f_product.product",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "CompuSci",
+                  "Educationly",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "measureSortItem": Object {
+                "direction": "desc",
+                "locators": Array [
+                  Object {
+                    "attributeLocatorItem": Object {
+                      "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                      "element": "East Coast",
+                    },
+                  },
+                  Object {
+                    "measureLocatorItem": Object {
+                      "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "measureSortItem": Object {
+              "direction": "desc",
+              "locators": Array [
+                Object {
+                  "attributeLocatorItem": Object {
+                    "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                    "element": "East Coast",
+                  },
+                },
+                Object {
+                  "measureLocatorItem": Object {
+                    "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        "summary": "AD has null value",
+        "title": "AD has null value",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "cf7c621eaf5f44f483c6ac52ca5e7fde",
+                  "title": "_Timeline [EOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_activity.subject",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
         ],
         "filters": Array [],
-        "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "big insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1ed7c5a07de94cf9ac583124b909f7bf",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "dt_activity_timestamp.year",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "63e1799693114006adfed9e510b00a83",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "relativeDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_activity_timestamp",
+                "type": "dataSet",
+              },
+              "granularity": "GDC.time.year",
+            },
+          },
+        ],
+        "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "invalid insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "fact.f_activity.activitydate",
+                        "type": "fact",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "8e79bc72230b460487232e0c67f4e2c9",
+                  "title": "Sum of Activity (Date)",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_opportunity.id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "434ea45fa89e4a56ba2a827572a93852",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_account.account.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "cfc7199c9e8c4f829bb803cc28197d27",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
         "isLocked": false,
         "properties": Object {
           "sortItems": Array [],
         },
         "ref": Object {
-          "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+          "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
           "type": "insight",
         },
         "sorts": Array [],
-        "summary": "Insight Activities",
-        "tags": undefined,
-        "title": "Insight Activities",
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "summary": "",
+        "title": "many data",
+        "uri": "sanitize_uri",
         "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "label.f_stage.stagename.order",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "101",
+                  "102",
+                  "103",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                "direction": "desc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+              "direction": "desc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "merge cells insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "58c6f0115c95489da76f0cff48df18d2",
+                  "title": "# Of Opportunities Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_product.product.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "1900-11-20 00:00",
+              "to": "1900-12-20 23:59",
+            },
+          },
+        ],
+        "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "No data",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "e519fa2a-86c3-4e32-8313-0c03061626b1",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e5bd892b4d0b445fae98c549267ab9a8",
+                  "title": "Parent metric",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "Parent Insight",
+        "title": "Parent Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "label.f_stage.stagename.order",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "101",
+                  "102",
+                  "103",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "unmerge cells insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
       },
     },
   ],
   "items": Array [],
   "limit": 50,
-  "offset": 1,
-  "totalCount": 1,
+  "offset": 8,
+  "totalCount": 8,
 }
 `;
 
 exports[`tiger insights should load insights 1`] = `
-InMemoryPaging {
+Object {
   "allItems": Array [
     Object {
       "insight": Object {
@@ -67,35 +752,720 @@ InMemoryPaging {
                     "measureDefinition": Object {
                       "filters": Array [],
                       "item": Object {
-                        "identifier": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                        "identifier": "metric_has_null_value",
                         "type": "measure",
                       },
                     },
                   },
-                  "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
-                  "title": "# of Activities",
+                  "localIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                  "title": "Metric has null value",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "f107b852334c4730abc4e11608530bb2",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "9bd8d6e1d80f4f15965be8a7926c590f",
+                  "title": "_Timeline [EOP]",
                 },
               },
             ],
             "localIdentifier": "measures",
           },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_product.product",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "204473a01e6442f8a10822ff15b7a0d2",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "positiveAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "f_owner.region_id",
+                "type": "displayForm",
+              },
+              "in": Object {
+                "values": Array [
+                  "",
+                  "East Coast",
+                ],
+              },
+            },
+          },
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2000-08-07 00:00",
+              "to": "2022-09-07 23:59",
+            },
+          },
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "attr.f_product.product",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "CompuSci",
+                  "Educationly",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "measureSortItem": Object {
+                "direction": "desc",
+                "locators": Array [
+                  Object {
+                    "attributeLocatorItem": Object {
+                      "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                      "element": "East Coast",
+                    },
+                  },
+                  Object {
+                    "measureLocatorItem": Object {
+                      "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "measureSortItem": Object {
+              "direction": "desc",
+              "locators": Array [
+                Object {
+                  "attributeLocatorItem": Object {
+                    "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                    "element": "East Coast",
+                  },
+                },
+                Object {
+                  "measureLocatorItem": Object {
+                    "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        "summary": "AD has null value",
+        "title": "AD has null value",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "cf7c621eaf5f44f483c6ac52ca5e7fde",
+                  "title": "_Timeline [EOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_activity.subject",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
         ],
         "filters": Array [],
-        "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "big insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1ed7c5a07de94cf9ac583124b909f7bf",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "dt_activity_timestamp.year",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "63e1799693114006adfed9e510b00a83",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "relativeDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_activity_timestamp",
+                "type": "dataSet",
+              },
+              "granularity": "GDC.time.year",
+            },
+          },
+        ],
+        "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "invalid insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "fact.f_activity.activitydate",
+                        "type": "fact",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "8e79bc72230b460487232e0c67f4e2c9",
+                  "title": "Sum of Activity (Date)",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_opportunity.id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "434ea45fa89e4a56ba2a827572a93852",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_account.account.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "cfc7199c9e8c4f829bb803cc28197d27",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
         "isLocked": false,
         "properties": Object {
           "sortItems": Array [],
         },
         "ref": Object {
-          "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+          "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
           "type": "insight",
         },
         "sorts": Array [],
-        "summary": "Insight Activities",
-        "tags": undefined,
-        "title": "Insight Activities",
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "summary": "",
+        "title": "many data",
+        "uri": "sanitize_uri",
         "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "label.f_stage.stagename.order",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "101",
+                  "102",
+                  "103",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                "direction": "desc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+              "direction": "desc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "merge cells insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "58c6f0115c95489da76f0cff48df18d2",
+                  "title": "# Of Opportunities Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_product.product.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "1900-11-20 00:00",
+              "to": "1900-12-20 23:59",
+            },
+          },
+        ],
+        "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "No data",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "e519fa2a-86c3-4e32-8313-0c03061626b1",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e5bd892b4d0b445fae98c549267ab9a8",
+                  "title": "Parent metric",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "Parent Insight",
+        "title": "Parent Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "label.f_stage.stagename.order",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "101",
+                  "102",
+                  "103",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "unmerge cells insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
       },
     },
   ],
@@ -111,40 +1481,725 @@ InMemoryPaging {
                     "measureDefinition": Object {
                       "filters": Array [],
                       "item": Object {
-                        "identifier": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                        "identifier": "metric_has_null_value",
                         "type": "measure",
                       },
                     },
                   },
-                  "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
-                  "title": "# of Activities",
+                  "localIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                  "title": "Metric has null value",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "f107b852334c4730abc4e11608530bb2",
+                  "title": "_Snapshot [EOP]",
+                },
+              },
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "9bd8d6e1d80f4f15965be8a7926c590f",
+                  "title": "_Timeline [EOP]",
                 },
               },
             ],
             "localIdentifier": "measures",
           },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_product.product",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "204473a01e6442f8a10822ff15b7a0d2",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                },
+              },
+            ],
+            "localIdentifier": "columns",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "positiveAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "f_owner.region_id",
+                "type": "displayForm",
+              },
+              "in": Object {
+                "values": Array [
+                  "",
+                  "East Coast",
+                ],
+              },
+            },
+          },
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "2000-08-07 00:00",
+              "to": "2022-09-07 23:59",
+            },
+          },
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "attr.f_product.product",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "CompuSci",
+                  "Educationly",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "measureSortItem": Object {
+                "direction": "desc",
+                "locators": Array [
+                  Object {
+                    "attributeLocatorItem": Object {
+                      "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                      "element": "East Coast",
+                    },
+                  },
+                  Object {
+                    "measureLocatorItem": Object {
+                      "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "measureSortItem": Object {
+              "direction": "desc",
+              "locators": Array [
+                Object {
+                  "attributeLocatorItem": Object {
+                    "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
+                    "element": "East Coast",
+                  },
+                },
+                Object {
+                  "measureLocatorItem": Object {
+                    "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        "summary": "AD has null value",
+        "title": "AD has null value",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "cf7c621eaf5f44f483c6ac52ca5e7fde",
+                  "title": "_Timeline [EOP]",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_activity.subject",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
         ],
         "filters": Array [],
-        "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "big insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "1ed7c5a07de94cf9ac583124b909f7bf",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "dt_activity_timestamp.year",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "63e1799693114006adfed9e510b00a83",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "relativeDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_activity_timestamp",
+                "type": "dataSet",
+              },
+              "granularity": "GDC.time.year",
+            },
+          },
+        ],
+        "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "invalid insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "aggregation": "sum",
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "fact.f_activity.activitydate",
+                        "type": "fact",
+                      },
+                    },
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "8e79bc72230b460487232e0c67f4e2c9",
+                  "title": "Sum of Activity (Date)",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_opportunity.id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "434ea45fa89e4a56ba2a827572a93852",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_account.account.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "cfc7199c9e8c4f829bb803cc28197d27",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
         "isLocked": false,
         "properties": Object {
           "sortItems": Array [],
         },
         "ref": Object {
-          "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+          "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
           "type": "insight",
         },
         "sorts": Array [],
-        "summary": "Insight Activities",
-        "tags": undefined,
-        "title": "Insight Activities",
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "summary": "",
+        "title": "many data",
+        "uri": "sanitize_uri",
         "visualizationUrl": "local:column",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "label.f_stage.stagename.order",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "101",
+                  "102",
+                  "103",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                "direction": "desc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+              "direction": "desc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "merge cells insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "58c6f0115c95489da76f0cff48df18d2",
+                  "title": "# Of Opportunities Won",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "label.f_product.product.name",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "identifier": "dt_closedate_timestamp",
+                "type": "dataSet",
+              },
+              "from": "1900-11-20 00:00",
+              "to": "1900-12-20 23:59",
+            },
+          },
+        ],
+        "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "No data",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "e519fa2a-86c3-4e32-8313-0c03061626b1",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e5bd892b4d0b445fae98c549267ab9a8",
+                  "title": "Parent metric",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.department_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "Parent Insight",
+        "title": "Parent Insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
+      },
+    },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "5f10774f0ef24bf0abf93cacfe2a7454",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "f_owner.region_id",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
+                },
+              },
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "identifier": "attr.f_stage.stagename",
+                    "type": "displayForm",
+                  },
+                  "localIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                },
+              },
+            ],
+            "localIdentifier": "attribute",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "label.f_stage.stagename.order",
+                "type": "displayForm",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "101",
+                  "102",
+                  "103",
+                ],
+              },
+            },
+          },
+        ],
+        "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [
+            Object {
+              "attributeSortItem": Object {
+                "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+                "direction": "asc",
+              },
+            },
+          ],
+        },
+        "ref": Object {
+          "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
+          "type": "insight",
+        },
+        "sorts": Array [
+          Object {
+            "attributeSortItem": Object {
+              "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
+              "direction": "asc",
+            },
+          },
+        ],
+        "summary": "",
+        "title": "unmerge cells insight",
+        "uri": "sanitize_uri",
+        "visualizationUrl": "local:table",
       },
     },
   ],
   "limit": 50,
   "offset": 0,
-  "totalCount": 1,
+  "totalCount": 8,
 }
 `;

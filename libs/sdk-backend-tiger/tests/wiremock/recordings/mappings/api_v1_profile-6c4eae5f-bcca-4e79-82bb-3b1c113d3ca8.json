@@ -1,0 +1,40 @@
+{
+    "id": "6c4eae5f-bcca-4e79-82bb-3b1c113d3ca8",
+    "name": "api_v1_profile",
+    "request": {
+        "url": "/api/v1/profile",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Anywhere Staging\",\"userId\":\"first.last\",\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"35fc7016022ae6140d4dbe0edfb2bc867267d793\"},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/profile\",\"organization\":\"https://staging.anywhere.gooddata.com/api/v1/entities/admin/organizations/staging\",\"user\":\"https://staging.anywhere.gooddata.com/api/v1/entities/users/first.last\"},\"features\":{\"live\":{\"configuration\":{\"host\":\"https://flags.panther.intgdc.com\",\"key\":\"default/f0352b97-5e76-4139-9059-4bea366cc2f9/q9yyvCPq957AR7T5GqfbIHaLZXAwqRtSzKt2Rtuv\"},\"context\":{\"earlyAccess\":\"\"}}}}",
+        "headers": {
+            "Date": "Mon, 27 Mar 2023 09:33:26 GMT",
+            "Content-Type": "application/json",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "X-GDC-TRACE-ID": "3583f21f44a4dde8",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-Content-Type-Options": "nosniff",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Referrer-Policy": "no-referrer",
+            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
+        }
+    },
+    "uuid": "6c4eae5f-bcca-4e79-82bb-3b1c113d3ca8",
+    "persistent": true,
+    "insertionIndex": 2
+}

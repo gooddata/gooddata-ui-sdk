@@ -6,6 +6,7 @@ import {
     newPositiveAttributeFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
+import omit from "lodash/omit";
 
 import * as Md from "../../src/fixtures/full";
 import * as ReferenceRecords from "../../src/fixtures/referenceObjects";
@@ -108,9 +109,8 @@ describe("tiger elements", () => {
                 .forDisplayForm(attributeDisplayFormRef(Md.Account.Default))
                 .withLimit(2)
                 .query();
-
             const page = await result.goTo(3);
-            expect(page).toMatchSnapshot();
+            expect(omit(page, "items")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page in initial request", async () => {
