@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     attributeAlias,
     attributeLocalId,
@@ -39,6 +39,7 @@ import {
     isMeasureGroupDescriptor,
     isResultMeasureHeader,
     isMeasureDefinition,
+    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -272,7 +273,7 @@ export class Normalizer {
         // throw away noop filters
         const filters = copy.filters.filter((f) => {
             if (isAttributeFilter(f)) {
-                return !filterIsEmpty(f);
+                return !filterIsEmpty(f) || isPositiveAttributeFilter(f);
             } else if (isMeasureValueFilter(f)) {
                 return measureValueFilterCondition(f) !== undefined;
             }

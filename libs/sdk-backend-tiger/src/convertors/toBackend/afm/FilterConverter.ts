@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     AbsoluteDateFilter,
     AttributeFilter,
@@ -26,6 +26,7 @@ import {
     isComparisonCondition,
     isFilter,
     isMeasureValueFilter,
+    isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
@@ -109,7 +110,7 @@ function convertAttributeFilter(
     filter: IAttributeFilter,
     applyOnResultProp: ApplyOnResultProp,
 ): AttributeFilter | null {
-    if (filterIsEmpty(filter)) {
+    if (isNegativeAttributeFilter(filter) && filterIsEmpty(filter)) {
         return null;
     }
 
