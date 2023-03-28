@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -6,6 +6,7 @@ import {
     IPreparedExecution,
     ExplainType,
     IExplainProvider,
+    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -17,6 +18,8 @@ import {
     ISortItem,
     defWithDateFormat,
     IExecutionConfig,
+    isPositiveAttributeFilter,
+    filterIsEmpty,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -34,7 +37,14 @@ export class BearPreparedExecution implements IPreparedExecution {
         private readonly executionFactory: IExecutionFactory,
     ) {}
 
+    private checkDefIsExecutable(def: IExecutionDefinition): void {
+        if (def.filters?.some((filter) => isPositiveAttributeFilter(filter) && filterIsEmpty(filter))) {
+            throw new NoDataError("Server returned no data");
+        }
+    }
+
     public async execute(): Promise<IExecutionResult> {
+        this.checkDefIsExecutable(this.definition);
         const afmExecution = toAfmExecution(this.definition);
 
         return this.authCall(
