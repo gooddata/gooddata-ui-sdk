@@ -1,5 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 
+// These imports and actions need to be done first because of mocks
+const Original = jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/bulletChart/CoreBulletChart");
+import { withPropsExtractor } from "../../_infra/withProps";
+const { extractProps, wrap } = withPropsExtractor();
+
 import bulletChartScenarios from "../../../scenarios/charts/bulletChart";
 import { ScenarioAndDescription } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
@@ -12,6 +17,11 @@ import flatMap from "lodash/flatMap";
 
 const Chart = "BulletChart";
 
+jest.mock("@gooddata/sdk-ui-charts/dist/charts/bulletChart/CoreBulletChart", () => ({
+    ...jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/bulletChart/CoreBulletChart"),
+    CoreBulletChart: wrap(Original.CoreBulletChart),
+}));
+
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<IBulletChartProps>> = flatMap(
         bulletChartScenarios,
@@ -19,9 +29,7 @@ describe(Chart, () => {
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, (wrapper) =>
-            wrapper.find("CoreBulletChart").props(),
-        );
+        const promisedInteractions = mountChartAndCapture(scenario);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -30,6 +38,8 @@ describe(Chart, () => {
         });
 
         it("should create expected props for core chart", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
+
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();

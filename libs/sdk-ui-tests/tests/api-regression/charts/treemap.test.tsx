@@ -1,5 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 
+// These imports and actions need to be done first because of mocks
+const Original = jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/treemap/CoreTreemap");
+import { withPropsExtractor } from "../../_infra/withProps";
+const { extractProps, wrap } = withPropsExtractor();
+
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 import treemapScenarios from "../../../scenarios/charts/treemap";
@@ -12,15 +17,18 @@ import { ScenarioAndDescription } from "../../../src";
 
 const Chart = "Treemap";
 
+jest.mock("@gooddata/sdk-ui-charts/dist/charts/treemap/CoreTreemap", () => ({
+    ...jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/treemap/CoreTreemap"),
+    CoreTreemap: wrap(Original.CoreTreemap),
+}));
+
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<ITreemapProps>> = flatMap(treemapScenarios, (group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, (wrapper) =>
-            wrapper.find("CoreTreemap").props(),
-        );
+        const promisedInteractions = mountChartAndCapture(scenario);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -29,6 +37,8 @@ describe(Chart, () => {
         });
 
         it("should create expected props for core chart", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
+
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
