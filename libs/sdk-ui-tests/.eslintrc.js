@@ -17,6 +17,8 @@ module.exports = {
         fixture: true,
     },
     rules: {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
         "import/no-unassigned-import": "off",
         "no-restricted-imports": [
             "error",
