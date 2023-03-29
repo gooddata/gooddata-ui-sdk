@@ -114,7 +114,11 @@ module.exports = (env, argv) => ({
         }),
         new DefinePlugin({
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
-            NPM_PACKAGE_VERSION: JSON.stringify(npmPackage.version),
+            // Use sdk-model for version, as current package version is not updated by rush
+            // because it's not released to NPM.
+            NPM_PACKAGE_VERSION: JSON.stringify(
+                npmPackage.dependencies["@gooddata/sdk-model"].replace(/[\^~]/, ""),
+            ),
         }),
         new ProvidePlugin({
             process: "process/browser",
