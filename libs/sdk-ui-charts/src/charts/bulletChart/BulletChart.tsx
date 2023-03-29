@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import {
     disableComputeRatio,
@@ -60,12 +60,14 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
+        const sortBy = props.sortBy ? (props.sortBy as ISortItem[]) : [];
+
         return backend
             .withTelemetry("BulletChart", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
-            .withSorting(...(props.sortBy as ISortItem[]))
+            .withSorting(...sortBy)
             .withDimensions(stackedChartDimensions)
             .withExecConfig(execConfig);
     },

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
@@ -32,12 +32,14 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
+        const sortBy = props.sortBy ? (props.sortBy as ISortItem[]) : [];
+
         return backend
             .withTelemetry("ScatterPlot", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
-            .withSorting(...(props.sortBy as ISortItem[]))
+            .withSorting(...sortBy)
             .withDimensions(pointyChartDimensions)
             .withExecConfig(execConfig);
     },

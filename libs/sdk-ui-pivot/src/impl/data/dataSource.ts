@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
@@ -139,7 +139,7 @@ export class AgGridDatasource implements IDatasource {
 
         const transformedExecution = result
             .transform()
-            .withSorting(...desiredSorts)
+            .withSorting(...(desiredSorts ?? []))
             .withDimensions(
                 dimensionSetTotals(definition.dimensions[0], desiredTotals),
                 definition.dimensions[1],

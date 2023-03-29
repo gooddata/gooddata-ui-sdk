@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -41,7 +41,7 @@ const renderEnhancedComponent = (
     const Component = withExecution({
         ...hocConfig,
         execution: (props?: IDummyComponentProps) => {
-            const { attributes, measures, filters } = props ?? {};
+            const { attributes = [], measures = [], filters } = props ?? {};
 
             return backend
                 .workspace("dummy")
