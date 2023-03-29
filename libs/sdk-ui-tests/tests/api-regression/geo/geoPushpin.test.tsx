@@ -32,7 +32,7 @@ describe(Chart, () => {
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
-    describe.each([Scenarios[0]])("with %s", (_desc, scenario) => {
+    describe.each(Scenarios)("with %s", (_desc, scenario) => {
         const promisedInteractions = mountChartAndCapture(scenario);
 
         it("should create expected execution definition", async () => {
