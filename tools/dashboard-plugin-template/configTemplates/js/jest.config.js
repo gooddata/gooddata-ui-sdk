@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 module.exports = {
-    setupFilesAfterEnv: ["<rootDir>/jest.setup.js", "jest-enzyme"],
+    setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
     testRegex: "(\\.test)\\.(jsx?)$",
     collectCoverage: false,
     moduleFileExtensions: ["js", "jsx"],
