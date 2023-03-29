@@ -266,7 +266,7 @@ Here are couple of ground rules for this package:
 
     -   Use sdk-ui-tests to define new test scenarios and recordings for your tests
 
-3.  Component tests with enzyme for React components. The goal of these tests is to quickly 'smoke' the component
+3.  Component tests with React Testing Library for React components. The goal of these tests is to quickly 'smoke' the component
     before more expensive tests kick in.
 
     Dev hints:

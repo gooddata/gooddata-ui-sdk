@@ -21,6 +21,6 @@ Use this for new headless libraries.
 
 ## sdk-skel-tsx
 
-TypeScript + React project. Jest, Enzyme and Storybook for testing.
+TypeScript + React project. Jest, React Testing Library and Storybook for testing.
 
 Use this for new UI components.

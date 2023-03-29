@@ -268,7 +268,7 @@
     },
     {
       "name": "@testing-library/react",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@testing-library/react-hooks",
@@ -301,10 +301,6 @@
     {
       "name": "@types/debounce-promise",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/enzyme",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/fast-levenshtein",
@@ -456,7 +452,7 @@
     },
     {
       "name": "@types/testing-library__jest-dom",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/tinycolor2",
@@ -493,10 +489,6 @@
     {
       "name": "@welldone-software/why-did-you-render",
       "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@wojtekmaj/enzyme-adapter-react-17",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "async",
@@ -621,10 +613,6 @@
     {
       "name": "downshift",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "enzyme",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "eslint",
@@ -765,10 +753,6 @@
     {
       "name": "jest-environment-jsdom-fourteen",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "jest-enzyme",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "jest-junit",

@@ -29,13 +29,6 @@ const JSDOM_VERSION = "^27.4.1";
  * The return value is the updated object.
  */
 function readPackage(packageJson, context) {
-  // this is needed as the jest-environment-enzyme is essentially unmaintained and Jest 27 requires latest jsdom
-  // without this test abort with error stemming from this change: https://github.com/facebook/jest/pull/9428
-  if (packageJson.name === 'jest-environment-enzyme') {
-    // context.log('Overwriting JSDOM version of jest-environment-enzyme to ' + JSDOM_VERSION);
-    packageJson.dependencies['jest-environment-jsdom'] = JSDOM_VERSION;
-  }
-
   // bump node-forge dependency of heroku-exec-utils to a safer version to fix audit (heroku-exec-utils does not use any of the functions missing in node-forge 0.10.0)
   if (packageJson.name === 'heroku-exec-util') {
     packageJson.dependencies['node-forge'] = "0.10.0";

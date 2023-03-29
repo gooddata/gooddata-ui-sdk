@@ -10,5 +10,5 @@ module.exports = {
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     testEnvironment: "jsdom",
-    setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
+    setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
 };
