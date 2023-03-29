@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { toAfmExecution } from "../toAfmResultSpec";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture";
@@ -37,7 +37,7 @@ describe("converts execution definition to AFM Execution", () => {
         expect(toAfmExecution(input)).toMatchSnapshot();
     });
 
-    it("should remove empty attribute filters and not cause RAIL-2083", () => {
+    it("should remove empty negative attribute filters and not cause RAIL-2083", () => {
         const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
         const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
         const positiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value 1"]);

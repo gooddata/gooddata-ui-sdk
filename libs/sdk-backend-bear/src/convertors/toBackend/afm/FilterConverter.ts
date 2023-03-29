@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import {
     filterIsEmpty,
@@ -12,10 +12,10 @@ import {
     isAttributeFilter,
     isComparisonCondition,
     isMeasureValueFilter,
-    isPositiveAttributeFilter,
     MeasureValueFilterCondition,
     isRankingFilter,
     IRankingFilter,
+    isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 import { toBearRef, toScopedBearRef } from "../ObjRefConverter";
@@ -27,12 +27,14 @@ function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterI
      * When sending either positive or negative filter and the in/notIn is empty, backend will bomb
      * with "Cannot parse MAQL expression(s): %s". Previously code was only throwing away empty negative
      * filters.
+     * Skip `All` filters represented by negative filter with empty selection, have no effect on execution now.
+     * Pass by positive empty filters `None` as they are handled later in execution by NO DATA error
      */
-    if (filterIsEmpty(filter)) {
+    if (isNegativeAttributeFilter(filter) && filterIsEmpty(filter)) {
         return null;
     }
 
-    if (!isPositiveAttributeFilter(filter)) {
+    if (isNegativeAttributeFilter(filter)) {
         assertNoNulls(filter.negativeAttributeFilter.notIn);
         return {
             negativeAttributeFilter: {

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -7,6 +7,7 @@ import {
     ExplainConfig,
     IExplainProvider,
     ExplainType,
+    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -19,6 +20,8 @@ import {
     ISortItem,
     defWithDateFormat,
     IExecutionConfig,
+    isPositiveAttributeFilter,
+    filterIsEmpty,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { AxiosRequestConfig } from "axios";
@@ -122,8 +125,10 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 }
 
-function checkDefIsExecutable(_def: IExecutionDefinition): void {
-    return;
+function checkDefIsExecutable(def: IExecutionDefinition): void {
+    if (def.filters?.some((filter) => isPositiveAttributeFilter(filter) && filterIsEmpty(filter))) {
+        throw new NoDataError("Server returned no data");
+    }
 }
 
 async function explainCall<T extends ExplainType | undefined>(

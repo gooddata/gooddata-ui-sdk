@@ -200,8 +200,18 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution should remove empty attribute filters and not cause RAIL-2083 1`] = `
+exports[`converts execution definition to AFM Execution should remove empty negative filters and not cause RAIL-2083 1`] = `
 Array [
+  Object {
+    "positiveAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.product.id.name",
+      },
+      "in": Object {
+        "values": Array [],
+      },
+    },
+  },
   Object {
     "positiveAttributeFilter": Object {
       "displayForm": Object {

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter";
 import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture";
 import {
@@ -150,11 +150,11 @@ describe("tiger filter converter from model to AFM", () => {
             expect(convertFilter(input)).toMatchSnapshot();
         });
 
-        it("should filter out empty attribute filters and not cause RAIL-2083", () => {
+        it("should filter out empty negative attribute filters and not cause RAIL-2083", () => {
             const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
             const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);
 
-            expect(convertFilter(emptyPositiveFilter)).toBeNull();
+            expect(convertFilter(emptyPositiveFilter)).not.toBeNull();
             expect(convertFilter(emptyNegativeFilter)).toBeNull();
         });
     });
