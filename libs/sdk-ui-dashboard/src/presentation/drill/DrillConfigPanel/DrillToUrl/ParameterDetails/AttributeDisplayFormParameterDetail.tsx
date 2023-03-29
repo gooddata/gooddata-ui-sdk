@@ -1,7 +1,7 @@
 // (C) 2020-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
-import { LRUCache } from "@gooddata/util";
+import LRUCache from "lru-cache";
 import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { ParameterDetail } from "./ParameterDetail";
 import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
@@ -11,7 +11,7 @@ const MAX_CACHED_REQUESTS = 50;
 const MAX_URL_LENGTH = 100;
 const DISPLAY_FORM_ELEMENTS_LIMIT = 3;
 
-const requestCache = new LRUCache<IElementsQueryResult>({ maxSize: MAX_CACHED_REQUESTS });
+const requestCache = new LRUCache<string, IElementsQueryResult>({ max: MAX_CACHED_REQUESTS });
 
 const getDisplayFormLabel = (type: AttributeDisplayFormType | undefined) => {
     const messages = defineMessages({

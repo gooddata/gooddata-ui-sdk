@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider, IntlShape, createIntl, IntlConfig } from "react-intl";
 import {
@@ -10,11 +10,11 @@ import {
 
 import { translations } from "./translations";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { LRUCache } from "@gooddata/util";
+import LRUCache from "lru-cache";
 
 const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";
-const intlCache = new LRUCache<IntlConfig>({ maxSize: INTL_CACHE_SIZE });
+const intlCache = new LRUCache<string, IntlConfig>({ max: INTL_CACHE_SIZE });
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     /**

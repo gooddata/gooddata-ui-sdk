@@ -2,7 +2,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
-const { DefinePlugin, EnvironmentPlugin, ProvidePlugin } = require("webpack");
+const { DefinePlugin, EnvironmentPlugin } = require("webpack");
 const path = require("path");
 const { URL } = require("url");
 const deps = require("./package.json").dependencies;
@@ -76,13 +76,6 @@ module.exports = (_env, argv) => {
 
             // Prefer ESM versions of packages to enable tree shaking
             mainFields: ["module", "browser", "main"],
-
-            // polyfill "process" and "util" for lru-cache, webpack 5 no longer does that automatically
-            // remove this after IE11 support is dropped and lru-cache can be finally upgraded
-            fallback: {
-                process: require.resolve("process/browser"),
-                util: require.resolve("util/"),
-            },
         },
         module: {
             rules: [
@@ -160,9 +153,6 @@ module.exports = (_env, argv) => {
             },
             plugins: [
                 ...commonConfig.plugins,
-                new ProvidePlugin({
-                    process: "process/browser",
-                }),
                 new DefinePlugin({
                     PORT: JSON.stringify(PORT),
                 }),

@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { EnvironmentPlugin, ProvidePlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
+const { EnvironmentPlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
@@ -46,13 +46,6 @@ module.exports = (env, argv) => ({
 
         // Prefer ESM versions of packages to enable tree shaking
         mainFields: ["module", "browser", "main"],
-
-        // polyfill "process" and "util" for lru-cache, webpack 5 no longer does that automatically
-        // remove this after IE11 support is dropped and lru-cache can be finally upgraded
-        fallback: {
-            process: require.resolve("process/browser"),
-            util: require.resolve("util/"),
-        },
     },
     module: {
         rules: [
@@ -119,9 +112,6 @@ module.exports = (env, argv) => ({
             NPM_PACKAGE_VERSION: JSON.stringify(
                 npmPackage.dependencies["@gooddata/sdk-model"].replace(/[\^~]/, ""),
             ),
-        }),
-        new ProvidePlugin({
-            process: "process/browser",
         }),
         argv.mode === "production" && new MiniCssExtractPlugin(),
         env.analyze &&

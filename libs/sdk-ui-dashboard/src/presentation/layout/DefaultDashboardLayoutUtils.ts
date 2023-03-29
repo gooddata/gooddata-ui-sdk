@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     ObjRef,
     IInsight,
@@ -12,7 +12,7 @@ import {
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { LRUCache } from "@gooddata/util";
+import LRUCache from "lru-cache";
 import stringify from "json-stable-stringify";
 import flow from "lodash/flow";
 
@@ -27,7 +27,7 @@ import {
  * down the line - we need to keep the widgets referentially equal whenever they are not changed.
  */
 export const getMemoizedWidgetSanitizer =
-    <TWidget>(cache: LRUCache<IDashboardLayoutItem<TWidget>>) =>
+    <TWidget>(cache: LRUCache<string, IDashboardLayoutItem<TWidget>>) =>
     (
         getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
         enableKDWidgetCustomHeight: boolean,

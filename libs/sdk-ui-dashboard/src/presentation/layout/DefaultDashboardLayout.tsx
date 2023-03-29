@@ -8,7 +8,7 @@ import {
     IDashboardLayout,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import { LRUCache } from "@gooddata/util";
+import LRUCache from "lru-cache";
 import max from "lodash/max";
 
 import {
@@ -113,7 +113,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
 
     const sanitizeWidgets = useMemo(() => {
         // keep the cache local so that it is cleared when the dashboard changes for example and this component is remounted
-        const cache = new LRUCache<IDashboardLayoutItem<ExtendedDashboardWidget>>({ maxSize: 100 });
+        const cache = new LRUCache<string, IDashboardLayoutItem<ExtendedDashboardWidget>>({ max: 100 });
         return getMemoizedWidgetSanitizer(cache);
     }, []);
 

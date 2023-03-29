@@ -3,10 +3,10 @@
     "compilerOptions": {
         "preserveSymlinks": true,
         "skipLibCheck": true,
-        "target": "es5",
+        "target": "es2017",
         "downlevelIteration": true,
         "jsx": "react",
-        "lib": ["es7", "dom"],
+        "lib": ["es2017", "dom"],
         "module": "commonjs",
         "moduleResolution": "node",
         "esModuleInterop": true,

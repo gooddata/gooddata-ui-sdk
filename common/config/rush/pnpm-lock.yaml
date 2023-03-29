@@ -13535,7 +13535,7 @@ packages:
     dev: false
 
   /keypair/1.0.1:
-    resolution: {integrity: sha512-kHlZn7IIoSK+g8uqTMbRJlB2eOMg34B2ACD2XMSqEi6zG6t7E40sajMlzmswfZnrt30ngKJoGhcGyyFaLXd/+g==}
+    resolution: {integrity: sha1-dgNxknCvtlZO04oiCHoG/Jqk6hs=}
     dev: false
 
   /keyv/3.0.0:
@@ -13962,6 +13962,11 @@ packages:
     resolution: {integrity: sha512-AmXqneQZL3KZMIgBpaPTeI6pfwh+xQ2vutMsyqOu1TBdEXFZgpG/80wuJ531w2ZN7TI0/oc8CPxzh/DKQudZqg==}
     engines: {node: '>=12'}
     deprecated: Please update to latest patch version to fix memory leak https://github.com/isaacs/node-lru-cache/issues/227
+    dev: false
+
+  /lru-cache/8.0.4:
+    resolution: {integrity: sha512-E9FF6+Oc/uFLqZCuZwRKUzgFt5Raih6LfxknOSAVTjNkrCZkBf7DQCwJxZQgd9l4eHjIJDGR+E+1QKD1RhThPw==}
+    engines: {node: '>=16.14'}
     dev: false
 
   /lz-string/1.4.4:
@@ -19123,8 +19128,7 @@ packages:
     dev: false
 
   /trim/0.0.1:
-    resolution: {integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==}
-    deprecated: Use String.prototype.trim() instead
+    resolution: {integrity: sha1-WFhUf2spB1fulczMZm+1AITEYN0=}
     dev: false
 
   /trough/1.0.5:
@@ -21148,7 +21152,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-3ogCt/Le0eF75+IZHZT5wwNns9Wnk+seMMYTywtRES3mMeH0y+5Dp96hOEfr46gUjwgcg3/Bzo8JUPMc/p1MEA==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-IU+3uqGZO47ZRflf4Vd3pQ+ixGPQSoDjekiVIIJNGGSe1KqqQPsw9i7oAX9K66y208qEqH1OW2qktR0LkxAs/Q==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21649,7 +21653,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-base.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-xH/ek5TdbrWCuuIsUkhbR3gQSG47auCzySxzshi6C2dlBho781/YnS0dbiESyzohb4uMLBTjtTTnXy/GM4Ws5Q==, tarball: file:projects/sdk-backend-base.tgz}
+    resolution: {integrity: sha512-IGkhN9qzGeaLs8JssfVGppHfrZrzhMYUV1tOGbBL8c98twq7evftFsyOdZdhdf5s8oFCLiACwkC9NsMu2VlIOQ==, tarball: file:projects/sdk-backend-base.tgz}
     id: file:projects/sdk-backend-base.tgz
     name: '@rush-temp/sdk-backend-base'
     version: 0.0.0
@@ -21680,6 +21684,7 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
+      lru-cache: 8.0.4
       prettier: 2.5.1
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
@@ -22331,7 +22336,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-CtryMb+SZpK4/ssKk0FK6weqD3Zg8k44uuLfPtMUW2CzM/ejnF+vaZM9gzQf/RRQQjFjz9TzBHp4AdfaTdcDRw==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-rcxd4PdFtY9tLH6qBsTKSbaPA9+DctY8CGCiQdUHvuwEEwBMIZHGWQt/a5uZB14h1WU1YlLZydqOINXHVP+BDg==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -22379,6 +22384,7 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
+      lru-cache: 8.0.4
       prettier: 2.5.1
       raf: 3.4.1
       react: 17.0.2
@@ -22422,7 +22428,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-IzjYc25b6AQAIHJYtJFqzlmXxoVqiPRbNZIFcBbEiOCmAA+Y3pLcoCrj5wKR4UphB7Fft3VCsQaK1485UkBkWA==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-oRo7DJ3+EufQcnXJEmE0p/DmKtPIXJ/j9iVPUlGOMJ+5va55ibp1yl+Xtms/exRtTwet2YljYf86EZL6FF+0Bw==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -22471,6 +22477,7 @@ packages:
       jest: 27.5.1_ts-node@10.7.0
       jest-junit: 3.7.0
       lodash: 4.17.21
+      lru-cache: 8.0.4
       prettier: 2.5.1
       raf: 3.4.1
       react: 17.0.2
