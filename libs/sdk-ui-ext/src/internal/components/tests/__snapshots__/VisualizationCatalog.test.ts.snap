@@ -8387,6 +8387,50 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for BarChart - reversed three measures and one viewBy with top axis and stackMeasures 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
+import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\")),
+    newArithmeticMeasure([\\"m_aangOxLSeztu\\", \\"m_acugFHNJgsBy\\"], \\"difference\\", m => m.alias(\\"Calculated 'Lost' measure\\").localId(\\"m_f72796b0fbc7c0dc4d17a1e68c1a9933\\")),
+    newArithmeticMeasure([
+    \\"m_f72796b0fbc7c0dc4d17a1e68c1a9933\\",
+    \\"m_acugFHNJgsBy\\"
+], \\"ratio\\", m => m.alias(\\"Ratio of Won and Lost\\").localId(\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
+const config: IChartConfig = {
+    secondary_xaxis: {measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"]},
+    stackMeasures: true,
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <BarChart
+                measures={measures}
+                viewBy={viewBy}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for BarChart - reversed two measures and two viewBy with stackMeasures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";

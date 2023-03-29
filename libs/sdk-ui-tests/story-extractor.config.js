@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+/* eslint-disable @typescript-eslint/no-var-requires */
 const base = require("../../common/config/jest/jest.config.base.js");
 module.exports = {
     preset: "ts-jest/presets/js-with-babel",
@@ -10,7 +11,7 @@ module.exports = {
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     testEnvironment: "jsdom",
-    setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
+    setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
     // we need to give this a bit more time than the default 5000ms, it can take up to a minute on CI...
     testTimeout: 90000,
 };

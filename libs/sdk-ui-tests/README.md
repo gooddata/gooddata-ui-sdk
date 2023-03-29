@@ -27,7 +27,7 @@ The tests contained in this package can be divided into three distinct groups:
     Transitively, these tests are first step in verifying that particular usage of public API always
     leads to predictable result for the end user.
 
-    These tests are implemented using jest & enzyme and are intended to run fairly fast.
+    These tests are implemented using jest & react testing library and are intended to run fairly fast.
 
 -   Visual regression tests
 

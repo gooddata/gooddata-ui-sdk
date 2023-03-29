@@ -1,8 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2023 GoodData Corporation
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-11-07T09:55:13.479Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-03-28T13:33:47.105Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1881,6 +1881,9 @@ const i_BarChart_bee0bd65314b3f42b57eb242e42ed9ab = {
 };
 const i_BarChart_c4a936f3d1a6cfa509c7bf15ca715a83 = {
     obj: require("./uiTestScenarios/insights/BarChart.c4a936f3d1a6cfa509c7bf15ca715a83/obj.json"),
+};
+const i_BarChart_c6a2c1354b30849d6e222653f9b1e087 = {
+    obj: require("./uiTestScenarios/insights/BarChart.c6a2c1354b30849d6e222653f9b1e087/obj.json"),
 };
 const i_BarChart_c6bd498beca0eae141f07b5cd9684d93 = {
     obj: require("./uiTestScenarios/insights/BarChart.c6bd498beca0eae141f07b5cd9684d93/obj.json"),
@@ -4740,6 +4743,10 @@ const dash_aaRaEZRWdRpQ = {
     obj: require("./metadata/dashboards/aaRaEZRWdRpQ/obj.json"),
     alerts: require("./metadata/dashboards/aaRaEZRWdRpQ/alerts.json"),
 };
+const dash_abpEJ9hwq9U8 = {
+    obj: require("./metadata/dashboards/abpEJ9hwq9U8/obj.json"),
+    alerts: require("./metadata/dashboards/abpEJ9hwq9U8/alerts.json"),
+};
 const dash_aeis6NlXcL7X = {
     obj: require("./metadata/dashboards/aeis6NlXcL7X/obj.json"),
     alerts: require("./metadata/dashboards/aeis6NlXcL7X/alerts.json"),
@@ -4763,10 +4770,6 @@ const dash_emptyDashboard = {
 const dash_aaI2dN741uaa = {
     obj: require("./metadata/dashboards/aaI2dN741uaa/obj.json"),
     alerts: require("./metadata/dashboards/aaI2dN741uaa/alerts.json"),
-};
-const dash_abpEJ9hwq9U8 = {
-    obj: require("./metadata/dashboards/abpEJ9hwq9U8/obj.json"),
-    alerts: require("./metadata/dashboards/abpEJ9hwq9U8/alerts.json"),
 };
 export const Recordings = {
     executions: {
@@ -5107,6 +5110,7 @@ export const Recordings = {
             i_BarChart_bda508bdb9882eb3251e2e4c7442b9ed,
             i_BarChart_bee0bd65314b3f42b57eb242e42ed9ab,
             i_BarChart_c4a936f3d1a6cfa509c7bf15ca715a83,
+            i_BarChart_c6a2c1354b30849d6e222653f9b1e087,
             i_BarChart_c6bd498beca0eae141f07b5cd9684d93,
             i_BarChart_c6de29a9263c8f6eeb509db7098d6fa7,
             i_BarChart_cc7038354e629ca3e5bb2469c3ce62a4,
@@ -5982,13 +5986,13 @@ export const Recordings = {
         },
         dashboards: {
             dash_aaRaEZRWdRpQ,
+            dash_abpEJ9hwq9U8,
             dash_aeis6NlXcL7X,
             dash_abr8vSe5exU7,
             dash_aaQ8QjLVhNOG,
             dash_abK3yl1TcTWV,
             dash_emptyDashboard,
             dash_aaI2dN741uaa,
-            dash_abpEJ9hwq9U8,
         },
     },
 };

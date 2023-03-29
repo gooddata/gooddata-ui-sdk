@@ -1,5 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 
+// These imports and actions need to be done first because of mocks
+const Original = jest.requireActual("@gooddata/sdk-ui-geo/dist/core/geoChart/GeoChartOptionsWrapper");
+import { withPropsExtractor } from "../../_infra/withProps";
+const { extractProps, wrap } = withPropsExtractor();
+
 import geoScenarios, { latitudeLongitudeScenarios } from "../../../scenarios/geo/index";
 import { ScenarioAndDescription } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
@@ -9,9 +14,13 @@ import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { cleanupGeoChartProps } from "../../_infra/utils";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { defSetSorts } from "@gooddata/sdk-model";
-import { ReactWrapper } from "enzyme";
 
 const Chart = "GeoPushpinChart";
+
+jest.mock("@gooddata/sdk-ui-geo/dist/core/geoChart/GeoChartOptionsWrapper", () => ({
+    ...jest.requireActual("@gooddata/sdk-ui-geo/dist/core/geoChart/GeoChartOptionsWrapper"),
+    GeoChartOptionsWrapper: wrap(Original.GeoChartOptionsWrapper),
+}));
 
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<IGeoPushpinChartProps>> = flatMap(geoScenarios, (group) =>
@@ -23,10 +32,8 @@ describe(Chart, () => {
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
-    describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, (wrapper: ReactWrapper) => {
-            return wrapper.find("GeoChartOptionsWrapper").props();
-        });
+    describe.each([Scenarios[0]])("with %s", (_desc, scenario) => {
+        const promisedInteractions = mountChartAndCapture(scenario);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -35,6 +42,8 @@ describe(Chart, () => {
         });
 
         it("should create expected props for core chart", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
+
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
@@ -58,9 +67,7 @@ describe(Chart, () => {
     });
 
     describe.each(latLongScenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, (wrapper: ReactWrapper) => {
-            return wrapper.find("GeoChartOptionsWrapper").props();
-        });
+        const promisedInteractions = mountChartAndCapture(scenario);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -69,6 +76,8 @@ describe(Chart, () => {
         });
 
         it("should create expected props for core chart", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
+
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();

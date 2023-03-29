@@ -557,6 +557,9 @@
     "BarChart.c4a936f3d1a6cfa509c7bf15ca715a83": {
         "comment": "Auto-generated insight for test scenario BarChart - legend position - legend on left."
     },
+    "BarChart.c6a2c1354b30849d6e222653f9b1e087": {
+        "comment": "Auto-generated insight for test scenario BarChart - reversed three measures and one viewBy with top axis and stackMeasures."
+    },
     "BarChart.c6bd498beca0eae141f07b5cd9684d93": {
         "comment": "Auto-generated insight for test scenario BarChart - assign color to attribute element stack."
     },

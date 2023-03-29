@@ -2,7 +2,7 @@
 
 import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { mount, ReactWrapper } from "enzyme";
+import { render } from "@testing-library/react";
 import React from "react";
 import { IScenario, VisProps } from "../../src";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
@@ -16,19 +16,15 @@ function errorHandler(error: GoodDataSdkError) {
         return;
     }
 
-    console.error("Possibly unexpected exception during enzyme mount of the chart", error);
+    console.error("Possibly unexpected exception during mount of the chart", error);
 }
 
-export type EffectivePropsExtractor = (wrapper: ReactWrapper) => any;
-
-const immediateChildPropsExtractor: EffectivePropsExtractor = (wrapper: ReactWrapper): any => {
-    return wrapper.childAt(0).props();
-};
+type EffectivePropsExtractor = () => any;
 
 async function _mountChartAndCapture<T extends VisProps>(
     scenario: IScenario<T>,
-    effectivePropsExtractor: EffectivePropsExtractor,
     normalize: boolean,
+    effectivePropsExtractor?: EffectivePropsExtractor,
 ): Promise<ChartInteractions> {
     const [backend, promisedInteractions] = backendWithCapturing(normalize);
     const { propsFactory, component: Component, workspaceType } = scenario;
@@ -44,10 +40,13 @@ async function _mountChartAndCapture<T extends VisProps>(
         props.onError = errorHandler;
     }
 
-    const wrapper = mount(<Component {...(props as any)} />);
+    render(<Component {...(props as any)} />);
+
     const interactions = await promisedInteractions;
 
-    interactions.effectiveProps = effectivePropsExtractor(wrapper);
+    // When no props extractor is provided, we conveniently use the props passed to the
+    // top-most component that is being rendered.
+    interactions.effectiveProps = effectivePropsExtractor ? effectivePropsExtractor() : props;
 
     if (!customErrorHandler) {
         // make sure error handler injected by this fun is not included in the captured props
@@ -67,9 +66,9 @@ async function _mountChartAndCapture<T extends VisProps>(
  */
 export async function mountChartAndCapture<T extends VisProps>(
     scenario: IScenario<T>,
-    effectivePropsExtractor: EffectivePropsExtractor = immediateChildPropsExtractor,
+    effectivePropsExtractor?: EffectivePropsExtractor,
 ): Promise<ChartInteractions> {
-    return _mountChartAndCapture(scenario, effectivePropsExtractor, false);
+    return _mountChartAndCapture(scenario, false, effectivePropsExtractor);
 }
 
 /**
@@ -80,5 +79,5 @@ export async function mountChartAndCapture<T extends VisProps>(
 export async function mountChartAndCaptureNormalized<T extends VisProps>(
     scenario: IScenario<T>,
 ): Promise<ChartInteractions> {
-    return _mountChartAndCapture(scenario, immediateChildPropsExtractor, true);
+    return _mountChartAndCapture(scenario, true);
 }

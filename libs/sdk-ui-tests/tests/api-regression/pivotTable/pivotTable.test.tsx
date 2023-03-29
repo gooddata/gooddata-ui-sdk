@@ -1,23 +1,26 @@
 // (C) 2007-2019 GoodData Corporation
 
+// These imports and actions need to be done first because of mocks
+const Original = jest.requireActual("@gooddata/sdk-ui-pivot/dist/CorePivotTable");
+import { withPropsExtractor } from "../../_infra/withProps";
+const { extractProps, wrap } = withPropsExtractor();
+
 import pivotTableScenarios from "../../../scenarios/pivotTable";
 import { ScenarioAndDescription } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCorePivotTableProps } from "../../_infra/utils";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
-import { ReactWrapper } from "enzyme";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { defSetSorts } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap";
 
-function tablePropsExtractor(wrapper: ReactWrapper): any {
-    const child = wrapper.find("CorePivotTableAgImpl");
-
-    return child.props();
-}
-
 const Vis = "PivotTable";
+
+jest.mock("@gooddata/sdk-ui-pivot/dist/CorePivotTable", () => ({
+    ...jest.requireActual("@gooddata/sdk-ui-pivot/dist/CorePivotTable"),
+    CorePivotTableAgImpl: wrap(Original.CorePivotTableAgImpl),
+}));
 
 describe(Vis, () => {
     const Scenarios: Array<ScenarioAndDescription<IPivotTableProps>> = flatMap(pivotTableScenarios, (group) =>
@@ -25,7 +28,7 @@ describe(Vis, () => {
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, tablePropsExtractor);
+        const promisedInteractions = mountChartAndCapture(scenario);
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;
@@ -34,6 +37,8 @@ describe(Vis, () => {
         });
 
         it("should create expected props for core chart", async () => {
+            const promisedInteractions = mountChartAndCapture(scenario, extractProps);
+
             const interactions = await promisedInteractions;
 
             expect(interactions.effectiveProps).toBeDefined();
