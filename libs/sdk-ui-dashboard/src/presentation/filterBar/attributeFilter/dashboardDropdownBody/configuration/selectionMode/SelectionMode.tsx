@@ -30,10 +30,9 @@ export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
         <>
             <ConfigurationCategory categoryTitle={selectionTitleText} />
             <div className="configuration-selection-mode">
-                <label className="input-radio-label">
+                <label className="input-radio-label s-input-selection-mode-multi">
                     <input
                         type="radio"
-                        className="input-radio"
                         value="multi"
                         disabled={disabled}
                         checked={selectionMode === "multi"}
@@ -41,7 +40,7 @@ export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
                     />
                     <span className="input-label-text">{multiSelectionOptionText}</span>
                 </label>
-                <label className="input-radio-label">
+                <label className="input-radio-label s-input-selection-mode-single">
                     <input
                         type="radio"
                         value="single"

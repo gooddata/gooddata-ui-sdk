@@ -39,6 +39,7 @@ import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAn
 import { AttributeFilterParentChildExampleScenario } from "../components/Scenarios/Filters/AttributeFilterParentChildExampleScenario";
 import { DashboardAttributeFilterRenaming } from "../components/Scenarios/Dashboard/DashboardAttributeFilterRenaming";
 import { SingleSelectionAttributeFilterButtonScenario } from "../components/Scenarios/Filters/SingleSelectionAttributeFilterButtonScenario";
+import { SingleSelectFilterIntegration } from "../components/Scenarios/Dashboard/SingleSelectFilterIntegration";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -81,6 +82,7 @@ export const SCENARIO_KEYS = {
     HEADER_SECTION: "dashboard/header",
     HEADER_LOCALIZATION: "dashboard/header-localization",
     DRAG_DROP_MOVE_WIDGET: "dashboard/drag-drop-widgets",
+    SINGLE_SELECT_FILTER_INTEGRATION: "dashboard/single-select-filter-integration",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -123,6 +125,7 @@ const scenarios = new Map<string, React.ComponentType>([
         SCENARIO_KEYS.FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_BUTTON,
         SingleSelectionAttributeFilterButtonScenario,
     ],
+    [SCENARIO_KEYS.SINGLE_SELECT_FILTER_INTEGRATION, SingleSelectFilterIntegration],
 ]);
 
 const ComponentResolver: React.FC = () => {
