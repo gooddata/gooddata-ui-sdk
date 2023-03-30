@@ -11,7 +11,7 @@ import {
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError } from "@gooddata/sdk-ui";
+import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
 import { IAttributeFilterCoreProps, OnApplyCallbackType } from "../types";
@@ -22,6 +22,7 @@ import { useAttributeFilterControllerData } from "./useAttributeFilterController
 import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } from "./constants";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { AttributeFilterController } from "./types";
+import { isValidSingleSelectionFilter } from "../utils";
 
 /**
  * Properties of {@link useAttributeFilterController}
@@ -91,6 +92,10 @@ export const useAttributeFilterController = (
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(handler);
 
+    const forcedInitErrorProp = isValidSingleSelectionFilter(selectionMode, filter, limitingAttributeFilters)
+        ? {}
+        : { initError: new UnexpectedSdkError() };
+
     useOnError(handler, { onError });
     useInitOrReload(handler, {
         filter,
@@ -106,6 +111,7 @@ export const useAttributeFilterController = (
     return {
         ...attributeFilterControllerData,
         ...callbacks,
+        ...forcedInitErrorProp,
     };
 };
 

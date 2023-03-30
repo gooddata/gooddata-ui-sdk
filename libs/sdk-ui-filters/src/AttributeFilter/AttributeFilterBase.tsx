@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { AttributeFilterRenderer } from "./Components/AttributeFilterRenderer";

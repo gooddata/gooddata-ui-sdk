@@ -8,11 +8,14 @@ import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsCount,
     attributeElementsIsEmpty,
+    DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
     IAttributeElement,
+    IAttributeFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+
 import { IAttributeFilterBaseProps } from "./types";
 
 /**
@@ -79,7 +82,6 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         hiddenElements,
         staticElements,
         backend,
-        selectionMode = "multi",
     } = props;
 
     invariant(
@@ -93,7 +95,6 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
     );
 
     //deprecated identifier check
-
     invariant(
         !(filter && identifier),
         "It's not possible to combine 'identifier' property with 'filter' property. Either provide an identifier, or a filter.",
@@ -128,27 +129,39 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         "Hidden elements are not supported by the current backend implementation.",
     );
 
-    const isSingleSelect = selectionMode === "single";
-    const hasEmptyParentFilters = isEmpty(parentFilters);
-    const isPositiveWithMaxOneElement = filter
-        ? isPositiveAttributeFilter(filter) && attributeElementsCount(filterAttributeElements(filter)) < 2
-        : true;
-
-    if (isSingleSelect) {
-        invariant(
-            isPositiveWithMaxOneElement,
-            "Provided 'filter' property is not compatible with given single selection mode. It needs to be positive filter with max one item selected in attribute elements",
-        );
-
-        invariant(
-            hasEmptyParentFilters,
-            "Parent filtering can not be used together with single selection mode. Use only one of these properties at the same time.",
-        );
-    }
-
     if (identifier) {
         console.warn(
             "Definition of an attribute display form using 'identifier' is deprecated, use 'filter' property instead. Please see the documentation of [AttributeFilter component](https://sdk.gooddata.com/gooddata-ui/docs/attribute_filter_component.html) for further details.",
         );
     }
+}
+
+/**
+ * @internal
+ */
+export function isValidSingleSelectionFilter(
+    selectionMode: DashboardAttributeFilterSelectionMode,
+    filter: IAttributeFilter,
+    limitingAttributeFilters: IElementsQueryAttributeFilter[],
+) {
+    const isSingleSelect = selectionMode === "single";
+    const hasEmptyParentFilters = isEmpty(limitingAttributeFilters);
+    const isPositiveWithMaxOneElement =
+        isPositiveAttributeFilter(filter) && attributeElementsCount(filterAttributeElements(filter)) < 2;
+
+    if (isSingleSelect) {
+        if (!isPositiveWithMaxOneElement) {
+            console.error(
+                "Provided 'filter' or 'connectToPlaceholder' property is not compatible with given single selection mode. It needs to be positive filter with max one item selected in attribute elements",
+            );
+            return false;
+        }
+        if (!hasEmptyParentFilters) {
+            console.error(
+                "Parent filtering can not be used together with single selection mode. Use only one of these properties at the same time.",
+            );
+            return false;
+        }
+    }
+    return true;
 }
