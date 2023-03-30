@@ -95,6 +95,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableFunnelChart,
+            "enableFunnelChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFunnelChart,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePyramidChart,
+            "enablePyramidChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePyramidChart,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKPIAttributeFilterRenaming,
             "enableKPIAttributeFilterRenaming",
             "BOOLEAN",

@@ -103,6 +103,30 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
         {
             visualizationClass: {
                 checksum: "local",
+                icon: "local:pyramid",
+                orderIndex: 12.5,
+                iconSelected: "local:pyramid.selected",
+                url: "local:pyramid",
+                title: "Pyramid chart",
+                identifier: "gdc.visualization.pyramid",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1002",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:funnel",
+                orderIndex: 12.6,
+                iconSelected: "local:funnel.selected",
+                url: "local:funnel",
+                title: "Funnel chart",
+                identifier: "gdc.visualization.funnel",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1003",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
                 icon: "local:heatmap",
                 orderIndex: 13,
                 iconSelected: "local:heatmap.selected",
