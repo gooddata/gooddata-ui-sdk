@@ -45,7 +45,7 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
-        const sortBy = props.sortBy ? (props.sortBy as ISortItem[]) : [];
+        const sortBy = (props.sortBy as ISortItem[]) ?? [];
         return backend
             .withTelemetry("AreaChart", props)
             .workspace(workspace)

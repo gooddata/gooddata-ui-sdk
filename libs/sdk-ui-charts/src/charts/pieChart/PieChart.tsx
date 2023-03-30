@@ -31,7 +31,7 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
-        const sortBy = props.sortBy ? (props.sortBy as ISortItem[]) : [];
+        const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
         return backend
             .withTelemetry("PieChart", props)
