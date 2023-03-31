@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import {
     IAttributeOrMeasure,
@@ -45,12 +45,14 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
+        const sortBy = (props.sortBy as ISortItem[]) ?? [];
+
         return backend
             .withTelemetry("ColumnChart", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as IFilter[])
-            .withSorting(...(props.sortBy as ISortItem[]))
+            .withSorting(...sortBy)
             .withDimensions(stackedChartDimensions)
             .withExecConfig(execConfig);
     },

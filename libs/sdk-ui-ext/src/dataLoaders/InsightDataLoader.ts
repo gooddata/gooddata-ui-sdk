@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { LRUCache } from "@gooddata/util";
+// (C) 2021-2023 GoodData Corporation
+import LRUCache from "lru-cache";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { INSIGHT_CACHE_SIZE } from "./constants";
@@ -18,7 +18,7 @@ export interface IInsightDataLoader {
 }
 
 class InsightDataLoader implements IInsightDataLoader {
-    private insightCache = new LRUCache<Promise<IInsight>>({ maxSize: INSIGHT_CACHE_SIZE });
+    private insightCache = new LRUCache<string, Promise<IInsight>>({ max: INSIGHT_CACHE_SIZE });
 
     constructor(protected readonly workspace: string) {}
 

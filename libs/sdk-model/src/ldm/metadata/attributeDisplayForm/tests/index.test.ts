@@ -1,9 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { idRef } from "../../../../objRef/factory";
 import {
-    attributeDisplayFormRef,
-    attributeDisplayFormTitle,
-    attributeDisplayFormAttributeRef,
+    attributeDisplayFormMetadataObjectRef,
+    attributeDisplayFormMetadataObjectTitle,
+    attributeDisplayFormMetadataObjectAttributeRef,
     IAttributeDisplayFormMetadataObject,
 } from "../index";
 
@@ -27,7 +27,9 @@ describe("attribute display form", () => {
 
     describe("attributeDisplayFormRef", () => {
         it("should return ref", () => {
-            expect(attributeDisplayFormRef(attributeDisplayForm)).toEqual(_attributeDisplayFormRef);
+            expect(attributeDisplayFormMetadataObjectRef(attributeDisplayForm)).toEqual(
+                _attributeDisplayFormRef,
+            );
         });
 
         it("should fail if attribute display form is null", () => {
@@ -43,7 +45,9 @@ describe("attribute display form", () => {
 
     describe("attributeDisplayFormTitle", () => {
         it("should return title", () => {
-            expect(attributeDisplayFormTitle(attributeDisplayForm)).toEqual(_attributeDisplayFormTitle);
+            expect(attributeDisplayFormMetadataObjectTitle(attributeDisplayForm)).toEqual(
+                _attributeDisplayFormTitle,
+            );
         });
 
         it("should fail if attribute display form is null", () => {
@@ -59,7 +63,7 @@ describe("attribute display form", () => {
 
     describe("attributeDisplayFormAttributeRef", () => {
         it("should return attribute ref", () => {
-            expect(attributeDisplayFormAttributeRef(attributeDisplayForm)).toEqual(
+            expect(attributeDisplayFormMetadataObjectAttributeRef(attributeDisplayForm)).toEqual(
                 _attributeDisplayFormAttributeRef,
             );
         });

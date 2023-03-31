@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 /**
  * This package contains utility functions used in production or test code of multiple different GoodData.UI packages.
@@ -17,4 +17,3 @@ import * as objectUtils from "./objectUtils";
 import * as typesUtils from "./typesUtils";
 
 export { stringUtils, testUtils, translationUtils, arrayUtils, objectUtils, typesUtils };
-export { ILRUCacheOptions, LRUCache } from "./lruCache";

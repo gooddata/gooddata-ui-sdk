@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import {
     applyRatioRule,
@@ -45,12 +45,14 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
+        const sortBy = (props.sortBy as ISortItem[]) ?? [];
+
         return backend
             .withTelemetry("BarChart", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as IFilter[])
-            .withSorting(...(props.sortBy as ISortItem[]))
+            .withSorting(...sortBy)
             .withDimensions(stackedChartDimensions)
             .withExecConfig(execConfig);
     },

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     addIntersectionFiltersToInsight,
@@ -286,7 +286,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
-            .withSorting(...getPivotTableSortItems(insight))
+            .withSorting(...(getPivotTableSortItems(insight) ?? []))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
     }

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
@@ -36,12 +36,14 @@ const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChart
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
+        const sortBy = (props.sortBy as ISortItem[]) ?? [];
+
         return backend
             .withTelemetry("DonutChart", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
-            .withSorting(...(props.sortBy as ISortItem[]))
+            .withSorting(...sortBy)
             .withDimensions(roundChartDimensions)
             .withExecConfig(execConfig);
     },

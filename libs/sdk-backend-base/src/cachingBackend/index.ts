@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     IAnalyticalBackend,
     IBackendCapabilities,
@@ -29,7 +29,7 @@ import {
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
 } from "../decoratedBackend";
-import { LRUCache } from "@gooddata/util";
+import LRUCache from "lru-cache";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings";
 import {
     DecoratedDataView,
@@ -77,31 +77,31 @@ type ExecutionCacheEntry = {
 };
 
 type CatalogCacheEntry = {
-    catalogForOptions: LRUCache<Promise<IWorkspaceCatalog>>;
+    catalogForOptions: LRUCache<string, Promise<IWorkspaceCatalog>>;
 };
 
 type SecuritySettingsCacheEntry = {
-    valid: LRUCache<Promise<boolean>>;
+    valid: LRUCache<string, Promise<boolean>>;
 };
 
 type AttributeCacheEntry = {
-    displayForms: LRUCache<Promise<IAttributeDisplayFormMetadataObject>>;
-    attributesByDisplayForms: LRUCache<Promise<IAttributeMetadataObject>>;
-    attributeElementResults?: LRUCache<Promise<IElementsQueryResult>>;
+    displayForms: LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>;
+    attributesByDisplayForms: LRUCache<string, Promise<IAttributeMetadataObject>>;
+    attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
 };
 
 type WorkspaceSettingsCacheEntry = {
-    userWorkspaceSettings: LRUCache<Promise<IUserWorkspaceSettings>>;
-    workspaceSettings: LRUCache<Promise<IWorkspaceSettings>>;
+    userWorkspaceSettings: LRUCache<string, Promise<IUserWorkspaceSettings>>;
+    workspaceSettings: LRUCache<string, Promise<IWorkspaceSettings>>;
 };
 
 type CachingContext = {
     caches: {
-        execution?: LRUCache<ExecutionCacheEntry>;
-        workspaceCatalogs?: LRUCache<CatalogCacheEntry>;
-        securitySettings?: LRUCache<SecuritySettingsCacheEntry>;
-        workspaceAttributes?: LRUCache<AttributeCacheEntry>;
-        workspaceSettings?: LRUCache<WorkspaceSettingsCacheEntry>;
+        execution?: LRUCache<string, ExecutionCacheEntry>;
+        workspaceCatalogs?: LRUCache<string, CatalogCacheEntry>;
+        securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
+        workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
+        workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
     };
     config: CachingConfiguration;
     capabilities: IBackendCapabilities;
@@ -198,7 +198,7 @@ function windowKey(offset: number[], size: number[]): string {
 
 class WithExecutionResultCaching extends DecoratedExecutionResult {
     private allData: Promise<IDataView> | undefined;
-    private windows: LRUCache<Promise<IDataView>> | undefined;
+    private windows: LRUCache<string, Promise<IDataView>> | undefined;
 
     constructor(
         decorated: IExecutionResult,
@@ -208,7 +208,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         super(decorated, wrapper);
 
         if (cachingEnabled(this.ctx.config.maxResultWindows)) {
-            this.windows = new LRUCache({ maxSize: this.ctx.config.maxResultWindows });
+            this.windows = new LRUCache({ max: this.ctx.config.maxResultWindows! });
         }
     }
 
@@ -286,8 +286,8 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 
         if (!cacheEntry) {
             cacheEntry = {
-                catalogForOptions: new LRUCache<Promise<IWorkspaceCatalog>>({
-                    maxSize: this.ctx.config.maxCatalogOptions,
+                catalogForOptions: new LRUCache<string, Promise<IWorkspaceCatalog>>({
+                    max: this.ctx.config.maxCatalogOptions!,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -350,9 +350,9 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
 
         if (!cacheEntry) {
             cacheEntry = {
-                valid: new LRUCache<Promise<boolean>>({
-                    maxSize: this.ctx.config.maxSecuritySettingsOrgUrls,
-                    maxAge: this.ctx.config.maxSecuritySettingsOrgUrlsAge,
+                valid: new LRUCache<string, Promise<boolean>>({
+                    max: this.ctx.config.maxSecuritySettingsOrgUrls!,
+                    ttl: this.ctx.config.maxSecuritySettingsOrgUrlsAge,
                 }),
             };
             cache.set(scope, cacheEntry);
@@ -417,11 +417,11 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
 
         if (!cacheEntry) {
             cacheEntry = {
-                userWorkspaceSettings: new LRUCache<Promise<IUserWorkspaceSettings>>({
-                    maxSize: this.ctx.config.maxWorkspaceSettings,
+                userWorkspaceSettings: new LRUCache<string, Promise<IUserWorkspaceSettings>>({
+                    max: this.ctx.config.maxWorkspaceSettings!,
                 }),
-                workspaceSettings: new LRUCache<Promise<IWorkspaceSettings>>({
-                    maxSize: this.ctx.config.maxWorkspaceSettings,
+                workspaceSettings: new LRUCache<string, Promise<IWorkspaceSettings>>({
+                    max: this.ctx.config.maxWorkspaceSettings!,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -465,15 +465,15 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
 
     if (!cacheEntry) {
         cacheEntry = {
-            displayForms: new LRUCache<Promise<IAttributeDisplayFormMetadataObject>>({
-                maxSize: ctx.config.maxAttributeDisplayFormsPerWorkspace,
+            displayForms: new LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>({
+                max: ctx.config.maxAttributeDisplayFormsPerWorkspace!,
             }),
-            attributesByDisplayForms: new LRUCache<Promise<IAttributeMetadataObject>>({
-                maxSize: ctx.config.maxAttributesPerWorkspace,
+            attributesByDisplayForms: new LRUCache<string, Promise<IAttributeMetadataObject>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
             }),
             attributeElementResults: cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
-                ? new LRUCache<Promise<IElementsQueryResult>>({
-                      maxSize: ctx.config.maxAttributeElementResultsPerWorkspace,
+                ? new LRUCache<string, Promise<IElementsQueryResult>>({
+                      max: ctx.config.maxAttributeElementResultsPerWorkspace!,
                   })
                 : undefined,
         };
@@ -1041,16 +1041,16 @@ export function withCaching(
 
     const ctx: CachingContext = {
         caches: {
-            execution: execCaching ? new LRUCache({ maxSize: config.maxExecutions }) : undefined,
-            workspaceCatalogs: catalogCaching ? new LRUCache({ maxSize: config.maxCatalogs }) : undefined,
+            execution: execCaching ? new LRUCache({ max: config.maxExecutions! }) : undefined,
+            workspaceCatalogs: catalogCaching ? new LRUCache({ max: config.maxCatalogs! }) : undefined,
             securitySettings: securitySettingsCaching
-                ? new LRUCache({ maxSize: config.maxSecuritySettingsOrgs })
+                ? new LRUCache({ max: config.maxSecuritySettingsOrgs! })
                 : undefined,
             workspaceAttributes: attributeCaching
-                ? new LRUCache({ maxSize: config.maxAttributeWorkspaces })
+                ? new LRUCache({ max: config.maxAttributeWorkspaces! })
                 : undefined,
             workspaceSettings: workspaceSettingsCaching
-                ? new LRUCache({ maxSize: config.maxWorkspaceSettings })
+                ? new LRUCache({ max: config.maxWorkspaceSettings! })
                 : undefined,
         },
         config,

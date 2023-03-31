@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "esModuleInterop": true,
-        "target": "es5",
+        "target": "es2017",
         "module": "commonjs",
-        "lib": ["es6", "webworker"],
+        "lib": ["es2017", "webworker"],
         "moduleResolution": "node",
         "importHelpers": true,
         "sourceMap": true,
