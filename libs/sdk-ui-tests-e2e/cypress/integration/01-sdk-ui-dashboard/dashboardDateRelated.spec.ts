@@ -23,85 +23,79 @@ const dashboardHeader = new DashboardHeader();
 const editMode = new EditMode();
 const dashboardMenu = new DashboardMenu();
 
-// Temporarily add post-merge_integrated_bear and checklist_integrated_bear.
-// Please remove them when we have test case that require those tags
-describe(
-    "Dashboard Date Related",
-    { tags: ["pre-merge_isolated_bear", "post-merge_integrated_bear", "checklist_integrated_bear"] },
-    () => {
-        beforeEach(() => {
-            cy.login();
-        });
+describe("Dashboard Date Related", { tags: "pre-merge_isolated_bear" }, () => {
+    beforeEach(() => {
+        cy.login();
+    });
 
-        it("Make no change on unrelated date insight", () => {
-            Navigation.visit("dashboard/date-filtering");
+    it("Make no change on unrelated date insight", () => {
+        Navigation.visit("dashboard/date-filtering");
 
-            new Widget(0).getTable().hasCellValue(1, 0, "01/01/1900");
-        });
+        new Widget(0).getTable().hasCellValue(1, 0, "01/01/1900");
+    });
 
-        it("Make no change on disabled date dataset filter insight", () => {
-            Navigation.visit("dashboard/date-filtering");
+    it("Make no change on disabled date dataset filter insight", () => {
+        Navigation.visit("dashboard/date-filtering");
 
-            new Widget(1).getTable().hasCellValue(1, 0, "01/01/1900");
-        });
+        new Widget(1).getTable().hasCellValue(1, 0, "01/01/1900");
+    });
 
-        it("Override filter if insight using same date dataset", () => {
-            Navigation.visit("dashboard/date-filtering");
+    it("Override filter if insight using same date dataset", () => {
+        Navigation.visit("dashboard/date-filtering");
 
-            new Widget(2).getTable().hasCellValue(0, 0, "12/24/2011");
-        });
+        new Widget(2).getTable().hasCellValue(0, 0, "12/24/2011");
+    });
 
-        it("Combine filters if insight using different date dataset", () => {
-            Navigation.visit("dashboard/date-filtering");
+    it("Combine filters if insight using different date dataset", () => {
+        Navigation.visit("dashboard/date-filtering");
 
-            new Widget(3).getTable().hasCellValue(0, 0, "12/24/2012");
-        });
+        new Widget(3).getTable().hasCellValue(0, 0, "12/24/2012");
+    });
 
-        it("Check insight not reloaded after ignore filter", () => {
-            Navigation.visit("dashboard/date-filtering");
+    it("Check insight not reloaded after ignore filter", () => {
+        Navigation.visit("dashboard/date-filtering");
 
-            new DateFilter().open().selectRelativePreset("relative-this-year").apply();
+        new DateFilter().open().selectRelativePreset("relative-this-year").apply();
 
-            new Widget(1).isLoading(false);
-        });
+        new Widget(1).isLoading(false);
+    });
 
-        it("Check available datasets", () => {
-            Navigation.visit("dashboard/kpis");
-            editMode.edit();
+    it("Check available datasets", () => {
+        Navigation.visit("dashboard/kpis");
+        editMode.edit();
 
-            new KpiConfiguration(0)
-                .open()
-                .isDateDropdownLoaded()
-                .openDateDataset()
-                .getDateDatasets()
-                .should("deep.equal", ["Created", "Closed", "Snapshot"]);
-        });
+        new KpiConfiguration(0)
+            .open()
+            .isDateDropdownLoaded()
+            .openDateDataset()
+            .getDateDatasets()
+            .should("deep.equal", ["Created", "Closed", "Snapshot"]);
+    });
 
-        it("(SEPARATE) Check date dataSet configured", () => {
-            Navigation.visit("dashboard/kpis");
-            dashboardMenu.toggle();
-            dashboardHeader.saveAsNew("Clone");
-            editMode.edit();
+    it("(SEPARATE) Check date dataSet configured", () => {
+        Navigation.visit("dashboard/kpis");
+        dashboardMenu.toggle();
+        dashboardHeader.saveAsNew("Clone");
+        editMode.edit();
 
-            const kpiConfiguration = new KpiConfiguration(0)
-                .open()
-                .isDateDropdownLoaded()
-                .openDateDataset()
-                .selectDateDataset("closed")
-                .close();
+        const kpiConfiguration = new KpiConfiguration(0)
+            .open()
+            .isDateDropdownLoaded()
+            .openDateDataset()
+            .selectDateDataset("closed")
+            .close();
 
-            editMode.save(true);
-            editMode.edit();
+        editMode.save(true);
+        editMode.edit();
 
-            kpiConfiguration.open().isDateDropdownLoaded().selectedDataset("closed");
-        });
+        kpiConfiguration.open().isDateDropdownLoaded().selectedDataset("closed");
+    });
 
-        it("Render date dataset after adding multiple KPIs", () => {
-            Navigation.visit("dashboard/kpis");
-            editMode.edit();
+    it("Render date dataset after adding multiple KPIs", () => {
+        Navigation.visit("dashboard/kpis");
+        editMode.edit();
 
-            new KpiConfiguration(0).open().isDateDropdownLoaded().selectedDataset("created").close();
-            new KpiConfiguration(3).open().isDateDropdownLoaded().selectedDataset("closed").close();
-        });
-    },
-);
+        new KpiConfiguration(0).open().isDateDropdownLoaded().selectedDataset("created").close();
+        new KpiConfiguration(3).open().isDateDropdownLoaded().selectedDataset("closed").close();
+    });
+});
