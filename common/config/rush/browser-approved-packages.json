@@ -359,6 +359,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/pdf-parse",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "@types/prettier",
       "allowedCategories": [ "tools" ]
     },
@@ -825,6 +829,10 @@
     {
       "name": "p-map",
       "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "pdf-parse",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "polished",

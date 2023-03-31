@@ -2,3 +2,4 @@
 import "./login";
 import "./getSettled";
 import "./dnd";
+import "./pdf";
