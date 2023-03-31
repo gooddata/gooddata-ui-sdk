@@ -205,7 +205,7 @@ export class CatalogHelper {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pareto" | "alluvial";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial";
 
 // @alpha
 export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
@@ -1850,6 +1850,7 @@ export const VisualizationTypes: {
     TREEMAP: "treemap";
     WATERFALL: "waterfall";
     FUNNEL: "funnel";
+    PYRAMID: "pyramid";
     PARETO: "pareto";
     ALLUVIAL: "alluvial";
     XIRR: "xirr";

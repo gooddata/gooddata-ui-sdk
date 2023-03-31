@@ -4,7 +4,7 @@ import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { CustomizedScenario, UnboundVisProps } from "../../../src";
 import { GermanNumberFormat } from "../../_infra/formatting";
 
-const ConfigVariants: Array<[string, IChartConfig]> = [
+export const ConfigVariants: Array<[string, IChartConfig]> = [
     ["default", {}],
     ["auto visibility", { dataLabels: { visible: "auto" } }],
     ["forced visible", { dataLabels: { visible: true } }],

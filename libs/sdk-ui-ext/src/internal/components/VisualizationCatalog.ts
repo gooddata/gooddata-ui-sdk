@@ -11,6 +11,7 @@ import { ComboChartDescriptor } from "./pluggableVisualizations/comboChart/Combo
 import { ComboChartDescriptorDeprecated } from "./pluggableVisualizations/comboChart/ComboChartDescriptorDeprecated";
 import { DonutChartDescriptor } from "./pluggableVisualizations/donutChart/DonutChartDescriptor";
 import { FunnelChartDescriptor } from "./pluggableVisualizations/funnelChart/FunnelChartDescriptor";
+import { PyramidChartDescriptor } from "./pluggableVisualizations/pyramidChart/PyramidChartDescriptor";
 import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor";
 import { HeatmapDescriptor } from "./pluggableVisualizations/heatMap/HeatmapDescriptor";
 import { LineChartDescriptor } from "./pluggableVisualizations/lineChart/LineChartDescriptor";
@@ -134,6 +135,7 @@ const DefaultVisualizations = {
     combo2: ComboChartDescriptor, // new combo chart
     treemap: TreemapDescriptor,
     funnel: FunnelChartDescriptor,
+    pyramid: PyramidChartDescriptor,
     pushpin: GeoPushpinChartDescriptor,
 };
 

@@ -20,6 +20,7 @@ import { getScatterConfiguration } from "../scatterPlot/scatterConfiguration";
 import { getComboConfiguration } from "../comboChart/comboConfiguration";
 import { getTreemapConfiguration } from "../treemap/treemapConfiguration";
 import { getFunnelConfiguration } from "../funnelChart/funnelConfiguration";
+import { getPyramidConfiguration } from "../pyramidChart/pyramidConfiguration";
 import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration";
 import { getBubbleConfiguration } from "../bubbleChart/bubbleConfiguration";
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
@@ -33,6 +34,7 @@ type ChartConfigurationValueType = (
     | HighchartsOptions
     | ReturnType<typeof getTreemapConfiguration>
     | ReturnType<typeof getFunnelConfiguration>
+    | ReturnType<typeof getPyramidConfiguration>
     | ReturnType<typeof getHeatmapConfiguration>;
 
 const chartConfigurationMap: {
@@ -50,6 +52,7 @@ const chartConfigurationMap: {
     [VisualizationTypes.TREEMAP]: getTreemapConfiguration,
     [VisualizationTypes.DONUT]: getDonutConfiguration,
     [VisualizationTypes.FUNNEL]: getFunnelConfiguration,
+    [VisualizationTypes.PYRAMID]: getPyramidConfiguration,
     [VisualizationTypes.HEATMAP]: getHeatmapConfiguration,
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration,
 };

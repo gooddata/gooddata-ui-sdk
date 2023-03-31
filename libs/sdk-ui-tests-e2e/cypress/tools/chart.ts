@@ -104,4 +104,10 @@ export class Chart {
         });
         return cy.wrap(result);
     }
+
+    isHighchartsChart(isHighchartsChart: boolean = true) {
+        this.getElement()
+            .find(".highcharts-root")
+            .should(isHighchartsChart ? "exist" : "not.exist");
+    }
 }

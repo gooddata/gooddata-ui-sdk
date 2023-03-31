@@ -195,4 +195,8 @@ export class Widget {
     hasNoDataForFilter() {
         this.getElement().contains("No data for your filter selection").should("exist");
     }
+
+    hasError() {
+        this.getElement().contains("Sorry, we can't display this insight").should("exist");
+    }
 }

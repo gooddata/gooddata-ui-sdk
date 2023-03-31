@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import Highcharts from "../lib";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -16,6 +16,8 @@ export const BLACK_LABEL: Highcharts.CSSObject = {
 export const whiteDataLabelTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
+    VisualizationTypes.PYRAMID,
+    VisualizationTypes.FUNNEL,
     VisualizationTypes.TREEMAP,
     VisualizationTypes.BUBBLE,
 ];

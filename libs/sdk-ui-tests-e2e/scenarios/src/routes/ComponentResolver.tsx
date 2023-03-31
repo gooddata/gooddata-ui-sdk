@@ -21,6 +21,7 @@ import {
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
 import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
 import { DashboardScenarioTigerPermissions } from "../components/Scenarios/Dashboard/DashboardScenarioTigerPermissions";
+import { DashboardScenarioTigerCharts } from "../components/Scenarios/Dashboard/DashboardScenarioTigerCharts";
 import { DashboardAttributeFilteringScenario } from "../components/Scenarios/Dashboard/DashboardAttributeFilteringScenario";
 import { DashboardStageNameScenario } from "../components/Scenarios/Dashboard/DashboardStageNameScenario";
 import { DashboardDateFilteringScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringScenario";
@@ -48,6 +49,7 @@ import { DashboardWithNoDataScenario } from "../components/Scenarios/Dashboard/D
 import { DashboardWithMergeAndUnmergeScenario } from "../components/Scenarios/Dashboard/DashboardWithMergeAndUnmergeScenario";
 import { SingleSelectFilterIntegration } from "../components/Scenarios/Dashboard/SingleSelectFilterIntegration";
 import { DashboardAttributeSelection } from "../components/Scenarios/Dashboard/DashboardAttributeSelection";
+import { DashboardScenarioTigerUnknownVisualization } from "../components/Scenarios/Dashboard/DashboardScenarioTigerUnknownVisualization";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -57,6 +59,8 @@ export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
     DASHBOARD_TIGER: "dashboard/dashboard-tiger",
     DASHBOARD_TIGER_PERMISSIONS: "dashboard/dashboard-tiger-permissions",
+    DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS: "dashboard/dashboard-tiger-unknown-visualization",
+    DASHBOARD_TIGER_CHARTS: "dashboard/dashboard-tiger-charts",
     DASHBOARD_ATTRIBUTE_FILTERING: "dashboard/attribute-filtering",
     DASHBOARD_DATE_FILTERING: "dashboard/date-filtering",
     DASHBOARD_FILTERING: "dashboard/filtering",
@@ -105,6 +109,8 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
     [SCENARIO_KEYS.DASHBOARD_TIGER_PERMISSIONS, DashboardScenarioTigerPermissions],
+    [SCENARIO_KEYS.DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS, DashboardScenarioTigerUnknownVisualization],
+    [SCENARIO_KEYS.DASHBOARD_TIGER_CHARTS, DashboardScenarioTigerCharts],
     [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_FILTERING, DashboardAttributeFilteringScenario],
     [SCENARIO_KEYS.DASHBOARD_DATE_FILTERING, DashboardDateFilteringScenario],
     [SCENARIO_KEYS.DASHBOARD_STAGE_NAME, DashboardStageNameScenario],

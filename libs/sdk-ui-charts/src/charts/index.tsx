@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 export { BaseChart, IBaseChartProps } from "./_base/BaseChart";
 
 export { AreaChart, IAreaChartProps, IAreaChartBucketProps } from "./areaChart/AreaChart";
@@ -16,6 +16,8 @@ export { ComboChart, IComboChartProps, IComboChartBucketProps } from "./comboCha
 export { DonutChart, IDonutChartProps, IDonutChartBucketProps } from "./donutChart/DonutChart";
 
 export { FunnelChart, IFunnelChartProps, IFunnelChartBucketProps } from "./funnelChart/FunnelChart";
+
+export { PyramidChart, IPyramidChartProps, IPyramidChartBucketProps } from "./pyramidChart/PyramidChart";
 
 export { Headline, IHeadlineProps, IHeadlineBucketProps } from "./headline/Headline";
 

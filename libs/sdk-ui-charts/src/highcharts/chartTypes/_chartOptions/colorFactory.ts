@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../interfaces";
@@ -22,6 +22,7 @@ const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
+    VisualizationTypes.PYRAMID,
     VisualizationTypes.SCATTER,
     VisualizationTypes.BUBBLE,
 ];

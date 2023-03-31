@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -8,6 +8,7 @@ import {
     DataViewFacade,
     getMappingHeaderFormattedName,
     IHeaderPredicate,
+    VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces";
 import {
@@ -28,8 +29,6 @@ import {
     isChartSupported,
     isComboChart,
     isHeatmap,
-    isFunnel,
-    isPieOrDonutChart,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
@@ -407,8 +406,13 @@ export function getChartOptions(
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
 
-    // When custom sorting is enabled and is Pie|Donut chart, need to skip this, so the sort specified by the user does not get override.
-    if ((isPieOrDonutChart(type) && !config.enableChartSorting) || isFunnel(type)) {
+    // When custom sorting is enabled and is Pie|Donut|Funnel chart, need to skip this, so the sort specified by the user does not get override.
+    const isAutoSortableChart = isOneOfTypes(type, [
+        VisualizationTypes.DONUT,
+        VisualizationTypes.PIE,
+        VisualizationTypes.FUNNEL,
+    ]);
+    if (isAutoSortableChart && !config.enableChartSorting) {
         // Pie|Donut charts dataPoints are sorted by default by value in descending order
         const dataPoints = series[0].data;
         const indexSortOrder: number[] = [];

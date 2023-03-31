@@ -400,6 +400,15 @@ export function percentageDataLabelFormatter(config?: IChartConfig): string {
     return labelFormatter.call(this, config);
 }
 
+export function firstValuePercentageLabelFormatter(config?: IChartConfig): string {
+    const firstValue = this.series?.data?.[0]?.y;
+
+    const formatted = labelFormatter.call(this, config);
+    const percentageOfFirstValue = (this.y / firstValue) * 100;
+    const percFormatted = Math.round(percentageOfFirstValue);
+    return `${formatted} (${percFormatted}%)`;
+}
+
 function labelFormatterHeatmap(options: any) {
     return formatLabel(this.point.value, options.formatGD, options.config);
 }
@@ -579,6 +588,12 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
     const dataLabelFormatter =
         stackMeasuresToPercent && canStackInPercent ? percentageDataLabelFormatter : labelFormatter;
 
+    // only applied to funnel if configured (default=true)
+    const funnelFormatter =
+        chartConfig?.dataLabels?.percentsVisible !== false
+            ? firstValuePercentageLabelFormatter
+            : labelFormatter;
+
     const DEFAULT_LABELS_CONFIG = {
         formatter: partial(labelFormatter, chartConfig),
         style,
@@ -651,6 +666,19 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     verticalAlign: "middle",
+                },
+            },
+            pyramid: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    inside: "true",
+                },
+            },
+            funnel: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(funnelFormatter, chartConfig),
+                    inside: "true",
                 },
             },
         },
@@ -888,7 +916,6 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BULLET:
-        case VisualizationTypes.FUNNEL:
             seriesMapFn = barSeriesMapFn;
             break;
         case VisualizationTypes.HEATMAP:
@@ -923,6 +950,8 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.TREEMAP:
+        case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.PYRAMID:
             seriesMapFn = (series) => {
                 return {
                     ...series,

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import React from "react";

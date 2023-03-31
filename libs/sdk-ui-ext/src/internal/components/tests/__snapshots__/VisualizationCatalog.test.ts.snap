@@ -36582,6 +36582,311 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - arithmetic measures 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newArithmeticMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newArithmeticMeasure([\\"m_aangOxLSeztu\\", \\"m_acugFHNJgsBy\\"], \\"difference\\", m => m.alias(\\"Calculated 'Lost' measure\\").localId(\\"m_f72796b0fbc7c0dc4d17a1e68c1a9933\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - assign color to attributes 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { getColorMappingPredicate, IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    colorMapping: [
+        {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1054/elements?id=166497\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
+        {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1054/elements?id=342345\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 255}}}
+    ],
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - assign color to measures 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newArithmeticMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
+import { getColorMappingPredicate, IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newArithmeticMeasure([\\"m_aangOxLSeztu\\", \\"m_acugFHNJgsBy\\"], \\"difference\\", m => m.alias(\\"Calculated 'Lost' measure\\").localId(\\"m_f72796b0fbc7c0dc4d17a1e68c1a9933\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const config: IChartConfig = {
+    colorMapping: [
+        {predicate: getColorMappingPredicate(\\"m_aangOxLSeztu\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
+        {predicate: getColorMappingPredicate(\\"m_acugFHNJgsBy\\"), color: {type: \\"guid\\", value: \\"05\\"}}
+    ],
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - coloring - custom palette 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - font 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - single measure 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - single measure with viewBy 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - single measure with viewBy sorted by attribute 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - themed 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - two measures 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for ScatterPlot - Y axis min/max configuration 1`] = `
 "import React from \\"react\\";
 import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";

@@ -121,7 +121,14 @@ export function extendDataLabelColors(Highcharts: any): void {
                 setTimeout(() => {
                     setBarDataLabelsColor(chart);
                 }, 500);
-            } else if (isOneOfTypes(type, [VisualizationTypes.COLUMN, VisualizationTypes.PIE])) {
+            } else if (
+                isOneOfTypes(type, [
+                    VisualizationTypes.COLUMN,
+                    VisualizationTypes.PIE,
+                    VisualizationTypes.FUNNEL,
+                    VisualizationTypes.PYRAMID,
+                ])
+            ) {
                 setTimeout(() => {
                     setColumnDataLabelsColor(chart);
                 }, 500);

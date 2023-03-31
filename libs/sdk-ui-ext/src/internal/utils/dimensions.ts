@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import compact from "lodash/compact";
 import {
     bucketAttributes,
@@ -116,6 +116,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.PYRAMID:
             return getPieDonutFunnelDimensions(insight);
 
         case VisualizationTypes.TREEMAP:

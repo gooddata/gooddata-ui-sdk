@@ -1,0 +1,61 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "PyramidChart.05aea2e4135f05f4f3e5ce52711e1686",
+        "properties": {
+            "controls": {
+                "colorMapping": [
+                    {
+                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
+                        "id": "m_aangOxLSeztu"
+                    },
+                    { "color": { "type": "guid", "value": "05" }, "id": "m_acugFHNJgsBy" }
+                ]
+            }
+        },
+        "sorts": [],
+        "title": "PyramidChart - assign color to measures",
+        "uri": "PyramidChart.05aea2e4135f05f4f3e5ce52711e1686",
+        "visualizationUrl": "local:pyramid"
+    }
+}

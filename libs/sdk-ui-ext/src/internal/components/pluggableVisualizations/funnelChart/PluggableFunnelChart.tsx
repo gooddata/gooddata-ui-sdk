@@ -1,12 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../../interfaces/Visualization";
 
 import { PluggablePieChart } from "../pieChart/PluggablePieChart";
 import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelChartUiConfigHelper";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
+import { IInsightDefinition } from "@gooddata/sdk-model";
+import FunnelChartConfigurationPanel from "../../configurationPanels/FunnelChartConfigurationPanel";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ISortConfig } from "../../../interfaces/SortConfig";
+import { FUNNELCHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 
 /**
  * PluggableFunnelChart
@@ -34,42 +35,40 @@ import { ISortConfig } from "../../../interfaces/SortConfig";
  *
  * ## Default sorts
  *
- * The PluggableFunnelChart does not use any sorts.
+ * The PluggableFunnelChart allows the same sorts as pie chart, however it does not sort automatically.
  *
  */
 export class PluggableFunnelChart extends PluggablePieChart {
     constructor(props: IVisConstruct) {
         super(props);
         this.type = VisualizationTypes.FUNNEL;
+        this.supportedPropertiesList = FUNNELCHART_SUPPORTED_PROPERTIES;
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
         return super.getExtendedReferencePoint(referencePoint).then(setFunnelChartUiConfig);
     }
 
-    protected renderConfigurationPanel(): void {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            const properties = this.visualizationProperties ?? {};
-
             this.renderFun(
-                <UnsupportedConfigurationPanel
+                <FunnelChartConfigurationPanel
                     locale={this.locale}
-                    pushData={this.pushData}
-                    properties={properties}
+                    properties={this.visualizationProperties}
+                    propertiesMeta={this.propertiesMeta}
+                    insight={insight}
+                    pushData={this.handlePushData}
+                    colors={this.colors}
+                    type={this.type}
+                    isError={this.getIsError()}
+                    isLoading={this.isLoading}
+                    featureFlags={this.featureFlags}
+                    references={this.references}
                 />,
                 configPanelElement,
             );
         }
-    }
-
-    public getSortConfig(_referencePoint: IReferencePoint): Promise<ISortConfig> {
-        return Promise.resolve({
-            defaultSort: [],
-            availableSorts: [],
-            supported: false,
-            disabled: false,
-        });
     }
 }
