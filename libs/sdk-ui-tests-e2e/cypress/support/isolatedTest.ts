@@ -73,7 +73,7 @@ after(() => {
                 );
             });
             sanitizeCredentials(currentTestFileMappings);
-            sanitizeWorkspaceId(getProjectId(), getRecordingsWorkspaceId(), currentTestFileMappings);
+            sanitizeWorkspaceId(getProjectId(), getRecordingsWorkspaceId, currentTestFileMappings);
         }
         wiremockReset(wiremockHost);
     }
