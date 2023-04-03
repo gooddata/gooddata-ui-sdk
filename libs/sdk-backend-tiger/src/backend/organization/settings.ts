@@ -26,7 +26,7 @@ export class OrganizationSettingsService
         return data.data.reduce((result: ISettings, setting) => {
             return {
                 ...result,
-                [setting.id]: unwrapSettingContent(setting.attributes?.content),
+                [setting.id]: unwrapSettingContent(setting.attributes),
             };
         }, {});
     }
