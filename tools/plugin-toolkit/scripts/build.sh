@@ -86,8 +86,5 @@ $PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
   --tab-width 4 \
   --trailing-comma all
 
-# replace TypeScript related content in JavaScript files
-# node -r esm "./src/processJavaScriptFiles.js" "${SCRIPT_PATH}/../build/tar-source"
-
 # build tar with JavaScript bootstrap files
 tar -czf ./dist/dashboard-plugin-template.js.tgz -C "${JS_BUILD_DIR}" .

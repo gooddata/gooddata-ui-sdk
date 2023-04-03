@@ -1,24 +1,18 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
-import { CustomLoading } from "./CustomLoading";
-import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
 import logo from "../static/gooddata.svg";
-import { ANONYMOUS_ACCESS } from "../constants/env";
-
 const appName = "GoodData.UI Examples Gallery";
 
 interface IHeaderProps extends RouteComponentProps {
     location: any;
     routes?: any[];
-    isUserLoggedIn?: boolean;
-    logoutAction: () => void;
 }
 
-const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLoggedIn, logoutAction }) => {
+const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [] }) => {
     const [state, setState] = useState({
         displayBackendInfo: true,
     });
@@ -30,24 +24,12 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
     const renderBackendInfo = () => {
         const { displayBackendInfo } = state;
 
-        if (!isUserLoggedIn || !displayBackendInfo) {
+        if (!displayBackendInfo) {
             return null;
         }
 
         return (
             <div className="backendInfo">
-                {!ANONYMOUS_ACCESS ? (
-                    <>
-                        <span className="backendInfoItem">
-                            Connected to:
-                            <span className="backendInfoValue">{backendUrlForInfo}</span>
-                        </span>
-                        <span className="backendInfoItem">
-                            Project ID:
-                            <span className="backendInfoValue">{workspace}</span>
-                        </span>
-                    </>
-                ) : null}
                 <span className="backendInfoItem">
                     <span className="backendInfoValue">
                         <a
@@ -65,47 +47,6 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     </Link>
                 </span>
                 <span className="backendInfoClose" onClick={toggleBackendInfo} />
-            </div>
-        );
-    };
-
-    const renderLoggingBlock = () => {
-        const redirectUri =
-            typeof window !== "undefined" && !window.location.pathname.match("/login")
-                ? window.location.pathname
-                : "/";
-        if (isUserLoggedIn === null) {
-            // s-isWaitingForLoggedInStatus is used to check if we are still waiting to determine logged in status
-            return (
-                <div className="gd-header-menu-item s-isWaitingForLoggedInStatus">
-                    <CustomLoading color="white" imageHeight={19} />
-                </div>
-            );
-        }
-        if (isUserLoggedIn === false) {
-            return (
-                <div>
-                    <Link
-                        className="gd-header-menu-item button-login button-header"
-                        to={{
-                            pathname: "/login",
-                            state: {
-                                redirectUri,
-                            },
-                        }}
-                    >
-                        <span>Login</span>
-                    </Link>
-                </div>
-            );
-        }
-        // s-isLoggedIn is used to check the site is logged in
-        return (
-            <div
-                className="gd-header-menu-item button-logout button-header s-isLoggedIn"
-                onClick={logoutAction}
-            >
-                Logout
             </div>
         );
     };
@@ -787,7 +728,6 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                         >
                             Run Locally
                         </a>
-                        {!ANONYMOUS_ACCESS ? renderLoggingBlock() : null}
                     </div>
                 </nav>
             </div>
