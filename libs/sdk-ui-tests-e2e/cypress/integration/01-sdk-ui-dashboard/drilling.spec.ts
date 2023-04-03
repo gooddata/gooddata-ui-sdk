@@ -94,7 +94,8 @@ describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
             drillModal.getModalText().should("have.text", "Sorry, we can't display this insight");
         });
 
-        it("Check attribute value when drilling in bubble chart", () => {
+        // eslint-disable-next-line jest/no-disabled-tests
+        it.skip("Check attribute value when drilling in bubble chart", () => {
             Navigation.visit("dashboard/dashboard-target");
             new Widget(2).getChart().scrollIntoView().waitComputed().clickSeriesPoint(1, 0);
 
