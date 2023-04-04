@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
-import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeDisplayFormMetadataObject, IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -43,4 +43,12 @@ export interface IParentWithConnectingAttributes {
      * Common attributes with the currently opened attribute filter.
      */
     connectingAttributes: IConnectingAttribute[];
+}
+
+/**
+ * @internal
+ */
+export interface IUseAttributeElements {
+    elements: IAttributeElement[];
+    totalCount: number;
 }

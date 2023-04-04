@@ -6,6 +6,7 @@ import { QueryMeasureDateDatasets } from "./kpis";
 import { QueryConnectingAttributes } from "./connectingAttributes";
 import { QueryAttributeByDisplayForm } from "./attributes";
 import { QueryAttributeDataSet } from "./attributeDataSet";
+import { QueryAttributeElements } from "./attributeElements";
 
 export { IDashboardQuery, DashboardQueryType } from "./base";
 export {
@@ -29,6 +30,7 @@ export {
 export { QueryConnectingAttributes, queryConnectingAttributes } from "./connectingAttributes";
 export { QueryAttributeByDisplayForm, queryAttributeByDisplayForm } from "./attributes";
 export { QueryAttributeDataSet, queryAttributeDataSet } from "./attributeDataSet";
+export { QueryAttributeElements, queryAttributeElements } from "./attributeElements";
 
 /**
  * @alpha
@@ -42,4 +44,5 @@ export type DashboardQueries =
     | QueryWidgetAlertCount
     | QueryConnectingAttributes
     | QueryAttributeByDisplayForm
-    | QueryAttributeDataSet;
+    | QueryAttributeDataSet
+    | QueryAttributeElements;

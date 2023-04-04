@@ -79,6 +79,7 @@ export {
     IDashboardAttributeFilterDisplayForms,
     IDashboardAttributeFilterParentItem,
     IParentWithConnectingAttributes,
+    IUseAttributeElements,
 } from "./types/attributeFilterTypes";
 
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes";

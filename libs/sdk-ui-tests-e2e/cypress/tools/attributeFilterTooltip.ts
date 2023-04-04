@@ -28,4 +28,15 @@ export class AttributeFilterTooltip {
         this.getElement().find(`${TOOLTIP_ITEM}-label`).should("contain.text", name);
         return this;
     }
+
+    hasAttributeValues(name: string[]) {
+        const result: string[] = [];
+        this.getElement()
+            .find(".s-attribute-element")
+            .each(($li) => {
+                return result.push($li.text());
+            });
+        cy.wrap(result).should("deep.include.members", name);
+        return this;
+    }
 }

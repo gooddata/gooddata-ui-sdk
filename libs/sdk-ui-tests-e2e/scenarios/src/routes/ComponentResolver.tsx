@@ -40,6 +40,7 @@ import { AttributeFilterParentChildExampleScenario } from "../components/Scenari
 import { DashboardAttributeFilterRenaming } from "../components/Scenarios/Dashboard/DashboardAttributeFilterRenaming";
 import { SingleSelectionAttributeFilterButtonScenario } from "../components/Scenarios/Filters/SingleSelectionAttributeFilterButtonScenario";
 import { SingleSelectFilterIntegration } from "../components/Scenarios/Dashboard/SingleSelectFilterIntegration";
+import { DashboardAttributeSelection } from "../components/Scenarios/Dashboard/DashboardAttributeSelection";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -61,6 +62,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_COMMANDS: "dashboard/commands",
     DASHBOARD_DRILL_TO_INSIGHT: "dashboard/drill-to-insight",
     DASHBOARD_TARGET: "dashboard/dashboard-target",
+    DASHBOARD_ATTRIBUTE_SELECTION: "dashboard/attribute-selection",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -121,6 +123,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.HEADER_LOCALIZATION, HeaderLocalizationScenario],
     [SCENARIO_KEYS.DRAG_DROP_MOVE_WIDGET, DragDropWidgetScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_RENAMING, DashboardAttributeFilterRenaming],
+    [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_SELECTION, DashboardAttributeSelection],
     [
         SCENARIO_KEYS.FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_BUTTON,
         SingleSelectionAttributeFilterButtonScenario,

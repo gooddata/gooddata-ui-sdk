@@ -9,6 +9,11 @@
         "comment": "",
         "limit": 0
     },
+    "empty_value": {
+        "value": "empty value",
+        "comment": "",
+        "limit": 0
+    },
     "gs.list.cancel": {
         "value": "Cancel",
         "comment": "",
@@ -1174,6 +1179,21 @@
     "attributesDropdown.noConnectionMessage": {
         "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.details.dataset": {
+        "value": "Dataset",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.details.values": {
+        "value": "Values",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.details.shortening_decoration": {
+        "value": "…and {count} more",
+        "comment": "Don't translate placeholder '{count}'. Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "attributesDropdown.removeTooltip": {
