@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import { IAttributeFilter, idRef, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { IPlaceholder, usePlaceholder } from "@gooddata/sdk-ui";
@@ -14,7 +14,7 @@ export const useResolveFilterInput = (
     const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(connectToPlaceholder);
 
     const currentFilter = useMemo(() => {
-        return resolvedPlaceholder ?? filter ?? createFilterFormIdentifier(identifier);
+        return resolvedPlaceholder ?? filter ?? createFilterFromIdentifier(identifier);
     }, [resolvedPlaceholder, filter, identifier]);
 
     const setConnectedPlaceholderValue = useCallback(
@@ -32,7 +32,7 @@ export const useResolveFilterInput = (
     };
 };
 
-const createFilterFormIdentifier = (identifier: string) => {
+const createFilterFromIdentifier = (identifier: string) => {
     return newNegativeAttributeFilter(idRef(identifier), {
         uris: [],
     });
