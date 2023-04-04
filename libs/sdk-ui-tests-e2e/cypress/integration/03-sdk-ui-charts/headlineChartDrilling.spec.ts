@@ -19,7 +19,7 @@ const scenarios = [
     },
 ];
 
-describe("BarChart drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
+describe("Headline drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     before(() => {
         cy.login();
 
