@@ -108,6 +108,16 @@ describe("filter convertors", () => {
             },
         },
     };
+
+    const positiveAttributeSingleSelectionFilterWithoutValue: EmbeddedGdc.IPositiveAttributeFilter = {
+        positiveAttributeFilter: {
+            in: [],
+            displayForm: {
+                uri: "dfuri",
+            },
+            selectionMode: "single",
+        },
+    };
     const positiveAttributeSingleSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1"],
@@ -208,12 +218,16 @@ describe("filter convertors", () => {
         expect(isValidFiltersFormat([positiveAttributeFilterWithoutDisplayForm])).toBe(false);
     });
 
-    it("should return false when positive attribute filter item without filter values", () => {
+    it("should return false when positive multi select attribute filter item without filter values", () => {
         expect(isValidFiltersFormat([positiveAttributeFilterWithoutValue])).toBe(false);
     });
 
     it("should return false when positive attribute single select filter item has multiple values", () => {
         expect(isValidFiltersFormat([positiveAttributeSingleSelectionFilterWithMultipleValues])).toBe(false);
+    });
+
+    it("should return true when positive attribute single select filter item without value", () => {
+        expect(isValidFiltersFormat([positiveAttributeSingleSelectionFilterWithoutValue])).toBe(true);
     });
 
     describe("ranking filter", () => {

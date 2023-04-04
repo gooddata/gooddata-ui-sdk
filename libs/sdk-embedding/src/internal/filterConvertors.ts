@@ -90,13 +90,13 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
         } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
 
-        const validSelectionMode = selectionMode === "single" ? attributeElements.length <= 1 : true;
+        const validElementsForSelectionMode =
+            selectionMode === "single" ? attributeElements.length <= 1 : attributeElements.length !== 0;
 
         return (
             (isString(uri) || isString(identifier)) &&
             Array.isArray(attributeElements) &&
-            attributeElements.length !== 0 &&
-            validSelectionMode
+            validElementsForSelectionMode
         );
     } else {
         const {
