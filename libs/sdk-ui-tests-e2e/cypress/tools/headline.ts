@@ -33,7 +33,7 @@ export class Headline {
     }
 
     hasValue(value: string) {
-        this.getPrimaryItem().get(".s-headline-value").should("have.text", value);
+        this.getPrimaryItem().find(".s-headline-value").should("have.text", value);
         return this;
     }
 

@@ -59,7 +59,9 @@
         "attr.activity.activitytype",
         "label.opportunity.id.url",
         "attr.stagehistory.id",
-        "attr.account.id"
+        "attr.account.id",
+        "attr.product.id",
+        "attr.owner.region"
     ],
     "objects": [
         {
@@ -3032,6 +3034,133 @@
                 }
             },
             "name": "visualizationObject_Table_by_year_and_3_metrics_aacGIfHZWIEa"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "bf7546c3c8e542b6871cfc52eece64e0",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_region}}}"
+                                            },
+                                            "localIdentifier": "d9b016ab384e43618e330423f902b4c8"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_id_name}}}"
+                                            },
+                                            "localIdentifier": "bdcd8e78c3964a0fa3c7ced01d682e99"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_product_id_name}}}"
+                                            },
+                                            "localIdentifier": "eaaf9340712f44aa9881fd0e9c5ab7df"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_status}}}"
+                                            },
+                                            "localIdentifier": "78468a4253b143fc9463926b9f1d710f"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"d9b016ab384e43618e330423f902b4c8\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aahfskIIpYkc",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Sales table"
+                    }
+                }
+            },
+            "name": "visualizationObject_Sales_table_aahfskIIpYkc"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "81e6bebea33b4e03ac31088143a8c911",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_id_name}}}"
+                                            },
+                                            "localIdentifier": "695c5d1998714b1e8f1c64316dde9f42"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_column}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aaifwhL4qpvy",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Sales Rep chart"
+                    }
+                }
+            },
+            "name": "visualizationObject_Sales_Rep_chart_aaifwhL4qpvy"
         },
         {
             "content": {
@@ -10162,6 +10291,210 @@
                 }
             },
             "name": "analyticalDashboard_Dependent_filter_set_aabE1L1nHMS8"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": true
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Sales_Rep_chart_aaifwhL4qpvy}}}"
+                    },
+                    "meta": {
+                        "identifier": "aajfv3CaA9wt",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Sales Rep chart"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Sales_Rep_chart_aajfv3CaA9wt"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "configuration": {
+                            "hideTitle": true
+                        },
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Sales_table_aahfskIIpYkc}}}"
+                    },
+                    "meta": {
+                        "identifier": "aaTfwR5PqtDO",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Sales table"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Sales_table_aaTfwR5PqtDO"
+        },
+        {
+            "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonDirection": "growIsGood",
+                        "comparisonType": "previousPeriod",
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{amount}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacfKRnODrSh",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Amount"
+                    }
+                }
+            },
+            "name": "kpi_Amount_aacfKRnODrSh"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": ["{{{attr_owner_region}}}/elements?id=460489"],
+                                    "displayForm": "{{{label_owner_region}}}",
+                                    "filterElementsBy": [],
+                                    "localIdentifier": "0fc6e3b2704c4003b8d48f87f8157bdc",
+                                    "negativeSelection": false,
+                                    "selectionMode": "single"
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": [
+                                        "{{{attr_owner_id}}}/elements?id=5035",
+                                        "{{{attr_owner_id}}}/elements?id=5159",
+                                        "{{{attr_owner_id}}}/elements?id=6669"
+                                    ],
+                                    "displayForm": "{{{label_owner_id_name}}}",
+                                    "filterElementsBy": [],
+                                    "localIdentifier": "3cd758caeaf540ce9bef1892bfdb8d55",
+                                    "negativeSelection": false
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": [
+                                        "{{{attr_product_id}}}/elements?id=165678",
+                                        "{{{attr_product_id}}}/elements?id=165847",
+                                        "{{{attr_product_id}}}/elements?id=342345"
+                                    ],
+                                    "displayForm": "{{{label_product_id_name}}}",
+                                    "filterElementsBy": [],
+                                    "localIdentifier": "4fa0b758d157490baa58974f0b479e4f",
+                                    "negativeSelection": true
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": [],
+                                    "displayForm": "{{{label_stage_status}}}",
+                                    "filterElementsBy": [],
+                                    "localIdentifier": "e73524f4d4174548bbf11ddfe66bcf30",
+                                    "negativeSelection": true
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aakfwhL4qpvy",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aakfwhL4qpvy"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aakfwhL4qpvy}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi_Amount_aacfKRnODrSh}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 10,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Sales_table_aaTfwR5PqtDO}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Sales_Rep_chart_aajfv3CaA9wt}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{kpi_Amount_aacfKRnODrSh}}}",
+                            "{{{visualizationWidget_Sales_table_aaTfwR5PqtDO}}}",
+                            "{{{visualizationWidget_Sales_Rep_chart_aajfv3CaA9wt}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aakfv3CaA9wt",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Single select filters"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Single_select_filters_aakfv3CaA9wt"
         },
         {
             "content": {

@@ -23,6 +23,7 @@ import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } fro
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { AttributeFilterController } from "./types";
 import { isValidSingleSelectionFilter } from "../utils";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Properties of {@link useAttributeFilterController}
@@ -70,6 +71,7 @@ export const useAttributeFilterController = (
         elementsOptions,
 
         selectionMode = "multi",
+        selectFirst = false,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -107,6 +109,12 @@ export const useAttributeFilterController = (
         selectionMode,
     });
     const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue, selectionMode });
+
+    useSingleSelectModeHandler(handler, {
+        selectFirst,
+        onApply: callbacks.onApply,
+        selectionMode,
+    });
 
     return {
         ...attributeFilterControllerData,
@@ -377,3 +385,46 @@ function useCallbacks(
         onReset,
     };
 }
+
+//
+
+const useSingleSelectModeHandler = (
+    handler: IMultiSelectAttributeFilterHandler,
+    props: {
+        selectFirst: boolean;
+        selectionMode: DashboardAttributeFilterSelectionMode;
+        onApply: () => void;
+    },
+) => {
+    const { selectFirst, selectionMode, onApply } = props;
+    const committedSelectionKeys = handler.getCommittedSelection().keys;
+    const initialElementsPageStatus = handler.getInitialElementsPageStatus();
+    const elements = handler.getAllElements();
+    const filter = handler.getFilter();
+
+    useEffect(() => {
+        if (
+            selectFirst &&
+            selectionMode === "single" &&
+            isEmpty(committedSelectionKeys) &&
+            initialElementsPageStatus === "success" &&
+            !isEmpty(elements)
+        ) {
+            const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
+            const keys = [isElementsByRef ? elements[0].uri : elements[0].title];
+
+            handler.changeSelection({ keys, isInverted: false });
+            handler.commitSelection();
+            onApply();
+        }
+    }, [
+        selectFirst,
+        selectionMode,
+        committedSelectionKeys,
+        initialElementsPageStatus,
+        elements,
+        filter,
+        handler,
+        onApply,
+    ]);
+};

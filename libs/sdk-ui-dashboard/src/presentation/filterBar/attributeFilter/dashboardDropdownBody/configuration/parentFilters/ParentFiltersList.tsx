@@ -18,6 +18,7 @@ interface IConfigurationParentItemsProps {
     onConnectingAttributeChanged: (localId: string, selectedAttribute: ObjRef) => void;
     connectingAttributes: IConnectingAttribute[][];
     attributes: IAttributeMetadataObject[];
+    disabled: boolean;
 }
 
 export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (props) => {
@@ -28,6 +29,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
         onConnectingAttributeChanged,
         connectingAttributes,
         attributes,
+        disabled,
     } = props;
 
     const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
@@ -45,6 +47,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
                         key={item.localIdentifier}
                         currentFilterLocalId={currentFilterLocalId}
                         item={item}
+                        disabled={disabled}
                         onClick={setParents}
                         onConnectingAttributeSelect={onConnectingAttributeChanged}
                         connectingAttributes={connectingAttributes[index]}

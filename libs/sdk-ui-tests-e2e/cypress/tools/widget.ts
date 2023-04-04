@@ -4,6 +4,7 @@ import { Chart } from "./chart";
 import { Table } from "./table";
 import { Kpi } from "./kpi";
 import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
+import { Headline } from "./headline";
 
 const MAXIMUM_TIMEOUT = Cypress.env("timeForInsightLoading");
 
@@ -52,6 +53,10 @@ export class Widget {
 
     getChart() {
         return new Chart(this.getElementSelector());
+    }
+
+    getHeadline() {
+        return new Headline(this.getElementSelector());
     }
 
     getTable() {
@@ -185,5 +190,9 @@ export class Widget {
 
     addBefore(name: InsightTitle) {
         return this.add(name, "prev");
+    }
+
+    hasNoDataForFilter() {
+        this.getElement().contains("No data for your filter selection").should("exist");
     }
 }

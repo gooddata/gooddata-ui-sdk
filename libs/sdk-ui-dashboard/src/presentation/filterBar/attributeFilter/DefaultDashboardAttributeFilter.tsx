@@ -56,7 +56,8 @@ export const DefaultDashboardAttributeFilter = (
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
+    const { enableKPIAttributeFilterRenaming, enableSingleSelectionFilter } =
+        useDashboardSelector(selectSettings);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
@@ -80,6 +81,9 @@ export const DefaultDashboardAttributeFilter = (
     const filterByText = intl.formatMessage({ id: "attributesDropdown.filterBy" });
     const titleText = intl.formatMessage({ id: "attributesDropdown.title" });
     const resetTitleText = intl.formatMessage({ id: "attributesDropdown.title.reset" });
+    const selectionTitleText = intl.formatMessage({ id: "attributesDropdown.selectionMode" });
+    const multiSelectionOptionText = intl.formatMessage({ id: "attributesDropdown.selectionMode.multi" });
+    const singleSelectionOptionText = intl.formatMessage({ id: "attributesDropdown.selectionMode.single" });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -140,19 +144,19 @@ export const DefaultDashboardAttributeFilter = (
                 titleChanged,
                 onConfigurationSave,
                 onConfigurationClose,
+                selectionModeChanged,
             } = useAttributeFilterParentFiltering();
 
             const isTitleDefined = !!title && title.length > 0;
+            const isSaveDisabled = isTitleDefined
+                ? !(configurationChanged || displayFormChanged || titleChanged || selectionModeChanged)
+                : true;
 
             return (
                 <>
                     {isConfigurationOpen ? (
                         <CustomConfigureAttributeFilterDropdownActions
-                            isSaveDisabled={
-                                isTitleDefined
-                                    ? !(configurationChanged || displayFormChanged || titleChanged)
-                                    : true
-                            }
+                            isSaveDisabled={isSaveDisabled}
                             onSaveButtonClick={() => {
                                 onConfigurationSave();
                                 setIsConfigurationOpen(false);
@@ -167,6 +171,7 @@ export const DefaultDashboardAttributeFilter = (
                         <CustomAttributeFilterDropdownActions
                             {...props}
                             filterDisplayFormRef={filter.attributeFilter.displayForm}
+                            filterSelectionMode={filter.attributeFilter.selectionMode}
                             applyText={applyText}
                             cancelText={cancelText}
                             onConfigurationButtonClick={() => {
@@ -187,6 +192,7 @@ export const DefaultDashboardAttributeFilter = (
         cancelText,
         saveText,
         filter.attributeFilter.displayForm,
+        filter.attributeFilter.selectionMode,
         applyText,
         attributes,
         handleRemoveAttributeFilter,
@@ -214,6 +220,9 @@ export const DefaultDashboardAttributeFilter = (
                             displayValuesAsText={displayValuesAsText}
                             titleText={titleText}
                             resetTitleText={resetTitleText}
+                            selectionTitleText={selectionTitleText}
+                            multiSelectionOptionText={multiSelectionOptionText}
+                            singleSelectionOptionText={singleSelectionOptionText}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -221,7 +230,17 @@ export const DefaultDashboardAttributeFilter = (
                 </>
             );
         };
-    }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText, titleText, resetTitleText]);
+    }, [
+        isConfigurationOpen,
+        filterRef,
+        filterByText,
+        displayValuesAsText,
+        titleText,
+        resetTitleText,
+        selectionTitleText,
+        multiSelectionOptionText,
+        singleSelectionOptionText,
+    ]);
 
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
@@ -245,6 +264,8 @@ export const DefaultDashboardAttributeFilter = (
                 DropdownActionsComponent={CustomDropdownActions}
                 ElementsSelectComponent={CustomElementsSelect}
                 fullscreenOnMobile
+                selectionMode={enableSingleSelectionFilter ? filter.attributeFilter.selectionMode : undefined}
+                selectFirst={enableSingleSelectionFilter}
             />
         </AttributeFilterParentFilteringProvider>
     );

@@ -109,6 +109,19 @@ export class AttributeFilter {
         return this;
     }
 
+    clearSearch() {
+        this.getDropdownElement()
+            .find(".gd-list-searchfield .gd-input-field")
+            .should("be.visible")
+            .clear({ force: true });
+        return this;
+    }
+
+    hasSubtitle(value: string) {
+        this.getElement().find(".s-attribute-filter-button-subtitle").should("have.text", value);
+        return this;
+    }
+
     isValueSelected(attributeValue: string, expected: boolean) {
         this.getDropdownElement()
             .find(`.s-attribute-filter-list-item[title="${attributeValue}"]`)
@@ -173,17 +186,31 @@ export class AttributeFilter {
     }
 
     configureDependency(filteredItem: string | string[]) {
-        const filteredItems = Array.isArray(filteredItem) ? filteredItem : [filteredItem];
-
         this.selectConfiguration();
+        this.checkDependency(filteredItem);
+        this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
+        return this;
+    }
+
+    checkDependency(filteredItem: string | string[]) {
+        const filteredItems = Array.isArray(filteredItem) ? filteredItem : [filteredItem];
         filteredItems.forEach((filteredItem) => {
             const testClass = getTestClassByTitle(filteredItem);
             this.getDropdownElement()
                 .find(`.s-attribute-filter-dropdown-configuration-item${testClass}`)
                 .click({ scrollBehavior: false });
         });
+        return this;
+    }
 
-        this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
+    hasDependencyEnabled(enabled: boolean) {
+        this.getDropdownElement()
+            .find(".s-attribute-filter-dropdown-configuration-item")
+            .each((item) => {
+                cy.wrap(item)
+                    .find("[type='checkbox']")
+                    .should(enabled ? "be.enabled" : "be.disabled");
+            });
         return this;
     }
 
@@ -196,13 +223,60 @@ export class AttributeFilter {
 
     selectConfiguration() {
         this.getDropdownElement().find(".s-configuration-button").click({ scrollBehavior: false }).wait(100);
+        return this;
+    }
+
+    saveConfiguration() {
+        this.getDropdownElement().find(".s-save").click({ scrollBehavior: false });
+        return this;
+    }
+
+    closeConfiguration() {
+        this.getDropdownElement().find(".s-cancel").click({ scrollBehavior: false });
+        return this;
     }
 
     changeAttributeLabel(label: string) {
         this.selectConfiguration();
         cy.get(".s-attribute-display-form-button").click();
         cy.get("div:not(.is-selected).gd-list-item span").contains(label).click({ force: true });
+
+        return this;
+    }
+
+    changeSelectionMode(mode: string) {
+        this.selectConfiguration();
+        this.checkSelectionMode(mode);
         this.getDropdownElement().find(".s-save").click({ scrollBehavior: false });
+        return this;
+    }
+
+    checkSelectionMode(mode: string) {
+        this.getDropdownElement()
+            .find(`.s-input-selection-mode-${mode}`)
+            .find("[type='radio']")
+            .check({ scrollBehavior: false })
+            .should("be.checked");
+        return this;
+    }
+
+    hasSelectionMode(mode: string, value: boolean) {
+        this.getDropdownElement()
+            .find(`.s-input-selection-mode-${mode}`)
+            .find("[type='radio']")
+            .should(value ? "be.checked" : "not.be.checked");
+        return this;
+    }
+
+    hasSelectionModeEnabled(enabled: boolean) {
+        this.getDropdownElement()
+            .find(".s-input-selection-mode-multi")
+            .find("[type='radio']")
+            .should(enabled ? "be.enabled" : "be.disabled");
+        this.getDropdownElement()
+            .find(".s-input-selection-mode-single")
+            .find("[type='radio']")
+            .should(enabled ? "be.enabled" : "be.disabled");
         return this;
     }
 
@@ -231,6 +305,11 @@ export class AttributeFilter {
     waitFilteringFinished(): this {
         this.getElement().should("have.class", "gd-is-filtering");
         this.getElement().should("not.have.class", "gd-is-filtering");
+        return this;
+    }
+
+    hasFilterListSize(length: number) {
+        this.getDropdownElement().find(".s-list-search-selection-size").should("have.text", `(${length})`);
         return this;
     }
 }

@@ -264,6 +264,16 @@ export interface ISettings {
      */
     enableKPIAttributeFilterRenaming?: boolean;
 
+    /**
+     * Enable single selection attribute filters
+     */
+    enableSingleSelectionFilter?: boolean;
+
+    /**
+     * Enable Dashboard component edit mode
+     */
+    dashboardEditModeDevRollout?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

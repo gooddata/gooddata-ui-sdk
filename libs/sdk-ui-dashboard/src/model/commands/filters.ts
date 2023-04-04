@@ -776,7 +776,7 @@ export function setAttributeFilterTitle(
  */
 export interface SetAttributeFilterSelectionModePayload {
     filterLocalId: string;
-    selectionMode: "single" | "multi";
+    selectionMode: DashboardAttributeFilterSelectionMode;
 }
 
 /**
@@ -791,18 +791,18 @@ export interface SetAttributeFilterSelectionMode extends IDashboardCommand {
  * Creates the {@link SetAttributeFilterSelectionMode} command.
  *
  * @remarks
- * Dispatching the commands will result into setting provided display form as a selected
- * display form for the attribute filter.
+ * Dispatching the commands will result into setting provided selection mode as a selected
+ * selection mode for the attribute filter.
  *
  *
  * @beta
- * @param filterLocalId - local identifier of the filter the display form is changed for
- * @param displayForm - newly selected display form
- * @returns change filter display form command
+ * @param filterLocalId - local identifier of the filter the selection mode is changed for
+ * @param selectionMode - newly selected selection mode
+ * @returns change filter selection mode command
  */
 export function setAttributeFilterSelectionMode(
     filterLocalId: string,
-    selectionMode: "single" | "multi",
+    selectionMode: DashboardAttributeFilterSelectionMode,
 ): SetAttributeFilterSelectionMode {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE",

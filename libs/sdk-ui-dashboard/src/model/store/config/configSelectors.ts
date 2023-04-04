@@ -310,7 +310,7 @@ export const selectEnableInsightExportScheduling = createSelector(selectConfig, 
  * @internal
  */
 export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (state) => {
-    return !!state.settings?.dashboardEditModeDevRollout ?? true;
+    return state.settings?.dashboardEditModeDevRollout ?? true;
 });
 
 /**

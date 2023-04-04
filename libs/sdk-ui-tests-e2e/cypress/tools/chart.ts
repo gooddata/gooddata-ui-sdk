@@ -68,6 +68,11 @@ export class Chart {
         return cy.wrap(result);
     }
 
+    hasDataLabelValues(labels: string[]) {
+        this.getDataLabelValues().should("deep.equal", labels);
+        return this;
+    }
+
     clickAxisDrilldownLabel(axis: "x" | "y", index: number) {
         this.getHighchartsContainer()
             .find(`.highcharts-${axis}axis-labels .highcharts-drilldown-axis-label`)

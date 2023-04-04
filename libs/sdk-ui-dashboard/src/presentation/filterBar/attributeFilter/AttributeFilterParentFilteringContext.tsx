@@ -18,13 +18,15 @@ import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/das
 import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration";
 import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration";
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration";
+import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration";
 
 /**
  * @internal
  */
 export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfiguration> &
     ReturnType<typeof useDisplayFormConfiguration> &
-    ReturnType<typeof useTitleConfiguration> & {
+    ReturnType<typeof useTitleConfiguration> &
+    ReturnType<typeof useSelectionModeConfiguration> & {
         onConfigurationSave: () => void;
         showDisplayFormPicker: boolean;
         showResetTitle: boolean;
@@ -120,17 +122,33 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onConfigurationClose: onTitleClose,
     } = useTitleConfiguration(currentFilter, defaultAttributeFilterTitle);
 
+    const {
+        selectionMode,
+        selectionModeChanged,
+        onSelectionModeChange,
+        onSelectionModeUpdate,
+        onConfigurationClose: onSelectionModeClose,
+    } = useSelectionModeConfiguration(currentFilter);
+
     const onConfigurationSave = useCallback(() => {
-        onParentFiltersChange();
+        // the order is important to keep the app in valid state
+        if (selectionMode === "single") {
+            onParentFiltersChange();
+            onSelectionModeChange();
+        } else {
+            onSelectionModeChange();
+            onParentFiltersChange();
+        }
         onDisplayFormChange();
         onTitleChange();
-    }, [onParentFiltersChange, onDisplayFormChange, onTitleChange]);
+    }, [selectionMode, onParentFiltersChange, onDisplayFormChange, onTitleChange, onSelectionModeChange]);
 
     const onConfigurationClose = useCallback(() => {
         onParentFiltersClose();
         onDisplayFormClose();
         onTitleClose();
-    }, [onParentFiltersClose, onDisplayFormClose, onTitleClose]);
+        onSelectionModeClose();
+    }, [onParentFiltersClose, onDisplayFormClose, onTitleClose, onSelectionModeClose]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
     const showResetTitle = title !== defaultAttributeFilterTitle;
@@ -160,6 +178,10 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 onTitleUpdate,
                 onTitleReset,
                 attributeFilterDisplayForm,
+                selectionMode,
+                selectionModeChanged,
+                onSelectionModeChange,
+                onSelectionModeUpdate,
             }}
         >
             {children}

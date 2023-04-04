@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-03-20T15:59:32.131Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-04-03T14:48:32.971Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3457,6 +3457,14 @@ export const Insights = {
      * Insight Title: Table by year and 3 metrics
      * Insight ID: aacGIfHZWIEa
      */ TableByYearAnd3Metrics: "aacGIfHZWIEa",
+    /**
+     * Insight Title: Sales table
+     * Insight ID: aahfskIIpYkc
+     */ SalesTable: "aahfskIIpYkc",
+    /**
+     * Insight Title: Sales Rep chart
+     * Insight ID: aaifwhL4qpvy
+     */ SalesRepChart: "aaifwhL4qpvy",
 };
 export const Dashboards = {
     /**
@@ -3640,4 +3648,8 @@ export const Dashboards = {
      * Dashboard Title: Dependent filter set
      * Dashboard ID: aabE1L1nHMS8
      */ DependentFilterSet: "aabE1L1nHMS8",
+    /**
+     * Dashboard Title: Single select filters
+     * Dashboard ID: aakfv3CaA9wt
+     */ SingleSelectFilters: "aakfv3CaA9wt",
 };

@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ConfigurationCategory } from "./ConfigurationCategory";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader";
 
@@ -21,6 +21,7 @@ import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes";
 import { AttributeTitleRenaming } from "./title/AttributeTitleRenaming";
+import { SelectionMode } from "./selectionMode/SelectionMode";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
@@ -29,10 +30,23 @@ interface IAttributeFilterConfigurationProps {
     displayValuesAsText: string;
     titleText: string;
     resetTitleText: string;
+    selectionTitleText: string;
+    multiSelectionOptionText: string;
+    singleSelectionOptionText: string;
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
-    const { filterRef, filterByText, displayValuesAsText, titleText, resetTitleText, closeHandler } = props;
+    const {
+        filterRef,
+        filterByText,
+        displayValuesAsText,
+        titleText,
+        resetTitleText,
+        selectionTitleText,
+        multiSelectionOptionText,
+        singleSelectionOptionText,
+        closeHandler,
+    } = props;
     const theme = useTheme();
 
     useEffect(() => {
@@ -41,7 +55,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         };
     }, [closeHandler]);
 
-    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
+    const { enableKPIAttributeFilterRenaming, enableSingleSelectionFilter } =
+        useDashboardSelector(selectSettings);
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
@@ -73,6 +88,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         showResetTitle,
         onTitleUpdate,
         onTitleReset,
+        selectionMode,
+        onSelectionModeUpdate,
     } = useAttributeFilterParentFiltering();
 
     const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
@@ -81,6 +98,10 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     );
 
     const { attributes, attributesLoading } = useAttributes(neighborFilterDisplayForms);
+
+    const parentsSelected = useCallback(() => {
+        return parents.filter((parent) => parent.isSelected).length > 0;
+    }, [parents]);
 
     if (connectingAttributesLoading || attributesLoading) {
         return (
@@ -100,7 +121,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration sdk-edit-mode-on">
             <ConfigurationPanelHeader />
-            {enableKPIAttributeFilterRenaming && (
+            {Boolean(enableKPIAttributeFilterRenaming) && (
                 <AttributeTitleRenaming
                     categoryTitle={titleText}
                     resetTitleText={resetTitleText}
@@ -108,6 +129,16 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                     onChange={onTitleUpdate}
                     showResetTitle={showResetTitle}
                     attributeTitle={title ?? defaultAttributeFilterTitle}
+                />
+            )}
+            {Boolean(enableSingleSelectionFilter) && (
+                <SelectionMode
+                    selectionTitleText={selectionTitleText}
+                    multiSelectionOptionText={multiSelectionOptionText}
+                    singleSelectionOptionText={singleSelectionOptionText}
+                    selectionMode={selectionMode}
+                    onSelectionModeChange={onSelectionModeUpdate}
+                    disabled={parentsSelected()}
                 />
             )}
             {isDependentFiltersEnabled && parents.length > 0 ? (
@@ -120,6 +151,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 onConnectingAttributeChanged={onConnectingAttributeChanged}
                 connectingAttributes={connectingAttributes}
                 attributes={attributes}
+                disabled={enableSingleSelectionFilter ? selectionMode === "single" : false}
             />
             {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">

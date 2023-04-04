@@ -121,6 +121,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableSqlDatasets,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableSingleSelectionFilter,
+            "enableSingleSelectionFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSingleSelectionFilter,
+        ),
     };
 }
 
