@@ -33,6 +33,8 @@ interface IAttributeFilterConfigurationProps {
     selectionTitleText: string;
     multiSelectionOptionText: string;
     singleSelectionOptionText: string;
+    singleSelectionDisabledTooltip: string;
+    parentFiltersDisabledTooltip: string;
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
@@ -45,6 +47,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         selectionTitleText,
         multiSelectionOptionText,
         singleSelectionOptionText,
+        singleSelectionDisabledTooltip,
+        parentFiltersDisabledTooltip,
         closeHandler,
     } = props;
     const theme = useTheme();
@@ -136,6 +140,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                     selectionTitleText={selectionTitleText}
                     multiSelectionOptionText={multiSelectionOptionText}
                     singleSelectionOptionText={singleSelectionOptionText}
+                    singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                     selectionMode={selectionMode}
                     onSelectionModeChange={onSelectionModeUpdate}
                     disabled={parentsSelected()}
@@ -152,6 +157,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 connectingAttributes={connectingAttributes}
                 attributes={attributes}
                 disabled={enableSingleSelectionFilter ? selectionMode === "single" : false}
+                disabledTooltip={parentFiltersDisabledTooltip}
             />
             {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">

@@ -2,11 +2,28 @@
 import React from "react";
 import { ConfigurationCategory } from "../ConfigurationCategory";
 import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
+import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { SelectionModeItem } from "./SelectionModeItem";
+import { SelectionModeButton } from "./SelectionModeButton";
+
+const ITEM_HEIGHT = 23;
+const DROPDOWN_WIDTH = 225;
+const ALIGN_POINTS: IAlignPoint[] = [
+    {
+        align: "bl tl",
+        offset: { x: 0, y: 1 },
+    },
+    {
+        align: "tl bl",
+        offset: { x: 0, y: -1 },
+    },
+];
 
 interface ISelectionModeProps {
     selectionTitleText: string;
     multiSelectionOptionText: string;
     singleSelectionOptionText: string;
+    singleSelectionDisabledTooltip: string;
     selectionMode: DashboardAttributeFilterSelectionMode;
     onSelectionModeChange: (value: DashboardAttributeFilterSelectionMode) => void;
     disabled: boolean;
@@ -17,39 +34,53 @@ export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
         selectionTitleText,
         multiSelectionOptionText,
         singleSelectionOptionText,
+        singleSelectionDisabledTooltip,
         selectionMode,
         onSelectionModeChange,
         disabled,
     } = props;
 
-    const changeSelectionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onSelectionModeChange(e.target.value as DashboardAttributeFilterSelectionMode);
+    const selectionOptionTitleMap = {
+        multi: multiSelectionOptionText,
+        single: singleSelectionOptionText,
     };
+    const items: DashboardAttributeFilterSelectionMode[] = ["multi", "single"];
 
     return (
         <>
             <ConfigurationCategory categoryTitle={selectionTitleText} />
             <div className="configuration-selection-mode">
-                <label className="input-radio-label s-input-selection-mode-multi">
-                    <input
-                        type="radio"
-                        value="multi"
-                        disabled={disabled}
-                        checked={selectionMode === "multi"}
-                        onChange={changeSelectionHandler}
-                    />
-                    <span className="input-label-text">{multiSelectionOptionText}</span>
-                </label>
-                <label className="input-radio-label s-input-selection-mode-single">
-                    <input
-                        type="radio"
-                        value="single"
-                        disabled={disabled}
-                        checked={selectionMode === "single"}
-                        onChange={changeSelectionHandler}
-                    />
-                    <span className="input-label-text">{singleSelectionOptionText}</span>
-                </label>
+                <Dropdown
+                    alignPoints={ALIGN_POINTS}
+                    renderButton={({ isOpen, toggleDropdown }) => (
+                        <SelectionModeButton
+                            isOpen={isOpen}
+                            title={selectionOptionTitleMap[selectionMode]}
+                            toggleDropdown={toggleDropdown}
+                        />
+                    )}
+                    renderBody={({ closeDropdown }) => (
+                        <DropdownList
+                            className="attribute-display-form-dropdown-body s-selection-mode-dropdown-body"
+                            items={items}
+                            itemHeight={ITEM_HEIGHT}
+                            width={DROPDOWN_WIDTH}
+                            renderItem={({ item }) => (
+                                <SelectionModeItem
+                                    item={item}
+                                    itemTitle={selectionOptionTitleMap[item]}
+                                    selected={item === selectionMode}
+                                    disabled={item === "single" && disabled}
+                                    disabledTooltip={singleSelectionDisabledTooltip}
+                                    onClick={() => {
+                                        closeDropdown();
+                                        onSelectionModeChange(item);
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
+                />
             </div>
         </>
     );

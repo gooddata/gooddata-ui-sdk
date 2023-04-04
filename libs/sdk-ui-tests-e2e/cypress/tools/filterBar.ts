@@ -246,37 +246,37 @@ export class AttributeFilter {
 
     changeSelectionMode(mode: string) {
         this.selectConfiguration();
-        this.checkSelectionMode(mode);
+        this.toggleSelectionModeDropdown();
+        this.clickSelectionMode(mode);
         this.getDropdownElement().find(".s-save").click({ scrollBehavior: false });
         return this;
     }
 
-    checkSelectionMode(mode: string) {
+    toggleSelectionModeDropdown() {
+        this.getDropdownElement().find(".s-selection-mode-dropdown-button").click({ scrollBehavior: false });
+        return this;
+    }
+
+    clickSelectionMode(mode: string) {
         this.getDropdownElement()
-            .find(`.s-input-selection-mode-${mode}`)
-            .find("[type='radio']")
-            .check({ scrollBehavior: false })
-            .should("be.checked");
+            .find(`.s-selection-mode-dropdown-item-${mode}`)
+            .click({ scrollBehavior: false });
         return this;
     }
 
     hasSelectionMode(mode: string, value: boolean) {
         this.getDropdownElement()
-            .find(`.s-input-selection-mode-${mode}`)
-            .find("[type='radio']")
-            .should(value ? "be.checked" : "not.be.checked");
+            .find(`.s-selection-mode-dropdown-item-${mode}`)
+            .should("exist")
+            .and(value ? "have.class" : "not.have.class", "is-selected");
         return this;
     }
 
-    hasSelectionModeEnabled(enabled: boolean) {
+    hasSingleSelectionModeEnabled(exist: boolean) {
         this.getDropdownElement()
-            .find(".s-input-selection-mode-multi")
-            .find("[type='radio']")
-            .should(enabled ? "be.enabled" : "be.disabled");
-        this.getDropdownElement()
-            .find(".s-input-selection-mode-single")
-            .find("[type='radio']")
-            .should(enabled ? "be.enabled" : "be.disabled");
+            .find(".s-selection-mode-dropdown-item-single")
+            .should("exist")
+            .and(exist ? "not.have.class" : "have.class", "is-disabled");
         return this;
     }
 

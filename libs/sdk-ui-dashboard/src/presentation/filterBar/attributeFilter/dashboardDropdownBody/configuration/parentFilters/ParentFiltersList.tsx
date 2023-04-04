@@ -10,6 +10,10 @@ import {
     IConnectingAttribute,
     selectSettings,
 } from "../../../../../../model";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
+const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };
+const ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
 
 interface IConfigurationParentItemsProps {
     currentFilterLocalId: string;
@@ -19,6 +23,7 @@ interface IConfigurationParentItemsProps {
     connectingAttributes: IConnectingAttribute[][];
     attributes: IAttributeMetadataObject[];
     disabled: boolean;
+    disabledTooltip: string;
 }
 
 export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (props) => {
@@ -30,6 +35,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
         connectingAttributes,
         attributes,
         disabled,
+        disabledTooltip,
     } = props;
 
     const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
@@ -40,25 +46,32 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
     }
 
     return (
-        <div className="gd-infinite-list">
-            {parents.map((item, index) => {
-                return (
-                    <ParentFiltersListItem
-                        key={item.localIdentifier}
-                        currentFilterLocalId={currentFilterLocalId}
-                        item={item}
-                        disabled={disabled}
-                        onClick={setParents}
-                        onConnectingAttributeSelect={onConnectingAttributeChanged}
-                        connectingAttributes={connectingAttributes[index]}
-                        title={
-                            enableKPIAttributeFilterRenaming
-                                ? item.title ?? attributes[index].title
-                                : attributes[index].title
-                        }
-                    />
-                );
-            })}
-        </div>
+        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
+            <div className="gd-infinite-list">
+                {parents.map((item, index) => {
+                    return (
+                        <ParentFiltersListItem
+                            key={item.localIdentifier}
+                            currentFilterLocalId={currentFilterLocalId}
+                            item={item}
+                            disabled={disabled}
+                            onClick={setParents}
+                            onConnectingAttributeSelect={onConnectingAttributeChanged}
+                            connectingAttributes={connectingAttributes[index]}
+                            title={
+                                enableKPIAttributeFilterRenaming
+                                    ? item.title ?? attributes[index].title
+                                    : attributes[index].title
+                            }
+                        />
+                    );
+                })}
+            </div>
+            {Boolean(disabled) && (
+                <Bubble arrowOffsets={ARROW_OFFSETS} alignPoints={ALIGN_POINTS}>
+                    <div>{disabledTooltip}</div>
+                </Bubble>
+            )}
+        </BubbleHoverTrigger>
     );
 };

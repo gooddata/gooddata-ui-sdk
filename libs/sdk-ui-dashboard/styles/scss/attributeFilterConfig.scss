@@ -139,12 +139,8 @@
         flex-direction: column;
         margin: 0 10px 10px;
 
-        .input-radio-label {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            margin: 4px 0;
+        .selection-mode-dropdown-button {
+            width: 100%;
         }
     }
 }

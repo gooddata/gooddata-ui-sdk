@@ -185,30 +185,34 @@ describe("Single selection filters", () => {
                 .open()
                 .selectConfiguration()
 
+                .toggleSelectionModeDropdown()
                 .hasSelectionMode("multi", true)
                 .hasSelectionMode("single", false)
-                .hasSelectionModeEnabled(true)
+                .hasSingleSelectionModeEnabled(true)
                 .hasDependencyEnabled(true)
 
-                .checkSelectionMode("single")
+                .clickSelectionMode("single")
 
+                .toggleSelectionModeDropdown()
                 .hasSelectionMode("multi", false)
                 .hasSelectionMode("single", true)
-                .hasSelectionModeEnabled(true)
+                .hasSingleSelectionModeEnabled(true)
                 .hasDependencyEnabled(false)
 
-                .checkSelectionMode("multi")
+                .clickSelectionMode("multi")
 
+                .toggleSelectionModeDropdown()
                 .hasSelectionMode("multi", true)
                 .hasSelectionMode("single", false)
-                .hasSelectionModeEnabled(true)
+                .hasSingleSelectionModeEnabled(true)
                 .hasDependencyEnabled(true)
 
                 .checkDependency("Region")
 
+                .toggleSelectionModeDropdown()
                 .hasSelectionMode("multi", true)
                 .hasSelectionMode("single", false)
-                .hasSelectionModeEnabled(false)
+                .hasSingleSelectionModeEnabled(false)
                 .hasDependencyEnabled(true)
 
                 .saveConfiguration()
@@ -231,6 +235,7 @@ describe("Single selection filters", () => {
                 .hasSubtitle("Alejandro Vabiano, Alexsandr Fyodr, John Jovi")
                 .hasFilterListSize(20)
                 .selectConfiguration()
+                .toggleSelectionModeDropdown()
                 .hasSelectionMode("multi", true)
                 .hasSelectionMode("single", false)
                 .checkDependency("Region")
@@ -254,6 +259,7 @@ describe("Single selection filters", () => {
                 .hasSubtitle("All")
                 .hasFilterListSize(9)
                 .selectConfiguration()
+                .toggleSelectionModeDropdown()
                 .hasSelectionMode("multi", true)
                 .hasSelectionMode("single", false)
                 .closeConfiguration()
