@@ -269,6 +269,11 @@ export interface ISettings {
      */
     enableSingleSelectionFilter?: boolean;
 
+    /**
+     * Enable Dashboard component edit mode
+     */
+    dashboardEditModeDevRollout?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

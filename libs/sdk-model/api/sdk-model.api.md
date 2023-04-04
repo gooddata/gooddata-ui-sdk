@@ -2207,6 +2207,7 @@ export interface ISettings {
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    dashboardEditModeDevRollout?: boolean;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;

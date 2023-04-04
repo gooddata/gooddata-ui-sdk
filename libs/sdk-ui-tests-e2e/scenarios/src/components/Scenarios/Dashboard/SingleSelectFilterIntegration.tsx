@@ -8,12 +8,7 @@ export const SingleSelectFilterIntegration: React.FC = () => {
     return (
         <Dashboard
             dashboard={idRef(Dashboards.SingleSelectFilters)}
-            config={{
-                settings: {
-                    dashboardEditModeDevRollout: true,
-                    enableSingleSelectionFilter: true,
-                },
-            }}
+            config={{ settings: { enableSingleSelectionFilter: true } }}
         />
     );
 };
