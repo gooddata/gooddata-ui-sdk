@@ -1,7 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import last from "lodash/last";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
-import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor";
 import { AreaChartDescriptor } from "./pluggableVisualizations/areaChart/AreaChartDescriptor";
 import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor";
@@ -21,6 +20,7 @@ import { ScatterPlotDescriptor } from "./pluggableVisualizations/scatterPlot/Sca
 import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDescriptor";
 import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor";
 import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor";
+import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -76,7 +76,10 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         const VisType = this.findInMapping(uri);
 
         if (!VisType) {
-            throw new UnexpectedSdkError(`Unknown visualization class URI: ${uri}`);
+            console.warn(
+                `Unknown visualization class: ${uri}. The reason may be that the visualization type is incompatible with dashboard plugins. Try removing the plugins from this dashboard or use different visualization type.`,
+            );
+            return new UnknownVisualizationDescriptor(uri);
         }
 
         return new VisType();
