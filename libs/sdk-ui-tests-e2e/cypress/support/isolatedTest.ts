@@ -9,7 +9,7 @@ import {
 } from "./constants";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const getRecordingsWorkspaceId = require("../../scripts/lib/recordings");
+const record = require("../../scripts/lib/recordings");
 
 const currentTestFileMappings = `${getWorkingDir()}/recordings/mappings/${getBackend()}/mapping-${
     Cypress.spec.name
@@ -73,7 +73,7 @@ after(() => {
                 );
             });
             sanitizeCredentials(currentTestFileMappings);
-            sanitizeWorkspaceId(getProjectId(), getRecordingsWorkspaceId(), currentTestFileMappings);
+            sanitizeWorkspaceId(getProjectId(), record.getRecordingsWorkspaceId(), currentTestFileMappings);
         }
         wiremockReset(wiremockHost);
     }

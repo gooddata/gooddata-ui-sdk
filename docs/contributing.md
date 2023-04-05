@@ -413,4 +413,4 @@ Try to run the following sequence of commands `npm un -g @microsoft/rush pnpm &&
 
 ### Conflict in pnpm-lock.yaml.
 
-Run `rush update --recheck` and it should fix conflicts.
+Run `rush update --recheck` and it should fix conflicts..
