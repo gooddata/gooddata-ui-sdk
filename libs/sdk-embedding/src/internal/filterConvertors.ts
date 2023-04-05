@@ -88,6 +88,11 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
         const {
             positiveAttributeFilter: { displayForm, in: attributeElements, selectionMode = "multi" },
         } = filterItem;
+
+        // because of untyped postMessages
+        if (selectionMode !== "single" && selectionMode !== "multi") {
+            return false;
+        }
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
 
         const validElementsForSelectionMode =
