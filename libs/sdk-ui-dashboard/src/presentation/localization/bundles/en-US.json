@@ -1171,6 +1171,16 @@
         "comment": "Input selection choice.",
         "limit": 0
     },
+    "attributesDropdown.selectionMode.disabled.tooltip": {
+        "value": "Single value selection is not allowed if any filters are selected in Filter by.To use the Single value selection, disable all filters in Filter by.",
+        "comment": "Tooltip describing why selection value is disabled.",
+        "limit": 0
+    },
+    "attributesDropdown.parentFilter.disabled.tooltip": {
+        "value": "Filtering by other filters is disabled for Single value selection. To set Filter by, select the multiple value selection.",
+        "comment": "Tooltip describing why choosing parent filters is disabled.",
+        "limit": 0
+    },
     "attributesDropdown.noConnectionMessage": {
         "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",

@@ -84,6 +84,12 @@ export const DefaultDashboardAttributeFilter = (
     const selectionTitleText = intl.formatMessage({ id: "attributesDropdown.selectionMode" });
     const multiSelectionOptionText = intl.formatMessage({ id: "attributesDropdown.selectionMode.multi" });
     const singleSelectionOptionText = intl.formatMessage({ id: "attributesDropdown.selectionMode.single" });
+    const singleSelectionDisabledTooltip = intl.formatMessage({
+        id: "attributesDropdown.selectionMode.disabled.tooltip",
+    });
+    const parentFiltersDisabledTooltip = intl.formatMessage({
+        id: "attributesDropdown.parentFilter.disabled.tooltip",
+    });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -99,7 +105,7 @@ export const DefaultDashboardAttributeFilter = (
 
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-            useAutoOpenAttributeFilterDropdownButton(props, !!autoOpen);
+            useAutoOpenAttributeFilterDropdownButton(props, Boolean(autoOpen));
             useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
 
             const { isOpen, title } = props;
@@ -223,6 +229,8 @@ export const DefaultDashboardAttributeFilter = (
                             selectionTitleText={selectionTitleText}
                             multiSelectionOptionText={multiSelectionOptionText}
                             singleSelectionOptionText={singleSelectionOptionText}
+                            singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
+                            parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -240,6 +248,8 @@ export const DefaultDashboardAttributeFilter = (
         selectionTitleText,
         multiSelectionOptionText,
         singleSelectionOptionText,
+        singleSelectionDisabledTooltip,
+        parentFiltersDisabledTooltip,
     ]);
 
     return (
