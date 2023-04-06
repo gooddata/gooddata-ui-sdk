@@ -39,6 +39,13 @@ import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAn
 import { AttributeFilterParentChildExampleScenario } from "../components/Scenarios/Filters/AttributeFilterParentChildExampleScenario";
 import { DashboardAttributeFilterRenaming } from "../components/Scenarios/Dashboard/DashboardAttributeFilterRenaming";
 import { SingleSelectionAttributeFilterButtonScenario } from "../components/Scenarios/Filters/SingleSelectionAttributeFilterButtonScenario";
+import { DashboardWithCompareScenario } from "../components/Scenarios/Dashboard/DashboardWithCompareScenario";
+import { DashboardHasNullValueScenario } from "../components/Scenarios/Dashboard/DashboardHasNullValueScenario";
+import { DashboardParentScenario } from "../components/Scenarios/Dashboard/DashboardParentScenario";
+import { DashboardWithManyDataScenario } from "../components/Scenarios/Dashboard/DashboardWithManyDataScenario";
+import { DashboardWithInvalidInsightScenario } from "../components/Scenarios/Dashboard/DashboardWithInvalidInsightScenario";
+import { DashboardWithNoDataScenario } from "../components/Scenarios/Dashboard/DashboardWithNoDataScenario";
+import { DashboardWithMergeAndUnmergeScenario } from "../components/Scenarios/Dashboard/DashboardWithMergeAndUnmergeScenario";
 import { SingleSelectFilterIntegration } from "../components/Scenarios/Dashboard/SingleSelectFilterIntegration";
 
 /**
@@ -82,6 +89,13 @@ export const SCENARIO_KEYS = {
     HEADER_SECTION: "dashboard/header",
     HEADER_LOCALIZATION: "dashboard/header-localization",
     DRAG_DROP_MOVE_WIDGET: "dashboard/drag-drop-widgets",
+    DASHBOARD_WITH_COMPARE_SCENARIO: "dashboard/compare",
+    DASHBOARD_HAS_NULL_VALUE_SCENARIO: "dashboard/nullvalue",
+    DASHBOARD_PARENT_SCENARIO: "dashboard/parent",
+    DASHBOARD_WITH_MERGE_AND_UNMERGE: "dashboard/mergeunmerge",
+    DASHBOARD_WITH_INVALID_INSIGHT_SCENARIO: "dashboard/invalidinsight",
+    DASHBOARD_WITH_MANY_DATA_SCENARIO: "dashboard/manydata",
+    DASHBOARD_WITH_NO_DATA_SCENARIO: "dashboard/nodata",
     SINGLE_SELECT_FILTER_INTEGRATION: "dashboard/single-select-filter-integration",
 };
 
@@ -125,6 +139,13 @@ const scenarios = new Map<string, React.ComponentType>([
         SCENARIO_KEYS.FILTERS_SINGLE_SELECTION_ATTRIBUTE_FILTER_BUTTON,
         SingleSelectionAttributeFilterButtonScenario,
     ],
+    [SCENARIO_KEYS.DASHBOARD_WITH_COMPARE_SCENARIO, DashboardWithCompareScenario],
+    [SCENARIO_KEYS.DASHBOARD_HAS_NULL_VALUE_SCENARIO, DashboardHasNullValueScenario],
+    [SCENARIO_KEYS.DASHBOARD_PARENT_SCENARIO, DashboardParentScenario],
+    [SCENARIO_KEYS.DASHBOARD_WITH_MERGE_AND_UNMERGE, DashboardWithMergeAndUnmergeScenario],
+    [SCENARIO_KEYS.DASHBOARD_WITH_INVALID_INSIGHT_SCENARIO, DashboardWithInvalidInsightScenario],
+    [SCENARIO_KEYS.DASHBOARD_WITH_MANY_DATA_SCENARIO, DashboardWithManyDataScenario],
+    [SCENARIO_KEYS.DASHBOARD_WITH_NO_DATA_SCENARIO, DashboardWithNoDataScenario],
     [SCENARIO_KEYS.SINGLE_SELECT_FILTER_INTEGRATION, SingleSelectFilterIntegration],
 ]);
 

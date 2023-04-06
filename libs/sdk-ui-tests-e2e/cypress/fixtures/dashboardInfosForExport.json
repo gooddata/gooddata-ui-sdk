@@ -1,0 +1,54 @@
+{
+    "validInsightsForTigerPDFExport": [
+        {
+            "dashboardTitle": "KD with compares",
+            "dashboardURL": "dashboard/compare",
+            "fileName": "KD with compares.pdf",
+            "contents": "Region\nEast CoastWest Coast\nStage Name\nSum of Amount: Stage Name (5)Sum of Amount: Stage Name (5)\nInterest112,261,028.81658,375,577.02\nDiscovery81,789,169.68181,439,545.32\nShort List–219,302,451.65\nAD with compares\nKD with compares"
+        },
+        {
+            "dashboardTitle": "KD has null value",
+            "dashboardURL": "dashboard/nullvalue",
+            "fileName": "KD has null value.pdf",
+            "contents": "Region\n(empty value)(empty value)\nProductMetric has null value_Snapshot [EOP]_Timeline [EOP]Metric has null value_Snapshot [EOP]_Timeline [EOP]\nPhoenixSoft–––1,45941,054.0044,195\nWonderKid24,09641,054.0044,195–––\nAD has null value\nKD has null value"
+        },
+        {
+            "dashboardTitle": "Parent Dashboard",
+            "dashboardURL": "dashboard/parent",
+            "fileName": "Parent Dashboard.pdf",
+            "contents": "Department\nParent metric\nDirect Sales3,927,040,223\nInside Sales1,690,899,040\nParent Insight\nParent Dashboard"
+        },
+        {
+            "dashboardTitle": "KD with invalid insight",
+            "dashboardURL": "dashboard/invalidinsight",
+            "fileName": "KD with invalid insight.pdf",
+            "contents": "SORRY, WE CAN'T DISPLAY THIS INSIGHT\nContact your administrator.\ninvalid insight\nKD with invalid insight"
+        },
+        {
+            "dashboardTitle": "KD with merge and unmerge insights",
+            "dashboardURL": "dashboard/mergeunmerge",
+            "fileName": "KD with merge and unmerge insights.pdf",
+            "contents": "RegionStage Name\nAmount\nEast CoastNegotiation$651,629.48\nWest CoastNegotiation$1,194,979.99\nEast CoastClosed Won$9,111,442.98\nWest CoastClosed Won$22,577,597.64\nEast CoastClosed Lost$8,825,311.89\nWest CoastClosed Lost$27,144,942.17\nunmerge cells insight\nRegion\nStage NameAmount\nWest CoastNegotiation$1,194,979.99\nClosed Won$22,577,597.64\nClosed Lost$27,144,942.17\nEast CoastNegotiation$651,629.48\nClosed Won$9,111,442.98\nClosed Lost$8,825,311.89\nmerge cells insight\nWest Coast\nKD with merge and unmerge insights"
+        },
+        {
+            "dashboardTitle": "KD with No data",
+            "dashboardURL": "dashboard/nodata",
+            "fileName": "KD with No data.pdf",
+            "contents": "No data for your filter selection\nNo data\nKD with No data"
+        },
+        {
+            "dashboardTitle": "KD with many data insight",
+            "dashboardURL": "dashboard/manydata",
+            "fileName": "KD with many data insight.pdf",
+            "contents": "TOO MANY DATA POINTS TO DISPLAY\nTry applying one or more filters to your dashboard.\nmany data\nKD with many data insight"
+        }
+    ],
+    "insightsAfterChangingFilterForPDFExport": [
+        {
+            "dashboardTitle": "KD has null value",
+            "dashboardURL": "dashboard/nullvalue",
+            "fileName": "KD has null value.pdf",
+            "contents": "Region\n(empty value)\nProductMetric has null value_Snapshot [EOP]_Timeline [EOP]\nWonderKid24,09641,054.0044,195\nAD has null value\nKD has null value"
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 {
     "analytics": {
+        "analyticalDashboardExtensions": [],
         "analyticalDashboards": [
             {
                 "content": {
@@ -724,6 +725,117 @@
                 "description": "",
                 "id": "97aca5e1-ab29-4ad9-a173-72085daf4dbf",
                 "title": "Drill to dashboard"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "4241e9a6-4dd0-4f61-9b4b-3d7d6ca4e165",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "configuration": {
+                                                "hideTitle": false
+                                            },
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "f6dc8313-c2dc-4731-b491-b5b0758738ae",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {
+                                                "controls": {
+                                                    "columnWidths": [
+                                                        {
+                                                            "measureColumnWidthItem": {
+                                                                "locators": [
+                                                                    {
+                                                                        "attributeLocatorItem": {
+                                                                            "attributeIdentifier": "4a9ade0988e94b59bbb5cdb457bbbc50",
+                                                                            "element": "East Coast"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "measureLocatorItem": {
+                                                                            "measureIdentifier": "2fc7b14ec80241b09a1f6a1bcb51a547"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "width": {
+                                                                    "value": 244
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "measureColumnWidthItem": {
+                                                                "locators": [
+                                                                    {
+                                                                        "attributeLocatorItem": {
+                                                                            "attributeIdentifier": "4a9ade0988e94b59bbb5cdb457bbbc50",
+                                                                            "element": "West Coast"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "measureLocatorItem": {
+                                                                            "measureIdentifier": "2fc7b14ec80241b09a1f6a1bcb51a547"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "width": {
+                                                                    "value": 307
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "title": "AD with compares",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "abcd2251-d78d-4d6b-b088-1845b89c04ba",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "graphene.tiger",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "KD with compares"
             },
             {
                 "content": {
@@ -1471,6 +1583,39 @@
             },
             {
                 "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": "2010-02-23 00:00",
+                                "granularity": "GDC.time.date",
+                                "to": "2022-03-23 23:59",
+                                "type": "absolute"
+                            }
+                        },
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": ["Interest", "Discovery", "Short List"]
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "attr.f_stage.stagename",
+                                        "type": "label"
+                                    }
+                                },
+                                "localIdentifier": "f1ba1124b4e540d5987e5ef2ff1cd20e",
+                                "negativeSelection": false
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "4241e9a6-4dd0-4f61-9b4b-3d7d6ca4e165",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [],
                     "version": "2"
                 },
@@ -1528,6 +1673,15 @@
                 },
                 "description": "",
                 "id": "4bf3df70-6de9-4199-a48e-360c74f94bac",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "4e207881-5730-4877-aa38-b67e506b1a5b",
                 "title": "filterContext"
             },
             {
@@ -3808,6 +3962,190 @@
                 "description": "Table with hyperlink attribute",
                 "id": "f51896d7-1a46-416b-8039-67d8af1d7651",
                 "title": "Table with hyperlink attribute"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [
+                                                    {
+                                                        "positiveAttributeFilter": {
+                                                            "displayForm": {
+                                                                "identifier": {
+                                                                    "id": "attr.f_stage.stagename",
+                                                                    "type": "label"
+                                                                }
+                                                            },
+                                                            "in": {
+                                                                "values": [
+                                                                    "Interest",
+                                                                    "Discovery",
+                                                                    "Short List",
+                                                                    "Risk Assessment",
+                                                                    "Conviction"
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_amount",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "2fc7b14ec80241b09a1f6a1bcb51a547",
+                                        "title": "Sum of Amount: Stage Name (5)"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "attr.f_stage.stagename",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "37133a8d587f4f9faaf43444778fb37d"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.region_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "4a9ade0988e94b59bbb5cdb457bbbc50"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "positiveAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "attr.f_stage.stagename",
+                                        "type": "label"
+                                    }
+                                },
+                                "in": {
+                                    "values": [
+                                        "Interest",
+                                        "Discovery",
+                                        "Short List",
+                                        "Risk Assessment",
+                                        "Conviction",
+                                        "Negotiation"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "absoluteDateFilter": {
+                                "dataSet": {
+                                    "identifier": {
+                                        "id": "dt_closedate_timestamp",
+                                        "type": "dataset"
+                                    }
+                                },
+                                "from": "2010-02-23 00:00",
+                                "to": "2022-03-23 23:59"
+                            }
+                        },
+                        {
+                            "rankingFilter": {
+                                "measure": {
+                                    "localIdentifier": "2fc7b14ec80241b09a1f6a1bcb51a547"
+                                },
+                                "operator": "TOP",
+                                "value": 5
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "controls": {
+                            "columnWidths": [
+                                {
+                                    "measureColumnWidthItem": {
+                                        "locators": [
+                                            {
+                                                "attributeLocatorItem": {
+                                                    "attributeIdentifier": "4a9ade0988e94b59bbb5cdb457bbbc50",
+                                                    "element": "East Coast"
+                                                }
+                                            },
+                                            {
+                                                "measureLocatorItem": {
+                                                    "measureIdentifier": "2fc7b14ec80241b09a1f6a1bcb51a547"
+                                                }
+                                            }
+                                        ],
+                                        "width": {
+                                            "value": 262
+                                        }
+                                    }
+                                },
+                                {
+                                    "measureColumnWidthItem": {
+                                        "locators": [
+                                            {
+                                                "attributeLocatorItem": {
+                                                    "attributeIdentifier": "4a9ade0988e94b59bbb5cdb457bbbc50",
+                                                    "element": "West Coast"
+                                                }
+                                            },
+                                            {
+                                                "measureLocatorItem": {
+                                                    "measureIdentifier": "2fc7b14ec80241b09a1f6a1bcb51a547"
+                                                }
+                                            }
+                                        ],
+                                        "width": {
+                                            "value": 329
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "37133a8d587f4f9faaf43444778fb37d",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "description": "",
+                "id": "f6dc8313-c2dc-4731-b491-b5b0758738ae",
+                "title": "AD with compares"
             },
             {
                 "content": {
