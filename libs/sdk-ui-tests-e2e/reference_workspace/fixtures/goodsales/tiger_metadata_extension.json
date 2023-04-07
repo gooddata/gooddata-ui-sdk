@@ -829,7 +829,7 @@
                 "permissions": [
                     {
                         "assignee": {
-                            "id": "graphene.tiger",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
