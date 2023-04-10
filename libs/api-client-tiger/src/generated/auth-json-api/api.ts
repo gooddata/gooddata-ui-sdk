@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -1077,6 +1077,760 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
      */
     public updateUser(requestParameters: AuthenticationApiUpdateUserRequest, options?: AxiosRequestConfig) {
         return AuthenticationApiFp(this.configuration)
+            .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * UserAuthorizationApi - axios parameter creator
+ * @export
+ */
+export const UserAuthorizationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         *
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser: async (authUser: AuthUser, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authUser' is not null or undefined
+            assertParamExists("createUser", "authUser", authUser);
+            const localVarPath = `/api/v1/auth/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof authUser !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(authUser !== undefined ? authUser : {})
+                : authUser || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser: async (userEmail: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("deleteUser", "userEmail", userEmail);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProfile: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser: async (userEmail: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("getUser", "userEmail", userEmail);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/auth/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * @param {Invitation} invitation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processInvitation: async (
+            invitation: Invitation,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'invitation' is not null or undefined
+            assertParamExists("processInvitation", "invitation", invitation);
+            const localVarPath = `/api/v1/actions/invite`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof invitation !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(invitation !== undefined ? invitation : {})
+                : invitation || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userEmail
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser: async (
+            userEmail: string,
+            authUser: AuthUser,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userEmail' is not null or undefined
+            assertParamExists("updateUser", "userEmail", userEmail);
+            // verify required parameter 'authUser' is not null or undefined
+            assertParamExists("updateUser", "authUser", authUser);
+            const localVarPath = `/api/v1/auth/users/{userEmail}`.replace(
+                `{${"userEmail"}}`,
+                encodeURIComponent(String(userEmail)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof authUser !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(authUser !== undefined ? authUser : {})
+                : authUser || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * UserAuthorizationApi - functional programming interface
+ * @export
+ */
+export const UserAuthorizationApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserAuthorizationApiAxiosParamCreator(configuration);
+    return {
+        /**
+         *
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createUser(
+            authUser: AuthUser,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(authUser, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteUser(
+            userEmail: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(userEmail, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProfile(
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userEmail
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUser(
+            userEmail: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(userEmail, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUsers(
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AuthUser>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * @param {Invitation} invitation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async processInvitation(
+            invitation: Invitation,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.processInvitation(invitation, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userEmail
+         * @param {AuthUser} authUser
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateUser(
+            userEmail: string,
+            authUser: AuthUser,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(
+                userEmail,
+                authUser,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * UserAuthorizationApi - factory interface
+ * @export
+ */
+export const UserAuthorizationApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = UserAuthorizationApiFp(configuration);
+    return {
+        /**
+         *
+         * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser(
+            requestParameters: UserAuthorizationApiCreateUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .createUser(requestParameters.authUser, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser(
+            requestParameters: UserAuthorizationApiDeleteUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteUser(requestParameters.userEmail, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile> {
+            return localVarFp.getProfile(options).then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser(
+            requestParameters: UserAuthorizationApiGetUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .getUser(requestParameters.userEmail, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>> {
+            return localVarFp.getUsers(options).then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processInvitation(
+            requestParameters: UserAuthorizationApiProcessInvitationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .processInvitation(requestParameters.invitation, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser(
+            requestParameters: UserAuthorizationApiUpdateUserRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AuthUser> {
+            return localVarFp
+                .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserAuthorizationApi - interface
+ * @export
+ * @interface UserAuthorizationApi
+ */
+export interface UserAuthorizationApiInterface {
+    /**
+     *
+     * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    createUser(
+        requestParameters: UserAuthorizationApiCreateUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+
+    /**
+     *
+     * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    deleteUser(
+        requestParameters: UserAuthorizationApiDeleteUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile>;
+
+    /**
+     *
+     * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    getUser(
+        requestParameters: UserAuthorizationApiGetUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>>;
+
+    /**
+     *
+     * @summary Puts a new invitation requirement into the invitation generator queue.
+     * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    processInvitation(
+        requestParameters: UserAuthorizationApiProcessInvitationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApiInterface
+     */
+    updateUser(
+        requestParameters: UserAuthorizationApiUpdateUserRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AuthUser>;
+}
+
+/**
+ * Request parameters for createUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiCreateUserRequest
+ */
+export interface UserAuthorizationApiCreateUserRequest {
+    /**
+     *
+     * @type {AuthUser}
+     * @memberof UserAuthorizationApiCreateUser
+     */
+    readonly authUser: AuthUser;
+}
+
+/**
+ * Request parameters for deleteUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiDeleteUserRequest
+ */
+export interface UserAuthorizationApiDeleteUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof UserAuthorizationApiDeleteUser
+     */
+    readonly userEmail: string;
+}
+
+/**
+ * Request parameters for getUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiGetUserRequest
+ */
+export interface UserAuthorizationApiGetUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof UserAuthorizationApiGetUser
+     */
+    readonly userEmail: string;
+}
+
+/**
+ * Request parameters for processInvitation operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiProcessInvitationRequest
+ */
+export interface UserAuthorizationApiProcessInvitationRequest {
+    /**
+     *
+     * @type {Invitation}
+     * @memberof UserAuthorizationApiProcessInvitation
+     */
+    readonly invitation: Invitation;
+}
+
+/**
+ * Request parameters for updateUser operation in UserAuthorizationApi.
+ * @export
+ * @interface UserAuthorizationApiUpdateUserRequest
+ */
+export interface UserAuthorizationApiUpdateUserRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof UserAuthorizationApiUpdateUser
+     */
+    readonly userEmail: string;
+
+    /**
+     *
+     * @type {AuthUser}
+     * @memberof UserAuthorizationApiUpdateUser
+     */
+    readonly authUser: AuthUser;
+}
+
+/**
+ * UserAuthorizationApi - object-oriented interface
+ * @export
+ * @class UserAuthorizationApi
+ * @extends {BaseAPI}
+ */
+export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationApiInterface {
+    /**
+     *
+     * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public createUser(
+        requestParameters: UserAuthorizationApiCreateUserRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
+            .createUser(requestParameters.authUser, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public deleteUser(
+        requestParameters: UserAuthorizationApiDeleteUserRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
+            .deleteUser(requestParameters.userEmail, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public getProfile(options?: AxiosRequestConfig) {
+        return UserAuthorizationApiFp(this.configuration)
+            .getProfile(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public getUser(requestParameters: UserAuthorizationApiGetUserRequest, options?: AxiosRequestConfig) {
+        return UserAuthorizationApiFp(this.configuration)
+            .getUser(requestParameters.userEmail, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public getUsers(options?: AxiosRequestConfig) {
+        return UserAuthorizationApiFp(this.configuration)
+            .getUsers(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @summary Puts a new invitation requirement into the invitation generator queue.
+     * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public processInvitation(
+        requestParameters: UserAuthorizationApiProcessInvitationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
+            .processInvitation(requestParameters.invitation, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAuthorizationApi
+     */
+    public updateUser(
+        requestParameters: UserAuthorizationApiUpdateUserRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return UserAuthorizationApiFp(this.configuration)
             .updateUser(requestParameters.userEmail, requestParameters.authUser, options)
             .then((request) => request(this.axios, this.basePath));
     }

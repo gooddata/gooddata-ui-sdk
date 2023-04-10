@@ -274,6 +274,11 @@ export interface ISettings {
      */
     dashboardEditModeDevRollout?: boolean;
 
+    /**
+     * Enable use of composite grain
+     */
+    enableCompositeGrain?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

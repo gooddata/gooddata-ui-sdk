@@ -12,6 +12,9 @@
     ],
     "tags": [
         {
+            "name": "Computation"
+        },
+        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }
@@ -19,7 +22,7 @@
     "paths": {
         "/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.",
                 "description": "Returns paged list of elements (values) of given label satisfying given filtering criteria.",
                 "operationId": "computeLabelElementsPost",
@@ -101,7 +104,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "AFM explain resource.",
                 "description": "The resource provides static structures needed for investigation of a problem with given AFM.",
                 "operationId": "explainAFM",
@@ -172,7 +175,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Executes analytical request and returns link to the result",
                 "description": "AFM is a combination of attributes, measures and filters that describe a query you want to execute.",
                 "operationId": "computeReport",
@@ -238,7 +241,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Valid objects",
                 "description": "Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.",
                 "operationId": "computeValidObjects",
@@ -284,7 +287,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata": {
             "get": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Get a single execution result's metadata.",
                 "description": "The resource provides execution result's metadata as AFM and resultSpec used in execution request and an executionResponse",
                 "operationId": "retrieveExecutionMetadata",
@@ -330,7 +333,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
             "get": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Get a single execution result",
                 "description": "Gets a single execution result.",
                 "operationId": "retrieveResult",
@@ -535,7 +538,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "example": "sample_item.price"
                     },
@@ -551,6 +554,7 @@
                 "type": "object",
                 "properties": {
                     "label": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "Requested label."
                     },
@@ -746,7 +750,7 @@
                                 ]
                             },
                             "id": {
-                                "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                                 "type": "string",
                                 "example": "sample_item.price"
                             }
@@ -764,7 +768,7 @@
                         "type": "object",
                         "properties": {
                             "id": {
-                                "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                                 "type": "string",
                                 "example": "sample_item.price"
                             },
@@ -785,7 +789,7 @@
                         "type": "object",
                         "properties": {
                             "id": {
-                                "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                                 "type": "string",
                                 "example": "sample_item.price"
                             },
@@ -806,7 +810,7 @@
                         "type": "object",
                         "properties": {
                             "id": {
-                                "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                                 "type": "string",
                                 "example": "sample_item.price"
                             },
@@ -831,7 +835,7 @@
                                 "enum": ["label"]
                             },
                             "id": {
-                                "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                                 "type": "string",
                                 "example": "sample_item.price"
                             }
@@ -1873,7 +1877,7 @@
                     },
                     "dimensionHeaders": {
                         "type": "array",
-                        "description": "An array containing dimension headers. The size of the array corresponds to dimension size. Their order corresponds to the dimension order in the execution result spec.",
+                        "description": "An array containing dimension headers. The size of the array corresponds to the number of dimensions. Their order corresponds to the dimension order in the execution result spec.",
                         "items": {
                             "$ref": "#/components/schemas/DimensionHeader"
                         }

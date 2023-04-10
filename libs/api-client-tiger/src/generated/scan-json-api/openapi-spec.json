@@ -12,6 +12,12 @@
     ],
     "tags": [
         {
+            "name": "Scanning"
+        },
+        {
+            "name": "Test Connection"
+        },
+        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }
@@ -19,7 +25,7 @@
     "paths": {
         "/api/v1/actions/dataSources/{dataSourceId}/test": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Test Connection", "actions"],
                 "summary": "Test data source connection by data source id",
                 "description": "Test if it is possible to connect to a database using an existing data source definition.",
                 "operationId": "testDataSource",
@@ -85,7 +91,7 @@
         },
         "/api/v1/actions/dataSources/{dataSourceId}/scanSql": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Scanning", "actions"],
                 "summary": "Collect metadata about SQL query",
                 "description": "It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query",
                 "operationId": "scanSql",
@@ -157,7 +163,7 @@
         },
         "/api/v1/actions/dataSources/{dataSourceId}/scan": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Scanning", "actions"],
                 "summary": "Scan a database to get a physical data model (PDM)",
                 "description": "It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.",
                 "operationId": "scanDataSource",
@@ -238,7 +244,7 @@
         },
         "/api/v1/actions/dataSource/test": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Test Connection", "actions"],
                 "summary": "Test connection by data source definition",
                 "description": "Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.",
                 "operationId": "testDataSourceDefinition",
@@ -291,7 +297,7 @@
         },
         "/api/v1/actions/dataSources/{dataSourceId}/scanSchemata": {
             "get": {
-                "tags": ["actions"],
+                "tags": ["Scanning", "actions"],
                 "summary": "Get a list of schema names of a database",
                 "description": "It scans a database and reads metadata. The result of the request contains a list of schema names of a database.",
                 "operationId": "getDataSourceSchemata",
@@ -455,7 +461,8 @@
                         "items": {
                             "type": "array",
                             "items": {
-                                "type": "string"
+                                "type": "string",
+                                "nullable": true
                             }
                         }
                     }
@@ -518,6 +525,7 @@
                 "type": "object",
                 "properties": {
                     "name": {
+                        "maxLength": 255,
                         "type": "string",
                         "description": "Column name",
                         "example": "customer_id"
@@ -533,11 +541,13 @@
                         "description": "Is column part of primary key?"
                     },
                     "referencedTableId": {
+                        "maxLength": 255,
                         "type": "string",
                         "description": "Referenced table (Foreign key)",
                         "example": "customers"
                     },
                     "referencedTableColumn": {
+                        "maxLength": 255,
                         "type": "string",
                         "description": "Referenced table (Foreign key)",
                         "example": "customer_id"
@@ -570,6 +580,7 @@
                         "example": "VIEW"
                     },
                     "namePrefix": {
+                        "maxLength": 255,
                         "type": "string",
                         "description": "Table or view name prefix used in scan. Will be stripped when generating LDM.",
                         "example": "out_gooddata"
@@ -682,7 +693,7 @@
                 "description": "A request containing all information critical to model scanning."
             },
             "TestDefinitionRequest": {
-                "required": ["type", "url"],
+                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "type": {
