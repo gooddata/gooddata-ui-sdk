@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     AnalyticalBackendErrorTypes,
     isAnalyticalBackendError,
@@ -78,6 +78,10 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
         },
         [ErrorCodes.BAD_REQUEST]: genericDescriptor,
         [ErrorCodes.UNKNOWN_ERROR]: genericDescriptor,
+        [ErrorCodes.VISUALIZATION_CLASS_UNKNOWN]: {
+            message: intl.formatMessage({ id: "visualization.ErrorMessageGeneric" }),
+            description: intl.formatMessage({ id: "visualization.ErrorDescriptionGeneric" }),
+        },
     };
 }
 

@@ -1,6 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
-import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { BarChartDescriptor } from "../pluggableVisualizations/barChart/BarChartDescriptor";
 import { CatalogViaTypeToClassMap, FullVisualizationCatalog } from "../VisualizationCatalog";
 import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
@@ -39,19 +38,23 @@ describe("CatalogViaTypeToClassMap", () => {
     });
 
     it("indicates no support for insight with unknown visualization class", () => {
-        const result = TestCatalog.hasDescriptorForInsight(newInsightDefinition("local:unknownType"));
+        const result = TestCatalog.forInsight(newInsightDefinition("local:unknownType"));
 
-        expect(result).toBeFalsy();
+        expect(result.getMeta()).toEqual({
+            documentationUrl: `unknown: local:unknownType`,
+            supportsExport: false,
+            supportsZooming: false,
+        });
     });
 
     it("throws when URI cannot be resolved", () => {
-        expect(() => TestCatalog.forUri("local:nonsense")).toThrowError(UnexpectedSdkError);
-    });
+        const result = TestCatalog.forUri("local:unknownType");
 
-    it("throws when insight cannot be resolved", () => {
-        expect(() => TestCatalog.forInsight(newInsightDefinition("local:nonsense"))).toThrowError(
-            UnexpectedSdkError,
-        );
+        expect(result.getMeta()).toEqual({
+            documentationUrl: `unknown: local:unknownType`,
+            supportsExport: false,
+            supportsZooming: false,
+        });
     });
 });
 

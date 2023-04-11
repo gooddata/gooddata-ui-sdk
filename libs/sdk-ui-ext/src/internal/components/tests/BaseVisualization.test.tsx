@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -439,18 +439,17 @@ describe("BaseVisualization", () => {
         });
     });
 
-    it("should not setup visualization of unknown type", () => {
-        // backup console object, restore at the end
-        const originalConsoleError = global.console.error;
-        global.console.error = jest.fn();
-
+    it("should render message in case visualization type is unknown", () => {
+        const onLoadingChanged = jest.fn();
         createComponent({
             ...defaultProps,
+            insight: testMocks.dummyInsight,
             visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
+            onLoadingChanged,
         });
 
-        expect(console.error).toBeCalled(); // eslint-disable-line no-console
-        global.console.error = originalConsoleError;
+        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
+        expect(screen.getByText("Sorry, we can't display this insight")).toBeInTheDocument();
     });
 
     describe("getExtendedReferencePoint in componentDidMount", () => {
