@@ -102,7 +102,7 @@ RC=1
     # per-project basis.
     #
 
-    $_RUSH test-ci $RUSH_SPECS --parallelism 4
+    $_RUSH test-ci $RUSH_SPECS --parallelism 2
     RC=$?
   fi
 
