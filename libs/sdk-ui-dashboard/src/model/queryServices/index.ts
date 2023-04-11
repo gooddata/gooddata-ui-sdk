@@ -8,6 +8,7 @@ import { QueryWidgetAlertCountService } from "./queryWidgetAlertCount";
 import { QueryConnectingAttributesService } from "./queryConnectingAttributes";
 import { QueryAttributeByDisplayFormService } from "./queryAttributeByDisplayForm";
 import { QueryAttributeDataSetService } from "./queryAttributeDataset";
+import { QueryAttributeElementsService } from "./queryAttributeElements";
 
 export const AllQueryServices = [
     QueryDateDatasetsForInsightService,
@@ -19,4 +20,5 @@ export const AllQueryServices = [
     QueryConnectingAttributesService,
     QueryAttributeByDisplayFormService,
     QueryAttributeDataSetService,
+    QueryAttributeElementsService,
 ];

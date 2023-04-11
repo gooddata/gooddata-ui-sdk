@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -10,6 +10,7 @@ import debounce from "lodash/debounce";
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton";
 import { useDashboardSelector, selectCatalogAttributes } from "../../../../model";
 import { IDashboardAttributeFilterPlaceholderProps } from "../types";
+import { AttributeListItemTooltip } from "./attributeListItemTooltip/AttributeListItemTooltip";
 
 interface IAttributeListItemProps {
     item?: ICatalogAttribute;
@@ -71,15 +72,21 @@ function AttributeListItem({ item, isMobile, onClick }: IAttributeListItemProps)
         return null;
     }
 
-    const metricItemClassNames = cx(`s-${stringUtils.simplifyText(item.attribute.title)}`, {
-        "gd-list-item": true,
-        "gd-list-item-shortened": true,
-    });
+    const metricItemClassNames = cx(
+        `s-${stringUtils.simplifyText(item.attribute.title)} gd-attribute-list-item`,
+        {
+            "gd-list-item": true,
+            "gd-list-item-shortened": true,
+        },
+    );
 
     const title = isMobile ? (
         item.attribute.title
     ) : (
-        <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{item.attribute.title}</ShortenedText>
+        <>
+            <AttributeListItemTooltip item={item} />
+            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{item.attribute.title}</ShortenedText>
+        </>
     );
 
     return (

@@ -10,7 +10,7 @@ import {
 /**
  * @internal
  */
-export function useAttributeDataSet(displayForm: ObjRef) {
+export function useAttributeDataSet(displayForm: ObjRef, loadQuery = true) {
     const {
         run: getAttributeDataSet,
         result: attributeDataSet,
@@ -25,8 +25,10 @@ export function useAttributeDataSet(displayForm: ObjRef) {
     });
 
     useEffect(() => {
-        getAttributeDataSet(displayForm);
-    }, [displayForm, getAttributeDataSet]);
+        if (loadQuery) {
+            getAttributeDataSet(displayForm);
+        }
+    }, [displayForm, loadQuery, getAttributeDataSet]);
 
     const attributesDataSetLoading = useMemo(() => {
         return attributesDataSetLoadingStatus === "pending" || attributesDataSetLoadingStatus === "running";

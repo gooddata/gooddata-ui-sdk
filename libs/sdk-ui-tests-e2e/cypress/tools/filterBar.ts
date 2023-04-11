@@ -370,6 +370,12 @@ export class FilterBar {
         return this;
     }
 
+    showTooltipDialog(name: string) {
+        const testClass = getTestClassByTitle(name);
+        cy.get(`${testClass} .s-attribute-dropdown-list-item-tooltip `).trigger("mouseover", { force: true });
+        return this;
+    }
+
     hasMatchingAttributeName(expect: boolean) {
         cy.get(".gd-no-matching-data").should(expect ? "not.exist" : "exist");
         return this;
