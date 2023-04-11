@@ -370,6 +370,20 @@ export function attributeFilterParentChanged(
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterParentChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttributeFilterParentChanged>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
+);
+
+//
+//
+//
+
+/**
  * Payload of the {@link DashboardAttributeTitleChanged} event.
  * @beta
  */
@@ -446,15 +460,25 @@ export function attributeDisplayFormChanged(
     };
 }
 
+/**
+ * Payload of the {@link DashboardAttributeSelectionModeChanged} event.
+ *
+ * @beta
+ */
 export interface DashboardAttributeSelectionModeChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
-     * The definition of parents represents the new state.
+     * The definition of selection mode represents the new state.
      */
     readonly filter: IDashboardAttributeFilter;
 }
 
+/**
+ * This event is emitted when the attribute filter selection mode is change.
+ *
+ * @beta
+ */
 export interface DashboardAttributeSelectionModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED";
     readonly payload: DashboardAttributeSelectionModeChangedPayload;
@@ -476,14 +500,15 @@ export function attributeSelectionModeChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterParentChanged}.
+ * Tests whether the provided object is an instance of {@link DashboardAttributeSelectionModeChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttributeFilterParentChanged>(
-    "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
-);
+export const isDashboardAttributeFilterSelectionModeChanged =
+    eventGuard<DashboardAttributeSelectionModeChanged>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
+    );
 
 //
 //
