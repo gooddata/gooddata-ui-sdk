@@ -829,8 +829,8 @@
                 "permissions": [
                     {
                         "assignee": {
-                            "id": "graphene.tiger",
-                            "type": "user"
+                            "id": "adminGroup",
+                            "type": "userGroup"
                         },
                         "name": "EDIT"
                     }

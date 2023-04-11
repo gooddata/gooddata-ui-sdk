@@ -39,6 +39,7 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger"] }, ()
                     contents: string;
                 }) => {
                     Navigation.visit(dashboardInfo.dashboardURL, { enableKPIDashboardExportPDF: true });
+                    widget.waitTableLoaded();
                     topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
                     dashboardMenu.toggle().clickOption("Export to PDF");
                     exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
