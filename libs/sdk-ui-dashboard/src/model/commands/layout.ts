@@ -26,7 +26,7 @@ export interface AddLayoutSectionPayload {
     /**
      * Specify one or more items to include in the newly created section.
      */
-    readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
+    readonly initialItems?: DashboardItemDefinition[];
 
     /**
      * Specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
@@ -318,7 +318,7 @@ export interface AddSectionItemsPayload {
      * Note: if you use the stashed items identifier, the items will be moved from the stash - you cannot use
      * the stash identifier again.
      */
-    readonly items: ReadonlyArray<DashboardItemDefinition>;
+    readonly items: DashboardItemDefinition[];
 
     /**
      * Specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI

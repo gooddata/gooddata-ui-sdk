@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { ExportDialog, IExportDialogData } from "@gooddata/sdk-ui-kit";
 import { IExtendedExportConfig, IExportFunction } from "@gooddata/sdk-ui";
@@ -89,7 +89,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
         const getExportUri = async () => {
             try {
                 return (await exportFunction(exportConfig!))?.uri;
-            } catch (error) {
+            } catch (error: any) {
                 let errorMessage = error.message;
                 if (error.responseBody) {
                     errorMessage = JSON.parse(error.responseBody)?.error?.message;
@@ -98,7 +98,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
             }
         };
 
-        if (exportFunction && exportConfig) {
+        if (!!exportFunction && exportConfig) {
             setState((oldState) => ({ ...oldState, exporting: true }));
             getExportUri()
                 .then((uri) =>

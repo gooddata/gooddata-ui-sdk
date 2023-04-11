@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { dataViewDimensionItems, dataViewHeaders, measureGroupItems } from "./utils";
 import {
@@ -226,6 +226,7 @@ function createMeasureIndexes(
             return [measure, idx];
         }) ?? [];
 
+    const accumulator: Record<string, number[]> = {};
     return measureAndIndex.reduce((res, [localId, seriesIdx]) => {
         if (!res[localId]) {
             res[localId] = [];
@@ -233,7 +234,7 @@ function createMeasureIndexes(
 
         res[localId].push(seriesIdx);
         return res;
-    }, {});
+    }, accumulator);
 }
 
 function createDataSeriesDigest(

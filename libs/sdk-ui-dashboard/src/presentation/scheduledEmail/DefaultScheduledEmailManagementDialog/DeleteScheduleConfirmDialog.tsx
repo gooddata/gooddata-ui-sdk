@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,7 +26,7 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             await effectiveBackend.workspace(effectiveWorkspace).dashboards().deleteScheduledMail(ref);
             onSuccess?.();
         } catch (err) {
-            onError?.(err);
+            onError?.(err as GoodDataSdkError);
         }
     };
 

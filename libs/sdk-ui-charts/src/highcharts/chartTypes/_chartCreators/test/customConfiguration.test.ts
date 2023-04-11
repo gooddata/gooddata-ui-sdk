@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import set from "lodash/set";
 import noop from "lodash/noop";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -83,15 +83,15 @@ describe("getCustomizedConfiguration", () => {
 
     it('should handle "%" format on axis and use label formatter', () => {
         const chartOptionsWithFormat = immutableSet(chartOptions, "yAxes[0].format", "0.00 %");
-        const resultWithoutFormat = getCustomizedConfiguration(chartOptions);
-        const resultWithFormat = getCustomizedConfiguration(chartOptionsWithFormat);
+        const resultWithoutFormat: any = getCustomizedConfiguration(chartOptions);
+        const resultWithFormat: any = getCustomizedConfiguration(chartOptionsWithFormat);
 
         expect(resultWithoutFormat.yAxis[0].labels.formatter).toBeUndefined();
         expect(resultWithFormat.yAxis[0].labels.formatter).toBeDefined();
     });
 
     it("should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation", () => {
-        const result = getCustomizedConfiguration({
+        const result: any = getCustomizedConfiguration({
             ...chartOptions,
             type: "bar",
             xAxisProps: {
@@ -103,7 +103,7 @@ describe("getCustomizedConfiguration", () => {
     });
 
     it("should set formatter for xAxis labels to prevent overlapping for stacking bar chart with 90 rotation", () => {
-        const result = getCustomizedConfiguration({
+        const result: any = getCustomizedConfiguration({
             ...chartOptions,
             isViewByTwoAttributes: true,
             type: "bar",
@@ -116,7 +116,7 @@ describe("getCustomizedConfiguration", () => {
     });
 
     it("shouldn't set formatter for xAxis by default", () => {
-        const result = getCustomizedConfiguration(chartOptions);
+        const result: any = getCustomizedConfiguration(chartOptions);
 
         expect(result.xAxis[0].labels.formatter).toBeUndefined();
     });
@@ -152,7 +152,7 @@ describe("getCustomizedConfiguration", () => {
 
     describe("getAxesConfiguration", () => {
         it("should set Y axis configuration from properties", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
                     min: "20",
@@ -179,7 +179,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set X axis configurations from properties", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
                     visible: false,
@@ -205,7 +205,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should not set chart and X axis configurations when the zooming is disabled", () => {
-            const result = getCustomizedConfiguration(
+            const result: any = getCustomizedConfiguration(
                 {
                     ...chartOptions,
                 },
@@ -224,7 +224,7 @@ describe("getCustomizedConfiguration", () => {
 
         it("should set chart and X axis configurations with the minRange = 2 when the zooming is enabled and the categories are larger than 2", () => {
             const intl = createIntlMock();
-            const result = getCustomizedConfiguration(
+            const result: any = getCustomizedConfiguration(
                 {
                     ...chartOptions,
                     data: {
@@ -250,7 +250,7 @@ describe("getCustomizedConfiguration", () => {
 
         it("should set chart and X axis configurations with the minRange is default value (undefined) when the zooming is enabled and the categories <= 2", () => {
             const intl = createIntlMock();
-            const result = getCustomizedConfiguration(
+            const result: any = getCustomizedConfiguration(
                 {
                     ...chartOptions,
                     data: {
@@ -275,7 +275,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set X axis configurations with style", () => {
-            const result = getCustomizedConfiguration(chartOptions);
+            const result: any = getCustomizedConfiguration(chartOptions);
             expect(result.xAxis[0].title.style).toEqual({
                 color: "#6d7680",
                 font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
@@ -284,7 +284,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should enable axis label for scatter plot when x and y are not set", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 type: VisualizationTypes.SCATTER,
             });
@@ -309,7 +309,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should disable xAxis labels when x axis is disabled in scatter", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
                     visible: false,
@@ -337,7 +337,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should disable labels when labels are disabled in bubble", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
                     labelsEnabled: false,
@@ -365,7 +365,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should enable labels for heatmap when categories are not empty", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 data: {
                     ...chartOptions.data,
@@ -394,7 +394,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should disable lables for heatmap when categories are empty", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 data: {
                     ...chartOptions.data,
@@ -438,7 +438,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set axis line width to 1 in scatter plot when axis is enabled", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
                     visible: true,
@@ -454,7 +454,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should not set axis line when in column and axis is enabled", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
                     visible: true,
@@ -470,7 +470,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set axis line width to 0 when axis is disabled", () => {
-            const result = getCustomizedConfiguration({
+            const result: any = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
                     visible: false,
@@ -485,7 +485,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set attribute axis title when chart config 'enableJoinedAttributeAxisName' is true", () => {
-            const result = getCustomizedConfiguration(
+            const result: any = getCustomizedConfiguration(
                 {
                     ...chartOptions,
                     type: VisualizationTypes.BAR,
@@ -502,31 +502,31 @@ describe("getCustomizedConfiguration", () => {
 
     describe("gridline configuration", () => {
         it("should set gridline width to 0 when grid is disabled", () => {
-            const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
+            const result: any = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
             expect(result.yAxis[0].gridLineWidth).toEqual(0);
         });
 
         it("should set gridline width on xAxis on 1 for Scatterplot when enabled", () => {
             const customConfig = { grid: { enabled: true }, type: VisualizationTypes.SCATTER };
-            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(1);
         });
 
         it("should set gridline width on xAxis on 1 for Bubblechart when enabled", () => {
             const customConfig = { grid: { enabled: true }, type: VisualizationTypes.BUBBLE };
-            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(1);
         });
 
         it("should set gridline width on xAxis on 0 for Scatterplot when disabled", () => {
             const customConfig = { grid: { enabled: false }, type: VisualizationTypes.SCATTER };
-            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(0);
         });
 
         it("should set gridline width on xAxis on 0 for Bubblechart when disabled", () => {
             const customConfig = { grid: { enabled: false }, type: VisualizationTypes.BUBBLE };
-            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            const result: any = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(0);
         });
     });
@@ -1082,7 +1082,7 @@ describe("getCustomizedConfiguration", () => {
         };
 
         it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
-            const result = getCustomizedConfiguration(
+            const result: any = getCustomizedConfiguration(
                 { type: chartType, data: { series: [] } },
                 {},
                 drillConfig,
@@ -1092,7 +1092,11 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it('should not set "drillConfig" to unsupported chart type', () => {
-            const result = getCustomizedConfiguration({ type: VisualizationTypes.LINE }, {}, drillConfig);
+            const result: any = getCustomizedConfiguration(
+                { type: VisualizationTypes.LINE },
+                {},
+                drillConfig,
+            );
             expect(result.xAxis[0].drillConfig).toBeFalsy();
         });
     });

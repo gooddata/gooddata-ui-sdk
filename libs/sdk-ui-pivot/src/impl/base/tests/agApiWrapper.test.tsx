@@ -212,7 +212,7 @@ describe("agGridApiWrapper", () => {
                 const pinnedTopRowElement = ApiWrapper.getPinnedTopRowElement(api);
 
                 expect(pinnedTopRowElement).toBeDefined();
-                expect(pinnedTopRowElement!.style["max-width"]).toEqual("123px");
+                expect((pinnedTopRowElement!.style as any)["max-width"]).toEqual("123px");
             });
         });
     });

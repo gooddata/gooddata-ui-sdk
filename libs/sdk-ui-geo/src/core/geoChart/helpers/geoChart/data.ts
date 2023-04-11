@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     IAvailableLegends,
     IGeoData,
@@ -95,8 +95,8 @@ export function getGeoData(
     emptyHeaderString: string,
     nullHeaderString: string,
 ): IGeoData {
-    const geoData: IGeoDataBuckets = getBucketItemNameAndDataIndex(dv);
-    const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
+    const geoData = getBucketItemNameAndDataIndex(dv);
+    const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData as IGeoData);
 
     const locationIndex = geoData.location?.index;
     const latitudeIndex = geoData.latitude?.index;
@@ -113,7 +113,7 @@ export function getGeoData(
             emptyHeaderString,
             nullHeaderString,
         );
-        geoData[BucketNames.LOCATION].data = locationData.map(getLocation);
+        geoData[BucketNames.LOCATION]!.data = locationData.map(getLocation) as IGeoLngLat[];
     }
 
     if (latitudeIndex !== undefined && longitudeIndex != undefined) {
@@ -131,22 +131,22 @@ export function getGeoData(
         );
 
         geoData[BucketNames.LOCATION] = {
-            ...geoData[BucketNames.LATITUDE],
+            ...geoData[BucketNames.LATITUDE]!,
             data: latitudeData.map((value, index) => ({
                 lat: parseCoordinate(value),
                 lng: parseCoordinate(longitudeData[index]),
-            })),
+            })) as IGeoLngLat[],
         };
     }
 
     if (segmentIndex !== undefined) {
         const { data, uris } = getSegmentDataAndUris(attributeHeaderItems, segmentIndex);
-        geoData[BucketNames.SEGMENT].data = data;
-        geoData[BucketNames.SEGMENT].uris = uris;
+        geoData[BucketNames.SEGMENT]!.data = data;
+        geoData[BucketNames.SEGMENT]!.uris = uris;
     }
 
     if (tooltipTextIndex !== undefined) {
-        geoData[BucketNames.TOOLTIP_TEXT].data = getAttributeData(
+        geoData[BucketNames.TOOLTIP_TEXT]!.data = getAttributeData(
             attributeHeaderItems,
             tooltipTextIndex,
             emptyHeaderString,
@@ -155,16 +155,16 @@ export function getGeoData(
     }
 
     if (sizeIndex !== undefined) {
-        geoData[BucketNames.SIZE].data = getMeasureData(dv, sizeIndex);
-        geoData[BucketNames.SIZE].format = getFormatFromExecutionResponse(dv, sizeIndex);
+        geoData[BucketNames.SIZE]!.data = getMeasureData(dv, sizeIndex);
+        geoData[BucketNames.SIZE]!.format = getFormatFromExecutionResponse(dv, sizeIndex);
     }
 
     if (colorIndex !== undefined) {
-        geoData[BucketNames.COLOR].data = getMeasureData(dv, colorIndex);
-        geoData[BucketNames.COLOR].format = getFormatFromExecutionResponse(dv, colorIndex);
+        geoData[BucketNames.COLOR]!.data = getMeasureData(dv, colorIndex);
+        geoData[BucketNames.COLOR]!.format = getFormatFromExecutionResponse(dv, colorIndex);
     }
 
-    return geoData;
+    return geoData as IGeoData;
 }
 
 function getSegmentDataAndUris(attributeHeaderItems: IResultHeader[][], dataIndex: number): ISegmentData {
@@ -206,7 +206,17 @@ function getAttributeData(
 
 type BucketInfos = { [localId: string]: IBucketItemInfo | null };
 
-function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoDataBuckets {
+type BucketItemInfo = {
+    [key in keyof IGeoDataBuckets]: {
+        index: number;
+        name: string;
+        data?: string[] | number[] | IGeoLngLat[];
+        format?: string;
+        uris?: string[];
+    };
+};
+
+function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
     const buckets = dv.def().buckets();
     const measureDescriptors = dv.meta().measureDescriptors();
     const attributeDescriptors = dv.meta().attributeDescriptors();
@@ -217,7 +227,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoDataBuckets {
     }, {});
 
     // init data
-    const result: IGeoDataBuckets = {};
+    const result: BucketItemInfo = {};
 
     [
         BucketNames.LOCATION,
@@ -225,7 +235,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoDataBuckets {
         BucketNames.LONGITUDE,
         BucketNames.SEGMENT,
         BucketNames.TOOLTIP_TEXT,
-    ].forEach((bucketName: string): void => {
+    ].forEach((bucketName): void => {
         const bucketItemInfo = bucketItemInfos[bucketName];
         if (!bucketItemInfo) {
             return;
@@ -247,7 +257,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoDataBuckets {
         }
     });
 
-    [BucketNames.SIZE, BucketNames.COLOR].forEach((bucketName: string): void => {
+    [BucketNames.SIZE, BucketNames.COLOR].forEach((bucketName): void => {
         const bucketItemInfo = bucketItemInfos[bucketName];
         if (!bucketItemInfo) {
             return;

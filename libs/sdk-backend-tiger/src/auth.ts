@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -52,7 +52,7 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         try {
             return await client.profile.getCurrent();
         } catch (err) {
-            throw convertApiError(err);
+            throw convertApiError(err as Error);
         }
     }
 }

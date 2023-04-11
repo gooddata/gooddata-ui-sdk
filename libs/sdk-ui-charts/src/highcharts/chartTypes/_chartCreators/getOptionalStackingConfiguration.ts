@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import partial from "lodash/partial";
 import merge from "lodash/merge";
 import includes from "lodash/includes";
@@ -242,7 +242,13 @@ export function getParentAttributeConfiguration(
 } {
     const { type } = chartOptions;
     const { xAxis } = config;
-    const xAxisItem: XAxisOptions = xAxis[0]; // expect only one X axis
+
+    if (!isArray(xAxis)) {
+        throw new Error(
+            "Wrong chart configuration. Expected axis as an array in case of grouped categories.",
+        );
+    }
+    const xAxisItem = xAxis[0];
 
     // parent attribute in X axis
     const parentAttributeOptions = {};

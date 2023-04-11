@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
@@ -164,7 +164,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         onFormSubmitted: onHubspotFormSubmitted,
         onFormReady: ($form: ArrayLike<IHubspotFormField> | IHubspotJqueryFormField) => {
             setIsFormReady(true);
-            let fields = $form;
+            let fields: any = $form;
             if (fields["jquery"] && fields[0]?.length > 0) {
                 fields = fields[0];
             }

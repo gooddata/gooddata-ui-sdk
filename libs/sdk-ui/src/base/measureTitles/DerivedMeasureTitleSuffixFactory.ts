@@ -1,8 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { ILocale } from "../localization/Locale";
 import { messages } from "../../locales";
+import { MessageDescriptor } from "react-intl";
 /**
  * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.
  * The suffix is used during AFM execution and for bucket item titles.
@@ -33,7 +34,9 @@ export class DerivedMeasureTitleSuffixFactory {
         return localizationKey === null ? "" : ` - ${this.translateKey(localizationKey)}`;
     }
 
-    private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): { id: string } | null {
+    private getSuffixLocalizationKey(
+        overTimeComparisonType: OverTimeComparisonType,
+    ): MessageDescriptor | null {
         switch (overTimeComparisonType) {
             case OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR:
                 return messages.samePeriodYearAgo;
@@ -44,7 +47,7 @@ export class DerivedMeasureTitleSuffixFactory {
         }
     }
 
-    private translateKey(localizationKey: { id: string }): string {
+    private translateKey(localizationKey: MessageDescriptor): string {
         return getTranslation(localizationKey, this.locale);
     }
 }

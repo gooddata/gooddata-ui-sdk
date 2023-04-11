@@ -15,7 +15,6 @@
         "strict": true,
         "outDir": "./dist",
         "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true,
         "resolveJsonModule": true,
         "baseUrl": "../..",
         "paths": {

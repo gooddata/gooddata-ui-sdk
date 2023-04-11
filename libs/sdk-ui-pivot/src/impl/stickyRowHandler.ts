@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GridApi } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
@@ -89,8 +89,8 @@ export function updateStickyRowContentClassesAndData(
         return colDef?.type === ROW_ATTRIBUTE_COLUMN;
     });
 
-    const stickyRowData = {};
-    const headerItemMap = {};
+    const stickyRowData: Record<string, unknown> = {};
+    const headerItemMap: Record<string, unknown> = {};
 
     attributeKeys.forEach((columnId: string) => {
         apiWrapper.removeCellClass(gridApi, columnId, lastRowIndex, "gd-cell-show-hidden");

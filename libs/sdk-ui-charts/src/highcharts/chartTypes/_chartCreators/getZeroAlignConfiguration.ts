@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 /**
  * Calculate new min/max to make Y axes aligned, and insert them to Highcharts config
  *
@@ -34,8 +34,7 @@ export interface IMinMaxInfo extends ICanon {
 }
 
 export interface IMinMaxLookup {
-    0?: IMinMaxInfo;
-    1?: IMinMaxInfo;
+    [key: number]: IMinMaxInfo;
 }
 
 /**
@@ -51,11 +50,11 @@ function isMinMaxConfigOnAnyAxis(minmax: IMinMaxInfo[]): boolean {
 
 function minmaxCanon(minmax: IMinMaxInfo[]): ICanon[] {
     const canon: ICanon[] = [];
-    const extremes = ["min", "max"];
+    const extremes: (keyof ICanon)[] = ["min", "max"];
 
     minmax.forEach((item: IMinMaxInfo, i: number) => {
-        canon[i] = {};
-        extremes.forEach((extreme: string) => {
+        canon[i] = {} as Record<keyof ICanon, number>;
+        extremes.forEach((extreme) => {
             if (item[extreme] === 0) {
                 canon[i][extreme] = 0;
             } else if (item[extreme] > 0) {

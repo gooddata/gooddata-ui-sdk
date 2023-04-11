@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { defineMessages, useIntl } from "react-intl";
+import { MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
 import {
     Dropdown,
@@ -35,7 +35,7 @@ interface IDateDatasetsListItemProps {
 
 // work around the evil DateDatasetsListItem from kit that magically translates SOME of the items' titles
 // this way the i18n actually has a chance to detect these
-const dateDatasetHeaderMessages = defineMessages({
+const dateDatasetHeaderMessages: Record<string, MessageDescriptor> = defineMessages({
     "gs.date.date-dataset.recommended": { id: "gs.date.date-dataset.recommended" },
     "gs.date.date-dataset.other": { id: "gs.date.date-dataset.other" },
     "gs.date.date-dataset.related": { id: "gs.date.date-dataset.related" },

@@ -1,7 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
-import { defineMessages } from "react-intl";
+// (C) 2019-2023 GoodData Corporation
+import { MessageDescriptor, defineMessages } from "react-intl";
 
-export const messages = defineMessages({
+export const messages: Record<string, MessageDescriptor> = defineMessages({
     messagesDashboardSaveSuccess: { id: "messages.dashboardSaveSuccess" },
     messagesDashboardSaveFailed: { id: "messages.dashboardSaveFailed" },
     messagesExportResultStart: { id: "messages.exportResultStart" },

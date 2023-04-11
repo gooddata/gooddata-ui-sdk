@@ -3,6 +3,12 @@ import { ISettings } from "@gooddata/sdk-model";
 import { getHost } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
 
+declare global {
+    interface Window {
+        customWorkspaceSettings: any;
+    }
+}
+
 const VISIT_TIMEOUT = 40000;
 
 function getDashboardUrl() {

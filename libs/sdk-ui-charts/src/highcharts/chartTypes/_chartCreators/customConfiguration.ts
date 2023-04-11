@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import noop from "lodash/noop";
 import isString from "lodash/isString";
 import merge from "lodash/merge";
@@ -14,7 +14,7 @@ import cx from "classnames";
 
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../../interfaces";
+import { IAxisConfig, IChartConfig } from "../../../interfaces";
 import {
     formatAsPercent,
     getLabelStyle,
@@ -993,19 +993,18 @@ function getGridConfiguration(
 
 export function areAxisLabelsEnabled(
     chartOptions: IChartOptions,
-    axisPropsName: string,
+    axisPropsName: keyof IChartOptions,
     shouldCheckForEmptyCategories: boolean,
 ): { enabled: boolean } {
     const data = chartOptions.data || EMPTY_DATA;
 
     const { type } = chartOptions;
     const categories = isHeatmap(type) ? data.categories : escapeCategories(data.categories);
-
-    const visible = chartOptions?.[axisPropsName]?.visible ?? true;
-
-    const labelsEnabled = chartOptions?.[axisPropsName]?.labelsEnabled ?? true;
-
     const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact(categories)) : true;
+
+    const axisOptions = chartOptions?.[axisPropsName] as IAxisConfig;
+    const visible = axisOptions?.visible ?? true;
+    const labelsEnabled = axisOptions?.labelsEnabled ?? true;
 
     return {
         enabled: categoriesFlag && visible && labelsEnabled,

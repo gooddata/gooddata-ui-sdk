@@ -1,10 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNameValues, BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     IExtendedReferencePoint,
     IBucketOfFun,
@@ -98,7 +98,7 @@ export function setBaseChartUiConfig(
         !hasColorMapping(referencePointConfigured.properties),
     );
 
-    const iconsMap = {
+    const iconsMap: Record<string, { [key in BucketNameValues]?: string }> = {
         column: {
             [BucketNames.MEASURES]: columnMeasuresIcon,
             [BucketNames.VIEW]: columnViewIcon,

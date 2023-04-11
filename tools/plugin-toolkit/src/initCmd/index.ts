@@ -230,7 +230,9 @@ function runInstall(target: string, config: InitCmdActionConfig): void {
         return;
     } catch (e) {
         logError(
-            `An internal error has occurred while attempting to install project dependencies: ${e.message}`,
+            `An internal error has occurred while attempting to install project dependencies: ${
+                (e as Error).message
+            }`,
         );
 
         return;

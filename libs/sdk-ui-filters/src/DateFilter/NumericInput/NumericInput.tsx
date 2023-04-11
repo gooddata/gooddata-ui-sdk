@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import isNumber from "lodash/isNumber";
 import defaultTo from "lodash/defaultTo";
@@ -59,11 +59,11 @@ export class NumericInput extends React.Component<{
 
     private isIncrementDisabled = () =>
         !isNumericOrEmptyString(this.props.value) ||
-        (this.props.max !== undefined && this.props.value >= this.props.max);
+        (this.props.max !== undefined && isNumber(this.props.value) && this.props.value >= this.props.max);
 
     private isDecrementDisabled = () =>
         !isNumericOrEmptyString(this.props.value) ||
-        (this.props.min !== undefined && this.props.value <= this.props.min);
+        (this.props.min !== undefined && isNumber(this.props.value) && this.props.value <= this.props.min);
 
     private clampToRange = (value: number): number => {
         const { max, min } = this.props;
@@ -91,7 +91,7 @@ export class NumericInput extends React.Component<{
 
     private decrement = this.valueChanger(-1);
 
-    private keyDownHandlers = {
+    private keyDownHandlers: Record<string, () => void> = {
         [UP_ARROW_CODE]: () => unless(this.isIncrementDisabled, this.increment),
         [DOWN_ARROW_CODE]: () => unless(this.isDecrementDisabled, this.decrement),
     };

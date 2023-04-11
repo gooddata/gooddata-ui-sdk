@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 // eslint-disable-next-line no-restricted-imports -- unfortunately, the get syntax is used heavily here for the supported properties
 import get from "lodash/get";
 import flow from "lodash/flow";
@@ -25,7 +25,7 @@ import {
 } from "./bucketHelper";
 import { PROPERTY_CONTROLS } from "../constants/properties";
 import { UICONFIG_AXIS } from "../constants/uiConfig";
-import { AxisType, IAxisNameProperties } from "../interfaces/AxisType";
+import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/AxisType";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets, ISettings } from "@gooddata/sdk-model";
@@ -211,7 +211,7 @@ export function removeImmutableOptionalStackingProperties(
 }
 
 // mapping between AD and SDK values
-const AXIS_NAME_POSITION_MAPPING = {
+const AXIS_NAME_POSITION_MAPPING: { [key in AxisPositionType]?: "low" | "middle" | "high" } = {
     auto: "middle",
 
     bottom: "low",

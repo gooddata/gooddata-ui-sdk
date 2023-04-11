@@ -46,7 +46,7 @@
         "@gooddata/sdk-model": "^8.13.0-alpha.35",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
-        "inquirer": "^7.3.3",
+        "inquirer": "^8.2.3",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "ora": "^5.3.0",
@@ -54,19 +54,19 @@
         "prettier": "~2.5.0",
         "rimraf": "^3.0.0",
         "ts-morph": "^13.0.2",
-        "tslib": "^2.0.0"
+        "tslib": "^2.5.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
-        "@types/inquirer": "^7.3.1",
+        "@types/inquirer": "^8.2.6",
         "@types/jest": "^27.0.1",
         "@types/json-stable-stringify": "^1.0.32",
         "@types/lodash": "^4.14.158",
-        "@types/node": "^16.11.11",
+        "@types/node": "^16.18.23",
         "@types/prettier": "~1.18.2",
         "@types/rimraf": "^2.0.2",
-        "@typescript-eslint/eslint-plugin": "^5.45.0",
-        "@typescript-eslint/parser": "^5.45.0",
+        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/parser": "^5.57.1",
         "dependency-cruiser": "^10.1.1",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
@@ -81,6 +81,6 @@
         "jest-junit": "^3.0.0",
         "ts-jest": "^27.0.5",
         "ts-node": "^10.4.0",
-        "typescript": "4.0.2"
+        "typescript": "5.0.2"
     }
 }

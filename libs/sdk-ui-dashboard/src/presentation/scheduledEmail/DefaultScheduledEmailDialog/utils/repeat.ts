@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import identity from "lodash/identity";
 import { IScheduleEmailRepeat, IScheduleEmailRepeatFrequency } from "../interfaces";
 import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../constants";
@@ -39,7 +39,7 @@ function fillFragments(fragments: IFragments, fragObj: IFragmentObject) {
             continue;
         }
         const index = FRAGMENT_BY_INDEX.indexOf(name);
-        fragments[index] = fragObj[name];
+        fragments[index] = fragObj[name as keyof IFragmentObject] as number;
     }
 }
 

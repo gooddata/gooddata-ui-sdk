@@ -1,7 +1,7 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import isObject from "lodash/isObject";
 import { transparentize } from "polished";
-import { IThemePalette, ITheme } from "@gooddata/sdk-model";
+import { IThemePalette, ITheme, IThemeComplementaryPalette } from "@gooddata/sdk-model";
 import { CssProperty, getCssProperty } from "./cssProperty";
 import { generateDerivedColors } from "./derivedColors";
 
@@ -109,7 +109,7 @@ const generateComplementaryPalette = (palette: IThemePalette): CssProperty[] => 
         return [];
     }
 
-    return Object.keys(palette.complementary).map((key, index) =>
+    return Object.keys(palette.complementary).map((key: keyof IThemeComplementaryPalette, index) =>
         getCssProperty(`palette-complementary-${index}`, palette.complementary[key]),
     );
 };

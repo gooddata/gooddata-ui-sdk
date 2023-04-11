@@ -110,7 +110,7 @@ export interface IPushData {
     properties?: {
         sortItems?: ISortItem[];
         totals?: ITotal[];
-        controls?: object;
+        controls?: Record<string, any>;
     };
     propertiesMeta?: any;
     colors?: IColorsData;

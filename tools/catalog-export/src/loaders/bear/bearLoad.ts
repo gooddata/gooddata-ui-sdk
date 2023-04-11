@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import ora from "ora";
 import { logError } from "../../cli/loggers";
 import { CatalogExportError, WorkspaceMetadata } from "../../base/types";
@@ -39,7 +39,7 @@ export async function bearLoad(workspaceId: string): Promise<WorkspaceMetadata> 
             insights,
             analyticalDashboards,
         };
-    } catch (err) {
+    } catch (err: any) {
         spinner.fail();
         if (err?.response?.status === 404) {
             // handle known error more gracefully to avoid general-type error messages

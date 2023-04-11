@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import throttle from "lodash/throttle";
-import { parseUrl } from "./parseUrl";
+import { AuthType, parseUrl } from "./parseUrl";
 import { getContext, setContext } from "./context";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 type AnyFunc = (...args: any[]) => any;
 
@@ -37,7 +38,7 @@ const withRedirectGate =
         func(...args);
     };
 
-const authMethodsMap = {
+const authMethodsMap: { [key in AuthType]?: (hostname: string) => Promise<IAnalyticalBackend> } = {
     sso: async function configureTigerSso(hostname: string) {
         const {
             default: tigerBackend,

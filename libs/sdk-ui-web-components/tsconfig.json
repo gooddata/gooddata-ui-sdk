@@ -15,7 +15,6 @@
         "outDir": "esm",
         "removeComments": false,
         "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true,
         "baseUrl": ".."
     },
     "compileOnSave": false,

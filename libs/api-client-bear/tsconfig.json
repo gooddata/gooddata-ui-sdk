@@ -13,7 +13,6 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "suppressExcessPropertyErrors": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/api-model-bear": ["api-model-bear/src"]

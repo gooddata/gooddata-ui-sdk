@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 
 import {
     CatalogExportConfig,
@@ -25,7 +25,7 @@ async function probeAccess(client: ITigerClient): Promise<boolean> {
         await client.entities.getAllEntitiesWorkspaces({ page: 0, size: 1 }, { headers: jsonApiHeaders });
 
         return true;
-    } catch (err) {
+    } catch (err: any) {
         if (err?.response?.status === 401) {
             return false;
         }

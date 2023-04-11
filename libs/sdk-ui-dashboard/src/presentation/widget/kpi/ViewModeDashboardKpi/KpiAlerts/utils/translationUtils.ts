@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
 import lowerFirst from "lodash/lowerFirst";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
@@ -73,7 +73,7 @@ function getIntlIdRoot(filter: IDateFilter | IDashboardDateFilter): string {
     const metadata = filterMetadata(filter);
 
     if (metadata.type === "absolute") {
-        return messages.alertMessageRelativePresetInPeriod.id;
+        return messages.alertMessageRelativePresetInPeriod.id!;
     }
 
     const hasOneBoundToday = metadata.from === 0 || metadata.to === 0; // e.g. last 4 months, next 6 days
@@ -81,8 +81,8 @@ function getIntlIdRoot(filter: IDateFilter | IDashboardDateFilter): string {
     const isNextOneX = metadata.from === 1 && metadata.to === 1; // e.g. next month
 
     return hasOneBoundToday || isLastOneX || isNextOneX
-        ? messages.alertMessageRelativePreset.id
-        : messages.alertMessageRelativePresetInPeriod.id;
+        ? messages.alertMessageRelativePreset.id!
+        : messages.alertMessageRelativePresetInPeriod.id!;
 }
 
 export function getKpiAlertTranslationData(

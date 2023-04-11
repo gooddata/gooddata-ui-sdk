@@ -18,7 +18,7 @@ import { DateTimePickerWithInt } from "./DateTimePicker";
 
 import { DAY_END_TIME } from "../constants/Platform";
 
-const convertedLocales = {
+const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
     "de-DE": de,
     "es-ES": es,

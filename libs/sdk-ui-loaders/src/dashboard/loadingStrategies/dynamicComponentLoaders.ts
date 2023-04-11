@@ -168,11 +168,11 @@ function loadEntry(
         // Initializes the share scope. This fills it with known provided modules from this build and all remotes
         await __webpack_init_sharing__("default");
 
-        const container = window[moduleName]; // or get the container somewhere else
+        const container = (<any>window)[moduleName]; // or get the container somewhere else
         // Initialize the container, it may provide shared modules
         await container.init(__webpack_share_scopes__.default);
         // the `./${moduleName}_ENTRY` corresponds to exposes in the dashboard-plugin-template webpack config
-        const entryFactory = await window[moduleName].get(`./${moduleName}_ENTRY`);
+        const entryFactory = await (<any>window)[moduleName].get(`./${moduleName}_ENTRY`);
 
         return entryFactory().default;
     };
@@ -181,7 +181,7 @@ function loadEntry(
 function loadPlugin(moduleName: string, moduleFederationIntegration: ModuleFederationIntegration) {
     return async () => {
         const entry = await loadEntry(moduleName, moduleFederationIntegration)();
-        const factory = await window[moduleName].get(entry.pluginKey);
+        const factory = await (<any>window)[moduleName].get(entry.pluginKey);
 
         return factory();
     };
@@ -190,7 +190,7 @@ function loadPlugin(moduleName: string, moduleFederationIntegration: ModuleFeder
 function loadEngine(moduleName: string, moduleFederationIntegration: ModuleFederationIntegration) {
     return async () => {
         const entry = await loadEntry(moduleName, moduleFederationIntegration)();
-        const factory = await window[moduleName].get(entry.engineKey);
+        const factory = await (<any>window)[moduleName].get(entry.engineKey);
 
         try {
             return factory();

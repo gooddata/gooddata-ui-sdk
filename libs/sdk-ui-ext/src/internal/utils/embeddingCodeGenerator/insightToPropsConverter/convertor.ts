@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import toPairs from "lodash/toPairs";
 
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor";
 
-import { InsightToPropsConverter, PropMeta, PropsWithMeta } from "../types";
+import { InsightToPropsConverter, PropMeta, PropWithMeta, PropsWithMeta } from "../types";
 
 /**
  * Describes a conversion from insight to a particular prop of a visualization.
@@ -81,7 +81,7 @@ export function getInsightToPropsConverter<TProps extends object>(
     return (insight, ctx) => {
         return toPairs(conversionSpec).reduce(
             (
-                acc: Partial<PropsWithMeta<TProps>>,
+                acc: Record<string, PropWithMeta<TProps>>,
                 [propName, conversion]: [string, IInsightToPropConversion<any, any, any>],
             ) => {
                 acc[propName] = {

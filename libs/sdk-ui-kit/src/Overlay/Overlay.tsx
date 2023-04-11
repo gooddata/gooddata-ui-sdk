@@ -414,10 +414,11 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         }
     }
 
-    private updateListeners = (method: string, props: IOverlayProps<T>) => {
+    private updateListeners = (method: "add" | "remove", props: IOverlayProps<T>) => {
+        type PropKey = keyof IOverlayProps<T>;
         events.forEach((event) => {
-            if (props[event.handler] || props[event.requiredProp]) {
-                const handler = this[event.handler];
+            if (props[event.handler as PropKey] || props[event.requiredProp as PropKey]) {
+                const handler = (this as Record<string, any>)[event.handler];
                 if (handler) {
                     (event.target || window)[`${method}EventListener`](event.name, handler);
                 }
@@ -473,8 +474,9 @@ function afterOverlayClosed() {
 
 function applyStyles(el: HTMLElement, newStyles: Record<string, any>) {
     return Object.keys(newStyles).reduce((prev, key) => {
-        const oldValue = el.style[key];
-        el.style[key] = newStyles[key];
+        const style = el.style as Record<string, any>;
+        const oldValue = style[key];
+        style[key] = newStyles[key];
         return { ...prev, [key]: oldValue };
     }, {});
 }

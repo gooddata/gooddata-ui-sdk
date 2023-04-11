@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce";
@@ -47,7 +47,7 @@ interface IDatePickerState {
     inputValue: string;
 }
 
-const convertedLocales = {
+const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
     "de-DE": de,
     "es-ES": es,

@@ -29,7 +29,7 @@ const recordedBackendConfig: RecordedBackendConfig = {
 const mockBackend = recordedBackend(ReferenceRecordings.Recordings, recordedBackendConfig);
 
 jest.mock("@gooddata/sdk-ui", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui"),
+    ...(jest.requireActual("@gooddata/sdk-ui") as object),
     useBackendStrict: () => mockBackend,
     useWorkspaceStrict: () => "workspace",
 }));

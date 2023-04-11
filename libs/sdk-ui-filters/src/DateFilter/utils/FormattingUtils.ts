@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
 
@@ -16,7 +16,7 @@ export const DEFAULT_LOCALE = "en-US";
  *
  * See https://date-fns.org/docs/format and https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
  */
-export const localizedIcuDateFormatPatterns = {
+export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "en-US": "M/d/y",
     "en-GB": "dd/MM/y",
     "cs-CZ": "d. M. y",

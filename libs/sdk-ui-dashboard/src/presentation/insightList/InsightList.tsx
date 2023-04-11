@@ -15,7 +15,7 @@ import debounce from "lodash/debounce";
 import range from "lodash/range";
 import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
-import { InsightListItem, DropdownList } from "@gooddata/sdk-ui-kit";
+import { InsightListItem, DropdownList, ITab } from "@gooddata/sdk-ui-kit";
 
 import { InsightListNoData } from "./InsightListNoData";
 import {
@@ -50,7 +50,7 @@ export function getInsightListSourceItem(insight: IInsight): IInsightListItem {
     };
 }
 
-const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll];
+const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll] as ITab[];
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import set from "lodash/set";
 import { WrappedComponentProps } from "react-intl";
 import { getTranslation } from "./translations";

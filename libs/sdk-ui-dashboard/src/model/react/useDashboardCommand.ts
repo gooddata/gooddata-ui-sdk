@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { useCallback } from "react";
 import { v4 as uuid } from "uuid";
 
@@ -52,7 +52,12 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
                       handler: (event) => {
                           if (event.correlationId === correlationId) {
                               unregisterHandlers();
-                              eventHandlers[eventType](event);
+                              (
+                                  eventHandlers as Record<
+                                      DashboardEventType,
+                                      (event: Extract<DashboardEvents, { type: DashboardEventType }>) => void
+                                  >
+                              )[eventType as DashboardEventType](event);
                           }
                       },
                   };

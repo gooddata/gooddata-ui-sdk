@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { useMemo } from "react";
-import { useIntl } from "react-intl";
+import { MessageDescriptor, useIntl } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import invariant from "ts-invariant";
 
@@ -11,7 +11,7 @@ import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 199;
 
-const getLocalizationKey = (id: string): { id: string } => {
+const getLocalizationKey = (id: string): MessageDescriptor => {
     switch (id) {
         case REPEAT_TYPES.DAILY:
             return messages.scheduleDialogEmailRepeats_daily;

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { program } from "commander";
 import chalk from "chalk";
 import * as path from "path";
@@ -105,7 +105,7 @@ async function run() {
         );
 
         process.exit(0);
-    } catch (err) {
+    } catch (err: any) {
         if (isCatalogExportError(err)) {
             logError(`${err.message}`);
             process.exit(err.rc);

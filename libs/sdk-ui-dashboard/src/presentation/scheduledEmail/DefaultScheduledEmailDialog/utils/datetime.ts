@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isDate from "lodash/isDate";
 import format from "date-fns/format";
 
@@ -18,7 +18,7 @@ export function convertDateToDisplayDateString(
 ): string | undefined | null {
     // In schedule email dialog, use date string as sub-fix of attached file name
     // to avoid "/" character in file name
-    const DISPLAY_DATE_FORMAT_MAPPER = {
+    const DISPLAY_DATE_FORMAT_MAPPER: Record<string, string> = {
         "MM/dd/yyyy": "MM-dd-yyyy",
         "dd/MM/yyyy": "dd-MM-yyyy",
         "M/d/yy": "M-d-yy",

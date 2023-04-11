@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ExtendedDashboardItem } from "../../../types/layoutTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import {
@@ -169,7 +169,7 @@ function* validateAndResolveKpiFilters(
 
         return {
             ...widget,
-            dateDataSet: measureDateDatasets[0]?.dataSet.ref,
+            dateDataSet: measureDateDatasets.dateDatasetsOrdered[0]?.dataSet.ref,
         };
     } else {
         return widget;

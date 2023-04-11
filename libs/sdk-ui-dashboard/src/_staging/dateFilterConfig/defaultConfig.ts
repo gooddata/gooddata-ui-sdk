@@ -1,6 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
-import { idRef, IRelativeDateFilterPreset, IDateFilterConfig } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IRelativeDateFilterPreset,
+    IDateFilterConfig,
+    DateFilterGranularity,
+} from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
 /**
@@ -21,9 +26,11 @@ export const defaultDateFilterConfig: IDateFilterConfig = {
         visible: true,
     },
     relativePresets: Object.keys(DateFilterHelpers.defaultDateFilterOptions.relativePreset!).reduce(
-        (presets: IRelativeDateFilterPreset[], granularityKey: string) => {
+        (presets: IRelativeDateFilterPreset[], granularityKey) => {
             const granularityPresets: IRelativeDateFilterPreset[] =
-                DateFilterHelpers.defaultDateFilterOptions.relativePreset![granularityKey];
+                DateFilterHelpers.defaultDateFilterOptions.relativePreset![
+                    granularityKey as DateFilterGranularity
+                ]!;
 
             presets.push(...granularityPresets);
             return presets;

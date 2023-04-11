@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import {
     RawExecute,
@@ -59,7 +59,7 @@ const RawExecuteExample: React.FC = () => {
                                     <strong>{locationState}</strong>
                                     <ul>
                                         {_locations.map((location) => (
-                                            <li key={location}>{location}</li>
+                                            <li key={location as string}>{location}</li>
                                         ))}
                                     </ul>
                                 </li>

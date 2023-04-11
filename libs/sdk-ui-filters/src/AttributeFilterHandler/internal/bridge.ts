@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import invariant from "ts-invariant";
 import compact from "lodash/compact";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -467,7 +467,7 @@ export class AttributeFilterReduxBridge {
         cb,
     ) => {
         return this.callbacks.registerCallback(
-            ({ selection }) => cb({ selection: selection[0] }),
+            ({ selection }) => cb({ selection: selection.keys[0] }),
             this.callbacks.registrations.selectionChanged,
         );
     };
@@ -476,7 +476,7 @@ export class AttributeFilterReduxBridge {
         OnSelectionCommittedCallbackPayload<string | undefined>
     > = (cb) => {
         return this.callbacks.registerCallback(
-            ({ selection }) => cb({ selection: selection[0] }),
+            ({ selection }) => cb({ selection: selection.keys[0] }),
             this.callbacks.registrations.selectionCommitted,
         );
     };

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import { IUser, areObjRefsEqual } from "@gooddata/sdk-model";
 import React from "react";
@@ -329,7 +329,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         const { data, children } = multiValueProps;
 
         // MultiValueRemove component from react-select
-        const removeIcon: React.ReactElement | null = children![1];
+        const removeIcon: React.ReactElement | null = (children as any)![1];
 
         if (isScheduleEmailExistingRecipient(data) && isEqual(data, this.props.author)) {
             const displayName = getScheduledEmailRecipientDisplayName(data);
@@ -342,7 +342,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return this.renderErrorValueContainer(
                 email,
                 removeIcon,
-                messages.scheduleEmailOptionRecepientInvalid.id,
+                messages.scheduleEmailOptionRecepientInvalid.id!,
             );
         }
         // don't allow adding external recipients to schedules created by somebody else than the current user
@@ -354,7 +354,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return this.renderErrorValueContainer(
                 email,
                 removeIcon,
-                messages.scheduleEmailOptionRecepientExternalNotAllowed.id,
+                messages.scheduleEmailOptionRecepientExternalNotAllowed.id!,
             );
         }
 

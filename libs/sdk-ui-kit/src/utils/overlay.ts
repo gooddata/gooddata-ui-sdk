@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import mapValues from "lodash/mapValues";
 import merge from "lodash/merge";
 import { elementRegion } from "./domUtilities";
@@ -11,13 +11,13 @@ import {
 import { IOffset, IAlignPoint } from "../typings/positioning";
 import { IRegion } from "../typings/domUtilities";
 
-const ALIGN_RATIOS_X = {
+const ALIGN_RATIOS_X: Record<string, number> = {
     l: 0,
     r: 1,
     c: 0.5,
 };
 
-const ALIGN_RATIOS_Y = {
+const ALIGN_RATIOS_Y: Record<string, number> = {
     t: 0,
     b: 1,
     c: 0.5,

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IInsight, insightMeasures, idMatchMeasure } from "@gooddata/sdk-model";
 import { ignoreTitlesForSimpleMeasures } from "../ignoreTitlesForSimpleMeasures";
 import { insightWithComplexArithmeticMeasureTree } from "../../../../__mocks__/fixtures";
@@ -11,7 +11,7 @@ describe("measureTitleHelper", () => {
             infoKey: string,
         ): string | undefined {
             const measures = insightMeasures(insight);
-            const matchingMeasure = measures.find(idMatchMeasure(localIdentifier));
+            const matchingMeasure: any = measures.find(idMatchMeasure(localIdentifier));
 
             return matchingMeasure === undefined ? undefined : matchingMeasure.measure[infoKey];
         }

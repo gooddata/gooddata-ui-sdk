@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { calculateAverage } from "../helpers/geoChart/common";
@@ -80,7 +80,7 @@ function renderMiddleCircle(props: IPushpinSizeLegendProps) {
 }
 
 function getSizeData(sizes: Array<number | null>): number[] {
-    return sizes.filter((value) => value !== null && isFinite && !isNaN(value)) as number[];
+    return sizes.filter((value) => value !== null && isFinite(value) && !isNaN(value)) as number[];
 }
 
 function getMin(sizeData: number[]) {

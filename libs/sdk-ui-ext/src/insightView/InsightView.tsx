@@ -147,7 +147,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
     // this reduces the amount of re-renders in case just filters change for example
     const currentInsightVisualizationUrl = insightResult && insightVisualizationUrl(insightResult);
     const backendWithTelemetry = useMemo(() => {
-        const telemetryProps: object = { ...props };
+        const telemetryProps: Record<string, unknown> = { ...props };
 
         // add a fake prop so that the type of the visualization rendered is present in the telemetry
         if (currentInsightVisualizationUrl) {

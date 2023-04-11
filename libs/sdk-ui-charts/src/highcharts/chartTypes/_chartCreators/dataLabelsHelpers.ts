@@ -1,6 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import isNil from "lodash/isNil";
+import isArray from "lodash/isArray";
 import Highcharts from "../../lib";
 
 import {
@@ -35,9 +36,15 @@ export const getDataLabelsGdcVisible = (chart: Highcharts.Chart): boolean | stri
 export const getDataLabelsGdcTotalsVisible = (chart: Highcharts.Chart): boolean | string =>
     (chart?.options?.plotOptions as any)?.gdcOptions?.dataLabels?.totalsVisible ?? "auto";
 
-const isLabelsStackedFromYAxis = (chart: Highcharts.Chart): boolean =>
-    (chart?.userOptions?.yAxis?.[0]?.stackLabels?.enabled ?? false) ||
-    (chart?.userOptions?.yAxis?.[1]?.stackLabels?.enabled ?? false);
+const isLabelsStackedFromYAxis = (chart: Highcharts.Chart): boolean => {
+    const yAxis = chart?.userOptions?.yAxis;
+
+    if (yAxis && isArray(yAxis)) {
+        return (yAxis[0]?.stackLabels?.enabled ?? false) || (yAxis[1]?.stackLabels?.enabled ?? false);
+    }
+
+    return false;
+};
 
 export const areLabelsStacked = (chart: Highcharts.Chart): boolean =>
     isLabelsStackedFromYAxis(chart) && isStacked(chart);

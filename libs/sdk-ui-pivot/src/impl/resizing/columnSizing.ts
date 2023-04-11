@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import invariant, { InvariantError } from "ts-invariant";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
@@ -956,7 +956,7 @@ export function getAutoResizedColumns(
         const context = canvas.getContext("2d");
         const rowData = getDisplayedRowData(gridApi);
         const totalData = getDisplayedTotalData(gridApi);
-        const autoResizedColumns = {};
+        const autoResizedColumns: IResizedColumns = {};
         const updatedColumDefs = calculateColumnWidths(
             {
                 tableDescriptor,

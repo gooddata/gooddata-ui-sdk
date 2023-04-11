@@ -29,7 +29,7 @@ const PieChartSingleMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.P
  * This mock enables us to test props as parameters of the called chart function
  */
 jest.mock("../adapter/HighChartsRenderer", () => ({
-    ...jest.requireActual("../adapter/HighChartsRenderer"),
+    ...(jest.requireActual("../adapter/HighChartsRenderer") as object),
     HighChartsRenderer: jest.fn(() => null),
 }));
 

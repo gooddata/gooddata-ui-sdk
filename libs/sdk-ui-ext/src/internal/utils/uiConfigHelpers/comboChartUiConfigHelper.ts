@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -27,7 +27,9 @@ const areaViewIcon = "local:area/bucket-title-view.svg";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;
 
-const MEASURE_BUCKET_ICONS = {
+type VisType = "column" | "line" | "area";
+
+const MEASURE_BUCKET_ICONS: Record<VisType, string> = {
     [COLUMN]: columnMeasureIcon,
     [LINE]: lineMeasureIcon,
     [AREA]: areaMeasureIcon,
@@ -62,7 +64,7 @@ export function setComboChartUiConfig(
         BucketNames.MEASURES,
         BucketNames.SECONDARY_MEASURES,
     ]);
-    const chartTypes = [
+    const chartTypes: VisType[] = [
         referencePointConfigured?.properties?.controls?.primaryChartType ?? COLUMN,
         referencePointConfigured?.properties?.controls?.secondaryChartType ?? LINE,
     ];

@@ -662,7 +662,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 result = await sdk.md.getObjectDetails<
                     GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext
                 >(exportFilterContextUri);
-            } catch (err) {
+            } catch (err: any) {
                 if (err?.response?.status === 404) {
                     // Export filter context has expired
                     result = undefined;
@@ -891,7 +891,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
     };
 
-    private getBearDashboardReferences = async (uri: string, types: SupportedDashboardReferenceTypes[]) => {
+    private getBearDashboardReferences = async (
+        uri: string,
+        types: SupportedDashboardReferenceTypes[],
+    ): Promise<{
+        dependencies: toSdkModel.BearDashboardDependency[];
+        visClassMapping: Record<string, string>;
+    }> => {
         const objectTypes = compact(types.map(mapDashboardReferenceTypes));
 
         if (isEmpty(objectTypes)) {
@@ -1103,7 +1109,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                         identifier,
                         uri,
                     };
-                } catch (error) {
+                } catch (error: any) {
                     if (error.httpStatus === 403) {
                         // forbidden
                         return {

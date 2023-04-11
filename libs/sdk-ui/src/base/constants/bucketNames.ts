@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 const MEASURES = "measures";
 const SECONDARY_MEASURES = "secondary_measures";
 const TERTIARY_MEASURES = "tertiary_measures";
@@ -37,4 +37,14 @@ export const BucketNames = {
     SIZE,
     COLOR,
     TOOLTIP_TEXT,
-};
+} as const;
+
+/**
+ * @internal
+ */
+export type BucketNameKeys = keyof typeof BucketNames;
+
+/**
+ * @internal
+ */
+export type BucketNameValues = typeof BucketNames[BucketNameKeys];
