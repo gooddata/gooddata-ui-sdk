@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { tokenizeExpression } from "../measureExpressionTokens";
 
 describe("tokenizeExpression", () => {
@@ -134,6 +134,40 @@ describe("tokenizeExpression", () => {
             { type: "number", value: "123" },
             { type: "text", value: " " },
             { type: "comment", value: "# WHERE SUM({fact/sum}) > 5" },
+        ]);
+    });
+
+    it("parses MAQL with single quoted after backslash", () => {
+        const tokens = tokenizeExpression(
+            `SELECT SUM( {fact/price}) WHERE {label/order_lines.region} like "x\'y\\'z"`,
+        );
+        expect(tokens).toEqual([
+            { type: "text", value: "SELECT SUM" },
+            { type: "bracket", value: "(" },
+            { type: "text", value: " " },
+            { type: "identifier", value: "fact/price" },
+            { type: "bracket", value: ")" },
+            { type: "text", value: " WHERE " },
+            { type: "identifier", value: "label/order_lines.region" },
+            { type: "text", value: " like " },
+            { type: "quoted_text", value: `"x\'y\\'z"` },
+        ]);
+    });
+
+    it("parses MAQL with double quoted after backslash", () => {
+        const tokens = tokenizeExpression(
+            `SELECT SUM( {fact/price}) WHERE {label/order_lines.region} like "x\\"y\\\\"z}"`,
+        );
+        expect(tokens).toEqual([
+            { type: "text", value: "SELECT SUM" },
+            { type: "bracket", value: "(" },
+            { type: "text", value: " " },
+            { type: "identifier", value: "fact/price" },
+            { type: "bracket", value: ")" },
+            { type: "text", value: " WHERE " },
+            { type: "identifier", value: "label/order_lines.region" },
+            { type: "text", value: " like " },
+            { type: "quoted_text", value: '"x\\"y\\\\"z"' },
         ]);
     });
 });
