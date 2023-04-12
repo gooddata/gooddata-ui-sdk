@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useState } from "react";
 import { IUseAttributeFilterControllerProps, useAttributeFilterController } from "@gooddata/sdk-ui-filters";
 import { IAttributeElement, IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
@@ -6,7 +6,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import * as Md from "../../../md/full";
 
 interface IAttributeFilterItemProps {
-    title: string;
+    title: string | null;
     isSelected: boolean;
     onChange: (checked: boolean) => void;
 }

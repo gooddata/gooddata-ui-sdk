@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { call } from "redux-saga/effects";
 import {
     IDrillEvent,
@@ -26,7 +26,7 @@ export function* resolveDrillToAttributeUrl(
     drillConfig: IDrillToAttributeUrl,
     event: IDrillEvent,
     ctx: DashboardContext,
-): SagaIterator<string | undefined> {
+): SagaIterator<string | null | undefined> {
     const header = getDrillToAttributeUrlIntersectionAttributeItemHeader(drillConfig, event);
     if (!header) {
         return;

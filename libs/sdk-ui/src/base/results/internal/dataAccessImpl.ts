@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
@@ -159,7 +159,7 @@ class DataSeries implements IDataSeries {
         return this.descriptor.measureTitle();
     };
 
-    public scopeTitles = (): string[] => {
+    public scopeTitles = (): (string | null)[] => {
         return this.descriptor.scopeTitles();
     };
 
@@ -215,7 +215,7 @@ class DataSlice implements IDataSlice {
         this.id = this.descriptor.id;
     }
 
-    public sliceTitles = (): string[] => {
+    public sliceTitles = (): (string | null)[] => {
         return this.descriptor.sliceTitles();
     };
 
@@ -443,7 +443,7 @@ export class DataAccessImpl {
             measureTitle: (): string => {
                 return measureName(measureDescriptor);
             },
-            scopeTitles: (): string[] => {
+            scopeTitles: (): Array<string | null> => {
                 if (!headerTranslator) {
                     return attributeHeaders.map(resultHeaderName);
                 }
@@ -480,7 +480,7 @@ export class DataAccessImpl {
             definitions: descriptorsDef,
             headers,
             isTotal: total,
-            sliceTitles: (): string[] => {
+            sliceTitles: (): Array<string | null> => {
                 if (!headerTranslator) {
                     return headers.map(resultHeaderName);
                 }

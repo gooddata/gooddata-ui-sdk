@@ -358,17 +358,17 @@ export interface IElementsQueryOptions {
 
 // @public
 export interface IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
-    primaryValues: string[];
+    primaryValues: Array<string | null>;
 }
 
 // @public
 export interface IElementsQueryOptionsElementsByUri {
-    uris: string[];
+    uris: Array<string | null>;
 }
 
 // @public
 export interface IElementsQueryOptionsElementsByValue {
-    values: string[];
+    values: Array<string | null>;
 }
 
 // @public

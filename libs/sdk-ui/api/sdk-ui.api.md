@@ -225,7 +225,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders & DataSeriesDescriptorMetho
 export type DataSeriesDescriptorMethods = {
     measureTitle(): string;
     measureFormat(): string;
-    scopeTitles(): string[];
+    scopeTitles(): Array<string | null>;
 };
 
 // @public (undocumented)
@@ -246,7 +246,7 @@ export type DataSliceDescriptor = DataSliceHeaders & DataSliceDescriptorMethods 
 
 // @public (undocumented)
 export type DataSliceDescriptorMethods = {
-    readonly sliceTitles: () => string[];
+    readonly sliceTitles: () => Array<string | null>;
 };
 
 // @public
@@ -412,7 +412,7 @@ export class GeoTokenMissingSdkError extends GoodDataSdkError {
 }
 
 // @internal
-export function getAttributeHeaderItemName(attributeHeaderItem: IResultAttributeHeaderItem | undefined): string | undefined;
+export function getAttributeHeaderItemName(attributeHeaderItem: IResultAttributeHeaderItem | undefined): string | null | undefined;
 
 // @internal (undocumented)
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[];
@@ -427,7 +427,7 @@ export function getIntersectionPartAfter(intersection: IDrillEventIntersectionEl
 export function getIntl(locale?: ILocale): IntlShape;
 
 // @internal
-export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined;
+export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined | null;
 
 // @internal (undocumented)
 export function getMappingHeaderIdentifier(header: IMappingHeader): string | undefined;
@@ -436,7 +436,7 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string | und
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string;
 
 // @internal (undocumented)
-export function getMappingHeaderName(header: IMappingHeader): string | undefined;
+export function getMappingHeaderName(header: IMappingHeader): string | undefined | null;
 
 // @internal (undocumented)
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
@@ -484,7 +484,7 @@ export const HeaderPredicates: {
 };
 
 // @public (undocumented)
-export type HeaderTranslator = (value: string) => string;
+export type HeaderTranslator = (value: string | null) => string;
 
 // @public (undocumented)
 export type HeadlineElementType = "primaryValue" | "secondaryValue";

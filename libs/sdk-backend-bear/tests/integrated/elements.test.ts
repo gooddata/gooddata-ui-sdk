@@ -73,7 +73,7 @@ describe("bear elements", () => {
             ReferenceRecordings.Recordings.metadata.displayForms.df_label_product_id_name
                 .elements as IAttributeElement[]
         ).find((el) => el.title === "Educationly");
-        const testAttributeElementUri = testAttributeElement!.uri.replace(
+        const testAttributeElementUri = testAttributeElement!.uri!.replace(
             "referenceworkspace",
             testWorkspace(),
         );

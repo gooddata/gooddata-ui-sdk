@@ -1005,7 +1005,7 @@ export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
 
 // @public
 export interface AttributeFilterElements {
-    values: Array<string>;
+    values: Array<string | null>;
 }
 
 // @public
@@ -3039,7 +3039,7 @@ export interface ElementsRequest {
     complementFilter?: boolean;
     // @deprecated
     dataSamplingPercentage?: number;
-    exactFilter?: Array<string>;
+    exactFilter?: Array<string | null>;
     excludePrimaryLabel?: boolean;
     filterBy?: FilterBy;
     label: string;

@@ -6,7 +6,8 @@ import { IGridTotalsRow } from "./resultTypes";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
 import { IDimension } from "@gooddata/sdk-model";
 
-export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridTotalsRow[]): boolean {
+export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridTotalsRow[] | null): boolean {
+    const totals = newTotals ?? [];
     const currentTotalsCount = gridApi?.getPinnedBottomRowCount() ?? 0;
     const newTotalsCount = newTotals?.length ?? 0;
 
@@ -15,7 +16,7 @@ export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridT
     }
 
     for (let i = 0; i < currentTotalsCount; i++) {
-        if (!isEqual(gridApi?.getPinnedBottomRow(i)?.data, newTotals[i])) {
+        if (!isEqual(gridApi?.getPinnedBottomRow(i)?.data, totals[i])) {
             return true;
         }
     }

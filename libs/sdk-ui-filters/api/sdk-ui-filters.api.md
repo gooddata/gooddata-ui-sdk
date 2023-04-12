@@ -57,7 +57,7 @@ export const AttributeDatasetInfo: React_2.FC<IAttributeDatasetInfoProps>;
 export const AttributeDisplayFormSelect: React_2.FC<IAttributeDisplayFormSelectProps>;
 
 // @public
-export type AttributeElementKey = string;
+export type AttributeElementKey = string | null;
 
 // @public
 export const AttributeFilter: React_2.FC<IAttributeFilterProps>;

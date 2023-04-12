@@ -1,12 +1,12 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 
 interface ISidebarItemProps {
-    label: string;
-    id: string;
+    label: string | null;
+    id: string | null;
     isSelected: boolean;
-    onClick: (id: string) => void;
+    onClick: (id: string | null) => void;
 }
 
 export const SidebarItem: React.FC<ISidebarItemProps> = ({ label, id, isSelected = false, onClick }) => {

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { DataValue } from "@gooddata/sdk-model";
 import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
@@ -15,7 +15,7 @@ export type ValueFormatter = (value: DataValue, format: string) => string;
 /**
  * @public
  */
-export type HeaderTranslator = (value: string) => string;
+export type HeaderTranslator = (value: string | null) => string;
 
 /**
  * Creates value formatter that uses `@gooddata/numberjs` to format raw measure values according

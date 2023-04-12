@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { isDrillToLegacyDashboard } from "@gooddata/sdk-model";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
@@ -13,7 +13,7 @@ import { isDrillToUrl } from "../types";
 /**
  * @internal
  */
-export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string {
+export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string | null {
     return (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)
         .filter(isDrillIntersectionAttributeItem)

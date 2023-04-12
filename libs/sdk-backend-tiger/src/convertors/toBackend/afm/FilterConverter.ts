@@ -56,7 +56,7 @@ export function newFilterWithApplyOnResult(
 
 type ApplyOnResultProp = { applyOnResult?: boolean };
 
-function extractValuesFromAttributeElements(attributeElements: IAttributeElements): string[] {
+function extractValuesFromAttributeElements(attributeElements: IAttributeElements): Array<string | null> {
     if (isAttributeElementsByValue(attributeElements)) {
         return attributeElements.values;
     }

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { ObjRef } from "../../objRef";
 
@@ -293,11 +293,8 @@ export interface IResultAttributeHeaderItem {
      * Human readable name of the attribute element.
      *
      * @remarks
-     * Note that this can actually be null on some backends if your data contains NULL values.
-     * We will change the type of this to string | null in the next major (since it is a breaking change),
-     * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
-    name: string;
+    name: string | null;
 
     /**
      * URI of the attribute element.
@@ -536,15 +533,10 @@ export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader {
 /**
  * Returns item name contained within a result header.
  *
- * @remarks
- * Note that this can actually be null on some backends if your data contains NULL values.
- * We will change the type of this to string | null in the next major (since it is a breaking change),
- * but for now, if you expect NULLs in your data, treat this as string | null already.
- *
  * @param header - header of any type
  * @public
  */
-export function resultHeaderName(header: IResultHeader): string {
+export function resultHeaderName(header: IResultHeader): string | null {
     if (isResultAttributeHeader(header)) {
         return header.attributeHeaderItem.name;
     } else if (isResultMeasureHeader(header)) {

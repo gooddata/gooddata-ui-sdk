@@ -21,7 +21,7 @@ const SingleSelectionAttributeFilterStatusBarExamples = (): JSX.Element => {
                 <div className="library-component screenshot-target">
                     <h4>SingleSelectionAttributeFilterStatusBar positive selection = renders nothing</h4>
                     <SingleSelectionAttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={false}
@@ -31,7 +31,7 @@ const SingleSelectionAttributeFilterStatusBarExamples = (): JSX.Element => {
                     />
                     <h4>SingleSelectionAttributeFilterStatusBar filtered by parent filters</h4>
                     <SingleSelectionAttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={true}

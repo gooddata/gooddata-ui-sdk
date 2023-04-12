@@ -492,10 +492,10 @@ export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
 export interface AttributeFilterElements {
     /**
      * Set of label values.
-     * @type {Array<string>}
+     * @type {Array<string | null>}
      * @memberof AttributeFilterElements
      */
-    values: Array<string>;
+    values: Array<string | null>;
 }
 /**
  *
@@ -850,7 +850,7 @@ export interface ElementsRequest {
      * @type {Array<string>}
      * @memberof ElementsRequest
      */
-    exactFilter?: Array<string>;
+    exactFilter?: Array<string | null>;
     /**
      * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
      * @type {number}

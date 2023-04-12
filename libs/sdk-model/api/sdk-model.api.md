@@ -132,7 +132,7 @@ export type AttributeInBucket = {
 export function attributeLocalId(attributeOrId: IAttribute | Identifier): string;
 
 // @public
-export function attributeLocatorElement(locator: IAttributeLocatorItem): Identifier;
+export function attributeLocatorElement(locator: IAttributeLocatorItem): Identifier | null;
 
 // @public
 export function attributeLocatorIdentifier(locator: IAttributeLocatorItem): Identifier;
@@ -426,7 +426,7 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
 // @internal
-export function getAttributeElementsItems(attributeElements: IAttributeElements): string[];
+export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
@@ -546,8 +546,8 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
 // @public
 export interface IAttributeElement {
     readonly formattedTitle?: string;
-    readonly title: string;
-    readonly uri: string;
+    readonly title: string | null;
+    readonly uri: string | null;
 }
 
 // @public
@@ -556,13 +556,13 @@ export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByV
 // @public
 export interface IAttributeElementsByRef {
     // (undocumented)
-    uris: string[];
+    uris: Array<string | null>;
 }
 
 // @public
 export interface IAttributeElementsByValue {
     // (undocumented)
-    values: string[];
+    values: Array<string | null>;
 }
 
 // @public
@@ -585,7 +585,7 @@ export interface IAttributeLocatorItem {
 // @public
 export interface IAttributeLocatorItemBody {
     attributeIdentifier: Identifier;
-    element: string;
+    element: string | null;
 }
 
 // @public
@@ -1953,7 +1953,7 @@ export interface IResultAttributeHeader {
 // @public
 export interface IResultAttributeHeaderItem {
     formattedName?: string;
-    name: string;
+    name: string | null;
     uri: string;
 }
 
@@ -3285,7 +3285,7 @@ export type RelativeDateFilterGranularityOffset = number;
 export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
 
 // @public
-export function resultHeaderName(header: IResultHeader): string;
+export function resultHeaderName(header: IResultHeader): string | null;
 
 // @public (undocumented)
 export type RgbType = "rgb";
@@ -3337,7 +3337,7 @@ export function totalIsNative(total: ITotal): boolean;
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
 
 // @internal
-export function updateAttributeElementsItems(attributeElements: IAttributeElements, newItems: string[]): IAttributeElements;
+export function updateAttributeElementsItems(attributeElements: IAttributeElements, newItems: Array<string | null>): IAttributeElements;
 
 // @public
 export type Uri = string;
