@@ -11,16 +11,6 @@ import { DropZone } from "../../tools/enum/DropZone";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
 const PARENT_FILTER_SELECTOR = ".s-attribute-filter.s-product";
 const CHILD_FILTER_SELECTOR = ".s-attribute-filter.s-department";
 
@@ -33,10 +23,6 @@ const widget = new Widget(0);
 
 // eslint-disable-next-line jest/no-disabled-tests
 describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
-    beforeEach(() => {
-        cy.login();
-    });
-
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip("AttributeFilterButton on dashboard (SEPARATE)", () => {
         Navigation.visit("dashboard/filtering");
@@ -48,9 +34,6 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         parentAttributeFilters.getParentFilter().titleHasText("Product").subtitleHasText("All");
         parentAttributeFilters.getChildFilter().titleHasText("Department").subtitleHasText("All");
-
-        // wait until filters applied to headline
-        cy.wait(200);
 
         headline.waitLoaded().hasValue("$38,310,753.45");
 
@@ -67,8 +50,6 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
             .subtitleHasText("All")
             .open()
             .isAllElementsFilteredByParent();
-        // wait until filters applied to headline
-        cy.wait(200);
 
         headline.waitLoaded().isValue();
     });
@@ -85,9 +66,6 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
         parentAttributeFilters.getParentFilter().titleHasText("Product").subtitleHasText("All");
         parentAttributeFilters.getChildFilter().titleHasText("Department").subtitleHasText("All");
 
-        // wait until filters applied to headline
-        cy.wait(200);
-
         headline.waitLoaded().hasValue("$38,310,753.45");
 
         parentAttributeFilters
@@ -96,9 +74,6 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
             .clearSelection()
             .selectElement(".s-compusci")
             .clickApply();
-
-        // wait until filters applied to headline
-        cy.wait(200);
 
         headline.waitLoaded().hasValue("$9,237,969.87");
 
@@ -109,8 +84,6 @@ describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
             .selectElement(".s-direct_sales")
             .clickApply();
 
-        // wait until filters applied to headline
-        cy.wait(200);
         headline.waitLoaded().hasValue("$6,111,808.02");
     });
 

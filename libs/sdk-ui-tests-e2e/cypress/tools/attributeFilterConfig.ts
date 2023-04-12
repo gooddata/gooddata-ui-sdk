@@ -11,7 +11,6 @@ export class AttributeFilterConfiguration {
 
     clickElement(elementSelector: string): this {
         cy.get(elementSelector).click();
-        cy.wait(200);
         return this;
     }
 
@@ -67,9 +66,7 @@ export class AttributeFilterConfiguration {
 
     changeAttributeTitle(title: string) {
         const inputTitle = title ? title : "{backspace}";
-        cy.get(".s-configuration-attribute-filter-title .gd-input-field")
-            .clear({ force: true })
-            .type(inputTitle, { force: true });
+        cy.get(".s-configuration-attribute-filter-title .gd-input-field").clear().type(inputTitle);
         return this;
     }
 

@@ -5,8 +5,6 @@ import camelCase from "lodash/camelCase";
 
 describe("AttributeFilterButton with initial selection", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("filters/attribute-filter-button-with-selection");
     });
 

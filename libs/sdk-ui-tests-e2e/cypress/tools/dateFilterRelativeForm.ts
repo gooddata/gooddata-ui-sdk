@@ -9,7 +9,7 @@ export class DateFilterRelativeForm {
     }
 
     selectTab(granularity: Granularity) {
-        this.getElement(`.s-granularity-${granularity}`).click({ force: true });
+        this.getElement(`.s-granularity-${granularity}`).click();
         return this;
     }
 

@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "a79e45a7-3b99-4f67-b0d1-71422868513a",
+            "id": "aa59b011-cb49-4221-a9ee-04dba4c3d7b9",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,18 +9,20 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"state\":\"/gdc/account/login/3ece989b2330f96ae7049a928bd1bc60\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/f51c248b0e33c0570209658f08af1be5\",\"state\":\"/gdc/account/login/f51c248b0e33c0570209658f08af1be5\"}}",
                 "headers": {
+                    "x-gdc-request": "lSWkvVR8Xn8lEhmX",
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
-                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin",
+                    "x-gdc-request-time": "25",
                     "content-type": "application/json",
                     "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
                     "p3p": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
-                    "pragma": "no-cache"
+                    "pragma": "no-cache",
+                    "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
                 }
             },
-            "uuid": "a79e45a7-3b99-4f67-b0d1-71422868513a"
+            "uuid": "aa59b011-cb49-4221-a9ee-04dba4c3d7b9"
         }
     ]
 }

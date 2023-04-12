@@ -1,6 +1,8 @@
 // (C) 2022 GoodData Corporation
-import { defineConfig } from "cypress";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import cypressGrepPlugin from "@cypress/grep/src/plugin";
+import { defineConfig } from "cypress";
 import axios from "axios";
 import readPdf from "./cypress/plugins/readPdf";
 
@@ -50,4 +52,5 @@ export default defineConfig({
         video: true,
         videoUploadOnPasses: false,
     },
+    scrollBehavior: false,
 });

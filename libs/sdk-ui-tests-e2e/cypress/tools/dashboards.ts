@@ -43,22 +43,14 @@ export class Dashboard {
 
     moveWidget(fromIndex: number, toIndex: number, dropzone: WidgetDropZone) {
         const dataTransfer = new DataTransfer();
-        cy.get(".dash-item-content").eq(fromIndex).trigger("dragstart", {
-            dataTransfer,
-        });
-
-        cy.get(".s-dash-item").eq(toIndex).trigger("dragover", "center", {
-            dataTransfer,
-            force: true,
-        });
+        cy.get(".dash-item-content").eq(fromIndex).trigger("dragstart", { dataTransfer });
 
         cy.get(".s-dash-item")
             .eq(toIndex)
             .parents(".gd-fluidlayout-column-container")
             .find(dropzone)
-            .trigger("drop", {
-                dataTransfer,
-            });
+            .trigger("dragover", "center", { dataTransfer })
+            .trigger("drop", { dataTransfer });
         return this;
     }
 

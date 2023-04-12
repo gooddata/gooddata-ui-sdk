@@ -41,12 +41,12 @@ export class DateFilter {
     }
 
     selectAbsolutePreset(preset: AbsolutePreset) {
-        this.getOption(`.s-absolute-preset-${preset}`).click({ scrollBehavior: false });
+        this.getOption(`.s-absolute-preset-${preset}`).click();
         return this;
     }
 
     selectRelativePreset(preset: RelativePreset) {
-        this.getOption(`.s-relative-preset-${preset}`).click({ scrollBehavior: false });
+        this.getOption(`.s-relative-preset-${preset}`).click();
         return this;
     }
 
@@ -56,7 +56,7 @@ export class DateFilter {
     }
 
     selectFloatingRange() {
-        this.getOption(".s-relative-form").click({ scrollBehavior: false });
+        this.getOption(".s-relative-form").click();
         return this;
     }
 
@@ -109,7 +109,7 @@ export class DateFilter {
     }
 
     apply() {
-        this.getDropdownElement().find(".s-date-filter-apply").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-date-filter-apply").click();
         return this;
     }
 
@@ -121,7 +121,7 @@ export class DateFilter {
     }
 
     cancel() {
-        this.getDropdownElement().find(".s-date-filter-cancel").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-date-filter-cancel").click();
         return this;
     }
 }

@@ -4,7 +4,7 @@ export const getHost = (): string => Cypress.env("HOST");
 
 export const getProjectId = (): string => Cypress.env("TEST_WORKSPACE_ID");
 
-export const getUsername = (): string => Cypress.env("USER_NAME");
+export const getUserName = (): string => Cypress.env("USER_NAME");
 
 export const getMockServer = (): string => Cypress.env("MOCK_SERVER");
 

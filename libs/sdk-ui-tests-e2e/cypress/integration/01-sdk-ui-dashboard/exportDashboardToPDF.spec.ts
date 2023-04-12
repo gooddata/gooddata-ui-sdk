@@ -13,22 +13,7 @@ const exportControl = new Export();
 const widget = new Widget(0);
 const topBar = new TopBar();
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger"] }, () => {
-    beforeEach(() => {
-        cy.login();
-    });
-
     it("should export insight to PDF from dashboards", () => {
         cy.fixture("dashboardInfosForExport").then((data) => {
             data["validInsightsForTigerPDFExport"].forEach(

@@ -6,8 +6,6 @@ const CELL_AUTO_RESIZE_WIDTH = 105;
 
 describe("should autoresized all columns", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("visualizations/pivot-table/sizing/pivot-table-sizing");
     });
 

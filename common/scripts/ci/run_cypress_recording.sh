@@ -2,7 +2,7 @@
 
 set -e
 
-CYPRESS_IMAGE='cypress/included:10.10.0'
+CYPRESS_IMAGE='cypress/included:12.10.0'
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e

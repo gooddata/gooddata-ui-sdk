@@ -19,7 +19,7 @@ export class EditMode {
     }
 
     save(waitForEnabled = true) {
-        this.getWrapperElement().settled(SAVE_EDIT_BUTTON_SELECTOR).click({ force: true });
+        this.getWrapperElement().find(SAVE_EDIT_BUTTON_SELECTOR).scrollIntoView().click();
         if (waitForEnabled) {
             this.editButtonEnabled();
         }
@@ -38,7 +38,7 @@ export class EditMode {
 
     edit() {
         this.editButtonEnabled();
-        this.getWrapperElement().settled(EDIT_BUTTON_SELECTOR).click();
+        this.getWrapperElement().find(EDIT_BUTTON_SELECTOR).click();
         new InsightsCatalog().waitForCatalogLoad();
         return this;
     }

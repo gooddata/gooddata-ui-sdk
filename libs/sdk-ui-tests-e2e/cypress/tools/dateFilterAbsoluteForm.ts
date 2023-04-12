@@ -14,16 +14,18 @@ export class DateFilterAbsoluteForm {
     typeIntoFromRangePickerInput(value: string): this {
         this.getElement(".s-date-range-picker-from")
             .find(".s-date-range-picker-input-field")
-            .clear({ force: true })
-            .type(value);
+            .clear()
+            .type(value)
+            .type("{esc}");
         return this;
     }
 
     typeIntoToRangePickerInput(value: string): this {
         this.getElement(".s-date-range-picker-to")
             .find(".s-date-range-picker-input-field")
-            .clear({ force: true })
-            .type(value);
+            .clear()
+            .type(value)
+            .type("{esc}");
         return this;
     }
 

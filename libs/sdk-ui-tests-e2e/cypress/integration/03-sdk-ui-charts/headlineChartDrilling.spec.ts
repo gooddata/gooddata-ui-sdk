@@ -20,9 +20,7 @@ const scenarios = [
 ];
 
 describe("Headline drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
-    before(() => {
-        cy.login();
-
+    beforeEach(() => {
         Navigation.visit("visualizations/headline/headline-drilling");
     });
 

@@ -10,8 +10,6 @@ const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter.s-opportunity";
 
 describe("Single selection AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("filters/single-selection-attribute-filter-button");
     });
 

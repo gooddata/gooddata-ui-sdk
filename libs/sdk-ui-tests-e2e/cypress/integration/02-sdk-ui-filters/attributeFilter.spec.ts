@@ -7,8 +7,6 @@ const CHILD_FILTER_SELECTOR = "button.s-department";
 
 describe("Parent-child filtering on AttributeFilter", { tags: ["post-merge_integrated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("filters/attribute-filter-parent-child-example");
     });
 

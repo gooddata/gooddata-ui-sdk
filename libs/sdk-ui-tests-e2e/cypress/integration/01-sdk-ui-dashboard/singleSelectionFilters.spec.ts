@@ -4,17 +4,6 @@ import { AttributeFilter } from "../../tools/filterBar";
 import { Widget } from "../../tools/widget";
 import { EditMode } from "../../tools/editMode";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 const editMode = new EditMode();
 const regionFilter = new AttributeFilter("Region");
 const salesRepFilter = new AttributeFilter("Sales Rep");
@@ -27,13 +16,12 @@ const getChart = () => new Widget(2).waitChartLoaded().getChart();
 
 describe("Single selection filters", () => {
     beforeEach(() => {
-        cy.login();
         Navigation.visit("dashboard/single-select-filter-integration");
     });
 
     it(
         "should affect widgets on selection changes in view mode",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false);
 
@@ -55,7 +43,7 @@ describe("Single selection filters", () => {
 
     it(
         "should change multiple selection with all values to single selection (auto-select first)",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false).edit().isInEditMode(true);
 
@@ -86,7 +74,7 @@ describe("Single selection filters", () => {
 
     it(
         "should change positive multiple selection with some values to single selection (auto-select first)",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false).edit().isInEditMode(true);
 
@@ -115,7 +103,7 @@ describe("Single selection filters", () => {
 
     it(
         "should change negative multiple selection with some values to single selection (auto-select first)",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false).edit().isInEditMode(true);
 
@@ -146,7 +134,7 @@ describe("Single selection filters", () => {
 
     it(
         "should change single selection to multiple selection (auto-select all)",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false).edit().isInEditMode(true);
 
@@ -178,7 +166,7 @@ describe("Single selection filters", () => {
 
     it(
         "should not allow combining single selection mode with parent filter, choosing one disables another",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false).edit().isInEditMode(true);
             salesRepFilter
@@ -222,7 +210,7 @@ describe("Single selection filters", () => {
 
     it(
         "should reset child filter to 'All' on single selection mode parent changes its selection",
-        { tags: ["post-merge_integrated_bear"] },
+        { tags: ["pre-merge_isolated_bear"] },
         () => {
             editMode.isInEditMode(false).edit().isInEditMode(true);
 

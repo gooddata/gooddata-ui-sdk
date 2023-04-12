@@ -4,7 +4,6 @@ import { nonEmptyValue, Table } from "../../tools/table";
 
 describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
         Navigation.visit("visualizations/pivot-table/pivot-table-aggregations-menu");
     });
 
@@ -16,7 +15,6 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
         table
             .getMeasureCellHeader(0, 2)
             .realHover()
-            .wait(100)
             .find(".s-table-header-menu")
             .should("exist")
             .should("have.class", "gd-pivot-table-header-menu--show");
@@ -26,7 +24,6 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
             .getMeasureGroupCell(0)
             .eq(1)
             .realHover()
-            .wait(100)
             .find(".s-table-header-menu")
             .should("exist")
             .should("have.class", "gd-pivot-table-header-menu--show");
@@ -45,30 +42,18 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
         table.waitLoaded();
 
         //check exist sort icon
-        table
-            .getMeasureCellHeader(0, 2)
-            .realHover()
-            .wait(100)
-            .find(".s-sort-direction-arrow")
-            .should("exist");
+        table.getMeasureCellHeader(0, 2).realHover().find(".s-sort-direction-arrow").should("exist");
 
         //check exist menu
         table
             .getMeasureCellHeader(0, 2)
             .realHover()
-            .wait(300)
             .find(".s-table-header-menu")
             .should("exist")
             .should("have.class", "gd-pivot-table-header-menu--show");
 
         //do menu hover
-        table
-            .getMeasureCellHeader(0, 2)
-            .realHover()
-            .wait(100)
-            .find(".s-table-header-menu")
-            .realHover()
-            .wait(100);
+        table.getMeasureCellHeader(0, 2).realHover().find(".s-table-header-menu").realHover();
 
         //check exist sort icon
         table.getMeasureCellHeader(0, 2).find(".s-sort-direction-arrow").should("not.exist");
@@ -89,7 +74,6 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
         table.clickAggregationMenu(element);
 
         table.waitRowLoaded();
-        cy.wait(300);
 
         table
             .getPivotTableFooterCell(0, 0)
@@ -123,7 +107,6 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
         table.clickAggregationMenu(element);
 
         table.waitRowLoaded();
-        cy.wait(300);
 
         table.getPivotTableFooterCell(0, 0).find(`.s-value`).should("have.text", "Sum");
 
@@ -152,7 +135,6 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
         table.clickAggregationMenu(element);
 
         table.waitRowLoaded();
-        cy.wait(300);
 
         table.getPivotTableFooterCell(0, 0).find(`.s-value`).should("have.text", "Sum");
 

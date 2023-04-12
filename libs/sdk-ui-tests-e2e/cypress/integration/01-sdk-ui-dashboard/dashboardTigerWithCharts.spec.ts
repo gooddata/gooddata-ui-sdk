@@ -4,23 +4,9 @@ import * as Navigation from "../../tools/navigation";
 import { Dashboard } from "../../tools/dashboards";
 import { Widget } from "../../tools/widget";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    // eslint-disable-next-line no-console
-    console.error("Uncaught excepton cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Dashboard with charts", { tags: ["pre-merge_isolated_tiger"] }, () => {
     describe("rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard-tiger-charts");
         });
 

@@ -43,7 +43,7 @@ export class SectionHeader {
     }
 
     setTitle(text: string) {
-        this.getTitleInputWrapper().click().find("textarea").type(`${text}{enter}`, { delay: 50 });
+        this.getTitleInputWrapper().click().find("textarea").type(`${text}{enter}`);
         return this;
     }
 
@@ -52,7 +52,7 @@ export class SectionHeader {
     }
 
     setDescription(text: string) {
-        this.getDescriptionInputWrapper().click().find("textarea").type(`${text}{enter}`, { delay: 50 });
+        this.getDescriptionInputWrapper().click().find("textarea").type(`${text}{enter}`);
         return this;
     }
 
@@ -81,6 +81,11 @@ export class SectionHeader {
             "have.text",
             message,
         );
+        return this;
+    }
+
+    scrollIntoView() {
+        this.getElement().scrollIntoView();
         return this;
     }
 }

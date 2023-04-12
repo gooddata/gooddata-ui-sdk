@@ -4,17 +4,6 @@ import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig"
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 const ACCOUNT_FILTER_SELECTOR = ".s-attribute-filter.s-account";
 const SALES_REP_FILTER_SELECTOR = ".s-attribute-filter.s-sales_rep";
 const ACTIVITY_FILTER_SELECTOR = ".s-attribute-filter.s-activity";
@@ -26,8 +15,6 @@ const CONFIGURATION_SELECTOR = ".s-attribute-filter-dropdown-configuration";
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Attribute filter Configuration", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("dashboard/attribute-filter-config");
     });
 

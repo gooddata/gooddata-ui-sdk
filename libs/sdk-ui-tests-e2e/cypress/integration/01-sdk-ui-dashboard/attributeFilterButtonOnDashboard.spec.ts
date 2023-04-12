@@ -5,24 +5,11 @@ import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import { AttributeFilterTooltip } from "../../tools/attributeFilterTooltip";
 import { getTestClassByTitle } from "../../support/commands/tools/classes";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 const ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR = ".s-attribute-filter.s-activity_type";
 const CONFIGURATION_SELECTOR = ".s-configuration-button";
 
 describe("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("dashboard/attribute-filter-button-renaming");
     });
 

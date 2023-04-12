@@ -4,7 +4,6 @@ import { Table } from "../../tools/table";
 
 describe("Pivot Table Aggregations remove all totals", () => {
     beforeEach(() => {
-        cy.login();
         Navigation.visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
     });
 
@@ -16,7 +15,6 @@ describe("Pivot Table Aggregations remove all totals", () => {
         table.clickAggregationMenu(element);
 
         table.waitRowLoaded();
-        cy.wait(300);
 
         table.existPivotTableFooterRow(0, false);
     });

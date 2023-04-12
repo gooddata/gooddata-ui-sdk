@@ -10,21 +10,8 @@ const editMode = new EditMode();
 const widget = new Widget(0);
 const insightCatalog = new InsightsCatalog();
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Insights on dashboard", () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("dashboard/insight");
         editMode.isInEditMode(false).edit().isInEditMode();
     });
@@ -36,6 +23,7 @@ describe("Insights on dashboard", () => {
     });
 
     it("has insight placeholder title", { tags: ["pre-merge_isolated_tiger"] }, () => {
+        insightCatalog.waitForCatalogLoad();
         widget
             .waitChartLoaded()
             .getTitle()

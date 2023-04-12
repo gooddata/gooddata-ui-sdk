@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useState } from "react";
 import {
     ColumnWidthItem,
@@ -103,7 +103,7 @@ const isSameWidthItem = (item: any, newItem: any) => {
     return isAllMeasureColumnWidthItem(item) && isAllMeasureColumnWidthItem(newItem);
 };
 
-const EastCoastUri = `/gdc/md/${workspace}/obj/1083/elements?id=460488`;
+const EastCoastUri = `/gdc/md/${workspace}/obj/1085/elements?id=460488`;
 
 const measureWidth = (width: number) =>
     measureColumnWidthItemSimple(measures[0], width, [newAttributeLocator(ReferenceMd.Region, EastCoastUri)]);

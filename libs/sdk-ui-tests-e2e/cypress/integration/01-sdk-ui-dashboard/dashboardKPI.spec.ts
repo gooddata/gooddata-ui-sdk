@@ -7,17 +7,6 @@ import { KpiConfiguration, KPIMeasureDropdown } from "../../tools/kpiConfigurati
 import { DateFilter, RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 const editMode = new EditMode();
 const widget = new Widget(0);
 const dateFilter = new DateFilter();
@@ -25,7 +14,6 @@ const kpiConfiguration = new KpiConfiguration(0);
 const kpiMeasureDropdown = new KPIMeasureDropdown();
 
 beforeEach(() => {
-    cy.login();
     Navigation.visit("dashboard/kpis");
 });
 
@@ -115,7 +103,6 @@ describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         widget.getKPI().clickValue();
         kpiConfiguration.toggleMeasureDropdown();
-        cy.wait(1000); //input too fast make input string vanished
         kpiMeasureDropdown.find("abc").noMatchingData();
     });
 });

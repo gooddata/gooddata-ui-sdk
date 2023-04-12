@@ -12,21 +12,8 @@ const dashboard = new Dashboard();
 const editMode = new EditMode();
 const insightCatalog = new InsightsCatalog();
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Insight on dashboard", () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("dashboard/drag-drop-widgets");
         editMode.isInEditMode();
         insightCatalog.waitForCatalogReload();
@@ -61,17 +48,17 @@ describe("Insight on dashboard", () => {
         //create a new row, between 2 existing rows
         dashboard.getRow(1).dragAbove("ComboChart");
         dashboard.hasPlaceholderText("Drop to create a new section");
-        cy.get(".s-cancel_button").trigger("dragleave", { force: true });
+        cy.get(".s-cancel_button").trigger("dragleave");
 
         //drag to beginning of a row
         dashboard.getWidget(0).dragBefore("TableWithHyperlinkAttribute");
         dashboard.hasPlaceholderText("Drop here");
-        cy.get(".s-cancel_button").trigger("dragleave", { force: true });
+        cy.get(".s-cancel_button").trigger("dragleave");
 
         //drag to the end of a row
         dashboard.getWidget(2).dragAfter("ComboChart");
         dashboard.hasPlaceholderText("Drop to the existing section");
-        cy.get(".s-cancel_button").trigger("dragleave", { force: true });
+        cy.get(".s-cancel_button").trigger("dragleave");
 
         //drag to between of 2 widgets
         dashboard.getWidget(0).dragAfter("Headline");
@@ -79,10 +66,10 @@ describe("Insight on dashboard", () => {
     });
 
     it("can remove widgets after drap&drop", { tags: ["pre-merge_isolated_tiger"] }, () => {
-        dashboard.getRow(2).addLast("ComboChart");
+        dashboard.getRow(2).scrollIntoView().addLast("ComboChart");
         dashboard.hasRowsCount(4);
 
-        new Widget(5).removeVizWidget();
+        new Widget(5).scrollIntoView().removeVizWidget();
         dashboard.hasRowsCount(3);
     });
 });

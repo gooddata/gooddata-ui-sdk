@@ -8,7 +8,7 @@ import * as Md from "../../../../../reference_workspace/workspace_objects/goodsa
 import { workspace } from "../../../constants.ts";
 
 const attributeFilter = newPositiveAttributeFilter(attributeDisplayFormRef(Md.Opportunity.Name), {
-    uris: [`/gdc/md/${workspace}/obj/1063/elements?id=5034`],
+    uris: [`/gdc/md/${workspace}/obj/1065/elements?id=5034`],
 });
 
 export const SingleSelectionAttributeFilterButtonScenario: React.FC = () => {

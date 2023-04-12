@@ -13,22 +13,9 @@ const insightCatalog = new InsightsCatalog();
 const layoutRow_01 = new LayoutRow(0);
 const layoutRow_02 = new LayoutRow(1);
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Header section", () => {
     describe("Default language", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/header");
             editMode.isInEditMode(false);
         });
@@ -80,8 +67,6 @@ describe("Header section", () => {
 
     describe("Localization", { tags: ["pre-merge_isolated_tiger"] }, () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/header-localization");
             editMode.isInEditMode(false).edit().isInEditMode();
             insightCatalog.waitForCatalogReload();
@@ -96,6 +81,7 @@ describe("Header section", () => {
 
                 headerRow_01.setTitle(title).selectTitleInput().hasLimitMessage("128/256 caractères restant");
                 headerRow_02
+                    .scrollIntoView()
                     .setDescription(desc)
                     .selectDescriptionInput()
                     .hasLimitMessage("512/1024 caractères restant");

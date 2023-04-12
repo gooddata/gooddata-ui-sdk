@@ -10,21 +10,8 @@ const editMode = new EditMode();
 const widget = new Widget(0);
 const layout = new LayoutRow(0);
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Basic actions on dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("dashboard/insight");
         editMode.edit().isInEditMode();
     });

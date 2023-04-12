@@ -4,25 +4,54 @@ import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
 import { DrillToModal } from "../../tools/drillToModal";
+import { getBackend, getHost, getProjectId } from "../../support/constants";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught excepton cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
+const DEPARTMENT_ID = "1087";
+const PRODUCT_ID = "1054";
 const drillModal = new DrillToModal();
 
-beforeEach(() => {
-    cy.login();
-});
+const postDrillDownStepAttributeDF = (value?: string) => {
+    if (getBackend() !== "BEAR") {
+        return;
+    }
+    const uri = `/gdc/md/${getProjectId()}/obj/${DEPARTMENT_ID}`;
+    const url = `${getHost()}${uri}`;
+    const headers = { accept: "application/json" };
 
-describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
+    cy.request({ method: "GET", url, headers }).then((getResponse) => {
+        cy.wrap(getResponse.status).should("equal", 200);
+        cy.wrap(getResponse.body?.attribute?.meta?.uri).should("equal", uri);
+        cy.wrap(getResponse.body?.attribute?.content).should("exist");
+
+        const body = {
+            ...getResponse.body,
+            attribute: {
+                ...getResponse.body.attribute,
+                content: {
+                    ...getResponse.body.attribute.content,
+                    drillDownStepAttributeDF: value,
+                },
+            },
+        };
+
+        cy.request({ method: "POST", url, headers, body }).then((postResponse) => {
+            cy.wrap(postResponse.status).should("equal", 200);
+            cy.wrap(postResponse.body?.uri).should("equal", uri);
+        });
+    });
+};
+
+describe("Drilling", { tags: ["post-merge_integrated_bear"] }, () => {
+    before(() => {
+        // Sets drilling on Department attribute into Product attribute
+        postDrillDownStepAttributeDF(`/gdc/md/${getProjectId()}/obj/${PRODUCT_ID}`);
+    });
+
+    after(() => {
+        // Removes drilling from Department attribute
+        postDrillDownStepAttributeDF();
+    });
+
     describe("implicit drill to attribute url", () => {
         beforeEach(() => {
             Navigation.visit("dashboard/implicit-drill-to-attribute-url");
@@ -60,9 +89,9 @@ describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("Advanced drill down", () => {
         it("Drill down on column with one drillable on drill to insight", () => {
             Navigation.visit("dashboard/drill-to-insight");
-            new Widget(2).getTable().click(0, 0);
+            new Widget(2).waitTableLoaded().getTable().click(0, 0);
 
-            drillModal.getChart().clickSeriesPoint(0);
+            drillModal.getChart().waitLoaded().clickSeriesPoint(0);
             drillModal
                 .getTitleElement()
                 .should("have.text", "Bar chart with measures and attribute › Direct Sales");
@@ -70,9 +99,7 @@ describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         it("Drill down on table with one drillable on drill to insight", () => {
             Navigation.visit("dashboard/drill-to-insight");
-            const chart = new Widget(3).getChart().scrollIntoView().waitLoaded();
-            cy.wait(1000); // after scroll to chart, have to wait then click
-            chart.clickSeriesPoint(0, 7);
+            new Widget(3).scrollIntoView().waitChartLoaded().getChart().waitLoaded().clickSeriesPoint(0, 7);
 
             drillModal.getTable().click(0, 1);
             drillModal
@@ -82,22 +109,21 @@ describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         it("Drill down on table with invalid drill", () => {
             Navigation.visit("dashboard/dashboard-target");
-            new Widget(0).getTable().waitLoaded().click(0, 1);
+            new Widget(0).waitTableLoaded().getTable().click(0, 1);
 
             drillModal.getModalText().should("have.text", "Sorry, we can't display this insight");
         });
 
         it("Drill down on column chart with invalid drill", () => {
             Navigation.visit("dashboard/dashboard-target");
-            new Widget(1).getChart().waitLoaded().clickSeriesPoint(0, 0);
+            new Widget(1).scrollIntoView().waitChartLoaded().getChart().waitLoaded().clickSeriesPoint(0, 0);
 
             drillModal.getModalText().should("have.text", "Sorry, we can't display this insight");
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
-        it.skip("Check attribute value when drilling in bubble chart", () => {
+        it("Check attribute value when drilling in bubble chart", () => {
             Navigation.visit("dashboard/dashboard-target");
-            new Widget(2).getChart().scrollIntoView().waitComputed().clickSeriesPoint(1, 0);
+            new Widget(2).scrollIntoView().waitChartLoaded().getChart().waitLoaded().clickSeriesPoint(1, 0);
 
             drillModal.getTable().getColumnValues(0).should("deep.equal", ["2011"]);
         });

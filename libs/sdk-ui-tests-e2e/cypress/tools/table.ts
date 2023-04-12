@@ -14,13 +14,11 @@ export class Table {
     public waitLoaded(): this {
         this.getElement().find(".s-loading").should("not.exist");
         this.getElement().find(".s-loading-done").should("exist");
-        cy.wait(500);
         return this;
     }
 
     public waitRowLoaded(): this {
         this.getElement().find(".s-loading").should("not.exist");
-        cy.wait(200);
         return this;
     }
 
@@ -49,14 +47,14 @@ export class Table {
     }
 
     hasCellWidth(rowIndex: number, columnIndex: number, expectedWidth: number, withTolerance = false) {
-        const columnWidth = this.getCell(rowIndex, columnIndex).invoke("outerWidth");
+        const columnWidth = () => this.getCell(rowIndex, columnIndex).invoke("outerWidth");
 
         if (withTolerance) {
-            columnWidth
+            columnWidth()
                 .should("be.greaterThan", expectedWidth - AUTO_SIZE_TOLERANCE)
-                .should("be.lessThan", expectedWidth + AUTO_SIZE_TOLERANCE);
+                .and("be.lessThan", expectedWidth + AUTO_SIZE_TOLERANCE);
         } else {
-            columnWidth.should("equal", expectedWidth);
+            columnWidth().should("equal", expectedWidth);
         }
     }
 
@@ -91,16 +89,9 @@ export class Table {
     }
 
     clickAggregationMenu(element: Cypress.Chainable<JQuery<HTMLElement>>) {
-        element
-            .trigger("mouseover")
-            .wait(100)
-            .find(".gd-menuOpenedByClick-togglerWrapped")
-            .click({ force: true })
-            .wait(300);
+        element.trigger("mouseover").find(".gd-menuOpenedByClick-togglerWrapped").click();
 
         cy.get(".s-menu-aggregation-inner").first().click();
-
-        cy.wait(1000);
     }
 
     getColumnValues(columnIndex: number) {
