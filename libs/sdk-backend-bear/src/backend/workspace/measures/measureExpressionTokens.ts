@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import flow from "lodash/flow";
 import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
@@ -22,7 +22,7 @@ export interface IExpressionToken {
 const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["text", /^[^#{}[\]"()0-9.]+/],
-    ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
+    ["quoted_text", /^"(?:[^"\\]|\\"|\\'|\\\\.)*"/],
     ["number", /^[+-]?((\d+(\.\d*)?)|(\.\d+))/],
     ["bracket", /^[()]+/],
     ["identifier", /^\{[^}]+\}/],
