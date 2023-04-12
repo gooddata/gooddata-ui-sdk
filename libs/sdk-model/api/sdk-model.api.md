@@ -2220,6 +2220,7 @@ export interface ISettings {
     enableChartsSorting?: boolean;
     enableClickableAttributeURL?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
+    enableCompositeGrain?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
     enableDescriptions?: boolean;

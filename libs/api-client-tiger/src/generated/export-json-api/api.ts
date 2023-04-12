@@ -893,3 +893,326 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             .then((request) => request(this.axios, this.basePath));
     }
 }
+
+/**
+ * ComputationApi - axios parameter creator
+ * @export
+ */
+export const ComputationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary Create tabular export request
+         * @param {string} workspaceId
+         * @param {TabularExportRequest} tabularExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTabularExport: async (
+            workspaceId: string,
+            tabularExportRequest: TabularExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createTabularExport", "workspaceId", workspaceId);
+            // verify required parameter 'tabularExportRequest' is not null or undefined
+            assertParamExists("createTabularExport", "tabularExportRequest", tabularExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/tabular`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof tabularExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(tabularExportRequest !== undefined ? tabularExportRequest : {})
+                : tabularExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTabularExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getTabularExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getTabularExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/tabular/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * ComputationApi - functional programming interface
+ * @export
+ */
+export const ComputationApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = ComputationApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary Create tabular export request
+         * @param {string} workspaceId
+         * @param {TabularExportRequest} tabularExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createTabularExport(
+            workspaceId: string,
+            tabularExportRequest: TabularExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTabularExport(
+                workspaceId,
+                tabularExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTabularExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTabularExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * ComputationApi - factory interface
+ * @export
+ */
+export const ComputationApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = ComputationApiFp(configuration);
+    return {
+        /**
+         * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary Create tabular export request
+         * @param {ComputationApiCreateTabularExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTabularExport(
+            requestParameters: ComputationApiCreateTabularExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createTabularExport(
+                    requestParameters.workspaceId,
+                    requestParameters.tabularExportRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary Retrieve exported files
+         * @param {ComputationApiGetTabularExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTabularExport(
+            requestParameters: ComputationApiGetTabularExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getTabularExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ComputationApi - interface
+ * @export
+ * @interface ComputationApi
+ */
+export interface ComputationApiInterface {
+    /**
+     * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create tabular export request
+     * @param {ComputationApiCreateTabularExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    createTabularExport(
+        requestParameters: ComputationApiCreateTabularExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
+     * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary Retrieve exported files
+     * @param {ComputationApiGetTabularExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    getTabularExport(
+        requestParameters: ComputationApiGetTabularExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createTabularExport operation in ComputationApi.
+ * @export
+ * @interface ComputationApiCreateTabularExportRequest
+ */
+export interface ComputationApiCreateTabularExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ComputationApiCreateTabularExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {TabularExportRequest}
+     * @memberof ComputationApiCreateTabularExport
+     */
+    readonly tabularExportRequest: TabularExportRequest;
+}
+
+/**
+ * Request parameters for getTabularExport operation in ComputationApi.
+ * @export
+ * @interface ComputationApiGetTabularExportRequest
+ */
+export interface ComputationApiGetTabularExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ComputationApiGetTabularExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ComputationApiGetTabularExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * ComputationApi - object-oriented interface
+ * @export
+ * @class ComputationApi
+ * @extends {BaseAPI}
+ */
+export class ComputationApi extends BaseAPI implements ComputationApiInterface {
+    /**
+     * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create tabular export request
+     * @param {ComputationApiCreateTabularExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public createTabularExport(
+        requestParameters: ComputationApiCreateTabularExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .createTabularExport(
+                requestParameters.workspaceId,
+                requestParameters.tabularExportRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary Retrieve exported files
+     * @param {ComputationApiGetTabularExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public getTabularExport(
+        requestParameters: ComputationApiGetTabularExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .getTabularExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}

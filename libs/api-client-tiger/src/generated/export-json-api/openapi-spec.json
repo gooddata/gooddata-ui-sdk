@@ -12,6 +12,9 @@
     ],
     "tags": [
         {
+            "name": "Computation"
+        },
+        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }
@@ -63,7 +66,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/tabular": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Create tabular export request",
                 "description": "An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createTabularExport",
@@ -204,7 +207,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/tabular/{exportId}": {
             "get": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Retrieve exported files",
                 "description": "After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getTabularExport",

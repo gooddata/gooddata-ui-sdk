@@ -620,6 +620,47 @@ export namespace AnalyticalDashboardModelV2 {
 }
 
 // @public
+export class AnalyticsModelApi extends MetadataBaseApi implements AnalyticsModelApiInterface {
+    getAnalyticsModel(requestParameters: AnalyticsModelApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAnalytics>>;
+    setAnalyticsModel(requestParameters: AnalyticsModelApiSetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const AnalyticsModelApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAnalyticsModel: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setAnalyticsModel: (workspaceId: string, declarativeAnalytics: DeclarativeAnalytics, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const AnalyticsModelApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAnalyticsModel(requestParameters: AnalyticsModelApiGetAnalyticsModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeAnalytics>;
+    setAnalyticsModel(requestParameters: AnalyticsModelApiSetAnalyticsModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const AnalyticsModelApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAnalyticsModel(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeAnalytics>>;
+    setAnalyticsModel(workspaceId: string, declarativeAnalytics: DeclarativeAnalytics, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface AnalyticsModelApiGetAnalyticsModelRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface AnalyticsModelApiInterface {
+    getAnalyticsModel(requestParameters: AnalyticsModelApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeAnalytics>;
+    setAnalyticsModel(requestParameters: AnalyticsModelApiSetAnalyticsModelRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface AnalyticsModelApiSetAnalyticsModelRequest {
+    readonly declarativeAnalytics: DeclarativeAnalytics;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ApiEntitlement {
     expiry?: string;
     name: ApiEntitlementNameEnum;
@@ -643,6 +684,278 @@ export const ApiEntitlementNameEnum: {
 
 // @public (undocumented)
 export type ApiEntitlementNameEnum = typeof ApiEntitlementNameEnum[keyof typeof ApiEntitlementNameEnum];
+
+// @public
+export class APITokensApi extends MetadataBaseApi implements APITokensApiInterface {
+    // (undocumented)
+    createEntityApiTokens(requestParameters: APITokensApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument>>;
+    // (undocumented)
+    deleteEntityApiTokens(requestParameters: APITokensApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    getAllEntitiesApiTokens(requestParameters: APITokensApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList>>;
+    // (undocumented)
+    getEntityApiTokens(requestParameters: APITokensApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument>>;
+    // (undocumented)
+    updateEntityApiTokens(requestParameters: APITokensApiUpdateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument>>;
+}
+
+// @public
+export const APITokensApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityApiTokens: (userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesApiTokens: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityApiTokens: (userId: string, id: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface APITokensApiCreateEntityApiTokensRequest {
+    readonly jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
+    readonly userId: string;
+}
+
+// @public
+export interface APITokensApiDeleteEntityApiTokensRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export const APITokensApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityApiTokens(requestParameters: APITokensApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutDocument>;
+    deleteEntityApiTokens(requestParameters: APITokensApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesApiTokens(requestParameters: APITokensApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutList>;
+    getEntityApiTokens(requestParameters: APITokensApiGetEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutDocument>;
+    updateEntityApiTokens(requestParameters: APITokensApiUpdateEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutDocument>;
+};
+
+// @public
+export const APITokensApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityApiTokens(userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
+    deleteEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesApiTokens(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutList>>;
+    getEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
+    updateEntityApiTokens(userId: string, id: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
+};
+
+// @public
+export interface APITokensApiGetAllEntitiesApiTokensRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly userId: string;
+}
+
+// @public
+export interface APITokensApiGetEntityApiTokensRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export interface APITokensApiInterface {
+    // (undocumented)
+    createEntityApiTokens(requestParameters: APITokensApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutDocument>;
+    // (undocumented)
+    deleteEntityApiTokens(requestParameters: APITokensApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesApiTokens(requestParameters: APITokensApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutList>;
+    // (undocumented)
+    getEntityApiTokens(requestParameters: APITokensApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutDocument>;
+    // (undocumented)
+    updateEntityApiTokens(requestParameters: APITokensApiUpdateEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutDocument>;
+}
+
+// @public
+export interface APITokensApiUpdateEntityApiTokensRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
+    readonly userId: string;
+}
+
+// @public
+export class AppearanceApi extends MetadataBaseApi implements AppearanceApiInterface {
+    // (undocumented)
+    createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesColorPalettes(requestParameters?: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList>>;
+    // (undocumented)
+    getAllEntitiesThemes(requestParameters?: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList>>;
+    // (undocumented)
+    getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+}
+
+// @public
+export const AppearanceApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityColorPalettes: (jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityThemes: (jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityThemes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesColorPalettes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesThemes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityThemes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityColorPalettes: (id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityThemes: (id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityColorPalettes: (id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityThemes: (id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface AppearanceApiCreateEntityColorPalettesRequest {
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+}
+
+// @public
+export interface AppearanceApiCreateEntityThemesRequest {
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+// @public
+export interface AppearanceApiDeleteEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface AppearanceApiDeleteEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const AppearanceApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesColorPalettes(requestParameters: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutList>;
+    getAllEntitiesThemes(requestParameters: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutList>;
+    getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+};
+
+// @public
+export const AppearanceApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityColorPalettes(jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    createEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    deleteEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityThemes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesColorPalettes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutList>>;
+    getAllEntitiesThemes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutList>>;
+    getEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    getEntityThemes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    patchEntityColorPalettes(id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    patchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    updateEntityColorPalettes(id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    updateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+};
+
+// @public
+export interface AppearanceApiGetAllEntitiesColorPalettesRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface AppearanceApiGetAllEntitiesThemesRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface AppearanceApiGetEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface AppearanceApiGetEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface AppearanceApiInterface {
+    // (undocumented)
+    createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesColorPalettes(requestParameters: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
+    // (undocumented)
+    getAllEntitiesThemes(requestParameters: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    // (undocumented)
+    getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+}
+
+// @public
+export interface AppearanceApiPatchEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument;
+}
+
+// @public
+export interface AppearanceApiPatchEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiThemePatchDocument: JsonApiThemePatchDocument;
+}
+
+// @public
+export interface AppearanceApiUpdateEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+}
+
+// @public
+export interface AppearanceApiUpdateEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
 
 // @public
 export interface ArithmeticMeasureDefinition {
@@ -754,6 +1067,63 @@ export interface AttributeResultHeader {
 }
 
 // @public
+export class AttributesApi extends MetadataBaseApi implements AttributesApiInterface {
+    // (undocumented)
+    getAllEntitiesAttributes(requestParameters: AttributesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList>>;
+    // (undocumented)
+    getEntityAttributes(requestParameters: AttributesApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument>>;
+}
+
+// @public
+export const AttributesApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesAttributes: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAttributes: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const AttributesApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllEntitiesAttributes(requestParameters: AttributesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAttributeOutList>;
+    getEntityAttributes(requestParameters: AttributesApiGetEntityAttributesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAttributeOutDocument>;
+};
+
+// @public
+export const AttributesApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesAttributes(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutList>>;
+    getEntityAttributes(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutDocument>>;
+};
+
+// @public
+export interface AttributesApiGetAllEntitiesAttributesRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface AttributesApiGetEntityAttributesRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface AttributesApiInterface {
+    // (undocumented)
+    getAllEntitiesAttributes(requestParameters: AttributesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAttributeOutList>;
+    // (undocumented)
+    getEntityAttributes(requestParameters: AttributesApiGetEntityAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAttributeOutDocument>;
+}
+
+// @public
 export const AuthActionsApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
 };
@@ -767,6 +1137,31 @@ export interface AuthActionsApiInterface {
 export interface AvailableAssignees {
     userGroups: Array<UserGroupAssignee>;
     users: Array<UserAssignee>;
+}
+
+// @public
+export class AvailableDriversApi extends MetadataBaseApi implements AvailableDriversApiInterface {
+    getDataSourceDrivers(options?: AxiosRequestConfig): Promise<AxiosResponse<object>>;
+}
+
+// @public
+export const AvailableDriversApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getDataSourceDrivers: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const AvailableDriversApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getDataSourceDrivers(options?: AxiosRequestConfig | undefined): AxiosPromise<object>;
+};
+
+// @public
+export const AvailableDriversApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getDataSourceDrivers(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>>;
+};
+
+// @public
+export interface AvailableDriversApiInterface {
+    getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<object>;
 }
 
 // @public
@@ -834,6 +1229,286 @@ export interface ConfigurationParameters {
 }
 
 // @public
+export class ContextFiltersApi extends MetadataBaseApi implements ContextFiltersApiInterface {
+    // (undocumented)
+    createEntityFilterContexts(requestParameters: ContextFiltersApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    deleteEntityFilterContexts(requestParameters: ContextFiltersApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesFilterContexts(requestParameters: ContextFiltersApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList>>;
+    // (undocumented)
+    getEntityFilterContexts(requestParameters: ContextFiltersApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    patchEntityFilterContexts(requestParameters: ContextFiltersApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    updateEntityFilterContexts(requestParameters: ContextFiltersApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+}
+
+// @public
+export const ContextFiltersApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityFilterContexts: (workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesFilterContexts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface ContextFiltersApiCreateEntityFilterContextsRequest {
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ContextFiltersApiDeleteEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const ContextFiltersApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityFilterContexts(requestParameters: ContextFiltersApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    deleteEntityFilterContexts(requestParameters: ContextFiltersApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesFilterContexts(requestParameters: ContextFiltersApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutList>;
+    getEntityFilterContexts(requestParameters: ContextFiltersApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    patchEntityFilterContexts(requestParameters: ContextFiltersApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    updateEntityFilterContexts(requestParameters: ContextFiltersApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+};
+
+// @public
+export const ContextFiltersApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityFilterContexts(workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    deleteEntityFilterContexts(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesFilterContexts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutList>>;
+    getEntityFilterContexts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    patchEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    updateEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+};
+
+// @public
+export interface ContextFiltersApiGetAllEntitiesFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface ContextFiltersApiGetEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface ContextFiltersApiInterface {
+    // (undocumented)
+    createEntityFilterContexts(requestParameters: ContextFiltersApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    deleteEntityFilterContexts(requestParameters: ContextFiltersApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesFilterContexts(requestParameters: ContextFiltersApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutList>;
+    // (undocumented)
+    getEntityFilterContexts(requestParameters: ContextFiltersApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    patchEntityFilterContexts(requestParameters: ContextFiltersApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    updateEntityFilterContexts(requestParameters: ContextFiltersApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+}
+
+// @public
+export interface ContextFiltersApiPatchEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ContextFiltersApiUpdateEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export class CookieSecurityConfigurationApi extends MetadataBaseApi implements CookieSecurityConfigurationApiInterface {
+    // (undocumented)
+    getEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument>>;
+    // (undocumented)
+    patchEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument>>;
+    // (undocumented)
+    updateEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument>>;
+}
+
+// @public
+export const CookieSecurityConfigurationApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getEntityCookieSecurityConfigurations: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityCookieSecurityConfigurations: (id: string, jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityCookieSecurityConfigurations: (id: string, jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const CookieSecurityConfigurationApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    patchEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    updateEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+};
+
+// @public
+export const CookieSecurityConfigurationApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getEntityCookieSecurityConfigurations(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
+    patchEntityCookieSecurityConfigurations(id: string, jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
+    updateEntityCookieSecurityConfigurations(id: string, jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
+};
+
+// @public
+export interface CookieSecurityConfigurationApiGetEntityCookieSecurityConfigurationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface CookieSecurityConfigurationApiInterface {
+    // (undocumented)
+    getEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    // (undocumented)
+    patchEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    // (undocumented)
+    updateEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+}
+
+// @public
+export interface CookieSecurityConfigurationApiPatchEntityCookieSecurityConfigurationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument;
+}
+
+// @public
+export interface CookieSecurityConfigurationApiUpdateEntityCookieSecurityConfigurationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument;
+}
+
+// @public
+export class CSPDirectivesApi extends MetadataBaseApi implements CSPDirectivesApiInterface {
+    // (undocumented)
+    createEntityCspDirectives(requestParameters: CSPDirectivesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    deleteEntityCspDirectives(requestParameters: CSPDirectivesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesCspDirectives(requestParameters?: CSPDirectivesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList>>;
+    // (undocumented)
+    getEntityCspDirectives(requestParameters: CSPDirectivesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    patchEntityCspDirectives(requestParameters: CSPDirectivesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    updateEntityCspDirectives(requestParameters: CSPDirectivesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+}
+
+// @public
+export const CSPDirectivesApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityCspDirectives: (jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityCspDirectives: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesCspDirectives: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityCspDirectives: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityCspDirectives: (id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityCspDirectives: (id: string, jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface CSPDirectivesApiCreateEntityCspDirectivesRequest {
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+// @public
+export interface CSPDirectivesApiDeleteEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const CSPDirectivesApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityCspDirectives(requestParameters: CSPDirectivesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    deleteEntityCspDirectives(requestParameters: CSPDirectivesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesCspDirectives(requestParameters: CSPDirectivesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutList>;
+    getEntityCspDirectives(requestParameters: CSPDirectivesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    patchEntityCspDirectives(requestParameters: CSPDirectivesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    updateEntityCspDirectives(requestParameters: CSPDirectivesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+};
+
+// @public
+export const CSPDirectivesApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityCspDirectives(jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    deleteEntityCspDirectives(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesCspDirectives(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutList>>;
+    getEntityCspDirectives(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    patchEntityCspDirectives(id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    updateEntityCspDirectives(id: string, jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+};
+
+// @public
+export interface CSPDirectivesApiGetAllEntitiesCspDirectivesRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface CSPDirectivesApiGetEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface CSPDirectivesApiInterface {
+    // (undocumented)
+    createEntityCspDirectives(requestParameters: CSPDirectivesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    deleteEntityCspDirectives(requestParameters: CSPDirectivesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesCspDirectives(requestParameters: CSPDirectivesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutList>;
+    // (undocumented)
+    getEntityCspDirectives(requestParameters: CSPDirectivesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    patchEntityCspDirectives(requestParameters: CSPDirectivesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    updateEntityCspDirectives(requestParameters: CSPDirectivesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+}
+
+// @public
+export interface CSPDirectivesApiPatchEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument;
+}
+
+// @public
+export interface CSPDirectivesApiUpdateEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+// @public
 export interface CustomLabel {
     title: string;
 }
@@ -861,6 +1536,124 @@ export interface DashboardPermissions {
 }
 
 // @public
+export class DashboardsApi extends MetadataBaseApi implements DashboardsApiInterface {
+    // (undocumented)
+    createEntityAnalyticalDashboards(requestParameters: DashboardsApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    deleteEntityAnalyticalDashboards(requestParameters: DashboardsApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesAnalyticalDashboards(requestParameters: DashboardsApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList>>;
+    // (undocumented)
+    getEntityAnalyticalDashboards(requestParameters: DashboardsApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    patchEntityAnalyticalDashboards(requestParameters: DashboardsApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    updateEntityAnalyticalDashboards(requestParameters: DashboardsApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+}
+
+// @public
+export const DashboardsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityAnalyticalDashboards: (workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesAnalyticalDashboards: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface DashboardsApiCreateEntityAnalyticalDashboardsRequest {
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DashboardsApiDeleteEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const DashboardsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityAnalyticalDashboards(requestParameters: DashboardsApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    deleteEntityAnalyticalDashboards(requestParameters: DashboardsApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesAnalyticalDashboards(requestParameters: DashboardsApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
+    getEntityAnalyticalDashboards(requestParameters: DashboardsApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    patchEntityAnalyticalDashboards(requestParameters: DashboardsApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    updateEntityAnalyticalDashboards(requestParameters: DashboardsApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+};
+
+// @public
+export const DashboardsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityAnalyticalDashboards(workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    deleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutList>>;
+    getEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    patchEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    updateEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+};
+
+// @public
+export interface DashboardsApiGetAllEntitiesAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DashboardsApiGetEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DashboardsApiInterface {
+    // (undocumented)
+    createEntityAnalyticalDashboards(requestParameters: DashboardsApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    deleteEntityAnalyticalDashboards(requestParameters: DashboardsApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesAnalyticalDashboards(requestParameters: DashboardsApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
+    // (undocumented)
+    getEntityAnalyticalDashboards(requestParameters: DashboardsApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    patchEntityAnalyticalDashboards(requestParameters: DashboardsApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    updateEntityAnalyticalDashboards(requestParameters: DashboardsApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+}
+
+// @public
+export interface DashboardsApiPatchEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DashboardsApiUpdateEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface DataColumnLocator {
     properties: {
         [key: string]: string;
@@ -872,6 +1665,269 @@ export interface DataColumnLocators {
     properties?: {
         [key: string]: DataColumnLocator;
     };
+}
+
+// @public
+export class DataFiltersApi extends MetadataBaseApi implements DataFiltersApiInterface {
+    // (undocumented)
+    createEntityUserDataFilters(requestParameters: DataFiltersApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    createEntityWorkspaceDataFilters(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    // (undocumented)
+    deleteEntityUserDataFilters(requestParameters: DataFiltersApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityWorkspaceDataFilters(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesUserDataFilters(requestParameters: DataFiltersApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilters(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList>>;
+    // (undocumented)
+    getEntityUserDataFilters(requestParameters: DataFiltersApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaceDataFilters(requestParameters: DataFiltersApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument>>;
+    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceDataFilters>>;
+    // (undocumented)
+    patchEntityUserDataFilters(requestParameters: DataFiltersApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    patchEntityWorkspaceDataFilters(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    setWorkspaceDataFiltersLayout(requestParameters: DataFiltersApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    updateEntityUserDataFilters(requestParameters: DataFiltersApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    updateEntityWorkspaceDataFilters(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+}
+
+// @public
+export const DataFiltersApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUserDataFilters: (workspaceId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaceDataFilters: (workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserDataFilters: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaceDataFilterSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaceDataFilters: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getWorkspaceDataFiltersLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setWorkspaceDataFiltersLayout: (declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface DataFiltersApiCreateEntityUserDataFiltersRequest {
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DataFiltersApiCreateEntityWorkspaceDataFiltersRequest {
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DataFiltersApiDeleteEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const DataFiltersApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityUserDataFilters(requestParameters: DataFiltersApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    createEntityWorkspaceDataFilters(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    deleteEntityUserDataFilters(requestParameters: DataFiltersApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityWorkspaceDataFilters(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesUserDataFilters(requestParameters: DataFiltersApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutList>;
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
+    getAllEntitiesWorkspaceDataFilters(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
+    getEntityUserDataFilters(requestParameters: DataFiltersApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    getEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    getEntityWorkspaceDataFilters(requestParameters: DataFiltersApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeWorkspaceDataFilters>;
+    patchEntityUserDataFilters(requestParameters: DataFiltersApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    patchEntityWorkspaceDataFilters(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    setWorkspaceDataFiltersLayout(requestParameters: DataFiltersApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    updateEntityUserDataFilters(requestParameters: DataFiltersApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    updateEntityWorkspaceDataFilters(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+};
+
+// @public
+export const DataFiltersApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUserDataFilters(workspaceId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    createEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    deleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesUserDataFilters(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutList>>;
+    getAllEntitiesWorkspaceDataFilterSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>>;
+    getAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutList>>;
+    getEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    getEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
+    getEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspaceDataFilters>>;
+    patchEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    patchEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    setWorkspaceDataFiltersLayout(declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    updateEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    updateEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+};
+
+// @public
+export interface DataFiltersApiGetAllEntitiesUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DataFiltersApiGetAllEntitiesWorkspaceDataFilterSettingsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DataFiltersApiGetAllEntitiesWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DataFiltersApiGetEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DataFiltersApiGetEntityWorkspaceDataFilterSettingsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DataFiltersApiGetEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DataFiltersApiInterface {
+    // (undocumented)
+    createEntityUserDataFilters(requestParameters: DataFiltersApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    createEntityWorkspaceDataFilters(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    // (undocumented)
+    deleteEntityUserDataFilters(requestParameters: DataFiltersApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityWorkspaceDataFilters(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesUserDataFilters(requestParameters: DataFiltersApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilters(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
+    // (undocumented)
+    getEntityUserDataFilters(requestParameters: DataFiltersApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    getEntityWorkspaceDataFilters(requestParameters: DataFiltersApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    // (undocumented)
+    getEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspaceDataFilters>;
+    // (undocumented)
+    patchEntityUserDataFilters(requestParameters: DataFiltersApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    patchEntityWorkspaceDataFilters(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    setWorkspaceDataFiltersLayout(requestParameters: DataFiltersApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    updateEntityUserDataFilters(requestParameters: DataFiltersApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    updateEntityWorkspaceDataFilters(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+}
+
+// @public
+export interface DataFiltersApiPatchEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DataFiltersApiPatchEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DataFiltersApiSetWorkspaceDataFiltersLayoutRequest {
+    readonly declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters;
+}
+
+// @public
+export interface DataFiltersApiUpdateEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -887,6 +1943,312 @@ export const DatasetReferenceIdentifierTypeEnum: {
 
 // @public (undocumented)
 export type DatasetReferenceIdentifierTypeEnum = typeof DatasetReferenceIdentifierTypeEnum[keyof typeof DatasetReferenceIdentifierTypeEnum];
+
+// @public
+export class DatasetsApi extends MetadataBaseApi implements DatasetsApiInterface {
+    // (undocumented)
+    getAllEntitiesDatasets(requestParameters: DatasetsApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList>>;
+    // (undocumented)
+    getEntityDatasets(requestParameters: DatasetsApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument>>;
+}
+
+// @public
+export const DatasetsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesDatasets: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDatasets: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const DatasetsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllEntitiesDatasets(requestParameters: DatasetsApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDatasetOutList>;
+    getEntityDatasets(requestParameters: DatasetsApiGetEntityDatasetsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDatasetOutDocument>;
+};
+
+// @public
+export const DatasetsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesDatasets(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutList>>;
+    getEntityDatasets(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutDocument>>;
+};
+
+// @public
+export interface DatasetsApiGetAllEntitiesDatasetsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DatasetsApiGetEntityDatasetsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface DatasetsApiInterface {
+    // (undocumented)
+    getAllEntitiesDatasets(requestParameters: DatasetsApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
+    // (undocumented)
+    getEntityDatasets(requestParameters: DatasetsApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
+}
+
+// @public
+export class DataSourceDeclarativeAPIsApi extends MetadataBaseApi implements DataSourceDeclarativeAPIsApiInterface {
+    getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources>>;
+    putDataSourcesLayout(requestParameters: DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const DataSourceDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getDataSourcesLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    putDataSourcesLayout: (declarativeDataSources: DeclarativeDataSources, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const DataSourceDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getDataSourcesLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeDataSources>;
+    putDataSourcesLayout(requestParameters: DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const DataSourceDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getDataSourcesLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeDataSources>>;
+    putDataSourcesLayout(declarativeDataSources: DeclarativeDataSources, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface DataSourceDeclarativeAPIsApiInterface {
+    getDataSourcesLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSources>;
+    putDataSourcesLayout(requestParameters: DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest {
+    readonly declarativeDataSources: DeclarativeDataSources;
+}
+
+// @public
+export class DataSourceEntitiesControllerApi extends MetadataBaseApi implements DataSourceEntitiesControllerApiInterface {
+    // (undocumented)
+    getAllEntitiesDataSourceTables(requestParameters: DataSourceEntitiesControllerApiGetAllEntitiesDataSourceTablesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceTableOutList>>;
+    // (undocumented)
+    getEntityDataSourceTables(requestParameters: DataSourceEntitiesControllerApiGetEntityDataSourceTablesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceTableOutDocument>>;
+}
+
+// @public
+export const DataSourceEntitiesControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesDataSourceTables: (dataSourceId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDataSourceTables: (dataSourceId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const DataSourceEntitiesControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllEntitiesDataSourceTables(requestParameters: DataSourceEntitiesControllerApiGetAllEntitiesDataSourceTablesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceTableOutList>;
+    getEntityDataSourceTables(requestParameters: DataSourceEntitiesControllerApiGetEntityDataSourceTablesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceTableOutDocument>;
+};
+
+// @public
+export const DataSourceEntitiesControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesDataSourceTables(dataSourceId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceTableOutList>>;
+    getEntityDataSourceTables(dataSourceId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceTableOutDocument>>;
+};
+
+// @public
+export interface DataSourceEntitiesControllerApiGetAllEntitiesDataSourceTablesRequest {
+    readonly dataSourceId: string;
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface DataSourceEntitiesControllerApiGetEntityDataSourceTablesRequest {
+    readonly dataSourceId: string;
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface DataSourceEntitiesControllerApiInterface {
+    // (undocumented)
+    getAllEntitiesDataSourceTables(requestParameters: DataSourceEntitiesControllerApiGetAllEntitiesDataSourceTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceTableOutList>;
+    // (undocumented)
+    getEntityDataSourceTables(requestParameters: DataSourceEntitiesControllerApiGetEntityDataSourceTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceTableOutDocument>;
+}
+
+// @public
+export class DataSourceEntityAPIsApi extends MetadataBaseApi implements DataSourceEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityDataSources(requestParameters: DataSourceEntityAPIsApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    deleteEntityDataSources(requestParameters: DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesDataSourceIdentifiers(requestParameters?: DataSourceEntityAPIsApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList>>;
+    // (undocumented)
+    getAllEntitiesDataSources(requestParameters?: DataSourceEntityAPIsApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList>>;
+    // (undocumented)
+    getAllEntitiesDataSourceTables(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourceTablesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceTableOutList>>;
+    // (undocumented)
+    getEntityDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument>>;
+    // (undocumented)
+    getEntityDataSources(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    getEntityDataSourceTables(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceTablesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceTableOutDocument>>;
+    // (undocumented)
+    patchEntityDataSources(requestParameters: DataSourceEntityAPIsApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    updateEntityDataSources(requestParameters: DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+}
+
+// @public
+export const DataSourceEntityAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityDataSources: (jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityDataSources: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDataSourceIdentifiers: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDataSourceTables: (dataSourceId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDataSources: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDataSourceIdentifiers: (id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDataSourceTables: (dataSourceId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDataSources: (id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityDataSources: (id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityDataSources: (id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface DataSourceEntityAPIsApiCreateEntityDataSourcesRequest {
+    readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const DataSourceEntityAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityDataSources(requestParameters: DataSourceEntityAPIsApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    deleteEntityDataSources(requestParameters: DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+    getAllEntitiesDataSourceTables(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourceTablesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceTableOutList>;
+    getAllEntitiesDataSources(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutList>;
+    getEntityDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
+    getEntityDataSourceTables(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceTablesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceTableOutDocument>;
+    getEntityDataSources(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    patchEntityDataSources(requestParameters: DataSourceEntityAPIsApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    updateEntityDataSources(requestParameters: DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+};
+
+// @public
+export const DataSourceEntityAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    deleteEntityDataSources(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesDataSourceIdentifiers(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceIdentifierOutList>>;
+    getAllEntitiesDataSourceTables(dataSourceId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceTableOutList>>;
+    getAllEntitiesDataSources(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutList>>;
+    getEntityDataSourceIdentifiers(id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceIdentifierOutDocument>>;
+    getEntityDataSourceTables(dataSourceId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceTableOutDocument>>;
+    getEntityDataSources(id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    patchEntityDataSources(id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    updateEntityDataSources(id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+};
+
+// @public
+export interface DataSourceEntityAPIsApiGetAllEntitiesDataSourceIdentifiersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiGetAllEntitiesDataSourcesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiGetAllEntitiesDataSourceTablesRequest {
+    readonly dataSourceId: string;
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiGetEntityDataSourceIdentifiersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiGetEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiGetEntityDataSourceTablesRequest {
+    readonly dataSourceId: string;
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityDataSources(requestParameters: DataSourceEntityAPIsApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    deleteEntityDataSources(requestParameters: DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+    // (undocumented)
+    getAllEntitiesDataSources(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutList>;
+    // (undocumented)
+    getAllEntitiesDataSourceTables(requestParameters: DataSourceEntityAPIsApiGetAllEntitiesDataSourceTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceTableOutList>;
+    // (undocumented)
+    getEntityDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
+    // (undocumented)
+    getEntityDataSources(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    getEntityDataSourceTables(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceTableOutDocument>;
+    // (undocumented)
+    patchEntityDataSources(requestParameters: DataSourceEntityAPIsApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    updateEntityDataSources(requestParameters: DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiPatchEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument;
+}
+
+// @public
+export interface DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
+}
 
 // @public
 export interface DataSourceParameter {
@@ -1065,13 +2427,13 @@ export interface DeclarativeDataset {
     sql?: DeclarativeDatasetSql;
     tags?: Array<string>;
     title: string;
-    workspaceDataFilterColumns?: Array<string>;
+    workspaceDataFilterColumns?: Array<DeclarativeWorkspaceDataFilterColumn>;
 }
 
 // @public
 export interface DeclarativeDatasetSql {
-    dataSourceId?: string;
-    statement?: string;
+    dataSourceId: string;
+    statement: string;
 }
 
 // @public
@@ -1383,6 +2745,21 @@ export interface DeclarativeUser {
 }
 
 // @public
+export interface DeclarativeUserDataFilter {
+    description?: string;
+    id: string;
+    maql: string;
+    title: string;
+    user?: UserIdentifier;
+    userGroup?: UserGroupIdentifier;
+}
+
+// @public
+export interface DeclarativeUserDataFilters {
+    userDataFilters: Array<DeclarativeUserDataFilter>;
+}
+
+// @public
 export interface DeclarativeUserGroup {
     id: string;
     name?: string;
@@ -1464,7 +2841,9 @@ export interface DeclarativeWorkspace {
     name: string;
     parent?: WorkspaceIdentifier;
     permissions?: Array<DeclarativeSingleWorkspacePermission>;
+    prefix?: string;
     settings?: Array<DeclarativeSetting>;
+    userDataFilters?: Array<DeclarativeUserDataFilter>;
 }
 
 // @public
@@ -1476,6 +2855,26 @@ export interface DeclarativeWorkspaceDataFilter {
     workspace?: WorkspaceIdentifier;
     workspaceDataFilterSettings: Array<DeclarativeWorkspaceDataFilterSetting>;
 }
+
+// @public
+export interface DeclarativeWorkspaceDataFilterColumn {
+    dataType: DeclarativeWorkspaceDataFilterColumnDataTypeEnum;
+    name: string;
+}
+
+// @public (undocumented)
+export const DeclarativeWorkspaceDataFilterColumnDataTypeEnum: {
+    readonly INT: "INT";
+    readonly STRING: "STRING";
+    readonly DATE: "DATE";
+    readonly NUMERIC: "NUMERIC";
+    readonly TIMESTAMP: "TIMESTAMP";
+    readonly TIMESTAMP_TZ: "TIMESTAMP_TZ";
+    readonly BOOLEAN: "BOOLEAN";
+};
+
+// @public (undocumented)
+export type DeclarativeWorkspaceDataFilterColumnDataTypeEnum = typeof DeclarativeWorkspaceDataFilterColumnDataTypeEnum[keyof typeof DeclarativeWorkspaceDataFilterColumnDataTypeEnum];
 
 // @public
 export interface DeclarativeWorkspaceDataFilters {
@@ -1531,6 +2930,47 @@ export interface DeclarativeWorkspaces {
 // @public (undocumented)
 const defaultTigerClient: ITigerClient;
 export default defaultTigerClient;
+
+// @public
+export class DependencyGraphApi extends MetadataBaseApi implements DependencyGraphApiInterface {
+    getDependentEntitiesGraph(requestParameters: DependencyGraphApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse>>;
+    getDependentEntitiesGraphFromEntryPoints(requestParameters: DependencyGraphApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse>>;
+}
+
+// @public
+export const DependencyGraphApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getDependentEntitiesGraph: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getDependentEntitiesGraphFromEntryPoints: (workspaceId: string, dependentEntitiesRequest: DependentEntitiesRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const DependencyGraphApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getDependentEntitiesGraph(requestParameters: DependencyGraphApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DependentEntitiesResponse>;
+    getDependentEntitiesGraphFromEntryPoints(requestParameters: DependencyGraphApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DependentEntitiesResponse>;
+};
+
+// @public
+export const DependencyGraphApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getDependentEntitiesGraph(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DependentEntitiesResponse>>;
+    getDependentEntitiesGraphFromEntryPoints(workspaceId: string, dependentEntitiesRequest: DependentEntitiesRequest, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DependentEntitiesResponse>>;
+};
+
+// @public
+export interface DependencyGraphApiGetDependentEntitiesGraphFromEntryPointsRequest {
+    readonly dependentEntitiesRequest: DependentEntitiesRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DependencyGraphApiGetDependentEntitiesGraphRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface DependencyGraphApiInterface {
+    getDependentEntitiesGraph(requestParameters: DependencyGraphApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
+    getDependentEntitiesGraphFromEntryPoints(requestParameters: DependencyGraphApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
+}
 
 // @public
 export interface DependentEntitiesGraph {
@@ -1652,6 +3092,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     // (undocumented)
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
     // (undocumented)
+    createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
     // (undocumented)
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
@@ -1687,6 +3129,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     // (undocumented)
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     // (undocumented)
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     // (undocumented)
@@ -1736,6 +3180,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList>>;
     // (undocumented)
     getAllEntitiesThemes(requestParameters?: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList>>;
+    // (undocumented)
+    getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList>>;
     // (undocumented)
     getAllEntitiesUserGroups(requestParameters?: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList>>;
     // (undocumented)
@@ -1794,6 +3240,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     // (undocumented)
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
     // (undocumented)
+    getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
     // (undocumented)
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
@@ -1835,6 +3283,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     // (undocumented)
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
     // (undocumented)
+    patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
     // (undocumented)
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
@@ -1873,6 +3323,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     // (undocumented)
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
     // (undocumented)
+    updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
     // (undocumented)
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
@@ -1890,24 +3342,25 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
 
 // @public
 export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
-    createEntityAnalyticalDashboards: (workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityAnalyticalDashboards: (workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityApiTokens: (userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityColorPalettes: (jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityCspDirectives: (jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityCustomApplicationSettings: (workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityDashboardPlugins: (workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityDataSources: (jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityFilterContexts: (workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityMetrics: (workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityCustomApplicationSettings: (workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityDashboardPlugins: (workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityDataSources: (jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityFilterContexts: (workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityMetrics: (workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityOrganizationSettings: (jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityThemes: (jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityUserDataFilters: (workspaceId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUserGroups: (jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUserSettings: (userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUsers: (jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityWorkspaceDataFilters: (workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityWorkspaceSettings: (workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityWorkspaces: (jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaceSettings: (workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaces: (jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1919,6 +3372,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     deleteEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityOrganizationSettings: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityThemes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityUserGroups: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityUserSettings: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityUsers: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1926,9 +3380,9 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     deleteEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaces: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesAnalyticalDashboards: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesAnalyticalDashboards: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesApiTokens: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesAttributes: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesAttributes: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesColorPalettes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesCspDirectives: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesCustomApplicationSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1936,27 +3390,28 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getAllEntitiesDataSourceIdentifiers: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesDataSourceTables: (dataSourceId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesDataSources: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesDatasets: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "datasets" | "ALL" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDatasets: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesEntitlements: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesFacts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesFilterContexts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesFacts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesFilterContexts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesLabels: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesMetrics: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesMetrics: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesOrganizationSettings: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesThemes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserDataFilters: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesUserGroups: (filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesUserSettings: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesUsers: (filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesVisualizationObjects: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesVisualizationObjects: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceDataFilterSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceDataFilters: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaceSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesWorkspaces: (filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllOptions: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getDataSourceDrivers: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityAttributes: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAttributes: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityCookieSecurityConfigurations: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityCspDirectives: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1965,43 +3420,45 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getEntityDataSourceIdentifiers: (id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityDataSourceTables: (dataSourceId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityDataSources: (id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityDatasets: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "datasets" | "ALL" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDatasets: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityEntitlements: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityFacts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityFacts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityLabels: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityOrganizationSettings: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityOrganizations: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityOrganizations: (id: string, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityThemes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityUserGroups: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityUserSettings: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityUsers: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityWorkspaces: (id: string, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getOrganization: (metaInclude?: ("all" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    patchEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityColorPalettes: (id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityCookieSecurityConfigurations: (id: string, jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityCspDirectives: (id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityCustomApplicationSettings: (workspaceId: string, objectId: string, jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityDashboardPlugins: (workspaceId: string, objectId: string, jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityDataSources: (id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    patchEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    patchEntityOrganizations: (id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityOrganizations: (id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityThemes: (id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityUserGroups: (id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityUsers: (id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    patchEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityWorkspaces: (id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    updateEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityApiTokens: (userId: string, id: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityColorPalettes: (id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityCookieSecurityConfigurations: (id: string, jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -2009,15 +3466,16 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     updateEntityCustomApplicationSettings: (workspaceId: string, objectId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityDashboardPlugins: (workspaceId: string, objectId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityDataSources: (id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    updateEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    updateEntityOrganizations: (id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityOrganizations: (id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityThemes: (id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityUserGroups: (id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityUserSettings: (userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityUsers: (id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    updateEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityWorkspaces: (id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -2027,6 +3485,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
 export interface EntitiesApiCreateEntityAnalyticalDashboardsRequest {
     readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
     readonly jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
@@ -2049,24 +3508,28 @@ export interface EntitiesApiCreateEntityCspDirectivesRequest {
 // @public
 export interface EntitiesApiCreateEntityCustomApplicationSettingsRequest {
     readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiCreateEntityDashboardPluginsRequest {
     readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiCreateEntityDataSourcesRequest {
     readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
 }
 
 // @public
 export interface EntitiesApiCreateEntityFilterContextsRequest {
     readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
     readonly jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
@@ -2074,6 +3537,7 @@ export interface EntitiesApiCreateEntityFilterContextsRequest {
 export interface EntitiesApiCreateEntityMetricsRequest {
     readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
@@ -2085,6 +3549,14 @@ export interface EntitiesApiCreateEntityOrganizationSettingsRequest {
 // @public
 export interface EntitiesApiCreateEntityThemesRequest {
     readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+// @public
+export interface EntitiesApiCreateEntityUserDataFiltersRequest {
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -2109,6 +3581,7 @@ export interface EntitiesApiCreateEntityUsersRequest {
 export interface EntitiesApiCreateEntityVisualizationObjectsRequest {
     readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
@@ -2122,6 +3595,7 @@ export interface EntitiesApiCreateEntityWorkspaceDataFiltersRequest {
 // @public
 export interface EntitiesApiCreateEntityWorkspaceSettingsRequest {
     readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
     readonly workspaceId: string;
 }
 
@@ -2129,6 +3603,7 @@ export interface EntitiesApiCreateEntityWorkspaceSettingsRequest {
 export interface EntitiesApiCreateEntityWorkspacesRequest {
     readonly include?: Array<"workspaces" | "parent" | "ALL">;
     readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
 }
 
 // @public
@@ -2204,6 +3679,13 @@ export interface EntitiesApiDeleteEntityThemesRequest {
 }
 
 // @public
+export interface EntitiesApiDeleteEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiDeleteEntityUserGroupsRequest {
     readonly filter?: string;
     readonly id: string;
@@ -2262,6 +3744,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
     createEntityMetrics(requestParameters: EntitiesApiCreateEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
     createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
@@ -2280,6 +3763,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
     deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
@@ -2305,6 +3789,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
     getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesThemes(requestParameters: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutList>;
+    getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutList>;
     getAllEntitiesUserGroups(requestParameters: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutList>;
     getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutList>;
     getAllEntitiesUsers(requestParameters: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutList>;
@@ -2335,6 +3820,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
     getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
     getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
@@ -2356,6 +3842,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
     patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
@@ -2375,6 +3862,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
     updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
@@ -2386,24 +3874,25 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration | undefi
 
 // @public
 export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) => {
-    createEntityAnalyticalDashboards(workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    createEntityAnalyticalDashboards(workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
     createEntityApiTokens(userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
     createEntityColorPalettes(jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
     createEntityCspDirectives(jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
-    createEntityCustomApplicationSettings(workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
-    createEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
-    createEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
-    createEntityFilterContexts(workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
-    createEntityMetrics(workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    createEntityCustomApplicationSettings(workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    createEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    createEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    createEntityFilterContexts(workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    createEntityMetrics(workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     createEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
     createEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    createEntityUserDataFilters(workspaceId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     createEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
     createEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
     createEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
-    createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
     createEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
-    createEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
-    createEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    createEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    createEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
     deleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
@@ -2415,6 +3904,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     deleteEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityOrganizationSettings(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityThemes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityUserGroups(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityUserSettings(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityUsers(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
@@ -2422,9 +3912,9 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     deleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityWorkspaces(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
-    getAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutList>>;
+    getAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutList>>;
     getAllEntitiesApiTokens(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutList>>;
-    getAllEntitiesAttributes(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutList>>;
+    getAllEntitiesAttributes(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutList>>;
     getAllEntitiesColorPalettes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutList>>;
     getAllEntitiesCspDirectives(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutList>>;
     getAllEntitiesCustomApplicationSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutList>>;
@@ -2432,27 +3922,28 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     getAllEntitiesDataSourceIdentifiers(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceIdentifierOutList>>;
     getAllEntitiesDataSourceTables(dataSourceId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceTableOutList>>;
     getAllEntitiesDataSources(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutList>>;
-    getAllEntitiesDatasets(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "datasets" | "ALL" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutList>>;
+    getAllEntitiesDatasets(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutList>>;
     getAllEntitiesEntitlements(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiEntitlementOutList>>;
-    getAllEntitiesFacts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutList>>;
-    getAllEntitiesFilterContexts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutList>>;
+    getAllEntitiesFacts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutList>>;
+    getAllEntitiesFilterContexts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutList>>;
     getAllEntitiesLabels(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutList>>;
-    getAllEntitiesMetrics(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutList>>;
+    getAllEntitiesMetrics(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutList>>;
     getAllEntitiesOrganizationSettings(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutList>>;
     getAllEntitiesThemes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutList>>;
+    getAllEntitiesUserDataFilters(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutList>>;
     getAllEntitiesUserGroups(filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutList>>;
     getAllEntitiesUserSettings(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutList>>;
     getAllEntitiesUsers(filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutList>>;
-    getAllEntitiesVisualizationObjects(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutList>>;
+    getAllEntitiesVisualizationObjects(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutList>>;
     getAllEntitiesWorkspaceDataFilterSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>>;
     getAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutList>>;
     getAllEntitiesWorkspaceSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutList>>;
     getAllEntitiesWorkspaces(filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutList>>;
     getAllOptions(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>>;
     getDataSourceDrivers(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>>;
-    getEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    getEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
     getEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
-    getEntityAttributes(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutDocument>>;
+    getEntityAttributes(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutDocument>>;
     getEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
     getEntityCookieSecurityConfigurations(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
     getEntityCspDirectives(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
@@ -2461,43 +3952,45 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     getEntityDataSourceIdentifiers(id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceIdentifierOutDocument>>;
     getEntityDataSourceTables(dataSourceId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceTableOutDocument>>;
     getEntityDataSources(id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
-    getEntityDatasets(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "datasets" | "ALL" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutDocument>>;
+    getEntityDatasets(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutDocument>>;
     getEntityEntitlements(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiEntitlementOutDocument>>;
-    getEntityFacts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutDocument>>;
-    getEntityFilterContexts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    getEntityFacts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutDocument>>;
+    getEntityFilterContexts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
     getEntityLabels(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutDocument>>;
-    getEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    getEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     getEntityOrganizationSettings(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
-    getEntityOrganizations(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    getEntityOrganizations(id: string, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
     getEntityThemes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    getEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     getEntityUserGroups(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
     getEntityUserSettings(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
     getEntityUsers(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
-    getEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    getEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
     getEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
     getEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     getEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
     getEntityWorkspaces(id: string, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
     getOrganization(metaInclude?: ("all" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
-    patchEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    patchEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
     patchEntityColorPalettes(id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
     patchEntityCookieSecurityConfigurations(id: string, jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
     patchEntityCspDirectives(id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
     patchEntityCustomApplicationSettings(workspaceId: string, objectId: string, jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
     patchEntityDashboardPlugins(workspaceId: string, objectId: string, jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
     patchEntityDataSources(id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
-    patchEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
-    patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    patchEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     patchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
-    patchEntityOrganizations(id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    patchEntityOrganizations(id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
     patchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    patchEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     patchEntityUserGroups(id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
     patchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
-    patchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    patchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
     patchEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     patchEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
     patchEntityWorkspaces(id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
-    updateEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    updateEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
     updateEntityApiTokens(userId: string, id: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
     updateEntityColorPalettes(id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
     updateEntityCookieSecurityConfigurations(id: string, jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
@@ -2505,15 +3998,16 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     updateEntityCustomApplicationSettings(workspaceId: string, objectId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
     updateEntityDashboardPlugins(workspaceId: string, objectId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
     updateEntityDataSources(id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
-    updateEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
-    updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    updateEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     updateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
-    updateEntityOrganizations(id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    updateEntityOrganizations(id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
     updateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    updateEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
     updateEntityUserGroups(id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
     updateEntityUserSettings(userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
     updateEntityUsers(id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
-    updateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    updateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
     updateEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
     updateEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
     updateEntityWorkspaces(id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
@@ -2708,6 +4202,19 @@ export interface EntitiesApiGetAllEntitiesThemesRequest {
     readonly page?: number;
     readonly size?: number;
     readonly sort?: Array<string>;
+}
+
+// @public
+export interface EntitiesApiGetAllEntitiesUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
 }
 
 // @public
@@ -2957,6 +4464,16 @@ export interface EntitiesApiGetEntityThemesRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityUserGroupsRequest {
     readonly filter?: string;
     readonly id: string;
@@ -3052,6 +4569,8 @@ export interface EntitiesApiInterface {
     // (undocumented)
     createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     // (undocumented)
+    createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
     createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     // (undocumented)
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
@@ -3087,6 +4606,8 @@ export interface EntitiesApiInterface {
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // (undocumented)
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // (undocumented)
     deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // (undocumented)
@@ -3136,6 +4657,8 @@ export interface EntitiesApiInterface {
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     // (undocumented)
     getAllEntitiesThemes(requestParameters: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    // (undocumented)
+    getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
     // (undocumented)
     getAllEntitiesUserGroups(requestParameters: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
     // (undocumented)
@@ -3194,6 +4717,8 @@ export interface EntitiesApiInterface {
     // (undocumented)
     getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     // (undocumented)
+    getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
     getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     // (undocumented)
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
@@ -3235,6 +4760,8 @@ export interface EntitiesApiInterface {
     // (undocumented)
     patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
     // (undocumented)
+    patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     // (undocumented)
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
@@ -3272,6 +4799,8 @@ export interface EntitiesApiInterface {
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     // (undocumented)
     updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     // (undocumented)
     updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     // (undocumented)
@@ -3379,6 +4908,15 @@ export interface EntitiesApiPatchEntityThemesRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiThemePatchDocument: JsonApiThemePatchDocument;
+}
+
+// @public
+export interface EntitiesApiPatchEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -3533,6 +5071,15 @@ export interface EntitiesApiUpdateEntityThemesRequest {
 }
 
 // @public
+export interface EntitiesApiUpdateEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiUpdateEntityUserGroupsRequest {
     readonly filter?: string;
     readonly id: string;
@@ -3588,6 +5135,69 @@ export interface EntitiesApiUpdateEntityWorkspacesRequest {
     readonly id: string;
     readonly include?: Array<"workspaces" | "parent" | "ALL">;
     readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+}
+
+// @public
+export class EntitlementApi extends MetadataBaseApi implements EntitlementApiInterface {
+    // (undocumented)
+    getAllEntitiesEntitlements(requestParameters?: EntitlementApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList>>;
+    // (undocumented)
+    getEntityEntitlements(requestParameters: EntitlementApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument>>;
+    resolveAllEntitlements(options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[]>>;
+    resolveRequestedEntitlements(requestParameters: EntitlementApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[]>>;
+}
+
+// @public
+export const EntitlementApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesEntitlements: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityEntitlements: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    resolveAllEntitlements: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    resolveRequestedEntitlements: (entitlementsRequest: EntitlementsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const EntitlementApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllEntitiesEntitlements(requestParameters: EntitlementApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiEntitlementOutList>;
+    getEntityEntitlements(requestParameters: EntitlementApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiEntitlementOutDocument>;
+    resolveAllEntitlements(options?: AxiosRequestConfig | undefined): AxiosPromise<Array<ApiEntitlement>>;
+    resolveRequestedEntitlements(requestParameters: EntitlementApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<Array<ApiEntitlement>>;
+};
+
+// @public
+export const EntitlementApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesEntitlements(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiEntitlementOutList>>;
+    getEntityEntitlements(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiEntitlementOutDocument>>;
+    resolveAllEntitlements(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<ApiEntitlement>>>;
+    resolveRequestedEntitlements(entitlementsRequest: EntitlementsRequest, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<ApiEntitlement>>>;
+};
+
+// @public
+export interface EntitlementApiGetAllEntitiesEntitlementsRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface EntitlementApiGetEntityEntitlementsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface EntitlementApiInterface {
+    // (undocumented)
+    getAllEntitiesEntitlements(requestParameters: EntitlementApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
+    // (undocumented)
+    getEntityEntitlements(requestParameters: EntitlementApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
+    resolveAllEntitlements(options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>>;
+    resolveRequestedEntitlements(requestParameters: EntitlementApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>>;
+}
+
+// @public
+export interface EntitlementApiResolveRequestedEntitlementsRequest {
+    readonly entitlementsRequest: EntitlementsRequest;
 }
 
 // @public
@@ -3674,6 +5284,63 @@ export interface ExportResponse {
     exportResult: string;
 }
 
+// @public
+export class FactsApi extends MetadataBaseApi implements FactsApiInterface {
+    // (undocumented)
+    getAllEntitiesFacts(requestParameters: FactsApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList>>;
+    // (undocumented)
+    getEntityFacts(requestParameters: FactsApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument>>;
+}
+
+// @public
+export const FactsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesFacts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityFacts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const FactsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllEntitiesFacts(requestParameters: FactsApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFactOutList>;
+    getEntityFacts(requestParameters: FactsApiGetEntityFactsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFactOutDocument>;
+};
+
+// @public
+export const FactsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesFacts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutList>>;
+    getEntityFacts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutDocument>>;
+};
+
+// @public
+export interface FactsApiGetAllEntitiesFactsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "dataset" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface FactsApiGetEntityFactsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "dataset" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface FactsApiInterface {
+    // (undocumented)
+    getAllEntitiesFacts(requestParameters: FactsApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutList>;
+    // (undocumented)
+    getEntityFacts(requestParameters: FactsApiGetEntityFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutDocument>;
+}
+
 // @public (undocumented)
 export type FeatureContext = {
     earlyAccess: string;
@@ -3711,12 +5378,43 @@ export interface GenerateLdmRequest {
     primaryLabelPrefix?: string;
     referencePrefix?: string;
     secondaryLabelPrefix?: string;
-    separator: string;
+    separator?: string;
     // @deprecated
     tablePrefix?: string;
     // @deprecated
     viewPrefix?: string;
     wdfPrefix?: string;
+}
+
+// @public
+export class GenerateLogicalDataModelApi extends MetadataBaseApi implements GenerateLogicalDataModelApiInterface {
+    generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel>>;
+}
+
+// @public
+export const GenerateLogicalDataModelApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    generateLogicalModel: (dataSourceId: string, generateLdmRequest: GenerateLdmRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const GenerateLogicalDataModelApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeModel>;
+};
+
+// @public
+export const GenerateLogicalDataModelApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    generateLogicalModel(dataSourceId: string, generateLdmRequest: GenerateLdmRequest, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeModel>>;
+};
+
+// @public
+export interface GenerateLogicalDataModelApiGenerateLogicalModelRequest {
+    readonly dataSourceId: string;
+    readonly generateLdmRequest: GenerateLdmRequest;
+}
+
+// @public
+export interface GenerateLogicalDataModelApiInterface {
+    generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
 }
 
 // @public
@@ -3833,6 +5531,36 @@ export interface InlineMeasureDefinition {
 // @public
 export interface InlineMeasureDefinitionInline {
     maql: string;
+}
+
+// @public
+export class InvalidateCacheApi extends MetadataBaseApi implements InvalidateCacheApiInterface {
+    registerUploadNotification(requestParameters: InvalidateCacheApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const InvalidateCacheApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    registerUploadNotification: (dataSourceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const InvalidateCacheApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    registerUploadNotification(requestParameters: InvalidateCacheApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const InvalidateCacheApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    registerUploadNotification(dataSourceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface InvalidateCacheApiInterface {
+    registerUploadNotification(requestParameters: InvalidateCacheApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface InvalidateCacheApiRegisterUploadNotificationRequest {
+    readonly dataSourceId: string;
 }
 
 // @public
@@ -4432,7 +6160,7 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
 }
@@ -4452,9 +6180,15 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -4473,15 +6207,9 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationPatchAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -4834,7 +6562,7 @@ export interface JsonApiDatasetOutAttributes {
     tags?: Array<string>;
     title?: string;
     type: JsonApiDatasetOutAttributesTypeEnum;
-    workspaceDataFilterColumns?: Array<string>;
+    workspaceDataFilterColumns?: Array<JsonApiDatasetOutAttributesWorkspaceDataFilterColumns>;
 }
 
 // @public
@@ -4874,6 +6602,26 @@ export const JsonApiDatasetOutAttributesTypeEnum: {
 
 // @public (undocumented)
 export type JsonApiDatasetOutAttributesTypeEnum = typeof JsonApiDatasetOutAttributesTypeEnum[keyof typeof JsonApiDatasetOutAttributesTypeEnum];
+
+// @public
+export interface JsonApiDatasetOutAttributesWorkspaceDataFilterColumns {
+    dataType: JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum;
+    name: string;
+}
+
+// @public (undocumented)
+export const JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum: {
+    readonly INT: "INT";
+    readonly STRING: "STRING";
+    readonly DATE: "DATE";
+    readonly NUMERIC: "NUMERIC";
+    readonly TIMESTAMP: "TIMESTAMP";
+    readonly TIMESTAMP_TZ: "TIMESTAMP_TZ";
+    readonly BOOLEAN: "BOOLEAN";
+};
+
+// @public (undocumented)
+export type JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum = typeof JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum[keyof typeof JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsDataTypeEnum];
 
 // @public
 export interface JsonApiDatasetOutDocument {
@@ -5818,9 +7566,21 @@ export type JsonApiMetricPatchTypeEnum = typeof JsonApiMetricPatchTypeEnum[keyof
 
 // @public
 export interface JsonApiOrganizationIn {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationInTypeEnum;
+}
+
+// @public
+export interface JsonApiOrganizationInAttributes {
+    allowedOrigins?: Array<string>;
+    earlyAccess?: string;
+    hostname?: string;
+    name?: string;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
 }
 
 // @public
@@ -5905,21 +7665,9 @@ export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEn
 
 // @public
 export interface JsonApiOrganizationPatch {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationPatchAttributes {
-    allowedOrigins?: Array<string>;
-    earlyAccess?: string;
-    hostname?: string;
-    name?: string;
-    oauthClientId?: string;
-    oauthClientSecret?: string;
-    oauthIssuerId?: string;
-    oauthIssuerLocation?: string;
 }
 
 // @public
@@ -5937,7 +7685,7 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
@@ -5957,10 +7705,30 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
 }
+
+// @public
+export interface JsonApiOrganizationSettingOutAttributes {
+    content?: object;
+    type?: JsonApiOrganizationSettingOutAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiOrganizationSettingOutAttributesTypeEnum: {
+    readonly TIMEZONE: "TIMEZONE";
+    readonly ACTIVE_THEME: "ACTIVE_THEME";
+    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
+    readonly WHITE_LABELING: "WHITE_LABELING";
+    readonly LOCALE: "LOCALE";
+    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
+    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+};
+
+// @public (undocumented)
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = typeof JsonApiOrganizationSettingOutAttributesTypeEnum[keyof typeof JsonApiOrganizationSettingOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingOutDocument {
@@ -5984,7 +7752,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -6000,7 +7768,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -6100,6 +7868,131 @@ export const JsonApiThemePatchTypeEnum: {
 
 // @public (undocumented)
 export type JsonApiThemePatchTypeEnum = typeof JsonApiThemePatchTypeEnum[keyof typeof JsonApiThemePatchTypeEnum];
+
+// @public
+export interface JsonApiUserDataFilterIn {
+    attributes: JsonApiUserDataFilterInAttributes;
+    id: string;
+    relationships?: JsonApiUserDataFilterInRelationships;
+    type: JsonApiUserDataFilterInTypeEnum;
+}
+
+// @public
+export interface JsonApiUserDataFilterInAttributes {
+    description?: string;
+    maql: string;
+    title: string;
+}
+
+// @public
+export interface JsonApiUserDataFilterInDocument {
+    data: JsonApiUserDataFilterIn;
+}
+
+// @public
+export interface JsonApiUserDataFilterInRelationships {
+    user?: JsonApiOrganizationOutRelationshipsBootstrapUser;
+    userGroup?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
+}
+
+// @public (undocumented)
+export const JsonApiUserDataFilterInTypeEnum: {
+    readonly USER_DATA_FILTER: "userDataFilter";
+};
+
+// @public (undocumented)
+export type JsonApiUserDataFilterInTypeEnum = typeof JsonApiUserDataFilterInTypeEnum[keyof typeof JsonApiUserDataFilterInTypeEnum];
+
+// @public
+export interface JsonApiUserDataFilterOut {
+    attributes: JsonApiUserDataFilterInAttributes;
+    id: string;
+    meta?: JsonApiCustomApplicationSettingOutMeta;
+    relationships?: JsonApiUserDataFilterOutRelationships;
+    type: JsonApiUserDataFilterOutTypeEnum;
+}
+
+// @public
+export interface JsonApiUserDataFilterOutDocument {
+    data: JsonApiUserDataFilterOut;
+    included?: Array<JsonApiUserDataFilterOutIncludes>;
+    links?: ObjectLinks;
+}
+
+// @public
+export type JsonApiUserDataFilterOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiUserGroupOutWithLinks | JsonApiUserOutWithLinks;
+
+// @public
+export interface JsonApiUserDataFilterOutList {
+    data: Array<JsonApiUserDataFilterOutWithLinks>;
+    included?: Array<JsonApiUserDataFilterOutIncludes>;
+    links?: ListLinks;
+}
+
+// @public
+export interface JsonApiUserDataFilterOutRelationships {
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+    facts?: JsonApiMetricOutRelationshipsFacts;
+    labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
+    metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
+    user?: JsonApiOrganizationOutRelationshipsBootstrapUser;
+    userGroup?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
+}
+
+// @public (undocumented)
+export const JsonApiUserDataFilterOutTypeEnum: {
+    readonly USER_DATA_FILTER: "userDataFilter";
+};
+
+// @public (undocumented)
+export type JsonApiUserDataFilterOutTypeEnum = typeof JsonApiUserDataFilterOutTypeEnum[keyof typeof JsonApiUserDataFilterOutTypeEnum];
+
+// @public
+export interface JsonApiUserDataFilterOutWithLinks {
+    attributes: JsonApiUserDataFilterInAttributes;
+    id: string;
+    links?: ObjectLinks;
+    meta?: JsonApiCustomApplicationSettingOutMeta;
+    relationships?: JsonApiUserDataFilterOutRelationships;
+    type: JsonApiUserDataFilterOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiUserDataFilterOutWithLinksTypeEnum: {
+    readonly USER_DATA_FILTER: "userDataFilter";
+};
+
+// @public (undocumented)
+export type JsonApiUserDataFilterOutWithLinksTypeEnum = typeof JsonApiUserDataFilterOutWithLinksTypeEnum[keyof typeof JsonApiUserDataFilterOutWithLinksTypeEnum];
+
+// @public
+export interface JsonApiUserDataFilterPatch {
+    attributes: JsonApiUserDataFilterPatchAttributes;
+    id: string;
+    relationships?: JsonApiUserDataFilterInRelationships;
+    type: JsonApiUserDataFilterPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiUserDataFilterPatchAttributes {
+    description?: string;
+    maql?: string;
+    title?: string;
+}
+
+// @public
+export interface JsonApiUserDataFilterPatchDocument {
+    data: JsonApiUserDataFilterPatch;
+}
+
+// @public (undocumented)
+export const JsonApiUserDataFilterPatchTypeEnum: {
+    readonly USER_DATA_FILTER: "userDataFilter";
+};
+
+// @public (undocumented)
+export type JsonApiUserDataFilterPatchTypeEnum = typeof JsonApiUserDataFilterPatchTypeEnum[keyof typeof JsonApiUserDataFilterPatchTypeEnum];
 
 // @public
 export interface JsonApiUserGroupIn {
@@ -6340,30 +8233,10 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
-
-// @public
-export interface JsonApiUserSettingInAttributes {
-    content?: object;
-    type?: JsonApiUserSettingInAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export const JsonApiUserSettingInAttributesTypeEnum: {
-    readonly TIMEZONE: "TIMEZONE";
-    readonly ACTIVE_THEME: "ACTIVE_THEME";
-    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
-    readonly WHITE_LABELING: "WHITE_LABELING";
-    readonly LOCALE: "LOCALE";
-    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
-    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
-};
-
-// @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = typeof JsonApiUserSettingInAttributesTypeEnum[keyof typeof JsonApiUserSettingInAttributesTypeEnum];
 
 // @public
 export interface JsonApiUserSettingInDocument {
@@ -6380,7 +8253,7 @@ export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[k
 
 // @public
 export interface JsonApiUserSettingOut {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiUserSettingOutTypeEnum;
 }
@@ -6407,7 +8280,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -6777,6 +8650,7 @@ export interface JsonApiWorkspaceOutAttributes {
     description?: string;
     earlyAccess?: string;
     name?: string;
+    prefix?: string;
 }
 
 // @public
@@ -6878,7 +8752,7 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -6898,7 +8772,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     meta?: JsonApiCustomApplicationSettingOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
@@ -6926,7 +8800,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiCustomApplicationSettingOutMeta;
@@ -6943,7 +8817,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -7029,12 +8903,70 @@ export const LabelIdentifierTypeEnum: {
 export type LabelIdentifierTypeEnum = typeof LabelIdentifierTypeEnum[keyof typeof LabelIdentifierTypeEnum];
 
 // @public
+export class LabelsApi extends MetadataBaseApi implements LabelsApiInterface {
+    // (undocumented)
+    getAllEntitiesLabels(requestParameters: LabelsApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList>>;
+    // (undocumented)
+    getEntityLabels(requestParameters: LabelsApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument>>;
+}
+
+// @public
+export const LabelsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesLabels: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityLabels: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const LabelsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllEntitiesLabels(requestParameters: LabelsApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiLabelOutList>;
+    getEntityLabels(requestParameters: LabelsApiGetEntityLabelsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiLabelOutDocument>;
+};
+
+// @public
+export const LabelsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllEntitiesLabels(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutList>>;
+    getEntityLabels(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutDocument>>;
+};
+
+// @public
+export interface LabelsApiGetAllEntitiesLabelsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "attribute" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface LabelsApiGetEntityLabelsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "attribute" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface LabelsApiInterface {
+    // (undocumented)
+    getAllEntitiesLabels(requestParameters: LabelsApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
+    // (undocumented)
+    getEntityLabels(requestParameters: LabelsApiGetEntityLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutDocument>;
+}
+
+// @public
 export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
     getAnalyticsModel(requestParameters: LayoutApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAnalytics>>;
     getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources>>;
     getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel>>;
     getOrganizationLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization>>;
     getPdmLayout(requestParameters: LayoutApiGetPdmLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativePdm>>;
+    getUserDataFilters(requestParameters: LayoutApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserDataFilters>>;
     getUserGroupPermissions(requestParameters: LayoutApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroupPermissions>>;
     getUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroups>>;
     getUserPermissions(requestParameters: LayoutApiGetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserPermissions>>;
@@ -7053,6 +8985,7 @@ export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
     setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     setPdmLayout(requestParameters: LayoutApiSetPdmLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    setUserDataFilters(requestParameters: LayoutApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     setUserGroupPermissions(requestParameters: LayoutApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     setUserPermissions(requestParameters: LayoutApiSetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
     setWorkspaceDataFiltersLayout(requestParameters: LayoutApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
@@ -7067,6 +9000,7 @@ export const LayoutApiAxiosParamCreator: (configuration?: MetadataConfiguration 
     getLogicalModel: (workspaceId: string, includeParents?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getOrganizationLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getPdmLayout: (dataSourceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getUserDataFilters: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getUserGroupPermissions: (userGroupId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getUserGroupsLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getUserPermissions: (userId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -7085,6 +9019,7 @@ export const LayoutApiAxiosParamCreator: (configuration?: MetadataConfiguration 
     setLogicalModel: (workspaceId: string, declarativeModel: DeclarativeModel, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setOrganizationLayout: (declarativeOrganization: DeclarativeOrganization, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setPdmLayout: (dataSourceId: string, declarativePdm: DeclarativePdm, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setUserDataFilters: (workspaceId: string, declarativeUserDataFilters: DeclarativeUserDataFilters, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setUserGroupPermissions: (userGroupId: string, declarativeUserGroupPermissions: DeclarativeUserGroupPermissions, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setUserPermissions: (userId: string, declarativeUserPermissions: DeclarativeUserPermissions, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setWorkspaceDataFiltersLayout: (declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -7099,6 +9034,7 @@ export const LayoutApiFactory: (configuration?: MetadataConfiguration | undefine
     getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeModel>;
     getOrganizationLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeOrganization>;
     getPdmLayout(requestParameters: LayoutApiGetPdmLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativePdm>;
+    getUserDataFilters(requestParameters: LayoutApiGetUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUserDataFilters>;
     getUserGroupPermissions(requestParameters: LayoutApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUserGroupPermissions>;
     getUserGroupsLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUserGroups>;
     getUserPermissions(requestParameters: LayoutApiGetUserPermissionsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUserPermissions>;
@@ -7117,6 +9053,7 @@ export const LayoutApiFactory: (configuration?: MetadataConfiguration | undefine
     setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     setPdmLayout(requestParameters: LayoutApiSetPdmLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    setUserDataFilters(requestParameters: LayoutApiSetUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     setUserGroupPermissions(requestParameters: LayoutApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     setUserPermissions(requestParameters: LayoutApiSetUserPermissionsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
     setWorkspaceDataFiltersLayout(requestParameters: LayoutApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
@@ -7131,6 +9068,7 @@ export const LayoutApiFp: (configuration?: MetadataConfiguration | undefined) =>
     getLogicalModel(workspaceId: string, includeParents?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeModel>>;
     getOrganizationLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeOrganization>>;
     getPdmLayout(dataSourceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativePdm>>;
+    getUserDataFilters(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUserDataFilters>>;
     getUserGroupPermissions(userGroupId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUserGroupPermissions>>;
     getUserGroupsLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUserGroups>>;
     getUserPermissions(userId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUserPermissions>>;
@@ -7149,6 +9087,7 @@ export const LayoutApiFp: (configuration?: MetadataConfiguration | undefined) =>
     setLogicalModel(workspaceId: string, declarativeModel: DeclarativeModel, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     setOrganizationLayout(declarativeOrganization: DeclarativeOrganization, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     setPdmLayout(dataSourceId: string, declarativePdm: DeclarativePdm, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    setUserDataFilters(workspaceId: string, declarativeUserDataFilters: DeclarativeUserDataFilters, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     setUserGroupPermissions(userGroupId: string, declarativeUserGroupPermissions: DeclarativeUserGroupPermissions, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     setUserPermissions(userId: string, declarativeUserPermissions: DeclarativeUserPermissions, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     setWorkspaceDataFiltersLayout(declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
@@ -7170,6 +9109,11 @@ export interface LayoutApiGetLogicalModelRequest {
 // @public
 export interface LayoutApiGetPdmLayoutRequest {
     readonly dataSourceId: string;
+}
+
+// @public
+export interface LayoutApiGetUserDataFiltersRequest {
+    readonly workspaceId: string;
 }
 
 // @public
@@ -7199,6 +9143,7 @@ export interface LayoutApiInterface {
     getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getOrganizationLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganization>;
     getPdmLayout(requestParameters: LayoutApiGetPdmLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativePdm>;
+    getUserDataFilters(requestParameters: LayoutApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserDataFilters>;
     getUserGroupPermissions(requestParameters: LayoutApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroupPermissions>;
     getUserGroupsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroups>;
     getUserPermissions(requestParameters: LayoutApiGetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserPermissions>;
@@ -7217,6 +9162,7 @@ export interface LayoutApiInterface {
     setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setPdmLayout(requestParameters: LayoutApiSetPdmLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setUserDataFilters(requestParameters: LayoutApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserGroupPermissions(requestParameters: LayoutApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserPermissions(requestParameters: LayoutApiSetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setWorkspaceDataFiltersLayout(requestParameters: LayoutApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -7274,6 +9220,12 @@ export interface LayoutApiSetPdmLayoutRequest {
 }
 
 // @public
+export interface LayoutApiSetUserDataFiltersRequest {
+    readonly declarativeUserDataFilters: DeclarativeUserDataFilters;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface LayoutApiSetUserGroupPermissionsRequest {
     readonly declarativeUserGroupPermissions: DeclarativeUserGroupPermissions;
     readonly userGroupId: string;
@@ -7299,6 +9251,48 @@ export interface LayoutApiSetWorkspacePermissionsRequest {
 // @public
 export interface LayoutApiSetWorkspacesLayoutRequest {
     readonly declarativeWorkspaces: DeclarativeWorkspaces;
+}
+
+// @public
+export class LDMDeclarativeAPIsApi extends MetadataBaseApi implements LDMDeclarativeAPIsApiInterface {
+    getLogicalModel(requestParameters: LDMDeclarativeAPIsApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel>>;
+    setLogicalModel(requestParameters: LDMDeclarativeAPIsApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const LDMDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getLogicalModel: (workspaceId: string, includeParents?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setLogicalModel: (workspaceId: string, declarativeModel: DeclarativeModel, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const LDMDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getLogicalModel(requestParameters: LDMDeclarativeAPIsApiGetLogicalModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeModel>;
+    setLogicalModel(requestParameters: LDMDeclarativeAPIsApiSetLogicalModelRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const LDMDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getLogicalModel(workspaceId: string, includeParents?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeModel>>;
+    setLogicalModel(workspaceId: string, declarativeModel: DeclarativeModel, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface LDMDeclarativeAPIsApiGetLogicalModelRequest {
+    readonly includeParents?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface LDMDeclarativeAPIsApiInterface {
+    getLogicalModel(requestParameters: LDMDeclarativeAPIsApiGetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
+    setLogicalModel(requestParameters: LDMDeclarativeAPIsApiSetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface LDMDeclarativeAPIsApiSetLogicalModelRequest {
+    readonly declarativeModel: DeclarativeModel;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -7447,6 +9441,124 @@ export class MetadataUtilities {
 }
 
 // @public
+export class MetricsApi extends MetadataBaseApi implements MetricsApiInterface {
+    // (undocumented)
+    createEntityMetrics(requestParameters: MetricsApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    deleteEntityMetrics(requestParameters: MetricsApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesMetrics(requestParameters: MetricsApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList>>;
+    // (undocumented)
+    getEntityMetrics(requestParameters: MetricsApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    patchEntityMetrics(requestParameters: MetricsApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    updateEntityMetrics(requestParameters: MetricsApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+}
+
+// @public
+export const MetricsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityMetrics: (workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesMetrics: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface MetricsApiCreateEntityMetricsRequest {
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface MetricsApiDeleteEntityMetricsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const MetricsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityMetrics(requestParameters: MetricsApiCreateEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    deleteEntityMetrics(requestParameters: MetricsApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesMetrics(requestParameters: MetricsApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutList>;
+    getEntityMetrics(requestParameters: MetricsApiGetEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    patchEntityMetrics(requestParameters: MetricsApiPatchEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    updateEntityMetrics(requestParameters: MetricsApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+};
+
+// @public
+export const MetricsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityMetrics(workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    deleteEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesMetrics(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutList>>;
+    getEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+};
+
+// @public
+export interface MetricsApiGetAllEntitiesMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface MetricsApiGetEntityMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface MetricsApiInterface {
+    // (undocumented)
+    createEntityMetrics(requestParameters: MetricsApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    deleteEntityMetrics(requestParameters: MetricsApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesMetrics(requestParameters: MetricsApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
+    // (undocumented)
+    getEntityMetrics(requestParameters: MetricsApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    patchEntityMetrics(requestParameters: MetricsApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    updateEntityMetrics(requestParameters: MetricsApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+}
+
+// @public
+export interface MetricsApiPatchEntityMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiMetricPatchDocument: JsonApiMetricPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface MetricsApiUpdateEntityMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface NegativeAttributeFilter {
     negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
 }
@@ -7473,6 +9585,328 @@ export interface ObjectLinksContainer {
     links?: ObjectLinks;
 }
 
+// @public
+export class OptionsApi extends MetadataBaseApi implements OptionsApiInterface {
+    getAllOptions(options?: AxiosRequestConfig): Promise<AxiosResponse<object>>;
+}
+
+// @public
+export const OptionsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getAllOptions: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const OptionsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllOptions(options?: AxiosRequestConfig | undefined): AxiosPromise<object>;
+};
+
+// @public
+export const OptionsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getAllOptions(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>>;
+};
+
+// @public
+export interface OptionsApiInterface {
+    getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
+}
+
+// @public
+export class OrganizationControllerApi extends MetadataBaseApi implements OrganizationControllerApiInterface {
+    // (undocumented)
+    getEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument>>;
+    // (undocumented)
+    getEntityOrganizations(requestParameters: OrganizationControllerApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument>>;
+    // (undocumented)
+    patchEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument>>;
+    // (undocumented)
+    patchEntityOrganizations(requestParameters: OrganizationControllerApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument>>;
+    // (undocumented)
+    updateEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument>>;
+    // (undocumented)
+    updateEntityOrganizations(requestParameters: OrganizationControllerApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument>>;
+}
+
+// @public
+export const OrganizationControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getEntityCookieSecurityConfigurations: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityOrganizations: (id: string, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityCookieSecurityConfigurations: (id: string, jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityOrganizations: (id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityCookieSecurityConfigurations: (id: string, jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityOrganizations: (id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const OrganizationControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    getEntityOrganizations(requestParameters: OrganizationControllerApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
+    patchEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    patchEntityOrganizations(requestParameters: OrganizationControllerApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
+    updateEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    updateEntityOrganizations(requestParameters: OrganizationControllerApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
+};
+
+// @public
+export const OrganizationControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getEntityCookieSecurityConfigurations(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
+    getEntityOrganizations(id: string, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    patchEntityCookieSecurityConfigurations(id: string, jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
+    patchEntityOrganizations(id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    updateEntityCookieSecurityConfigurations(id: string, jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>>;
+    updateEntityOrganizations(id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+};
+
+// @public
+export interface OrganizationControllerApiGetEntityCookieSecurityConfigurationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationControllerApiGetEntityOrganizationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationControllerApiInterface {
+    // (undocumented)
+    getEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    // (undocumented)
+    getEntityOrganizations(requestParameters: OrganizationControllerApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+    // (undocumented)
+    patchEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    // (undocumented)
+    patchEntityOrganizations(requestParameters: OrganizationControllerApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+    // (undocumented)
+    updateEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+    // (undocumented)
+    updateEntityOrganizations(requestParameters: OrganizationControllerApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+}
+
+// @public
+export interface OrganizationControllerApiPatchEntityCookieSecurityConfigurationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument;
+}
+
+// @public
+export interface OrganizationControllerApiPatchEntityOrganizationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+    readonly jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument;
+}
+
+// @public
+export interface OrganizationControllerApiUpdateEntityCookieSecurityConfigurationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument;
+}
+
+// @public
+export interface OrganizationControllerApiUpdateEntityOrganizationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+    readonly jsonApiOrganizationInDocument: JsonApiOrganizationInDocument;
+}
+
+// @public
+export class OrganizationDeclarativeAPIsApi extends MetadataBaseApi implements OrganizationDeclarativeAPIsApiInterface {
+    getOrganizationLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization>>;
+    setOrganizationLayout(requestParameters: OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const OrganizationDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getOrganizationLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setOrganizationLayout: (declarativeOrganization: DeclarativeOrganization, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const OrganizationDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getOrganizationLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeOrganization>;
+    setOrganizationLayout(requestParameters: OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const OrganizationDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getOrganizationLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeOrganization>>;
+    setOrganizationLayout(declarativeOrganization: DeclarativeOrganization, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface OrganizationDeclarativeAPIsApiInterface {
+    getOrganizationLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganization>;
+    setOrganizationLayout(requestParameters: OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest {
+    readonly declarativeOrganization: DeclarativeOrganization;
+}
+
+// @public
+export class OrganizationEntityAPIsApi extends MetadataBaseApi implements OrganizationEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    // (undocumented)
+    deleteEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationEntityAPIsApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList>>;
+    // (undocumented)
+    getEntityOrganizations(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument>>;
+    // (undocumented)
+    getEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    getOrganization(requestParameters?: OrganizationEntityAPIsApiGetOrganizationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    patchEntityOrganizations(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument>>;
+    // (undocumented)
+    patchEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    // (undocumented)
+    updateEntityOrganizations(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument>>;
+    // (undocumented)
+    updateEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+}
+
+// @public
+export const OrganizationEntityAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityOrganizationSettings: (jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityOrganizationSettings: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesOrganizationSettings: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityOrganizationSettings: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityOrganizations: (id: string, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getOrganization: (metaInclude?: ("all" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityOrganizations: (id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityOrganizations: (id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface OrganizationEntityAPIsApiCreateEntityOrganizationSettingsRequest {
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const OrganizationEntityAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    deleteEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutList>;
+    getEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    getEntityOrganizations(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
+    getOrganization(requestParameters: OrganizationEntityAPIsApiGetOrganizationRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    patchEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    patchEntityOrganizations(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
+    updateEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    updateEntityOrganizations(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationOutDocument>;
+};
+
+// @public
+export const OrganizationEntityAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    deleteEntityOrganizationSettings(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesOrganizationSettings(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutList>>;
+    getEntityOrganizationSettings(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    getEntityOrganizations(id: string, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    getOrganization(metaInclude?: ("all" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    patchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    patchEntityOrganizations(id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+    updateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    updateEntityOrganizations(id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, filter?: string | undefined, include?: ("ALL" | "users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
+};
+
+// @public
+export interface OrganizationEntityAPIsApiGetAllEntitiesOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiGetEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiGetEntityOrganizationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiGetOrganizationRequest {
+    readonly metaInclude?: Array<"permissions" | "all">;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    // (undocumented)
+    deleteEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
+    // (undocumented)
+    getEntityOrganizations(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+    // (undocumented)
+    getEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    getOrganization(requestParameters: OrganizationEntityAPIsApiGetOrganizationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    patchEntityOrganizations(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+    // (undocumented)
+    patchEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    // (undocumented)
+    updateEntityOrganizations(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+    // (undocumented)
+    updateEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiPatchEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiPatchEntityOrganizationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+    readonly jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiUpdateEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
+
+// @public
+export interface OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+    readonly jsonApiOrganizationInDocument: JsonApiOrganizationInDocument;
+}
+
 // @internal
 export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams> = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
@@ -7484,6 +9918,753 @@ export type OrganizationGetEntitiesResult = JsonApiDataSourceIdentifierOutList |
 
 // @internal
 export type OrganizationGetEntitiesSupportingIncludedResult = JsonApiUserOutList | JsonApiUserGroupOutList | JsonApiWorkspaceOutList;
+
+// @public
+export class OrganizationModelControllerApi extends MetadataBaseApi implements OrganizationModelControllerApiInterface {
+    // (undocumented)
+    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    // (undocumented)
+    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+    // (undocumented)
+    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityDataSources(requestParameters: OrganizationModelControllerApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesColorPalettes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList>>;
+    // (undocumented)
+    getAllEntitiesCspDirectives(requestParameters?: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList>>;
+    // (undocumented)
+    getAllEntitiesDataSourceIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList>>;
+    // (undocumented)
+    getAllEntitiesDataSources(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList>>;
+    // (undocumented)
+    getAllEntitiesEntitlements(requestParameters?: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList>>;
+    // (undocumented)
+    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList>>;
+    // (undocumented)
+    getAllEntitiesThemes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList>>;
+    // (undocumented)
+    getAllEntitiesUserGroups(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList>>;
+    // (undocumented)
+    getAllEntitiesUsers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaces(requestParameters?: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList>>;
+    // (undocumented)
+    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument>>;
+    // (undocumented)
+    getEntityDataSources(requestParameters: OrganizationModelControllerApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument>>;
+    // (undocumented)
+    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    // (undocumented)
+    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+    // (undocumented)
+    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    // (undocumented)
+    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+    // (undocumented)
+    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument>>;
+    // (undocumented)
+    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument>>;
+    // (undocumented)
+    updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument>>;
+    // (undocumented)
+    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument>>;
+    // (undocumented)
+    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument>>;
+    // (undocumented)
+    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+}
+
+// @public
+export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityColorPalettes: (jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityCspDirectives: (jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityDataSources: (jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityOrganizationSettings: (jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityThemes: (jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityUserGroups: (jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityUsers: (jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaces: (jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityCspDirectives: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityDataSources: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityOrganizationSettings: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityThemes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserGroups: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUsers: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWorkspaces: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesColorPalettes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesCspDirectives: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDataSourceIdentifiers: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDataSources: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesEntitlements: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesOrganizationSettings: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesThemes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserGroups: (filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUsers: (filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaces: (filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityCspDirectives: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDataSourceIdentifiers: (id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDataSources: (id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityEntitlements: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityOrganizationSettings: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityThemes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserGroups: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUsers: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaces: (id: string, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityColorPalettes: (id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityCspDirectives: (id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityDataSources: (id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityThemes: (id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUserGroups: (id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUsers: (id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWorkspaces: (id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityColorPalettes: (id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityCspDirectives: (id: string, jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityDataSources: (id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityThemes: (id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserGroups: (id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUsers: (id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWorkspaces: (id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityColorPalettesRequest {
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityCspDirectivesRequest {
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityDataSourcesRequest {
+    readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest {
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityThemesRequest {
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityUserGroupsRequest {
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityUsersRequest {
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly jsonApiUserInDocument: JsonApiUserInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityWorkspacesRequest {
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiDeleteEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const OrganizationModelControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityDataSources(requestParameters: OrganizationModelControllerApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesColorPalettes(requestParameters: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutList>;
+    getAllEntitiesCspDirectives(requestParameters: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutList>;
+    getAllEntitiesDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+    getAllEntitiesDataSources(requestParameters: OrganizationModelControllerApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutList>;
+    getAllEntitiesEntitlements(requestParameters: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiEntitlementOutList>;
+    getAllEntitiesOrganizationSettings(requestParameters: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutList>;
+    getAllEntitiesThemes(requestParameters: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutList>;
+    getAllEntitiesUserGroups(requestParameters: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutList>;
+    getAllEntitiesUsers(requestParameters: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutList>;
+    getAllEntitiesWorkspaces(requestParameters: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutList>;
+    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
+    getEntityDataSources(requestParameters: OrganizationModelControllerApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiEntitlementOutDocument>;
+    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDataSourceOutDocument>;
+    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+};
+
+// @public
+export const OrganizationModelControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityColorPalettes(jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    createEntityCspDirectives(jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    createEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    createEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    createEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    createEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    createEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    createEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    deleteEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityCspDirectives(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityDataSources(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityOrganizationSettings(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityThemes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityUserGroups(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityUsers(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityWorkspaces(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesColorPalettes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutList>>;
+    getAllEntitiesCspDirectives(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutList>>;
+    getAllEntitiesDataSourceIdentifiers(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceIdentifierOutList>>;
+    getAllEntitiesDataSources(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutList>>;
+    getAllEntitiesEntitlements(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiEntitlementOutList>>;
+    getAllEntitiesOrganizationSettings(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutList>>;
+    getAllEntitiesThemes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutList>>;
+    getAllEntitiesUserGroups(filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutList>>;
+    getAllEntitiesUsers(filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutList>>;
+    getAllEntitiesWorkspaces(filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutList>>;
+    getEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    getEntityCspDirectives(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    getEntityDataSourceIdentifiers(id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceIdentifierOutDocument>>;
+    getEntityDataSources(id: string, filter?: string | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    getEntityEntitlements(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiEntitlementOutDocument>>;
+    getEntityOrganizationSettings(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    getEntityThemes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    getEntityUserGroups(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    getEntityUsers(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    getEntityWorkspaces(id: string, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    patchEntityColorPalettes(id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    patchEntityCspDirectives(id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    patchEntityDataSources(id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    patchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    patchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    patchEntityUserGroups(id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    patchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    patchEntityWorkspaces(id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    updateEntityColorPalettes(id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
+    updateEntityCspDirectives(id: string, jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCspDirectiveOutDocument>>;
+    updateEntityDataSources(id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
+    updateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
+    updateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiThemeOutDocument>>;
+    updateEntityUserGroups(id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    updateEntityUsers(id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    updateEntityWorkspaces(id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+};
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesDataSourcesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesThemesRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesUsersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly metaInclude?: Array<"permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityEntitlementsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface OrganizationModelControllerApiInterface {
+    // (undocumented)
+    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    // (undocumented)
+    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    // (undocumented)
+    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityDataSources(requestParameters: OrganizationModelControllerApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesColorPalettes(requestParameters: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
+    // (undocumented)
+    getAllEntitiesCspDirectives(requestParameters: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutList>;
+    // (undocumented)
+    getAllEntitiesDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+    // (undocumented)
+    getAllEntitiesDataSources(requestParameters: OrganizationModelControllerApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutList>;
+    // (undocumented)
+    getAllEntitiesEntitlements(requestParameters: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
+    // (undocumented)
+    getAllEntitiesOrganizationSettings(requestParameters: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
+    // (undocumented)
+    getAllEntitiesThemes(requestParameters: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    // (undocumented)
+    getAllEntitiesUserGroups(requestParameters: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
+    // (undocumented)
+    getAllEntitiesUsers(requestParameters: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaces(requestParameters: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
+    // (undocumented)
+    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
+    // (undocumented)
+    getEntityDataSources(requestParameters: OrganizationModelControllerApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
+    // (undocumented)
+    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    // (undocumented)
+    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    // (undocumented)
+    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    // (undocumented)
+    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    // (undocumented)
+    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    // (undocumented)
+    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    // (undocumented)
+    updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    // (undocumented)
+    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    // (undocumented)
+    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    // (undocumented)
+    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiThemePatchDocument: JsonApiThemePatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly jsonApiUserPatchDocument: JsonApiUserPatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityDataSourcesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly jsonApiUserInDocument: JsonApiUserInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+}
 
 // @internal
 export class OrganizationUtilities {
@@ -7513,6 +10694,47 @@ export interface PdfExportRequest {
 }
 
 // @public
+export class PDMDeclarativeAPIsApi extends MetadataBaseApi implements PDMDeclarativeAPIsApiInterface {
+    getPdmLayout(requestParameters: PDMDeclarativeAPIsApiGetPdmLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativePdm>>;
+    setPdmLayout(requestParameters: PDMDeclarativeAPIsApiSetPdmLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const PDMDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getPdmLayout: (dataSourceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setPdmLayout: (dataSourceId: string, declarativePdm: DeclarativePdm, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const PDMDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getPdmLayout(requestParameters: PDMDeclarativeAPIsApiGetPdmLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativePdm>;
+    setPdmLayout(requestParameters: PDMDeclarativeAPIsApiSetPdmLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const PDMDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getPdmLayout(dataSourceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativePdm>>;
+    setPdmLayout(dataSourceId: string, declarativePdm: DeclarativePdm, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface PDMDeclarativeAPIsApiGetPdmLayoutRequest {
+    readonly dataSourceId: string;
+}
+
+// @public
+export interface PDMDeclarativeAPIsApiInterface {
+    getPdmLayout(requestParameters: PDMDeclarativeAPIsApiGetPdmLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativePdm>;
+    setPdmLayout(requestParameters: PDMDeclarativeAPIsApiSetPdmLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface PDMDeclarativeAPIsApiSetPdmLayoutRequest {
+    readonly dataSourceId: string;
+    readonly declarativePdm: DeclarativePdm;
+}
+
+// @public
 export interface PdmLdmRequest {
     sqls?: Array<PdmSql>;
 }
@@ -7522,6 +10744,47 @@ export interface PdmSql {
     columns?: Array<SqlColumn>;
     statement: string;
     title: string;
+}
+
+// @public
+export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInterface {
+    getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspacePermissions>>;
+    setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const PermissionsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getWorkspacePermissions: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setWorkspacePermissions: (workspaceId: string, declarativeWorkspacePermissions: DeclarativeWorkspacePermissions, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const PermissionsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeWorkspacePermissions>;
+    setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const PermissionsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getWorkspacePermissions(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspacePermissions>>;
+    setWorkspacePermissions(workspaceId: string, declarativeWorkspacePermissions: DeclarativeWorkspacePermissions, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface PermissionsApiGetWorkspacePermissionsRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface PermissionsApiInterface {
+    getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspacePermissions>;
+    setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface PermissionsApiSetWorkspacePermissionsRequest {
+    readonly declarativeWorkspacePermissions: DeclarativeWorkspacePermissions;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -7568,6 +10831,119 @@ export const PlatformUsageRequestUsageItemNamesEnum: {
 
 // @public (undocumented)
 export type PlatformUsageRequestUsageItemNamesEnum = typeof PlatformUsageRequestUsageItemNamesEnum[keyof typeof PlatformUsageRequestUsageItemNamesEnum];
+
+// @public
+export class PluginsApi extends MetadataBaseApi implements PluginsApiInterface {
+    // (undocumented)
+    createEntityDashboardPlugins(requestParameters: PluginsApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    deleteEntityDashboardPlugins(requestParameters: PluginsApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesDashboardPlugins(requestParameters: PluginsApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList>>;
+    // (undocumented)
+    getEntityDashboardPlugins(requestParameters: PluginsApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    patchEntityDashboardPlugins(requestParameters: PluginsApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    updateEntityDashboardPlugins(requestParameters: PluginsApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+}
+
+// @public
+export const PluginsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityDashboardPlugins: (workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityDashboardPlugins: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDashboardPlugins: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDashboardPlugins: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityDashboardPlugins: (workspaceId: string, objectId: string, jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityDashboardPlugins: (workspaceId: string, objectId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface PluginsApiCreateEntityDashboardPluginsRequest {
+    readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface PluginsApiDeleteEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const PluginsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityDashboardPlugins(requestParameters: PluginsApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    deleteEntityDashboardPlugins(requestParameters: PluginsApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesDashboardPlugins(requestParameters: PluginsApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutList>;
+    getEntityDashboardPlugins(requestParameters: PluginsApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    patchEntityDashboardPlugins(requestParameters: PluginsApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    updateEntityDashboardPlugins(requestParameters: PluginsApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+};
+
+// @public
+export const PluginsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    deleteEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesDashboardPlugins(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutList>>;
+    getEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    patchEntityDashboardPlugins(workspaceId: string, objectId: string, jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    updateEntityDashboardPlugins(workspaceId: string, objectId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+};
+
+// @public
+export interface PluginsApiGetAllEntitiesDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface PluginsApiGetEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface PluginsApiInterface {
+    // (undocumented)
+    createEntityDashboardPlugins(requestParameters: PluginsApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    deleteEntityDashboardPlugins(requestParameters: PluginsApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesDashboardPlugins(requestParameters: PluginsApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutList>;
+    // (undocumented)
+    getEntityDashboardPlugins(requestParameters: PluginsApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    patchEntityDashboardPlugins(requestParameters: PluginsApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    updateEntityDashboardPlugins(requestParameters: PluginsApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+}
+
+// @public
+export interface PluginsApiPatchEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface PluginsApiUpdateEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
 
 // @public
 export interface PopDataset {
@@ -7719,6 +11095,41 @@ export const RelativeDateFilterRelativeDateFilterGranularityEnum: {
 
 // @public (undocumented)
 export type RelativeDateFilterRelativeDateFilterGranularityEnum = typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
+
+// @public
+export class ReportingSettingsApi extends MetadataBaseApi implements ReportingSettingsApiInterface {
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[]>>;
+    resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[]>>;
+}
+
+// @public
+export const ReportingSettingsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    resolveAllSettingsWithoutWorkspace: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    resolveSettingsWithoutWorkspace: (resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const ReportingSettingsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig | undefined): AxiosPromise<Array<ResolvedSetting>>;
+    resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<Array<ResolvedSetting>>;
+};
+
+// @public
+export const ReportingSettingsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<ResolvedSetting>>>;
+    resolveSettingsWithoutWorkspace(resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<ResolvedSetting>>>;
+};
+
+// @public
+export interface ReportingSettingsApiInterface {
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+    resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+}
+
+// @public
+export interface ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest {
+    readonly resolveSettingsRequest: ResolveSettingsRequest;
+}
 
 // @public
 export interface ResolvedSetting {
@@ -8087,7 +11498,7 @@ export interface TestDefinitionRequest {
     schema?: string;
     token?: string;
     type: TestDefinitionRequestTypeEnum;
-    url: string;
+    url?: string;
     username?: string;
 }
 
@@ -8213,10 +11624,86 @@ export interface TotalResultHeader {
 }
 
 // @public
+export class UsageApi extends MetadataBaseApi implements UsageApiInterface {
+    allPlatformUsage(options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[]>>;
+    particularPlatformUsage(requestParameters: UsageApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[]>>;
+}
+
+// @public
+export const UsageApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    allPlatformUsage: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    particularPlatformUsage: (platformUsageRequest: PlatformUsageRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const UsageApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    allPlatformUsage(options?: AxiosRequestConfig | undefined): AxiosPromise<Array<PlatformUsage>>;
+    particularPlatformUsage(requestParameters: UsageApiParticularPlatformUsageRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<Array<PlatformUsage>>;
+};
+
+// @public
+export const UsageApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    allPlatformUsage(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<PlatformUsage>>>;
+    particularPlatformUsage(platformUsageRequest: PlatformUsageRequest, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<PlatformUsage>>>;
+};
+
+// @public
+export interface UsageApiInterface {
+    allPlatformUsage(options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
+    particularPlatformUsage(requestParameters: UsageApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
+}
+
+// @public
+export interface UsageApiParticularPlatformUsageRequest {
+    readonly platformUsageRequest: PlatformUsageRequest;
+}
+
+// @public
 export interface UserAssignee {
     email?: string;
     id: string;
     name?: string;
+}
+
+// @public
+export class UserDataFiltersApi extends MetadataBaseApi implements UserDataFiltersApiInterface {
+    getUserDataFilters(requestParameters: UserDataFiltersApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserDataFilters>>;
+    setUserDataFilters(requestParameters: UserDataFiltersApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const UserDataFiltersApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getUserDataFilters: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setUserDataFilters: (workspaceId: string, declarativeUserDataFilters: DeclarativeUserDataFilters, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const UserDataFiltersApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getUserDataFilters(requestParameters: UserDataFiltersApiGetUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUserDataFilters>;
+    setUserDataFilters(requestParameters: UserDataFiltersApiSetUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const UserDataFiltersApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getUserDataFilters(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUserDataFilters>>;
+    setUserDataFilters(workspaceId: string, declarativeUserDataFilters: DeclarativeUserDataFilters, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface UserDataFiltersApiGetUserDataFiltersRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface UserDataFiltersApiInterface {
+    getUserDataFilters(requestParameters: UserDataFiltersApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserDataFilters>;
+    setUserDataFilters(requestParameters: UserDataFiltersApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface UserDataFiltersApiSetUserDataFiltersRequest {
+    readonly declarativeUserDataFilters: DeclarativeUserDataFilters;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -8247,6 +11734,336 @@ export interface UserGroupPermission {
 }
 
 // @public
+export class UserGroupsDeclarativeAPIsApi extends MetadataBaseApi implements UserGroupsDeclarativeAPIsApiInterface {
+    getUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroups>>;
+    getUsersUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsersUserGroups>>;
+    putUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    putUsersUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const UserGroupsDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getUserGroupsLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getUsersUserGroupsLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    putUserGroupsLayout: (declarativeUserGroups: DeclarativeUserGroups, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    putUsersUserGroupsLayout: (declarativeUsersUserGroups: DeclarativeUsersUserGroups, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const UserGroupsDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getUserGroupsLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUserGroups>;
+    getUsersUserGroupsLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUsersUserGroups>;
+    putUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    putUsersUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const UserGroupsDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getUserGroupsLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUserGroups>>;
+    getUsersUserGroupsLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUsersUserGroups>>;
+    putUserGroupsLayout(declarativeUserGroups: DeclarativeUserGroups, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    putUsersUserGroupsLayout(declarativeUsersUserGroups: DeclarativeUsersUserGroups, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface UserGroupsDeclarativeAPIsApiInterface {
+    getUserGroupsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroups>;
+    getUsersUserGroupsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeUsersUserGroups>;
+    putUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    putUsersUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface UserGroupsDeclarativeAPIsApiPutUserGroupsLayoutRequest {
+    readonly declarativeUserGroups: DeclarativeUserGroups;
+}
+
+// @public
+export interface UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest {
+    readonly declarativeUsersUserGroups: DeclarativeUsersUserGroups;
+}
+
+// @public
+export class UserGroupsEntityAPIsApi extends MetadataBaseApi implements UserGroupsEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    deleteEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesUserGroups(requestParameters?: UserGroupsEntityAPIsApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList>>;
+    // (undocumented)
+    getEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    patchEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+    // (undocumented)
+    updateEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument>>;
+}
+
+// @public
+export const UserGroupsEntityAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUserGroups: (jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserGroups: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserGroups: (filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserGroups: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUserGroups: (id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserGroups: (id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest {
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
+export interface UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const UserGroupsEntityAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    deleteEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesUserGroups(requestParameters: UserGroupsEntityAPIsApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutList>;
+    getEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    patchEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+    updateEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserGroupOutDocument>;
+};
+
+// @public
+export const UserGroupsEntityAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    deleteEntityUserGroups(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesUserGroups(filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutList>>;
+    getEntityUserGroups(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    patchEntityUserGroups(id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+    updateEntityUserGroups(id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
+};
+
+// @public
+export interface UserGroupsEntityAPIsApiGetAllEntitiesUserGroupsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface UserGroupsEntityAPIsApiGetEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+}
+
+// @public
+export interface UserGroupsEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    deleteEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesUserGroups(requestParameters: UserGroupsEntityAPIsApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
+    // (undocumented)
+    getEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    patchEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    // (undocumented)
+    updateEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+}
+
+// @public
+export interface UserGroupsEntityAPIsApiPatchEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument;
+}
+
+// @public
+export interface UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "parents" | "ALL">;
+    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
+export interface UserIdentifier {
+    id: string;
+    type: UserIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export const UserIdentifierTypeEnum: {
+    readonly USER: "user";
+};
+
+// @public (undocumented)
+export type UserIdentifierTypeEnum = typeof UserIdentifierTypeEnum[keyof typeof UserIdentifierTypeEnum];
+
+// @public
+export class UserModelControllerApi extends MetadataBaseApi implements UserModelControllerApiInterface {
+    // (undocumented)
+    createEntityApiTokens(requestParameters: UserModelControllerApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument>>;
+    // (undocumented)
+    createEntityUserSettings(requestParameters: UserModelControllerApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument>>;
+    // (undocumented)
+    deleteEntityApiTokens(requestParameters: UserModelControllerApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityUserSettings(requestParameters: UserModelControllerApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    getAllEntitiesApiTokens(requestParameters: UserModelControllerApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList>>;
+    getAllEntitiesUserSettings(requestParameters: UserModelControllerApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList>>;
+    // (undocumented)
+    getEntityApiTokens(requestParameters: UserModelControllerApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument>>;
+    // (undocumented)
+    getEntityUserSettings(requestParameters: UserModelControllerApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument>>;
+    // (undocumented)
+    updateEntityApiTokens(requestParameters: UserModelControllerApiUpdateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument>>;
+    // (undocumented)
+    updateEntityUserSettings(requestParameters: UserModelControllerApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument>>;
+}
+
+// @public
+export const UserModelControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityApiTokens: (userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityUserSettings: (userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserSettings: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesApiTokens: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserSettings: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserSettings: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityApiTokens: (userId: string, id: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserSettings: (userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface UserModelControllerApiCreateEntityApiTokensRequest {
+    readonly jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiCreateEntityUserSettingsRequest {
+    readonly jsonApiUserSettingInDocument: JsonApiUserSettingInDocument;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiDeleteEntityApiTokensRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiDeleteEntityUserSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export const UserModelControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityApiTokens(requestParameters: UserModelControllerApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutDocument>;
+    createEntityUserSettings(requestParameters: UserModelControllerApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
+    deleteEntityApiTokens(requestParameters: UserModelControllerApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityUserSettings(requestParameters: UserModelControllerApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesApiTokens(requestParameters: UserModelControllerApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutList>;
+    getAllEntitiesUserSettings(requestParameters: UserModelControllerApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutList>;
+    getEntityApiTokens(requestParameters: UserModelControllerApiGetEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutDocument>;
+    getEntityUserSettings(requestParameters: UserModelControllerApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
+    updateEntityApiTokens(requestParameters: UserModelControllerApiUpdateEntityApiTokensRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiApiTokenOutDocument>;
+    updateEntityUserSettings(requestParameters: UserModelControllerApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
+};
+
+// @public
+export const UserModelControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityApiTokens(userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
+    createEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
+    deleteEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityUserSettings(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesApiTokens(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutList>>;
+    getAllEntitiesUserSettings(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutList>>;
+    getEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
+    getEntityUserSettings(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
+    updateEntityApiTokens(userId: string, id: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
+    updateEntityUserSettings(userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
+};
+
+// @public
+export interface UserModelControllerApiGetAllEntitiesApiTokensRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiGetAllEntitiesUserSettingsRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiGetEntityApiTokensRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiGetEntityUserSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiInterface {
+    // (undocumented)
+    createEntityApiTokens(requestParameters: UserModelControllerApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutDocument>;
+    // (undocumented)
+    createEntityUserSettings(requestParameters: UserModelControllerApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
+    // (undocumented)
+    deleteEntityApiTokens(requestParameters: UserModelControllerApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityUserSettings(requestParameters: UserModelControllerApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesApiTokens(requestParameters: UserModelControllerApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutList>;
+    getAllEntitiesUserSettings(requestParameters: UserModelControllerApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutList>;
+    // (undocumented)
+    getEntityApiTokens(requestParameters: UserModelControllerApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutDocument>;
+    // (undocumented)
+    getEntityUserSettings(requestParameters: UserModelControllerApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
+    // (undocumented)
+    updateEntityApiTokens(requestParameters: UserModelControllerApiUpdateEntityApiTokensRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiApiTokenOutDocument>;
+    // (undocumented)
+    updateEntityUserSettings(requestParameters: UserModelControllerApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
+}
+
+// @public
+export interface UserModelControllerApiUpdateEntityApiTokensRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
+    readonly userId: string;
+}
+
+// @public
+export interface UserModelControllerApiUpdateEntityUserSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiUserSettingInDocument: JsonApiUserSettingInDocument;
+    readonly userId: string;
+}
+
+// @public
 export interface UserPermission {
     email?: string;
     id: string;
@@ -8254,10 +12071,359 @@ export interface UserPermission {
     permissions?: Array<GrantedPermission>;
 }
 
+// @public
+export class UsersDeclarativeAPIsApi extends MetadataBaseApi implements UsersDeclarativeAPIsApiInterface {
+    getUsersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsers>>;
+    putUsersLayout(requestParameters: UsersDeclarativeAPIsApiPutUsersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const UsersDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getUsersLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    putUsersLayout: (declarativeUsers: DeclarativeUsers, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const UsersDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getUsersLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeUsers>;
+    putUsersLayout(requestParameters: UsersDeclarativeAPIsApiPutUsersLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const UsersDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getUsersLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeUsers>>;
+    putUsersLayout(declarativeUsers: DeclarativeUsers, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface UsersDeclarativeAPIsApiInterface {
+    getUsersLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeUsers>;
+    putUsersLayout(requestParameters: UsersDeclarativeAPIsApiPutUsersLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface UsersDeclarativeAPIsApiPutUsersLayoutRequest {
+    readonly declarativeUsers: DeclarativeUsers;
+}
+
+// @public
+export class UsersEntityAPIsApi extends MetadataBaseApi implements UsersEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityUsers(requestParameters: UsersEntityAPIsApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    deleteEntityUsers(requestParameters: UsersEntityAPIsApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesUsers(requestParameters?: UsersEntityAPIsApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList>>;
+    // (undocumented)
+    getEntityUsers(requestParameters: UsersEntityAPIsApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    patchEntityUsers(requestParameters: UsersEntityAPIsApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+    // (undocumented)
+    updateEntityUsers(requestParameters: UsersEntityAPIsApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument>>;
+}
+
+// @public
+export const UsersEntityAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUsers: (jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUsers: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUsers: (filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUsers: (id: string, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUsers: (id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUsers: (id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface UsersEntityAPIsApiCreateEntityUsersRequest {
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly jsonApiUserInDocument: JsonApiUserInDocument;
+}
+
+// @public
+export interface UsersEntityAPIsApiDeleteEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const UsersEntityAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityUsers(requestParameters: UsersEntityAPIsApiCreateEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    deleteEntityUsers(requestParameters: UsersEntityAPIsApiDeleteEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesUsers(requestParameters: UsersEntityAPIsApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutList>;
+    getEntityUsers(requestParameters: UsersEntityAPIsApiGetEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    patchEntityUsers(requestParameters: UsersEntityAPIsApiPatchEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+    updateEntityUsers(requestParameters: UsersEntityAPIsApiUpdateEntityUsersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserOutDocument>;
+};
+
+// @public
+export const UsersEntityAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    deleteEntityUsers(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesUsers(filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutList>>;
+    getEntityUsers(id: string, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    patchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+    updateEntityUsers(id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string | undefined, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
+};
+
+// @public
+export interface UsersEntityAPIsApiGetAllEntitiesUsersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface UsersEntityAPIsApiGetEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+}
+
+// @public
+export interface UsersEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityUsers(requestParameters: UsersEntityAPIsApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    deleteEntityUsers(requestParameters: UsersEntityAPIsApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesUsers(requestParameters: UsersEntityAPIsApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
+    // (undocumented)
+    getEntityUsers(requestParameters: UsersEntityAPIsApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    patchEntityUsers(requestParameters: UsersEntityAPIsApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    // (undocumented)
+    updateEntityUsers(requestParameters: UsersEntityAPIsApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+}
+
+// @public
+export interface UsersEntityAPIsApiPatchEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly jsonApiUserPatchDocument: JsonApiUserPatchDocument;
+}
+
+// @public
+export interface UsersEntityAPIsApiUpdateEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"userGroups" | "ALL">;
+    readonly jsonApiUserInDocument: JsonApiUserInDocument;
+}
+
+// @public
+export class UserSettingsApi extends MetadataBaseApi implements UserSettingsApiInterface {
+    // (undocumented)
+    createEntityUserSettings(requestParameters: UserSettingsApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument>>;
+    // (undocumented)
+    deleteEntityUserSettings(requestParameters: UserSettingsApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    getAllEntitiesUserSettings(requestParameters: UserSettingsApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList>>;
+    // (undocumented)
+    getEntityUserSettings(requestParameters: UserSettingsApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument>>;
+    // (undocumented)
+    updateEntityUserSettings(requestParameters: UserSettingsApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument>>;
+}
+
+// @public
+export const UserSettingsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUserSettings: (userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserSettings: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserSettings: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserSettings: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserSettings: (userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface UserSettingsApiCreateEntityUserSettingsRequest {
+    readonly jsonApiUserSettingInDocument: JsonApiUserSettingInDocument;
+    readonly userId: string;
+}
+
+// @public
+export interface UserSettingsApiDeleteEntityUserSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export const UserSettingsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityUserSettings(requestParameters: UserSettingsApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
+    deleteEntityUserSettings(requestParameters: UserSettingsApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesUserSettings(requestParameters: UserSettingsApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutList>;
+    getEntityUserSettings(requestParameters: UserSettingsApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
+    updateEntityUserSettings(requestParameters: UserSettingsApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserSettingOutDocument>;
+};
+
+// @public
+export const UserSettingsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
+    deleteEntityUserSettings(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesUserSettings(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutList>>;
+    getEntityUserSettings(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
+    updateEntityUserSettings(userId: string, id: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserSettingOutDocument>>;
+};
+
+// @public
+export interface UserSettingsApiGetAllEntitiesUserSettingsRequest {
+    readonly filter?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly userId: string;
+}
+
+// @public
+export interface UserSettingsApiGetEntityUserSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly userId: string;
+}
+
+// @public
+export interface UserSettingsApiInterface {
+    // (undocumented)
+    createEntityUserSettings(requestParameters: UserSettingsApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
+    // (undocumented)
+    deleteEntityUserSettings(requestParameters: UserSettingsApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesUserSettings(requestParameters: UserSettingsApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutList>;
+    // (undocumented)
+    getEntityUserSettings(requestParameters: UserSettingsApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
+    // (undocumented)
+    updateEntityUserSettings(requestParameters: UserSettingsApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
+}
+
+// @public
+export interface UserSettingsApiUpdateEntityUserSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiUserSettingInDocument: JsonApiUserSettingInDocument;
+    readonly userId: string;
+}
+
 // @public (undocumented)
 export const ValidateRelationsHeader: {
     "X-GDC-VALIDATE-RELATIONS": string;
 };
+
+// @public
+export class VisualizationObjectApi extends MetadataBaseApi implements VisualizationObjectApiInterface {
+    // (undocumented)
+    createEntityVisualizationObjects(requestParameters: VisualizationObjectApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    deleteEntityVisualizationObjects(requestParameters: VisualizationObjectApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesVisualizationObjects(requestParameters: VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList>>;
+    // (undocumented)
+    getEntityVisualizationObjects(requestParameters: VisualizationObjectApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    patchEntityVisualizationObjects(requestParameters: VisualizationObjectApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    updateEntityVisualizationObjects(requestParameters: VisualizationObjectApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+}
+
+// @public
+export const VisualizationObjectApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesVisualizationObjects: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface VisualizationObjectApiCreateEntityVisualizationObjectsRequest {
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface VisualizationObjectApiDeleteEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const VisualizationObjectApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityVisualizationObjects(requestParameters: VisualizationObjectApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    deleteEntityVisualizationObjects(requestParameters: VisualizationObjectApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesVisualizationObjects(requestParameters: VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getEntityVisualizationObjects(requestParameters: VisualizationObjectApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityVisualizationObjects(requestParameters: VisualizationObjectApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityVisualizationObjects(requestParameters: VisualizationObjectApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+};
+
+// @public
+export const VisualizationObjectApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    deleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesVisualizationObjects(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutList>>;
+    getEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    patchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    updateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+};
+
+// @public
+export interface VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface VisualizationObjectApiGetEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface VisualizationObjectApiInterface {
+    // (undocumented)
+    createEntityVisualizationObjects(requestParameters: VisualizationObjectApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    deleteEntityVisualizationObjects(requestParameters: VisualizationObjectApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesVisualizationObjects(requestParameters: VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    // (undocumented)
+    getEntityVisualizationObjects(requestParameters: VisualizationObjectApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    patchEntityVisualizationObjects(requestParameters: VisualizationObjectApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    updateEntityVisualizationObjects(requestParameters: VisualizationObjectApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+}
+
+// @public
+export interface VisualizationObjectApiPatchEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface VisualizationObjectApiUpdateEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
 
 // @public (undocumented)
 export namespace VisualizationObjectModelV1 {
@@ -8357,5 +12523,1464 @@ export const WorkspaceIdentifierTypeEnum: {
 
 // @public (undocumented)
 export type WorkspaceIdentifierTypeEnum = typeof WorkspaceIdentifierTypeEnum[keyof typeof WorkspaceIdentifierTypeEnum];
+
+// @public
+export class WorkspaceObjectControllerApi extends MetadataBaseApi implements WorkspaceObjectControllerApiInterface {
+    // (undocumented)
+    createEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    createEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    createEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    createEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    // (undocumented)
+    createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    // (undocumented)
+    deleteEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList>>;
+    // (undocumented)
+    getAllEntitiesAttributes(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList>>;
+    // (undocumented)
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList>>;
+    // (undocumented)
+    getAllEntitiesDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList>>;
+    // (undocumented)
+    getAllEntitiesDatasets(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList>>;
+    // (undocumented)
+    getAllEntitiesFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList>>;
+    // (undocumented)
+    getAllEntitiesFilterContexts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList>>;
+    // (undocumented)
+    getAllEntitiesLabels(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList>>;
+    // (undocumented)
+    getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList>>;
+    // (undocumented)
+    getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList>>;
+    // (undocumented)
+    getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList>>;
+    // (undocumented)
+    getEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    getEntityAttributes(requestParameters: WorkspaceObjectControllerApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument>>;
+    // (undocumented)
+    getEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    getEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    getEntityDatasets(requestParameters: WorkspaceObjectControllerApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument>>;
+    // (undocumented)
+    getEntityFacts(requestParameters: WorkspaceObjectControllerApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument>>;
+    // (undocumented)
+    getEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    getEntityLabels(requestParameters: WorkspaceObjectControllerApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument>>;
+    // (undocumented)
+    getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    // (undocumented)
+    patchEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    patchEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    patchEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    patchEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    // (undocumented)
+    patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    // (undocumented)
+    updateEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument>>;
+    // (undocumented)
+    updateEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    updateEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument>>;
+    // (undocumented)
+    updateEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument>>;
+    // (undocumented)
+    updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument>>;
+    // (undocumented)
+    updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument>>;
+    // (undocumented)
+    updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument>>;
+    // (undocumented)
+    updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument>>;
+    // (undocumented)
+    updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+}
+
+// @public
+export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityAnalyticalDashboards: (workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityCustomApplicationSettings: (workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityDashboardPlugins: (workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityFilterContexts: (workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityMetrics: (workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityUserDataFilters: (workspaceId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaceDataFilters: (workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaceSettings: (workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityCustomApplicationSettings: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityDashboardPlugins: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesAnalyticalDashboards: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesAttributes: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesCustomApplicationSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDashboardPlugins: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesDatasets: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesFacts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesFilterContexts: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesLabels: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesMetrics: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesUserDataFilters: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesVisualizationObjects: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaceDataFilterSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaceDataFilters: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaceSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAttributes: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityCustomApplicationSettings: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDashboardPlugins: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityDatasets: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityFacts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityLabels: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityMetrics: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityUserDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityVisualizationObjects: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaceDataFilterSettings: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityCustomApplicationSettings: (workspaceId: string, objectId: string, jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityDashboardPlugins: (workspaceId: string, objectId: string, jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityAnalyticalDashboards: (workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityCustomApplicationSettings: (workspaceId: string, objectId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityDashboardPlugins: (workspaceId: string, objectId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityUserDataFilters: (workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityVisualizationObjects: (workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityAnalyticalDashboardsRequest {
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityCustomApplicationSettingsRequest {
+    readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityDashboardPluginsRequest {
+    readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityFilterContextsRequest {
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityMetricsRequest {
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest {
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest {
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest {
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest {
+    readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityMetricsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    createEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    createEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    createEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    deleteEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
+    getAllEntitiesAttributes(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAttributeOutList>;
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
+    getAllEntitiesDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutList>;
+    getAllEntitiesDatasets(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDatasetOutList>;
+    getAllEntitiesFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFactOutList>;
+    getAllEntitiesFilterContexts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutList>;
+    getAllEntitiesLabels(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiLabelOutList>;
+    getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutList>;
+    getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutList>;
+    getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
+    getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+    getEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    getEntityAttributes(requestParameters: WorkspaceObjectControllerApiGetEntityAttributesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAttributeOutDocument>;
+    getEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    getEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    getEntityDatasets(requestParameters: WorkspaceObjectControllerApiGetEntityDatasetsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDatasetOutDocument>;
+    getEntityFacts(requestParameters: WorkspaceObjectControllerApiGetEntityFactsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFactOutDocument>;
+    getEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    getEntityLabels(requestParameters: WorkspaceObjectControllerApiGetEntityLabelsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiLabelOutDocument>;
+    getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    patchEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    patchEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    patchEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    patchEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    updateEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    updateEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    updateEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    updateEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiFilterContextOutDocument>;
+    updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiMetricOutDocument>;
+    updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+};
+
+// @public
+export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityAnalyticalDashboards(workspaceId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    createEntityCustomApplicationSettings(workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    createEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    createEntityFilterContexts(workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    createEntityMetrics(workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    createEntityUserDataFilters(workspaceId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    createEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    createEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    deleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityFilterContexts(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutList>>;
+    getAllEntitiesAttributes(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutList>>;
+    getAllEntitiesCustomApplicationSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutList>>;
+    getAllEntitiesDashboardPlugins(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutList>>;
+    getAllEntitiesDatasets(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutList>>;
+    getAllEntitiesFacts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutList>>;
+    getAllEntitiesFilterContexts(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutList>>;
+    getAllEntitiesLabels(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutList>>;
+    getAllEntitiesMetrics(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutList>>;
+    getAllEntitiesUserDataFilters(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutList>>;
+    getAllEntitiesVisualizationObjects(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutList>>;
+    getAllEntitiesWorkspaceDataFilterSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>>;
+    getAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutList>>;
+    getAllEntitiesWorkspaceSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutList>>;
+    getEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    getEntityAttributes(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets" | "labels" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutDocument>>;
+    getEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    getEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    getEntityDatasets(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "references")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDatasetOutDocument>>;
+    getEntityFacts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "ALL" | "datasets")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFactOutDocument>>;
+    getEntityFilterContexts(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    getEntityLabels(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutDocument>>;
+    getEntityMetrics(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    getEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    getEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    getEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilter" | "ALL" | "workspaceDataFilters")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>>;
+    getEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    getEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    patchEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    patchEntityCustomApplicationSettings(workspaceId: string, objectId: string, jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    patchEntityDashboardPlugins(workspaceId: string, objectId: string, jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    patchEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    patchEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    patchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    patchEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    patchEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    updateEntityAnalyticalDashboards(workspaceId: string, objectId: string, jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument, filter?: string | undefined, include?: ("ALL" | "datasets" | "labels" | "visualizationObjects" | "analyticalDashboards" | "metrics" | "filterContexts" | "dashboardPlugins")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    updateEntityCustomApplicationSettings(workspaceId: string, objectId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    updateEntityDashboardPlugins(workspaceId: string, objectId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
+    updateEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string | undefined, include?: ("attributes" | "ALL" | "datasets" | "labels")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
+    updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    updateEntityUserDataFilters(workspaceId: string, objectId: string, jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument, filter?: string | undefined, include?: ("user" | "attributes" | "facts" | "userGroup" | "ALL" | "datasets" | "labels" | "metrics" | "users" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDataFilterOutDocument>>;
+    updateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string | undefined, include?: ("attributes" | "facts" | "ALL" | "datasets" | "labels" | "metrics")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
+    updateEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string | undefined, include?: ("workspaceDataFilterSettings" | "ALL" | "filterSettings")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>>;
+    updateEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+};
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesAttributesRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesDatasetsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesFactsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "dataset" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesLabelsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "attribute" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityAttributesRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityDatasetsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityFactsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"datasets" | "dataset" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityLabelsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "attribute" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiInterface {
+    // (undocumented)
+    createEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    createEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    createEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    createEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    // (undocumented)
+    createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    // (undocumented)
+    deleteEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
+    // (undocumented)
+    getAllEntitiesAttributes(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAttributeOutList>;
+    // (undocumented)
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
+    // (undocumented)
+    getAllEntitiesDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutList>;
+    // (undocumented)
+    getAllEntitiesDatasets(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
+    // (undocumented)
+    getAllEntitiesFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutList>;
+    // (undocumented)
+    getAllEntitiesFilterContexts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutList>;
+    // (undocumented)
+    getAllEntitiesLabels(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
+    // (undocumented)
+    getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
+    // (undocumented)
+    getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutList>;
+    // (undocumented)
+    getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+    // (undocumented)
+    getEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    getEntityAttributes(requestParameters: WorkspaceObjectControllerApiGetEntityAttributesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAttributeOutDocument>;
+    // (undocumented)
+    getEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    getEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    getEntityDatasets(requestParameters: WorkspaceObjectControllerApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
+    // (undocumented)
+    getEntityFacts(requestParameters: WorkspaceObjectControllerApiGetEntityFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutDocument>;
+    // (undocumented)
+    getEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    getEntityLabels(requestParameters: WorkspaceObjectControllerApiGetEntityLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutDocument>;
+    // (undocumented)
+    getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    // (undocumented)
+    getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    // (undocumented)
+    getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    // (undocumented)
+    patchEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    patchEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    patchEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    patchEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    // (undocumented)
+    patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    // (undocumented)
+    updateEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
+    // (undocumented)
+    updateEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    updateEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
+    // (undocumented)
+    updateEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
+    // (undocumented)
+    updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
+    // (undocumented)
+    updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
+    // (undocumented)
+    updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    // (undocumented)
+    updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+    // (undocumented)
+    updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiMetricPatchDocument: JsonApiMetricPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterPatchDocument: JsonApiUserDataFilterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityAnalyticalDashboardsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
+    readonly jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityDashboardPluginsRequest {
+    readonly filter?: string;
+    readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityFilterContextsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
+    readonly jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityMetricsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"users" | "userGroups" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "user" | "userGroup" | "ALL">;
+    readonly jsonApiUserDataFilterInDocument: JsonApiUserDataFilterInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest {
+    readonly filter?: string;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+    readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+    readonly jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export class WorkspacesDeclarativeAPIsApi extends MetadataBaseApi implements WorkspacesDeclarativeAPIsApiInterface {
+    getWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceModel>>;
+    getWorkspacesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaces>>;
+    putWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    setWorkspacesLayout(requestParameters: WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+}
+
+// @public
+export const WorkspacesDeclarativeAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getWorkspaceLayout: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getWorkspacesLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    putWorkspaceLayout: (workspaceId: string, declarativeWorkspaceModel: DeclarativeWorkspaceModel, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setWorkspacesLayout: (declarativeWorkspaces: DeclarativeWorkspaces, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const WorkspacesDeclarativeAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeWorkspaceModel>;
+    getWorkspacesLayout(options?: AxiosRequestConfig | undefined): AxiosPromise<DeclarativeWorkspaces>;
+    putWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    setWorkspacesLayout(requestParameters: WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export const WorkspacesDeclarativeAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getWorkspaceLayout(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspaceModel>>;
+    getWorkspacesLayout(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspaces>>;
+    putWorkspaceLayout(workspaceId: string, declarativeWorkspaceModel: DeclarativeWorkspaceModel, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    setWorkspacesLayout(declarativeWorkspaces: DeclarativeWorkspaces, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+};
+
+// @public
+export interface WorkspacesDeclarativeAPIsApiGetWorkspaceLayoutRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesDeclarativeAPIsApiInterface {
+    getWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspaceModel>;
+    getWorkspacesLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspaces>;
+    putWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setWorkspacesLayout(requestParameters: WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface WorkspacesDeclarativeAPIsApiPutWorkspaceLayoutRequest {
+    readonly declarativeWorkspaceModel: DeclarativeWorkspaceModel;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest {
+    readonly declarativeWorkspaces: DeclarativeWorkspaces;
+}
+
+// @public
+export class WorkspacesEntityAPIsApi extends MetadataBaseApi implements WorkspacesEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+    // (undocumented)
+    deleteEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesWorkspaces(requestParameters?: WorkspacesEntityAPIsApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList>>;
+    // (undocumented)
+    getEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+    // (undocumented)
+    patchEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+    // (undocumented)
+    updateEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument>>;
+}
+
+// @public
+export const WorkspacesEntityAPIsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityWorkspaces: (jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWorkspaces: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaces: (filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaces: (id: string, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWorkspaces: (id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWorkspaces: (id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest {
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const WorkspacesEntityAPIsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    deleteEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutList>;
+    getEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    patchEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    updateEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceOutDocument>;
+};
+
+// @public
+export const WorkspacesEntityAPIsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    deleteEntityWorkspaces(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesWorkspaces(filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutList>>;
+    getEntityWorkspaces(id: string, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    patchEntityWorkspaces(id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+    updateEntityWorkspaces(id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutDocument>>;
+};
+
+// @public
+export interface WorkspacesEntityAPIsApiGetAllEntitiesWorkspacesRequest {
+    readonly filter?: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface WorkspacesEntityAPIsApiGetEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
+}
+
+// @public
+export interface WorkspacesEntityAPIsApiInterface {
+    // (undocumented)
+    createEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    // (undocumented)
+    deleteEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
+    // (undocumented)
+    getEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    // (undocumented)
+    patchEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    // (undocumented)
+    updateEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+}
+
+// @public
+export interface WorkspacesEntityAPIsApiPatchEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument;
+}
+
+// @public
+export interface WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<"workspaces" | "parent" | "ALL">;
+    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+}
+
+// @public
+export class WorkspacesSettingsApi extends MetadataBaseApi implements WorkspacesSettingsApiInterface {
+    // (undocumented)
+    createEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    createEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    // (undocumented)
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    deleteEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>>;
+    // (undocumented)
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList>>;
+    // (undocumented)
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList>>;
+    // (undocumented)
+    getEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    getEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    // (undocumented)
+    patchEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    patchEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    // (undocumented)
+    updateEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument>>;
+    // (undocumented)
+    updateEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument>>;
+    workspaceResolveAllSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[]>>;
+    workspaceResolveSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[]>>;
+}
+
+// @public
+export const WorkspacesSettingsApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityCustomApplicationSettings: (workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityWorkspaceSettings: (workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityCustomApplicationSettings: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesCustomApplicationSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesWorkspaceSettings: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityCustomApplicationSettings: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityCustomApplicationSettings: (workspaceId: string, objectId: string, jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityCustomApplicationSettings: (workspaceId: string, objectId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityWorkspaceSettings: (workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    workspaceResolveAllSettings: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    workspaceResolveSettings: (workspaceId: string, resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface WorkspacesSettingsApiCreateEntityCustomApplicationSettingsRequest {
+    readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest {
+    readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export const WorkspacesSettingsApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    createEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    deleteEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+    getEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    getEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    patchEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    patchEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    updateEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    updateEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    workspaceResolveAllSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<Array<ResolvedSetting>>;
+    workspaceResolveSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<Array<ResolvedSetting>>;
+};
+
+// @public
+export const WorkspacesSettingsApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    createEntityCustomApplicationSettings(workspaceId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    createEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    deleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    deleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    getAllEntitiesCustomApplicationSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutList>>;
+    getAllEntitiesWorkspaceSettings(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutList>>;
+    getEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    getEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    patchEntityCustomApplicationSettings(workspaceId: string, objectId: string, jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    patchEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    updateEntityCustomApplicationSettings(workspaceId: string, objectId: string, jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>>;
+    updateEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>>;
+    workspaceResolveAllSettings(workspaceId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<ResolvedSetting>>>;
+    workspaceResolveSettings(workspaceId: string, resolveSettingsRequest: ResolveSettingsRequest, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<ResolvedSetting>>>;
+};
+
+// @public
+export interface WorkspacesSettingsApiGetAllEntitiesCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspacesSettingsApiGetAllEntitiesWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspacesSettingsApiGetEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspacesSettingsApiGetEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspacesSettingsApiInterface {
+    // (undocumented)
+    createEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    createEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    // (undocumented)
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // (undocumented)
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
+    // (undocumented)
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+    // (undocumented)
+    getEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    getEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    // (undocumented)
+    patchEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    patchEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    // (undocumented)
+    updateEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+    // (undocumented)
+    updateEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    workspaceResolveAllSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+    workspaceResolveSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+}
+
+// @public
+export interface WorkspacesSettingsApiPatchEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiPatchEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiUpdateEntityCustomApplicationSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiUpdateEntityWorkspaceSettingsRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspacesSettingsApiWorkspaceResolveSettingsRequest {
+    readonly resolveSettingsRequest: ResolveSettingsRequest;
+    readonly workspaceId: string;
+}
 
 ```

@@ -25,6 +25,7 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
+                [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -36,6 +37,7 @@ describe("static features", () => {
             enableMetricSqlAndDataExplain: true,
             enableLongitudeAndLatitudeLabels: true,
             enableSqlDatasets: true,
+            enableCompositeGrain: true,
         });
     });
 
@@ -51,6 +53,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
+                    [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
                 },
                 "beta",
             ),
@@ -64,6 +67,7 @@ describe("static features", () => {
             enableMetricSqlAndDataExplain: true,
             enableLongitudeAndLatitudeLabels: true,
             enableSqlDatasets: true,
+            enableCompositeGrain: true,
         });
     });
 });

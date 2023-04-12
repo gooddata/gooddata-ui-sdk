@@ -128,6 +128,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableSingleSelectionFilter,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableCompositeGrain,
+            "enableCompositeGrain",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCompositeGrain,
+        ),
     };
 }
 

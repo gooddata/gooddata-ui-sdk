@@ -38,6 +38,8 @@ export enum TigerFeaturesNames {
     EnableFunnelChart = "enableFunnelChart",
     //boolean + possible values: enabled, disabled
     EnablePyramidChart = "enablePyramidChart",
+    //boolean + possible values: enabled, disabled
+    EnableCompositeGrain = "enableCompositeGrain",
 }
 
 export type ITigerFeatureFlags = {
@@ -57,6 +59,7 @@ export type ITigerFeatureFlags = {
     enableSingleSelectionFilter: typeof FeatureFlagsValues["enableSingleSelectionFilter"][number];
     enableFunnelChart: typeof FeatureFlagsValues["enableFunnelChart"][number];
     enablePyramidChart: typeof FeatureFlagsValues["enablePyramidChart"][number];
+    enableCompositeGrain: typeof FeatureFlagsValues["enableCompositeGrain"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -76,6 +79,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSingleSelectionFilter: false,
     enableFunnelChart: false,
     enablePyramidChart: false,
+    enableCompositeGrain: false,
 };
 
 export const FeatureFlagsValues = {
@@ -99,4 +103,5 @@ export const FeatureFlagsValues = {
     enableSingleSelectionFilter: [true, false] as const,
     enableFunnelChart: [true, false] as const,
     enablePyramidChart: [true, false] as const,
+    enableCompositeGrain: [true, false] as const,
 };
