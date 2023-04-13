@@ -12,7 +12,7 @@ default:
 
 variables:
   AWS_ECR_URL: '441851189095.dkr.ecr.eu-central-1.amazonaws.com'
-  BUILD_IMAGE_VERSION: "3.1.0"
+  BUILD_IMAGE_VERSION: "3.3.1"
 
 stages:
   - build
@@ -34,8 +34,9 @@ stages:
 .with-buildx:
   before_script:
     - mkdir -p $HOME/.docker
-    - cp ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/Dockerfile $HOME/.docker/config.json
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cp $DOCKERCONFIG $HOME/.docker/config.json
+    - docker login -u $DOCKER_BUILDER_USER -p $DOCKER_BUILDER_TOKEN $CI_REGISTRY
+    - docker login -u $DOCKER_BUILDER_USER -p $DOCKER_BUILDER_TOKEN $CI_DEPENDENCY_PROXY_SERVER
     - docker buildx create --use --name=eks_builder --platform=linux/amd64,linux/arm64
       --node eks-builder0 --driver=kubernetes
       --driver-opt="namespace=gitlab-managed-apps,nodeselector=role=ci,qemu.install=true,replicas=3"
@@ -43,7 +44,7 @@ stages:
 build-web-components:
   extends:
     - .release
-  image: node:16
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:16
   stage: build
   cache:
     key: build-web-components
@@ -74,6 +75,7 @@ docker-build-web-components:
   script:
     - cd ${CI_PROJECT_DIR}/libs/sdk-ui-web-components
     - docker buildx build --push --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+      --build-arg REPO_PREFIX=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/
       -t $IMAGE_ID -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f Dockerfile .
   dependencies:
     - build-web-components
