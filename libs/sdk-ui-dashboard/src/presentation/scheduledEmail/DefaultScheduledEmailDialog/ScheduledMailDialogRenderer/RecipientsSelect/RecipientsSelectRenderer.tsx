@@ -33,6 +33,8 @@ import {
     getScheduledEmailRecipientDisplayName,
     getScheduledEmailRecipientEmail,
     getScheduledEmailRecipientUniqueIdentifier,
+    splitScheduledEmailRecipients,
+    uniqueScheduledEmailRecipients,
 } from "../../utils/scheduledMailRecipients";
 import { messages } from "../../../../../locales";
 
@@ -451,6 +453,8 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         selectedValues: IScheduleEmailRecipient[],
         actionTypes: ActionMeta<IScheduleEmailRecipient>,
     ): void => {
+        const splittedSelectedValues = splitScheduledEmailRecipients(selectedValues);
+        const newSelectedValues = uniqueScheduledEmailRecipients(splittedSelectedValues);
         const { value, allowEmptySelection } = this.props;
         const { action } = actionTypes;
         if (
@@ -460,7 +464,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             this.props.onChange?.(value);
             return;
         }
-        if (selectedValues === null) {
+        if (newSelectedValues === null) {
             if (allowEmptySelection) {
                 this.props.onChange?.([]);
             } else {
@@ -469,7 +473,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return;
         }
 
-        this.props.onChange?.(selectedValues);
+        this.props.onChange?.(newSelectedValues);
     };
 
     private loadUserListItems = (searchString: string): void => {
