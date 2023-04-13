@@ -91,7 +91,6 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             <EmbedInsightContent
                 integrationDocLink={integrationDocLink}
                 code={code}
-                embedTab={embedTab}
                 embedTypeOptions={embedTypeOptions}
                 onCopyCode={onAreaCopy}
                 openSaveInsightDialog={openSaveInsightDialog}

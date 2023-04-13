@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 
-import { IReactOptions, IWebComponentsOptions, EmbedOptionsType, EmbedType } from "../types";
+import { IReactOptions, IWebComponentsOptions, EmbedOptionsType } from "../types";
 import { EmbedInsightCodeArea } from "./CodeArea";
 
 import { PrepareEnvMessage } from "./PrepareEnvMessage";
@@ -11,7 +11,6 @@ import { WebComponentsOptions } from "./WebComponentsOptions";
 interface IEmbedInsightContentProps {
     integrationDocLink: string;
     embedTypeOptions: EmbedOptionsType;
-    embedTab: EmbedType;
     code: string;
     openSaveInsightDialog: () => void;
     onCopyCode: () => void;
@@ -21,29 +20,25 @@ interface IEmbedInsightContentProps {
  * @internal
  */
 export const EmbedInsightContent: React.FC<IEmbedInsightContentProps> = (props) => {
-    const {
-        integrationDocLink,
-        embedTypeOptions,
-        embedTab,
-        code,
-        openSaveInsightDialog,
-        onCopyCode,
-        onOptionsChange,
-    } = props;
+    const { integrationDocLink, embedTypeOptions, code, openSaveInsightDialog, onCopyCode, onOptionsChange } =
+        props;
+
+    const renderEmbedOptions = useMemo(() => {
+        return embedTypeOptions.type === "react" ? (
+            <ReactOptions option={embedTypeOptions as IReactOptions} onChange={onOptionsChange} />
+        ) : (
+            <WebComponentsOptions
+                option={embedTypeOptions as IWebComponentsOptions}
+                onChange={onOptionsChange}
+            />
+        );
+    }, [embedTypeOptions, onOptionsChange]);
+
     return (
         <div className="embed-insight-dialog-content">
             <PrepareEnvMessage integrationDocLink={integrationDocLink} />
             <div className="embed-insight-dialog-code">
-                <div className="embed-insight-dialog-code-settings">
-                    {embedTab === "react" ? (
-                        <ReactOptions option={embedTypeOptions as IReactOptions} onChange={onOptionsChange} />
-                    ) : (
-                        <WebComponentsOptions
-                            option={embedTypeOptions as IWebComponentsOptions}
-                            onChange={onOptionsChange}
-                        />
-                    )}
-                </div>
+                <div className="embed-insight-dialog-code-settings">{renderEmbedOptions}</div>
                 <div className="embed-insight-dialog-code-wrapper">
                     <EmbedInsightCodeArea
                         code={code}

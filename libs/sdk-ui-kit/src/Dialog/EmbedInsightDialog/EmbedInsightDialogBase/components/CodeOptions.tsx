@@ -47,7 +47,7 @@ export const CodeOptions: React.VFC<ICodeOptionsProps> = (props) => {
             </strong>
 
             <ToggleSwitch
-                id={"display-title"}
+                id={"display-configuration"}
                 className="bottom-space"
                 label={intl.formatMessage({
                     id: "embedInsightDialog.code.options.display.configuration",
