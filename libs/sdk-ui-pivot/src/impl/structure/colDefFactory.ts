@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import findIndex from "lodash/findIndex";
 import {
@@ -51,12 +51,14 @@ function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
     for (const row of rows) {
         const sortProp = getSortProp(state.initialSorts, (s) => attributeSortMatcher(row, s));
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+        const headerName = row.attributeDescriptor.attributeHeader.formOf.name;
 
         const colDef: ColDef = {
             type: ROW_ATTRIBUTE_COLUMN,
             colId: row.id,
             field: row.id,
-            headerName: row.attributeDescriptor.attributeHeader.formOf.name,
+            headerName,
+            headerTooltip: headerName,
             ...cellRendererProp,
             ...sortProp,
         };
@@ -72,15 +74,16 @@ function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
 
 function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef | ColGroupDef {
     const children = createColumnHeadersFromDescriptors(col.children, state);
-
+    const headerName = valueWithEmptyHandling(
+        getMappingHeaderFormattedName(col.header),
+        state.emptyHeaderTitle,
+    );
     if (children.length === 0) {
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
-            headerName: valueWithEmptyHandling(
-                getMappingHeaderFormattedName(col.header),
-                state.emptyHeaderTitle,
-            ),
+            headerName,
+            headerTooltip: headerName,
         };
 
         state.allColDefs.push(colDef);
@@ -90,10 +93,8 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
     } else {
         const colGroup: ColGroupDef = {
             groupId: col.id,
-            headerName: valueWithEmptyHandling(
-                getMappingHeaderFormattedName(col.header),
-                state.emptyHeaderTitle,
-            ),
+            headerName,
+            headerTooltip: headerName,
             children,
         };
 
@@ -112,12 +113,14 @@ function createColumnHeadersFromDescriptors(
     for (const col of cols) {
         switch (col.type) {
             case "rootCol": {
+                const headerName = col.groupingAttributes
+                    .map((attr) => attr.attributeHeader.formOf.name)
+                    .join(COLUMN_GROUPING_DELIMITER);
                 const colDef: ColGroupDef = {
                     groupId: ColumnGroupingDescriptorId,
                     children: createColumnHeadersFromDescriptors(col.children, state),
-                    headerName: col.groupingAttributes
-                        .map((attr) => attr.attributeHeader.formOf.name)
-                        .join(COLUMN_GROUPING_DELIMITER),
+                    headerName,
+                    headerTooltip: headerName,
                 };
 
                 colDefs.push(colDef);
@@ -133,12 +136,13 @@ function createColumnHeadersFromDescriptors(
             case "seriesCol": {
                 const sortProp = getSortProp(state.initialSorts, (s) => measureSortMatcher(col, s));
                 const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
-
+                const headerName = col.seriesDescriptor.measureTitle();
                 const colDef: ColDef = {
                     type: MEASURE_COLUMN,
                     colId: col.id,
                     field: col.id,
-                    headerName: col.seriesDescriptor.measureTitle(),
+                    headerName,
+                    headerTooltip: headerName,
                     ...sortProp,
                     ...cellRendererProp,
                 };
