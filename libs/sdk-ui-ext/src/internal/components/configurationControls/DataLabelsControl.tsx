@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import DropdownControl from "./DropdownControl";
@@ -60,7 +60,7 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                         properties={properties}
                         pushData={pushData}
                         items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
-                        showDisabledMessage={showDisabledMessage}
+                        showDisabledMessage={isTotalsDisabled}
                     />
                 ) : null}
             </div>
