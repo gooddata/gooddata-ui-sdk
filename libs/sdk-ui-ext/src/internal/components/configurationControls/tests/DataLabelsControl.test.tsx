@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
@@ -10,6 +10,8 @@ describe("DataLabelsControl", () => {
     const HIDE_LABEL = "hide";
     const VISIBLE_LABEL = "show";
     const AUTO_LABEL = "auto (default)";
+    const TOTAL_LABELS_TEXT = "Total Labels";
+    const DISABLED_TOOLTIP = "Property is not applicable for this configuration of the insight";
 
     const defaultProps = {
         properties: {},
@@ -93,5 +95,30 @@ describe("DataLabelsControl", () => {
                 expect(buttons[1]).toHaveTextContent(visibleValueToText(totalsVisible));
             },
         );
+
+        it("should render total labels dropdown as disabled when isTotalsDisabled is true", () => {
+            createComponent({
+                isTotalsDisabled: true,
+                enableSeparateTotalLabels: true,
+            });
+
+            const buttons = screen.getAllByRole("button");
+            expect(buttons[0]).not.toHaveClass("disabled");
+            expect(buttons[1]).toHaveClass("disabled");
+        });
+
+        it("should show the tooltip while hover on the disabled total labels control", () => {
+            jest.useFakeTimers();
+            createComponent({
+                isTotalsDisabled: true,
+                enableSeparateTotalLabels: true,
+            });
+
+            fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT));
+            jest.advanceTimersByTime(500);
+            expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();
+
+            jest.useRealTimers();
+        });
     });
 });
