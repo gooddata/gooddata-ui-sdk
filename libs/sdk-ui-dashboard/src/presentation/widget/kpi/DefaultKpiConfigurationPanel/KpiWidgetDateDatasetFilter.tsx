@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useEffect } from "react";
 import { IKpiWidget, widgetRef } from "@gooddata/sdk-model";
 
@@ -17,6 +17,7 @@ import {
     useDashboardSelector,
 } from "../../../../model";
 import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
 
 export const KpiWidgetDateDatasetFilter: React.FC<{
     widget: IKpiWidget;
@@ -62,7 +63,9 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
         if (isWidgetDateDatasetAutoSelect) {
             preselectDateDataset(ref, "default");
         }
-    }, [isWidgetDateDatasetAutoSelect, dispatch, ref, preselectDateDataset]);
+        // We need to safely serialize ref here to avoid recalling the effect
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isWidgetDateDatasetAutoSelect, safeSerializeObjRef(ref), preselectDateDataset]);
 
     const { handleDateDatasetChanged, shouldOpenDateDatasetPicker } = useDateDatasetFilter(
         result?.dateDatasets,
