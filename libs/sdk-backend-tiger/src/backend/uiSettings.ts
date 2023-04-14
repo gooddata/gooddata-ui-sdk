@@ -50,7 +50,7 @@ export const DefaultUiSettings: ISettings = {
     enableKPIDashboardDrillToInsight: true,
     enableKPIDashboardDrillToURL: true,
     enableKPIDashboardImplicitDrillDown: false,
-    enableKPIDashboardDrillFromAttribute: false,
+    enableKPIDashboardDrillFromAttribute: true,
     enableDrilledInsightExport: true,
     enableFilterValuesResolution: false,
     enableClickableAttributeURL: true,
