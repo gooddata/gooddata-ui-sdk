@@ -12,10 +12,26 @@ import {
 describe("dashboard export utils", () => {
     describe("sanitizeFiltersForExport", () => {
         it("should leave valid attribute filter as it is", () => {
-            expect(sanitizeFiltersForExport([attributeFilter, singleSelectionAttributeFilter])).toEqual([
-                attributeFilter,
-                singleSelectionAttributeFilter,
-            ]);
+            expect(sanitizeFiltersForExport([attributeFilter])).toEqual([attributeFilter]);
+        });
+
+        it("should remove selection mode from attribute filters", () => {
+            expect(
+                sanitizeFiltersForExport([
+                    {
+                        attributeFilter: {
+                            ...attributeFilter.attributeFilter,
+                            selectionMode: "multi",
+                        },
+                    },
+                    {
+                        attributeFilter: {
+                            ...singleSelectionAttributeFilter.attributeFilter,
+                            selectionMode: "single",
+                        },
+                    },
+                ]),
+            ).toEqual([attributeFilter, singleSelectionAttributeFilter]);
         });
 
         it("should remove localIdentifier and filterElementsBy props from attribute filter", () => {

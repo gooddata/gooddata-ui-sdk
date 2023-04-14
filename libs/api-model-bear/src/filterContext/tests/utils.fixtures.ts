@@ -1,7 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
 import { GdcFilterContext } from "../GdcFilterContext";
+import IAttributeFilter = GdcFilterContext.IAttributeFilter;
+import IDateFilter = GdcFilterContext.IDateFilter;
 
-export const relativeDateFilter: GdcFilterContext.FilterContextItem = {
+export const relativeDateFilter: IDateFilter = {
     dateFilter: {
         type: "relative",
         from: "-11",
@@ -10,7 +12,7 @@ export const relativeDateFilter: GdcFilterContext.FilterContextItem = {
     },
 };
 
-export const absoluteDateFilter: GdcFilterContext.FilterContextItem = {
+export const absoluteDateFilter: IDateFilter = {
     dateFilter: {
         type: "absolute",
         from: "2019-08-06",
@@ -19,7 +21,7 @@ export const absoluteDateFilter: GdcFilterContext.FilterContextItem = {
     },
 };
 
-export const attributeFilter: GdcFilterContext.FilterContextItem = {
+export const attributeFilter: IAttributeFilter = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
@@ -27,16 +29,15 @@ export const attributeFilter: GdcFilterContext.FilterContextItem = {
     },
 };
 
-export const singleSelectionAttributeFilter: GdcFilterContext.FilterContextItem = {
+export const singleSelectionAttributeFilter: IAttributeFilter = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
         attributeElements: ["/gdc/md/testProjectId/obj/750"],
-        selectionMode: "single",
     },
 };
 
-export const dependentAttributeFilter: GdcFilterContext.FilterContextItem = {
+export const dependentAttributeFilter: IAttributeFilter = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
@@ -53,7 +54,7 @@ export const dependentAttributeFilter: GdcFilterContext.FilterContextItem = {
     },
 };
 
-export const dateFilterWithUndefinedRange: GdcFilterContext.FilterContextItem = {
+export const dateFilterWithUndefinedRange: IDateFilter = {
     dateFilter: {
         type: "relative",
         from: undefined,
