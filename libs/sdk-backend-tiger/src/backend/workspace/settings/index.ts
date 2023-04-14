@@ -10,7 +10,7 @@ import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types";
 import { TigerFeaturesService, pickContext } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter";
-import { TigerSettingsService } from "../../settings";
+import { TigerSettingsService, mapTypeToKey } from "../../settings";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -104,7 +104,7 @@ async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace:
     return data.reduce((result: ISettings, setting) => {
         return {
             ...result,
-            [setting.id]: unwrapSettingContent(setting.content),
+            [mapTypeToKey(setting.type, setting.id)]: unwrapSettingContent(setting.content),
         };
     }, {});
 }

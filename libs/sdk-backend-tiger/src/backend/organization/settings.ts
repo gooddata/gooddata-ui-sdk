@@ -4,7 +4,7 @@ import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter";
-import { TigerSettingsService } from "../settings";
+import { TigerSettingsService, mapTypeToKey } from "../settings";
 
 export class OrganizationSettingsService
     extends TigerSettingsService<ISettings>
@@ -26,7 +26,7 @@ export class OrganizationSettingsService
         return data.data.reduce((result: ISettings, setting) => {
             return {
                 ...result,
-                [setting.id]: unwrapSettingContent(setting.attributes?.content),
+                [mapTypeToKey(setting.type, setting.id)]: unwrapSettingContent(setting.attributes?.content),
             };
         }, {});
     }
