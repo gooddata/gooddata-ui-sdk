@@ -27,7 +27,7 @@ function sanitizeAttributeFilter(
     filter: GdcFilterContext.IAttributeFilter,
 ): GdcFilterContext.IAttributeFilter {
     const {
-        attributeFilter: { displayForm, negativeSelection, attributeElements, selectionMode },
+        attributeFilter: { displayForm, negativeSelection, attributeElements },
     } = filter;
 
     return {
@@ -35,7 +35,6 @@ function sanitizeAttributeFilter(
             displayForm,
             negativeSelection,
             attributeElements,
-            selectionMode,
         },
     };
 }
