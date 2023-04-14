@@ -5,7 +5,7 @@ import { ISettings } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types";
 import { TigerFeaturesService } from "../features";
 import { DefaultUserSettings } from "../uiSettings";
-import { TigerSettingsService } from "../settings";
+import { TigerSettingsService, mapTypeToKey } from "../settings";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter";
 
 export class TigerUserSettingsService
@@ -24,7 +24,7 @@ export class TigerUserSettingsService
             const resolvedSettings = data.reduce(
                 (result: ISettings, setting) => ({
                     ...result,
-                    [setting.id]: unwrapSettingContent(setting.content),
+                    [mapTypeToKey(setting.type, setting.id)]: unwrapSettingContent(setting.content),
                 }),
                 {},
             );
