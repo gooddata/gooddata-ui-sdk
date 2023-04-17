@@ -1,6 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
+import { ISettings } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
 
 const selectSelf = createSelector(
@@ -41,7 +42,7 @@ export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectSettings = createSelector(selectConfig, (state) => {
+export const selectSettings: DashboardSelector<ISettings> = createSelector(selectConfig, (state) => {
     return state.settings ?? undefined;
 });
 

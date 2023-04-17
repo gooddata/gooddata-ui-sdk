@@ -1,18 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap";
+import {
+    IAttributeDisplayFormMetadataObject,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+} from "@gooddata/sdk-model";
 
 import {
     CatalogDateAttributeWithDataset,
     newCatalogDateAttributeWithDatasetMap,
 } from "../../../_staging/catalog/dateAttributeWithDatasetMap";
 import {
+    ObjRefMap,
     newCatalogAttributeMap,
     newCatalogDateDatasetMap,
     newCatalogMeasureMap,
 } from "../../../_staging/metadata/objRefMap";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap";
 import isEmpty from "lodash/isEmpty";
 import negate from "lodash/negate";
@@ -25,9 +31,12 @@ const selectSelf = createSelector(
 /**
  * @public
  */
-export const selectCatalogAttributes = createSelector(selectSelf, (state) => {
-    return state.attributes ?? [];
-});
+export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.attributes ?? [];
+    },
+);
 
 /**
  * @alpha
@@ -121,7 +130,9 @@ export const selectAllCatalogDateDatasetsMap = createSelector(
  *
  * @alpha
  */
-export const selectAllCatalogDisplayFormsMap = createSelector(
+export const selectAllCatalogDisplayFormsMap: DashboardSelector<
+    ObjRefMap<IAttributeDisplayFormMetadataObject>
+> = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
         return createDisplayFormMap(attributes, dateDatasets, capabilities.hasTypeScopedIdentifiers);
@@ -135,7 +146,9 @@ export const selectAllCatalogDisplayFormsMap = createSelector(
  * @remarks see `isCatalogAttribute` guard; this can be used to determine type of attribute
  * @alpha
  */
-export const selectAllCatalogAttributesMap = createSelector(
+export const selectAllCatalogAttributesMap: DashboardSelector<
+    ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>
+> = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
         const dateAttributes = flatMap(dateDatasets, (d) => d.dateAttributes);

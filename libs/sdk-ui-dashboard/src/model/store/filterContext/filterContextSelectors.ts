@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
 import {
     areObjRefsEqual,
@@ -12,8 +12,9 @@ import {
     isDashboardDateFilter,
     uriRef,
     idRef,
+    IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
-import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
+import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 import { createMemoizedSelector } from "../_infra/selectors";
 import compact from "lodash/compact";
 
@@ -138,7 +139,9 @@ export const selectAttributeFilterDisplayForms = createSelector(selectSelf, (fil
  *
  * @internal
  */
-export const selectAttributeFilterDisplayFormsMap = createSelector(selectSelf, (filterContextState) => {
+export const selectAttributeFilterDisplayFormsMap: DashboardSelector<
+    ObjRefMap<IAttributeDisplayFormMetadataObject>
+> = createSelector(selectSelf, (filterContextState) => {
     invariant(
         filterContextState.attributeFilterDisplayForms,
         "attempting to access uninitialized filter context state",
@@ -156,7 +159,7 @@ export const selectAttributeFilterDisplayFormsMap = createSelector(selectSelf, (
  *
  * @public
  */
-export const selectFilterContextFilters = createSelector(
+export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]> = createSelector(
     selectFilterContextDefinition,
     (filterContext): FilterContextItem[] => filterContext.filters,
 );
@@ -170,10 +173,10 @@ export const selectFilterContextFilters = createSelector(
  *
  * @public
  */
-export const selectFilterContextAttributeFilters = createSelector(
-    selectFilterContextFilters,
-    (filters): IDashboardAttributeFilter[] => filters.filter(isDashboardAttributeFilter),
-);
+export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]> =
+    createSelector(selectFilterContextFilters, (filters): IDashboardAttributeFilter[] =>
+        filters.filter(isDashboardAttributeFilter),
+    );
 
 /**
  * This selector returns dashboard's filter context date filter.
@@ -184,10 +187,10 @@ export const selectFilterContextAttributeFilters = createSelector(
  *
  * @public
  */
-export const selectFilterContextDateFilter = createSelector(
-    selectFilterContextFilters,
-    (filters): IDashboardDateFilter | undefined => filters.find(isDashboardDateFilter),
-);
+export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined> =
+    createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter | undefined =>
+        filters.find(isDashboardDateFilter),
+    );
 
 /**
  * Creates a selector for selecting attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
@@ -227,7 +230,9 @@ export const selectFilterContextAttributeFilterByDisplayForm: (
  *
  * @public
  */
-export const selectFilterContextAttributeFilterByLocalId = createMemoizedSelector((localId: string) =>
+export const selectFilterContextAttributeFilterByLocalId: (
+    localId: string,
+) => DashboardSelector<IDashboardAttributeFilter | undefined> = createMemoizedSelector((localId: string) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
     ),

@@ -10,9 +10,11 @@ import {
     isDashboardAttributeFilter,
     IDashboardDefinition,
     IDashboardObjectIdentity,
+    IDashboard,
+    UriRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import isUndefined from "lodash/isUndefined";
 import { selectBasicLayout } from "../layout/layoutSelectors";
 import {
@@ -50,9 +52,12 @@ export const selectDashboardDescriptor = createSelector(selectSelf, (state) => {
  *
  * @internal
  */
-export const selectPersistedDashboard = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard ?? undefined;
-});
+export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.persistedDashboard ?? undefined;
+    },
+);
 
 /**
  * Selects persisted IFilterContext/ITempFilterContext - that is the IFilterContext or ITempFilterContext that
@@ -118,9 +123,12 @@ export const selectDashboardRef = createSelector(selectPersistedDashboard, (stat
  *
  * @public
  */
-export const selectDashboardId = createSelector(selectPersistedDashboard, (state) => {
-    return state?.identifier ?? undefined;
-});
+export const selectDashboardId: DashboardSelector<string | undefined> = createSelector(
+    selectPersistedDashboard,
+    (state) => {
+        return state?.identifier ?? undefined;
+    },
+);
 
 /**
  * Selects URI of the persisted dashboard object that backs and is rendered-by the dashboard component.
@@ -131,9 +139,12 @@ export const selectDashboardId = createSelector(selectPersistedDashboard, (state
  *
  * @public
  */
-export const selectDashboardUri = createSelector(selectPersistedDashboard, (state) => {
-    return state?.uri ?? undefined;
-});
+export const selectDashboardUri: DashboardSelector<string | undefined> = createSelector(
+    selectPersistedDashboard,
+    (state) => {
+        return state?.uri ?? undefined;
+    },
+);
 
 /**
  * Selects idRef of the persisted dashboard object that backs and is rendered-by the dashboard component.
@@ -157,9 +168,12 @@ export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
  *
  * @public
  */
-export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) => {
-    return uri ? uriRef(uri) : undefined;
-});
+export const selectDashboardUriRef: DashboardSelector<UriRef | undefined> = createSelector(
+    selectDashboardUri,
+    (uri) => {
+        return uri ? uriRef(uri) : undefined;
+    },
+);
 
 /**
  * Selects a boolean indication if dashboard is new
@@ -177,9 +191,12 @@ export const selectIsNewDashboard = createSelector(selectDashboardRef, isUndefin
  *
  * @public
  */
-export const selectDashboardTitle = createSelector(selectDashboardDescriptor, (state) => {
-    return state.title;
-});
+export const selectDashboardTitle: DashboardSelector<string> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.title;
+    },
+);
 
 /**
  * Selects current dashboard description.
@@ -231,7 +248,7 @@ export const selectDashboardLockStatus = createSelector(selectDashboardDescripto
  *
  * @alpha
  */
-export const selectDashboardShareInfo = createSelector(
+export const selectDashboardShareInfo: DashboardSelector<IAccessControlAware> = createSelector(
     selectDashboardDescriptor,
     ({ shareStatus, isLocked }): IAccessControlAware => ({
         shareStatus,
@@ -377,7 +394,7 @@ export const selectIsLayoutChanged = createSelector(
  *
  * @internal
  */
-export const selectIsDashboardDirty = createSelector(
+export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector(
     selectIsNewDashboard,
     selectBasicLayout,
     selectIsFiltersChanged,

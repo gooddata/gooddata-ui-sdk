@@ -13,10 +13,10 @@ import {
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
-import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
@@ -122,9 +122,12 @@ export const selectWidgets = createSelector(selectLayout, (layout) => {
  *
  * @internal
  */
-export const selectWidgetsMap = createSelector(selectWidgets, (widgets) => {
-    return newMapForObjectWithIdentity(widgets);
-});
+export const selectWidgetsMap: DashboardSelector<ObjRefMap<ExtendedDashboardWidget>> = createSelector(
+    selectWidgets,
+    (widgets) => {
+        return newMapForObjectWithIdentity(widgets);
+    },
+);
 
 /**
  * Selects widget by its ref (including custom widgets).
@@ -134,14 +137,17 @@ export const selectWidgetsMap = createSelector(selectWidgets, (widgets) => {
  *
  * @alpha
  */
-export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectWidgetsMap, (widgetMap): ExtendedDashboardWidget | undefined => {
-        if (!ref) {
-            return undefined;
-        }
+export const selectWidgetByRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<ExtendedDashboardWidget | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(selectWidgetsMap, (widgetMap): ExtendedDashboardWidget | undefined => {
+            if (!ref) {
+                return undefined;
+            }
 
-        return widgetMap.get(ref);
-    }),
+            return widgetMap.get(ref);
+        }),
 );
 
 /**
@@ -153,7 +159,9 @@ export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined
  *
  * @alpha
  */
-export const selectAnalyticalWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
+export const selectAnalyticalWidgetByRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IWidget | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>
     createSelector(selectWidgetsMap, (widgetMap): IWidget | undefined => {
         if (!ref) {
             return undefined;
@@ -202,18 +210,24 @@ const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
  *
  * @alpha
  */
-export const selectIsLayoutEmpty = createSelector(selectAllWidgets, (allWidgets) => {
-    return allWidgets.length === 0;
-});
+export const selectIsLayoutEmpty: DashboardSelector<boolean> = createSelector(
+    selectAllWidgets,
+    (allWidgets) => {
+        return allWidgets.length === 0;
+    },
+);
 
 /**
  * Selects all KPI widgets in the layout.
  *
  * @alpha
  */
-export const selectAllKpiWidgets = createSelector(selectAllWidgets, (allWidgets) => {
-    return allWidgets.filter(isKpiWidget);
-});
+export const selectAllKpiWidgets: DashboardSelector<IKpiWidget[]> = createSelector(
+    selectAllWidgets,
+    (allWidgets) => {
+        return allWidgets.filter(isKpiWidget);
+    },
+);
 
 /**
  * Selects all insight widgets in the layout.
@@ -295,13 +309,10 @@ export const selectInsightWidgetPlaceholder = createSelector(selectAllCustomWidg
 /**
  * @internal
  */
-export const selectInsightWidgetPlaceholderCoordinates = createSelector(
-    selectInsightWidgetPlaceholder,
-    selectLayout,
-    (widgetPlaceholder, layout) => {
+export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectInsightWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
         return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
-    },
-);
+    });
 
 /**
  * @internal
@@ -313,10 +324,7 @@ export const selectKpiWidgetPlaceholder = createSelector(selectAllCustomWidgets,
 /**
  * @internal
  */
-export const selectKpiWidgetPlaceholderCoordinates = createSelector(
-    selectKpiWidgetPlaceholder,
-    selectLayout,
-    (widgetPlaceholder, layout) => {
+export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectKpiWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
         return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
-    },
-);
+    });
