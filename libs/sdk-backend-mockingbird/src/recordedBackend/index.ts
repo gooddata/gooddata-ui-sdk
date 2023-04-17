@@ -340,6 +340,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 setWhiteLabeling: () => Promise.resolve(),
                 setLocale: () => Promise.resolve(),
+                setTimezone: () => Promise.resolve(),
+                setDateFormat: () => Promise.resolve(),
                 getSettings: () => Promise.resolve({}),
             };
         },

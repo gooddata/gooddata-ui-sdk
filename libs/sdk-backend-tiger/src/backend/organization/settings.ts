@@ -18,6 +18,14 @@ export class OrganizationSettingsService
         return this.setSetting("WHITE_LABELING", whiteLabeling);
     }
 
+    public async setTimezone(timezone: string): Promise<void> {
+        return this.setSetting("TIMEZONE", { value: timezone });
+    }
+
+    public async setDateFormat(dateFormat: string): Promise<void> {
+        return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
+    }
+
     public async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
             client.entities.getAllEntitiesOrganizationSettings({}),

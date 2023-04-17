@@ -1054,7 +1054,9 @@ export interface IOrganizations {
 // @public
 export interface IOrganizationSettingsService {
     getSettings(): Promise<ISettings_2>;
+    setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setTimezone(timezone: string): Promise<void>;
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 }
 

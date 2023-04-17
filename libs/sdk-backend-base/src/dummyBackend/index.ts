@@ -706,6 +706,8 @@ class DummyOrganization implements IOrganization {
         return {
             setWhiteLabeling: () => Promise.resolve(),
             setLocale: () => Promise.resolve(),
+            setTimezone: () => Promise.resolve(),
+            setDateFormat: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
         };
     }
@@ -720,6 +722,7 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
             testSetting: "test_value",
         });
     }
+
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return Promise.resolve({
             workspace: this.workspace,
@@ -734,6 +737,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setLocale(_locale: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setTimezone(_timezone: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setDateFormat(_dateFormat: string): Promise<void> {
         return Promise.resolve();
     }
 }
