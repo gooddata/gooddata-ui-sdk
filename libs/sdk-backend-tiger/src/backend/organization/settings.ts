@@ -34,7 +34,9 @@ export class OrganizationSettingsService
         return data.data.reduce((result: ISettings, setting) => {
             return {
                 ...result,
-                [mapTypeToKey(setting.type, setting.id)]: unwrapSettingContent(setting.attributes?.content),
+                [mapTypeToKey(setting.attributes?.type, setting.id)]: unwrapSettingContent(
+                    setting.attributes?.content,
+                ),
             };
         }, {});
     }
