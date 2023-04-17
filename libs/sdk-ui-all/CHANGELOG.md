@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 09 Mar 2023 08:43:20 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Apr 2023 08:24:37 GMT and should not be manually modified.
+
+## 8.12.1
+Mon, 17 Apr 2023 08:24:37 GMT
+
+### Updates
+
+- Add fallback for unknown visualization types of insights
 
 ## 8.12.0
 Thu, 09 Mar 2023 08:43:20 GMT
