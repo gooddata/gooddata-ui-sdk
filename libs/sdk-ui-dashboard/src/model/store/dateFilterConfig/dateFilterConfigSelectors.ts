@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import invariant from "ts-invariant";
-import { DateFilterGranularity, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+import { DateFilterGranularity, DashboardDateFilterConfigMode, IDateFilterConfig } from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../../../_staging/dateFilterConfig/dateFilterConfigConverters";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import { selectIsInEditMode } from "../renderMode/renderModeSelectors";
 
 const selectSelf = createSelector(
@@ -38,14 +38,17 @@ export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateF
  *
  * @alpha
  */
-export const selectEffectiveDateFilterConfig = createSelector(selectSelf, (dateFilterConfigState) => {
-    invariant(
-        dateFilterConfigState.effectiveDateFilterConfig,
-        "attempting to access uninitialized date filter config state",
-    );
+export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfig> = createSelector(
+    selectSelf,
+    (dateFilterConfigState) => {
+        invariant(
+            dateFilterConfigState.effectiveDateFilterConfig,
+            "attempting to access uninitialized date filter config state",
+        );
 
-    return dateFilterConfigState.effectiveDateFilterConfig!;
-});
+        return dateFilterConfigState.effectiveDateFilterConfig!;
+    },
+);
 
 /**
  * Returns effective date filter options. This is created by merging the workspace-level

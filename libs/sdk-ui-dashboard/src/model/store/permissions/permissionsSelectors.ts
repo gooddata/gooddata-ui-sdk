@@ -1,7 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
+import { IWorkspacePermissions } from "@gooddata/sdk-model";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -43,11 +44,14 @@ const selectSelf = createSelector(
  *
  * @public
  */
-export const selectPermissions = createSelector(selectSelf, (state) => {
-    invariant(state.permissions, "attempting to access uninitialized permissions state");
+export const selectPermissions: DashboardSelector<IWorkspacePermissions> = createSelector(
+    selectSelf,
+    (state) => {
+        invariant(state.permissions, "attempting to access uninitialized permissions state");
 
-    return state.permissions!;
-});
+        return state.permissions!;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to list users, roles, and permissions.
@@ -108,9 +112,12 @@ export const selectCanCreateAnalyticalDashboard = createSelector(selectPermissio
  *
  * @public
  */
-export const selectCanManageAnalyticalDashboard = createSelector(selectPermissions, (state) => {
-    return state?.canManageAnalyticalDashboard ?? false;
-});
+export const selectCanManageAnalyticalDashboard: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canManageAnalyticalDashboard ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to add, remove, and list ACLs (Access Control Lists) on an object.

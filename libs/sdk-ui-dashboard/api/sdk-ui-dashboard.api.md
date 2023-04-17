@@ -40,8 +40,6 @@ import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeFilterBaseProps } from '@gooddata/sdk-ui-filters';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
-import { IAuditableDates } from '@gooddata/sdk-model';
-import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBaseWidget } from '@gooddata/sdk-model';
@@ -5758,11 +5756,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectAllCatalogAttributesMap: ((state: DashboardState) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>) & OutputSelectorFields<(args_0: ICatalogAttribute[], args_1: ICatalogDateDataset[], args_2: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute> & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectAllCatalogAttributesMap: DashboardSelector<ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
 
 // @alpha
 export const selectAllCatalogDateDatasetsMap: ((state: DashboardState) => ObjRefMap<ICatalogDateDataset>) & OutputSelectorFields<(args_0: ICatalogDateDataset[], args_1: IBackendCapabilities) => ObjRefMap<ICatalogDateDataset> & {
@@ -5772,11 +5766,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectAllCatalogDisplayFormsMap: ((state: DashboardState) => ObjRefMap<IAttributeDisplayFormMetadataObject>) & OutputSelectorFields<(args_0: ICatalogAttribute[], args_1: ICatalogDateDataset[], args_2: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject> & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectAllCatalogDisplayFormsMap: DashboardSelector<ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha
 export const selectAllCatalogMeasuresMap: ((state: DashboardState) => ObjRefMap<ICatalogMeasure>) & OutputSelectorFields<(args_0: ICatalogMeasure[], args_1: IBackendCapabilities) => ObjRefMap<ICatalogMeasure> & {
@@ -5800,11 +5790,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectAllKpiWidgets: ((state: DashboardState) => IKpiWidget[]) & OutputSelectorFields<(args_0: ExtendedDashboardWidget[]) => IKpiWidget[] & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectAllKpiWidgets: DashboardSelector<IKpiWidget[]>;
 
 // @internal
 export const selectAllowCreateInsightRequest: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: ResolvedDashboardConfig) => boolean & {
@@ -5821,11 +5807,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => ((state: DashboardState) => IWidget | undefined) & OutputSelectorFields<(args_0: ObjRefMap<ExtendedDashboardWidget>) => (IWidget | undefined) & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | undefined>;
 
 // @public
 export const selectAttributeFilterDescendants: (localId: string) => ((state: DashboardState) => string[]) & OutputSelectorFields<(args_0: IDashboardAttributeFilter[]) => string[] & {
@@ -5849,11 +5831,7 @@ clearCache: () => void;
 };
 
 // @internal
-export const selectAttributeFilterDisplayFormsMap: ((state: DashboardState) => ObjRefMap<IAttributeDisplayFormMetadataObject>) & OutputSelectorFields<(args_0: FilterContextState) => ObjRefMap<IAttributeDisplayFormMetadataObject> & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha (undocumented)
 export const selectAttributesWithDrillDown: ((state: DashboardState) => (ICatalogAttribute | ICatalogDateAttribute)[]) & OutputSelectorFields<(args_0: ICatalogAttribute[], args_1: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[] & {
@@ -5968,11 +5946,7 @@ clearCache: () => void;
 };
 
 // @public
-export const selectCanManageAnalyticalDashboard: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: IWorkspacePermissions) => boolean & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectCanManageAnalyticalDashboard: DashboardSelector<boolean>;
 
 // @public
 export const selectCanManageDomain: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: IWorkspacePermissions) => boolean & {
@@ -6045,11 +6019,7 @@ clearCache: () => void;
 };
 
 // @public (undocumented)
-export const selectCatalogAttributes: ((state: DashboardState) => ICatalogAttribute[]) & OutputSelectorFields<(args_0: CatalogState) => ICatalogAttribute[] & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]>;
 
 // @public (undocumented)
 export const selectCatalogDateDatasets: ((state: DashboardState) => ICatalogDateDataset[]) & OutputSelectorFields<(args_0: CatalogState) => ICatalogDateDataset[] & {
@@ -6136,11 +6106,7 @@ clearCache: () => void;
 };
 
 // @public
-export const selectDashboardId: ((state: DashboardState) => string | undefined) & OutputSelectorFields<(args_0: IDashboard<IDashboardWidget> | undefined) => string & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectDashboardId: DashboardSelector<string | undefined>;
 
 // @public
 export const selectDashboardIdRef: ((state: DashboardState) => IdentifierRef | undefined) & OutputSelectorFields<(args_0: string | undefined) => IdentifierRef & {
@@ -6150,11 +6116,7 @@ clearCache: () => void;
 };
 
 // @internal (undocumented)
-export const selectDashboardLoading: ((state: DashboardState) => LoadingState) & OutputSelectorFields<(args_0: DashboardState) => LoadingState & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectDashboardLoading: DashboardSelector<LoadingState>;
 
 // @alpha
 export const selectDashboardLockStatus: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: DashboardDescriptor) => boolean & {
@@ -6185,11 +6147,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectDashboardShareInfo: ((state: DashboardState) => IAccessControlAware) & OutputSelectorFields<(args_0: DashboardDescriptor) => IAccessControlAware & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectDashboardShareInfo: DashboardSelector<IAccessControlAware>;
 
 // @alpha
 export const selectDashboardShareStatus: ((state: DashboardState) => ShareStatus) & OutputSelectorFields<(args_0: DashboardDescriptor) => ShareStatus & {
@@ -6206,25 +6164,13 @@ clearCache: () => void;
 };
 
 // @public
-export const selectDashboardTitle: ((state: DashboardState) => string) & OutputSelectorFields<(args_0: DashboardDescriptor) => string & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectDashboardTitle: DashboardSelector<string>;
 
 // @public
-export const selectDashboardUri: ((state: DashboardState) => string | undefined) & OutputSelectorFields<(args_0: IDashboard<IDashboardWidget> | undefined) => string & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectDashboardUri: DashboardSelector<string | undefined>;
 
 // @public
-export const selectDashboardUriRef: ((state: DashboardState) => UriRef | undefined) & OutputSelectorFields<(args_0: string | undefined) => UriRef & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectDashboardUriRef: DashboardSelector<UriRef | undefined>;
 
 // @internal (undocumented)
 export const selectDashboardWorkingDefinition: ((state: DashboardState) => IDashboardDefinition<IDashboardWidget>) & OutputSelectorFields<(args_0: IDashboard<IDashboardWidget> | undefined, args_1: DashboardDescriptor, args_2: IFilterContextDefinition, args_3: IDashboardObjectIdentity | undefined, args_4: IDashboardLayout<IWidget>, args_5: IDashboardDateFilterConfig_2 | undefined) => IDashboardDefinition<IDashboardWidget> & {
@@ -6338,11 +6284,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectEffectiveDateFilterConfig: ((state: DashboardState) => IDateFilterConfig) & OutputSelectorFields<(args_0: DateFilterConfigState) => IDateFilterConfig & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfig>;
 
 // @alpha
 export const selectEffectiveDateFilterMode: ((state: DashboardState) => DashboardDateFilterConfigMode) & OutputSelectorFields<(args_0: boolean, args_1: IDashboardDateFilterConfig_2 | undefined) => DashboardDateFilterConfigMode & {
@@ -6512,18 +6454,10 @@ clearCache: () => void;
 export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => (state: DashboardState) => IDashboardAttributeFilter | undefined;
 
 // @public
-export const selectFilterContextAttributeFilters: ((state: DashboardState) => IDashboardAttributeFilter[]) & OutputSelectorFields<(args_0: FilterContextItem[]) => IDashboardAttributeFilter[] & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @public
-export const selectFilterContextDateFilter: ((state: DashboardState) => IDashboardDateFilter | undefined) & OutputSelectorFields<(args_0: FilterContextItem[]) => IDashboardDateFilter & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined>;
 
 // @public
 export const selectFilterContextDefinition: ((state: DashboardState) => IFilterContextDefinition) & OutputSelectorFields<(args_0: FilterContextState) => IFilterContextDefinition & {
@@ -6533,11 +6467,7 @@ clearCache: () => void;
 };
 
 // @public
-export const selectFilterContextFilters: ((state: DashboardState) => FilterContextItem[]) & OutputSelectorFields<(args_0: IFilterContextDefinition) => FilterContextItem[] & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 
 // @internal
 export const selectFilterContextIdentity: ((state: DashboardState) => IDashboardObjectIdentity | undefined) & OutputSelectorFields<(args_0: FilterContextState) => IDashboardObjectIdentity & {
@@ -6616,18 +6546,7 @@ clearCache: () => void;
 export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightAttributesMeta> | undefined;
 
 // @alpha
-export const selectInsightByRef: (ref: ObjRef | undefined) => ((state: DashboardState) => IInsight | undefined) & OutputSelectorFields<(args_0: ObjRefMap<IInsight>) => IInsightDefinition & {
-insight: IAuditableDates & IAuditableUsers & {
-identifier: string;
-uri: string;
-ref: ObjRef;
-isLocked?: boolean | undefined;
-};
-} & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined>;
 
 // @internal (undocumented)
 export const selectInsightListLastUpdateRequested: ((state: DashboardState) => number) & OutputSelectorFields<(args_0: UiState) => number & {
@@ -6661,11 +6580,7 @@ clearCache: () => void;
 };
 
 // @internal (undocumented)
-export const selectInsightWidgetPlaceholderCoordinates: ((state: DashboardState) => ILayoutCoordinates | undefined) & OutputSelectorFields<(args_0: InsightPlaceholderWidget | undefined, args_1: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
 
 // @internal (undocumented)
 export const selectInvalidDrillWidgetRefs: ((state: DashboardState) => ObjRef[]) & OutputSelectorFields<(args_0: UiState) => ObjRef[] & {
@@ -6724,11 +6639,7 @@ clearCache: () => void;
 };
 
 // @internal
-export const selectIsDashboardDirty: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: boolean, args_1: IDashboardLayout<IWidget>, args_2: boolean, args_3: boolean, args_4: boolean) => boolean & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectIsDashboardDirty: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDashboardLoading: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: LoadingState) => boolean & {
@@ -6849,11 +6760,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectIsLayoutEmpty: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: ExtendedDashboardWidget[]) => boolean & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectIsLayoutEmpty: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsNewDashboard: ((state: DashboardState) => boolean) & OutputSelectorFields<(args_0: ObjRef | undefined) => boolean & {
@@ -6954,11 +6861,7 @@ clearCache: () => void;
 };
 
 // @internal (undocumented)
-export const selectKpiWidgetPlaceholderCoordinates: ((state: DashboardState) => ILayoutCoordinates | undefined) & OutputSelectorFields<(args_0: KpiPlaceholderWidget | undefined, args_1: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
 
 // @alpha
 export const selectLayout: ((state: DashboardState) => IDashboardLayout<ExtendedDashboardWidget>) & OutputSelectorFields<(args_0: LayoutState) => IDashboardLayout<ExtendedDashboardWidget> & {
@@ -7041,18 +6944,10 @@ clearCache: () => void;
 };
 
 // @public
-export const selectPermissions: ((state: DashboardState) => IWorkspacePermissions) & OutputSelectorFields<(args_0: PermissionsState) => IWorkspacePermissions & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectPermissions: DashboardSelector<IWorkspacePermissions>;
 
 // @internal
-export const selectPersistedDashboard: ((state: DashboardState) => IDashboard<IDashboardWidget> | undefined) & OutputSelectorFields<(args_0: DashboardMetaState) => IDashboard<IDashboardWidget> & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>;
 
 // @public
 export const selectPlatformEdition: ((state: DashboardState) => PlatformEdition) & OutputSelectorFields<(args_0: ResolvedDashboardConfig) => PlatformEdition & {
@@ -7104,11 +6999,7 @@ clearCache: () => void;
 };
 
 // @public
-export const selectSettings: ((state: DashboardState) => ISettings) & OutputSelectorFields<(args_0: ResolvedDashboardConfig) => ISettings & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectSettings: DashboardSelector<ISettings>;
 
 // @internal
 export const selectShouldHidePixelPerfectExperience: ((state: DashboardState) => string | number | boolean | object) & OutputSelectorFields<(args_0: ResolvedDashboardConfig) => (string | number | boolean | object) & {
@@ -7167,11 +7058,7 @@ clearCache: () => void;
 };
 
 // @alpha
-export const selectWidgetByRef: (ref: ObjRef | undefined) => ((state: DashboardState) => ExtendedDashboardWidget | undefined) & OutputSelectorFields<(args_0: ObjRefMap<ExtendedDashboardWidget>) => (ExtendedDashboardWidget | undefined) & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<ExtendedDashboardWidget | undefined>;
 
 // @alpha
 export const selectWidgetCoordinatesByRef: (ref: ObjRef) => ((state: DashboardState) => ILayoutCoordinates) & OutputSelectorFields<(args_0: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates & {
@@ -7216,11 +7103,7 @@ clearCache: () => void;
 };
 
 // @internal
-export const selectWidgetsMap: ((state: DashboardState) => ObjRefMap<ExtendedDashboardWidget>) & OutputSelectorFields<(args_0: ExtendedDashboardWidget[]) => ObjRefMap<ExtendedDashboardWidget> & {
-clearCache: () => void;
-}> & {
-    clearCache: () => void;
-};
+export const selectWidgetsMap: DashboardSelector<ObjRefMap<ExtendedDashboardWidget>>;
 
 // @internal (undocumented)
 export const selectWidgetsModification: (refs: (ObjRef | undefined)[]) => ((state: DashboardState) => ("insertedByPlugin" | "modifiedByPlugin")[]) & OutputSelectorFields<(args_0: Record<string, IDashboardWidgetOverlay>) => ("insertedByPlugin" | "modifiedByPlugin")[] & {
