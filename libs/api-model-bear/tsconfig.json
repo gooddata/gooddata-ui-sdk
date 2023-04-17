@@ -11,8 +11,7 @@
         "noUnusedParameters": true,
         "outDir": "dist",
         "strict": true,
-        "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true
+        "sourceMap": true
     },
     "exclude": ["**/node_modules", "dist", "esm"]
 }

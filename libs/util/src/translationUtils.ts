@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 
 /**
  * Given an object containing the parsed translation bundle, this function creates a new object which contains
@@ -8,7 +8,7 @@
  * @internal
  */
 export function removeMetadata(translationsWithMetadata: Record<string, any>): Record<string, string> {
-    const translations = {};
+    const translations: Record<string, string> = {};
     Object.keys(translationsWithMetadata).forEach((key) => {
         translations[key] =
             typeof translationsWithMetadata[key] === "object"

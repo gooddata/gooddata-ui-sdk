@@ -1,8 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
-import { defineMessages } from "react-intl";
+// (C) 2007-2023 GoodData Corporation
+import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
-export const messages = defineMessages({
+export const messages: Record<string, MessageDescriptor> = defineMessages({
     sum: { id: "visualizations.measure.arithmetic.sum.title" },
     difference: { id: "visualizations.measure.arithmetic.difference.title" },
     multiplication: { id: "visualizations.measure.arithmetic.multiplication.title" },

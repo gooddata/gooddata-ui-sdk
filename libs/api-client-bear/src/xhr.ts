@@ -197,7 +197,7 @@ export class XhrModule {
             // TODO: We should clean up the settings at this point to be pure `RequestInit` object
             response = await this.fetch(url, settings);
         } catch (e) {
-            throw new ApiNetworkError(e.message, e); // TODO is it really necessary? couldn't we throw just Error?
+            throw new ApiNetworkError((e as Error).message, e); // TODO is it really necessary? couldn't we throw just Error?
         }
 
         // Fetch URL and resolve body promise (if left unresolved, the body isn't even shown in chrome-dev-tools)

@@ -1,11 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { IntlShape, createIntl } from "react-intl";
+import { IntlShape, MessageDescriptor, createIntl } from "react-intl";
 
 import { DefaultLocale, ILocale } from "./Locale";
 import { messagesMap } from "./messagesMap";
 
-const intlStore = {};
+const intlStore: { [key in ILocale]?: IntlShape } = {};
 
 /**
  * Gets react-intl's IntlShape set up for the provided locale.
@@ -37,7 +37,11 @@ export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
  *
  * @internal
  */
-export function getTranslation(translationId: string | { id: string }, locale: ILocale, values = {}): string {
+export function getTranslation(
+    translationId: string | MessageDescriptor,
+    locale: ILocale,
+    values = {},
+): string {
     const intl = getIntl(locale);
     const desc =
         typeof translationId === "object"

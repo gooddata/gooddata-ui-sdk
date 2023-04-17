@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import mapboxgl from "mapbox-gl";
 import { IGeoLngLat, IGeoViewports } from "../../../GeoChart";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
@@ -104,7 +104,7 @@ export const DEFAULT_DATA_POINTS_LIMIT = 25000;
 export const DEFAULT_DATA_SOURCE_NAME = "gdcPushpinsData";
 export const DEFAULT_LAYER_NAME = "gdcPushpins";
 
-export const INTERACTION_EVENTS: string[] = [
+export const INTERACTION_EVENTS = [
     "scrollZoom",
     "boxZoom",
     "dragRotate",
@@ -112,7 +112,7 @@ export const INTERACTION_EVENTS: string[] = [
     "keyboard",
     "doubleClickZoom",
     "touchZoomRotate",
-];
+] as const;
 
 export const DEFAULT_COLORS: string[] = colorPaletteToColors(DefaultColorPalette);
 const DEFAULT_LATITUDE: number = 34;

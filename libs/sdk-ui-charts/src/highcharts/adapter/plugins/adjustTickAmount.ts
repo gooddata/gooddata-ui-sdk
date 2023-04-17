@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 /**
  * Highcharts extension that overwrites 'axis.adjustTickAmount' of Highcharts
  * Original code snippet
@@ -15,6 +15,7 @@
  */
 
 import isNil from "lodash/isNil";
+import isArray from "lodash/isArray";
 import Highcharts from "../../lib";
 import { isLineChart } from "../../chartTypes/_util/common";
 import { UnsafeInternals } from "../../typings/unsafe";
@@ -48,7 +49,10 @@ function isYAxis(axis: Highcharts.Axis): boolean {
  */
 function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
     const yAxes = chart.userOptions.yAxis;
-    return yAxes[0].isUserMinMax || yAxes[1].isUserMinMax;
+    if (yAxes && isArray(yAxes)) {
+        // isUserMinMax is a custom prop not included in original typing
+        return (yAxes[0] as any).isUserMinMax || (yAxes[1] as any).isUserMinMax;
+    }
 }
 
 /**

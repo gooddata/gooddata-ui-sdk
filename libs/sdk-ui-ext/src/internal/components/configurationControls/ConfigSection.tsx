@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -134,7 +134,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
     private toggleCollapsed() {
         const { collapsed } = this.state;
 
-        const propertiesMeta = {};
+        const propertiesMeta: Record<string, { collapsed: boolean }> = {};
 
         propertiesMeta[this.props.id] = {
             collapsed: !collapsed,

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -120,7 +120,7 @@ export class DashboardItemWithKpiAlert extends Component<
         isReadOnlyMode: false,
     };
 
-    private timeouts = {};
+    private timeouts: Record<string, NodeJS.Timeout> = {};
     private isScrolledToHighlightedAlert = false;
     private node = React.createRef<HTMLDivElement>();
 

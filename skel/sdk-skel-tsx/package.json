@@ -57,7 +57,7 @@
     "dependencies": {
         "lodash": "^4.17.19",
         "react-intl": "^5.23.0",
-        "tslib": "^2.0.0"
+        "tslib": "^2.5.0"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0",
@@ -75,8 +75,8 @@
         "@types/react-dom": "^17.0.11",
         "@types/react": "^17.0.34",
         "@types/testing-library__jest-dom": "^5.14.5",
-        "@typescript-eslint/eslint-plugin": "^5.45.0",
-        "@typescript-eslint/parser": "^5.45.0",
+        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/parser": "^5.57.1",
         "concurrently": "^6.0.2",
         "dependency-cruiser": "^10.1.1",
         "eslint": "^8.25.0",
@@ -97,6 +97,6 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "ts-jest": "^27.0.5",
-        "typescript": "4.0.2"
+        "typescript": "5.0.2"
     }
 }

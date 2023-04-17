@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import memoizeOne from "memoize-one";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
@@ -8,7 +8,7 @@ const pickCorrectInsightWordingInner = (
     translations: Record<string, string>,
     isEnabledInsightToReport: boolean,
 ): Record<string, string> => {
-    const modifiedTranslations = {};
+    const modifiedTranslations: Record<string, string> = {};
     Object.keys(translations).forEach((key) => {
         if (key.includes("|report") || key.includes("|insight")) {
             const newKey = getNewKey(key, isEnabledInsightToReport ? "|report" : "|insight");
@@ -43,7 +43,7 @@ const pickCorrectMetricWordingInner = (
     translations: Record<string, string>,
     isEnabledRenamingMeasureToMetric: boolean,
 ): Record<string, string> => {
-    const modifiedTranslations = {};
+    const modifiedTranslations: Record<string, string> = {};
     Object.keys(translations).forEach((key) => {
         if (key.includes("._metric") || key.includes("._measure")) {
             const newKey = getNewKey(key, isEnabledRenamingMeasureToMetric ? "._metric" : "._measure");

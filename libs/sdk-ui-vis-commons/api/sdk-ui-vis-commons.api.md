@@ -34,7 +34,7 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
 };
 
 // @internal (undocumented)
-export const ColorLegend: React_2.ComponentType<Pick<IColorLegendProps, "data" | "title" | "format" | "size" | "position" | "numericSymbols">>;
+export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
@@ -112,7 +112,7 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate;
 export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 
 // @internal
-export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean | undefined) => string;
+export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean) => string;
 
 // @internal (undocumented)
 export function getLegendDetails(legendPosition: PositionType, responsive: boolean | "autoPositionWithPopup", options: ILegendDetailOptions): ILegendDetails | null;

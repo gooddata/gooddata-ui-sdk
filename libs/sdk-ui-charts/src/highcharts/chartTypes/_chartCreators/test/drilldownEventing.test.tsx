@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems, uriRef } from "@gooddata/sdk-model";
@@ -329,7 +329,7 @@ describe("Drilldown Eventing", () => {
     it("should correctly handle z coordinate of point", () => {
         const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
-        const pointClickWitZEventData = cloneDeep(pointClickEventData);
+        const pointClickWitZEventData: any = cloneDeep(pointClickEventData);
 
         pointClickWitZEventData.point["z"] = 12000;
 

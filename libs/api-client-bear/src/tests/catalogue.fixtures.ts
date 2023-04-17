@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 
 // (C) 2007-2018 GoodData Corporation
@@ -1045,7 +1045,10 @@ export const optionsForOnlyDateBuckets = {
     },
 };
 
-export const optionsForPureMAQL: { bucketItems: GdcVisualizationObject.IVisualizationObjectContent } = {
+export const optionsForPureMAQL: {
+    bucketItems: GdcVisualizationObject.IVisualizationObjectContent;
+    attributesMap: Record<string, any>;
+} = {
     bucketItems: {
         visualizationClass: {
             uri: "/gdc/dummy/uri",

@@ -7,11 +7,9 @@
 /// <reference types="react" />
 
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
-import { ComponentClass } from 'react';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
 import { DependencyList } from 'react';
-import { FunctionComponent } from 'react';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -58,6 +56,7 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
+import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
@@ -114,25 +113,31 @@ export class BadRequestSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
+// @internal (undocumented)
+export type BucketNameKeys = keyof typeof BucketNames;
+
 // @internal
 export const BucketNames: {
-    MEASURES: string;
-    SECONDARY_MEASURES: string;
-    TERTIARY_MEASURES: string;
-    ATTRIBUTE: string;
-    ATTRIBUTES: string;
-    VIEW: string;
-    STACK: string;
-    TREND: string;
-    SEGMENT: string;
-    COLUMNS: string;
-    LOCATION: string;
-    LONGITUDE: string;
-    LATITUDE: string;
-    SIZE: string;
-    COLOR: string;
-    TOOLTIP_TEXT: string;
+    readonly MEASURES: "measures";
+    readonly SECONDARY_MEASURES: "secondary_measures";
+    readonly TERTIARY_MEASURES: "tertiary_measures";
+    readonly ATTRIBUTE: "attribute";
+    readonly ATTRIBUTES: "attributes";
+    readonly VIEW: "view";
+    readonly STACK: "stack";
+    readonly TREND: "trend";
+    readonly SEGMENT: "segment";
+    readonly COLUMNS: "columns";
+    readonly LOCATION: "location";
+    readonly LONGITUDE: "longitude";
+    readonly LATITUDE: "latitude";
+    readonly SIZE: "size";
+    readonly COLOR: "color";
+    readonly TOOLTIP_TEXT: "tooltipText";
 };
+
+// @internal (undocumented)
+export type BucketNameValues = typeof BucketNames[BucketNameKeys];
 
 // @internal (undocumented)
 export class CancelError extends Error {
@@ -481,9 +486,7 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
 
 // @internal
-export function getTranslation(translationId: string | {
-    id: string;
-}, locale: ILocale, values?: {}): string;
+export function getTranslation(translationId: string | MessageDescriptor, locale: ILocale, values?: {}): string;
 
 // @internal (undocumented)
 export function getVisualizationType(type: ChartType): ChartType;
@@ -1171,7 +1174,7 @@ export interface IPushData {
     properties?: {
         sortItems?: ISortItem[];
         totals?: ITotal[];
-        controls?: object;
+        controls?: Record<string, any>;
     };
     // (undocumented)
     propertiesMeta?: any;
@@ -1554,13 +1557,13 @@ export const OverTimeComparisonTypes: {
 };
 
 // @beta (undocumented)
-export const pickCorrectInsightWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
+export const pickCorrectInsightWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
 
 // @beta
-export const pickCorrectMetricWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
+export const pickCorrectMetricWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
 
 // @beta (undocumented)
-export const pickCorrectWording: (translations: Record<string, string>, settings?: IWorkspaceSettings | undefined) => Record<string, string>;
+export const pickCorrectWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
 
 // @public
 export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
@@ -1664,10 +1667,10 @@ export type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) ext
 export function uriMatch(uri: string): IHeaderPredicate;
 
 // @public
-export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
+export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | undefined;
 
 // @public
-export const useBackendStrict: (backend?: IAnalyticalBackend | undefined, context?: string) => IAnalyticalBackend;
+export const useBackendStrict: (backend?: IAnalyticalBackend, context?: string) => IAnalyticalBackend;
 
 // @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
@@ -1796,10 +1799,10 @@ export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [..
 export function useResolveValueWithPlaceholders<T, C>(value: T, resolutionContext?: C): PlaceholderResolvedValue<T>;
 
 // @public
-export const useWorkspace: (workspace?: string | undefined) => string | undefined;
+export const useWorkspace: (workspace?: string) => string | undefined;
 
 // @public
-export const useWorkspaceStrict: (workspace?: string | undefined, context?: string) => string;
+export const useWorkspaceStrict: (workspace?: string, context?: string) => string;
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
@@ -1895,7 +1898,7 @@ export function withWorkspace<T extends {
 export const WorkspaceProvider: React_2.FC<IWorkspaceProviderProps>;
 
 // @internal
-export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentClass<any, any> | FunctionComponent<any> | undefined) => <T>(Component: ComponentType<T>) => ComponentType<T>;
+export const wrapDisplayName: (hocName: string, BaseComponent?: React.ComponentType<any>) => <T>(Component: ComponentType<T>) => ComponentType<T>;
 
 // @public (undocumented)
 export type XirrType = "xirr";

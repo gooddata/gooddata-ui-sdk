@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { createContext, useContext, useDebugValue, useState } from "react";
 import noop from "lodash/noop";
 import { IPlaceholder } from "./base";
@@ -51,6 +51,7 @@ export interface IPlaceholdersProviderProps {
  */
 export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element {
     const { children, initialValues } = props;
+    const accumulator: Record<string, IPlaceholder<any>> = {};
     const initialPlaceholdersState =
         initialValues?.reduce((acc, [placeholder, value]) => {
             acc[placeholder.id] = {
@@ -58,7 +59,7 @@ export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Ele
                 value,
             };
             return acc;
-        }, {}) ?? {};
+        }, accumulator) ?? {};
 
     const [state, updateState] = useState<PlaceholdersState>({
         placeholders: initialPlaceholdersState,

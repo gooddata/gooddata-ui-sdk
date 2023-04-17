@@ -1,9 +1,13 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     IDimensionDescriptor,
     IAttributeDescriptor,
     IMeasureGroupDescriptor,
     IResultHeader,
+    isMeasureGroupDescriptor,
+    IDimensionItemDescriptor,
+    IMeasureDescriptorObject,
+    IAttributeDescriptorBody,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
@@ -26,10 +30,18 @@ function findInDimensionHeaders(
     for (let dimensionIndex = 0; dimensionIndex < dimensions.length; dimensionIndex++) {
         const dimension = dimensions[dimensionIndex];
         for (let headerIndex = 0; headerIndex < dimension.headers.length; headerIndex++) {
-            const wrappedDescriptor = dimension.headers[headerIndex];
-            const headerType = Object.keys(wrappedDescriptor)[0];
-            const header = wrappedDescriptor[headerType];
+            const wrappedDescriptor: IDimensionItemDescriptor = dimension.headers[headerIndex];
             const headerCount = dimension.headers.length;
+
+            let headerType: string;
+            let header: IMeasureDescriptorObject | IAttributeDescriptorBody;
+            if (isMeasureGroupDescriptor(wrappedDescriptor)) {
+                headerType = "measureGroupHeader";
+                header = wrappedDescriptor.measureGroupHeader;
+            } else {
+                headerType = "attributeHeader";
+                header = wrappedDescriptor.attributeHeader;
+            }
 
             const callbackResult = headerCallback(
                 headerType,

@@ -87,7 +87,7 @@
         "react-select": "^5.3.0",
         "react-transition-group": "^4.4.2",
         "ts-invariant": "^0.7.3",
-        "tslib": "^2.0.0",
+        "tslib": "^2.5.0",
         "uuid": "^8.3.2",
         "lru-cache": "^8.0.4"
     },
@@ -109,7 +109,7 @@
         "@testing-library/user-event": "^14.4.2",
         "@types/jest": "^27.0.1",
         "@types/lodash": "^4.14.158",
-        "@types/node": "^16.11.11",
+        "@types/node": "^16.18.23",
         "@types/raf": "^3.4.0",
         "@types/react": "^17.0.34",
         "@types/react-dom": "^17.0.11",
@@ -118,8 +118,8 @@
         "@types/react-transition-group": "^4.4.4",
         "@types/testing-library__jest-dom": "^5.14.5",
         "@types/uuid": "^8.3.4",
-        "@typescript-eslint/eslint-plugin": "^5.45.0",
-        "@typescript-eslint/parser": "^5.45.0",
+        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/parser": "^5.57.1",
         "concurrently": "^6.0.2",
         "dependency-cruiser": "^10.1.1",
         "eslint": "^8.25.0",
@@ -145,6 +145,6 @@
         "stylelint-config-prettier": "^8.0.2",
         "svgo": "^2.8.0",
         "ts-jest": "^27.0.5",
-        "typescript": "4.0.2"
+        "typescript": "5.0.2"
     }
 }

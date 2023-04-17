@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import {
@@ -96,7 +96,8 @@ export type AllQueryCacheReducers<TQuery extends IDashboardQuery, TResult> = {
  * @internal
  */
 export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<
-    AllQueryCacheReducers<TQuery, TResult>
+    AllQueryCacheReducers<TQuery, TResult>,
+    string
 >;
 
 /**
@@ -299,7 +300,7 @@ export function createCachedQueryService<TQuery extends IDashboardQuery, TResult
                 queryCache.actions.set({
                     query,
                     status: "error",
-                    error: e.message,
+                    error: (e as Error).message,
                 }),
             );
 

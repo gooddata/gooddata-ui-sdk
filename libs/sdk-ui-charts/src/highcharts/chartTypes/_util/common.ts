@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import clone from "lodash/clone";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
@@ -121,7 +121,7 @@ export const isChartSupported = (type: string): boolean => includes(Visualizatio
 export const isOneOfTypes = (type: string, types: string[]): boolean => includes(types, type);
 export const stringifyChartTypes = (): string =>
     Object.keys(VisualizationTypes)
-        .reduce((acc, type) => {
+        .reduce((acc, type: keyof typeof VisualizationTypes) => {
             acc.push(VisualizationTypes[type]);
             return acc;
         }, [])
@@ -163,7 +163,7 @@ export const getPrimaryChartType = (chartOptions: IChartOptions): string => {
     return targetSeries?.type ?? chartOptions.type;
 };
 
-export const unwrap = (wrappedObject: unknown): any => {
+export const unwrap = (wrappedObject: any): any => {
     return wrappedObject[Object.keys(wrappedObject)[0]];
 };
 

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -74,8 +74,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
 
     const noSchedulesMessageId =
         selectedTabId === messages.scheduleManagementTabAll.id
-            ? messages.scheduleManagementNoSchedules.id
-            : messages.scheduleManagementNoSchedulesByUser.id;
+            ? messages.scheduleManagementNoSchedules.id!
+            : messages.scheduleManagementNoSchedulesByUser.id!;
 
     return (
         <>
@@ -92,7 +92,9 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 {!isFirstLoaded && canManageScheduledMail ? (
                     <Tabs
                         className="gd-scheduled-email-management-dialog-tabs"
-                        tabs={[messages.scheduleManagementTabUser, messages.scheduleManagementTabAll]}
+                        tabs={
+                            [messages.scheduleManagementTabUser, messages.scheduleManagementTabAll] as ITab[]
+                        }
                         selectedTabId={selectedTabId}
                         onTabSelect={handleTabChange}
                     />

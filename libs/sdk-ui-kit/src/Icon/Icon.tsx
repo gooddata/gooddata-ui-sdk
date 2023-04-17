@@ -1,4 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
+
+import { IIconProps } from "./typings";
+
 import { Book } from "./icons/Book";
 import { Lock } from "./icons/Lock";
 import { Refresh } from "./icons/Refresh";
@@ -68,7 +71,7 @@ import { Invite } from "./icons/Invite";
 /**
  * @internal
  */
-export const Icon = {
+export const Icon: Record<string, React.FC<IIconProps>> = {
     Book,
     Refresh,
     DrillDown,

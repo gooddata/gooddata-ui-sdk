@@ -30,7 +30,8 @@ export interface IStylingPickerItem<T extends StylingPickerItemContent> {
 /**
  * @internal
  */
-export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooterProps {
+export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
+    extends IStylingEditorDialogFooterProps {
     title: string;
     tooltip?: string;
     stylingItem?: IStylingPickerItem<T>;

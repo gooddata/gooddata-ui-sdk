@@ -9,7 +9,7 @@ import { wrapWithTheme } from "../../themeWrapper";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 
-const info = {
+const info: { guidelines: { name: string }[]; messages: Record<string, IMessage> } = {
     guidelines: [
         { name: "1-progress.png" },
         { name: "2-success.png" },

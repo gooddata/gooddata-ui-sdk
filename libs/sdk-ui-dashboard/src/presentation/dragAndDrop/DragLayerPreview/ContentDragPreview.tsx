@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { FC, useMemo } from "react";
 import { XYCoord } from "react-dnd";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
@@ -49,7 +49,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             return null;
         }
 
-        const Component = previewComponentsMap[itemType];
+        const Component = previewComponentsMap[itemType as DraggableContentItemType];
         return <Component itemType={itemType} item={item} />;
     }, [itemType, previewComponentsMap, item]);
 

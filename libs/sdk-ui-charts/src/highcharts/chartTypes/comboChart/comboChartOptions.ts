@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import {
@@ -15,7 +15,7 @@ import { isLineChart } from "../_util/common";
 import { StackingType } from "../../constants/stacking";
 import { ISeriesItem } from "../../typings/unsafe";
 
-export const CHART_ORDER = {
+export const CHART_ORDER: Record<string, number> = {
     [VisualizationTypes.AREA]: 1,
     [VisualizationTypes.COLUMN]: 2,
     [VisualizationTypes.LINE]: 3,
@@ -52,7 +52,7 @@ export function getComboChartSeries(
     dv: DataViewFacade,
 ): ISeriesItem[] {
     const updatedSeries = cloneDeep(series);
-    const measureBuckets = {};
+    const measureBuckets: Record<string, number[]> = {};
     const types = [config.primaryChartType, config.secondaryChartType];
     const measureGroupIdentifiers = measureGroup.items.map(
         (item: IMeasureDescriptor) => item?.measureHeaderItem?.localIdentifier ?? "",

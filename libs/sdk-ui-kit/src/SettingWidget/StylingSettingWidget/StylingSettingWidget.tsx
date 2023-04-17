@@ -21,7 +21,7 @@ import { Hyperlink } from "../../Hyperlink";
 /**
  * @internal
  */
-export interface IStylingSettingWidgetProps<T> {
+export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> {
     title: string;
     defaultItem: IStylingPickerItem<T>;
     customItems: IStylingPickerItem<T>[];

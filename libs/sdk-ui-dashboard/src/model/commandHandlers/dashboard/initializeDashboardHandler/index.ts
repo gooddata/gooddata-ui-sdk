@@ -333,7 +333,7 @@ export function* initializeDashboardHandler(
 
         return result.event;
     } catch (e) {
-        yield put(loadingActions.setLoadingError(e));
+        yield put(loadingActions.setLoadingError(e as Error));
 
         throw e;
     }

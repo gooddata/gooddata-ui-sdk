@@ -24,7 +24,7 @@ const optionTranslator =
         return `${Math.abs(offset)} ${plural} ${offset > 0 ? "ahead" : "ago"}`;
     };
 
-const translations = {
+const translations: Record<string, any> = {
     "filters.floatingRange.option.day": optionTranslator("yesterday", "today", "tomorrow", "days"),
     "filters.floatingRange.option.week": optionTranslator("last week", "this week", "next week", "weeks"),
     "filters.floatingRange.option.month": optionTranslator(

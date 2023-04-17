@@ -18,7 +18,7 @@ export function responsiveScenarios<T extends VisProps>(
 ) {
     const tags = generateInsight ? [] : ["no-plug-viz-tests"];
 
-    const usedLabels = {};
+    const usedLabels: Record<string, string> = {};
 
     return sizes.map((size) => {
         const label = size.label

@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import { Icon } from "./Icon";
 import { IIconProps } from "./typings";
 
-const INSIGHT_ICON_MAP = {
+const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
     "local:scatter": Icon.ScatterPlot,
     "local:donut": Icon.Donut,
     "local:headline": Icon.HeadlineChart,

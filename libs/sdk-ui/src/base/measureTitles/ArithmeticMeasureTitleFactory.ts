@@ -1,8 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
 import { ILocale } from "../localization/Locale";
 import { messages } from "../../locales";
+import { MessageDescriptor } from "react-intl";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.
@@ -45,7 +46,7 @@ export class ArithmeticMeasureTitleFactory {
         return masterMeasureTitles === null ? null : this.translateKey(localizationKey, masterMeasureTitles);
     }
 
-    private getTitleLocalizationKey(arithmeticMeasureOperator: string): string {
+    private getTitleLocalizationKey(arithmeticMeasureOperator: string): MessageDescriptor {
         const msg = messages[arithmeticMeasureOperator];
 
         if (!msg) {
@@ -86,7 +87,7 @@ export class ArithmeticMeasureTitleFactory {
         return measureCurrentNames.length > 0 ? measureCurrentNames[0] : undefined;
     }
 
-    private translateKey(localizationKey: string, values: any): string {
+    private translateKey(localizationKey: MessageDescriptor, values: any): string {
         return getTranslation(localizationKey, this.locale, values);
     }
 }

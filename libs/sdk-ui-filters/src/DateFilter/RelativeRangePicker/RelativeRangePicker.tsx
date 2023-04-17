@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect";
@@ -67,7 +67,7 @@ class RelativeRangePickerComponent extends React.Component<
     }
 
     private isTouchDevice = (): boolean | number => {
-        return "ontouchstart" in window || navigator.msMaxTouchPoints;
+        return "ontouchstart" in window || navigator.maxTouchPoints > 0;
     };
 
     private focusToField = (): void => {

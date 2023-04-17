@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import ReactDom from "react-dom";
 import invariant from "ts-invariant";
@@ -21,7 +21,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      *
      * @internal
      */
-    private [COMPONENT]: C;
+    private [COMPONENT]!: C;
 
     /**
      * @remarks
@@ -29,7 +29,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      *
      * @internal
      */
-    private [CONTEXT]: CustomElementContext;
+    private [CONTEXT]!: CustomElementContext;
 
     constructor() {
         super();
@@ -136,5 +136,5 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      * @internal
      * @returns A React Component needed for the visualization rendering
      */
-    abstract async [LOAD_COMPONENT](): Promise<C>;
+    abstract [LOAD_COMPONENT](): Promise<C>;
 }

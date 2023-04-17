@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import {
     ErrorComponent,
@@ -121,6 +121,8 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 
+type DashboardComponentContextKey = keyof IDashboardComponentsContext;
+
 /**
  * @internal
  */
@@ -129,10 +131,10 @@ export const useDashboardComponentsContext = (
 ): IDashboardComponentsContext => {
     const globalComponents = useContext(DashboardComponentsContext);
     // cannot just spread here, we only want to use overrides that are not undefined
-    return Object.keys(globalComponents).reduce((acc, key) => {
+    return (Object.keys(globalComponents) as DashboardComponentContextKey[]).reduce((acc, key) => {
         acc[key] = localComponentOverrides?.[key] ?? globalComponents[key];
         return acc;
-    }, {} as IDashboardComponentsContext);
+    }, {} as Record<DashboardComponentContextKey, any>);
 };
 
 /**

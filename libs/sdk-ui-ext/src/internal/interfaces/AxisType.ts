@@ -1,9 +1,20 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 export type AxisType = "xaxis" | "yaxis" | "secondary_xaxis" | "secondary_yaxis";
+
+export type AxisPositionType =
+    | "auto"
+    | "bottom"
+    | "middle"
+    | "top"
+    | "left"
+    | "center"
+    | "right"
+    | "low"
+    | "high";
 
 export interface IAxisNameProperties {
     visible?: boolean;
-    position?: string;
+    position?: AxisPositionType;
 }
 
 export interface IAxisProperties {

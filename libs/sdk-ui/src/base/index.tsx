@@ -1,11 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 /*
  *
  */
 
 export { DefaultColorPalette } from "./constants/colorPalette";
-export { BucketNames } from "./constants/bucketNames";
+export { BucketNames, BucketNameKeys, BucketNameValues } from "./constants/bucketNames";
 export { visualizationIsBetaWarning } from "./helpers/logging";
 
 /*

@@ -52,7 +52,7 @@
         "@gooddata/sdk-ui-dashboard": "^8.13.0-alpha.35",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
-        "tslib": "^2.0.0"
+        "tslib": "^2.5.0"
     },
     "peerDependencies": {
         "@gooddata/sdk-model": "^8.13.0-alpha.35",
@@ -91,8 +91,8 @@
         "@types/raf": "^3.4.0",
         "@types/react-dom": "^17.0.11",
         "@types/react": "^17.0.34",
-        "@typescript-eslint/eslint-plugin": "^5.45.0",
-        "@typescript-eslint/parser": "^5.45.0",
+        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/parser": "^5.57.1",
         "babel-loader": "^8.0.5",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "concurrently": "^6.0.2",
@@ -124,7 +124,7 @@
         "style-loader": "^3.3.1",
         "ts-jest": "^27.0.5",
         "ts-loader": "^8.3.0",
-        "typescript": "4.0.2",
+        "typescript": "5.0.2",
         "webpack": "^5.58.0",
         "webpack-bundle-analyzer": "^4.5.0",
         "webpack-cli": "^4.9.2",

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 export interface IDummyPromise<R, E> {
     willResolve?: boolean;
     result?: R;
@@ -15,7 +15,7 @@ export const createDummyPromise = <R, E>({
     new Promise<R>((resolve, reject) => {
         setTimeout(() => {
             if (willResolve) {
-                resolve(result);
+                resolve(result!);
             } else {
                 reject(error);
             }

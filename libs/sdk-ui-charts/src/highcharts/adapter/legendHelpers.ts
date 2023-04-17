@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import head from "lodash/head";
 import isEmpty from "lodash/isEmpty";
 
@@ -83,7 +83,9 @@ export function calculateStaticLegend(
     };
 }
 
-const LEGEND_TEXT_KEYS = {
+type TextKeyPositionType = "left" | "right" | "bottom" | "top";
+
+const LEGEND_TEXT_KEYS: Record<string, TextKeyPositionType[]> = {
     column: ["left", "right"],
     line: ["left", "right"],
     bar: ["bottom", "top"],

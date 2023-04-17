@@ -194,8 +194,8 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps<"intl">>;
+export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps>> & {
+    WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps>;
 };
 
 // @internal

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { GridApi } from "@ag-grid-community/all-modules";
 
 function getHeaderHeight(gridApi: GridApi): number {
@@ -64,7 +64,7 @@ function removePinnedTopRowClass(gridApi: GridApi, className: string): void {
 function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyValue: string): void {
     const rowElement = getPinnedTopRowElement(gridApi);
     if (rowElement) {
-        rowElement.style[propertyName] = propertyValue;
+        (rowElement.style as unknown as Record<string, string>)[propertyName] = propertyValue;
     }
 }
 

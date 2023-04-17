@@ -33,7 +33,7 @@ export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
     fromWorkspace: (workspace: string) => this;
     // (undocumented)
-    load: (options?: IDashboardLoadOptions | undefined) => Promise<DashboardLoadResult>;
+    load: (options?: IDashboardLoadOptions) => Promise<DashboardLoadResult>;
     // (undocumented)
     onBackend: (backend: IAnalyticalBackend) => this;
     static staticOnly(): DashboardLoader;

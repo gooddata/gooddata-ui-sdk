@@ -1,7 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import merge from "lodash/merge";
 import invariant from "ts-invariant";
-import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
+import { VisualizationTypes, IDrillConfig, VisType } from "@gooddata/sdk-ui";
 import { getCommonConfiguration } from "./commonConfiguration";
 
 import { stringifyChartTypes } from "../_util/common";
@@ -27,7 +27,17 @@ import { IChartOptions } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
 import { HighchartsOptions } from "../../lib";
 
-const chartConfigurationMap = {
+type ChartConfigurationValueType = (
+    ...args: any
+) =>
+    | HighchartsOptions
+    | ReturnType<typeof getTreemapConfiguration>
+    | ReturnType<typeof getFunnelConfiguration>
+    | ReturnType<typeof getHeatmapConfiguration>;
+
+const chartConfigurationMap: {
+    [key in VisType]?: ChartConfigurationValueType;
+} = {
     [VisualizationTypes.LINE]: getLineConfiguration,
     [VisualizationTypes.BAR]: getBarConfiguration,
     [VisualizationTypes.BULLET]: getBulletConfiguration,
@@ -52,7 +62,7 @@ export function getHighchartsOptions(
     intl?: IntlShape,
     theme?: ITheme,
 ): HighchartsOptions {
-    const getConfigurationByType = chartConfigurationMap[chartOptions.type];
+    const getConfigurationByType = chartConfigurationMap[chartOptions.type as VisType];
     invariant(
         getConfigurationByType,
         `visualisation type ${chartOptions.type} is invalid (valid types: ${stringifyChartTypes()}).`,

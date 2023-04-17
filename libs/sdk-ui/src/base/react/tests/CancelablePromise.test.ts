@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { makeCancelable, CancelError } from "../CancelablePromise";
 import { createDummyPromise } from "./toolkit";
 
@@ -13,7 +13,7 @@ describe("CancelablePromise", () => {
         let error: CancelError | undefined;
         try {
             await cancelableDummyPromise.promise;
-        } catch (err) {
+        } catch (err: any) {
             error = err;
         }
 

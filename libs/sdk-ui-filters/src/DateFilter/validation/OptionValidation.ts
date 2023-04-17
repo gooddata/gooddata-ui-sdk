@@ -1,16 +1,17 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     IExtendedDateFilterErrors,
     DateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    IDateFilterOptionsByType,
 } from "../interfaces";
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions";
 import { messages } from "../../locales";
 
 const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
-    const errors: IExtendedDateFilterErrors = {};
+    const errors: { [key in keyof IDateFilterOptionsByType]?: object } = {};
     if (!filterOption.visible) {
         // indicate that the Apply button should be disabled, it makes no sense for hidden forms
         errors[filterOption.type] = {};

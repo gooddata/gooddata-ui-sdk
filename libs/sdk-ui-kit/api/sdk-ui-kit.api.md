@@ -12,7 +12,6 @@ import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
 import { DebouncedFunc } from 'lodash';
-import { FC } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
@@ -63,7 +62,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "helpMenuDropdownAlignPoints" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "onInviteItemClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "expiredDate" | "disableHelpDropdown" | "onHelpClick" | "showStaticHelpMenu" | "showUpsellButton" | "showInviteItem">>;
+export const AppHeader: React_2.ComponentType<Omit<WithIntlProps<IAppHeaderProps & WrappedComponentProps>, "theme" | "themeIsLoading">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -278,8 +277,8 @@ export const CodeOptions: React_2.VFC<ICodeOptionsProps>;
 export type Color = string;
 
 // @internal (undocumented)
-export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IColorPickerProps & WrappedComponentProps<"intl">>;
+export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedComponentProps>> & {
+    WrappedComponent: React_2.ComponentType<IColorPickerProps & WrappedComponentProps>;
 };
 
 // @internal (undocumented)
@@ -536,8 +535,8 @@ export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IFilterLabelProps & WrappedComponentProps<"intl">>;
+export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
+    WrappedComponent: React_2.ComponentType<IFilterLabelProps & WrappedComponentProps>;
 };
 
 // @internal (undocumented)
@@ -1107,73 +1106,7 @@ export type IComponentLabelsProviderProps = {
 };
 
 // @internal (undocumented)
-export const Icon: {
-    Book: FC<IIconProps>;
-    Refresh: FC<IIconProps>;
-    DrillDown: FC<IIconProps>;
-    DrillToDashboard: FC<IIconProps>;
-    DrillToInsight: FC<IIconProps>;
-    Date: FC<IIconProps>;
-    Explore: FC<IIconProps>;
-    Logout: FC<IIconProps>;
-    Lock: FC<IIconProps>;
-    Pdf: FC<IIconProps>;
-    ExternalLink: FC<IIconProps>;
-    Hyperlink: FC<IIconProps>;
-    Undo: FC<IIconProps>;
-    Home: FC<IIconProps>;
-    BurgerMenu: FC<IIconProps>;
-    Rows: FC<IRowsIconProps>;
-    DragHandle: FC<IIconProps>;
-    Interaction: FC<IIconProps>;
-    AttributeFilter: FC<IIconProps>;
-    LegendMenu: FC<IIconProps>;
-    ArrowDown: FC<IIconProps>;
-    ArrowUp: FC<IIconProps>;
-    Attribute: FC<IIconProps>;
-    Close: FC<IIconProps>;
-    Dataset: FC<IIconProps>;
-    Expand: FC<IIconProps>;
-    Contract: FC<IIconProps>;
-    Fact: FC<IIconProps>;
-    Function: FC<IIconProps>;
-    Insight: FC<IIconProps>;
-    Keyword: FC<IIconProps>;
-    Label: FC<IIconProps>;
-    Metric: FC<IIconProps>;
-    QuestionMark: FC<IIconProps>;
-    Minimize: FC<IIconProps>;
-    Dashboard: FC<IIconProps>;
-    Many: FC<IIconProps>;
-    SettingsGear: FC<IIconProps>;
-    AttachmentClip: FC<IIconProps>;
-    Table: FC<IIconProps>;
-    Column: FC<IIconProps>;
-    Bar: FC<IIconProps>;
-    Line: FC<IIconProps>;
-    StackedArea: FC<IIconProps>;
-    Combo: FC<IIconProps>;
-    HeadlineChart: FC<IIconProps>;
-    ScatterPlot: FC<IIconProps>;
-    Bubble: FC<IIconProps>;
-    Pie: FC<IIconProps>;
-    Donut: FC<IIconProps>;
-    TreeMap: FC<IIconProps>;
-    HeatMap: FC<IIconProps>;
-    Bullet: FC<IIconProps>;
-    Geo: FC<IIconProps>;
-    EmbedCodeIcon: FC<IIconProps>;
-    Error: FC<IIconProps>;
-    Aborted: FC<IIconProps>;
-    Progress: FC<IIconProps>;
-    Success: FC<IIconProps>;
-    Token: FC<IIconProps>;
-    Origin: FC<IIconProps>;
-    Leave: FC<IIconProps>;
-    Copy: FC<IIconProps>;
-    Run: FC<IIconProps>;
-    Invite: FC<IIconProps>;
-};
+export const Icon: Record<string, React.FC<IIconProps>>;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
@@ -3127,8 +3060,8 @@ export type InsightCodeType = "definition" | "reference";
 export const InsightIcon: React_2.FC<IInsightIconProps>;
 
 // @internal (undocumented)
-export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps<"intl">>;
+export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps>> & {
+    WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps>;
 };
 
 // @internal (undocumented)
@@ -3706,7 +3639,7 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooterProps {
+export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends IStylingEditorDialogFooterProps {
     // (undocumented)
     examples?: IStylingPickerItem<T>[];
     // (undocumented)
@@ -3748,7 +3681,7 @@ export interface IStylingPickerItem<T extends StylingPickerItemContent> {
 }
 
 // @internal (undocumented)
-export interface IStylingSettingWidgetProps<T> {
+export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> {
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -4060,7 +3993,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         onRangeChange: (...args: any[]) => void;
         onScrollStart: (...args: any[]) => void;
         onSelect: (...args: any[]) => void;
-        rowItem: React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any>) | (new (props: any) => React_2.Component<any, any, any>)>;
+        rowItem: React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
         scrollToSelected: boolean;
         selection: {};
     };
@@ -4590,6 +4523,6 @@ export interface UseToastMessageType {
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
 
 // @internal (undocumented)
-export const WorkspacePickerHomeFooter: React_2.ComponentType<Pick<IWorkspacePickerHomeFooterProps, "className" | "onClick" | "href">>;
+export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading">>;
 
 ```

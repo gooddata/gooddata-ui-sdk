@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import noop from "lodash/noop";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
@@ -109,7 +109,7 @@ describe("PluggableHeatmap", () => {
             ],
         };
 
-        const extendedReferencePoint = await heatmap.getExtendedReferencePoint(referencePoint);
+        const extendedReferencePoint: any = await heatmap.getExtendedReferencePoint(referencePoint);
 
         expect(extendedReferencePoint.buckets?.[0]?.items?.[0]?.[0]?.showInPercent).toBeFalsy();
     });

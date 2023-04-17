@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 /* *
  * (c) 2010-2019 Torstein Honsi
  *
@@ -30,6 +30,8 @@ export interface IBubbleSeries extends Highcharts.Series {
     radii?: Array<number | null>;
     getRadii(zMin: number, zMax: number, series: Highcharts.Series): number | null;
     options: SeriesMapbubbleOptions;
+    xData?: Array<number | null>;
+    yData?: Array<number | null>;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -132,8 +134,8 @@ export function renderBubbles(HighchartsInstance: any): void {
                 }
             });
 
-            activeSeries.forEach((series: IBubbleSeries) => {
-                const dataKey: string = isXAxis ? "xData" : "yData";
+            activeSeries.forEach((series) => {
+                const dataKey = isXAxis ? "xData" : "yData";
                 const data = series[dataKey];
                 let i = data.length;
 

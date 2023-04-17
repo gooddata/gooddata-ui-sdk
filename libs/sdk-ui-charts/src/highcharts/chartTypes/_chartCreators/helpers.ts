@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import map from "lodash/map";
@@ -20,6 +20,7 @@ import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
 import Highcharts from "../../lib";
 import { ISeriesDataItem, ISeriesItem, UnsafeInternals, IChartOptions } from "../../typings/unsafe";
+import { OptionsStackingValue, PlotOptions } from "highcharts";
 
 export interface IRectByPoints {
     left: number;
@@ -67,9 +68,12 @@ export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart): Highchart
 
 export const getChartType = (chart: Highcharts.Chart): string | undefined => chart.options.chart?.type;
 export const isStacked = (chart: Highcharts.Chart): boolean => {
-    const chartType = getChartType(chart);
+    const chartType = getChartType(chart) as keyof PlotOptions;
 
-    const isStackedByChartType = !!chart.userOptions?.plotOptions?.[chartType]?.stacking;
+    const chartTypeOptions = chart.userOptions?.plotOptions?.[chartType] as {
+        stacking?: OptionsStackingValue;
+    };
+    const isStackedByChartType = !!chartTypeOptions?.stacking;
     const isStackedBySeries = !!chart.userOptions?.plotOptions?.series?.stacking;
     const hasStackedAxis = chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks));
 
@@ -376,13 +380,19 @@ export function getAxisRangeForAxes(chart: Highcharts.Chart): IAxisRangeForAxes 
     return yAxis
         .map((axis: UnsafeInternals) => pick(axis, ["opposite", "min", "max"]))
         .map(({ opposite, min, max }: any) => ({ axis: opposite ? "second" : "first", min, max }))
-        .reduce((result: IAxisRangeForAxes, { axis, min, max }: any) => {
-            result[axis] = {
-                minAxisValue: min,
-                maxAxisValue: max,
-            };
-            return result;
-        }, {});
+        .reduce(
+            (
+                result: Record<string, { minAxisValue: number; maxAxisValue: number }>,
+                { axis, min, max }: { axis: string; min: number; max: number },
+            ) => {
+                result[axis] = {
+                    minAxisValue: min,
+                    maxAxisValue: max,
+                };
+                return result;
+            },
+            {},
+        );
 }
 
 export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean {

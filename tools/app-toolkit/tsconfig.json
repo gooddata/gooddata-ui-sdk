@@ -13,7 +13,6 @@
         "noUnusedParameters": true,
         "outDir": "dist",
         "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true,
         "baseUrl": ".."
     },
     "compileOnSave": false,

@@ -1,5 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
+import { isResultAttributeHeader, isResultMeasureHeader, isResultTotalHeader } from "@gooddata/sdk-model";
 
 /**
  * This function will mutate the incoming data view and replace headers with empty name with a fallback
@@ -14,10 +15,12 @@ export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: stri
     dataView.headerItems.forEach((dim) => {
         dim.forEach((attr) => {
             attr.forEach((item) => {
-                const type = Object.keys(item)[0];
-
-                if (["attributeHeaderItem", "measureHeaderItem", "totalHeaderItem"].indexOf(type) >= 0) {
-                    item[type].name = item[type].name || emptyHeaderString;
+                if (isResultAttributeHeader(item)) {
+                    item.attributeHeaderItem.name = item.attributeHeaderItem.name || emptyHeaderString;
+                } else if (isResultMeasureHeader(item)) {
+                    item.measureHeaderItem.name = item.measureHeaderItem.name || emptyHeaderString;
+                } else if (isResultTotalHeader(item)) {
+                    item.totalHeaderItem.name = item.totalHeaderItem.name || emptyHeaderString;
                 }
             });
         });

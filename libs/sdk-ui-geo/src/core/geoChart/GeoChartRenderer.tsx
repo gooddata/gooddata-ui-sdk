@@ -273,13 +273,15 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
 
     private toggleInteractionEvents = (): void => {
         const isViewportFrozen = this.isViewportFrozen();
-        const chart = this.chart;
+        const chart:
+            | { [key in typeof INTERACTION_EVENTS[number]]?: { disable?: () => void; enable?: () => void } }
+            | undefined = this.chart;
         if (chart === undefined) {
             return;
         }
 
         const action = isViewportFrozen ? "disable" : "enable";
-        INTERACTION_EVENTS.forEach((interactionEvent: string): void => chart[interactionEvent][action]());
+        INTERACTION_EVENTS.forEach((interactionEvent): void => chart[interactionEvent]?.[action]?.());
     };
 
     private updatePanAndZoom = (): void => {

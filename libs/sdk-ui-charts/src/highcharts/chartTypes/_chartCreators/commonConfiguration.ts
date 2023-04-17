@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import invoke from "lodash/invoke";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
@@ -13,7 +13,7 @@ import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities"
 import { IChartOptions } from "../../typings/unsafe";
 import { ITheme } from "@gooddata/sdk-model";
 
-const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
+const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
 export const DEFAULT_SERIES_LIMIT = 1000;

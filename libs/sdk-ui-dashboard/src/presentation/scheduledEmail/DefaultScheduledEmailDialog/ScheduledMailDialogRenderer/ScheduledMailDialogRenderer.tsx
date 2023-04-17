@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import * as React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import differenceBy from "lodash/differenceBy";
@@ -20,6 +20,7 @@ import {
     isWidgetAttachment,
     ScheduledMailAttachment,
     IWorkspaceUser,
+    UriRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError, withContexts } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
@@ -770,10 +771,13 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                       includeFilters: configuration.includeFilters,
                   }
                 : undefined;
-        const widgetsRefStringToUriRefMap = this.props.dashboardInsightWidgets.reduce((acc, widget) => {
-            acc[objRefToString(widget)] = uriRef(widget.uri);
-            return acc;
-        }, {});
+        const widgetsRefStringToUriRefMap = this.props.dashboardInsightWidgets.reduce(
+            (acc: Record<string, UriRef>, widget) => {
+                acc[objRefToString(widget)] = uriRef(widget.uri);
+                return acc;
+            },
+            {},
+        );
         for (const widgetRefString in widgetsSelected) {
             if (widgetsSelected[widgetRefString]) {
                 result.push({

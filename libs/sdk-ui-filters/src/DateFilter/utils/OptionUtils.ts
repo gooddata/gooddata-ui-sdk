@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     DateFilterOption,
@@ -31,16 +31,22 @@ function pickDateFilterOptionIfVisible<T extends IDateFilterOption>(option: T) {
 function filterVisibleRelativePresets(
     relativePreset: DateFilterRelativeOptionGroup,
 ): DateFilterRelativeOptionGroup {
-    return Object.keys(relativePreset).reduce((filtered: DateFilterRelativeOptionGroup, granularity) => {
-        const presetsOfGranularity: IRelativeDateFilterPreset[] = relativePreset[granularity];
-        const visiblePresetsOfGranularity = presetsOfGranularity.filter(isDateFilterOptionVisible);
+    return Object.keys(relativePreset).reduce(
+        (
+            filtered: { [key in DateFilterGranularity]?: IRelativeDateFilterPreset[] },
+            granularity: DateFilterGranularity,
+        ) => {
+            const presetsOfGranularity: IRelativeDateFilterPreset[] = relativePreset[granularity];
+            const visiblePresetsOfGranularity = presetsOfGranularity.filter(isDateFilterOptionVisible);
 
-        if (visiblePresetsOfGranularity.length) {
-            filtered[granularity] = visiblePresetsOfGranularity;
-        }
+            if (visiblePresetsOfGranularity.length) {
+                filtered[granularity] = visiblePresetsOfGranularity;
+            }
 
-        return filtered;
-    }, {});
+            return filtered;
+        },
+        {},
+    ) as DateFilterRelativeOptionGroup;
 }
 
 function removeEmptyKeysFromDateFilterOptions(
@@ -100,12 +106,18 @@ function sanitizePreset<T extends IAbsoluteDateFilterPreset | IRelativeDateFilte
 function sanitizeRelativePresets(
     relativePreset: DateFilterRelativeOptionGroup,
 ): DateFilterRelativeOptionGroup {
-    return Object.keys(relativePreset).reduce((filtered: DateFilterRelativeOptionGroup, granularity) => {
-        const presetsOfGranularity: IRelativeDateFilterPreset[] = relativePreset[granularity];
-        filtered[granularity] = presetsOfGranularity.map(sanitizePreset);
+    return Object.keys(relativePreset).reduce(
+        (
+            filtered: { [key in DateFilterGranularity]?: IRelativeDateFilterPreset[] },
+            granularity: DateFilterGranularity,
+        ) => {
+            const presetsOfGranularity: IRelativeDateFilterPreset[] = relativePreset[granularity];
+            filtered[granularity] = presetsOfGranularity.map(sanitizePreset);
 
-        return filtered;
-    }, {});
+            return filtered;
+        },
+        {},
+    ) as DateFilterRelativeOptionGroup;
 }
 
 /**
