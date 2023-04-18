@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ActionOptions, AppTemplate, TargetAppLanguage } from "../_base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import * as path from "path";
@@ -58,6 +58,18 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             },
             {
                 regex: /\{\{language\}\}/g,
+                value: language,
+            },
+        ],
+        "src/App.tsx": [
+            {
+                regex: /\[\[language]]/g,
+                value: language,
+            },
+        ],
+        "src/App.jsx": [
+            {
+                regex: /\[\[language]]/g,
                 value: language,
             },
         ],
