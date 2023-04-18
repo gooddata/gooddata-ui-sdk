@@ -38,6 +38,7 @@ export interface IEmbedInsightDialogProps {
     colorPalette?: IColorPalette;
     executionConfig?: IExecutionConfig;
     workspaceId?: string;
+    showWebComponentsTab?: boolean;
 
     openSaveInsightDialog: () => void;
     onClose: () => void;
@@ -48,7 +49,7 @@ export interface IEmbedInsightDialogProps {
  * @internal
  */
 export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) => {
-    const { locale, openSaveInsightDialog, onClose, onCopyCode } = props;
+    const { locale, openSaveInsightDialog, onClose, onCopyCode, showWebComponentsTab } = props;
 
     const {
         code,
@@ -66,6 +67,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
                 <EmbedInsightDialogBase
                     code={code}
                     propertiesLink={documentationLink}
+                    showWebComponentsTab={showWebComponentsTab}
                     integrationDocLink={integrationDocLink}
                     openSaveInsightDialog={openSaveInsightDialog}
                     onClose={onClose}

@@ -44,6 +44,7 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                 <EmbedInsightDialogBase
                     code={code}
                     embedTab={"react"}
+                    showWebComponentsTab={true}
                     embedTypeOptions={reactOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
@@ -66,6 +67,7 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                 <EmbedInsightDialogBase
                     code={""}
                     embedTab={"react"}
+                    showWebComponentsTab={true}
                     embedTypeOptions={reactOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
@@ -82,12 +84,36 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                 />
 
                 <div className="library-component">
+                    <h4>EmbedInsightDialogBase without Web component tab</h4>
+                </div>
+
+                <EmbedInsightDialogBase
+                    code={""}
+                    embedTab={"react"}
+                    showWebComponentsTab={false}
+                    embedTypeOptions={reactOptions}
+                    propertiesLink={
+                        "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
+                    }
+                    integrationDocLink={"https://sdk.gooddata.com/gooddata-ui/docs/platform_integration.html"}
+                    onClose={action("onClose")}
+                    onCopyCode={action("onCopyCode")}
+                    onTabChange={action("onTabChange")}
+                    onOptionsChange={(opts) => {
+                        setReactOptions(opts as IReactOptions);
+                        action("onOptionChange");
+                    }}
+                    openSaveInsightDialog={action("openSaveInsightDialog")}
+                />
+
+                <div className="library-component">
                     <h4>EmbedInsightDialogBase by Web component</h4>
                 </div>
 
                 <EmbedInsightDialogBase
                     code={code}
                     embedTab={"webComponents"}
+                    showWebComponentsTab={true}
                     embedTypeOptions={webComponentOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
@@ -110,6 +136,7 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                 <EmbedInsightDialogBase
                     code={""}
                     embedTab={"webComponents"}
+                    showWebComponentsTab={true}
                     embedTypeOptions={webComponentOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"

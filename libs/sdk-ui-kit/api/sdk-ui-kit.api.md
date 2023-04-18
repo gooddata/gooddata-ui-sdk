@@ -1565,6 +1565,7 @@ export type IEmbedInsightDialogBaseProps = {
     embedTypeOptions: IReactOptions | IWebComponentsOptions;
     propertiesLink?: string;
     integrationDocLink?: string;
+    showWebComponentsTab?: boolean;
     openSaveInsightDialog: () => void;
     onClose: () => void;
     onCopyCode: (code: string, type: CopyCodeOriginType, codeType: EmbedType) => void;
