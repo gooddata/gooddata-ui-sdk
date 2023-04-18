@@ -13,9 +13,7 @@
 # Note that you need to make sure that the tests you choose by the tags can
 # run against the SDK_BACKEND you provide
 
-if [ -z "$JENKINS_URL" ]; then
-    export $(grep -v '^#' .env | xargs -0)
-fi
+export $(grep -v '^#' .env | xargs -0)
 
 if [ -z "$SDK_BACKEND" ]; then
     echo "Isolated tests need SDK_BACKEND"
