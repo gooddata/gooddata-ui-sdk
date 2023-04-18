@@ -3,9 +3,7 @@
     "include": ["src/index.ts", "src/typings.d.ts", "src/internal/index.ts"],
     "compilerOptions": {
         "baseUrl": null,
-        "paths": {
-            "reselect": ["../../common/temp/node_modules/.pnpm/reselect@4.1.7/node_modules/reselect/es"]
-        },
+        "paths": null,
         "declaration": true
     }
 }

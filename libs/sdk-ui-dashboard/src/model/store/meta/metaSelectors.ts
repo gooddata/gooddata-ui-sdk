@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     idRef,
@@ -12,6 +12,12 @@ import {
     IDashboardObjectIdentity,
     IDashboard,
     UriRef,
+    IFilterContext,
+    ITempFilterContext,
+    ObjRef,
+    IdentifierRef,
+    ShareStatus,
+    IDashboardWidget,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardSelector, DashboardState } from "../types";
@@ -26,6 +32,7 @@ import {
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
 import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors";
+import { DashboardDescriptor } from "./metaState";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -37,11 +44,14 @@ const selectSelf = createSelector(
  *
  * @internal
  */
-export const selectDashboardDescriptor = createSelector(selectSelf, (state) => {
-    invariant(state.descriptor, "attempting to access uninitialized meta state");
+export const selectDashboardDescriptor: DashboardSelector<DashboardDescriptor> = createSelector(
+    selectSelf,
+    (state) => {
+        invariant(state.descriptor, "attempting to access uninitialized meta state");
 
-    return state.descriptor!;
-});
+        return state.descriptor!;
+    },
+);
 
 /**
  * Selects persisted IDashboard object - that is the IDashboard object that was used to initialize the rest
@@ -67,7 +77,9 @@ export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  */
-export const selectPersistedDashboardFilterContext = createSelector(selectSelf, (state) => {
+export const selectPersistedDashboardFilterContext: DashboardSelector<
+    IFilterContext | ITempFilterContext | undefined
+> = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.filterContext ?? undefined;
 });
 
@@ -80,7 +92,9 @@ export const selectPersistedDashboardFilterContext = createSelector(selectSelf, 
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  */
-export const selectPersistedDashboardFilterContextAsFilterContextDefinition = createSelector(
+export const selectPersistedDashboardFilterContextAsFilterContextDefinition: DashboardSelector<
+    IFilterContextDefinition | undefined
+> = createSelector(
     selectPersistedDashboardFilterContext,
     (filterContext): IFilterContextDefinition | undefined => {
         if (!filterContext) {
@@ -110,9 +124,12 @@ export const selectPersistedDashboardFilterContextAsFilterContextDefinition = cr
  *
  * @public
  */
-export const selectDashboardRef = createSelector(selectPersistedDashboard, (state) => {
-    return state?.ref ?? undefined;
-});
+export const selectDashboardRef: DashboardSelector<ObjRef | undefined> = createSelector(
+    selectPersistedDashboard,
+    (state) => {
+        return state?.ref ?? undefined;
+    },
+);
 
 /**
  * Selects identifier of the persisted dashboard object that backs and is rendered-by the dashboard component.
@@ -155,9 +172,12 @@ export const selectDashboardUri: DashboardSelector<string | undefined> = createS
  *
  * @public
  */
-export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
-    return id ? idRef(id, "analyticalDashboard") : undefined;
-});
+export const selectDashboardIdRef: DashboardSelector<IdentifierRef | undefined> = createSelector(
+    selectDashboardId,
+    (id) => {
+        return id ? idRef(id, "analyticalDashboard") : undefined;
+    },
+);
 
 /**
  * Selects uriRef of the persisted dashboard object that backs and is rendered-by the dashboard component.
@@ -180,7 +200,10 @@ export const selectDashboardUriRef: DashboardSelector<UriRef | undefined> = crea
  *
  * @internal
  */
-export const selectIsNewDashboard = createSelector(selectDashboardRef, isUndefined);
+export const selectIsNewDashboard: DashboardSelector<boolean> = createSelector(
+    selectDashboardRef,
+    isUndefined,
+);
 
 //
 //
@@ -203,45 +226,60 @@ export const selectDashboardTitle: DashboardSelector<string> = createSelector(
  *
  * @public
  */
-export const selectDashboardDescription = createSelector(selectDashboardDescriptor, (state) => {
-    return state.description;
-});
+export const selectDashboardDescription: DashboardSelector<string> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.description;
+    },
+);
 
 /**
  * Selects dashboard tags.
  *
  * @public
  */
-export const selectDashboardTags = createSelector(selectDashboardDescriptor, (state) => {
-    return state.tags ?? [];
-});
+export const selectDashboardTags: DashboardSelector<string[]> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.tags ?? [];
+    },
+);
 
 /**
  * Selects dashboard share status.
  *
  * @alpha
  */
-export const selectDashboardShareStatus = createSelector(selectDashboardDescriptor, (state) => {
-    return state.shareStatus;
-});
+export const selectDashboardShareStatus: DashboardSelector<ShareStatus> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.shareStatus;
+    },
+);
 
 /**
  * Returns whether dashboard is private.
  *
  * @alpha
  */
-export const selectIsDashboardPrivate = createSelector(selectDashboardShareStatus, (status) => {
-    return status === "private";
-});
+export const selectIsDashboardPrivate: DashboardSelector<boolean> = createSelector(
+    selectDashboardShareStatus,
+    (status) => {
+        return status === "private";
+    },
+);
 
 /**
  * Selects dashboard lock status.
  *
  * @alpha
  */
-export const selectDashboardLockStatus = createSelector(selectDashboardDescriptor, (state) => {
-    return state.isLocked ?? false;
-});
+export const selectDashboardLockStatus: DashboardSelector<boolean> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.isLocked ?? false;
+    },
+);
 
 /**
  * Selects complete dashboard share info.
@@ -329,7 +367,7 @@ const selectPersistedDashboardLayout = createSelector(selectSelf, (state) => {
  *
  * @internal
  */
-export const selectIsDateFilterChanged = createSelector(
+export const selectIsDateFilterChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardFilterContextDateFilter,
     selectFilterContextDateFilter,
     (persistedDateFilter, currentDateFilter) => {
@@ -342,7 +380,7 @@ export const selectIsDateFilterChanged = createSelector(
  *
  * @internal
  */
-export const selectIsAttributeFiltersChanged = createSelector(
+export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardFilterContextAttributeFilters,
     selectFilterContextAttributeFilters,
     (persistedAttributeFilters, currentAttributeFilters) => {
@@ -355,7 +393,7 @@ export const selectIsAttributeFiltersChanged = createSelector(
  *
  * @internal
  */
-export const selectIsFiltersChanged = createSelector(
+export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector(
     selectIsDateFilterChanged,
     selectIsAttributeFiltersChanged,
     (isDateFilterChanged, isAttributeFiltersChanged) => {
@@ -368,7 +406,7 @@ export const selectIsFiltersChanged = createSelector(
  *
  * @internal
  */
-export const selectIsTitleChanged = createSelector(
+export const selectIsTitleChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardTitle,
     selectDashboardTitle,
     (persistedTitle, currentTitle) => {
@@ -381,7 +419,7 @@ export const selectIsTitleChanged = createSelector(
  *
  * @internal
  */
-export const selectIsLayoutChanged = createSelector(
+export const selectIsLayoutChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardLayout,
     selectBasicLayout,
     (persistedLayout, currentLayout) => {
@@ -412,40 +450,41 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
 /**
  * @internal
  */
-export const selectDashboardWorkingDefinition = createSelector(
-    selectPersistedDashboard,
-    selectDashboardDescriptor,
-    selectFilterContextDefinition,
-    selectFilterContextIdentity,
-    selectBasicLayout,
-    selectDateFilterConfigOverrides,
-    (
-        persistedDashboard,
-        dashboardDescriptor,
-        filterContextDefinition,
-        filterContextIdentity,
-        layout,
-        dateFilterConfig,
-    ): IDashboardDefinition => {
-        const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
-            ref: persistedDashboard?.ref,
-            uri: persistedDashboard?.uri,
-            identifier: persistedDashboard?.identifier,
-        };
-
-        const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
-
-        return {
-            type: "IDashboard",
-            ...dashboardDescriptor,
-            ...dashboardIdentity,
-            filterContext: {
-                ...filterContextIdentity,
-                ...filterContextDefinition,
-            },
+export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefinition<IDashboardWidget>> =
+    createSelector(
+        selectPersistedDashboard,
+        selectDashboardDescriptor,
+        selectFilterContextDefinition,
+        selectFilterContextIdentity,
+        selectBasicLayout,
+        selectDateFilterConfigOverrides,
+        (
+            persistedDashboard,
+            dashboardDescriptor,
+            filterContextDefinition,
+            filterContextIdentity,
             layout,
             dateFilterConfig,
-            ...pluginsProp,
-        };
-    },
-);
+        ): IDashboardDefinition => {
+            const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
+                ref: persistedDashboard?.ref,
+                uri: persistedDashboard?.uri,
+                identifier: persistedDashboard?.identifier,
+            };
+
+            const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
+
+            return {
+                type: "IDashboard",
+                ...dashboardDescriptor,
+                ...dashboardIdentity,
+                filterContext: {
+                    ...filterContextIdentity,
+                    ...filterContextDefinition,
+                },
+                layout,
+                dateFilterConfig,
+                ...pluginsProp,
+            };
+        },
+    );

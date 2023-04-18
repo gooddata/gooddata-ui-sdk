@@ -1,6 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
 
 const selectSelf = createSelector(
@@ -13,18 +14,21 @@ const selectSelf = createSelector(
  *
  * @public
  */
-export const selectBackendCapabilities = createSelector(selectSelf, (state) => {
-    invariant(state.backendCapabilities, "attempting to access uninitialized backend capabilities");
+export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities> = createSelector(
+    selectSelf,
+    (state) => {
+        invariant(state.backendCapabilities, "attempting to access uninitialized backend capabilities");
 
-    return state.backendCapabilities!;
-});
+        return state.backendCapabilities!;
+    },
+);
 
 /**
  * This selector returns capability if parent child filtering is enabled.
  *
  * @public
  */
-export const selectSupportsElementsQueryParentFiltering = createSelector(
+export const selectSupportsElementsQueryParentFiltering: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsElementsQueryParentFiltering ?? false,
 );
@@ -34,7 +38,7 @@ export const selectSupportsElementsQueryParentFiltering = createSelector(
  *
  * @internal
  */
-export const selectSupportsKpiWidgetCapability = createSelector(
+export const selectSupportsKpiWidgetCapability: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsKpiWidget ?? false,
 );
@@ -44,7 +48,7 @@ export const selectSupportsKpiWidgetCapability = createSelector(
  *
  * @internal
  */
-export const selectSupportsAccessControlCapability = createSelector(
+export const selectSupportsAccessControlCapability: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsAccessControl ?? false,
 );
@@ -54,7 +58,7 @@ export const selectSupportsAccessControlCapability = createSelector(
  *
  * @internal
  */
-export const selectSupportsHierarchicalWorkspacesCapability = createSelector(
+export const selectSupportsHierarchicalWorkspacesCapability: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsHierarchicalWorkspaces ?? false,
 );
@@ -64,7 +68,7 @@ export const selectSupportsHierarchicalWorkspacesCapability = createSelector(
  *
  * @internal
  */
-export const selectSupportsElementUris = createSelector(
+export const selectSupportsElementUris: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsElementUris ?? false,
 );
@@ -74,7 +78,7 @@ export const selectSupportsElementUris = createSelector(
  *
  * @internal
  */
-export const selectSupportsExportToCsv = createSelector(
+export const selectSupportsExportToCsv: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.canExportCsv ?? false,
 );
@@ -84,7 +88,7 @@ export const selectSupportsExportToCsv = createSelector(
  *
  * @internal
  */
-export const selectSupportsExportToXlsx = createSelector(
+export const selectSupportsExportToXlsx: DashboardSelector<boolean> = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.canExportXlsx ?? false,
 );

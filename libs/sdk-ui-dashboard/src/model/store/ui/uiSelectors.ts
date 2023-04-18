@@ -5,10 +5,12 @@ import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import union from "lodash/union";
 import filter from "lodash/filter";
 import { selectWidgetsMap } from "../layout/layoutSelectors";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
+import { DraggableLayoutItem } from "../../../presentation";
 import { InvalidCustomUrlDrillParameterInfo } from "./uiState";
 
 const selectSelf = createSelector(
@@ -19,7 +21,7 @@ const selectSelf = createSelector(
 /**
  * @alpha
  */
-export const selectIsScheduleEmailDialogOpen = createSelector(
+export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.scheduleEmailDialog.open,
 );
@@ -27,15 +29,13 @@ export const selectIsScheduleEmailDialogOpen = createSelector(
 /**
  * @alpha
  */
-export const selectScheduleEmailDialogDefaultAttachment = createSelector(
-    selectSelf,
-    (state) => state.scheduleEmailDialog.defaultAttachmentRef ?? undefined,
-);
+export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined> =
+    createSelector(selectSelf, (state) => state.scheduleEmailDialog.defaultAttachmentRef ?? undefined);
 
 /**
  * @alpha
  */
-export const selectIsScheduleEmailManagementDialogOpen = createSelector(
+export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.scheduleEmailManagementDialog.open,
 );
@@ -43,22 +43,31 @@ export const selectIsScheduleEmailManagementDialogOpen = createSelector(
 /**
  * @alpha
  */
-export const selectIsSaveAsDialogOpen = createSelector(selectSelf, (state) => state.saveAsDialog.open);
+export const selectIsSaveAsDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.saveAsDialog.open,
+);
 
 /**
  * @alpha
  */
-export const selectIsShareDialogOpen = createSelector(selectSelf, (state) => state.shareDialog.open);
+export const selectIsShareDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.shareDialog.open,
+);
 
 /**
  * @internal
  */
-export const selectIsDeleteDialogOpen = createSelector(selectSelf, (state) => state.deleteDialog.open);
+export const selectIsDeleteDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.deleteDialog.open,
+);
 
 /**
  * @internal
  */
-export const selectIsKpiDeleteDialogOpen = createSelector(
+export const selectIsKpiDeleteDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => !!state.kpiDeleteDialog.widgetCoordinates,
 );
@@ -66,7 +75,7 @@ export const selectIsKpiDeleteDialogOpen = createSelector(
 /**
  * @internal
  */
-export const selectIsCancelEditModeDialogOpen = createSelector(
+export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => !!state.cancelEditModeDialog.open,
 );
@@ -74,15 +83,16 @@ export const selectIsCancelEditModeDialogOpen = createSelector(
 /**
  * @internal
  */
-export const selectKpiDeleteDialogWidgetCoordinates = createSelector(
-    selectSelf,
-    (state) => state.kpiDeleteDialog.widgetCoordinates,
-);
+export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectSelf, (state) => state.kpiDeleteDialog.widgetCoordinates);
 
 /**
  * @alpha
  */
-export const selectFilterBarExpanded = createSelector(selectSelf, (state) => state.filterBar.expanded);
+export const selectFilterBarExpanded: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.filterBar.expanded,
+);
 
 const selectHighlightedKpiWidgetRef = createSelector(
     selectSelf,
@@ -151,7 +161,7 @@ export const selectIsKpiAlertHighlightedByWidgetRef = createMemoizedSelector(
 /**
  * @alpha
  */
-export const selectMenuButtonItemsVisibility = createSelector(
+export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItemsVisibility> = createSelector(
     selectSelf,
     (state) => state.menuButton.itemsVisibility ?? {},
 );
@@ -159,12 +169,15 @@ export const selectMenuButtonItemsVisibility = createSelector(
 /**
  * @internal
  */
-export const selectSelectedWidgetRef = createSelector(selectSelf, (state) => state.selectedWidgetRef);
+export const selectSelectedWidgetRef: DashboardSelector<ObjRef | undefined> = createSelector(
+    selectSelf,
+    (state) => state.selectedWidgetRef,
+);
 
 /**
  * @internal
  */
-export const selectConfigurationPanelOpened = createSelector(
+export const selectConfigurationPanelOpened: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.configurationPanelOpened,
 );
@@ -172,7 +185,7 @@ export const selectConfigurationPanelOpened = createSelector(
 /**
  * @internal
  */
-export const selectWidgetDateDatasetAutoSelect = createSelector(
+export const selectWidgetDateDatasetAutoSelect: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.widgetDateDatasetAutoSelect,
 );
@@ -180,12 +193,12 @@ export const selectWidgetDateDatasetAutoSelect = createSelector(
 /**
  * @internal
  */
-export const selectInsightListLastUpdateRequested = createSelector(
+export const selectInsightListLastUpdateRequested: DashboardSelector<number> = createSelector(
     selectSelf,
     (state) => state.insightListLastUpdateRequested,
 );
 
-const selectWidgetsLoadingAdditionalData = createSelector(
+const selectWidgetsLoadingAdditionalData: DashboardSelector<ObjRef[]> = createSelector(
     selectSelf,
     (state) => state.widgetsLoadingAdditionalData,
 );
@@ -193,16 +206,17 @@ const selectWidgetsLoadingAdditionalData = createSelector(
 /**
  * @internal
  */
-export const selectIsWidgetLoadingAdditionalDataByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectWidgetsLoadingAdditionalData, (widgetsLoading) => {
-        return widgetsLoading.some((loadingRef) => areObjRefsEqual(loadingRef, ref));
-    }),
-);
+export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (refs: ObjRef) => DashboardSelector<boolean> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(selectWidgetsLoadingAdditionalData, (widgetsLoading) => {
+            return widgetsLoading.some((loadingRef) => areObjRefsEqual(loadingRef, ref));
+        }),
+    );
 
 /**
  * @alpha
  */
-export const selectIsFilterAttributeSelectionOpen = createSelector(
+export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.filterAttributeSelectionOpen,
 );
@@ -210,12 +224,15 @@ export const selectIsFilterAttributeSelectionOpen = createSelector(
 /**
  * @alpha
  */
-export const selectSelectedFilterIndex = createSelector(selectSelf, (state) => state.selectedFilterIndex);
+export const selectSelectedFilterIndex: DashboardSelector<number | undefined> = createSelector(
+    selectSelf,
+    (state) => state.selectedFilterIndex,
+);
 
 /**
  * @internal
  */
-export const selectIsDraggingWidget = createSelector(
+export const selectIsDraggingWidget: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.draggingWidgetSource !== undefined,
 );
@@ -223,12 +240,15 @@ export const selectIsDraggingWidget = createSelector(
 /**
  * @internal
  */
-export const selectActiveSectionIndex = createSelector(selectSelf, (state) => state.activeSectionIndex);
+export const selectActiveSectionIndex: DashboardSelector<number | undefined> = createSelector(
+    selectSelf,
+    (state) => state.activeSectionIndex,
+);
 
 /**
  * @internal
  */
-export const selectInvalidDrillWidgetRefs = createSelector(
+export const selectInvalidDrillWidgetRefs: DashboardSelector<ObjRef[]> = createSelector(
     selectSelf,
     (state) => state.drillValidationMessages.invalidDrillWidgetRefs,
 );
@@ -241,7 +261,7 @@ const selectInvalidCustomUrlDrillParameterWidgets = createSelector(
 /**
  * @internal
  */
-export const selectInvalidUrlDrillParameterWidgetRefs = createSelector(
+export const selectInvalidUrlDrillParameterWidgetRefs: DashboardSelector<ObjRef[]> = createSelector(
     selectInvalidCustomUrlDrillParameterWidgets,
     (invalidCustomUrlDrillParameterWidgets) => invalidCustomUrlDrillParameterWidgets.map((i) => i.widgetRef),
 );
@@ -249,7 +269,7 @@ export const selectInvalidUrlDrillParameterWidgetRefs = createSelector(
 /**
  * @internal
  */
-export const selectInvalidUrlDrillParameterWidgetWarnings = createSelector(
+export const selectInvalidUrlDrillParameterWidgetWarnings: DashboardSelector<ObjRef[]> = createSelector(
     selectInvalidCustomUrlDrillParameterWidgets,
     (invalidCustomUrlDrillParameterWidgets) =>
         invalidCustomUrlDrillParameterWidgets.filter((item) => item.showMessage).map((i) => i.widgetRef),
@@ -269,7 +289,9 @@ const selectInvalidUrlDrillParameterWidgetsMap = createSelector(
 /**
  * @internal
  */
-export const selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<string[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectInvalidUrlDrillParameterWidgetsMap,
         (invalidParameterWidgetsMap) =>
@@ -280,72 +302,94 @@ export const selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef = createMemo
 /**
  * @internal
  */
-export const selectDraggingWidgetSource = createSelector(selectSelf, (state) => state.draggingWidgetSource);
-
-/**
- * @internal
- */
-export const selectDraggingWidgetTarget = createSelector(selectSelf, (state) => state.draggingWidgetTarget);
-
-/**
- * @internal
- */
-export const selectWidgetsOverlay = createSelector(selectSelf, (state) => state.widgetsOverlay);
-
-/**
- * @internal
- */
-export const selectWidgetsOverlayState = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
-    createSelector(selectWidgetsOverlay, (overlay): boolean => {
-        return refs.every((ref) => {
-            return (ref && overlay[objRefToString(ref)]?.showOverlay) ?? false;
-        });
-    }),
+export const selectDraggingWidgetSource: DashboardSelector<DraggableLayoutItem | undefined> = createSelector(
+    selectSelf,
+    (state) => state.draggingWidgetSource,
 );
 
 /**
  * @internal
  */
-export const selectWidgetsModification = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
-    createSelector(selectWidgetsOverlay, (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
-        return refs.reduce((modification, ref) => {
-            const item = ref && overlay[objRefToString(ref)];
-            if (item?.modification) {
-                return union(modification, [item.modification]);
-            }
-            return modification;
-        }, [] as Required<IDashboardWidgetOverlay>["modification"][]);
-    }),
+export const selectDraggingWidgetTarget: DashboardSelector<ILayoutCoordinates | undefined> = createSelector(
+    selectSelf,
+    (state) => state.draggingWidgetTarget,
 );
 
 /**
  * @internal
  */
-export const selectSectionModification = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
-    createSelector(selectWidgetsOverlay, (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
-        const modifications = refs.map((ref) => {
-            const item = ref && overlay[objRefToString(ref)];
-            return item?.modification;
-        });
+export const selectWidgetsOverlay: DashboardSelector<Record<string, IDashboardWidgetOverlay>> =
+    createSelector(selectSelf, (state) => state.widgetsOverlay);
 
-        const inserted = filter(modifications, (a) => a === "insertedByPlugin");
-        const modified = filter(modifications, (a) => a === "modifiedByPlugin");
+/**
+ * @internal
+ */
+export const selectWidgetsOverlayState: (refs: (ObjRef | undefined)[]) => DashboardSelector<boolean> =
+    createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
+        createSelector(selectWidgetsOverlay, (overlay): boolean => {
+            return refs.every((ref) => {
+                return (ref && overlay[objRefToString(ref)]?.showOverlay) ?? false;
+            });
+        }),
+    );
 
-        return [
-            ...(inserted.length === refs.length ? ["insertedByPlugin"] : []),
-            ...(modified.length === refs.length ? ["modifiedByPlugin"] : []),
-        ] as Required<IDashboardWidgetOverlay>["modification"][];
-    }),
+/**
+ * @internal
+ */
+export const selectWidgetsModification: (
+    refs: (ObjRef | undefined)[],
+) => DashboardSelector<("insertedByPlugin" | "modifiedByPlugin")[]> = createMemoizedSelector(
+    (refs: (ObjRef | undefined)[]) =>
+        createSelector(
+            selectWidgetsOverlay,
+            (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
+                return refs.reduce((modification, ref) => {
+                    const item = ref && overlay[objRefToString(ref)];
+                    if (item?.modification) {
+                        return union(modification, [item.modification]);
+                    }
+                    return modification;
+                }, [] as Required<IDashboardWidgetOverlay>["modification"][]);
+            },
+        ),
 );
 
 /**
  * @internal
  */
-export const selectIsSectionInsertedByPlugin = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
-    createSelector(
-        selectSectionModification(refs),
-        // When all the widgets in the section were inserted by the plugin,
-        // the section was added by the plugin as well (empty section(s) cannot be added)
-        (modifications) => modifications.length > 0 && modifications.every((m) => m === "insertedByPlugin"),
-    ),
+export const selectSectionModification: (
+    refs: (ObjRef | undefined)[],
+) => DashboardSelector<("insertedByPlugin" | "modifiedByPlugin")[]> = createMemoizedSelector(
+    (refs: (ObjRef | undefined)[]) =>
+        createSelector(
+            selectWidgetsOverlay,
+            (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
+                const modifications = refs.map((ref) => {
+                    const item = ref && overlay[objRefToString(ref)];
+                    return item?.modification;
+                });
+
+                const inserted = filter(modifications, (a) => a === "insertedByPlugin");
+                const modified = filter(modifications, (a) => a === "modifiedByPlugin");
+
+                return [
+                    ...(inserted.length === refs.length ? ["insertedByPlugin"] : []),
+                    ...(modified.length === refs.length ? ["modifiedByPlugin"] : []),
+                ] as Required<IDashboardWidgetOverlay>["modification"][];
+            },
+        ),
 );
+
+/**
+ * @internal
+ */
+export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => DashboardSelector<boolean> =
+    createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
+        createSelector(
+            selectSectionModification(refs),
+            // When all the widgets in the section were inserted by the plugin,
+            // the section was added by the plugin as well (empty section(s) cannot be added)
+            (modifications) =>
+                modifications.length > 0 && modifications.every((m) => m === "insertedByPlugin"),
+        ),
+    );

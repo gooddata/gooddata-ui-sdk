@@ -1,10 +1,13 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap";
 import {
     IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
     ICatalogDateAttribute,
+    ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogMeasure,
 } from "@gooddata/sdk-model";
 
 import {
@@ -41,72 +44,98 @@ export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]> = c
 /**
  * @alpha
  */
-export const selectHasCatalogAttributes = createSelector(selectCatalogAttributes, negate(isEmpty));
+export const selectHasCatalogAttributes: DashboardSelector<boolean> = createSelector(
+    selectCatalogAttributes,
+    negate(isEmpty),
+);
 
 /**
  * @public
  */
-export const selectCatalogAttributeDisplayForms = createSelector(selectCatalogAttributes, (attributes) => {
-    return flatMap(attributes, (attribute) => [...attribute.displayForms, ...attribute.geoPinDisplayForms]);
-});
+export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDisplayFormMetadataObject[]> =
+    createSelector(selectCatalogAttributes, (attributes) => {
+        return flatMap(attributes, (attribute) => [
+            ...attribute.displayForms,
+            ...attribute.geoPinDisplayForms,
+        ]);
+    });
 
 /**
  * @public
  */
-export const selectCatalogMeasures = createSelector(selectSelf, (state) => {
-    return state.measures ?? [];
-});
+export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.measures ?? [];
+    },
+);
 
 /**
  * @alpha
  */
-export const selectHasCatalogMeasures = createSelector(selectCatalogMeasures, negate(isEmpty));
+export const selectHasCatalogMeasures: DashboardSelector<boolean> = createSelector(
+    selectCatalogMeasures,
+    negate(isEmpty),
+);
 
 /**
  * @public
  */
-export const selectCatalogFacts = createSelector(selectSelf, (state) => {
+export const selectCatalogFacts: DashboardSelector<ICatalogFact[]> = createSelector(selectSelf, (state) => {
     return state.facts ?? [];
 });
 
 /**
  * @alpha
  */
-export const selectHasCatalogFacts = createSelector(selectCatalogFacts, negate(isEmpty));
+export const selectHasCatalogFacts: DashboardSelector<boolean> = createSelector(
+    selectCatalogFacts,
+    negate(isEmpty),
+);
 
 /**
  * @public
  */
-export const selectCatalogDateDatasets = createSelector(selectSelf, (state) => {
-    return state.dateDatasets ?? [];
-});
-
-/**
- * @alpha
- */
-export const selectHasCatalogDateDatasets = createSelector(selectCatalogDateDatasets, negate(isEmpty));
-
-/**
- * @public
- */
-export const selectCatalogDateAttributes = createSelector(selectCatalogDateDatasets, (dateDatasets) => {
-    return flatMap(dateDatasets, (dd) => dd.dateAttributes);
-});
-
-/**
- * @alpha
- */
-export const selectAttributesWithDrillDown = createSelector(
-    [selectCatalogAttributes, selectCatalogDateAttributes],
-    (attributes = [], dateAttributes = []) => {
-        return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
+export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.dateDatasets ?? [];
     },
 );
 
 /**
+ * @alpha
+ */
+export const selectHasCatalogDateDatasets: DashboardSelector<boolean> = createSelector(
+    selectCatalogDateDatasets,
+    negate(isEmpty),
+);
+
+/**
+ * @public
+ */
+export const selectCatalogDateAttributes: DashboardSelector<ICatalogDateAttribute[]> = createSelector(
+    selectCatalogDateDatasets,
+    (dateDatasets) => {
+        return flatMap(dateDatasets, (dd) => dd.dateAttributes);
+    },
+);
+
+/**
+ * @alpha
+ */
+export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]> =
+    createSelector(
+        [selectCatalogAttributes, selectCatalogDateAttributes],
+        (attributes = [], dateAttributes = []) => {
+            return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
+        },
+    );
+
+/**
  * @internal
  */
-export const selectAttributesWithDisplayFormLink = createSelector(
+export const selectAttributesWithDisplayFormLink: DashboardSelector<ICatalogAttribute[]> = createSelector(
     [selectCatalogAttributes],
     (attributes = []) => {
         return attributes.filter((attr) => attr.attribute.drillToAttributeLink);
@@ -118,12 +147,10 @@ export const selectAttributesWithDisplayFormLink = createSelector(
  *
  * @alpha
  */
-export const selectAllCatalogDateDatasetsMap = createSelector(
-    [selectCatalogDateDatasets, selectBackendCapabilities],
-    (dateDatasets, capabilities) => {
+export const selectAllCatalogDateDatasetsMap: DashboardSelector<ObjRefMap<ICatalogDateDataset>> =
+    createSelector([selectCatalogDateDatasets, selectBackendCapabilities], (dateDatasets, capabilities) => {
         return newCatalogDateDatasetMap(dateDatasets, capabilities.hasTypeScopedIdentifiers);
-    },
-);
+    });
 
 /**
  * Selects all display forms in the catalog as a mapping of obj ref to display form
@@ -165,7 +192,7 @@ export const selectAllCatalogAttributesMap: DashboardSelector<
  *
  * @alpha
  */
-export const selectAllCatalogMeasuresMap = createSelector(
+export const selectAllCatalogMeasuresMap: DashboardSelector<ObjRefMap<ICatalogMeasure>> = createSelector(
     [selectCatalogMeasures, selectBackendCapabilities],
     (measures, capabilities) => {
         return newCatalogMeasureMap(measures, capabilities.hasTypeScopedIdentifiers);
@@ -179,21 +206,20 @@ export const selectAllCatalogMeasuresMap = createSelector(
  *
  * @alpha
  */
-export const selectCatalogDateAttributeToDataset = createSelector(
-    [selectCatalogDateDatasets, selectBackendCapabilities],
-    (dateDatasets, capabilities) => {
-        const attributesWithDatasets: CatalogDateAttributeWithDataset[] = flatMap(dateDatasets, (dataset) =>
-            dataset.dateAttributes.map((attribute) => {
-                return {
-                    attribute,
-                    dataset,
-                };
-            }),
-        );
+export const selectCatalogDateAttributeToDataset: DashboardSelector<
+    ObjRefMap<CatalogDateAttributeWithDataset>
+> = createSelector([selectCatalogDateDatasets, selectBackendCapabilities], (dateDatasets, capabilities) => {
+    const attributesWithDatasets: CatalogDateAttributeWithDataset[] = flatMap(dateDatasets, (dataset) =>
+        dataset.dateAttributes.map((attribute) => {
+            return {
+                attribute,
+                dataset,
+            };
+        }),
+    );
 
-        return newCatalogDateAttributeWithDatasetMap(
-            attributesWithDatasets,
-            capabilities.hasTypeScopedIdentifiers,
-        );
-    },
-);
+    return newCatalogDateAttributeWithDatasetMap(
+        attributesWithDatasets,
+        capabilities.hasTypeScopedIdentifiers,
+    );
+});

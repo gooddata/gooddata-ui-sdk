@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
@@ -58,43 +58,55 @@ export const selectPermissions: DashboardSelector<IWorkspacePermissions> = creat
  *
  * @public
  */
-export const selectCanListUsersInWorkspace = createSelector(selectPermissions, (state) => {
-    return state?.canListUsersInProject ?? false;
-});
+export const selectCanListUsersInWorkspace: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canListUsersInProject ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to modify workspace metadata, see the workspace token, lock and unlock objects, delete locked objects, set and unset the restricted flag on objects, clear cache, delete a workspace.
  *
  * @public
  */
-export const selectCanManageWorkspace = createSelector(selectPermissions, (state) => {
-    return state?.canManageProject ?? false;
-});
+export const selectCanManageWorkspace: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canManageProject ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions necessary to export insights.
  *
  * @public
  */
-export const selectCanExportReport = createSelector(selectPermissions, (state) => {
-    return state?.canExportReport ?? false;
-});
+export const selectCanExportReport: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canExportReport ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions necessary to export insights to CSV, XLSX
  *
  * @public
  */
-export const selectCanExportTabular = createSelector(selectPermissions, (state) => {
-    return (state?.canExportReport || state?.canExportTabular) ?? false;
-});
+export const selectCanExportTabular: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return (state?.canExportReport || state?.canExportTabular) ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions necessary to export insights to PDF
  *
  * @public
  */
-export const selectCanExportPdf = createSelector(selectPermissions, (state) => {
+export const selectCanExportPdf: DashboardSelector<boolean> = createSelector(selectPermissions, (state) => {
     return (state?.canExportReport || state?.canExportPdf) ?? false;
 });
 
@@ -103,9 +115,12 @@ export const selectCanExportPdf = createSelector(selectPermissions, (state) => {
  *
  * @public
  */
-export const selectCanCreateAnalyticalDashboard = createSelector(selectPermissions, (state) => {
-    return state?.canCreateAnalyticalDashboard ?? false;
-});
+export const selectCanCreateAnalyticalDashboard: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canCreateAnalyticalDashboard ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to modify and delete a KPI dashboard object.
@@ -124,7 +139,7 @@ export const selectCanManageAnalyticalDashboard: DashboardSelector<boolean> = cr
  *
  * @public
  */
-export const selectCanManageACL = createSelector(selectPermissions, (state) => {
+export const selectCanManageACL: DashboardSelector<boolean> = createSelector(selectPermissions, (state) => {
     return state?.canManageACL ?? false;
 });
 
@@ -133,16 +148,19 @@ export const selectCanManageACL = createSelector(selectPermissions, (state) => {
  *
  * @public
  */
-export const selectCanCreateScheduledMail = createSelector(selectPermissions, (state) => {
-    return state?.canCreateScheduledMail ?? false;
-});
+export const selectCanCreateScheduledMail: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canCreateScheduledMail ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to run MAQL DDL and DML, access a workspace staging directory.
  *
  * @public
  */
-export const selectCanInitData = createSelector(selectPermissions, (state) => {
+export const selectCanInitData: DashboardSelector<boolean> = createSelector(selectPermissions, (state) => {
     return state?.canInitData ?? false;
 });
 
@@ -151,16 +169,19 @@ export const selectCanInitData = createSelector(selectPermissions, (state) => {
  *
  * @public
  */
-export const selectCanUploadNonProductionCSV = createSelector(selectPermissions, (state) => {
-    return state?.canUploadNonProductionCSV ?? false;
-});
+export const selectCanUploadNonProductionCSV: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canUploadNonProductionCSV ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions necessary to export insights to CSV..
  *
  * @public
  */
-export const selectCanExecuteRaw = createSelector(selectPermissions, (state) => {
+export const selectCanExecuteRaw: DashboardSelector<boolean> = createSelector(selectPermissions, (state) => {
     return state?.canExecuteRaw ?? false;
 });
 
@@ -169,43 +190,55 @@ export const selectCanExecuteRaw = createSelector(selectPermissions, (state) => 
  *
  * @public
  */
-export const selectCanCreateVisualization = createSelector(selectPermissions, (state) => {
-    return state?.canCreateVisualization ?? false;
-});
+export const selectCanCreateVisualization: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canCreateVisualization ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to modify and delete a metric, run MAQL DDL, run the MAQL validator, change metric visibility via the `unlisted` flag.
  *
  * @public
  */
-export const selectCanManageMetric = createSelector(selectPermissions, (state) => {
-    return state?.canManageMetric ?? false;
-});
+export const selectCanManageMetric: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canManageMetric ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to modify and delete a domain, run MAQL DDL.
  *
  * @public
  */
-export const selectCanManageDomain = createSelector(selectPermissions, (state) => {
-    return state?.canManageDomain ?? false;
-});
+export const selectCanManageDomain: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canManageDomain ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to invite a user to a workspace or delete an invitation.
  *
  * @public
  */
-export const selectCanInviteUserToWorkspace = createSelector(selectPermissions, (state) => {
-    return state?.canInviteUserToProject ?? false;
-});
+export const selectCanInviteUserToWorkspace: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canInviteUserToProject ?? false;
+    },
+);
 
 /**
  * Returns whether the current user has permissions to run uploads, load date dimensions, access a workspace staging directory.
  *
  * @public
  */
-export const selectCanRefreshData = createSelector(selectPermissions, (state) => {
+export const selectCanRefreshData: DashboardSelector<boolean> = createSelector(selectPermissions, (state) => {
     return state?.canRefreshData ?? false;
 });
 
@@ -214,6 +247,9 @@ export const selectCanRefreshData = createSelector(selectPermissions, (state) =>
  *
  * @public
  */
-export const selectCanManageScheduledMail = createSelector(selectPermissions, (state) => {
-    return state?.canManageScheduledMail ?? false;
-});
+export const selectCanManageScheduledMail: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canManageScheduledMail ?? false;
+    },
+);

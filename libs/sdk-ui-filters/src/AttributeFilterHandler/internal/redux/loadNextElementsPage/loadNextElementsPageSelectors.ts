@@ -1,4 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { createSelector } from "@reduxjs/toolkit";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
@@ -9,12 +10,13 @@ import {
     selectLastLoadedElementsOptions,
     selectLoadElementsOptions,
 } from "../elements/elementsSelectors";
-import { ILoadElementsOptions } from "../../../types";
+import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types";
+import { FilterSelector } from "../common/types";
 
 /**
  * @internal
  */
-export const selectLoadNextElementsPageStatus = createSelector(
+export const selectLoadNextElementsPageStatus: FilterSelector<AsyncOperationStatus> = createSelector(
     selectState,
     (state) => state.elements.nextPageLoad.status,
 );
@@ -22,7 +24,7 @@ export const selectLoadNextElementsPageStatus = createSelector(
 /**
  * @internal
  */
-export const selectLoadNextElementsPageError = createSelector(
+export const selectLoadNextElementsPageError: FilterSelector<GoodDataSdkError> = createSelector(
     selectState,
     (state) => state.elements.nextPageLoad.error,
 );
@@ -30,7 +32,7 @@ export const selectLoadNextElementsPageError = createSelector(
 /**
  * @internal
  */
-export const selectLoadNextElementsPageOptions = createSelector(
+export const selectLoadNextElementsPageOptions: FilterSelector<ILoadElementsOptions> = createSelector(
     selectLastLoadedElementsOptions,
     (options): ILoadElementsOptions => {
         return {
@@ -43,7 +45,7 @@ export const selectLoadNextElementsPageOptions = createSelector(
 /**
  * @internal
  */
-export const selectHasNextPage = createSelector(
+export const selectHasNextPage: FilterSelector<boolean> = createSelector(
     selectLastLoadedElementsOptions,
     selectElementsTotalCount,
     (lastLoadedOptions, totalCount) => {
@@ -54,7 +56,7 @@ export const selectHasNextPage = createSelector(
 /**
  * @internal
  */
-export const selectIsLoadElementsOptionsChanged = createSelector(
+export const selectIsLoadElementsOptionsChanged: FilterSelector<boolean> = createSelector(
     selectLoadElementsOptions,
     selectLastLoadedElementsOptions,
     (loadOptions, lastLoadedOptions) => {

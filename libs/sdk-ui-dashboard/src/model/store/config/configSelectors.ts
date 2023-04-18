@@ -1,8 +1,16 @@
 // (C) 2021-2023 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-model";
+import {
+    IColorPalette,
+    IDateFilterConfig,
+    ISeparators,
+    ISettings,
+    PlatformEdition,
+} from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
+import { ObjectAvailabilityConfig, ResolvedDashboardConfig } from "../../types/commonTypes";
+import { ILocale } from "@gooddata/sdk-ui";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -18,11 +26,14 @@ const selectSelf = createSelector(
  *
  * @public
  */
-export const selectConfig = createSelector(selectSelf, (configState) => {
-    invariant(configState.config, "attempting to access uninitialized config state");
+export const selectConfig: DashboardSelector<ResolvedDashboardConfig> = createSelector(
+    selectSelf,
+    (configState) => {
+        invariant(configState.config, "attempting to access uninitialized config state");
 
-    return configState.config!;
-});
+        return configState.config!;
+    },
+);
 
 /**
  * Returns workspace-level configuration for the of the date filter options and presets.
@@ -33,9 +44,12 @@ export const selectConfig = createSelector(selectSelf, (configState) => {
  *
  * @public
  */
-export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
-    return state.dateFilterConfig ?? undefined;
-});
+export const selectDateFilterConfig: DashboardSelector<IDateFilterConfig> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.dateFilterConfig ?? undefined;
+    },
+);
 
 /**
  * Returns settings that are in effect for the current dashboard.
@@ -51,7 +65,7 @@ export const selectSettings: DashboardSelector<ISettings> = createSelector(selec
  *
  * @public
  */
-export const selectLocale = createSelector(selectConfig, (state) => {
+export const selectLocale: DashboardSelector<ILocale> = createSelector(selectConfig, (state) => {
     return state.locale ?? undefined;
 });
 
@@ -60,7 +74,7 @@ export const selectLocale = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectSeparators = createSelector(selectConfig, (state) => {
+export const selectSeparators: DashboardSelector<ISeparators> = createSelector(selectConfig, (state) => {
     return state.separators ?? undefined;
 });
 
@@ -69,7 +83,7 @@ export const selectSeparators = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectColorPalette = createSelector(selectConfig, (state) => {
+export const selectColorPalette: DashboardSelector<IColorPalette> = createSelector(selectConfig, (state) => {
     return state.colorPalette ?? undefined;
 });
 
@@ -82,18 +96,24 @@ export const selectColorPalette = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectObjectAvailabilityConfig = createSelector(selectConfig, (state) => {
-    return state.objectAvailability ?? undefined;
-});
+export const selectObjectAvailabilityConfig: DashboardSelector<ObjectAvailabilityConfig> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.objectAvailability ?? undefined;
+    },
+);
 
 /**
  * Returns Mapbox token.
  *
  * @internal
  */
-export const selectMapboxToken = createSelector(selectConfig, (state) => {
-    return state.mapboxToken ?? undefined;
-});
+export const selectMapboxToken: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.mapboxToken ?? undefined;
+    },
+);
 
 /**
  * Returns whether the Dashboard is executed in read-only mode.
@@ -103,7 +123,7 @@ export const selectMapboxToken = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectIsReadOnly = createSelector(selectConfig, (state) => {
+export const selectIsReadOnly: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.isReadOnly ?? false;
 });
 
@@ -115,7 +135,7 @@ export const selectIsReadOnly = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectIsEmbedded = createSelector(selectConfig, (state) => {
+export const selectIsEmbedded: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.isEmbedded ?? false;
 });
 
@@ -125,7 +145,7 @@ export const selectIsEmbedded = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectIsExport = createSelector(selectConfig, (state) => {
+export const selectIsExport: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.isExport ?? false;
 });
 
@@ -134,7 +154,7 @@ export const selectIsExport = createSelector(selectConfig, (state) => {
  *
  * @internal
  */
-export const selectIsWhiteLabeled = createSelector(selectConfig, (state) => {
+export const selectIsWhiteLabeled: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.isWhiteLabeled ?? false;
 });
 
@@ -144,27 +164,36 @@ export const selectIsWhiteLabeled = createSelector(selectConfig, (state) => {
  *
  * @public
  */
-export const selectDisableDefaultDrills = createSelector(selectConfig, (state) => {
-    return state.disableDefaultDrills ?? false;
-});
+export const selectDisableDefaultDrills: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.disableDefaultDrills ?? false;
+    },
+);
 
 /**
  * Returns whether filter values in drill events should be resolved.
  *
  * @public
  */
-export const selectEnableFilterValuesResolutionInDrillEvents = createSelector(selectConfig, (state) => {
-    return state.enableFilterValuesResolutionInDrillEvents ?? false;
-});
+export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.enableFilterValuesResolutionInDrillEvents ?? false;
+    },
+);
 
 /**
  * Returns whether the save as new button is hidden.
  *
  * @internal
  */
-export const selectIsSaveAsNewButtonHidden = createSelector(selectConfig, (state) => {
-    return state.hideSaveAsNewButton ?? false;
-});
+export const selectIsSaveAsNewButtonHidden: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.hideSaveAsNewButton ?? false;
+    },
+);
 
 //
 // FEATURE FLAGS
@@ -175,207 +204,269 @@ export const selectIsSaveAsNewButtonHidden = createSelector(selectConfig, (state
  *
  * @public
  */
-export const selectDateFormat = createSelector(selectConfig, (state) => {
-    return state.settings?.responsiveUiDateFormat ?? undefined;
-});
+export const selectDateFormat: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.responsiveUiDateFormat ?? undefined;
+    },
+);
 
 /**
  * Returns whether the current user can schedule emails.
  *
  * @public
  */
-export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardSchedule ?? false;
-});
+export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardSchedule ?? false;
+    },
+);
 
 /**
  * Returns whether the current user can share scheduled email to other recipients.
  *
  * @public
  */
-export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardScheduleRecipients ?? false;
-});
+export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardScheduleRecipients ?? false;
+    },
+);
 
 /**
  * Returns current platform edition.
  *
  * @public
  */
-export const selectPlatformEdition = createSelector(selectConfig, (state) => {
-    return state.settings?.platformEdition ?? "enterprise";
-});
+export const selectPlatformEdition: DashboardSelector<PlatformEdition> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.platformEdition ?? "enterprise";
+    },
+);
 
 /**
  * Returns whether company logo should be visible in embedded dashboard.
  *
  * @public
  */
-export const selectEnableCompanyLogoInEmbeddedUI = createSelector(selectConfig, (state) => {
-    return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
-});
+export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
+    },
+);
 
 /**
  * Returns whether the export to pdf is enabled.
  *
  * @public
  */
-export const selectEnableKPIDashboardExportPDF = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardExportPDF ?? true;
-});
+export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | number | boolean | object> =
+    createSelector(selectConfig, (state) => {
+        return state.settings?.enableKPIDashboardExportPDF ?? true;
+    });
 
 /**
  * Returns whether the drill to dashboard is enabled.
  *
  * @public
  */
-export const selectEnableKPIDashboardDrillToDashboard = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
-});
+export const selectEnableKPIDashboardDrillToDashboard: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
+    },
+);
 
 /**
  * Returns whether the save as new dashboard functionality is enabled.
  *
  * @public
  */
-export const selectEnableKPIDashboardSaveAsNew = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardSaveAsNew ?? false;
-});
+export const selectEnableKPIDashboardSaveAsNew: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardSaveAsNew ?? false;
+    },
+);
 
 /**
  * Returns whether implicit drill to attributes url enabled
  *
  * @public
  */
-export const selectEnableClickableAttributeURL = createSelector(selectConfig, (state) => {
-    return state.settings?.enableClickableAttributeURL ?? true;
-});
+export const selectEnableClickableAttributeURL: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableClickableAttributeURL ?? true;
+    },
+);
 
 /**
  * Returns whether drill to url is enabled
  *
  * @public
  */
-export const selectEnableKPIDashboardDrillToURL = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardDrillToURL ?? false;
-});
+export const selectEnableKPIDashboardDrillToURL: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardDrillToURL ?? false;
+    },
+);
 
 /**
  * Returns whether drill to insight is enabled
  *
  * @public
  */
-export const selectEnableKPIDashboardDrillToInsight = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardDrillToInsight ?? false;
-});
+export const selectEnableKPIDashboardDrillToInsight: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardDrillToInsight ?? false;
+    },
+);
 
 /**
  * Returns whether implicit drill to attributes url enabled
  *
  * @public
  */
-export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
-});
+export const selectEnableKPIDashboardImplicitDrillDown: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
+    },
+);
 
 /**
  * Returns whether drill fromAttribute is enabled
  *
  * @public
  */
-export const selectEnableKPIDashboardDrillFromAttribute = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardDrillFromAttribute ?? false;
-});
+export const selectEnableKPIDashboardDrillFromAttribute: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardDrillFromAttribute ?? false;
+    },
+);
 
 /**
  * Returns whether Kpi drills in embedded mode are disabled.
  *
  * @public
  */
-export const selectHideKpiDrillInEmbedded = createSelector(selectConfig, (state) => {
-    return state.settings?.hideKpiDrillInEmbedded ?? false;
-});
+export const selectHideKpiDrillInEmbedded: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.hideKpiDrillInEmbedded ?? false;
+    },
+);
 
 /**
  * Returns whether insight export scheduling is enabled.
  *
  * @public
  */
-export const selectEnableInsightExportScheduling = createSelector(selectConfig, (state) => {
-    return state.settings?.enableInsightExportScheduling ?? false;
-});
+export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableInsightExportScheduling ?? false;
+    },
+);
 
 /**
  * Returns whether dashboard edit mode is enabled.
  *
  * @internal
  */
-export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (state) => {
-    return state.settings?.dashboardEditModeDevRollout ?? true;
-});
+export const selectDashboardEditModeDevRollout: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.dashboardEditModeDevRollout ?? true;
+    },
+);
 
 /**
  * Returns whether analytical dashboard permissions are enabled
  *
  * @internal
  */
-export const selectEnableAnalyticalDashboardPermissions = createSelector(selectConfig, (state) => {
-    return state.settings?.enableAnalyticalDashboardPermissions ?? true;
-});
+export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAnalyticalDashboardPermissions ?? true;
+    },
+);
 
 /**
  * Returns whether custom widget heights are enabled
  *
  * @internal
  */
-export const selectEnableWidgetCustomHeight = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKDWidgetCustomHeight ?? false;
-});
+export const selectEnableWidgetCustomHeight: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDWidgetCustomHeight ?? false;
+    },
+);
 
 /**
  * Returns whether we should call workspaces workspaces (true) or projects (false).
  *
  * @internal
  */
-export const selectEnableRenamingProjectToWorkspace = createSelector(selectConfig, (state) => {
-    return !!(state.settings?.enableRenamingProjectToWorkspace ?? true);
-});
+export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return !!(state.settings?.enableRenamingProjectToWorkspace ?? true);
+    },
+);
 
 /**
  * Returns whether we should call measures metrics (true) or measures (false).
  *
  * @internal
  */
-export const selectEnableRenamingMeasureToMetric = createSelector(selectConfig, (state) => {
-    return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
-});
+export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
+    },
+);
 
 /**
  * Returns whether we should hide the pixel perfect experience references.
  *
  * @internal
  */
-export const selectShouldHidePixelPerfectExperience = createSelector(selectConfig, (state) => {
-    const isHidden = state.settings?.hidePixelPerfectExperience ?? true;
-    const isEnabled = state.settings?.enablePixelPerfectExperience ?? false;
-    return !isHidden && isEnabled;
-});
+export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object> =
+    createSelector(selectConfig, (state) => {
+        const isHidden = state.settings?.hidePixelPerfectExperience ?? true;
+        const isEnabled = state.settings?.enablePixelPerfectExperience ?? false;
+        return !isHidden && isEnabled;
+    });
 
 /**
  * Returns whether we should disable the underline in KPIs when they are drillable.
  *
  * @internal
  */
-export const selectDisableKpiDashboardHeadlineUnderline = createSelector(selectConfig, (state) => {
-    return !!(state.settings?.disableKpiDashboardHeadlineUnderline ?? false);
-});
+export const selectDisableKpiDashboardHeadlineUnderline: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return !!(state.settings?.disableKpiDashboardHeadlineUnderline ?? false);
+    },
+);
 
 /**
  * Returns whether unfinished features are allowed.
  *
  * @internal
  */
-export const selectAllowUnfinishedFeatures = createSelector(
+export const selectAllowUnfinishedFeatures: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => state.allowUnfinishedFeatures || false,
 );
@@ -385,16 +476,19 @@ export const selectAllowUnfinishedFeatures = createSelector(
  *
  * @internal
  */
-export const selectAllowCreateInsightRequest = createSelector(selectConfig, (state) => {
-    return state.allowCreateInsightRequest ?? false;
-});
+export const selectAllowCreateInsightRequest: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.allowCreateInsightRequest ?? false;
+    },
+);
 
 /**
  * Returns whether analytical designer is enabled.
  *
  * @internal
  */
-export const selectIsAnalyticalDesignerEnabled = createSelector(
+export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => !!(state.settings?.analyticalDesigner || false),
 );
@@ -404,7 +498,7 @@ export const selectIsAnalyticalDesignerEnabled = createSelector(
  *
  * @internal
  */
-export const selectIsDeleteFilterButtonEnabled = createSelector(
+export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => !!(state.settings?.enableKPIDashboardDeleteFilterButton || false),
 );
@@ -414,7 +508,7 @@ export const selectIsDeleteFilterButtonEnabled = createSelector(
  *
  * @internal
  */
-export const selectIsKPIDashboardDependentFiltersEnabled = createSelector(
+export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => !!(state.settings?.enableKPIDashboardDependentFilters || false),
 );
@@ -424,7 +518,7 @@ export const selectIsKPIDashboardDependentFiltersEnabled = createSelector(
  *
  * @internal
  */
-export const selectIsAlternativeDisplayFormSelectionEnabled = createSelector(
+export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => !!(state.settings?.enableAlternativeDisplayFormSelection || false),
 );
@@ -434,6 +528,6 @@ export const selectIsAlternativeDisplayFormSelectionEnabled = createSelector(
  *
  * @internal
  */
-export const selectIsShareButtonHidden = createSelector(selectConfig, (state) => {
+export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.hideShareButton ?? false;
 });

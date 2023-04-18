@@ -1,10 +1,19 @@
-// (C) 2021-2022 GoodData Corporation
-import { IAttributeElement } from "@gooddata/sdk-model";
+// (C) 2021-2023 GoodData Corporation
+import {
+    IAttributeElement,
+    IAttributeMetadataObject,
+    IMeasure,
+    IMeasureDefinitionType,
+    IRelativeDateFilter,
+    SortDirection,
+} from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact";
 
 import { ILoadElementsOptions } from "../../../types";
 import { selectState } from "../common/selectors";
+import { FilterSelector } from "../common/types";
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 /**
  * Get the elements specified by the keys.
@@ -23,27 +32,40 @@ export const getElementsByKeys = (keys: string[], elementsMap: Record<string, IA
 /**
  * @internal
  */
-export const selectElementKeys = createSelector(selectState, (state) => state.elements.data ?? []);
+export const selectElementKeys: FilterSelector<string[]> = createSelector(
+    selectState,
+    (state) => state.elements.data ?? [],
+);
 
 /**
  * @internal
  */
-export const selectElementsCache = createSelector(selectState, (state) => state.elements.cache);
+export const selectElementsCache: FilterSelector<Record<string, IAttributeElement>> = createSelector(
+    selectState,
+    (state) => state.elements.cache,
+);
 
 /**
  * @internal
  */
-export const selectElements = createSelector(selectElementKeys, selectElementsCache, getElementsByKeys);
+export const selectElements: FilterSelector<IAttributeElement[]> = createSelector(
+    selectElementKeys,
+    selectElementsCache,
+    getElementsByKeys,
+);
 
 /**
  * @internal
  */
-export const selectElementsTotalCount = createSelector(selectState, (state) => state.elements.totalCount);
+export const selectElementsTotalCount: FilterSelector<number> = createSelector(
+    selectState,
+    (state) => state.elements.totalCount,
+);
 
 /**
  * @internal
  */
-export const selectElementsTotalCountWithCurrentSettings = createSelector(
+export const selectElementsTotalCountWithCurrentSettings: FilterSelector<number> = createSelector(
     selectState,
     (state) => state.elements.totalCountWithCurrentSettings,
 );
@@ -51,27 +73,39 @@ export const selectElementsTotalCountWithCurrentSettings = createSelector(
 /**
  * @internal
  */
-export const selectStaticElements = createSelector(selectState, (state) => state.config.staticElements ?? []);
+export const selectStaticElements: FilterSelector<IAttributeElement[]> = createSelector(
+    selectState,
+    (state) => state.config.staticElements ?? [],
+);
 
 /**
  * @internal
  */
-export const selectSearch = createSelector(selectState, (state) => state.elements.currentOptions.search);
+export const selectSearch: FilterSelector<string> = createSelector(
+    selectState,
+    (state) => state.elements.currentOptions.search,
+);
 
 /**
  * @internal
  */
-export const selectOrder = createSelector(selectState, (state) => state.elements.currentOptions.order);
+export const selectOrder: FilterSelector<SortDirection> = createSelector(
+    selectState,
+    (state) => state.elements.currentOptions.order,
+);
 
 /**
  * @internal
  */
-export const selectLimit = createSelector(selectState, (state) => state.elements.currentOptions.limit);
+export const selectLimit: FilterSelector<number> = createSelector(
+    selectState,
+    (state) => state.elements.currentOptions.limit,
+);
 
 /**
  * @internal
  */
-export const selectOffset = createSelector(
+export const selectOffset: FilterSelector<number> = createSelector(
     selectState,
     (state) => state.elements?.lastLoadedOptions?.offset ?? state.elements.currentOptions.offset,
 );
@@ -79,7 +113,7 @@ export const selectOffset = createSelector(
 /**
  * @internal
  */
-export const selectLimitingAttributeFilters = createSelector(
+export const selectLimitingAttributeFilters: FilterSelector<IElementsQueryAttributeFilter[]> = createSelector(
     selectState,
     (state) => state.elements.currentOptions.limitingAttributeFilters,
 );
@@ -87,7 +121,7 @@ export const selectLimitingAttributeFilters = createSelector(
 /**
  * @internal
  */
-export const selectLimitingMeasures = createSelector(
+export const selectLimitingMeasures: FilterSelector<IMeasure<IMeasureDefinitionType>[]> = createSelector(
     selectState,
     (state) => state.elements.currentOptions.limitingMeasures,
 );
@@ -95,7 +129,7 @@ export const selectLimitingMeasures = createSelector(
 /**
  * @internal
  */
-export const selectLimitingDateFilters = createSelector(
+export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[]> = createSelector(
     selectState,
     (state) => state.elements.currentOptions.limitingDateFilters,
 );
@@ -103,7 +137,7 @@ export const selectLimitingDateFilters = createSelector(
 /**
  * @internal
  */
-export const selectLoadElementsOptions = createSelector(
+export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = createSelector(
     selectOffset,
     selectLimit,
     selectOrder,
@@ -135,14 +169,15 @@ export const selectLoadElementsOptions = createSelector(
 /**
  * @internal
  */
-export const selectLastLoadedElementsOptions = createSelector(selectState, (state): ILoadElementsOptions => {
-    return state.elements.lastLoadedOptions;
-});
+export const selectLastLoadedElementsOptions: FilterSelector<ILoadElementsOptions> = createSelector(
+    selectState,
+    (state): ILoadElementsOptions => {
+        return state.elements.lastLoadedOptions;
+    },
+);
 
 /**
  * @internal
  */
-export const selectLimitingAttributeFiltersAttributes = createSelector(
-    selectState,
-    (state) => state.elements.limitingAttributeFiltersAttributes,
-);
+export const selectLimitingAttributeFiltersAttributes: FilterSelector<IAttributeMetadataObject[]> =
+    createSelector(selectState, (state) => state.elements.limitingAttributeFiltersAttributes);
