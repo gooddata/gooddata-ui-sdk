@@ -9,22 +9,25 @@ import {
     IDashboardLayout,
     IInsightWidget,
     IKpiWidget,
+    IDrillToLegacyDashboard,
+    InsightDrillDefinition,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 
 import { DashboardSelector, DashboardState } from "../types";
 import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
-import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
+import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
-import { ILayoutCoordinates } from "../../../types";
+import { IDashboardFilter, ILayoutCoordinates } from "../../../types";
 import { isInsightPlaceholderWidget, isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets";
 
-import { LayoutState } from "./layoutState";
+import { LayoutStash, LayoutState } from "./layoutState";
 import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils";
+import { DashboardLayoutCommands } from "../../commands";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -38,18 +41,22 @@ const selectSelf = createSelector(
  *
  * @internal
  */
-export const selectStash = createSelector(selectSelf, (layoutState: LayoutState) => {
-    return layoutState.stash;
-});
+export const selectStash: DashboardSelector<LayoutStash> = createSelector(
+    selectSelf,
+    (layoutState: LayoutState) => {
+        return layoutState.stash;
+    },
+);
 
 /**
  * This selector returns commands that impacted the layout and can now be undone.
  *
  * @internal
  */
-export const selectUndoableLayoutCommands = createSelector(selectSelf, (layoutState: LayoutState) => {
-    return createUndoableCommandsMapping(layoutState);
-});
+export const selectUndoableLayoutCommands: DashboardSelector<UndoableCommand<DashboardLayoutCommands>[]> =
+    createSelector(selectSelf, (layoutState: LayoutState) => {
+        return createUndoableCommandsMapping(layoutState);
+    });
 
 /**
  * This selector returns dashboard's layout. It is expected that the selector is called only after the layout state
@@ -57,11 +64,14 @@ export const selectUndoableLayoutCommands = createSelector(selectSelf, (layoutSt
  *
  * @alpha
  */
-export const selectLayout = createSelector(selectSelf, (layoutState: LayoutState) => {
-    invariant(layoutState.layout, "attempting to access uninitialized layout state");
+export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardWidget>> = createSelector(
+    selectSelf,
+    (layoutState: LayoutState) => {
+        invariant(layoutState.layout, "attempting to access uninitialized layout state");
 
-    return layoutState.layout;
-});
+        return layoutState.layout;
+    },
+);
 
 /**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
@@ -78,21 +88,24 @@ export const selectLayout = createSelector(selectSelf, (layoutState: LayoutState
  *
  * @internal
  */
-export const selectBasicLayout = createSelector(selectLayout, (layout) => {
-    const dashboardLayout: IDashboardLayout<IWidget> = {
-        ...layout,
-        sections: layout.sections
-            .map((section) => {
-                return {
-                    ...section,
-                    items: section.items.filter(isItemWithBaseWidget),
-                };
-            })
-            .filter((section) => !isEmpty(section.items)),
-    };
+export const selectBasicLayout: DashboardSelector<IDashboardLayout<IWidget>> = createSelector(
+    selectLayout,
+    (layout) => {
+        const dashboardLayout: IDashboardLayout<IWidget> = {
+            ...layout,
+            sections: layout.sections
+                .map((section) => {
+                    return {
+                        ...section,
+                        items: section.items.filter(isItemWithBaseWidget),
+                    };
+                })
+                .filter((section) => !isEmpty(section.items)),
+        };
 
-    return dashboardLayout;
-});
+        return dashboardLayout;
+    },
+);
 
 /**
  * Selects dashboard widgets in an obj ref an array. This map will include both analytical and custom
@@ -100,21 +113,24 @@ export const selectBasicLayout = createSelector(selectLayout, (layout) => {
  *
  * @internal
  */
-export const selectWidgets = createSelector(selectLayout, (layout) => {
-    const items: ExtendedDashboardWidget[] = [];
+export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = createSelector(
+    selectLayout,
+    (layout) => {
+        const items: ExtendedDashboardWidget[] = [];
 
-    for (const section of layout.sections) {
-        for (const item of section.items) {
-            if (!item.widget) {
-                continue;
+        for (const section of layout.sections) {
+            for (const item of section.items) {
+                if (!item.widget) {
+                    continue;
+                }
+
+                items.push(item.widget);
             }
-
-            items.push(item.widget);
         }
-    }
 
-    return items;
-});
+        return items;
+    },
+);
 
 /**
  * Selects dashboard widgets in an obj ref to widget map. This map will include both analytical and custom
@@ -182,8 +198,11 @@ export const selectAnalyticalWidgetByRef: (
  *
  * @alpha
  */
-export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.drills ?? []),
+export const selectWidgetDrills: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[]> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.drills ?? []),
 );
 
 /**
@@ -194,12 +213,17 @@ export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefine
  *
  * @internal
  */
-export const selectAllFiltersForWidgetByRef = createMemoizedSelector((ref: ObjRef) => {
-    return createSelector(selectWidgetByRef(ref), selectFilterContextFilters, (widget, dashboardFilters) => {
-        invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-        return filterContextItemsToDashboardFiltersByWidget(dashboardFilters, widget);
+export const selectAllFiltersForWidgetByRef: (ref: ObjRef) => DashboardSelector<IDashboardFilter[]> =
+    createMemoizedSelector((ref: ObjRef) => {
+        return createSelector(
+            selectWidgetByRef(ref),
+            selectFilterContextFilters,
+            (widget, dashboardFilters) => {
+                invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+                return filterContextItemsToDashboardFiltersByWidget(dashboardFilters, widget);
+            },
+        );
     });
-});
 
 const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
     return Array.from(widgetMap.values());
@@ -234,34 +258,43 @@ export const selectAllKpiWidgets: DashboardSelector<IKpiWidget[]> = createSelect
  *
  * @alpha
  */
-export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidgets) => {
-    return allWidgets.filter(isInsightWidget);
-});
+export const selectAllInsightWidgets: DashboardSelector<ExtendedDashboardWidget[]> = createSelector(
+    selectAllWidgets,
+    (allWidgets) => {
+        return allWidgets.filter(isInsightWidget);
+    },
+);
 
 /**
  * Selects all custom widgets in the layout.
  *
  * @alpha
  */
-export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidgets) => {
-    return allWidgets.filter(isCustomWidget);
-});
+export const selectAllCustomWidgets: DashboardSelector<ExtendedDashboardWidget[]> = createSelector(
+    selectAllWidgets,
+    (allWidgets) => {
+        return allWidgets.filter(isCustomWidget);
+    },
+);
 
 /**
  * Selects all non-custom widgets in the layout.
  *
  * @alpha
  */
-export const selectAllAnalyticalWidgets = createSelector(selectAllWidgets, (allWidgets) => {
-    return allWidgets.filter((w): w is IKpiWidget | IInsightWidget => !isCustomWidget(w));
-});
+export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]> = createSelector(
+    selectAllWidgets,
+    (allWidgets) => {
+        return allWidgets.filter((w): w is IKpiWidget | IInsightWidget => !isCustomWidget(w));
+    },
+);
 
 /**
  * Selects a boolean indicating if the dashboard contains at least one non-custom widget.
  *
  * @alpha
  */
-export const selectLayoutHasAnalyticalWidgets = createSelector(
+export const selectLayoutHasAnalyticalWidgets: DashboardSelector<boolean> = createSelector(
     selectAllAnalyticalWidgets,
     (allAnalyticalWidgets) => {
         return allAnalyticalWidgets.length > 0;
@@ -273,38 +306,40 @@ export const selectLayoutHasAnalyticalWidgets = createSelector(
  *
  * @alpha
  */
-export const selectWidgetCoordinatesByRef = createMemoizedSelector((ref: ObjRef) => {
-    return createSelector(selectLayout, (layout): ILayoutCoordinates => {
-        const coords = getWidgetCoordinates(layout, ref);
-        invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-        return coords;
+export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<ILayoutCoordinates> =
+    createMemoizedSelector((ref: ObjRef) => {
+        return createSelector(selectLayout, (layout): ILayoutCoordinates => {
+            const coords = getWidgetCoordinates(layout, ref);
+            invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+            return coords;
+        });
     });
-});
 
 /**
  * @internal
  */
-export const selectWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
-    return customWidgets.find(isPlaceholderWidget);
-});
-
-/**
- * @internal
- */
-export const selectWidgetPlaceholderCoordinates = createSelector(
-    selectWidgetPlaceholder,
-    selectLayout,
-    (widgetPlaceholder, layout) => {
-        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+export const selectWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined> = createSelector(
+    selectAllCustomWidgets,
+    (customWidgets) => {
+        return customWidgets.find(isPlaceholderWidget);
     },
 );
 
 /**
  * @internal
  */
-export const selectInsightWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
-    return customWidgets.find(isInsightPlaceholderWidget);
-});
+export const selectWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    });
+
+/**
+ * @internal
+ */
+export const selectInsightWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined> =
+    createSelector(selectAllCustomWidgets, (customWidgets) => {
+        return customWidgets.find(isInsightPlaceholderWidget);
+    });
 
 /**
  * @internal
@@ -317,9 +352,10 @@ export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayou
 /**
  * @internal
  */
-export const selectKpiWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
-    return customWidgets.find(isKpiPlaceholderWidget);
-});
+export const selectKpiWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined> =
+    createSelector(selectAllCustomWidgets, (customWidgets) => {
+        return customWidgets.find(isKpiPlaceholderWidget);
+    });
 
 /**
  * @internal

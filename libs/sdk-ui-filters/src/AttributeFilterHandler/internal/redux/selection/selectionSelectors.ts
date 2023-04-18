@@ -1,20 +1,24 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 
 import { selectState } from "../common/selectors";
 import { InvertableAttributeElementSelection } from "../../../types";
+import { FilterSelector } from "../common/types";
 
 /**
  * @internal
  */
-export const selectWorkingSelection = createSelector(selectState, (state) => state.selection.working.keys);
+export const selectWorkingSelection: FilterSelector<string[]> = createSelector(
+    selectState,
+    (state) => state.selection.working.keys,
+);
 
 /**
  * @internal
  */
-export const selectIsWorkingSelectionInverted = createSelector(
+export const selectIsWorkingSelectionInverted: FilterSelector<boolean> = createSelector(
     selectState,
     (state) => state.selection.working.isInverted,
 );
@@ -22,12 +26,15 @@ export const selectIsWorkingSelectionInverted = createSelector(
 /**
  * @internal
  */
-export const selectCommittedSelection = createSelector(selectState, (state) => state.selection.commited.keys);
+export const selectCommittedSelection: FilterSelector<string[]> = createSelector(
+    selectState,
+    (state) => state.selection.commited.keys,
+);
 
 /**
  * @internal
  */
-export const selectIsCommittedSelectionInverted = createSelector(
+export const selectIsCommittedSelectionInverted: FilterSelector<boolean> = createSelector(
     selectState,
     (state) => state.selection.commited.isInverted,
 );
@@ -35,31 +42,33 @@ export const selectIsCommittedSelectionInverted = createSelector(
 /**
  * @internal
  */
-export const selectInvertableWorkingSelection = createSelector(
-    selectWorkingSelection,
-    selectIsWorkingSelectionInverted,
-    (keys, isInverted): InvertableAttributeElementSelection => ({
-        keys,
-        isInverted,
-    }),
-);
+export const selectInvertableWorkingSelection: FilterSelector<InvertableAttributeElementSelection> =
+    createSelector(
+        selectWorkingSelection,
+        selectIsWorkingSelectionInverted,
+        (keys, isInverted): InvertableAttributeElementSelection => ({
+            keys,
+            isInverted,
+        }),
+    );
 
 /**
  * @internal
  */
-export const selectInvertableCommittedSelection = createSelector(
-    selectCommittedSelection,
-    selectIsCommittedSelectionInverted,
-    (keys, isInverted): InvertableAttributeElementSelection => ({
-        keys,
-        isInverted,
-    }),
-);
+export const selectInvertableCommittedSelection: FilterSelector<InvertableAttributeElementSelection> =
+    createSelector(
+        selectCommittedSelection,
+        selectIsCommittedSelectionInverted,
+        (keys, isInverted): InvertableAttributeElementSelection => ({
+            keys,
+            isInverted,
+        }),
+    );
 
 /**
  * @internal
  */
-export const selectIsWorkingSelectionChanged = createSelector(
+export const selectIsWorkingSelectionChanged: FilterSelector<boolean> = createSelector(
     selectIsWorkingSelectionInverted,
     selectWorkingSelection,
     selectIsCommittedSelectionInverted,
@@ -72,4 +81,7 @@ export const selectIsWorkingSelectionChanged = createSelector(
 /**
  * @internal
  */
-export const selectIsWorkingSelectionEmpty = createSelector(selectWorkingSelection, isEmpty);
+export const selectIsWorkingSelectionEmpty: FilterSelector<boolean> = createSelector(
+    selectWorkingSelection,
+    isEmpty,
+);

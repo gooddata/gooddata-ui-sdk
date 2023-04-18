@@ -13,6 +13,8 @@ import {
     uriRef,
     idRef,
     IAttributeDisplayFormMetadataObject,
+    IFilterContextDefinition,
+    IDashboardObjectIdentity,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 import { createMemoizedSelector } from "../_infra/selectors";
@@ -34,14 +36,15 @@ const selectSelf = createSelector(
  *
  * @public
  */
-export const selectOriginalFilterContextDefinition = createSelector(selectSelf, (filterContextState) => {
-    invariant(
-        filterContextState.filterContextDefinition,
-        "attempting to access uninitialized filter context state",
-    );
+export const selectOriginalFilterContextDefinition: DashboardSelector<IFilterContextDefinition | undefined> =
+    createSelector(selectSelf, (filterContextState) => {
+        invariant(
+            filterContextState.filterContextDefinition,
+            "attempting to access uninitialized filter context state",
+        );
 
-    return filterContextState.originalFilterContextDefinition;
-});
+        return filterContextState.originalFilterContextDefinition;
+    });
 
 /**
  * This selector returns original (stored) dashboard's filters.
@@ -54,7 +57,7 @@ export const selectOriginalFilterContextDefinition = createSelector(selectSelf, 
  *
  * @public
  */
-export const selectOriginalFilterContextFilters = createSelector(
+export const selectOriginalFilterContextFilters: DashboardSelector<FilterContextItem[]> = createSelector(
     selectOriginalFilterContextDefinition,
     (filterContext): FilterContextItem[] => filterContext?.filters ?? [],
 );
@@ -70,14 +73,17 @@ export const selectOriginalFilterContextFilters = createSelector(
  *
  * @public
  */
-export const selectFilterContextDefinition = createSelector(selectSelf, (filterContextState) => {
-    invariant(
-        filterContextState.filterContextDefinition,
-        "attempting to access uninitialized filter context state",
-    );
+export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefinition> = createSelector(
+    selectSelf,
+    (filterContextState) => {
+        invariant(
+            filterContextState.filterContextDefinition,
+            "attempting to access uninitialized filter context state",
+        );
 
-    return filterContextState.filterContextDefinition!;
-});
+        return filterContextState.filterContextDefinition!;
+    },
+);
 
 /**
  * Selects dashboard's filter context identity.
@@ -99,16 +105,17 @@ export const selectFilterContextDefinition = createSelector(selectSelf, (filterC
  *
  * @internal
  */
-export const selectFilterContextIdentity = createSelector(selectSelf, (filterContextState) => {
-    // this is intentional; want to fail fast when trying to access an optional identity of filter context \
-    // but there is actually no filter context initialized for the dashboard
-    invariant(
-        filterContextState.filterContextDefinition,
-        "attempting to access uninitialized filter context state",
-    );
+export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIdentity | undefined> =
+    createSelector(selectSelf, (filterContextState) => {
+        // this is intentional; want to fail fast when trying to access an optional identity of filter context \
+        // but there is actually no filter context initialized for the dashboard
+        invariant(
+            filterContextState.filterContextDefinition,
+            "attempting to access uninitialized filter context state",
+        );
 
-    return filterContextState.filterContextIdentity;
-});
+        return filterContextState.filterContextIdentity;
+    });
 
 /**
  * Selects list of display form metadata objects referenced by attribute filters.
@@ -120,14 +127,15 @@ export const selectFilterContextIdentity = createSelector(selectSelf, (filterCon
  *
  * @public
  */
-export const selectAttributeFilterDisplayForms = createSelector(selectSelf, (filterContextState) => {
-    invariant(
-        filterContextState.attributeFilterDisplayForms,
-        "attempting to access uninitialized filter context state",
-    );
+export const selectAttributeFilterDisplayForms: DashboardSelector<IAttributeDisplayFormMetadataObject[]> =
+    createSelector(selectSelf, (filterContextState) => {
+        invariant(
+            filterContextState.attributeFilterDisplayForms,
+            "attempting to access uninitialized filter context state",
+        );
 
-    return filterContextState.attributeFilterDisplayForms;
-});
+        return filterContextState.attributeFilterDisplayForms;
+    });
 
 /**
  * Selects map of display form metadata objects referenced by attribute filters.
@@ -246,7 +254,9 @@ export const selectFilterContextAttributeFilterByLocalId: (
  *
  * @public
  */
-export const selectFilterContextAttributeFilterIndexByLocalId = createMemoizedSelector((localId: string) =>
+export const selectFilterContextAttributeFilterIndexByLocalId: (
+    localId: string,
+) => DashboardSelector<number> = createMemoizedSelector((localId: string) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === localId),
     ),
@@ -260,35 +270,38 @@ export const selectFilterContextAttributeFilterIndexByLocalId = createMemoizedSe
  *
  * @public
  */
-export const selectAttributeFilterDescendants = createMemoizedSelector((localId: string) =>
-    createSelector(selectFilterContextAttributeFilters, (attributeFilters) => {
-        const toCheck = compact([localId]);
-        const result = new Set<string>();
+export const selectAttributeFilterDescendants: (localId: string) => DashboardSelector<string[]> =
+    createMemoizedSelector((localId: string) =>
+        createSelector(selectFilterContextAttributeFilters, (attributeFilters) => {
+            const toCheck = compact([localId]);
+            const result = new Set<string>();
 
-        while (toCheck.length) {
-            const current = toCheck.pop();
-            const children = attributeFilters.filter((f) =>
-                f.attributeFilter.filterElementsBy?.some(
-                    (parent) => parent.filterLocalIdentifier === current,
-                ),
-            );
+            while (toCheck.length) {
+                const current = toCheck.pop();
+                const children = attributeFilters.filter((f) =>
+                    f.attributeFilter.filterElementsBy?.some(
+                        (parent) => parent.filterLocalIdentifier === current,
+                    ),
+                );
 
-            children.forEach((child) => {
-                result.add(child.attributeFilter.localIdentifier!);
-                toCheck.push(child.attributeFilter.localIdentifier!);
-            });
-        }
+                children.forEach((child) => {
+                    result.add(child.attributeFilter.localIdentifier!);
+                    toCheck.push(child.attributeFilter.localIdentifier!);
+                });
+            }
 
-        return Array.from(result);
-    }),
-);
+            return Array.from(result);
+        }),
+    );
 
 /**
  * Creates a selector for selecting all filters with different reference than the given one.
  *
  * @internal
  */
-export const selectOtherContextAttributeFilters = createMemoizedSelector((ref?: ObjRef) =>
+export const selectOtherContextAttributeFilters: (
+    ref?: ObjRef,
+) => DashboardSelector<IDashboardAttributeFilter[]> = createMemoizedSelector((ref?: ObjRef) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters): IDashboardAttributeFilter[] => {
         return attributeFilters.filter(
             (attributeFilter) => !areObjRefsEqual(attributeFilter.attributeFilter.displayForm, ref),
@@ -301,22 +314,26 @@ export const selectOtherContextAttributeFilters = createMemoizedSelector((ref?: 
  *
  * @internal
  */
-export const selectAttributeFilterDisplayFormByLocalId = createMemoizedSelector((localId: string) =>
-    createSelector(selectFilterContextAttributeFilters, (filters) => {
-        const filter = filters.find((filter) => filter.attributeFilter.localIdentifier === localId);
+export const selectAttributeFilterDisplayFormByLocalId: (localId: string) => DashboardSelector<ObjRef> =
+    createMemoizedSelector((localId: string) =>
+        createSelector(selectFilterContextAttributeFilters, (filters) => {
+            const filter = filters.find((filter) => filter.attributeFilter.localIdentifier === localId);
 
-        invariant(filter, "Unable to find current filter to get its title.");
+            invariant(filter, "Unable to find current filter to get its title.");
 
-        return filter.attributeFilter.displayForm;
-    }),
-);
+            return filter.attributeFilter.displayForm;
+        }),
+    );
 
 /**
  * Creates a selector which checks for a circular dependency between filters.
  *
  * @internal
  */
-export const selectIsCircularDependency = createMemoizedSelector(
+export const selectIsCircularDependency: (
+    currentFilterLocalId: string,
+    neighborFilterLocalId: string,
+) => DashboardSelector<boolean> = createMemoizedSelector(
     (currentFilterLocalId: string, neighborFilterLocalId: string) =>
         createSelector(selectAttributeFilterDescendants(currentFilterLocalId), (descendants) => {
             return descendants.some((descendant) => descendant === neighborFilterLocalId);
@@ -334,7 +351,7 @@ const MAX_ATTRIBUTE_FILTERS_COUNT = 30;
  *
  * @public
  */
-export const selectCanAddMoreAttributeFilters = createSelector(
+export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
     selectFilterContextAttributeFilters,
     (attributeFilters) => {
         return attributeFilters.length < MAX_ATTRIBUTE_FILTERS_COUNT;

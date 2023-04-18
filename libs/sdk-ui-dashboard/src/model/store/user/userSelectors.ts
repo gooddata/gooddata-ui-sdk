@@ -1,7 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
+import { IUser, ObjRef } from "@gooddata/sdk-model";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -50,7 +51,7 @@ const selectSelf = createSelector(
  * @returns - an {@link @gooddata/sdk-model#IUser} object for logged in user.
  * @public
  */
-export const selectCurrentUser = createSelector(selectSelf, (state) => {
+export const selectCurrentUser: DashboardSelector<IUser> = createSelector(selectSelf, (state) => {
     invariant(state.user, "attempting to access uninitialized user state");
 
     return state.user!;
@@ -66,6 +67,6 @@ export const selectCurrentUser = createSelector(selectSelf, (state) => {
  * @returns - an {@link @gooddata/sdk-model#ObjRef} of the logged in user.
  * @public
  */
-export const selectCurrentUserRef = createSelector(selectCurrentUser, (user) => {
+export const selectCurrentUserRef: DashboardSelector<ObjRef> = createSelector(selectCurrentUser, (user) => {
     return user.ref;
 });

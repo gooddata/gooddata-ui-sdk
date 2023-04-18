@@ -23,6 +23,7 @@ import {
     selectCanManageWorkspace,
     selectCanManageAnalyticalDashboard,
     selectSupportsHierarchicalWorkspacesCapability,
+    DashboardSelector,
 } from "../../../../model";
 
 /**
@@ -31,7 +32,7 @@ import {
  *
  * @internal
  */
-export const hasEditDashboardPermission = createSelector(
+export const hasEditDashboardPermission: DashboardSelector<boolean> = createSelector(
     selectEnableAnalyticalDashboardPermissions,
     selectCanEditDashboardPermission,
     selectCanManageAnalyticalDashboard,
@@ -49,7 +50,7 @@ export const hasEditDashboardPermission = createSelector(
  *
  * @internal
  */
-export const hasEditLockedDashboardPermission = createSelector(
+export const hasEditLockedDashboardPermission: DashboardSelector<boolean> = createSelector(
     selectEnableAnalyticalDashboardPermissions,
     selectCanEditLockedDashboardPermission,
     selectCanManageWorkspace,
@@ -71,7 +72,7 @@ export const hasEditLockedDashboardPermission = createSelector(
 /**
  * @internal
  */
-export const selectCanEnterEditMode = createSelector(
+export const selectCanEnterEditMode: DashboardSelector<boolean> = createSelector(
     selectDashboardEditModeDevRollout,
     hasEditDashboardPermission,
     hasEditLockedDashboardPermission,
@@ -87,7 +88,7 @@ export const selectCanEnterEditMode = createSelector(
 /**
  * @internal
  */
-export const selectCanEnterEditModeAndIsLoaded = createSelector(
+export const selectCanEnterEditModeAndIsLoaded: DashboardSelector<boolean> = createSelector(
     selectIsDashboardLoading,
     selectCanEnterEditMode,
     (isLoading, canEnterEditMode) => !isLoading && canEnterEditMode,
@@ -96,7 +97,7 @@ export const selectCanEnterEditModeAndIsLoaded = createSelector(
 /**
  * @internal
  */
-export const selectIsPrivateDashboard = createSelector(
+export const selectIsPrivateDashboard: DashboardSelector<boolean> = createSelector(
     selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardPrivate,
     selectIsNewDashboard,
@@ -114,7 +115,7 @@ export function selectCanSaveDashboard(state: DashboardState) {
 /**
  * @internal
  */
-export const selectIsCurrentDashboardVisibleInList = createSelector(
+export const selectIsCurrentDashboardVisibleInList: DashboardSelector<boolean> = createSelector(
     selectDashboardRef,
     selectListedDashboardsMap,
     (currentDashboardRef, dashboardsList) =>
@@ -124,7 +125,7 @@ export const selectIsCurrentDashboardVisibleInList = createSelector(
 /**
  * @internal
  */
-export const selectIsShareButtonVisible = createSelector(
+export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSelector(
     selectEnableAnalyticalDashboardPermissions,
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,

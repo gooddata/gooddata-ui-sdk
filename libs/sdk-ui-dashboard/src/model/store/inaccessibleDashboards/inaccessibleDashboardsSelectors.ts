@@ -1,8 +1,9 @@
 // (C) 2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 
-import { DashboardState } from "../types";
-import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes";
+import { DashboardSelector, DashboardState } from "../types";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 
 import { inaccessibleDashboardsEntityAdapter } from "./inaccessibleDashboardsEntityAdapter";
 
@@ -25,6 +26,7 @@ export const selectInaccessibleDashboards = adapterSelectors.selectAll;
  *
  * @alpha
  */
-export const selectInaccessibleDashboardsMap = createSelector(selectInaccessibleDashboards, (dashboards) => {
-    return newMapForObjectWithIdentity(dashboards);
-});
+export const selectInaccessibleDashboardsMap: DashboardSelector<ObjRefMap<IInaccessibleDashboard>> =
+    createSelector(selectInaccessibleDashboards, (dashboards) => {
+        return newMapForObjectWithIdentity(dashboards);
+    });

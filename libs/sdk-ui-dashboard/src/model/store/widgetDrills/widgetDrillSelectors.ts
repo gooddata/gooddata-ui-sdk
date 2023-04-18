@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -18,6 +18,7 @@ import {
     ICatalogDateAttribute,
 } from "@gooddata/sdk-model";
 import {
+    ExplicitDrill,
     HeaderPredicates,
     IAvailableDrillTargetAttribute,
     IAvailableDrillTargets,
@@ -46,6 +47,7 @@ import {
 import flatMap from "lodash/flatMap";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors";
 import { selectInsightsMap } from "../insights/insightsSelectors";
+import { DashboardSelector } from "../types";
 
 /**
  * @internal
@@ -158,7 +160,9 @@ function getDrillDefinitionsWithPredicates(
 /**
  * @internal
  */
-export const selectImplicitDrillsDownByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectImplicitDrillsDownByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDrillDown,
@@ -181,7 +185,9 @@ export const selectImplicitDrillsDownByWidgetRef = createMemoizedSelector((ref: 
 /**
  * @internal
  */
-export const selectImplicitDrillsToUrlByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectImplicitDrillsToUrlByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDisplayFormLink,
@@ -201,7 +207,9 @@ export const selectImplicitDrillsToUrlByWidgetRef = createMemoizedSelector((ref:
 /**
  * @internal
  */
-export const selectConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectConfiguredDrillsByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectWidgetDrills(ref),
         selectDisableDefaultDrills,
@@ -258,7 +266,9 @@ export const selectConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: Ob
 /**
  * @internal
  */
-export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectValidConfiguredDrillsByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectConfiguredDrillsByWidgetRef(ref),
         selectAllCatalogDisplayFormsMap,
@@ -320,7 +330,9 @@ const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
 /**
  * @internal
  */
-export const selectConfiguredAndImplicitDrillsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+export const selectConfiguredAndImplicitDrillsByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
@@ -334,34 +346,35 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef = createMemoizedSelect
 /**
  * @internal
  */
-export const selectDrillableItemsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(
-        selectDisableDefaultDrills,
-        selectDrillableItems,
-        selectConfiguredDrillPredicates(ref),
-        selectImplicitDrillDownPredicates(ref),
-        selectImplicitDrillToUrlPredicates(ref),
-        (
-            disableDefaultDrills,
-            drillableItems,
-            configuredDrills,
-            implicitDrillDownDrills,
-            implicitDrillToUrlDrills,
-        ) => {
-            const resolvedDrillableItems = [...drillableItems];
+export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector<ExplicitDrill[]> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectDisableDefaultDrills,
+            selectDrillableItems,
+            selectConfiguredDrillPredicates(ref),
+            selectImplicitDrillDownPredicates(ref),
+            selectImplicitDrillToUrlPredicates(ref),
+            (
+                disableDefaultDrills,
+                drillableItems,
+                configuredDrills,
+                implicitDrillDownDrills,
+                implicitDrillToUrlDrills,
+            ) => {
+                const resolvedDrillableItems = [...drillableItems];
 
-            if (!disableDefaultDrills) {
-                resolvedDrillableItems.push(
-                    ...configuredDrills,
-                    ...implicitDrillDownDrills,
-                    ...implicitDrillToUrlDrills,
-                );
-            }
+                if (!disableDefaultDrills) {
+                    resolvedDrillableItems.push(
+                        ...configuredDrills,
+                        ...implicitDrillDownDrills,
+                        ...implicitDrillToUrlDrills,
+                    );
+                }
 
-            return resolvedDrillableItems;
-        },
-    ),
-);
+                return resolvedDrillableItems;
+            },
+        ),
+    );
 
 //
 // Following selectors are for insight widget in drill dialog
@@ -370,7 +383,9 @@ export const selectDrillableItemsByWidgetRef = createMemoizedSelector((ref: ObjR
 /**
  * @internal
  */
-export const selectImplicitDrillsByAvailableDrillTargets = createMemoizedSelector(
+export const selectImplicitDrillsByAvailableDrillTargets: (
+    availableDrillTargets: IAvailableDrillTargets | undefined,
+) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector(
     (availableDrillTargets: IAvailableDrillTargets | undefined) =>
         createSelector(
             selectAttributesWithDrillDown,
@@ -394,7 +409,9 @@ export const selectImplicitDrillsByAvailableDrillTargets = createMemoizedSelecto
 /**
  * @internal
  */
-export const selectDrillableItemsByAvailableDrillTargets = createMemoizedSelector(
+export const selectDrillableItemsByAvailableDrillTargets: (
+    availableDrillTargets: IAvailableDrillTargets | undefined,
+) => DashboardSelector<IHeaderPredicate[]> = createMemoizedSelector(
     (availableDrillTargets: IAvailableDrillTargets | undefined) =>
         createSelector(
             selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets),

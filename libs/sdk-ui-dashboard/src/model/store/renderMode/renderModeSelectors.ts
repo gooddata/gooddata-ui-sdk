@@ -1,7 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
+import { RenderMode } from "../../../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -11,14 +12,23 @@ const selectSelf = createSelector(
 /**
  * @internal
  */
-export const selectRenderMode = createSelector(selectSelf, (state) => state.renderMode);
+export const selectRenderMode: DashboardSelector<RenderMode> = createSelector(
+    selectSelf,
+    (state) => state.renderMode,
+);
 
 /**
  * @internal
  */
-export const selectIsInViewMode = createSelector(selectRenderMode, (renderMode) => renderMode === "view");
+export const selectIsInViewMode: DashboardSelector<boolean> = createSelector(
+    selectRenderMode,
+    (renderMode) => renderMode === "view",
+);
 
 /**
  * @internal
  */
-export const selectIsInEditMode = createSelector(selectRenderMode, (renderMode) => renderMode === "edit");
+export const selectIsInEditMode: DashboardSelector<boolean> = createSelector(
+    selectRenderMode,
+    (renderMode) => renderMode === "edit",
+);

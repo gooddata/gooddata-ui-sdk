@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
@@ -13,6 +13,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     selectIsReadOnly,
+    DashboardSelector,
 } from "../../../../../model";
 import { ISaveAsNewButtonProps } from "./types";
 import { selectCanEnterEditModeAndIsLoaded } from "../selectors";
@@ -21,7 +22,7 @@ import { createSelector } from "@reduxjs/toolkit";
 /**
  * @internal
  */
-export const selectIsSaveAsNewButtonVisible = createSelector(
+export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = createSelector(
     selectDashboardEditModeDevRollout,
     selectEnableKPIDashboardSaveAsNew,
     selectIsSaveAsNewButtonHidden,

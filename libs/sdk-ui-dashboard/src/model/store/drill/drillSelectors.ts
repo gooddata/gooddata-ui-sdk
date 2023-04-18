@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { ExplicitDrill } from "@gooddata/sdk-ui";
+import { DashboardSelector, DashboardState } from "../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -12,6 +13,9 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectDrillableItems = createSelector(selectSelf, (state) => {
-    return state.drillableItems;
-});
+export const selectDrillableItems: DashboardSelector<ExplicitDrill[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.drillableItems;
+    },
+);

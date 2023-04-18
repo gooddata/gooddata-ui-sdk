@@ -1,12 +1,18 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import invariant from "ts-invariant";
-import { DateFilterGranularity, DashboardDateFilterConfigMode, IDateFilterConfig } from "@gooddata/sdk-model";
+import {
+    DateFilterGranularity,
+    DashboardDateFilterConfigMode,
+    IDateFilterConfig,
+    IDashboardDateFilterConfig,
+} from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../../../_staging/dateFilterConfig/dateFilterConfigConverters";
 import { DashboardSelector, DashboardState } from "../types";
 import { selectIsInEditMode } from "../renderMode/renderModeSelectors";
+import { DateFilterValidationResult } from "../../../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -26,9 +32,10 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateFilterConfigState) => {
-    return dateFilterConfigState.dateFilterConfig ?? undefined;
-});
+export const selectDateFilterConfigOverrides: DashboardSelector<IDashboardDateFilterConfig | undefined> =
+    createSelector(selectSelf, (dateFilterConfigState) => {
+        return dateFilterConfigState.dateFilterConfig ?? undefined;
+    });
 
 /**
  * Returns effective date filter config. The effective date filter config is created by merging the workspace-level
@@ -58,7 +65,7 @@ export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfi
  *
  * @alpha
  */
-export const selectEffectiveDateFilterOptions = createSelector(
+export const selectEffectiveDateFilterOptions: DashboardSelector<IDateFilterOptionsByType> = createSelector(
     selectEffectiveDateFilterConfig,
     (effectiveDateFilterConfig): IDateFilterOptionsByType =>
         convertDateFilterConfigToDateFilterOptions(effectiveDateFilterConfig),
@@ -72,11 +79,12 @@ export const selectEffectiveDateFilterOptions = createSelector(
  *
  * @alpha
  */
-export const selectEffectiveDateFilterAvailableGranularities = createSelector(
-    selectEffectiveDateFilterConfig,
-    (effectiveDateFilterConfig): DateFilterGranularity[] =>
-        effectiveDateFilterConfig.relativeForm?.availableGranularities ?? [],
-);
+export const selectEffectiveDateFilterAvailableGranularities: DashboardSelector<DateFilterGranularity[]> =
+    createSelector(
+        selectEffectiveDateFilterConfig,
+        (effectiveDateFilterConfig): DateFilterGranularity[] =>
+            effectiveDateFilterConfig.relativeForm?.availableGranularities ?? [],
+    );
 
 /**
  * Indicates whether the effective date filter is using dashboard-level overrides.
@@ -97,7 +105,7 @@ const effectiveDateFilterConfigIsUsingOverrides = createSelector(selectSelf, (da
  *
  * @alpha
  */
-export const selectEffectiveDateFilterTitle = createSelector(
+export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefined> = createSelector(
     effectiveDateFilterConfigIsUsingOverrides,
     selectDateFilterConfigOverrides,
     (isUsingOverrides, dashboardOverrides) => {
@@ -119,7 +127,7 @@ export const selectEffectiveDateFilterTitle = createSelector(
  *
  * @alpha
  */
-export const selectEffectiveDateFilterMode = createSelector(
+export const selectEffectiveDateFilterMode: DashboardSelector<DashboardDateFilterConfigMode> = createSelector(
     selectIsInEditMode,
     selectDateFilterConfigOverrides,
     (isInEditMode, dashboardOverrides): DashboardDateFilterConfigMode => {
@@ -136,9 +144,7 @@ export const selectEffectiveDateFilterMode = createSelector(
  *
  * @alpha
  */
-export const selectDateFilterConfigValidationWarnings = createSelector(
-    selectSelf,
-    (dateFilterConfigState) => {
+export const selectDateFilterConfigValidationWarnings: DashboardSelector<DateFilterValidationResult[]> =
+    createSelector(selectSelf, (dateFilterConfigState) => {
         return dateFilterConfigState.dateFilterConfigValidationWarnings ?? [];
-    },
-);
+    });

@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { alertsAdapter } from "./alertsEntityAdapter";
-import { DashboardState } from "../types";
-import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import { DashboardSelector, DashboardState } from "../types";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import compact from "lodash/compact";
 import memoize from "lodash/memoize";
 import { Identifier, ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
@@ -84,9 +84,12 @@ export const selectAlertByWidgetRef = memoize(
  *
  * @internal
  */
-export const selectAlertsMap = createSelector(selectAlerts, (alerts) => {
-    return newMapForObjectWithIdentity(alerts);
-});
+export const selectAlertsMap: DashboardSelector<ObjRefMap<IWidgetAlert>> = createSelector(
+    selectAlerts,
+    (alerts) => {
+        return newMapForObjectWithIdentity(alerts);
+    },
+);
 
 /**
  * Selects alert or undefined by alert ref

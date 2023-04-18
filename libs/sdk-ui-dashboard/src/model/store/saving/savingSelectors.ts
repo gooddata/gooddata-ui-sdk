@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
+import { SavingState } from "./savingState";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -11,9 +12,12 @@ const selectSelf = createSelector(
 /**
  * @internal
  */
-export const selectDashboardSaving = selectSelf;
+export const selectDashboardSaving: DashboardSelector<SavingState> = selectSelf;
 
 /**
  * @public
  */
-export const selectIsDashboardSaving = createSelector(selectSelf, (state) => state.saving);
+export const selectIsDashboardSaving: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.saving,
+);

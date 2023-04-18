@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import invariant from "ts-invariant";
-import { DashboardState } from "../types";
+import { DashboardSelector, DashboardState } from "../types";
+import { ILegacyDashboard } from "../../../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -13,8 +14,11 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectLegacyDashboards = createSelector(selectSelf, (state) => {
-    invariant(state.legacyDashboards, "attempting to access uninitialized legacy dashboard state");
+export const selectLegacyDashboards: DashboardSelector<ILegacyDashboard[]> = createSelector(
+    selectSelf,
+    (state) => {
+        invariant(state.legacyDashboards, "attempting to access uninitialized legacy dashboard state");
 
-    return state.legacyDashboards;
-});
+        return state.legacyDashboards;
+    },
+);

@@ -1,7 +1,9 @@
 // (C) 2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardState } from "../types";
+import { IEntitlementDescriptor } from "@gooddata/sdk-model";
+import { DashboardSelector, DashboardState } from "../types";
 import invariant from "ts-invariant";
+import { ResolvedEntitlements } from "../../types/commonTypes";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -17,15 +19,19 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectEntitlements = createSelector(selectSelf, (state) => {
-    invariant(state.entitlements, "attempting to access uninitialized entitlements state");
+export const selectEntitlements: DashboardSelector<ResolvedEntitlements> = createSelector(
+    selectSelf,
+    (state) => {
+        invariant(state.entitlements, "attempting to access uninitialized entitlements state");
 
-    return state.entitlements;
-});
+        return state.entitlements;
+    },
+);
 
 /**
  * @alpha
  */
-export const selectEntitlementExportPdf = createSelector(selectEntitlements, (entitlements) => {
-    return entitlements.find((entitlement) => entitlement.name === "PdfExports");
-});
+export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined> =
+    createSelector(selectEntitlements, (entitlements) => {
+        return entitlements.find((entitlement) => entitlement.name === "PdfExports");
+    });

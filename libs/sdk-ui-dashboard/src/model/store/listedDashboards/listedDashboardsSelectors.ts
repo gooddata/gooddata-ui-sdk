@@ -1,8 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
+import { IListedDashboard } from "@gooddata/sdk-model";
 import { listedDashboardsEntityAdapter } from "./listedDashboardsEntityAdapter";
-import { DashboardState } from "../types";
-import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import { DashboardSelector, DashboardState } from "../types";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -23,6 +24,9 @@ export const selectListedDashboards = adapterSelectors.selectAll;
  *
  * @alpha
  */
-export const selectListedDashboardsMap = createSelector(selectListedDashboards, (dashboards) => {
-    return newMapForObjectWithIdentity(dashboards);
-});
+export const selectListedDashboardsMap: DashboardSelector<ObjRefMap<IListedDashboard>> = createSelector(
+    selectListedDashboards,
+    (dashboards) => {
+        return newMapForObjectWithIdentity(dashboards);
+    },
+);
