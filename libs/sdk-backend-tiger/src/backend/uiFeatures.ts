@@ -76,7 +76,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKPIAttributeFilterRenaming: false,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
-    enableSingleSelectionFilter: false,
+    enableSingleSelectionFilter: true,
     enableFunnelChart: false,
     enablePyramidChart: false,
     enableCompositeGrain: false,
