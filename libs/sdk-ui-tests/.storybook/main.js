@@ -1,4 +1,5 @@
 const CopyPlugin = require("copy-webpack-plugin");
+const path = require("path");
 
 module.exports = {
     addons: ["@storybook/addon-actions", "@storybook/preset-scss"],
@@ -13,6 +14,22 @@ module.exports = {
     },
     webpackFinal: async (config) => ({
         ...config,
+        resolve: {
+            ...config.resolve,
+            alias: {
+                ...config.resolve.alias,
+                // fixes tilde imports in CSS from sdk-ui-ext
+                "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
+                "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
+                "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),                
+                "@gooddata/sdk-ui": path.resolve("./node_modules/@gooddata/sdk-ui"),
+                "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
+                "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
+                "@gooddata/sdk-ui-geo": path.resolve("./node_modules/@gooddata/sdk-ui-geo"),
+                "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
+                
+            },
+        },
         plugins: [
             ...config.plugins,
             new CopyPlugin({

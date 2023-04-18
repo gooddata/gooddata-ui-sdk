@@ -63,7 +63,7 @@ describe("DateRangePicker", () => {
             const onRangeChange = jest.fn();
             renderComponent({ onRangeChange });
             fireEvent.click(getInput("05/05/2019"));
-            fireEvent.click(screen.getByText("6th May (Monday)"));
+            fireEvent.click(screen.getByText("6"));
 
             // Cannot test on exact match, because the dates are local.
             // See https://github.com/gpbl/react-day-picker/blob/b08661717076249f1b6c1085174bb1d92aad6b08/test/daypicker/events.js#L37-L54
@@ -76,7 +76,7 @@ describe("DateRangePicker", () => {
             const onRangeChange = jest.fn();
             renderComponent({ onRangeChange });
             fireEvent.click(getInput("05/15/2019"));
-            fireEvent.click(screen.getByText("6th May (Monday)"));
+            fireEvent.click(screen.getByText("6"));
 
             const to = onRangeChange.mock.calls[0][0].to;
             expect(to.getFullYear()).toEqual(2019);

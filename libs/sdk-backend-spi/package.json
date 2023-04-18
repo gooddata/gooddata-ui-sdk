@@ -48,7 +48,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-model": "^8.13.0-alpha.44",
+        "@gooddata/sdk-model": "workspace:*",
         "lodash": "^4.17.19",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.5.0"

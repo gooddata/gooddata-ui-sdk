@@ -44,10 +44,13 @@ module.exports = (_env, argv) => {
                 extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
 
                 alias: {
-                    // Fixes tilde imports in CSS from sdk-ui-* packages
-                    "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
-                    "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
+                    // fixes tilde imports in CSS from sdk-ui-* packages
+                    "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
+                    "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
+                    "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
                     "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
+                    "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
+                    "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
                 },
 
                 // Prefer ESM versions of packages to enable tree shaking
