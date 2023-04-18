@@ -1,7 +1,7 @@
 {
-  "hostname": "https://public-examples.gooddata.com",
-  "workspaceId": "demo",
-  "output": "src/catalog.ts",
-  "backend": "tiger",
-  "demo": true
+    "hostname": "https://public-examples.gooddata.com",
+    "workspaceId": "demo",
+    "output": "src/catalog.js",
+    "backend": "tiger",
+    "demo": true
 }
