@@ -44,9 +44,11 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
 
     return (
         <div className={classes} onClick={onItemClick} title={itemTitle}>
-            {itemTitle}
+            <span>{itemTitle}</span>
             {isSelected && isMobile && fullscreenOnMobile ? (
-                <CustomizableCheckmark className="gd-customizable-checkmark-mobile-navigation" />
+                <span className="gd-customizable-checkmark-mobile-navigation-wrapper">
+                    <CustomizableCheckmark className="gd-customizable-checkmark-mobile-navigation" />
+                </span>
             ) : null}
         </div>
     );
