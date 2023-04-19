@@ -76,6 +76,12 @@ module.exports = (_env, argv) => {
 
             // Prefer ESM versions of packages to enable tree shaking
             mainFields: ["module", "browser", "main"],
+
+            fallback: {
+                // semver package depends on node `util`,
+                // but node API is no longer supported with webpack >= 5
+                util: false,
+            },
         },
         module: {
             rules: [
