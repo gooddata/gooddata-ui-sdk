@@ -109,6 +109,27 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSankeyChart,
+            "enableSankeyChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSankeyChart,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDependencyWheelChart,
+            "enableDependencyWheelChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDependencyWheelChart,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableWaterfallChart,
+            "enableWaterfallChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableWaterfallChart,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKPIAttributeFilterRenaming,
             "enableKPIAttributeFilterRenaming",
             "BOOLEAN",
