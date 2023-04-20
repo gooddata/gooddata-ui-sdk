@@ -7,7 +7,7 @@ _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
 
 NODE_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-node-16:node-16.20.0-yarn-1.22.17'
-NETWORK_ID=network-id-${EXECUTOR_NUMBER}
+NETWORK_ID=ui-sdk-network-$BUILD_ID
 CYPRESS_HOST=$HOST
 TIGER_API_TOKEN=$TIGER_API_TOKEN
 FIXTURE_TYPE=$FIXTURE_TYPE
@@ -46,7 +46,6 @@ function shutdownAIO() {
 
 if [[ "$IS_AIO" == true ]]; then
   DATA_LOADER_IMAGE='registry.gitlab.com/gooddata/gdc-nas/data-loader:master'
-  AIO_IMAGE="registry.gitlab.com/gooddata/gdc-nas/gooddata-cn-ce:$AIO_VERSION"
   IMAGE_ID=gooddata-cn-ce-aio-${EXECUTOR_NUMBER}
   PORT_NUMBER=300${EXECUTOR_NUMBER}
   HOST=http://localhost:$PORT_NUMBER
@@ -55,6 +54,12 @@ if [[ "$IS_AIO" == true ]]; then
   TIGER_API_TOKEN=YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz
   TIGER_DATASOURCES_NAME=pg_staging-goodsales
   EXTRA_PARAMS=" --net=$NETWORK_ID "
+
+  if [[ "$AIO_VERSION" == "master" || "$AIO_VERSION" == "stable" ]]; then
+    AIO_IMAGE="registry.gitlab.com/gooddata/gdc-nas/gooddata-cn-ce:$AIO_VERSION"
+  else
+    AIO_IMAGE="gooddata/gooddata-cn-ce:$AIO_VERSION"
+  fi
 
   trap shutdownAIO EXIT
   docker network create $NETWORK_ID

@@ -1,28 +1,32 @@
 {
-    "id": "4b1e36d0-2427-48a5-88c9-250efec0d341",
-    "name": "api_v1_actions_resolveentitlements",
+    "id": "6e174e8c-e70d-4982-ba18-c2332c1610b6",
+    "name": "api_v1_entities_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_visualizationobjects",
     "request": {
-        "url": "/api/v1/actions/resolveEntitlements",
+        "url": "/api/v1/entities/workspaces/2b7da2afb0d34f4397481c4d2a2d50b0/visualizationObjects?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
             }
         }
     },
     "response": {
         "status": 200,
-        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
+        "bodyFileName": "api_v1_entities_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_visualizationobjects-6e174e8c-e70d-4982-ba18-c2332c1610b6.json",
         "headers": {
-            "Date": "Mon, 27 Mar 2023 09:34:10 GMT",
-            "Content-Type": "application/json",
+            "Date": "Fri, 12 May 2023 10:28:07 GMT",
+            "Content-Type": "application/vnd.gooddata.api+json",
             "Vary": [
                 "Accept-Encoding",
                 "Origin",
                 "Access-Control-Request-Method",
                 "Access-Control-Request-Headers"
             ],
-            "X-GDC-TRACE-ID": "1adefa6d7296b824",
+            "X-GDC-TRACE-ID": "3fc3479235902f02",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
@@ -34,7 +38,7 @@
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
         }
     },
-    "uuid": "4b1e36d0-2427-48a5-88c9-250efec0d341",
+    "uuid": "6e174e8c-e70d-4982-ba18-c2332c1610b6",
     "persistent": true,
     "insertionIndex": 15
 }

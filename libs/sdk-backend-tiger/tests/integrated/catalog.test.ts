@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 
 import { testBackend, testWorkspace, sanitizeWorkspace, sortToOrder } from "./backend";
-// import fs from "fs";
 import { measureLocalId, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
 
 import * as Md from "../../src/fixtures/full";

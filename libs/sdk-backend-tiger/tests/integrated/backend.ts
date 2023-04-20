@@ -108,10 +108,10 @@ export function sortToOrder(json: any) {
         const currentObject = json.items[i];
         for (const [objectKeys, objectValues] of Object.entries(currentObject)) {
             sortByKey(currentObject, objectKeys, objectValues, "id");
+            sortByKey(currentObject, objectKeys, objectValues, "granularity");
             if (typeof objectValues === "object" && !Array.isArray(objectValues)) {
                 for (const [keys, values] of Object.entries(currentObject[objectKeys])) {
                     sortByKey(currentObject[objectKeys], keys, values, "id");
-                    sortByKey(currentObject[objectKeys], keys, values, "granularity");
                 }
             }
         }
@@ -121,8 +121,19 @@ export function sortToOrder(json: any) {
 
 function sortByKey(object: any, key: any, value: any, sortBy: string) {
     if (Array.isArray(value) && value.length >= 2) {
-        if (Object.keys(object[key][0]).includes(sortBy)) {
-            object[key].sort((a: any, b: any) => a.id.localeCompare(b.id));
+        switch (sortBy) {
+            case "id":
+                if (Object.keys(object[key][0]).includes(sortBy)) {
+                    object[key].sort((a: any, b: any) => a.id.localeCompare(b.id));
+                }
+                break;
+            case "granularity":
+                if (Object.keys(object[key][0]).includes(sortBy)) {
+                    object[key].sort((a: any, b: any) => a.granularity.localeCompare(b.granularity));
+                }
+                break;
+            default:
+                break;
         }
     }
 }

@@ -1,32 +1,39 @@
 {
-    "id": "2e547e71-b6be-418f-8fa4-eb5947939fa1",
-    "name": "api_v1_entities_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_metrics",
+    "id": "a590844d-c580-4ea8-8c80-8091376327aa",
+    "name": "api_v1_actions_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/entities/workspaces/2b7da2afb0d34f4397481c4d2a2d50b0/metrics?size=250&page=0",
-        "method": "GET",
+        "url": "/api/v1/actions/workspaces/2b7da2afb0d34f4397481c4d2a2d50b0/execution/collectLabelElements?offset=0&limit=100",
+        "method": "POST",
         "headers": {
             "Accept": {
-                "equalTo": "application/vnd.gooddata.api+json"
+                "equalTo": "application/json, text/plain, */*"
             },
             "Content-Type": {
-                "equalTo": "application/vnd.gooddata.api+json",
+                "equalTo": "application/json",
                 "caseInsensitive": true
             }
-        }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_metrics-2e547e71-b6be-418f-8fa4-eb5947939fa1.json",
+        "bodyFileName": "api_v1_actions_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_execution_collectlabelelements-a590844d-c580-4ea8-8c80-8091376327aa.json",
         "headers": {
-            "Date": "Mon, 27 Mar 2023 09:33:56 GMT",
-            "Content-Type": "application/vnd.gooddata.api+json",
+            "Date": "Fri, 12 May 2023 10:27:42 GMT",
+            "Content-Type": "application/json",
             "Vary": [
                 "Accept-Encoding",
                 "Origin",
                 "Access-Control-Request-Method",
                 "Access-Control-Request-Headers"
             ],
-            "X-GDC-TRACE-ID": "7d24a4e22481f608",
+            "X-GDC-TRACE-ID": "90bcc4f3a6a551a5",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
@@ -38,7 +45,7 @@
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
         }
     },
-    "uuid": "2e547e71-b6be-418f-8fa4-eb5947939fa1",
+    "uuid": "a590844d-c580-4ea8-8c80-8091376327aa",
     "persistent": true,
-    "insertionIndex": 12
+    "insertionIndex": 7
 }
