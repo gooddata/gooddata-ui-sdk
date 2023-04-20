@@ -73,7 +73,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDescriptions: true,
     enableAnalyticalDashboardPermissions: true,
     enablePushpinGeoChart: true,
-    enableKPIAttributeFilterRenaming: false,
+    enableKPIAttributeFilterRenaming: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
     enableSingleSelectionFilter: true,
