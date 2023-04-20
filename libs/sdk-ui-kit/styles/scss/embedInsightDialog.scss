@@ -5,6 +5,10 @@
 
 .embed-insight-dialog {
     width: 600px;
+
+    .gd-tabs.small {
+        margin-bottom: 20px;
+    }
 }
 
 .embed-insight-dialog-header {
@@ -23,7 +27,6 @@
 .embed-insight-dialog-content {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
 }
 
 .embed-component-type-help {

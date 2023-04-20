@@ -21,6 +21,7 @@ export type IEmbedInsightDialogBaseProps = {
     embedTypeOptions: IReactOptions | IWebComponentsOptions;
     propertiesLink?: string;
     integrationDocLink?: string;
+    showWebComponentsTab?: boolean;
     openSaveInsightDialog: () => void;
     onClose: () => void;
     onCopyCode: (code: string, type: CopyCodeOriginType, codeType: EmbedType) => void;
@@ -43,6 +44,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
         onCopyCode,
         onOptionsChange,
         onTabChange,
+        showWebComponentsTab,
     } = props;
 
     const intl = useIntl();
@@ -81,13 +83,15 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                     : undefined
             }
         >
-            <Tabs
-                tabs={getTabIds()}
-                onTabSelect={(tab) => {
-                    onTabChange(tab.id.includes("react") ? "react" : "webComponents");
-                }}
-                selectedTabId={dialogEmbedTabLabels[embedTab].id}
-            />
+            {showWebComponentsTab && (
+                <Tabs
+                    tabs={getTabIds()}
+                    onTabSelect={(tab) => {
+                        onTabChange(tab.id.includes("react") ? "react" : "webComponents");
+                    }}
+                    selectedTabId={dialogEmbedTabLabels[embedTab].id}
+                />
+            )}
             <EmbedInsightContent
                 integrationDocLink={integrationDocLink}
                 code={code}

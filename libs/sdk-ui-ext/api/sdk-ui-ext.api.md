@@ -113,6 +113,8 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     settings?: IUserWorkspaceSettings;
     // (undocumented)
+    showWebComponentsTab?: boolean;
+    // (undocumented)
     webComponentIntegrationDocLink?: string;
     // (undocumented)
     workspaceId?: string;
