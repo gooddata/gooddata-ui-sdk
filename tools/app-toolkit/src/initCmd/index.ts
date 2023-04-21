@@ -63,13 +63,13 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
         ],
         "src/App.tsx": [
             {
-                regex: /\[\[language]]/g,
+                regex: /\[\[language\]\]/g,
                 value: language,
             },
         ],
         "src/App.jsx": [
             {
-                regex: /\[\[language]]/g,
+                regex: /\[\[language\]\]/g,
                 value: language,
             },
         ],
