@@ -12,11 +12,13 @@ import bulletModule from "highcharts/modules/bullet";
 import funnelModule from "highcharts/modules/funnel";
 import heatmap from "highcharts/modules/heatmap";
 import patternFill from "highcharts/modules/pattern-fill";
+import sankeyModule from "highcharts/modules/sankey";
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
 bulletModule(Highcharts);
 funnelModule(Highcharts);
+sankeyModule(Highcharts);
 heatmap(Highcharts);
 HighchartsMore(Highcharts);
 patternFill(Highcharts);

@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "SankeyChart.d07948721798befe8b66e4cc48a235d5",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "left", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "SankeyChart - 610x154 - Force position RIGHT - legend on left",
+        "uri": "SankeyChart.d07948721798befe8b66e4cc48a235d5",
+        "visualizationUrl": "local:sankey"
+    }
+}

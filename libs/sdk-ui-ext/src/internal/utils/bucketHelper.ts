@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import set from "lodash/set";
 import uniq from "lodash/uniq";
 import uniqBy from "lodash/uniqBy";
@@ -318,6 +318,10 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
         );
     }
 
+    if (visualizationType === VisualizationTypes.SANKEY) {
+        return bucketLocalIdentifier !== BucketNames.MEASURES;
+    }
+
     return false;
 }
 
@@ -528,6 +532,20 @@ export function getStackItems(buckets: IBucketOfFun[], itemTypes: string[] = [AT
     const preferredStacks = getPreferredBucket(buckets, [BucketNames.STACK, BucketNames.SEGMENT], itemTypes);
 
     return preferredStacks?.items ?? [];
+}
+
+export function getAttributeToItems(buckets: IBucketOfFun[]): IBucketItem[] {
+    const preferredAttributeTos = getPreferredBucket(buckets, [BucketNames.ATTRIBUTE_TO], [ATTRIBUTE, DATE]);
+    return preferredAttributeTos?.items ?? [];
+}
+
+export function getAttributeFromItems(buckets: IBucketOfFun[]): IBucketItem[] {
+    const preferredAttributeTos = getPreferredBucket(
+        buckets,
+        [BucketNames.ATTRIBUTE_FROM],
+        [ATTRIBUTE, DATE],
+    );
+    return preferredAttributeTos?.items ?? [];
 }
 
 export function getViewItems(buckets: IBucketOfFun[], itemTypes: string[] = [ATTRIBUTE]): IBucketItem[] {

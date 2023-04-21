@@ -36,6 +36,10 @@ jest.mock("highcharts/modules/funnel", () => {
     return (H: any) => H;
 });
 
+jest.mock("highcharts/modules/sankey", () => {
+    return (H: any) => H;
+});
+
 jest.mock("highcharts/highcharts-more", () => {
     return (H: any) => H;
 });

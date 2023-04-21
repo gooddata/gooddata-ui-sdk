@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import {
     ColorAxisOptions,
@@ -77,6 +77,14 @@ export interface ISeriesDataItem {
     name?: string;
     legendIndex?: number;
     color?: TooltipPositionerPointObject["color"];
+    from?: string;
+    to?: string;
+    weight?: number;
+}
+
+export interface ISeriesNodeItem {
+    id?: string;
+    color?: string;
 }
 
 export interface IStackItem {
@@ -86,6 +94,7 @@ export interface IStackItem {
 
 export interface ISeriesItem {
     name?: string;
+    keys?: string[];
     data?: ISeriesDataItem[];
     color?: string;
     userOptions?: any;
@@ -100,6 +109,7 @@ export interface ISeriesItem {
     stacking?: StackingType;
     dataLabels?: DataLabelsOptionsObject;
     dataLabelsGroup?: SVGAttributes;
+    nodes?: ISeriesNodeItem[];
 }
 
 export interface IChartOptionsData {
@@ -231,6 +241,11 @@ export interface IUnsafeHighchartsTooltipPoint {
     node?: {
         isLeaf: boolean;
     };
+    isNode?: boolean;
+    from?: string;
+    to?: string;
+    weight?: number;
+    sum?: number;
 }
 
 export interface ICategoryParent {

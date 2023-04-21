@@ -3852,3 +3852,27 @@ export const measureValueFilterAndInvalidNatTotal: IReferencePoint = {
         ],
     },
 };
+
+export const metricAndAttributeFromAndTo: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measure",
+            items: [masterMeasureItems[0]],
+        },
+        {
+            localIdentifier: "attribute_from",
+            items: [attributeItems[0]],
+        },
+        {
+            localIdentifier: "attribute_to",
+            items: [attributeItems[1]],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        sortItems: [],
+    },
+};

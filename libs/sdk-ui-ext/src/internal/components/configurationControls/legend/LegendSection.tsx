@@ -1,22 +1,32 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import ConfigSection from "../ConfigSection";
 import LegendPositionControl from "./LegendPositionControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import { messages } from "../../../../locales";
+import noop from "lodash/noop";
 
 export interface ILegendSection {
     controlsDisabled: boolean;
     properties: IVisualizationProperties;
     propertiesMeta: any;
+    defaultLegendEnabled?: boolean;
     pushData: (data: any) => any;
 }
 
 class LegendSection extends React.PureComponent<ILegendSection> {
-    public render() {
-        const { controlsDisabled, properties, pushData } = this.props;
+    public static defaultProps: ILegendSection = {
+        controlsDisabled: false,
+        properties: {},
+        propertiesMeta: {},
+        defaultLegendEnabled: true,
+        pushData: noop,
+    };
 
-        const legendEnabled = this.props.properties?.controls?.legend?.enabled ?? true;
+    public render() {
+        const { controlsDisabled, properties, pushData, defaultLegendEnabled } = this.props;
+
+        const legendEnabled = this.props.properties?.controls?.legend?.enabled ?? defaultLegendEnabled;
         const legendPosition = this.props.properties?.controls?.legend?.position ?? "auto";
         const legendToggleDisabledByVisualization = !(this.props.propertiesMeta?.legend_enabled ?? true);
 

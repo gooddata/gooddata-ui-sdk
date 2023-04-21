@@ -101,6 +101,13 @@ function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
     return newTwoDimensional(viewByAttributes, [MeasureGroupIdentifier]);
 }
 
+function getSankeyDimensions(insight: IInsightDefinition): IDimension[] {
+    const fromAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE_FROM);
+    const toAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE_TO);
+
+    return newTwoDimensional([MeasureGroupIdentifier], compact([...fromAttributes, ...toAttributes]));
+}
+
 /**
  * Generates dimensions based on buckets and visualization objects.
  *
@@ -148,6 +155,9 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
 
         case VisualizationTypes.BUBBLE:
             return getBubbleDimensions(insight);
+
+        case VisualizationTypes.SANKEY:
+            return getSankeyDimensions(insight);
     }
     return [];
 }

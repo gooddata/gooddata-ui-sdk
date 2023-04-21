@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -23,6 +23,7 @@ describe("HeatmapColorStrategy", () => {
             undefined,
             undefined,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,
@@ -56,6 +57,7 @@ describe("HeatmapColorStrategy", () => {
                 CUSTOM_COLOR_PALETTE,
                 undefined,
                 viewByAttribute,
+                undefined,
                 stackByAttribute,
                 dv,
                 type,
@@ -99,6 +101,7 @@ describe("HeatmapColorStrategy", () => {
                 CUSTOM_COLOR_PALETTE,
                 inapplicableColorMapping,
                 viewByAttribute,
+                undefined,
                 stackByAttribute,
                 dv,
                 type,
@@ -138,6 +141,7 @@ describe("HeatmapColorStrategy", () => {
             CUSTOM_COLOR_PALETTE,
             colorMapping,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,
@@ -176,6 +180,7 @@ describe("HeatmapColorStrategy", () => {
             CUSTOM_COLOR_PALETTE,
             colorMapping,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,
@@ -326,6 +331,7 @@ describe("HeatmapColorStrategy", () => {
                     customColors,
                     undefined,
                     viewByAttribute,
+                    undefined,
                     stackByAttribute,
                     dv,
                     "heatmap",

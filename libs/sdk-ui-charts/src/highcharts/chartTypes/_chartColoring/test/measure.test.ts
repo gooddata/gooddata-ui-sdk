@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
@@ -48,6 +48,7 @@ describe("MeasureColorStrategy", () => {
                 TwoColorPalette,
                 colorMapping,
                 viewByAttribute,
+                undefined,
                 stackByAttribute,
                 dv,
                 type,
@@ -62,6 +63,7 @@ describe("MeasureColorStrategy", () => {
                 TwoColorPalette,
                 colorMapping,
                 viewByAttribute,
+                undefined,
                 stackByAttribute,
                 dv,
                 type,
@@ -84,6 +86,7 @@ describe("MeasureColorStrategy", () => {
                 TwoColorPalette,
                 colorMapping,
                 viewByAttribute,
+                undefined,
                 stackByAttribute,
                 dv,
                 type,
@@ -116,6 +119,7 @@ describe("MeasureColorStrategy", () => {
             TwoColorPalette,
             undefined,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,
@@ -143,6 +147,7 @@ describe("MeasureColorStrategy", () => {
             colorPalette,
             undefined,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,
@@ -163,6 +168,7 @@ describe("MeasureColorStrategy", () => {
             TwoColorPalette,
             undefined,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,

@@ -123,6 +123,8 @@ export const BucketNames: {
     readonly TERTIARY_MEASURES: "tertiary_measures";
     readonly ATTRIBUTE: "attribute";
     readonly ATTRIBUTES: "attributes";
+    readonly ATTRIBUTE_FROM: "attribute_from";
+    readonly ATTRIBUTE_TO: "attribute_to";
     readonly VIEW: "view";
     readonly STACK: "stack";
     readonly TREND: "trend";
@@ -205,7 +207,7 @@ export class CatalogHelper {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey";
 
 // @alpha
 export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
@@ -1854,6 +1856,7 @@ export const VisualizationTypes: {
     PARETO: "pareto";
     ALLUVIAL: "alluvial";
     XIRR: "xirr";
+    SANKEY: "sankey";
 };
 
 // @internal

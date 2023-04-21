@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "SankeyChart.fbe0abecfb74e515153ae491b739c9ba",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "bottom", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom",
+        "uri": "SankeyChart.fbe0abecfb74e515153ae491b739c9ba",
+        "visualizationUrl": "local:sankey"
+    }
+}

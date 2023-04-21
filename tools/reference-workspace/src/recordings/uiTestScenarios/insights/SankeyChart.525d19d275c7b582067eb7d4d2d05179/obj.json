@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "SankeyChart.525d19d275c7b582067eb7d4d2d05179",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "bottom", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom",
+        "uri": "SankeyChart.525d19d275c7b582067eb7d4d2d05179",
+        "visualizationUrl": "local:sankey"
+    }
+}

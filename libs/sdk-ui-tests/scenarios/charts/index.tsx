@@ -15,6 +15,7 @@ import lineChart from "./lineChart";
 import pieChart from "./pieChart";
 import scatterPlot from "./scatterPlot";
 import treemap from "./treemap";
+import sankeyChart from "./sankeyChart";
 import xirr from "./xirr";
 
 export default [
@@ -33,5 +34,6 @@ export default [
     ...pieChart,
     ...scatterPlot,
     ...treemap,
+    ...sankeyChart,
     ...xirr,
 ];

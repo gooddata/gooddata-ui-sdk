@@ -34,6 +34,7 @@ import {
     isTreemap,
     stringifyChartTypes,
     unwrap,
+    isSankey,
 } from "../_util/common";
 import { setMeasuresToSecondaryAxis } from "./dualAxis";
 import {
@@ -62,11 +63,13 @@ import { getSeries } from "./chartSeries";
 import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
+    generateTooltipSankeyChartFn,
     generateTooltipXYFn,
     getTooltipFactory,
 } from "./chartTooltips";
 import { getDrillableSeries } from "./chartDrilling";
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
+import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -368,6 +371,7 @@ export function getChartOptions(
         config.colorPalette,
         config.colorMapping,
         viewByAttribute,
+        viewByParentAttribute,
         stackByAttribute,
         dv,
         type,
@@ -599,6 +603,33 @@ export function getChartOptions(
             colorAssignments,
             colorPalette,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
+        };
+    }
+
+    if (isSankey(type)) {
+        const sankeySeries = buildSankeyChartSeries(
+            dv,
+            [viewByParentAttribute, viewByAttribute],
+            colorAssignments,
+            colorPalette,
+            emptyHeaderTitle,
+        );
+        return {
+            type,
+            data: {
+                series: sankeySeries,
+                categories: [[""]],
+            },
+            actions: {
+                tooltip: generateTooltipSankeyChartFn(
+                    viewByAttribute,
+                    viewByParentAttribute,
+                    measureGroup.items[0],
+                    config,
+                ),
+            },
+            colorPalette,
+            colorAssignments,
         };
     }
 

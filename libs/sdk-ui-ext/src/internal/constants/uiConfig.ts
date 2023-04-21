@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization";
 
 import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket";
@@ -660,6 +660,27 @@ export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
     supportedLocationIcon: { supported: true },
     ...defaultRootUiConfigProperties,
     ...enabledNoMetricConfig,
+};
+
+export const DEFAULT_SANKEY_UI_CONFIG: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            itemsLimit: 1,
+            allowsReordering: false,
+            canAddItems: true,
+        },
+        attribute_from: {
+            ...viewBase,
+            canAddItems: true,
+        },
+        attribute_to: {
+            ...viewBase,
+            canAddItems: true,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
 };
 
 export function getTreemapUiConfig(

@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "SankeyChart.32c5c274c34fd278f29dcc0c37580dcd",
+        "properties": { "controls": { "legend": { "responsive": "autoPositionWithPopup" } } },
+        "sorts": [],
+        "title": "SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - default legend",
+        "uri": "SankeyChart.32c5c274c34fd278f29dcc0c37580dcd",
+        "visualizationUrl": "local:sankey"
+    }
+}

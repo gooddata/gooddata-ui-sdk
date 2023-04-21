@@ -31,6 +31,7 @@ export {
     isPieOrDonutChart,
     isScatterPlot,
     isTreemap,
+    isSankey,
     updateConfigWithSettings,
 } from "./highcharts";
 

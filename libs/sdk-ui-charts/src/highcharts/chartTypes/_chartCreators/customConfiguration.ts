@@ -682,6 +682,12 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                     inside: "true",
                 },
             },
+            sankey: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: noop,
+                },
+            },
         },
         yAxis,
     };
@@ -953,6 +959,7 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.TREEMAP:
         case VisualizationTypes.FUNNEL:
         case VisualizationTypes.PYRAMID:
+        case VisualizationTypes.SANKEY:
             seriesMapFn = (series) => {
                 return {
                     ...series,
