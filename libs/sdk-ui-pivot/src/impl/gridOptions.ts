@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     ICustomGridOptions,
     TableAgGridCallbacks,
@@ -27,7 +27,6 @@ import {
 import { TableFacade } from "./tableFacade";
 import { ICorePivotTableProps } from "../publicTypes";
 import { createLoadingRenderer } from "./data/loadingRenderer";
-import { ServerSideStoreType } from "@ag-grid-community/all-modules";
 
 export function createGridOptions(
     table: TableFacade,
@@ -70,7 +69,7 @@ export function createGridOptions(
         rowData: [],
         defaultColDef: {
             cellClass: cellClassFactory(table, props),
-            headerComponentFramework: ColumnHeader as any,
+            headerComponent: ColumnHeader,
             headerComponentParams: {
                 menu: tableMethods.getMenuConfig,
                 enableSorting: true,
@@ -83,7 +82,7 @@ export function createGridOptions(
         defaultColGroupDef: {
             headerClass: headerClassFactory(table, props),
             children: [],
-            headerGroupComponentFramework: ColumnGroupHeader as any,
+            headerGroupComponent: ColumnGroupHeader,
             headerGroupComponentParams: {
                 menu: tableMethods.getMenuConfig,
                 ...commonHeaderComponentParams,
@@ -98,12 +97,12 @@ export function createGridOptions(
 
         // Basic options
         suppressMovableColumns: true,
-        suppressCellSelection: true,
+        suppressCellFocus: true,
         suppressAutoSize: tableMethods.hasColumnWidths,
 
         // infinite scrolling model
         rowModelType: "infinite",
-        serverSideStoreType: ServerSideStoreType.Partial,
+        serverSideStoreType: "partial",
         paginationPageSize: effectivePageSize,
         cacheOverflowSize: effectivePageSize,
         cacheBlockSize: effectivePageSize,
@@ -123,7 +122,7 @@ export function createGridOptions(
         },
 
         // Custom renderers
-        frameworkComponents: {
+        components: {
             // any is needed here because of incompatible types with AgGridReact types
             loadingRenderer: createLoadingRenderer(table, props), // loading indicator
         },

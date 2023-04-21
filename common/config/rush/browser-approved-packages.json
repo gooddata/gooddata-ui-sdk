@@ -11,6 +11,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@ag-grid-community/core",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@ag-grid-community/react",
       "allowedCategories": [ "production" ]
     },

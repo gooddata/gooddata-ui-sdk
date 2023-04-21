@@ -370,6 +370,8 @@ $subtotal-odd-background-color: var(
     flex-direction: row;
     min-height: 29px;
     line-height: 28px;
+    flex: 1 1 auto;
+    overflow: hidden;
 
     .ag-header-group-cell-with-group & {
         line-height: 26px;

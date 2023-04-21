@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { GridApi } from "@ag-grid-community/all-modules";
 import ApiWrapper from "../base/agApiWrapper";
 import isEqual from "lodash/isEqual";
@@ -15,7 +15,7 @@ export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridT
     }
 
     for (let i = 0; i < currentTotalsCount; i++) {
-        if (!isEqual(gridApi?.getPinnedBottomRow(i).data, newTotals[i])) {
+        if (!isEqual(gridApi?.getPinnedBottomRow(i)?.data, newTotals[i])) {
             return true;
         }
     }

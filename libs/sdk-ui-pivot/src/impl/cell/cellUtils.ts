@@ -1,8 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import cx from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
-
 import { DataValue } from "@gooddata/sdk-model";
+import { CellStyle } from "@ag-grid-community/all-modules";
 
 export interface ITableCellStyle {
     backgroundColor?: string;
@@ -46,7 +46,7 @@ export function getMeasureCellStyle(
     format: string,
     separators: ISeparators | undefined,
     applyColor: boolean,
-): ITableCellStyle {
+): CellStyle {
     const formattedNumber = getFormattedNumber(value, format, separators);
     const { backgroundColor, color, label } = colors2Object(formattedNumber);
 
