@@ -526,6 +526,7 @@
                 "properties": {
                     "name": {
                         "maxLength": 255,
+                        "pattern": "^[^\u0000]*$",
                         "type": "string",
                         "description": "Column name",
                         "example": "customer_id"

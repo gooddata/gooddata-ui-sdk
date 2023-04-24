@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,
@@ -26,7 +26,6 @@ import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConv
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
-import { v4 as uuidv4 } from "uuid";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
@@ -118,9 +117,9 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             return client.entities.createEntityMetrics(
                 {
                     workspaceId: this.workspace,
-                    jsonApiMetricInDocument: {
+                    jsonApiMetricPostOptionalIdDocument: {
                         data: {
-                            id: measure.id || uuidv4(),
+                            id: measure.id,
                             type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: metricAttributes,
                         },

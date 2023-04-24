@@ -405,7 +405,6 @@ export type TigerSpecificFunctions = {
      */
     createWorkspaceCustomAppSetting?: (
         workspaceId: string,
-        id: string,
         applicationName: string,
         content: object,
     ) => Promise<ICustomApplicationSetting>;
@@ -1281,16 +1280,14 @@ export const buildTigerSpecificFunctions = (
 
     createWorkspaceCustomAppSetting: async (
         workspaceId: string,
-        id: string,
         applicationName: string,
         content: object,
     ) => {
         return await authApiCall(async (sdk) => {
             const result = await sdk.entities.createEntityCustomApplicationSettings({
                 workspaceId,
-                jsonApiCustomApplicationSettingInDocument: {
+                jsonApiCustomApplicationSettingPostOptionalIdDocument: {
                     data: {
-                        id,
                         type: JsonApiCustomApplicationSettingOutTypeEnum.CUSTOM_APPLICATION_SETTING,
                         attributes: {
                             applicationName,

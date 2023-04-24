@@ -72,14 +72,13 @@ export class TigerWorkspaceSettings
         );
     }
 
-    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected async createSetting(type: TigerSettingsType, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.createEntityWorkspaceSettings({
                 workspaceId: this.workspace,
-                jsonApiWorkspaceSettingInDocument: {
+                jsonApiWorkspaceSettingPostOptionalIdDocument: {
                     data: {
                         type: "workspaceSetting",
-                        id,
                         attributes: {
                             content,
                             type,

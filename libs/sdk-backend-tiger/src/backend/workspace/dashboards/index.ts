@@ -46,7 +46,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
-import { v4 as uuidv4 } from "uuid";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
@@ -250,9 +249,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return client.entities.createEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
-                    jsonApiAnalyticalDashboardInDocument: {
+                    jsonApiAnalyticalDashboardPostOptionalIdDocument: {
                         data: {
-                            id: uuidv4(),
                             type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
                             attributes: {
                                 content: dashboardContent,
@@ -487,9 +485,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return client.entities.createEntityDashboardPlugins(
                 {
                     workspaceId: this.workspace,
-                    jsonApiDashboardPluginInDocument: {
+                    jsonApiDashboardPluginPostOptionalIdDocument: {
                         data: {
-                            id: uuidv4(),
                             type: JsonApiDashboardPluginInTypeEnum.DASHBOARD_PLUGIN,
                             attributes: {
                                 content: pluginContent,
@@ -592,9 +589,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return client.entities.createEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
-                    jsonApiFilterContextInDocument: {
+                    jsonApiFilterContextPostOptionalIdDocument: {
                         data: {
-                            id: uuidv4(),
                             type: JsonApiFilterContextInTypeEnum.FILTER_CONTEXT,
                             attributes: {
                                 content: tigerFilterContext,
