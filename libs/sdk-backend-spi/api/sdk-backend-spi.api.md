@@ -1785,6 +1785,7 @@ export interface IWorkspaceDescriptor {
     // (undocumented)
     isDemo?: boolean;
     parentWorkspace?: string;
+    prefix?: string;
     // (undocumented)
     title: string;
 }

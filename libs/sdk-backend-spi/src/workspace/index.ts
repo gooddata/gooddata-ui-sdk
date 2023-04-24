@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IPagedResource } from "../common/paging";
 import { IExecutionFactory } from "./execution";
 import { IWorkspaceInsightsService } from "./insights";
@@ -128,6 +128,10 @@ export interface IWorkspaceDescriptor {
     description: string;
     isDemo?: boolean;
 
+    /**
+     * Prefix used by current workspace
+     */
+    prefix?: string;
     /**
      * Identifier of the parent workspace
      */
