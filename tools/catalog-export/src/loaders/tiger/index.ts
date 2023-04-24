@@ -142,13 +142,6 @@ async function selectWorkspace(client: ITigerClient): Promise<string> {
     return promptWorkspaceId(choices, "workspace");
 }
 
-async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): Promise<string | null> {
-    const workspaces = await loadWorkspaces(client);
-    const workspace = workspaces.data.find((ws) => ws.attributes?.name === workspaceName);
-
-    return workspace?.id ?? null;
-}
-
 /**
  * Given the export config, ask for any missing information and then load workspace metadata from
  * a tiger workspace.

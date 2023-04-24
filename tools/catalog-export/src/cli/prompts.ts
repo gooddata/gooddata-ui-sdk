@@ -47,16 +47,10 @@ export async function promptWorkspaceId(
 }
 
 export async function confirmFileRewrite(fileName: string): Promise<boolean> {
-    let message = `The file ${fileName} already exists. Would you like to merge the new data with the file? (It will keep your possibly renamed "keys")`;
-
-    if (!fileName.endsWith(".json")) {
-        message = `The file ${fileName} already exists. Would you like to overwrite it?`;
-    }
-
     const shouldRewriteQuestion: DistinctQuestion = {
         type: "confirm",
         name: "shouldRewrite",
-        message,
+        message: `The file ${fileName} already exists. Would you like to overwrite it?`,
         default: true,
     };
 

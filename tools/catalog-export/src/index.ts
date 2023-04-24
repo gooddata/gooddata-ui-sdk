@@ -10,7 +10,6 @@ import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromEnv, getConfigFromOptions } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
 import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
-import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
 import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
@@ -75,16 +74,10 @@ async function run() {
 
         await checkFolderExists(filePath);
 
-        if (filePath.endsWith(".ts")) {
-            await exportMetadataToTypescript(projectMetadata, filePath, backend === "tiger");
-        } else if (filePath.endsWith(".js")) {
+        if (filePath.endsWith(".js")) {
             await exportMetadataToJavascript(projectMetadata, filePath, backend === "tiger");
         } else {
-            logWarn(
-                "Exporting catalog to JSON document is deprecated and will disappear in next major release together with CatalogHelper. Please switch to generating TypeScript or JavaScript code.",
-            );
-
-            await exportMetadataToCatalog(projectMetadata, filePath);
+            await exportMetadataToTypescript(projectMetadata, filePath, backend === "tiger");
         }
 
         logSuccess("All data have been successfully exported");
