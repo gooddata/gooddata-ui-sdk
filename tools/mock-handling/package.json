@@ -40,10 +40,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.13.0-alpha.44",
-        "@gooddata/sdk-backend-bear": "^8.13.0-alpha.44",
-        "@gooddata/sdk-backend-spi": "^8.13.0-alpha.44",
-        "@gooddata/sdk-model": "^8.13.0-alpha.44",
+        "@gooddata/api-model-bear": "workspace:*",
+        "@gooddata/sdk-backend-bear": "workspace:*",
+        "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "inquirer": "^8.2.3",

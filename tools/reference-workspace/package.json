@@ -40,8 +40,8 @@
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.13.0-alpha.44",
-        "@gooddata/sdk-model": "^8.13.0-alpha.44",
+        "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
         "lodash": "^4.17.19",
         "tslib": "^2.5.0"
     },

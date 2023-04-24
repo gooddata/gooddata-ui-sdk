@@ -54,10 +54,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.13.0-alpha.44",
-        "@gooddata/sdk-model": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui-dashboard": "^8.13.0-alpha.44",
+        "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
+        "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-ui-dashboard": "workspace:*",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "react-intl": "^5.23.0",

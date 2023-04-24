@@ -51,14 +51,14 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.13.0-alpha.44",
-        "@gooddata/sdk-model": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui-charts": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui-ext": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui-filters": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui-geo": "^8.13.0-alpha.44",
-        "@gooddata/sdk-ui-pivot": "^8.13.0-alpha.44",
+        "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
+        "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-ui-charts": "workspace:*",
+        "@gooddata/sdk-ui-ext": "workspace:*",
+        "@gooddata/sdk-ui-filters": "workspace:*",
+        "@gooddata/sdk-ui-geo": "workspace:*",
+        "@gooddata/sdk-ui-pivot": "workspace:*",
         "tslib": "^2.5.0"
     },
     "devDependencies": {

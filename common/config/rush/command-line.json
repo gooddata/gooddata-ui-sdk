@@ -97,6 +97,13 @@
       "ignoreMissingScript": true
     },
     {
+      "commandKind": "bulk",
+      "name": "build",
+      "summary": "Run rush build command",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
       "commandKind": "global",
       "name": "audit",
       "summary": "Performs security audit of all dependencies used by projects in this repository. This command uses pnpm audit which in the end calls out to the npmjs API.",

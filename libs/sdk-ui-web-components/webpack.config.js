@@ -34,6 +34,9 @@ module.exports = (env, argv) => ({
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
 
         alias: {
+            react: path.resolve("./node_modules/react"),
+            "react-dom":  path.resolve("./node_modules/react-dom"),
+            
             // fixes tilde imports in CSS from sdk-ui-* packages
             "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
             "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
