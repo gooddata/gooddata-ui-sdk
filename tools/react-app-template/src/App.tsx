@@ -14,7 +14,8 @@ export const App: React.FC = () => {
                 <div className="app">
                     <h1>Hello GoodWorld!</h1>
                     <p>
-                        Edit <code>/src/App.tsx</code> to get started. Learn more about this template in{" "}
+                        Edit <code>/src/App.[[language]]x</code> to get started. Learn more about this
+                        template in{" "}
                         <a
                             target="_blank"
                             rel="noreferrer"
@@ -30,7 +31,7 @@ export const App: React.FC = () => {
                         </code>
                     </pre>
                     <figure>
-                        <InsightView insight={Md.Insights.Top10Customers} showTitle />
+                        <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
                     </figure>
                     <footer>
                         <img src={img} alt="" />

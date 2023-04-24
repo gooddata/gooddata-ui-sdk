@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import fse from "fs-extra";
 import path from "path";
 import flatMap from "lodash/flatMap";
@@ -28,7 +28,16 @@ function collectFileReplacements(currentPath: string, spec: FileReplacementSpec)
 
 function createFileProcessor(readFile: ReadFileFn, writeFile: WriteFileFn): FileReplacementProcessor {
     return async ({ file, replacements }) => {
-        const contents = await readFile(file, { encoding: "utf8", flag: "r" });
+        let contents;
+        try {
+            contents = await readFile(file, { encoding: "utf8", flag: "r" });
+        } catch (e: any) {
+            // ENOENT is fine, allow defining replacements for files that may not exist
+            if (e.code === "ENOENT") return;
+
+            throw e;
+        }
+
         const replaced = replacements.reduce(
             (acc, { regex, value, apply }) => (apply ?? true ? acc.replace(regex, value) : acc),
             contents,
