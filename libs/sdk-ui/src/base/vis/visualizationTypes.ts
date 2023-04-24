@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 
 /**
  * @internal
@@ -24,6 +24,7 @@ export const VisualizationTypes = {
     TREEMAP: "treemap" as const,
     WATERFALL: "waterfall" as const,
     FUNNEL: "funnel" as const,
+    PYRAMID: "pyramid" as const,
     PARETO: "pareto" as const,
     ALLUVIAL: "alluvial" as const,
     XIRR: "xirr" as const,
@@ -51,6 +52,7 @@ export type ChartType =
     | "treemap"
     | "waterfall"
     | "funnel"
+    | "pyramid"
     | "pareto"
     | "alluvial";
 

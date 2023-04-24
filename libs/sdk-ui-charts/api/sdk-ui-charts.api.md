@@ -282,6 +282,7 @@ export interface ICoreChartProps extends ICommonChartProps {
 
 // @public (undocumented)
 export interface IDataLabelsConfig {
+    percentsVisible?: boolean;
     // (undocumented)
     totalsVisible?: IDataLabelsVisible;
     // (undocumented)
@@ -408,6 +409,19 @@ export interface IPieChartBucketProps {
 export interface IPieChartProps extends IBucketChartProps, IPieChartBucketProps {
 }
 
+// @public (undocumented)
+export interface IPyramidChartBucketProps {
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
+    placeholdersResolutionContext?: any;
+    sortBy?: SortsOrPlaceholders;
+    viewBy?: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
+}
+
 // @internal (undocumented)
 export const isAreaChart: LodashIsEqual1x1;
 
@@ -459,6 +473,9 @@ export const isPieChart: LodashIsEqual1x1;
 export const isPieOrDonutChart: (type: string) => boolean;
 
 // @internal (undocumented)
+export const isPyramid: LodashIsEqual1x1;
+
+// @internal (undocumented)
 export const isScatterPlot: LodashIsEqual1x1;
 
 // @internal (undocumented)
@@ -508,6 +525,9 @@ export const PieChart: (props: IPieChartProps) => JSX.Element;
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
+
+// @public
+export const PyramidChart: (props: IPyramidChartProps) => JSX.Element;
 
 // @public
 export const ScatterPlot: (props: IScatterPlotProps) => JSX.Element;

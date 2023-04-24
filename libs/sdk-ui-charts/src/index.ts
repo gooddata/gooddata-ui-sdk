@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 /**
  * This package provides a set of React-based chart visualizations that you can use to visualize your data.
  *
@@ -25,6 +25,7 @@ export {
     isDonutChart,
     isHeatmap,
     isFunnel,
+    isPyramid,
     isLineChart,
     isPieChart,
     isPieOrDonutChart,

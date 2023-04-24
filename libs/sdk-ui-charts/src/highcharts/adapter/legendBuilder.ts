@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import pick from "lodash/pick";
 import set from "lodash/set";
 import {
@@ -36,7 +36,12 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const hasMoreThanOneSeries = seriesLength > 1;
     const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = isStackedChart(chartOptions);
-    const sliceTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
+    const sliceTypes = [
+        VisualizationTypes.PIE,
+        VisualizationTypes.DONUT,
+        VisualizationTypes.PYRAMID,
+        VisualizationTypes.FUNNEL,
+    ];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
         isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
     const isBubbleWithViewByAttribute = isBubbleChart(type) && hasViewByAttribute;
@@ -64,6 +69,7 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
         VisualizationTypes.DONUT,
         VisualizationTypes.TREEMAP,
         VisualizationTypes.FUNNEL,
+        VisualizationTypes.PYRAMID,
         VisualizationTypes.SCATTER,
     ];
 
@@ -115,6 +121,8 @@ export default function buildLegendOptions(
         VisualizationTypes.TREEMAP,
         VisualizationTypes.BUBBLE,
         VisualizationTypes.HEATMAP,
+        VisualizationTypes.FUNNEL,
+        VisualizationTypes.PYRAMID,
     ];
     const defaultTopLegendCharts = [
         VisualizationTypes.COLUMN,

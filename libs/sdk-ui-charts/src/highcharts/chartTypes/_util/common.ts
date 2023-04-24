@@ -110,6 +110,11 @@ export const isFunnel = isEqual(VisualizationTypes.FUNNEL);
 /**
  * @internal
  */
+export const isPyramid = isEqual(VisualizationTypes.PYRAMID);
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 

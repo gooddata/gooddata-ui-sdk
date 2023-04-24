@@ -3872,6 +3872,170 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - arithmetic measures 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 3,
+    "attributes": 0,
+    "measures": 3,
+    "seriesNames": Array [
+      " > Amount",
+      " > Calculated 'Lost' measure",
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by attribute 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - themed 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - two measures 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: ScatterPlot - font 1`] = `
 Object {
   "seriesDigest": Object {

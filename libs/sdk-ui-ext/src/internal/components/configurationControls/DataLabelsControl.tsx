@@ -2,6 +2,7 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import DropdownControl from "./DropdownControl";
+import CheckboxControl from "../configurationControls/CheckboxControl";
 
 import { dataLabelsDropdownItems } from "../../constants/dropdowns";
 import { getTranslatedDropdownItems } from "../../utils/translations";
@@ -16,6 +17,7 @@ export interface IDataLabelsControlProps {
     showDisabledMessage?: boolean;
     defaultValue?: string | boolean;
     enableSeparateTotalLabels?: boolean;
+    enablePercentLabels?: boolean;
 }
 
 class DataLabelsControl extends React.Component<IDataLabelsControlProps & WrappedComponentProps> {
@@ -35,9 +37,11 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
             defaultValue,
             isTotalsDisabled,
             enableSeparateTotalLabels,
+            enablePercentLabels,
         } = this.props;
         const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
         const totalLabels = properties?.controls?.dataLabels?.totalsVisible ?? defaultValue;
+        const percentLabels = properties?.controls?.dataLabels?.percentsVisible ?? true;
 
         return (
             <div className="s-data-labels-config">
@@ -61,6 +65,16 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                         pushData={pushData}
                         items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
                         showDisabledMessage={isTotalsDisabled}
+                    />
+                ) : null}
+                {enablePercentLabels ? (
+                    <CheckboxControl
+                        valuePath="dataLabels.percentsVisible"
+                        labelText={messages.canvasLabelsPercentages.id}
+                        properties={properties}
+                        checked={percentLabels}
+                        disabled={isDisabled}
+                        pushData={pushData}
                     />
                 ) : null}
             </div>

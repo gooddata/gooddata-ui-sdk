@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
@@ -239,6 +239,8 @@ export class HighChartsRenderer extends React.PureComponent<
             VisualizationTypes.PIE,
             VisualizationTypes.DONUT,
             VisualizationTypes.TREEMAP,
+            VisualizationTypes.FUNNEL,
+            VisualizationTypes.PYRAMID,
         ];
         const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
 

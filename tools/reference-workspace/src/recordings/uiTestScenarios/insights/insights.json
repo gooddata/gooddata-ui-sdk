@@ -3200,6 +3200,50 @@
     "PivotTable.fff21a04fbd4b7be1c351eda8937cd60": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom attribute column size."
     },
+    "PyramidChart.05aea2e4135f05f4f3e5ce52711e1686": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - assign color to measures."
+    },
+    "PyramidChart.1009bf223b82efe816a16ccb1d1f7744": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - font.",
+        "scenarioName": "font",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.11a6118f2fcc03ee66a9e651e00dd644": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - coloring - custom palette."
+    },
+    "PyramidChart.33d920b92ca4575ce35c637de927dc9c": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - themed.",
+        "scenarioName": "themed",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.464eb5fb4642e4aad8b6db76f42ea7ad": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - single measure.",
+        "scenarioName": "single measure",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.51bc95c3040626e1a5c50dff0615547f": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - arithmetic measures.",
+        "scenarioName": "arithmetic measures",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.6bff428344dca9ab143adbed602c5c83": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - single measure with viewBy sorted by attribute.",
+        "scenarioName": "single measure with viewBy sorted by attribute",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.8758ca3e6e1bedfa64fdcce265138e08": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - assign color to attributes."
+    },
+    "PyramidChart.9e5044f56899394fa76cf2fa6ae9e64f": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - single measure with viewBy.",
+        "scenarioName": "single measure with viewBy",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.c68a087aa3dd851942307cd717aac4c4": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - two measures.",
+        "scenarioName": "two measures",
+        "visName": "PyramidChart"
+    },
     "ScatterPlot.0596d6b98f5e4ea7da9b7efd2acd2ee2": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - themed.",
         "scenarioName": "themed",

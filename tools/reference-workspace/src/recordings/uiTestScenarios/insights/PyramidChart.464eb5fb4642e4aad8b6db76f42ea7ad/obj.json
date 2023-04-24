@@ -1,0 +1,29 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "PyramidChart.464eb5fb4642e4aad8b6db76f42ea7ad",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "PyramidChart - single measure",
+        "uri": "PyramidChart.464eb5fb4642e4aad8b6db76f42ea7ad",
+        "visualizationUrl": "local:pyramid"
+    }
+}

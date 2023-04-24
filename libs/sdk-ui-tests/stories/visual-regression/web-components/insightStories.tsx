@@ -16,6 +16,7 @@ const insightIds = [
     ReferenceRecordings.Insights.ComboChart.MultiplePrimaryAndSecondaryMeasuresWithViewBy,
     ReferenceRecordings.Insights.DonutChart.SingleMeasureWithViewBy,
     ReferenceRecordings.Insights.FunnelChart.SingleMeasureWithViewBy,
+    ReferenceRecordings.Insights.PyramidChart.SingleMeasureWithViewBy,
     ReferenceRecordings.Insights.Headline.TwoMeasures,
     ReferenceRecordings.Insights.Heatmap.MeasureRowsAndColumns,
     ReferenceRecordings.Insights.LineChart.TwoMeasuresWithTrendBy,

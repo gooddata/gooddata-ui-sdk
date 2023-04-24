@@ -10,6 +10,10 @@ export const FunnelChartWithMeasureAndViewBy = {
     viewBy: ReferenceMd.Product.Name,
 };
 
+export const FunnelChartWithTwoMeasures = {
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+};
+
 export const FunnelChartWithArithmeticMeasures = {
     measures: [ReferenceMd.Amount, ReferenceMdExt.CalculatedLost, ReferenceMd.Won],
 };

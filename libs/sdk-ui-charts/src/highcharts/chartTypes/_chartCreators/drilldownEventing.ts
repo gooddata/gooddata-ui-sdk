@@ -34,6 +34,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
         case VisualizationTypes.TREEMAP:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.PYRAMID:
             return "slice";
         case VisualizationTypes.HEATMAP:
             return "cell";

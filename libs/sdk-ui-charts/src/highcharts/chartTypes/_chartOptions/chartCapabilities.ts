@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const supportedDualAxesChartTypes = [
@@ -30,12 +30,14 @@ export const multiMeasuresAlternatingTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
+    VisualizationTypes.PYRAMID,
     VisualizationTypes.TREEMAP,
 ];
 export const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
+    VisualizationTypes.PYRAMID,
     VisualizationTypes.TREEMAP,
 ];
 // charts sorted by default by measure value

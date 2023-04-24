@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IColorPalette, Identifier } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
@@ -311,6 +311,11 @@ export type ChartAlignTypes = "top" | "bottom" | "middle";
 export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
     totalsVisible?: IDataLabelsVisible;
+    /**
+     * Indicates whether to render data labels enriched with percentages.
+     * Applies only to funnel chart.
+     */
+    percentsVisible?: boolean;
 }
 
 /**

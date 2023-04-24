@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import assign from "lodash/assign";
@@ -22,6 +22,9 @@ export function setFunnelChartUiConfig(referencePoint: IExtendedReferencePoint):
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], funnelMeasuresIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], funnelViewIcon);
+
+    // always disabled for funnel
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "isShowInPercentVisible"], false);
 
     return referencePointConfigured;
 }

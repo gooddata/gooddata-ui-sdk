@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
@@ -12,6 +12,8 @@ import { AreaChartExample } from "./AreaChartExample";
 import { StackedAreaChartExample } from "./StackedAreaChartExample";
 import { PieChartExample } from "./PieChartExample";
 import { DonutChartExample } from "./DonutChartExample";
+import { FunnelChartExample } from "./FunnelChartExample";
+import { PyramidChartExample } from "./PyramidChartExample";
 import { ComboChartExample } from "./ComboChartExample";
 import { ScatterPlotExample } from "./ScatterPlotExample";
 import { BubbleChartExample } from "./BubbleChartExample";
@@ -28,6 +30,8 @@ import AreaChartExampleSRC from "./AreaChartExample?raw";
 import StackedAreaChartExampleSRC from "./StackedAreaChartExample?raw";
 import PieChartExampleSRC from "./PieChartExample?raw";
 import DonutChartExampleSRC from "./DonutChartExample?raw";
+import FunnelChartExampleSRC from "./FunnelChartExample?raw";
+import PyramidChartExampleSRC from "./PyramidChartExample?raw";
 import ComboChartExampleSRC from "./ComboChartExample?raw";
 import ScatterPlotExampleSRC from "./ScatterPlotExample?raw";
 import BubbleChartExampleSRC from "./BubbleChartExample?raw";
@@ -44,6 +48,8 @@ import AreaChartExampleSRCJS from "./AreaChartExample?rawJS";
 import StackedAreaChartExampleSRCJS from "./StackedAreaChartExample?rawJS";
 import PieChartExampleSRCJS from "./PieChartExample?rawJS";
 import DonutChartExampleSRCJS from "./DonutChartExample?rawJS";
+import FunnelChartExampleSRCJS from "./FunnelChartExample?rawJS";
+import PyramidChartExampleSRCJS from "./PyramidChartExample?rawJS";
 import ComboChartExampleSRCJS from "./ComboChartExample?rawJS";
 import ScatterPlotExampleSRCJS from "./ScatterPlotExample?rawJS";
 import BubbleChartExampleSRCJS from "./BubbleChartExample?rawJS";
@@ -116,6 +122,20 @@ export const BasicComponents: React.FC = () => (
             for={DonutChartExample}
             source={DonutChartExampleSRC}
             sourceJS={DonutChartExampleSRCJS}
+        />
+
+        <h2 id="funnel-chart">Funnel chart</h2>
+        <ExampleWithSource
+            for={FunnelChartExample}
+            source={FunnelChartExampleSRC}
+            sourceJS={FunnelChartExampleSRCJS}
+        />
+
+        <h2 id="pyramid-chart">Pyramid chart</h2>
+        <ExampleWithSource
+            for={PyramidChartExample}
+            source={PyramidChartExampleSRC}
+            sourceJS={PyramidChartExampleSRCJS}
         />
 
         <h2 id="combo-chart">Combo chart</h2>
