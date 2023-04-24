@@ -972,7 +972,7 @@ export interface ExecutionResult {
      */
     data: Array<object>;
     /**
-     * An array containing dimension headers. The size of the array corresponds to dimension size. Their order corresponds to the dimension order in the execution result spec.
+     * An array containing dimension headers. The size of the array corresponds to the number of dimensions. Their order corresponds to the dimension order in the execution result spec.
      * @type {Array<DimensionHeader>}
      * @memberof ExecutionResult
      */
@@ -2273,7 +2273,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2283,6 +2283,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             explainType?:
                 | "MAQL"
                 | "GRPC_MODEL"
+                | "GRPC_MODEL_SVG"
                 | "WDF"
                 | "QT"
                 | "QT_SVG"
@@ -2533,7 +2534,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2543,6 +2544,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             explainType?:
                 | "MAQL"
                 | "GRPC_MODEL"
+                | "GRPC_MODEL_SVG"
                 | "WDF"
                 | "QT"
                 | "QT_SVG"
@@ -2949,13 +2951,14 @@ export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution;
 
     /**
-     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-     * @type {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'}
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'}
      * @memberof ActionsApiExplainAFM
      */
     readonly explainType?:
         | "MAQL"
         | "GRPC_MODEL"
+        | "GRPC_MODEL_SVG"
         | "WDF"
         | "QT"
         | "QT_SVG"
@@ -3146,6 +3149,1099 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
+            .retrieveResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                requestParameters.excludedTotalDimensions,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * ComputationApi - axios parameter creator
+ * @export
+ */
+export const ComputationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+         * @param {string} workspaceId Workspace identifier
+         * @param {ElementsRequest} elementsRequest
+         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElementsPost: async (
+            workspaceId: string,
+            elementsRequest: ElementsRequest,
+            offset?: number,
+            limit?: number,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("computeLabelElementsPost", "workspaceId", workspaceId);
+            // verify required parameter 'elementsRequest' is not null or undefined
+            assertParamExists("computeLabelElementsPost", "elementsRequest", elementsRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof elementsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(elementsRequest !== undefined ? elementsRequest : {})
+                : elementsRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {string} [timestamp]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeReport: async (
+            workspaceId: string,
+            afmExecution: AfmExecution,
+            skipCache?: boolean,
+            timestamp?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("computeReport", "workspaceId", workspaceId);
+            // verify required parameter 'afmExecution' is not null or undefined
+            assertParamExists("computeReport", "afmExecution", afmExecution);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (timestamp !== undefined && timestamp !== null) {
+                localVarHeaderParameter["timestamp"] = String(timestamp);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof afmExecution !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+                : afmExecution || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidObjects: async (
+            workspaceId: string,
+            afmValidObjectsQuery: AfmValidObjectsQuery,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("computeValidObjects", "workspaceId", workspaceId);
+            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
+            assertParamExists("computeValidObjects", "afmValidObjectsQuery", afmValidObjectsQuery);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof afmValidObjectsQuery !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
+                : afmValidObjectsQuery || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM: async (
+            workspaceId: string,
+            afmExecution: AfmExecution,
+            explainType?:
+                | "MAQL"
+                | "GRPC_MODEL"
+                | "GRPC_MODEL_SVG"
+                | "WDF"
+                | "QT"
+                | "QT_SVG"
+                | "OPT_QT"
+                | "OPT_QT_SVG"
+                | "SQL"
+                | "SETTINGS",
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("explainAFM", "workspaceId", workspaceId);
+            // verify required parameter 'afmExecution' is not null or undefined
+            assertParamExists("explainAFM", "afmExecution", afmExecution);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (explainType !== undefined) {
+                localVarQueryParameter["explainType"] = explainType;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof afmExecution !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+                : afmExecution || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+         * @summary Get a single execution result\'s metadata.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        retrieveExecutionMetadata: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("retrieveExecutionMetadata", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("retrieveExecutionMetadata", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets a single execution result.
+         * @summary Get a single execution result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        retrieveResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: Array<number>,
+            limit?: Array<number>,
+            excludedTotalDimensions?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("retrieveResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("retrieveResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset) {
+                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (limit) {
+                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (excludedTotalDimensions) {
+                localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
+                    COLLECTION_FORMATS.csv,
+                );
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * ComputationApi - functional programming interface
+ * @export
+ */
+export const ComputationApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = ComputationApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+         * @param {string} workspaceId Workspace identifier
+         * @param {ElementsRequest} elementsRequest
+         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async computeLabelElementsPost(
+            workspaceId: string,
+            elementsRequest: ElementsRequest,
+            offset?: number,
+            limit?: number,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.computeLabelElementsPost(
+                workspaceId,
+                elementsRequest,
+                offset,
+                limit,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {string} [timestamp]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async computeReport(
+            workspaceId: string,
+            afmExecution: AfmExecution,
+            skipCache?: boolean,
+            timestamp?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.computeReport(
+                workspaceId,
+                afmExecution,
+                skipCache,
+                timestamp,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async computeValidObjects(
+            workspaceId: string,
+            afmValidObjectsQuery: AfmValidObjectsQuery,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidObjects(
+                workspaceId,
+                afmValidObjectsQuery,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM.
+         * @summary AFM explain resource.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmExecution} afmExecution
+         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async explainAFM(
+            workspaceId: string,
+            afmExecution: AfmExecution,
+            explainType?:
+                | "MAQL"
+                | "GRPC_MODEL"
+                | "GRPC_MODEL_SVG"
+                | "WDF"
+                | "QT"
+                | "QT_SVG"
+                | "OPT_QT"
+                | "OPT_QT_SVG"
+                | "SQL"
+                | "SETTINGS",
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
+                workspaceId,
+                afmExecution,
+                explainType,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+         * @summary Get a single execution result\'s metadata.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async retrieveExecutionMetadata(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveExecutionMetadata(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets a single execution result.
+         * @summary Get a single execution result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async retrieveResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: Array<number>,
+            limit?: Array<number>,
+            excludedTotalDimensions?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                excludedTotalDimensions,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * ComputationApi - factory interface
+ * @export
+ */
+export const ComputationApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = ComputationApiFp(configuration);
+    return {
+        /**
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+         * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeLabelElementsPost(
+            requestParameters: ComputationApiComputeLabelElementsPostRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ElementsResponse> {
+            return localVarFp
+                .computeLabelElementsPost(
+                    requestParameters.workspaceId,
+                    requestParameters.elementsRequest,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
+         * @param {ComputationApiComputeReportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeReport(
+            requestParameters: ComputationApiComputeReportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AfmExecutionResponse> {
+            return localVarFp
+                .computeReport(
+                    requestParameters.workspaceId,
+                    requestParameters.afmExecution,
+                    requestParameters.skipCache,
+                    requestParameters.timestamp,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {ComputationApiComputeValidObjectsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computeValidObjects(
+            requestParameters: ComputationApiComputeValidObjectsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AfmValidObjectsResponse> {
+            return localVarFp
+                .computeValidObjects(
+                    requestParameters.workspaceId,
+                    requestParameters.afmValidObjectsQuery,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * The resource provides static structures needed for investigation of a problem with given AFM.
+         * @summary AFM explain resource.
+         * @param {ComputationApiExplainAFMRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        explainAFM(
+            requestParameters: ComputationApiExplainAFMRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<any> {
+            return localVarFp
+                .explainAFM(
+                    requestParameters.workspaceId,
+                    requestParameters.afmExecution,
+                    requestParameters.explainType,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+         * @summary Get a single execution result\'s metadata.
+         * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        retrieveExecutionMetadata(
+            requestParameters: ComputationApiRetrieveExecutionMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ResultCacheMetadata> {
+            return localVarFp
+                .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets a single execution result.
+         * @summary Get a single execution result
+         * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        retrieveResult(
+            requestParameters: ComputationApiRetrieveResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExecutionResult> {
+            return localVarFp
+                .retrieveResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    requestParameters.excludedTotalDimensions,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ComputationApi - interface
+ * @export
+ * @interface ComputationApi
+ */
+export interface ComputationApiInterface {
+    /**
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+     * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    computeLabelElementsPost(
+        requestParameters: ComputationApiComputeLabelElementsPostRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ElementsResponse>;
+
+    /**
+     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+     * @summary Executes analytical request and returns link to the result
+     * @param {ComputationApiComputeReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    computeReport(
+        requestParameters: ComputationApiComputeReportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AfmExecutionResponse>;
+
+    /**
+     * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
+     * @param {ComputationApiComputeValidObjectsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    computeValidObjects(
+        requestParameters: ComputationApiComputeValidObjectsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AfmValidObjectsResponse>;
+
+    /**
+     * The resource provides static structures needed for investigation of a problem with given AFM.
+     * @summary AFM explain resource.
+     * @param {ComputationApiExplainAFMRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    explainAFM(
+        requestParameters: ComputationApiExplainAFMRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<any>;
+
+    /**
+     * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+     * @summary Get a single execution result\'s metadata.
+     * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    retrieveExecutionMetadata(
+        requestParameters: ComputationApiRetrieveExecutionMetadataRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ResultCacheMetadata>;
+
+    /**
+     * Gets a single execution result.
+     * @summary Get a single execution result
+     * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    retrieveResult(
+        requestParameters: ComputationApiRetrieveResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for computeLabelElementsPost operation in ComputationApi.
+ * @export
+ * @interface ComputationApiComputeLabelElementsPostRequest
+ */
+export interface ComputationApiComputeLabelElementsPostRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiComputeLabelElementsPost
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ElementsRequest}
+     * @memberof ComputationApiComputeLabelElementsPost
+     */
+    readonly elementsRequest: ElementsRequest;
+
+    /**
+     * Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+     * @type {number}
+     * @memberof ComputationApiComputeLabelElementsPost
+     */
+    readonly offset?: number;
+
+    /**
+     * Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+     * @type {number}
+     * @memberof ComputationApiComputeLabelElementsPost
+     */
+    readonly limit?: number;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiComputeLabelElementsPost
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for computeReport operation in ComputationApi.
+ * @export
+ * @interface ComputationApiComputeReportRequest
+ */
+export interface ComputationApiComputeReportRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiComputeReport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmExecution}
+     * @memberof ComputationApiComputeReport
+     */
+    readonly afmExecution: AfmExecution;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiComputeReport
+     */
+    readonly skipCache?: boolean;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ComputationApiComputeReport
+     */
+    readonly timestamp?: string;
+}
+
+/**
+ * Request parameters for computeValidObjects operation in ComputationApi.
+ * @export
+ * @interface ComputationApiComputeValidObjectsRequest
+ */
+export interface ComputationApiComputeValidObjectsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiComputeValidObjects
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmValidObjectsQuery}
+     * @memberof ComputationApiComputeValidObjects
+     */
+    readonly afmValidObjectsQuery: AfmValidObjectsQuery;
+}
+
+/**
+ * Request parameters for explainAFM operation in ComputationApi.
+ * @export
+ * @interface ComputationApiExplainAFMRequest
+ */
+export interface ComputationApiExplainAFMRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiExplainAFM
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmExecution}
+     * @memberof ComputationApiExplainAFM
+     */
+    readonly afmExecution: AfmExecution;
+
+    /**
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS'}
+     * @memberof ComputationApiExplainAFM
+     */
+    readonly explainType?:
+        | "MAQL"
+        | "GRPC_MODEL"
+        | "GRPC_MODEL_SVG"
+        | "WDF"
+        | "QT"
+        | "QT_SVG"
+        | "OPT_QT"
+        | "OPT_QT_SVG"
+        | "SQL"
+        | "SETTINGS";
+}
+
+/**
+ * Request parameters for retrieveExecutionMetadata operation in ComputationApi.
+ * @export
+ * @interface ComputationApiRetrieveExecutionMetadataRequest
+ */
+export interface ComputationApiRetrieveExecutionMetadataRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiRetrieveExecutionMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiRetrieveExecutionMetadata
+     */
+    readonly resultId: string;
+}
+
+/**
+ * Request parameters for retrieveResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiRetrieveResultRequest
+ */
+export interface ComputationApiRetrieveResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly resultId: string;
+
+    /**
+     * Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+     * @type {Array<number>}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly offset?: Array<number>;
+
+    /**
+     * Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+     * @type {Array<number>}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly limit?: Array<number>;
+
+    /**
+     * Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+     * @type {Array<string>}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly excludedTotalDimensions?: Array<string>;
+}
+
+/**
+ * ComputationApi - object-oriented interface
+ * @export
+ * @class ComputationApi
+ * @extends {BaseAPI}
+ */
+export class ComputationApi extends BaseAPI implements ComputationApiInterface {
+    /**
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+     * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public computeLabelElementsPost(
+        requestParameters: ComputationApiComputeLabelElementsPostRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .computeLabelElementsPost(
+                requestParameters.workspaceId,
+                requestParameters.elementsRequest,
+                requestParameters.offset,
+                requestParameters.limit,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+     * @summary Executes analytical request and returns link to the result
+     * @param {ComputationApiComputeReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public computeReport(
+        requestParameters: ComputationApiComputeReportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .computeReport(
+                requestParameters.workspaceId,
+                requestParameters.afmExecution,
+                requestParameters.skipCache,
+                requestParameters.timestamp,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
+     * @param {ComputationApiComputeValidObjectsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public computeValidObjects(
+        requestParameters: ComputationApiComputeValidObjectsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .computeValidObjects(
+                requestParameters.workspaceId,
+                requestParameters.afmValidObjectsQuery,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The resource provides static structures needed for investigation of a problem with given AFM.
+     * @summary AFM explain resource.
+     * @param {ComputationApiExplainAFMRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public explainAFM(requestParameters: ComputationApiExplainAFMRequest, options?: AxiosRequestConfig) {
+        return ComputationApiFp(this.configuration)
+            .explainAFM(
+                requestParameters.workspaceId,
+                requestParameters.afmExecution,
+                requestParameters.explainType,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+     * @summary Get a single execution result\'s metadata.
+     * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public retrieveExecutionMetadata(
+        requestParameters: ComputationApiRetrieveExecutionMetadataRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets a single execution result.
+     * @summary Get a single execution result
+     * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public retrieveResult(
+        requestParameters: ComputationApiRetrieveResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
             .retrieveResult(
                 requestParameters.workspaceId,
                 requestParameters.resultId,

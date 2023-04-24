@@ -26,7 +26,6 @@ import {
     insightTags,
     insightSummary,
 } from "@gooddata/sdk-model";
-import { v4 as uuidv4 } from "uuid";
 import sortBy from "lodash/sortBy";
 import {
     jsonApiHeaders,
@@ -165,9 +164,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             return client.entities.createEntityVisualizationObjects(
                 {
                     workspaceId: this.workspace,
-                    jsonApiVisualizationObjectInDocument: {
+                    jsonApiVisualizationObjectPostOptionalIdDocument: {
                         data: {
-                            id: uuidv4(),
                             type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
                                 description: insightSummary(insight),
