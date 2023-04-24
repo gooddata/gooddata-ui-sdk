@@ -4,6 +4,10 @@ import * as process from "process";
 import fs from "fs";
 import * as path from "path";
 
+import {    
+    readJsonSync,
+} from "../src/_base/utils";
+
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with
  * the template project bootstrapped by the application development toolkit.
@@ -78,6 +82,24 @@ function replaceItems(search: { [key: string]: null | string }, targets: { [key:
     }
 }
 
+function resolveCurrentPackageVersion(){
+    //we need current version of app-toolkit
+    const parenPackagePath = path.resolve("./", "package.json");
+    const parentPackage = readJsonSync(parenPackagePath);
+    return parentPackage.version;
+}
+
+function updateGDPackageVersion(version:string, targets: { [key: string]: string }) {
+    //replace workspace version definition 
+    for (let [searchKey, searchValue] of Object.entries(targets)) {
+        if (searchValue === "workspace:*") {
+            targets[searchKey] = version;
+        } else {
+            targets[searchKey] = searchValue;
+        }
+    }
+}
+
 function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.name = "<app-name>";
     packageJson.author = "";
@@ -88,6 +110,11 @@ function removeGdStuff(packageJson: Record<string, any>) {
     replaceItems(GdScriptsReplace, scripts);
     removeItems(UnnecessaryDependencies, devDependencies);
     removeItems(UnnecessaryDependencies, dependencies);
+
+    const packageVersion = resolveCurrentPackageVersion();
+
+    updateGDPackageVersion(packageVersion,devDependencies);
+    updateGDPackageVersion(packageVersion,dependencies);
 
     delete packageJson.repository;
     delete packageJson.sideEffects;

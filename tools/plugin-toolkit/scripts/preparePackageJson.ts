@@ -5,6 +5,10 @@ import fs from "fs";
 import * as path from "path";
 import { keys } from "lodash";
 
+import {    
+    readJsonSync,
+} from "../src/_base/utils";
+
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with
  * the template project bootstrapped by the plugin development toolkit.
@@ -36,12 +40,31 @@ const ExplicitTypeScriptDependencies = [
     "tslib",
 ];
 
+function resolveCurrentPackageVersion(){
+    //we need current version of app-toolkit
+    const parenPackagePath = path.resolve("./", "package.json");
+    const parentPackage = readJsonSync(parenPackagePath);
+    parentPackage.peerDependen
+    return parentPackage.version;
+}
+
+function updateGDPackageVersion(version:string, targets: { [key: string]: string }) {
+    //replace workspace version definition 
+    for (let [searchKey, searchValue] of Object.entries(targets)) {
+        if (searchValue === "workspace:*") {
+            targets[searchKey] = version;
+        } else {
+            targets[searchKey] = searchValue;
+        }
+    }
+}
+
 function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.name = "<plugin-name>";
     packageJson.author = "";
     packageJson.description = "";
 
-    const { scripts, devDependencies } = packageJson;
+    const { scripts, devDependencies,dependencies,peerDependencies } = packageJson;
 
     GdScriptsRemove.forEach((script) => {
         delete scripts[script];
@@ -50,6 +73,12 @@ function removeGdStuff(packageJson: Record<string, any>) {
     UnnecessaryDevDependencies.forEach((dep) => {
         delete devDependencies[dep];
     });
+
+    const packageVersion = resolveCurrentPackageVersion();
+
+    updateGDPackageVersion(packageVersion,devDependencies);
+    updateGDPackageVersion(packageVersion,dependencies);
+    updateGDPackageVersion(packageVersion,peerDependencies);
 
     delete packageJson.repository;
 }
