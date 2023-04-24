@@ -5,7 +5,8 @@
 
 $base-path: "~@gooddata/sdk-ui-kit/styles/images/visualization-types/";
 $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline,
-    heatmap, line, pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet;
+    heatmap, line, pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel,
+    sankey;
 
 %visualisation-icon {
     display: inline-block;
