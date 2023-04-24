@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants";
 import * as path from "path";
@@ -33,7 +33,7 @@ export type WorkspaceChoices = {
 
 export async function promptWorkspaceId(
     choices: WorkspaceChoices[],
-    wording: string = "project",
+    wording: string = "workspace",
 ): Promise<string> {
     const question: DistinctQuestion = {
         type: "list",

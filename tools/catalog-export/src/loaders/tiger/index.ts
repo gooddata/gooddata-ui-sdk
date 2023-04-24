@@ -4,7 +4,6 @@ import {
     CatalogExportConfig,
     CatalogExportError,
     getConfiguredWorkspaceId,
-    getConfiguredWorkspaceName,
     WorkspaceMetadata,
 } from "../../base/types";
 import ora from "ora";
@@ -60,8 +59,6 @@ function getTigerApiToken(): string | undefined {
 
 /**
  * Gets the tiger client asking for credentials if they are needed.
- * @param hostname - hostname to use
- * @param usernameFromConfig - username that may have been provided in a config or CLI
  */
 async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient> {
     const token = getTigerApiToken();
@@ -168,16 +165,7 @@ export async function loadWorkspaceMetadataFromTiger(
 ): Promise<WorkspaceMetadata> {
     const client = await getTigerClient(config);
 
-    let workspaceId = getConfiguredWorkspaceId(config, true);
-    const workspaceName = getConfiguredWorkspaceName(config, true);
-
-    if (workspaceName && !workspaceId) {
-        workspaceId = await lookupWorkspaceId(client, workspaceName);
-
-        if (!workspaceId) {
-            logWarn(`Workspace with name '${workspaceName}' does not exist.`);
-        }
-    }
+    let workspaceId = getConfiguredWorkspaceId(config);
 
     if (!workspaceId && !config.demo) {
         workspaceId = await selectWorkspace(client);

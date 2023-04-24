@@ -1,15 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { getConfigFromOptions } from "../config";
 import { CatalogExportConfig } from "../types";
 
 describe("getConfigFromProgram", () => {
     const EMPTY_CONFIG: CatalogExportConfig = {
-        projectName: null,
-        workspaceName: null,
         hostname: null,
         output: null,
         password: null,
-        projectId: null,
         workspaceId: null,
         username: null,
         backend: null,
@@ -20,15 +17,11 @@ describe("getConfigFromProgram", () => {
         ["handle empty object", {}, null],
         ["handle object with just some of the needed props", { username: "noone" }, null],
         ["handle case sensitivity", { USERNAME: "not valid", username: "valid" }, null],
-        [
-            "complement config from defaults",
-            { username: "valid" },
-            { ...EMPTY_CONFIG, projectName: "project" },
-        ],
+        ["complement config from defaults", { username: "valid" }, { ...EMPTY_CONFIG, workspaceId: "abc" }],
         [
             "prefer input over default",
-            { username: "valid", projectId: "abc", workspaceId: "abc" },
-            { ...EMPTY_CONFIG, projectId: "xyz", workspaceId: "abc" },
+            { username: "valid", workspaceId: "abc" },
+            { ...EMPTY_CONFIG, workspaceId: "xyz" },
         ],
         ["propagate tiger backend type", { backend: "tiger" }, null],
     ];

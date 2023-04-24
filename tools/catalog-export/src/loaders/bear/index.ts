@@ -1,10 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 
 import {
     CatalogExportConfig,
     CatalogExportError,
     getConfiguredWorkspaceId,
-    getConfiguredWorkspaceName,
     WorkspaceMetadata,
 } from "../../base/types";
 import { DEFAULT_HOSTNAME } from "../../base/constants";
@@ -41,7 +40,6 @@ async function selectBearWorkspace(client: SDK): Promise<string> {
  * @throws CatalogExportError upon any error.
  */
 export async function loadWorkspaceMetadataFromBear(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
-    const workspaceName = getConfiguredWorkspaceName(config);
     let workspaceId = getConfiguredWorkspaceId(config);
 
     const { hostname, demo } = config;
@@ -88,23 +86,6 @@ export async function loadWorkspaceMetadataFromBear(config: CatalogExportConfig)
 
     const workspaceSpinner = ora();
     try {
-        if (workspaceName && !workspaceId) {
-            log("Project Name", workspaceName);
-            workspaceSpinner.start("Loading project");
-            const metadataResponse = await gooddata.xhr.get("/gdc/md");
-            const metadata = metadataResponse.getData();
-            workspaceSpinner.stop();
-            const workspaceMetadata = metadata.about
-                ? metadata.about.links.find((link: any) => {
-                      return link.title === workspaceName;
-                  })
-                : null;
-            if (workspaceMetadata) {
-                workspaceId = workspaceMetadata.identifier;
-            } else {
-                logError(`Could not find a project with name '${workspaceName}'`);
-            }
-        }
         if (workspaceId) {
             log("Project ID", workspaceId);
         } else {

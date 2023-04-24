@@ -7,11 +7,8 @@ Object {
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": "project",
   "username": "valid",
-  "workspaceId": null,
-  "workspaceName": null,
+  "workspaceId": "abc",
 }
 `;
 
@@ -22,11 +19,8 @@ Object {
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": "valid",
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
 
@@ -37,11 +31,8 @@ Object {
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": null,
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
 
@@ -52,11 +43,8 @@ Object {
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": "noone",
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
 
@@ -67,11 +55,8 @@ Object {
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": "abc",
-  "projectName": null,
   "username": "valid",
   "workspaceId": "abc",
-  "workspaceName": null,
 }
 `;
 
@@ -82,10 +67,7 @@ Object {
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": null,
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
