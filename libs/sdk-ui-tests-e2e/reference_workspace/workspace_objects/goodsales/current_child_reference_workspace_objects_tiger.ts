@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-04-13T08:40:32.570Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-04-25T10:58:29.565Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -86,10 +86,10 @@ export const CountyName: IAttribute = newAttribute("county_name");
  */
 export const City = {
     /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
+     * Display Form Title: City
+     * Display Form ID: f_city.id
      */
-    ShortName: newAttribute("f_city.id.cityshortname"),
+    Default: newAttribute("f_city.id"),
     /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
@@ -99,21 +99,21 @@ export const City = {
      * Display Form ID: f_city.id.cityname
      */ Name: newAttribute("f_city.id.cityname"),
     /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
      * Display Form Title: Longitude
      * Display Form ID: f_city.id.longitude
      */ Longitude: newAttribute("f_city.id.longitude"),
     /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
-    /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */ Default: newAttribute("f_city.id"),
-    /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
      */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
 };
 /**
  * Attribute Title: State
@@ -136,18 +136,18 @@ export const State = {
  */
 export const Opportunity = {
     /**
+     * Display Form Title: Opportunity
+     * Display Form ID: attr.f_opportunity.opportunity
+     */
+    Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
      * Display Form Title: SFDC URL
      * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */
-    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
      */ Name: newAttribute("label.f_opportunity.opportunity.name"),
-    /**
-     * Display Form Title: Opportunity
-     * Display Form ID: attr.f_opportunity.opportunity
-     */ Default: newAttribute("attr.f_opportunity.opportunity"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -175,14 +175,14 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Owner Name
-     * Display Form ID: label.f_owner.salesrep.ownername
-     */
-    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
-    /**
      * Display Form Title: Sales Rep
      * Display Form ID: attr.f_owner.salesrep
-     */ Default: newAttribute("attr.f_owner.salesrep"),
+     */
+    Default: newAttribute("attr.f_owner.salesrep"),
+    /**
+     * Display Form Title: Owner Name
+     * Display Form ID: label.f_owner.salesrep.ownername
+     */ OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
 };
 /**
  * Attribute Title: Department
@@ -230,13 +230,13 @@ export const StageName = {
      */
     Default: newAttribute("label.f_stage.stagename.stagename"),
     /**
-     * Display Form Title: Stage Name
-     * Display Form ID: attr.f_stage.stagename
-     */ _1: newAttribute("attr.f_stage.stagename"),
-    /**
      * Display Form Title: Order
      * Display Form ID: label.f_stage.stagename.order
      */ Order: newAttribute("label.f_stage.stagename.order"),
+    /**
+     * Display Form Title: Stage Name
+     * Display Form ID: attr.f_stage.stagename
+     */ _1: newAttribute("attr.f_stage.stagename"),
 };
 /**
  * Attribute Title: Stage Id
@@ -2251,6 +2251,10 @@ export const Insights = {
      * Insight ID: fb53ecfb-3874-4bee-8612-afecd3fa3e04
      */ UnmergeCellsInsight: "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
     /**
+     * Insight Title: Funnel chart
+     * Insight ID: 39fc72a9-5f25-455c-92bb-f7dbde85d586
+     */ FunnelChart: "39fc72a9-5f25-455c-92bb-f7dbde85d586",
+    /**
      * Insight Title: Combo chart
      * Insight ID: 3c05e649-7897-4a95-9c75-c043f0c39e14
      */ ComboChart: "3c05e649-7897-4a95-9c75-c043f0c39e14",
@@ -2270,6 +2274,10 @@ export const Insights = {
      * Insight Title: Column chart
      * Insight ID: a40866ab-5272-4f2c-9b5a-dd255b1e5d42
      */ ColumnChart: "a40866ab-5272-4f2c-9b5a-dd255b1e5d42",
+    /**
+     * Insight Title: With unknown visualization class
+     * Insight ID: c4121590-8e24-418e-b3d1-7e442288eb4e
+     */ WithUnknownVisualizationClass: "c4121590-8e24-418e-b3d1-7e442288eb4e",
     /**
      * Insight Title: Scatter plot
      * Insight ID: c44d07fb-e48d-445d-87ff-5c07d8749863
@@ -2298,6 +2306,10 @@ export const Insights = {
      * Insight Title: Pie chart multiple measures
      * Insight ID: de6092cf-d243-4987-918b-8aac3ecd26cc
      */ PieChartMultipleMeasures: "de6092cf-d243-4987-918b-8aac3ecd26cc",
+    /**
+     * Insight Title: Pyramid chart
+     * Insight ID: eb7f3b09-09e8-498b-bff5-249660ffcd6e
+     */ PyramidChart: "eb7f3b09-09e8-498b-bff5-249660ffcd6e",
     /**
      * Insight Title: Table with stage name
      * Insight ID: ed91a9b6-8ee1-4a70-a2cf-a1454817e538
@@ -2358,6 +2370,10 @@ export const Dashboards = {
      * Dashboard ID: 0e0cb428-c0db-45dc-946e-65b47287a94f
      */ KDWithStageName: "0e0cb428-c0db-45dc-946e-65b47287a94f",
     /**
+     * Dashboard Title: Dashboard with unknown visualization class
+     * Dashboard ID: 2326d431-ccb3-405e-a3d2-394bdf276e61
+     */ DashboardWithUnknownVisualizationClass: "2326d431-ccb3-405e-a3d2-394bdf276e61",
+    /**
      * Dashboard Title: Header Tests
      * Dashboard ID: 2dcc56ff-5ae6-49f1-ba97-9b76000ca4a1
      */ HeaderTests: "2dcc56ff-5ae6-49f1-ba97-9b76000ca4a1",
@@ -2381,6 +2397,10 @@ export const Dashboards = {
      * Dashboard Title: KD with compares
      * Dashboard ID: abcd2251-d78d-4d6b-b088-1845b89c04ba
      */ KDWithCompares: "abcd2251-d78d-4d6b-b088-1845b89c04ba",
+    /**
+     * Dashboard Title: Dashboard with charts
+     * Dashboard ID: b5f958b1-0428-41d6-b211-b4dad61d21ff
+     */ DashboardWithCharts: "b5f958b1-0428-41d6-b211-b4dad61d21ff",
     /**
      * Dashboard Title: Drag drop and Move
      * Dashboard ID: b74d3889-655f-4a0d-bc94-15b39d5e1046
