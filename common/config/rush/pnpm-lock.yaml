@@ -881,7 +881,7 @@ importers:
       '@gooddata/api-client-tiger': workspace:*
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': ^1.17.1
+      '@gooddata/fixtures': ^1.20.1
       '@gooddata/reference-workspace': workspace:*
       '@gooddata/sdk-backend-base': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
@@ -933,7 +933,7 @@ importers:
     devDependencies:
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.20.0
+      '@gooddata/fixtures': 1.20.1
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
       '@microsoft/api-documenter': 7.21.7
       '@microsoft/api-extractor': 7.34.4
@@ -2624,7 +2624,7 @@ importers:
       '@cypress/grep': ^3.1.0
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
-      '@gooddata/fixtures': ^1.17.1
+      '@gooddata/fixtures': ^1.20.1
       '@gooddata/sdk-backend-bear': workspace:*
       '@gooddata/sdk-backend-spi': workspace:*
       '@gooddata/sdk-backend-tiger': workspace:*
@@ -2702,7 +2702,7 @@ importers:
       '@babel/polyfill': 7.12.1
       '@gooddata/catalog-export': link:../../tools/catalog-export
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
-      '@gooddata/fixtures': 1.20.0
+      '@gooddata/fixtures': 1.20.1
       '@gooddata/sdk-backend-bear': link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi': link:../sdk-backend-spi
       '@gooddata/sdk-backend-tiger': link:../sdk-backend-tiger
@@ -6205,8 +6205,8 @@ packages:
       - supports-color
       - typescript
 
-  /@gooddata/fixtures/1.20.0:
-    resolution: {integrity: sha512-hx8u5AbaGbKji6Fhv0DUSmuY+jPStVg3XFc8STXlJ8Rv64cfmGkEjYiepOeNcg1dAU/D7YNyYusjmk+x941c7g==}
+  /@gooddata/fixtures/1.20.1:
+    resolution: {integrity: sha512-g4PdnSE9pJR71B2T0H6OA/fnrWprCoO+OYRHaOQJj0G4R17G8M/h8lhz1/fi2lb5dIM9i3e6d9KgcJ4JvrPGcQ==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.1
       '@gooddata/api-client-tiger': 8.12.1
@@ -14492,7 +14492,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
