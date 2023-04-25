@@ -2,7 +2,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import "../../scripts/env.js";
-import { exportTigerFixture } from "@gooddata/fixtures";
+import { exportTigerFixtureExtension } from "@gooddata/fixtures";
 import { logLn } from "@gooddata/fixtures/logger.js";
 
 import { exportCatalogTiger } from "../export_catalog.js";
@@ -20,7 +20,7 @@ async function main() {
         }
 
         const outputFile = TIGER_FIXTURE_METADATA_EXTENSIONS["goodsales"];
-        await exportTigerFixture(
+        await exportTigerFixtureExtension(
             "goodsales",
             TEST_WORKSPACE_ID,
             TIGER_API_TOKEN,
