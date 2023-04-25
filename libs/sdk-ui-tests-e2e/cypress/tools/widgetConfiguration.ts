@@ -20,12 +20,7 @@ export class WidgetConfiguration {
     }
 
     open() {
-        new Widget(this.widgetIndex)
-            .getElement()
-            .click()
-            .find(".dash-item-action")
-            .first()
-            .click({ force: true });
+        new Widget(this.widgetIndex).getElement().click().find(".dash-item-action").first().click();
         this.getElement().should("be.visible");
         return this;
     }
@@ -123,10 +118,7 @@ export class WidgetConfiguration {
     }
 
     clickLoadedDateDatasetButton() {
-        this.getElement()
-            .find(".s-date-dataset-button")
-            .should("not.contain.text", "Loading")
-            .click({ scrollBehavior: false });
+        this.getElement().find(".s-date-dataset-button").should("not.contain.text", "Loading").click();
         return this;
     }
 
@@ -206,8 +198,8 @@ class DrillConfigItem {
     }
 
     chooseAction(drillType: DrillType) {
-        this.getElement().find(".s-drill-config-panel-target-button").click({ force: true });
-        cy.get(".s-drill-config-panel-target-type-open").contains(drillType).click({ force: true });
+        this.getElement().find(".s-drill-config-panel-target-button").click();
+        cy.get(".s-drill-config-panel-target-type-open").contains(drillType).click();
         return this;
     }
 
@@ -218,7 +210,6 @@ class DrillConfigItem {
         cy.get(".s-open-visualizations .s-isLoading").should("exist");
         cy.get(".s-open-visualizations .s-isLoading").should("not.exist");
 
-        cy.wait(200);
         cy.get(
             `.s-open-visualizations .gd-visualizations-list-item${getInsightSelectorFromInsightTitle(
                 insightName,
@@ -231,10 +222,9 @@ class DrillConfigItem {
     }
 
     chooseTargetDashboard(dashboardName: DashboardName) {
-        this.getElement().find(".s-dashboards-dropdown-button").click({ force: true });
+        this.getElement().find(".s-dashboards-dropdown-button").click();
 
         cy.get(".dropdown-body .gd-input").type(splitCamelCaseToWords(dashboardName));
-        cy.wait(200);
         cy.get(".s-dashboards-dropdown-body .gd-list-item")
             .contains(splitCamelCaseToWords(dashboardName))
             .click();

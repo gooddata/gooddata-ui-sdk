@@ -69,10 +69,11 @@ export class LayoutRow {
     }
 
     dragAndDropItems(source: string, target: string) {
+        const dataTransfer = new DataTransfer();
         cy.get(source).should("exist");
-        cy.get(source).parent().trigger("dragstart", { force: true });
+        cy.get(source).parent().trigger("dragstart", { dataTransfer });
         cy.get(target).should("be.visible");
-        cy.get(target).trigger("drop");
+        cy.get(target).trigger("drop", { dataTransfer });
         return this;
     }
 
@@ -84,10 +85,16 @@ export class LayoutRow {
     }
 
     dragItems(source: string, target: string) {
+        const dataTransfer = new DataTransfer();
         cy.get(source).should("exist");
-        cy.get(source).parent().trigger("dragstart", { force: true });
+        cy.get(source).parent().trigger("dragstart", { dataTransfer });
         cy.get(target).should("be.visible");
-        cy.get(target).trigger("dragenter");
+        cy.get(target).trigger("dragenter", { dataTransfer });
+        return this;
+    }
+
+    scrollIntoView() {
+        this.getElement().scrollIntoView();
         return this;
     }
 }

@@ -5,6 +5,7 @@ import { DropZone } from "./enum/DropZone";
 
 export const NEW_ATTRIBUTE_FILTER_SELECTOR = ".s-add-attribute-filter";
 export const ATTRIBUTE_DROPZONE_SELECTOR = ".s-attr-filter-dropzone-box";
+export const ATTRIBUTE_FILTER_SELECT_SELECTOR = ".s-attribute_select";
 export const ATTRIBUTE_FILTER_BODY_SELECTOR = ".attributes-list";
 export const ATTRIBUTE_FILTERS_SELECTOR = ".dash-filters-attribute:not(.dash-filters-date)";
 export const FILTER_BAR_SELECTOR = ".dash-filters-visible";
@@ -24,7 +25,7 @@ export class AttributeFilter {
 
     select(name?: string): AttributeFilter {
         const testClass = getTestClassByTitle(name ?? this.name);
-        cy.get(`${ATTRIBUTE_FILTER_BODY_SELECTOR} ${testClass}`).click({ force: true });
+        cy.get(`${ATTRIBUTE_FILTER_BODY_SELECTOR} ${testClass}`).click();
         return this;
     }
 
@@ -51,9 +52,7 @@ export class AttributeFilter {
 
     selectAttributesWithoutApply(name?: string) {
         this.clearAllValues();
-        this.getDropdownElement()
-            .find(`.s-attribute-filter-list-item[title="${name}"]`)
-            .click({ force: true });
+        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${name}"]`).click();
     }
 
     selectAttributeWithoutSearch(name?: string): AttributeFilter {
@@ -89,7 +88,7 @@ export class AttributeFilter {
     }
 
     apply() {
-        this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-apply").click();
         return this;
     }
 
@@ -104,16 +103,13 @@ export class AttributeFilter {
         this.getDropdownElement()
             .find(".gd-list-searchfield .gd-input-field")
             .should("be.visible")
-            .clear({ force: true })
-            .type(attributeValue, { force: true });
+            .clear()
+            .type(attributeValue);
         return this;
     }
 
     clearSearch() {
-        this.getDropdownElement()
-            .find(".gd-list-searchfield .gd-input-field")
-            .should("be.visible")
-            .clear({ force: true });
+        this.getDropdownElement().find(".gd-list-searchfield .gd-input-field").should("be.visible").clear();
         return this;
     }
 
@@ -131,10 +127,7 @@ export class AttributeFilter {
 
     searchAndSelectFilterItem(attributeValue: string) {
         this.search(attributeValue);
-        this.getDropdownElement()
-            .find(`.s-attribute-filter-list-item[title="${attributeValue}"]`)
-            .should("be.visible")
-            .click({ force: true });
+        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${attributeValue}"]`).click();
         return this;
     }
 
@@ -145,38 +138,22 @@ export class AttributeFilter {
     }
 
     addAttribute(name: string): AttributeFilter {
-        const dataTransfer = new DataTransfer();
-        cy.get(NEW_ATTRIBUTE_FILTER_SELECTOR).trigger("dragstart", {
-            dataTransfer,
-        });
-
-        cy.get(ATTRIBUTE_DROPZONE_SELECTOR).trigger("drop", {
-            dataTransfer,
-        });
-        return new AttributeFilter(name).search(name).select();
+        return new FilterBar().addAttribute(name);
     }
 
     removeFilter() {
         const dataTransfer = new DataTransfer();
-        this.getElement().trigger("dragstart", {
-            dataTransfer,
-        });
+        this.getElement().trigger("dragstart", { dataTransfer });
 
-        cy.get(".gd-dropzone-delete").trigger("drop", {
-            dataTransfer,
-        });
+        cy.get(".gd-dropzone-delete").trigger("drop", { dataTransfer });
         return this;
     }
 
     dragFilter() {
         const dataTransfer = new DataTransfer();
-        this.getElement().trigger("dragstart", {
-            dataTransfer,
-        });
+        this.getElement().trigger("dragstart", { dataTransfer });
 
-        cy.get(".gd-dash-content").trigger("dragOver", {
-            dataTransfer,
-        });
+        cy.get(".gd-dash-content").trigger("dragOver", { dataTransfer });
         return this;
     }
 
@@ -188,7 +165,7 @@ export class AttributeFilter {
     configureDependency(filteredItem: string | string[]) {
         this.selectConfiguration();
         this.checkDependency(filteredItem);
-        this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-apply").click();
         return this;
     }
 
@@ -198,7 +175,7 @@ export class AttributeFilter {
             const testClass = getTestClassByTitle(filteredItem);
             this.getDropdownElement()
                 .find(`.s-attribute-filter-dropdown-configuration-item${testClass}`)
-                .click({ scrollBehavior: false });
+                .click();
         });
         return this;
     }
@@ -222,24 +199,24 @@ export class AttributeFilter {
     }
 
     selectConfiguration() {
-        this.getDropdownElement().find(".s-configuration-button").click({ scrollBehavior: false }).wait(100);
+        this.getDropdownElement().find(".s-configuration-button").click();
         return this;
     }
 
     saveConfiguration() {
-        this.getDropdownElement().find(".s-save").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-save").click();
         return this;
     }
 
     closeConfiguration() {
-        this.getDropdownElement().find(".s-cancel").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-cancel").click();
         return this;
     }
 
     changeAttributeLabel(label: string) {
         this.selectConfiguration();
         cy.get(".s-attribute-display-form-button").click();
-        cy.get("div:not(.is-selected).gd-list-item span").contains(label).click({ force: true });
+        cy.get("div:not(.is-selected).gd-list-item span").contains(label).click();
 
         return this;
     }
@@ -248,19 +225,17 @@ export class AttributeFilter {
         this.selectConfiguration();
         this.toggleSelectionModeDropdown();
         this.clickSelectionMode(mode);
-        this.getDropdownElement().find(".s-save").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-save").click();
         return this;
     }
 
     toggleSelectionModeDropdown() {
-        this.getDropdownElement().find(".s-selection-mode-dropdown-button").click({ scrollBehavior: false });
+        this.getDropdownElement().find(".s-selection-mode-dropdown-button").click();
         return this;
     }
 
     clickSelectionMode(mode: string) {
-        this.getDropdownElement()
-            .find(`.s-selection-mode-dropdown-item-${mode}`)
-            .click({ scrollBehavior: false });
+        this.getDropdownElement().find(`.s-selection-mode-dropdown-item-${mode}`).click();
         return this;
     }
 
@@ -281,7 +256,7 @@ export class AttributeFilter {
     }
 
     toggle() {
-        this.getElement().click({ scrollBehavior: false });
+        this.getElement().click();
         return this;
     }
 
@@ -329,39 +304,36 @@ export class FilterBar {
     }
 
     toggleShowAll(): FilterBar {
-        this.getShowAllButton().click().wait(100);
+        this.getShowAllButton().click();
         return this;
     }
 
     addAttribute(name: string): AttributeFilter {
         this.dragAttributeToFilterBar();
-        return new AttributeFilter(name).search(name).select();
+        new AttributeFilter(name).search(name).select();
+        cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("not.exist");
+        return new AttributeFilter(name);
     }
 
     moveAttributeFilter(fromIndex: number, toIndex: number, dropzone: DropZone) {
         const dataTransfer = new DataTransfer();
-        cy.get(".s-attribute-filter").eq(fromIndex).trigger("dragstart", {
-            dataTransfer,
-        });
+        cy.get(".s-attribute-filter").eq(fromIndex).trigger("dragstart", { dataTransfer });
         cy.get(".dash-filters-notdate .s-attribute-filter")
             .eq(toIndex)
             .parents(".draggable-attribute-filter")
             .find(dropzone)
-            .trigger("drop", {
-                dataTransfer,
-            });
+            .trigger("drop", { dataTransfer });
         return this;
     }
 
     dragAttributeToFilterBar() {
         const dataTransfer = new DataTransfer();
-        cy.get(NEW_ATTRIBUTE_FILTER_SELECTOR).trigger("dragstart", {
-            dataTransfer,
-        });
-
-        cy.get(ATTRIBUTE_DROPZONE_SELECTOR).trigger("drop", {
-            dataTransfer,
-        });
+        cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("not.exist");
+        cy.get(NEW_ATTRIBUTE_FILTER_SELECTOR).trigger("dragstart", { dataTransfer });
+        cy.get(ATTRIBUTE_DROPZONE_SELECTOR)
+            .should("have.class", "attr-filter-dropzone-box-active")
+            .trigger("drop", { dataTransfer });
+        cy.get(ATTRIBUTE_FILTER_SELECT_SELECTOR).should("exist");
         return this;
     }
 
@@ -372,7 +344,7 @@ export class FilterBar {
 
     showTooltipDialog(name: string) {
         const testClass = getTestClassByTitle(name);
-        cy.get(`${testClass} .s-attribute-dropdown-list-item-tooltip `).trigger("mouseover", { force: true });
+        cy.get(`${testClass} .gd-attribute-item-tooltip-icon`).invoke("show").trigger("mouseover");
         return this;
     }
 

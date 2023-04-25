@@ -7,10 +7,6 @@ Cypress.on("test:before:run", (_attributes, test) => {
     testInfo = test;
 });
 
-before(() => {
-    cy.login();
-});
-
 beforeEach(() => {
     const testName = `${testInfo.parent.title} - It ${testInfo.title}`;
     let heading = "TEST:";

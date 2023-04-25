@@ -7,7 +7,6 @@ import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 
 describe("DateFilter", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
         Navigation.visit("filters/date-filter");
     });
 

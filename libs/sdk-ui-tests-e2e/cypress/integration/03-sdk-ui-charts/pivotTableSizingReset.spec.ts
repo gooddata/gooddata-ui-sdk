@@ -26,7 +26,7 @@ const MEASURE_LOCATOR_ITEM = measureLocalId(Md.Amount);
 const ATTRIBUTE_LOCATOR_ITEM_ATT_ID = attributeLocalId(Md.Region);
 
 // rep from workspace variable
-const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = `/gdc/md/${getProjectId()}/obj/1083/elements?id=460488`;
+const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = `/gdc/md/${getProjectId()}/obj/1085/elements?id=460488`;
 
 export const getCallbackArray = () => {
     const callbackSelector = `.s-pivot-table-sizing-complex-callback`;
@@ -105,7 +105,6 @@ const checkWidthWithTolerance = (width: Cypress.Chainable<JQuery<number>>, expec
 
 describe("Pivot Table Sizing and Reset by double click", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
         Navigation.visit("visualizations/pivot-table/sizing/pivot-table-complex-reset");
     });
 

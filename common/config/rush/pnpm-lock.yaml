@@ -2621,7 +2621,7 @@ importers:
       '@babel/preset-react': ^7.7.2
       '@babel/preset-typescript': ^7.7.2
       '@babel/runtime': ^7.7.2
-      '@cypress/grep': ^3.1.0
+      '@cypress/grep': ^3.1.5
       '@gooddata/catalog-export': workspace:*
       '@gooddata/eslint-config': ^4.1.0
       '@gooddata/fixtures': ^1.17.1
@@ -2656,8 +2656,8 @@ importers:
       clean-webpack-plugin: ^4.0.0
       compression-webpack-plugin: ^7.1.0
       css-loader: ^6.7.1
-      cypress: ^10.10.0
-      cypress-real-events: ^1.7.0
+      cypress: ^12.10.0
+      cypress-real-events: ^1.7.6
       dependency-cruiser: ^10.1.1
       dotenv: ^10.0.0
       dotenv-webpack: ^7.0.2
@@ -2738,7 +2738,7 @@ importers:
       '@babel/preset-react': 7.18.6_@babel+core@7.21.4
       '@babel/preset-typescript': 7.21.4_@babel+core@7.21.4
       '@babel/runtime': 7.21.0
-      '@cypress/grep': 3.1.5_2og7nkxod5ijpdsft2otvcl7eu
+      '@cypress/grep': 3.1.5_6xjulfxiiww4emjzu2ighrucye
       '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
       '@microsoft/api-extractor': 7.34.4_@types+node@16.18.23
       '@types/lodash': 4.14.194
@@ -2756,8 +2756,8 @@ importers:
       clean-webpack-plugin: 4.0.0_webpack@5.79.0
       compression-webpack-plugin: 7.1.2_webpack@5.79.0
       css-loader: 6.7.3_webpack@5.79.0
-      cypress: 10.11.0
-      cypress-real-events: 1.7.6_cypress@10.11.0
+      cypress: 12.10.0
+      cypress-real-events: 1.7.6_cypress@12.10.0
       dependency-cruiser: 10.9.0
       dotenv-webpack: 7.1.1_webpack@5.79.0
       eslint: 8.38.0
@@ -4859,7 +4859,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.21.3_@babel+core@7.12.9
     dev: false
@@ -5840,12 +5840,12 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  /@cypress/grep/3.1.5_2og7nkxod5ijpdsft2otvcl7eu:
+  /@cypress/grep/3.1.5_6xjulfxiiww4emjzu2ighrucye:
     resolution: {integrity: sha512-dbLKP9wGLId+TwTRFDcWVcr9AvJ06W3K7dVeJzLONiPbI5/XJh2mDZvnoyJlAz+VZxdwe0+nejk/CPmuphuzkQ==}
     peerDependencies:
       cypress: '>=10'
     dependencies:
-      cypress: 10.11.0
+      cypress: 12.10.0
       debug: 4.3.4
       find-test-names: 1.28.4_@babel+core@7.21.4
       globby: 11.1.0
@@ -6279,7 +6279,7 @@ packages:
       '@heroku-cli/color': 1.1.14
       '@oclif/errors': 1.2.2
       cli-ux: 4.9.3
-      debug: 4.1.1
+      debug: 4.3.4
       fs-extra: 7.0.1
       heroku-client: 3.1.0
       http-call: 5.3.0
@@ -6375,7 +6375,7 @@ packages:
       '@oclif/config': 1.13.2
       chalk: 2.4.2
       cli-ux: 4.9.3
-      debug: 4.1.1
+      debug: 4.3.4
       fs-extra: 7.0.1
       lodash.flatten: 4.4.0
       tslib: 1.9.3
@@ -6456,7 +6456,7 @@ packages:
       ansi-escapes: 3.2.0
       async-file: 2.0.2
       cli-ux: 4.9.3
-      debug: 4.1.1
+      debug: 4.3.4
       fs-extra: 7.0.1
       github-url-to-object: 4.0.6
       got: 9.6.0
@@ -11980,15 +11980,9 @@ packages:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
 
-  /commander/5.1.0:
-    resolution: {integrity: sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==}
-    engines: {node: '>= 6'}
-    dev: true
-
   /commander/6.2.1:
     resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
     engines: {node: '>= 6'}
-    dev: false
 
   /commander/7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
@@ -12503,17 +12497,17 @@ packages:
     resolution: {integrity: sha512-NJGVKPS81XejHcLhaLJS7plab0fK3slPh11mESeeDq2W4ZI5kUKK/LRRdVDvjJseojbPB7ZwjnyOybg3Igea/A==}
     dev: false
 
-  /cypress-real-events/1.7.6_cypress@10.11.0:
+  /cypress-real-events/1.7.6_cypress@12.10.0:
     resolution: {integrity: sha512-yP6GnRrbm6HK5q4DH6Nnupz37nOfZu/xn1xFYqsE2o4G73giPWQOdu6375QYpwfU1cvHNCgyD2bQ2hPH9D7NMw==}
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x
     dependencies:
-      cypress: 10.11.0
+      cypress: 12.10.0
     dev: true
 
-  /cypress/10.11.0:
-    resolution: {integrity: sha512-lsaE7dprw5DoXM00skni6W5ElVVLGAdRUUdZjX2dYsGjbY/QnpzWZ95Zom1mkGg0hAaO/QVTZoFVS7Jgr/GUPA==}
-    engines: {node: '>=12.0.0'}
+  /cypress/12.10.0:
+    resolution: {integrity: sha512-Y0wPc221xKKW1/4iAFCphkrG2jNR4MjOne3iGn4mcuCaE7Y5EtXL83N8BzRsAht7GYfWVjJ/UeTqEdDKHz39HQ==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -12531,7 +12525,7 @@ packages:
       check-more-types: 2.24.0
       cli-cursor: 3.1.0
       cli-table3: 0.6.3
-      commander: 5.1.0
+      commander: 6.2.1
       common-tags: 1.8.2
       dayjs: 1.11.7
       debug: 4.3.4_supports-color@8.1.1
@@ -14492,7 +14486,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
     requiresBuild: true
     dependencies:
       bindings: 1.5.0

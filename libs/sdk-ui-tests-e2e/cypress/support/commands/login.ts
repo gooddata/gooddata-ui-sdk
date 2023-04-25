@@ -1,8 +1,5 @@
 // (C) 2021 GoodData Corporation
-
-import { getHost, getUsername, getPassword } from "../constants";
-import { Users } from "../../tools/users";
-import { getTigerAuthToken } from "../../tools/api";
+import { getHost, getUserName, getPassword } from "../constants";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -17,17 +14,13 @@ declare global {
 export default {};
 
 Cypress.Commands.add("login", () => {
-    if (getTigerAuthToken()) {
-        Users.switchToDefaultUser();
-    }
-
-    if (!getUsername()) {
+    if (!getUserName()) {
         return;
     }
 
     cy.request("POST", `${getHost()}/gdc/account/login`, {
         postUserLogin: {
-            login: getUsername(),
+            login: getUserName(),
             password: getPassword(),
             remember: 1,
             captcha: "",

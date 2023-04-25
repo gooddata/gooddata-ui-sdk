@@ -38,7 +38,7 @@ export class KpiConfiguration {
     openComparisonDropdown() {
         this.getElement().then((body) => {
             if (body.find(".comparison-list").length < 1) {
-                this.getElement().find(".s-compare_with_select .gd-button").click();
+                this.getElement().find(".s-compare_with_select .gd-button").scrollIntoView().click();
             }
         });
         return this;
@@ -102,7 +102,7 @@ export class KpiConfiguration {
     }
 
     selectTargetOldDashboard(oldDashboardtabTitle: string) {
-        this.getElement().find(".gd-button").contains("Select a dashboard").click({ force: true });
+        this.getElement().find(".gd-button").contains("Select a dashboard").click();
         new DrillToOldDashboardDropdown().clickOption(oldDashboardtabTitle);
     }
 
@@ -135,7 +135,7 @@ export class KPIComparisonDropdown {
     }
 
     clickItem(comparisonType: string) {
-        this.getElement().settled(".gd-list-item").contains(comparisonType).click();
+        this.getElement().find(".gd-list-item").contains(comparisonType).click();
         return this;
     }
 }
@@ -151,7 +151,7 @@ export class KPIMeasureDropdown {
     }
 
     clickItem(measureName: string) {
-        this.getElement().settled(".gd-list-item").contains(measureName).click();
+        this.getElement().find(".gd-list-item").contains(measureName).click();
         return this;
     }
 

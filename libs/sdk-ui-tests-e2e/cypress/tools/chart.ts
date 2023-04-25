@@ -42,10 +42,9 @@ export class Chart {
 
     clickSeriesPoint(seriesIndex: number, pointIndex = 0) {
         this.getHighchartsContainer()
-            .settled(`.highcharts-series.highcharts-series-${seriesIndex} .highcharts-point`)
+            .find(`.highcharts-series.highcharts-series-${seriesIndex} .highcharts-point`)
             .eq(pointIndex)
-            .scrollIntoView()
-            .click({ force: true });
+            .click();
         return this;
     }
 

@@ -3,23 +3,9 @@
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    // eslint-disable-next-line no-console
-    console.error("Uncaught excepton cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard-tiger");
         });
 
@@ -64,8 +50,6 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
 
     describe("FilterBar rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard-tiger");
         });
 
@@ -106,8 +90,6 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
 
     describe("Dashboard body rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard");
         });
 

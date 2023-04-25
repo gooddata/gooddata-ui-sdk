@@ -4,7 +4,6 @@ import { nonEmptyValue, Table } from "../../tools/table";
 
 describe("Pivot Table Aggregations remove all totals", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
         Navigation.visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
     });
 
@@ -16,11 +15,11 @@ describe("Pivot Table Aggregations remove all totals", { tags: ["pre-merge_isola
         table.clickAggregationMenu(element1);
 
         table.waitRowLoaded();
-        cy.wait(300);
 
         table.getPivotTableFooterCell(0, 0).find(`.s-value`).should("have.text", "Sum");
 
         table
+            .waitLoaded()
             .getPivotTableFooterCell(0, 2)
             .find(`.s-value`)
             .invoke("text")
@@ -29,6 +28,7 @@ describe("Pivot Table Aggregations remove all totals", { tags: ["pre-merge_isola
             });
 
         table
+            .waitLoaded()
             .getPivotTableFooterCell(0, 3)
             .find(`.s-value`)
             .invoke("text")

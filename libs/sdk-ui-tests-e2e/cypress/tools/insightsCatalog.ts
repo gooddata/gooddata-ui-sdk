@@ -36,7 +36,7 @@ export class InsightsCatalog {
     searchText(text: string) {
         this.clearSearch();
         cy.get(this.getElementSelector(".gd-input-field")).should("exist");
-        cy.get(this.getElementSelector(".gd-input-field")).type(text, { delay: 50 });
+        cy.get(this.getElementSelector(".gd-input-field")).type(text);
         this.waitForCatalogReload();
         return this;
     }
@@ -55,8 +55,6 @@ export class InsightsCatalog {
 
     waitForCatalogReload() {
         cy.get(this.getElementSelector(".s-isLoading")).should("not.exist");
-        cy.wait(1000);
-        // wait again for loading reappearance
         cy.get(this.getElementSelector(".s-isLoading")).should("not.exist");
         return this;
     }

@@ -8,17 +8,6 @@ import { Dashboard } from "../../tools/dashboards";
 import { Widget } from "../../tools/widget";
 import { getProjectId } from "../../support/constants";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 const dashboard = new Dashboard();
 const editMode = new EditMode();
 const filterBar = new FilterBar();
@@ -29,17 +18,12 @@ const account = new AttributeFilter("Account");
 const isWon = new AttributeFilter("Is Won?");
 
 describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, () => {
-    beforeEach(() => {
-        cy.login();
-    });
-
     it("Apply dependence filter on Edit Mode", () => {
         Navigation.visit("dashboard/stage-name");
         editMode.edit();
 
         widget.waitTableLoaded();
         filterBar.addAttribute("Product");
-        cy.wait(1000);
 
         product.configureDependency("Stage Name").close();
 
@@ -239,23 +223,23 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
                 },
                 {
                     attributeFilter: {
-                        displayForm: `/gdc/md/${getProjectId()}/obj/1055`,
+                        displayForm: `/gdc/md/${getProjectId()}/obj/1057`,
                         negativeSelection: false,
-                        attributeElements: [`/gdc/md/${getProjectId()}/obj/1054/elements?id=2870`],
+                        attributeElements: [`/gdc/md/${getProjectId()}/obj/1056/elements?id=2870`],
                     },
                 },
                 {
                     attributeFilter: {
-                        displayForm: `/gdc/md/${getProjectId()}/obj/1089`,
+                        displayForm: `/gdc/md/${getProjectId()}/obj/1091`,
                         negativeSelection: true,
                         attributeElements: [],
                     },
                 },
                 {
                     attributeFilter: {
-                        displayForm: `/gdc/md/${getProjectId()}/obj/1094`,
+                        displayForm: `/gdc/md/${getProjectId()}/obj/1096`,
                         negativeSelection: false,
-                        attributeElements: [`/gdc/md/${getProjectId()}/obj/1093/elements?id=460493`],
+                        attributeElements: [`/gdc/md/${getProjectId()}/obj/1095/elements?id=460493`],
                     },
                 },
             ]);

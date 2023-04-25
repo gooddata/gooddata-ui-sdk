@@ -16,7 +16,6 @@ export class AttributeFilterButton {
     }
 
     openConfiguration(): this {
-        cy.wait(300);
         cy.get(".s-configuration-button").click();
         return this;
     }
@@ -63,7 +62,7 @@ export class AttributeFilterButton {
     }
 
     selectElement(element: string): this {
-        cy.wait(200).get(element).click();
+        cy.get(element).click();
         return this;
     }
 
@@ -88,8 +87,7 @@ export class AttributeFilterButton {
     }
 
     waitElementsLoaded(): this {
-        // wait until loading is finished
-        cy.wait(500).get(".s-isLoading").should("not.exist");
+        cy.get(".s-isLoading").should("not.exist");
         return this;
     }
 
@@ -100,13 +98,14 @@ export class AttributeFilterButton {
 
     searchAndSelectFilterItem(attributeValue: string, only?: boolean) {
         this.searchElements(attributeValue);
-        this.getDropdownElement()
-            .find(
-                only
-                    ? `.s-attribute-filter-list-item[title="${attributeValue}"] .gd-list-item-only`
-                    : `.s-attribute-filter-list-item[title="${attributeValue}"]`,
-            )
-            .click({ force: true });
+        if (only) {
+            this.getDropdownElement()
+                .find(`.s-attribute-filter-list-item[title="${attributeValue}"] .gd-list-item-only`)
+                .invoke("show")
+                .click();
+            return this;
+        }
+        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${attributeValue}"]`).click();
         return this;
     }
 
@@ -161,6 +160,11 @@ export class AttributeFilterButton {
         cy.get(`${this.attributeFilterUniqueSelector}`)
             .find(".s-attribute-filter-tooltip-icon")
             .trigger("mouseover");
+        return this;
+    }
+
+    hasFilterListSize(length: number) {
+        this.getDropdownElement().find(".s-list-search-selection-size").should("have.text", `(${length})`);
         return this;
     }
 }

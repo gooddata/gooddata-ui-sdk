@@ -10,19 +10,10 @@ import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { generateUUID } from "../../tools/utils";
 
-Cypress.on("uncaught:exception", (error) => {
-    // eslint-disable-next-line no-console
-    console.error("Uncaught excepton cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
     const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
     describe("Basic case", () => {
         beforeEach(() => {
-            cy.login();
             Users.switchToDefaultUser();
             Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
@@ -45,7 +36,6 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
         }
 
         beforeEach(() => {
-            cy.login();
             Users.switchToDefaultUser();
             Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
@@ -170,7 +160,6 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
         const secondGroup = `test-viewers-2-${guid}`;
 
         beforeEach(() => {
-            cy.login();
             Users.switchToDefaultUser();
             Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 

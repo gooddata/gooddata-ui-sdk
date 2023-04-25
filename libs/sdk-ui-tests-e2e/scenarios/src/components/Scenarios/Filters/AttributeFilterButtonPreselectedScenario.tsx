@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useState } from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { attributeDisplayFormRef, IAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -8,7 +8,7 @@ import * as Md from "../../../../../reference_workspace/workspace_objects/goodsa
 import { workspace } from "../../../constants.ts";
 
 const attributeFilter = newPositiveAttributeFilter(attributeDisplayFormRef(Md.Opportunity.Name), {
-    uris: [`/gdc/md/${workspace}/obj/1063/elements?id=108112`],
+    uris: [`/gdc/md/${workspace}/obj/1065/elements?id=108112`],
 });
 
 export const AttributeFilterButtonPreselectedScenario: React.FC = () => {

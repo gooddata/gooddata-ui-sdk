@@ -6,7 +6,7 @@ export class DashboardMenu {
     }
 
     toggle() {
-        this.getButtonElement().should("be.visible").click({ scrollBehavior: false });
+        this.getButtonElement().should("be.visible").click();
         return this;
     }
 
@@ -15,9 +15,7 @@ export class DashboardMenu {
     }
 
     clickOption(optionLabel: string) {
-        this.getDropdownItemElement(optionLabel)
-            .should("not.have.class", "is-disabled")
-            .click({ force: true });
+        this.getDropdownItemElement(optionLabel).should("not.have.class", "is-disabled").click();
         return this;
     }
 

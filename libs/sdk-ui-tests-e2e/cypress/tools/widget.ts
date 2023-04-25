@@ -160,18 +160,20 @@ export class Widget {
     }
 
     drag(name: InsightTitle, offset: "next" | "prev") {
+        const dataTransfer = new DataTransfer();
         const catalog = new InsightsCatalog();
         catalog.searchExistingInsight(name);
-        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { force: true });
-        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("dragenter");
+        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { dataTransfer });
+        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("dragenter", { dataTransfer });
         return this;
     }
 
     add(name: InsightTitle, offset: "next" | "prev") {
         const catalog = new InsightsCatalog();
         catalog.searchExistingInsight(name);
-        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { force: true });
-        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("drop", { force: true });
+        const dataTransfer = new DataTransfer();
+        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { dataTransfer });
+        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("drop", { dataTransfer });
         return this;
     }
 
@@ -198,5 +200,10 @@ export class Widget {
 
     hasError() {
         this.getElement().contains("Sorry, we can't display this insight").should("exist");
+    }
+
+    scrollIntoView() {
+        this.getElement().scrollIntoView();
+        return this;
     }
 }

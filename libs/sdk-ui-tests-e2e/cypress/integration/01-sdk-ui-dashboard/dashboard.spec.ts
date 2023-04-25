@@ -3,22 +3,9 @@
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught excepton cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard");
         });
 
@@ -34,12 +21,12 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
             topBar.dashboardTitleExist().dashboardTitleHasValue("Test dashboard");
         });
 
-        it("should not render edit button", () => {
+        it("should render edit button", () => {
             const topBar = new TopBar();
             const dashboard = new Dashboard();
 
             dashboard.topBarExist();
-            topBar.editButtonIsVisible(false);
+            topBar.editButtonIsVisible();
         });
 
         it("should menu button render", () => {
@@ -61,8 +48,6 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     describe("FilterBar rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard");
         });
 
@@ -102,8 +87,6 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     describe("Dashboard body rendering", () => {
         beforeEach(() => {
-            cy.login();
-
             Navigation.visit("dashboard/dashboard");
         });
 

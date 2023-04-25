@@ -10,8 +10,6 @@ const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter.s-opportunity";
 
 describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        cy.login();
-
         Navigation.visit("filters/attribute-filter-button");
     });
 
@@ -51,9 +49,12 @@ describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
         attributeFilter
             .open()
             .waitElementsLoaded()
+            .hasFilterListSize(6527)
             .clearSelection()
             .searchElements(SEARCH_QUERY)
             .waitElementsLoaded()
+            .hasFilterListSize(2)
+            .isFilteredElementsCount(2)
             .selectAll()
             .clickApply()
             .subtitleHasText("101 Financial > Educationly, 101 Financial > WonderKid");
@@ -65,8 +66,11 @@ describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
         attributeFilter
             .open()
             .waitElementsLoaded()
+            .hasFilterListSize(6527)
             .searchElements(SEARCH_QUERY)
             .waitElementsLoaded()
+            .hasFilterListSize(2)
+            .isFilteredElementsCount(2)
             .clearSelection()
             .clickApply()
             .subtitleHasText("All except 101 Financial > Educationly, 101 Financial > WonderKid");
@@ -92,9 +96,9 @@ describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
 
         attributeFilter
             .open()
-            .waitElementsLoaded()
+            .hasFilterListSize(6527)
             .searchElements(SEARCH_QUERY)
-            .waitElementsLoaded()
+            .hasFilterListSize(2)
             .elementsCorrespondToQuery(SEARCH_QUERY);
     });
 
@@ -116,8 +120,11 @@ describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
         attributeFilter
             .open()
             .waitElementsLoaded()
+            .hasFilterListSize(6527)
             .searchElements(SEARCH_QUERY)
             .waitElementsLoaded()
+            .hasFilterListSize(2)
+            .isFilteredElementsCount(2)
             .clearSelection()
             .applyDisabled(false);
     });

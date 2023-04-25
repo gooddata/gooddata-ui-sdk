@@ -26,10 +26,7 @@ export class AnalyticalDesigner {
     }
 
     searchData(itemName: string) {
-        this.getElement()
-            .find(".s-catalogue-search .gd-input-field-small")
-            .clear()
-            .type(itemName, { delay: 20 });
+        this.getElement().find(".s-catalogue-search .gd-input-field-small").clear().type(itemName);
         return this;
     }
 
@@ -62,13 +59,8 @@ export class AnalyticalDesigner {
 
     removeDateFilter() {
         const dataTransfer = new DataTransfer();
-        this.getElement().find(DATE_FILTER_BUTTON_SELECTOR).trigger("dragstart", {
-            dataTransfer,
-        });
-
-        cy.get(TRASH_SELECTOR).trigger("drop", {
-            dataTransfer,
-        });
+        this.getElement().find(DATE_FILTER_BUTTON_SELECTOR).trigger("dragstart", { dataTransfer });
+        cy.get(TRASH_SELECTOR).trigger("drop", { dataTransfer });
         return this;
     }
 
@@ -93,10 +85,7 @@ export class AnalyticalDesigner {
     inputInsightNameInDialog(insightName: string) {
         this.getElement().find(NAME_INSIGHT_INPUT_SELECTOR).type(insightName);
 
-        this.getElement()
-            .find(DIALOG_FOOTER_SELECTOR)
-            .find(DIALOG_SUBMIT_BUTTON_SELECTOR)
-            .click({ force: true });
+        this.getElement().find(DIALOG_FOOTER_SELECTOR).find(DIALOG_SUBMIT_BUTTON_SELECTOR).click();
     }
 
     waitForSuccessMessage(): void {

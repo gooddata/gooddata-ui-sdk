@@ -28,7 +28,7 @@ export class Headline {
     }
 
     clickPrimaryValue() {
-        this.getPrimaryValue().click({ force: true });
+        this.getPrimaryValue().click();
         return this;
     }
 

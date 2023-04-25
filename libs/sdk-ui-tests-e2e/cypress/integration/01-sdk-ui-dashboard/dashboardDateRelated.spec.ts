@@ -8,26 +8,11 @@ import { Widget } from "../../tools/widget";
 import { DateFilter } from "../../tools/dateFilter";
 import { KpiConfiguration } from "../../tools/kpiConfiguration";
 
-Cypress.Cookies.defaults({
-    preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
-});
-
-Cypress.on("uncaught:exception", (error) => {
-    console.error("Uncaught exception cause", error);
-    return false;
-});
-
-Cypress.Cookies.debug(true);
-
 const dashboardHeader = new DashboardHeader();
 const editMode = new EditMode();
 const dashboardMenu = new DashboardMenu();
 
 describe("Dashboard Date Related", { tags: "pre-merge_isolated_bear" }, () => {
-    beforeEach(() => {
-        cy.login();
-    });
-
     it("Make no change on unrelated date insight", () => {
         Navigation.visit("dashboard/date-filtering");
 

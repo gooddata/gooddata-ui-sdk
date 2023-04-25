@@ -28,9 +28,7 @@ const scenarios = [
 ];
 
 describe("BarChart drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
-    before(() => {
-        cy.login();
-
+    beforeEach(() => {
         Navigation.visit("visualizations/barchart/bar-chart-drilling-scenario");
     });
 
@@ -40,13 +38,10 @@ describe("BarChart drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
             chart.waitLoaded();
             pressButton(item.id);
 
-            cy.wait(100);
-
             cy.get(lastEventSelector).should("have.text", "null");
 
             chart.clickSeriesPoint(0, 0);
 
-            cy.wait(100);
             cy.get(lastEventSelector).contains(/CompuSci/);
         });
     });

@@ -10,7 +10,7 @@ export class WidgetOptionsMenu {
     }
 
     open() {
-        this.getButtonElement().realHover().click({ force: true });
+        this.getButtonElement().realHover().click();
         return this;
     }
 
@@ -31,7 +31,7 @@ export class WidgetOptionsMenu {
     }
 
     clickExportToXLSX() {
-        this.getExportToXLSXButtonElement().click({ force: true });
+        this.getExportToXLSXButtonElement().click();
         return this;
     }
 
@@ -40,7 +40,7 @@ export class WidgetOptionsMenu {
     }
 
     clickScheduleExport() {
-        this.getScheduleExportButtonElement().click({ force: true });
+        this.getScheduleExportButtonElement().click();
         return this;
     }
 
@@ -49,7 +49,7 @@ export class WidgetOptionsMenu {
     }
 
     clickExplore() {
-        this.getExploreButtonElement().click({ force: true });
+        this.getExploreButtonElement().click();
         return this;
     }
 }
