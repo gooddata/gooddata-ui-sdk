@@ -7,6 +7,7 @@ EXPORTER="${ROOTDIR}/node_modules/.bin/gdc-catalog-export"
 OUTPUT="${ROOTDIR}/src/md/full.ts"
 
 $EXPORTER \
+  --backend bear \
   --hostname "developer.na.gooddata.com" \
   --project-id "xms7ga4tf3g3nzucd8380o2bev8oeknp" \
   --output "${OUTPUT}"

@@ -7,6 +7,7 @@ OUTPUT="${ROOTDIR}/src/md/full.ts"
 PROJECTID="xms7ga4tf3g3nzucd8380o2bev8oeknp"
 
 $EXPORTER \
+  --backend bear \
   --hostname "https://developer.na.gooddata.com" \
   --output "${OUTPUT}" \
   --project-id "${PROJECTID}"
