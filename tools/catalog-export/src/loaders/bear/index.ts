@@ -42,46 +42,39 @@ async function selectBearWorkspace(client: SDK): Promise<string> {
 export async function loadWorkspaceMetadataFromBear(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
     let workspaceId = getConfiguredWorkspaceId(config);
 
-    const { hostname, demo } = config;
+    const { hostname } = config;
     let { username, password } = config;
 
     gooddata.config.setCustomDomain(hostname || DEFAULT_HOSTNAME);
     gooddata.config.setJsPackage(pkg.name, pkg.version);
 
-    if (!demo) {
-        const logInSpinner = ora();
-        try {
-            if (username) {
-                log("Username", username);
-            } else {
-                username = await promptUsername();
-            }
-
-            password = password || (await promptPassword());
-
-            logInSpinner.start("Logging in...");
-            await gooddata.user.login(username, password);
-            logInSpinner.stop();
-            clearLine();
-        } catch (err: any) {
-            logInSpinner.fail();
-            clearLine();
-
-            if (err.message && err.message.search(/.*(certificate|self-signed).*/) > -1) {
-                logError(
-                    "Server does not have valid certificate. The login has failed. " +
-                        "If you trust the server, you can use the --accept-untrusted-ssl option " +
-                        "to turn off certificate validation.",
-                );
-            }
-
-            throw new CatalogExportError(`Unable to log in to platform. The error was: ${err}`, 1);
+    const logInSpinner = ora();
+    try {
+        if (username) {
+            log("Username", username);
+        } else {
+            username = await promptUsername();
         }
-    } else {
-        throw new CatalogExportError(
-            "Demo option is supported for GoodData Cloud only (--backend option must be set to tiger).",
-            1,
-        );
+
+        password = password || (await promptPassword());
+
+        logInSpinner.start("Logging in...");
+        await gooddata.user.login(username, password);
+        logInSpinner.stop();
+        clearLine();
+    } catch (err: any) {
+        logInSpinner.fail();
+        clearLine();
+
+        if (err.message && err.message.search(/.*(certificate|self-signed).*/) > -1) {
+            logError(
+                "Server does not have valid certificate. The login has failed. " +
+                    "If you trust the server, you can use the --accept-untrusted-ssl option " +
+                    "to turn off certificate validation.",
+            );
+        }
+
+        throw new CatalogExportError(`Unable to log in to platform. The error was: ${err}`, 1);
     }
 
     const workspaceSpinner = ora();

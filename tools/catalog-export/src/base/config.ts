@@ -12,7 +12,7 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
     return {
         ...prevConfig,
         ...pickBy(
-            pick(config, ["hostname", "workspaceId", "username", "password", "output", "backend", "demo"]),
+            pick(config, ["hostname", "workspaceId", "username", "password", "output", "backend"]),
             identity,
         ),
     };
@@ -26,7 +26,6 @@ function retrieveConfigFromObject(obj: OptionValues): CatalogExportConfig {
         password: obj.password ?? null,
         output: obj.output ?? null,
         backend: obj.backend ?? "tiger",
-        demo: obj.demo ?? false,
     };
 }
 

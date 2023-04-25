@@ -55,11 +55,6 @@ export type CatalogExportConfig = {
      * Indicates type of backend
      */
     backend: SupportedBackendTypes | null;
-
-    /**
-     * Indicates whether to export demo data without need of the authentication.
-     */
-    demo: boolean;
 };
 
 export function getConfiguredWorkspaceId(config: CatalogExportConfig): string | null {

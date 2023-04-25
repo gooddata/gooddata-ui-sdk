@@ -12,5 +12,4 @@ export const DEFAULT_CONFIG: CatalogExportConfig = {
     password: null,
     output: null,
     backend: "tiger",
-    demo: false,
 };

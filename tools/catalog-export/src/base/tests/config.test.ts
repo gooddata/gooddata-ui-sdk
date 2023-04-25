@@ -10,7 +10,6 @@ describe("getConfigFromProgram", () => {
         workspaceId: null,
         username: null,
         backend: null,
-        demo: false,
     };
 
     const TEST_DATA: Array<[string, any, CatalogExportConfig | null]> = [

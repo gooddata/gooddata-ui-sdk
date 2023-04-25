@@ -18,10 +18,7 @@ import fs from "fs";
 
 program
     .version(pkg.version)
-    .option(
-        "--workspace-id <id>",
-        "Workspace id for which you want to export the catalog. This is a synonym for project-id. If not specified, code will fall back to use project-id.",
-    )
+    .option("--workspace-id <id>", "Workspace id for which you want to export the catalog.")
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
         "--output <value>",
@@ -34,7 +31,6 @@ program
         "Indicates type of the backend that runs on the hostname. Can be either tiger for GoodData Cloud or GoodData.CN or bear for the GoodData platform. Default: tiger",
     )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
-    .option("--demo", "Allows to export catalog with demo data without authentication.")
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {

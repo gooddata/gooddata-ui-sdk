@@ -67,10 +67,6 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
 
     const client = createTigerClient(config.hostname!, token);
 
-    if (config.demo) {
-        return client;
-    }
-
     try {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
         // token set
@@ -160,12 +156,8 @@ export async function loadWorkspaceMetadataFromTiger(
 
     let workspaceId = getConfiguredWorkspaceId(config);
 
-    if (!workspaceId && !config.demo) {
+    if (!workspaceId) {
         workspaceId = await selectWorkspace(client);
-    } else if (!workspaceId && config.demo) {
-        logError(
-            "Unable to get workspaceId. Please set workspaceId in your configuration file or provide it with --workspace-id parameter.",
-        );
     }
 
     const workspaceSpinner = ora();
