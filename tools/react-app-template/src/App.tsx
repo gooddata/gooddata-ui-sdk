@@ -15,15 +15,7 @@ export const App: React.FC = () => {
                     <h1>Hello GoodWorld!</h1>
                     <p>
                         Edit <code>/src/App.[[language]]x</code> to get started. Learn more about this
-                        template in{" "}
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href="https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/react-app-template/README.md"
-                        >
-                            Readme
-                        </a>
-                        .
+                        template in <code>README.md</code>.
                     </p>
                     <pre>
                         <code>
