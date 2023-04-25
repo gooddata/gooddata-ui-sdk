@@ -4,7 +4,7 @@ import { program } from "commander";
 import chalk from "chalk";
 import * as path from "path";
 import * as pkg from "../package.json";
-import { logBox, logError, logSuccess, logWarn, printHeader } from "./cli/loggers";
+import { logBox, logError, logSuccess, printHeader } from "./cli/loggers";
 import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromEnv, getConfigFromOptions } from "./base/config";

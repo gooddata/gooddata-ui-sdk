@@ -7,7 +7,7 @@ import {
     WorkspaceMetadata,
 } from "../../base/types";
 import ora from "ora";
-import { logError, logInfo, logWarn } from "../../cli/loggers";
+import { logError, logInfo } from "../../cli/loggers";
 import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
