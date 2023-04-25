@@ -23,7 +23,7 @@ describe("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] },
     beforeEach(() => {
         cy.login();
 
-        Navigation.visit("filters/attribute-filter-button-renaming");
+        Navigation.visit("dashboard/attribute-filter-button-renaming");
     });
 
     it("should not show details icon if attribute button is not selected", () => {

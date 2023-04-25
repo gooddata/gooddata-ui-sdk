@@ -28,7 +28,7 @@ describe.skip("Attribute filter Configuration", { tags: ["pre-merge_isolated_bea
     beforeEach(() => {
         cy.login();
 
-        Navigation.visit("filters/attribute-filter-config");
+        Navigation.visit("dashboard/attribute-filter-config");
     });
 
     it("Change parent filtering configuration", () => {
