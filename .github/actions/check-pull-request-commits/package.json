@@ -8,11 +8,11 @@
     "devDependencies": {},
     "dependencies": {
         "@actions/core": "^1.10.0",
-        "@commitlint/cli": "^17.1.2",
-        "@commitlint/config-conventional": "^17.1.0",
-        "@commitlint/format": "^17.0.0",
-        "@commitlint/lint": "^17.1.0",
-        "@commitlint/load": "^17.1.2",
-        "@commitlint/read": "^17.1.0"
+        "@commitlint/cli": "^17.6.1",
+        "@commitlint/config-conventional": "^17.6.1",
+        "@commitlint/format": "^17.4.4",
+        "@commitlint/lint": "^17.6.1",
+        "@commitlint/load": "^17.5.0",
+        "@commitlint/read": "^17.5.1"
     }
 }
