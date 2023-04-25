@@ -31,18 +31,18 @@ program
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option(
         "--backend <backend>",
-        "Indicates type of the backend that runs on the hostname. Can be either bear for the GoodData platform or tiger for GoodData Cloud or GoodData.CN. Default: bear",
+        "Indicates type of the backend that runs on the hostname. Can be either tiger for GoodData Cloud or GoodData.CN or bear for the GoodData platform. Default: tiger",
     )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .option("--demo", "Allows to export catalog with demo data without authentication.")
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
-    if (config.backend === "tiger") {
-        return loadWorkspaceMetadataFromTiger(config);
+    if (config.backend === "bear") {
+        return loadWorkspaceMetadataFromBear(config);
     }
 
-    return loadWorkspaceMetadataFromBear(config);
+    return loadWorkspaceMetadataFromTiger(config);
 }
 
 async function checkFolderExists(filePath: string) {
@@ -75,9 +75,9 @@ async function run() {
         await checkFolderExists(filePath);
 
         if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectMetadata, filePath, backend === "tiger");
+            await exportMetadataToJavascript(projectMetadata, filePath, backend !== "bear");
         } else {
-            await exportMetadataToTypescript(projectMetadata, filePath, backend === "tiger");
+            await exportMetadataToTypescript(projectMetadata, filePath, backend !== "bear");
         }
 
         logSuccess("All data have been successfully exported");

@@ -25,7 +25,7 @@ function retrieveConfigFromObject(obj: OptionValues): CatalogExportConfig {
         username: obj.username ?? null,
         password: obj.password ?? null,
         output: obj.output ?? null,
-        backend: obj.backend ?? "bear",
+        backend: obj.backend ?? "tiger",
         demo: obj.demo ?? false,
     };
 }

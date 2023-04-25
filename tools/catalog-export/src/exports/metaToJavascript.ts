@@ -17,7 +17,7 @@ import { WorkspaceMetadata } from "../base/types";
 export async function exportMetadataToJavascript(
     projectMetadata: WorkspaceMetadata,
     outputFile: string,
-    tiger = false,
+    tiger = true,
 ): Promise<void> {
     const output = transformToTypescript(projectMetadata, outputFile, tiger);
 

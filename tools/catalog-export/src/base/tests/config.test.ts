@@ -23,7 +23,7 @@ describe("getConfigFromProgram", () => {
             { username: "valid", workspaceId: "abc" },
             { ...EMPTY_CONFIG, workspaceId: "xyz" },
         ],
-        ["propagate tiger backend type", { backend: "tiger" }, null],
+        ["propagate bear backend type", { backend: "bear" }, null],
     ];
 
     it.each(TEST_DATA)("should %s", (_, input: any, defaultOptions: CatalogExportConfig | null) => {

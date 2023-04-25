@@ -20,7 +20,7 @@ export class CatalogExportError extends Error {
  * Defines types used across catalog exporter
  */
 
-export type SupportedBackendTypes = "bear" | "tiger";
+export type SupportedBackendTypes = "tiger" | "bear";
 
 /**
  * Exporter configuration
