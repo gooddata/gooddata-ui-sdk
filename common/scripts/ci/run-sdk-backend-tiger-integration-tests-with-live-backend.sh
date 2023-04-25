@@ -6,7 +6,7 @@ ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
 
-NODE_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-node-16:node-16.13.0-yarn-1.22.17'
+NODE_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-node-16:node-16.20.0-yarn-1.22.17'
 NETWORK_ID=network-id-${EXECUTOR_NUMBER}
 CYPRESS_HOST=$HOST
 TIGER_API_TOKEN=$TIGER_API_TOKEN
