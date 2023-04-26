@@ -6,6 +6,7 @@ import { Widget } from "../../tools/widget";
 import { KpiConfiguration, KPIMeasureDropdown } from "../../tools/kpiConfiguration";
 import { DateFilter, RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
+import { Dashboard } from "../../tools/dashboards";
 
 const editMode = new EditMode();
 const widget = new Widget(0);
@@ -119,5 +120,14 @@ describe("KPI metric formatting", { tags: ["pre-merge_isolated_bear"] }, () => {
                 kpi.hasValue(format.value);
             });
         });
+    });
+});
+
+describe("KPI with alert", { tags: ["checklist_integrated_bear"] }, () => {
+    //Cover ticket: RAIL-4760
+    it("Dashboard should reload and render well after delete KPI has alert", () => {
+        editMode.edit();
+        new Widget(1).removeKPIWidget(true);
+        new Dashboard().dashboardBodyExist(true);
     });
 });

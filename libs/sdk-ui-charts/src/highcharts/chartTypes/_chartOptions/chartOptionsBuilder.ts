@@ -49,7 +49,7 @@ import { getChartProperties } from "../_chartCreators/helpers";
 import Highcharts from "../../lib";
 import {
     multiMeasuresAlternatingTypes,
-    sortedByMeasureTypes,
+    showingNameInLegendWhenViewByPresent,
     unsupportedStackingTypes,
 } from "./chartCapabilities";
 import cloneDeep from "lodash/cloneDeep";
@@ -329,7 +329,7 @@ function getLegendLabel(
     let legendLabel;
     if (isTreemap(type)) {
         legendLabel = viewByAttribute?.formOf?.name;
-    } else if (isOneOfTypes(type, sortedByMeasureTypes) && viewByAttribute) {
+    } else if (isOneOfTypes(type, showingNameInLegendWhenViewByPresent) && viewByAttribute) {
         legendLabel = viewByAttribute?.formOf?.name;
     } else {
         legendLabel = stackByAttribute?.formOf?.name;

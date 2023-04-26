@@ -44,6 +44,13 @@ export class WidgetConfiguration {
         return this;
     }
 
+    hasInteractionItems(expected = true) {
+        this.getElement()
+            .find(".s-drill-config-item")
+            .should(expected ? "exist" : "not.exist");
+        return this;
+    }
+
     openInteractions() {
         this.getElement().contains("Interactions").click();
         this.getElement().find(".s-drill-config-panel").should("be.visible");
@@ -184,6 +191,11 @@ export class WidgetConfiguration {
         this.getElement().find(".gd-input-field").clear().type(text);
         return this;
     }
+
+    checkFilterCheckbox(text: string) {
+        this.getElement().find(`${text} .input-checkbox`).check();
+        return this;
+    }
 }
 
 type DrillType = "Drill into insight" | "Drill into dashboard" | "Drill into URL";
@@ -304,5 +316,16 @@ export class DrillConfigItemDrillToUrlDropdown {
 
     hasDrillToCustomUrlOption(url: string) {
         this.getElement().find(".s-drill-to-custom-url-option").contains(url.slice(0, 50)).should("exist");
+    }
+}
+
+export class CustomURLDialog {
+    getElement() {
+        return cy.get(".s-gd-drill-custom-url-editor");
+    }
+
+    hasItem(title: string) {
+        this.getElement().find(".gd-list-item").contains(`${title}`);
+        return this;
     }
 }

@@ -2,6 +2,8 @@
 
 import { Button } from "./Button";
 
+const ATTR_DISPLAY_FORM_BUTTON = ".s-attribute-display-form-button";
+
 export class AttributeFilterConfiguration {
     constructor(private parentSelector: string) {}
 
@@ -52,6 +54,11 @@ export class AttributeFilterConfiguration {
         return this;
     }
 
+    toggleDisplayFormButton() {
+        cy.get(ATTR_DISPLAY_FORM_BUTTON).click();
+        return this;
+    }
+
     selectDisplayForm(displayFormSelector: string): this {
         cy.get(".s-attribute-display-form-dropdown-body").find(displayFormSelector).click();
         return this;
@@ -72,5 +79,17 @@ export class AttributeFilterConfiguration {
 
     getSaveButton() {
         return new Button(".gd-attribute-filter-apply-button__next.s-save");
+    }
+
+    cancel() {
+        cy.get(".dropdown-body .cancel-button").click();
+        cy.wait(200);
+        return this;
+    }
+
+    save() {
+        cy.get(".s-attribute-filter-dropdown-configuration-save-button").click();
+        cy.wait(200);
+        return this;
     }
 }
