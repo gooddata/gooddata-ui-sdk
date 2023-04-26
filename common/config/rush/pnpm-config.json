@@ -106,7 +106,11 @@
      * https://pnpm.io/package_json#pnpmpeerdependencyrules
      */
     "globalPeerDependencyRules": {
-      // "ignoreMissing": ["@eslint/*"],
+      "ignoreMissing": [
+        "redux", // in sdk-ui-dashboard redux-batched-actions has peer dependency to redux@>=1.0.0 but is installed as transitive dependency  
+        "webpack", // in sdk-ui-tests need peer dependency but its installed by storybook
+        "@ag-grid-community/core" //in sdk-ui-pivot need peer dependency but it is installed by @ag-grid-community/react 
+      ]
       // "allowedVersions": { "react": "17" },
       // "allowAny": ["@babel/*"]
     },

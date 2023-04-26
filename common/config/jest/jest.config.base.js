@@ -8,7 +8,13 @@ module.exports = {
     moduleNameMapper: {
         "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/__mocks__/jestSvgStub.js",
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
+        "uuid": require.resolve('uuid'),
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     testTimeout: 20000, // This timeout was added because we have flaky tests that ended up with timeouts. more info: https://github.com/facebook/jest/issues/11607
+
+    snapshotFormat: {
+        escapeString: true,
+        printBasicPrototype: true
+    }
 };
