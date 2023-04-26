@@ -236,7 +236,7 @@
                 "permissions": [
                     {
                         "assignee": {
-                            "id": "petr.benes",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
@@ -985,7 +985,7 @@
                 "permissions": [
                     {
                         "assignee": {
-                            "id": "petr.benes",
+                            "id": "admin",
                             "type": "user"
                         },
                         "name": "EDIT"
