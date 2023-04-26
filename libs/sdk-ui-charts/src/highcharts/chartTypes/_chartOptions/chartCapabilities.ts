@@ -40,11 +40,11 @@ export const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PYRAMID,
     VisualizationTypes.TREEMAP,
 ];
-// charts sorted by default by measure value
-export const sortedByMeasureTypes = [
+export const showingNameInLegendWhenViewByPresent = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
+    VisualizationTypes.PYRAMID,
 ];
 export const unsupportedStackingTypes = [
     VisualizationTypes.LINE,
