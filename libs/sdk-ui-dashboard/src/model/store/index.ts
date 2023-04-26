@@ -49,7 +49,6 @@ export {
     selectShouldHidePixelPerfectExperience,
     selectDisableKpiDashboardHeadlineUnderline,
     selectIsWhiteLabeled,
-    selectEnableAnalyticalDashboardPermissions,
     selectIsSaveAsNewButtonHidden,
     selectAllowUnfinishedFeatures,
     selectAllowCreateInsightRequest,

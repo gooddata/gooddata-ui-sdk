@@ -48,11 +48,6 @@ export interface ISettings {
     enableBulletChart?: boolean;
 
     /**
-     * Indicates whether the GeoPushpin Chart is available in AD.
-     */
-    enablePushpinGeoChart?: boolean;
-
-    /**
      * Indicates whether week filtering is available in AD.
      */
     enableWeekFilters?: boolean;
@@ -193,11 +188,6 @@ export interface ISettings {
      * Enable drill from attributes
      */
     enableKPIDashboardDrillFromAttribute?: boolean;
-
-    /**
-     * Enable usage of Dashboard permissions
-     */
-    enableAnalyticalDashboardPermissions?: boolean;
 
     /**
      * Enable renaming measure to metric

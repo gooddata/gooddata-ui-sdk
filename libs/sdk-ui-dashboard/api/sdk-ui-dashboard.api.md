@@ -6001,9 +6001,6 @@ export const selectEffectiveDateFilterOptions: DashboardSelector<IDateFilterOpti
 // @alpha
 export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefined>;
 
-// @internal
-export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
-
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 

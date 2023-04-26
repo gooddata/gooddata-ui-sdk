@@ -31,7 +31,6 @@ import {
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
 import { layoutActions } from "../../store/layout";
 import { savingActions } from "../../store/saving";
-import { selectSettings } from "../../store/config/configSelectors";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors";
@@ -85,22 +84,20 @@ function updateDashboard(ctx: DashboardContext, saveCtx: DashboardSaveContext): 
 
 export function getDashboardWithSharing(
     dashboard: IDashboardDefinition,
-    sharingEnabled: boolean = false,
     sharingSupported: boolean = true,
     isNewDashboard: boolean,
 ): IDashboardDefinition {
     let shareProp: Partial<IAccessControlAware> = {};
     if (isNewDashboard) {
         const { isUnderStrictControl: _unusedIsUnderStrictControl, ...dashboardRest } = dashboard;
-        shareProp =
-            sharingEnabled && sharingSupported
-                ? {
-                      shareStatus: "private",
-                      isUnderStrictControl: true,
-                  }
-                : {
-                      shareStatus: "public",
-                  };
+        shareProp = sharingSupported
+            ? {
+                  shareStatus: "private",
+                  isUnderStrictControl: true,
+              }
+            : {
+                  shareStatus: "public",
+              };
         return {
             ...dashboardRest,
             ...shareProp,
@@ -135,7 +132,6 @@ function* createDashboardSaveContext(
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
         selectDateFilterConfigOverrides,
     );
-    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
         selectBackendCapabilities,
     );
@@ -179,7 +175,6 @@ function* createDashboardSaveContext(
         dashboardFromState,
         dashboardToSave: getDashboardWithSharing(
             dashboardToSave,
-            settings.enableAnalyticalDashboardPermissions,
             capabilities.supportsAccessControl,
             isNewDashboard,
         ),

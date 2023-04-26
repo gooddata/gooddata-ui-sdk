@@ -116,16 +116,13 @@ describe("getDashboardWithSharing", () => {
         },
     };
     it.each([
-        [true, true, { shareStatus: "private", isLocked: false, isUnderStrictControl: true }],
-        [false, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [false, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [true, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [true, { shareStatus: "private", isLocked: false, isUnderStrictControl: true }],
+        [false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
     ])(
-        "should set proper sharing on dashboard for new dashboard when enableAnalyticalDashboardPermissions %s, supportsAccessControl %s",
-        (sharingEnabled, sharingSupported, expectedResult) => {
+        "should set proper sharing on dashboard for new dashboard when supportsAccessControl %s",
+        (sharingSupported, expectedResult) => {
             const { shareStatus, isLocked, isUnderStrictControl } = getDashboardWithSharing(
                 dashboard,
-                sharingEnabled,
                 sharingSupported,
                 true,
             );
@@ -136,13 +133,11 @@ describe("getDashboardWithSharing", () => {
     );
 
     it.each([
-        [true, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [false, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [false, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [true, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
     ])(
-        "should set proper sharing on dashboard for existing public dashboard when enableAnalyticalDashboardPermissions %s, supportsAccessControl %s",
-        (sharingEnabled, sharingSupported, expectedResult) => {
+        "should set proper sharing on dashboard for existing public dashboard when supportsAccessControl %s",
+        (sharingSupported, expectedResult) => {
             const publicDashboard: IDashboardDefinition = {
                 ...SimpleDashboardWithReferences.dashboard,
                 type: "IDashboard",
@@ -153,7 +148,6 @@ describe("getDashboardWithSharing", () => {
             };
             const { shareStatus, isLocked, isUnderStrictControl } = getDashboardWithSharing(
                 publicDashboard,
-                sharingEnabled,
                 sharingSupported,
                 false,
             );

@@ -390,18 +390,6 @@ export const selectDashboardEditModeDevRollout: DashboardSelector<boolean> = cre
 );
 
 /**
- * Returns whether analytical dashboard permissions are enabled
- *
- * @internal
- */
-export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAnalyticalDashboardPermissions ?? true;
-    },
-);
-
-/**
  * Returns whether custom widget heights are enabled
  *
  * @internal

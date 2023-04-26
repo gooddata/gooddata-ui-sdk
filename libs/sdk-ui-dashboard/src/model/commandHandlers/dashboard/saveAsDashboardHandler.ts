@@ -26,7 +26,6 @@ import { PromiseFnReturnType } from "../../types/sagas";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
 import { alertsActions } from "../../store/alerts";
 import { savingActions } from "../../store/saving";
-import { selectSettings } from "../../store/config/configSelectors";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
 import { listedDashboardsActions } from "../../store/listedDashboards";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils";
@@ -97,7 +96,6 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         selectDateFilterConfigOverrides,
     );
 
-    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
         selectBackendCapabilities,
     );
@@ -116,17 +114,16 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
 
-    const shareProp: Partial<IAccessControlAware> =
-        settings.enableAnalyticalDashboardPermissions && capabilities.supportsAccessControl
-            ? {
-                  isLocked: false,
-                  shareStatus: "private",
-                  isUnderStrictControl: true,
-              }
-            : {
-                  isLocked: false,
-                  shareStatus: "public",
-              };
+    const shareProp: Partial<IAccessControlAware> = capabilities.supportsAccessControl
+        ? {
+              isLocked: false,
+              shareStatus: "private",
+              isUnderStrictControl: true,
+          }
+        : {
+              isLocked: false,
+              shareStatus: "public",
+          };
 
     // remove widget identity from all widgets; according to the SPI contract, this will result in
     // creation of new widgets

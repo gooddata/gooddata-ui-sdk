@@ -8,7 +8,6 @@ import noop from "lodash/noop";
 import {
     dispatchAndWaitFor,
     saveDashboard,
-    selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardDirty,
     selectIsDashboardSaving,
     selectIsInEditMode,
@@ -55,7 +54,6 @@ export function useSaveButtonProps(): ISaveButtonProps {
 
     const isEditing = useDashboardSelector(selectIsInEditMode);
     const isSavingDashboard = useDashboardSelector(selectIsDashboardSaving);
-    const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
     const isEmptyDashboard = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const canSaveDashboard = useDashboardSelector(selectCanSaveDashboard);
@@ -65,9 +63,7 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isVisible = isEditing;
     const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard;
 
-    const buttonValue = arePermissionsEnabled
-        ? messages.controlButtonsSaveValue
-        : messages.controlButtonsSaveAndPublishValue;
+    const buttonValue = messages.controlButtonsSaveValue;
 
     let buttonTitle = messages.controlButtonsSaveAndPublishTitle;
     if (isPrivateDashboard) {

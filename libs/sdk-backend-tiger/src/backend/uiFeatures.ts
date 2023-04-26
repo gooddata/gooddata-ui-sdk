@@ -23,10 +23,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableDescriptions = "enableDescriptions",
     //boolean + possible values: enabled, disabled
-    EnableAnalyticalDashboardPermissions = "enableAnalyticalDashboardPermissions",
-    //boolean + possible values: enabled, disabled
-    EnablePushpinGeoChart = "enablePushpinGeoChart",
-    //boolean + possible values: enabled, disabled
     EnableKPIAttributeFilterRenaming = "enableKPIAttributeFilterRenaming",
     //boolean + possible values: enabled, disabled
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
@@ -57,8 +53,6 @@ export type ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
-    enableAnalyticalDashboardPermissions: typeof FeatureFlagsValues["enableAnalyticalDashboardPermissions"][number];
-    enablePushpinGeoChart: typeof FeatureFlagsValues["enablePushpinGeoChart"][number];
     enableKPIAttributeFilterRenaming: typeof FeatureFlagsValues["enableKPIAttributeFilterRenaming"][number];
     enableKPIDashboardExportPDF: typeof FeatureFlagsValues["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: typeof FeatureFlagsValues["enableSqlDatasets"][number];
@@ -80,8 +74,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: true,
     enableDescriptions: true,
-    enableAnalyticalDashboardPermissions: true,
-    enablePushpinGeoChart: true,
     enableKPIAttributeFilterRenaming: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
@@ -107,8 +99,6 @@ export const FeatureFlagsValues = {
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableLongitudeAndLatitudeLabels: [true, false] as const,
     enableDescriptions: [true, false] as const,
-    enableAnalyticalDashboardPermissions: [true, false] as const,
-    enablePushpinGeoChart: [true, false] as const,
     enableKPIAttributeFilterRenaming: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,

@@ -2211,7 +2211,6 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
-    enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
@@ -2243,7 +2242,6 @@ export interface ISettings {
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleDates?: boolean;
-    enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
     enableSeparateTotalLabels?: boolean;

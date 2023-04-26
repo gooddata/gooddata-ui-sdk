@@ -13,16 +13,4 @@ describe("mergeWorkspaceAndUserSettings", () => {
         };
         expect(mergeWorkspaceAndUserSettings(workspaceSettings, userSettings)).toMatchSnapshot();
     });
-
-    it("should omit ignored user setting and keep project one", () => {
-        const workspaceSettings = {
-            workspaceSetting: "projectValue",
-            enableAnalyticalDashboardPermissions: "projectValue",
-        };
-        const userSettings = {
-            userSetting: "userValue",
-            enableAnalyticalDashboardPermissions: "userValue",
-        };
-        expect(mergeWorkspaceAndUserSettings(workspaceSettings, userSettings)).toMatchSnapshot();
-    });
 });

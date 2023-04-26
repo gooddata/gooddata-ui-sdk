@@ -2,7 +2,6 @@
 
 import * as Navigation from "../../tools/navigation";
 import { TopBar, Dashboard } from "../../tools/dashboards";
-import { Api } from "../../tools/api";
 import { ShareDialog } from "../../tools/shareDialog";
 import { getProjectId } from "../../support/constants";
 import { Users } from "../../tools/users";
@@ -11,11 +10,9 @@ import { Dashboards } from "../../../reference_workspace/workspace_objects/goods
 import { generateUUID } from "../../tools/utils";
 
 describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
-    const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
     describe("Basic case", () => {
         beforeEach(() => {
             Users.switchToDefaultUser();
-            Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
             Navigation.visit("dashboard/dashboard-tiger-permissions");
         });
@@ -37,7 +34,6 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
 
         beforeEach(() => {
             Users.switchToDefaultUser();
-            Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
             deleteUserAndGroup(username, groupname);
             Users.createGroup(groupname);
@@ -161,7 +157,6 @@ describe("Dashboard", { tags: ["post-merge_integrated_tiger"] }, () => {
 
         beforeEach(() => {
             Users.switchToDefaultUser();
-            Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
             Users.deleteUser(firstUser);
             Users.deleteUser(secondUser);

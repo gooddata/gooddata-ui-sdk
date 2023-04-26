@@ -6,7 +6,6 @@ import {
     selectDashboardEditModeDevRollout,
     selectDashboardLockStatus,
     selectDashboardRef,
-    selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardDirty,
     selectIsDashboardLoading,
     selectIsDashboardPrivate,
@@ -20,9 +19,6 @@ import {
     selectCanEditLockedDashboardPermission,
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
-    selectCanManageWorkspace,
-    selectCanManageAnalyticalDashboard,
-    selectSupportsHierarchicalWorkspacesCapability,
     DashboardSelector,
 } from "../../../../model";
 
@@ -32,50 +28,15 @@ import {
  *
  * @internal
  */
-export const hasEditDashboardPermission: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
-    selectCanEditDashboardPermission,
-    selectCanManageAnalyticalDashboard,
-    (dashboardPermissionsEnabled, canEditDashboardPermission, canManageAnalyticalDashboard) => {
-        if (dashboardPermissionsEnabled) {
-            return canEditDashboardPermission;
-        }
-        return canManageAnalyticalDashboard;
-    },
-);
-
-/**
- * Decide whether the user has the right to edit locked dashboard.
- * If dashboard permissions are enabled then use them, otherwise fallback to workspace permissions
- *
- * @internal
- */
-export const hasEditLockedDashboardPermission: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
-    selectCanEditLockedDashboardPermission,
-    selectCanManageWorkspace,
-    selectSupportsHierarchicalWorkspacesCapability,
-    (
-        dashboardPermissionsEnabled,
-        canEditLockedDashboardPermission,
-        canManageWorkspace,
-        hierarchicalWorkspacesSupported,
-    ) => {
-        if (dashboardPermissionsEnabled) {
-            return canEditLockedDashboardPermission;
-        }
-        // editing locked dashboard is always disabled when hierarchical workspaces are supported (Tiger)
-        return canManageWorkspace && !hierarchicalWorkspacesSupported;
-    },
-);
+export const hasEditDashboardPermission: DashboardSelector<boolean> = selectCanEditDashboardPermission;
 
 /**
  * @internal
  */
 export const selectCanEnterEditMode: DashboardSelector<boolean> = createSelector(
     selectDashboardEditModeDevRollout,
-    hasEditDashboardPermission,
-    hasEditLockedDashboardPermission,
+    selectCanEditDashboardPermission,
+    selectCanEditLockedDashboardPermission,
     selectDashboardLockStatus,
     selectIsReadOnly,
     (isEditModeEnabled, hasEditDashboardPermission, hasEditLockedDashboardPermission, isLocked, isReadOnly) =>
@@ -98,11 +59,9 @@ export const selectCanEnterEditModeAndIsLoaded: DashboardSelector<boolean> = cre
  * @internal
  */
 export const selectIsPrivateDashboard: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardPrivate,
     selectIsNewDashboard,
-    (arePermissionsEnabled, isPrivate, isCreatingNewDashboard) =>
-        arePermissionsEnabled && (isCreatingNewDashboard || isPrivate),
+    (isPrivate, isCreatingNewDashboard) => isCreatingNewDashboard || isPrivate,
 );
 
 /**
@@ -126,7 +85,6 @@ export const selectIsCurrentDashboardVisibleInList: DashboardSelector<boolean> =
  * @internal
  */
 export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
     selectDashboardLockStatus,
@@ -135,7 +93,6 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
     selectIsInEditMode,
     selectIsShareButtonHidden,
     (
-        dashboardPermissionsEnabled,
         canShareDashboardPermission,
         canShareLockedDashboardPermission,
         isLocked,
@@ -144,7 +101,6 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
         isInEditMode,
         isShareButtonHidden,
     ) =>
-        dashboardPermissionsEnabled &&
         canShareDashboardPermission &&
         (!isLocked || canShareLockedDashboardPermission) &&
         isCurrentDashboardVisibleInList &&

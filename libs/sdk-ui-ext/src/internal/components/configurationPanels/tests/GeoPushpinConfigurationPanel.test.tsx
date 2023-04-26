@@ -62,9 +62,6 @@ describe("GeoPushpinConfigurationPanel", () => {
     }
 
     const defaultProps: IConfigurationPanelContentProps = {
-        featureFlags: {
-            enablePushpinGeoChart: true,
-        },
         insight: DefaultInsight,
         isError: false,
         isLoading: false,

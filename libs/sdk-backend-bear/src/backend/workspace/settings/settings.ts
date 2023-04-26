@@ -13,10 +13,7 @@ import { ANONYMOUS_USER_SETTINGS } from "../../constants";
 
 // settings which are ignored from user level as they can be set up only for project and above levels
 // no explicit type as every string is valid key from IUserWorkspaceSettings
-const IGNORED_USER_SETTINGS = [
-    "enableAnalyticalDashboardPermissions",
-    "enableNewAnalyticalDashboardsNavigation",
-];
+const IGNORED_USER_SETTINGS = ["enableNewAnalyticalDashboardsNavigation"];
 
 const filterIgnoredUserSettings = (userFeatureFlags: IFeatureFlags) => {
     const keptUserSettings = { ...userFeatureFlags };
