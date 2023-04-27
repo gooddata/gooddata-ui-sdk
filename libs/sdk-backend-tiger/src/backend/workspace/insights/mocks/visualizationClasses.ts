@@ -199,6 +199,30 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
         {
             visualizationClass: {
                 checksum: "local",
+                icon: "local:dependencywheel",
+                orderIndex: 19.2,
+                iconSelected: "local:dependencywheel.selected",
+                url: "local:dependencywheel",
+                title: "Dependency wheel chart",
+                identifier: "gdc.visualization.dependencywheel",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glrn/obj/1219",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:sankey",
+                orderIndex: 19.3,
+                iconSelected: "local:sankey.selected",
+                url: "local:sankey",
+                title: "Sankey chart",
+                identifier: "gdc.visualization.sankey",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu5gpyn/obj/1319",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
                 icon: "local:pushpin",
                 orderIndex: 20,
                 iconSelected: "local:pushpin.selected",
