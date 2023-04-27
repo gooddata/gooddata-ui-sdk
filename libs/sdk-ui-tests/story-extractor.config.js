@@ -1,6 +1,4 @@
 // (C) 2019 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-var-requires */
-const base = require("../../common/config/jest/jest.config.base.js");
 module.exports = {
     preset: "ts-jest/presets/js-with-babel",
     testRegex: "/backstop/story-extractor.js$",
@@ -8,6 +6,7 @@ module.exports = {
     moduleNameMapper: {
         "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/__mocks__/jestSvgStub.js",
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
+        "uuid": require.resolve('uuid'),
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     testEnvironment: "jsdom",
