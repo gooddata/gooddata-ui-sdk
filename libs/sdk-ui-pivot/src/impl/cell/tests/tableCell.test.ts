@@ -1,6 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
-import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils";
+// (C) 2007-2023 GoodData Corporation
+import { render } from "@testing-library/react";
 import { identity } from "lodash";
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils";
 import { createCellRenderer } from "../cellRenderer";
 
 describe("cellRenderer", () => {
@@ -13,9 +14,9 @@ describe("cellRenderer", () => {
             },
         };
 
-        const value = createCellRenderer()(fakeParams);
+        const { container } = render(createCellRenderer()(fakeParams));
 
-        expect(value).toEqual('<span class="s-value">&lt;button&gt;xss&lt;/button&gt;</span>');
+        expect(container).toMatchSnapshot();
     });
 });
 

@@ -115,7 +115,14 @@ storiesOf(`${CustomStories}/Pivot Table`)
             screenshots: {
                 "initial viewport": {},
                 "scrolled right": {
-                    scrollToSelector: ".s-table-measure-column-header-index-9",
+                    /* 
+                        this scroll is done to check if virtualized hidden cells 
+                        are correctly resized after scroll
+
+                        ag-grid has a problem with programatically scrolled header 
+                        so we used a cell in the body to scroll instead
+                    */
+                    scrollToSelector: ".ag-center-cols-clipper .s-cell-0-9",
                     postInteractionWait: 1000,
                 },
             },
@@ -139,7 +146,14 @@ storiesOf(`${CustomStories}/Pivot Table`)
             screenshots: {
                 "initial viewport": {},
                 "scrolled right": {
-                    scrollToSelector: ".s-table-measure-column-header-index-9",
+                    /* 
+                        this scroll is done to check if virtualized hidden cells 
+                        are correctly resized after scroll
+
+                        ag-grid has a problem with programatically scrolled header 
+                        so we used a cell in the body to scroll instead
+                    */
+                    scrollToSelector: ".ag-center-cols-clipper .s-cell-0-9",
                     postInteractionWait: 1000,
                 },
             },

@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import { AgGridReact } from "@ag-grid-community/react";
 
 import ApiWrapper from "../agApiWrapper";
@@ -47,7 +47,9 @@ describe("agGridApiWrapper", () => {
                                  * approach to obtain the stickied row.. perhaps instrument our renderers to help with
                                  * it.. same as this test cell renderer does :/
                                  */
-                                resolve(params.api);
+                                setTimeout(() => {
+                                    resolve(params.api);
+                                });
                                 return params.value;
                             },
                         },
@@ -66,7 +68,11 @@ describe("agGridApiWrapper", () => {
     async function renderGridReady() {
         return new Promise<GridApi>((resolve) => {
             const onGridReady = (params: GridReadyEvent) => {
-                params.api.setPinnedTopRowData([{ [firstAttributeColumnId]: firstAttributePinnedTopValue }]);
+                act(() => {
+                    params.api.setPinnedTopRowData([
+                        { [firstAttributeColumnId]: firstAttributePinnedTopValue },
+                    ]);
+                });
             };
 
             renderComponent(resolve, { onGridReady });

@@ -1,4 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
+import React from "react";
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { isSomeTotal } from "../data/dataSourceUtils";
 import escape from "lodash/escape";
@@ -23,8 +24,9 @@ function hasTotalForCurrentColumn(params: ICellRendererParams): boolean {
  *
  * TODO: Consider to use custom pinnerRowCellRenderer in order to reduce number of conditionals
  */
-export function createCellRenderer(): (params: ICellRendererParams) => string {
-    return (params: ICellRendererParams): string => {
+export function createCellRenderer(): (params: ICellRendererParams) => JSX.Element {
+    // eslint-disable-next-line react/display-name
+    return (params: ICellRendererParams): JSX.Element => {
         const isRowTotalOrSubtotal = isSomeTotal(params.data?.type);
         const isActiveRowTotal = isRowTotalOrSubtotal && hasTotalForCurrentColumn(params);
         const formattedValue =
@@ -33,6 +35,6 @@ export function createCellRenderer(): (params: ICellRendererParams) => string {
                 : escape(params.formatValue!(params.value));
         const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : VALUE_CLASS;
 
-        return `<span class="${className}">${formattedValue || ""}</span>`;
+        return <span className={className}>{formattedValue || ""}</span>;
     };
 }

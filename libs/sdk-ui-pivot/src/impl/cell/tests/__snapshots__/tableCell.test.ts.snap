@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cellRenderer should escape value 1`] = `
+<div>
+  <span
+    class="s-value"
+  >
+    &lt;button&gt;xss&lt;/button&gt;
+  </span>
+</div>
+`;

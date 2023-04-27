@@ -2,14 +2,17 @@
 import { GridApi } from "@ag-grid-community/all-modules";
 
 function getHeaderHeight(gridApi: GridApi): number {
-    return (gridApi as any)?.headerRootComp?.eHeaderContainer?.clientHeight ?? 0;
+    return (gridApi as any)?.ctrlsService?.gridHeaderCtrl?.eGui?.clientHeight ?? 0;
 }
 
 function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number): HTMLElement | null {
     const rowRenderer = (gridApi as any).rowRenderer;
-    const rowCon = rowRenderer.rowConsByRowIndex[rowIndex];
+    const rowCon = rowRenderer.rowCtrlsByRowIndex[rowIndex];
+    const cell = rowCon?.centerCellCtrls?.list?.find((col: any) => {
+        return col.column.colId === attributeId;
+    });
 
-    return rowCon?.centerRowComp?.cellComps?.[attributeId]?.eGui ?? null;
+    return cell?.eGui ?? null;
 }
 
 function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string): void {
@@ -41,7 +44,7 @@ function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
         return null;
     }
 
-    const rootElement: HTMLElement | undefined = (gridApi as any).gridBodyComp?.eGui;
+    const rootElement: HTMLElement | undefined = (gridApi as any).gridBodyCtrl?.eGridBody;
     const rowElement = rootElement?.querySelector(`[row-id=${pinnedTopRow.id}]`);
 
     return rowElement?.parentElement?.parentElement ?? null;

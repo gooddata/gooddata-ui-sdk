@@ -666,8 +666,8 @@ export class TableFacade {
             }
         }
         // DANGER: using ag-grid internals
-        (this.columnApi as any).columnController.setLeftValues(source);
-        (this.columnApi as any).columnController.updateBodyWidths();
+        (this.columnApi as any).columnModel.setLeftValues(source);
+        (this.columnApi as any).columnModel.updateBodyWidths();
     }
 
     private getWidthOfColsInList(columnList: Column[]) {

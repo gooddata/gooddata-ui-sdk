@@ -62,8 +62,9 @@
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
-        "@ag-grid-community/all-modules": "25.3.0",
-        "@ag-grid-community/react": "25.3.0",
+        "@ag-grid-community/all-modules": "27.3.0",
+        "@ag-grid-community/core": "27.3.0",
+        "@ag-grid-community/react": "27.3.0",
         "@gooddata/numberjs": "^4.0.3",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",

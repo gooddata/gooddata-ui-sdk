@@ -860,7 +860,7 @@ function getDisplayedTotalData(gridApi: GridApi): IGridRow[] {
     const totalCount = gridApi.getPinnedBottomRowCount();
     const totalData: IGridRow[] = [];
     for (let index = 0; index < totalCount; index++) {
-        const item: IGridRow = gridApi.getPinnedBottomRow(index).data;
+        const item: IGridRow = gridApi?.getPinnedBottomRow(index)?.data;
         if (item) {
             totalData.push(item);
         }
