@@ -78,7 +78,8 @@ mkdir -p ./recordings/mappings/$SDK_BACKEND
 docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 echo "⭐️ 6/8 Run isolated recording against TEST_BACKEND=$TEST_BACKEND."
-MODE=record NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml up \
+PROJECT_NAME=${sdk_backend}-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
+MODE=record NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
     --abort-on-container-exit --exit-code-from isolated-tests \
     --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 
