@@ -50,6 +50,8 @@ const autohideLabels = (Highcharts: any): void => {
                         return;
                     case VisualizationTypes.PIE:
                     case VisualizationTypes.DONUT:
+                    case VisualizationTypes.PYRAMID:
+                    case VisualizationTypes.FUNNEL:
                         autohidePieLabels(chart);
                         return;
                     case VisualizationTypes.TREEMAP:
