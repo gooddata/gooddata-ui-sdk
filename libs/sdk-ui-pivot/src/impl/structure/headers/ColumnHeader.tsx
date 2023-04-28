@@ -44,6 +44,13 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
 
     public onSortRequested = (sortDir: SortDirection): void => {
         const multiSort = false; // Enable support for multisort with CMD key with 'event.shiftKey';
+        /**
+         * Header needs to be refreshed otherwise the grid will throw error.
+         *
+         * The whole grid is reinitialized during sorting and ag-grid expects
+         * that the grid dom is there.
+         */
+        this.props.api.refreshHeader();
         this.props.setSort(sortDir, multiSort);
     };
 
