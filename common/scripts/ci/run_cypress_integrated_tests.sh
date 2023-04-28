@@ -54,7 +54,8 @@ trap "$_RUSHX libs/sdk-ui-tests-e2e delete-ref-workspace; rm -f $E2E_TEST_DIR/.e
 # Use Dockerfile_local as scenarios have been build in previous steps
 docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
-NO_COLOR=1 docker-compose -f docker-compose-integrated.yaml up \
+PROJECT_NAME=${sdk_backend}-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
+NO_COLOR=1 docker-compose -f docker-compose-integrated.yaml -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from integrated-tests \
   --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 
