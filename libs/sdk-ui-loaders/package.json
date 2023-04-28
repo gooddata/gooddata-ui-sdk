@@ -60,7 +60,7 @@
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
-        "react-intl": "^5.23.0",
+        "react-intl": "^6.4.1",
         "semver": "^7.3.5",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.5.0"
