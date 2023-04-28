@@ -8,6 +8,7 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { disabledOpenAsReportConfig, UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
+import { configurePercent } from "../bucketConfig";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -25,6 +26,7 @@ export function setFunnelChartUiConfig(referencePoint: IExtendedReferencePoint):
 
     // always disabled for funnel
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "isShowInPercentVisible"], false);
+    configurePercent(referencePointConfigured, true);
 
     return referencePointConfigured;
 }
