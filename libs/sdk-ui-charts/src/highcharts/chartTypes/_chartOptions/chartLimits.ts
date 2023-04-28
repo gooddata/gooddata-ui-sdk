@@ -33,6 +33,7 @@ function getChartLimits(type: string): IChartLimits {
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.PYRAMID:
             return {
                 series: 1,
                 categories: PIE_CHART_LIMIT,
