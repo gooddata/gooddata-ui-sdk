@@ -8,7 +8,6 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { disabledOpenAsReportConfig, UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
-import { getAttributeItems } from "../../utils/bucketHelper";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -23,16 +22,6 @@ export function setPyramidChartUiConfig(referencePoint: IExtendedReferencePoint)
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], pyramidMeasuresIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], pyramidViewIcon);
-
-    const buckets = referencePointConfigured?.buckets ?? [];
-    const attributes = getAttributeItems(buckets);
-    if (attributes.length > 0) {
-        set(
-            referencePointConfigured,
-            [UICONFIG, BUCKETS, BucketNames.MEASURES, "isShowInPercentEnabled"],
-            true,
-        );
-    }
 
     return referencePointConfigured;
 }
