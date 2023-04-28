@@ -67,7 +67,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "lodash": "^4.17.19",
-        "react-intl": "^5.23.0",
+        "react-intl": "^6.4.1",
         "tslib": "^2.5.0",
         "ts-invariant": "^0.7.3",
         "mini-css-extract-plugin": "~2.6.1"

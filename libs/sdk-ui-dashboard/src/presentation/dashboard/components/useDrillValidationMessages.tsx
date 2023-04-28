@@ -15,8 +15,8 @@ import {
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";
 
 const commonReplacements = {
-    b: (chunks: string) => <b>{chunks}</b>,
-    i: (chunks: string) => <i>{chunks}</i>,
+    b: (chunks: React.ReactNode) => <b>{chunks}</b>,
+    i: (chunks: React.ReactNode) => <i>{chunks}</i>,
 };
 
 const localizationMessages = defineMessages({

@@ -167,7 +167,7 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         public render() {
             return (
                 <IntlWrapper locale={this.props.locale}>
-                    <IntlValidatorHOC {...this.props} />
+                    <IntlValidatorHOC {...(this.props as any)} />
                 </IntlWrapper>
             );
         }

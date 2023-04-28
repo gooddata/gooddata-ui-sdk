@@ -1145,7 +1145,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       stylelint: ^13.8.0
       stylelint-checkstyle-formatter: ^0.1.2
       stylelint-config-prettier: ^8.0.2
@@ -1165,7 +1165,7 @@ importers:
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
       memoize-one: 6.0.0
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       ts-invariant: 0.7.5
       tslib: 2.5.0
       uuid: 8.3.2
@@ -1343,7 +1343,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-measure: ^2.3.0
       sass: ^1.52.3
       stylelint: ^13.8.0
@@ -1369,7 +1369,7 @@ importers:
       hoist-non-react-statics: 3.3.2
       lodash: 4.17.21
       polished: 3.7.2
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-measure: 2.5.2_sfoxds7t5ydpegc3knd667wn6m
       ts-invariant: 0.7.5
       tslib: 2.5.0
@@ -1489,7 +1489,7 @@ importers:
       react-dnd-html5-backend: ^14.1.0
       react-dom: ^17.0.2
       react-grid-system: ^8.1.4
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-lines-ellipsis: ^0.15.0
       react-measure: ^2.3.0
       react-redux: ^7.2.4
@@ -1530,7 +1530,7 @@ importers:
       react-dnd: 14.0.5_d5jue5xkflzagzhxpoaee6u4fa
       react-dnd-html5-backend: 14.1.0
       react-grid-system: 8.1.9_react@17.0.2
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-lines-ellipsis: 0.15.3_sfoxds7t5ydpegc3knd667wn6m
       react-measure: 2.5.2_sfoxds7t5ydpegc3knd667wn6m
       react-redux: 7.2.9_sfoxds7t5ydpegc3knd667wn6m
@@ -1659,7 +1659,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-lines-ellipsis: ^0.15.0
       react-measure: ^2.3.0
       react-select: ^5.3.0
@@ -1694,7 +1694,7 @@ importers:
       fixed-data-table-2: 1.2.17_sfoxds7t5ydpegc3knd667wn6m
       lodash: 4.17.21
       lru-cache: 8.0.5
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-lines-ellipsis: 0.15.3_sfoxds7t5ydpegc3knd667wn6m
       react-measure: 2.5.2_sfoxds7t5ydpegc3knd667wn6m
       react-select: 5.7.2_wsldad6nghbaz27nd5ik6opowq
@@ -1814,7 +1814,7 @@ importers:
       react: ^17.0.2
       react-day-picker: 8.0.7
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-responsive: ^8.2.0
       react-window: ^1.8.7
       redux-saga: ^1.1.3
@@ -1843,7 +1843,7 @@ importers:
       lodash: 4.17.21
       moment: 2.29.4
       react-day-picker: 8.0.7_zzzju5hbmttc5bgszxvrhr3o2e
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-responsive: 8.2.0_react@17.0.2
       react-window: 1.8.9_sfoxds7t5ydpegc3knd667wn6m
       redux-saga: 1.2.3
@@ -1949,7 +1949,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-measure: ^2.3.0
       sass: ^1.52.3
       stylelint: ^13.8.0
@@ -1971,7 +1971,7 @@ importers:
       classnames: 2.3.2
       lodash: 4.17.21
       mapbox-gl: 2.14.1
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-measure: 2.5.2_sfoxds7t5ydpegc3knd667wn6m
       ts-invariant: 0.7.5
       tslib: 2.5.0
@@ -2094,7 +2094,7 @@ importers:
       react-dom: ^17.0.2
       react-fast-compare: ^3.2.0
       react-helmet: ^6.1.0
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-measure: ^2.3.0
       react-native-listener: ~1.1.0
       react-portal: ^4.1.5
@@ -2134,7 +2134,7 @@ importers:
       react-day-picker: 8.0.7_zzzju5hbmttc5bgszxvrhr3o2e
       react-fast-compare: 3.2.1
       react-helmet: 6.1.0_react@17.0.2
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-measure: 2.5.2_sfoxds7t5ydpegc3knd667wn6m
       react-native-listener: 1.1.0
       react-portal: 4.2.2_sfoxds7t5ydpegc3knd667wn6m
@@ -2245,7 +2245,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       semver: ^7.3.5
       ts-invariant: ^0.7.3
       ts-jest: ^29.1.0
@@ -2258,7 +2258,7 @@ importers:
       '@gooddata/sdk-ui-dashboard': link:../sdk-ui-dashboard
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       semver: 7.5.0
       ts-invariant: 0.7.5
       tslib: 2.5.0
@@ -2351,7 +2351,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       sass: ^1.52.3
       stylelint: ^13.8.0
       stylelint-checkstyle-formatter: ^0.1.2
@@ -2375,7 +2375,7 @@ importers:
       classnames: 2.3.2
       fixed-data-table-2: 1.2.17_sfoxds7t5ydpegc3knd667wn6m
       lodash: 4.17.21
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       ts-invariant: 0.7.5
       tslib: 2.5.0
       uuid: 8.3.2
@@ -2502,7 +2502,7 @@ importers:
       prettier: ~2.5.0
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-responsive: ^8.2.0
       sass-loader: ^10.1.1
       spark-md5: ^3.0.0
@@ -2549,7 +2549,7 @@ importers:
       json-stable-stringify: 1.0.2
       lodash: 4.17.21
       moment: 2.29.4
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-responsive: 8.2.0_react@17.0.2
       spark-md5: 3.0.2
       ts-invariant: 0.7.5
@@ -2686,7 +2686,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-router-dom: ^5.2.0
       sass: ^1.52.3
       sass-loader: ^10.1.1
@@ -2724,7 +2724,7 @@ importers:
       pdf-parse: 1.1.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-router-dom: 5.3.4_react@17.0.2
       tslib: 2.5.0
       wait-on: 6.0.1
@@ -2930,7 +2930,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       react-measure: ^2.3.0
       sass: ^1.52.3
       stylelint: ^13.8.0
@@ -2948,7 +2948,7 @@ importers:
       '@gooddata/sdk-ui-theme-provider': link:../sdk-ui-theme-provider
       classnames: 2.3.2
       lodash: 4.17.21
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       react-measure: 2.5.2_sfoxds7t5ydpegc3knd667wn6m
       tslib: 2.5.0
     devDependencies:
@@ -3047,7 +3047,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       source-map-loader: ^4.0.0
       style-loader: ^3.3.1
       ts-invariant: ^0.7.3
@@ -3074,7 +3074,7 @@ importers:
       '@gooddata/sdk-ui-pivot': link:../sdk-ui-pivot
       lodash: 4.17.21
       mini-css-extract-plugin: 2.6.1_webpack@5.79.0
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       ts-invariant: 0.7.5
       tslib: 2.5.0
     devDependencies:
@@ -3269,13 +3269,13 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       ts-jest: ^29.1.0
       tslib: ^2.5.0
       typescript: 5.0.2
     dependencies:
       lodash: 4.17.21
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       tslib: 2.5.0
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
@@ -3630,7 +3630,7 @@ importers:
       raf: ^3.4.1
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-intl: ^5.23.0
+      react-intl: ^6.4.1
       source-map-loader: ^4.0.0
       style-loader: ^3.3.1
       ts-jest: ^29.1.0
@@ -3698,7 +3698,7 @@ importers:
       raf: 3.4.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-intl: 5.25.1_ghte4c7xq6n6coodbl2sbzyrgu
+      react-intl: 6.4.1_ghte4c7xq6n6coodbl2sbzyrgu
       source-map-loader: 4.0.1_webpack@5.79.0
       style-loader: 3.3.2_webpack@5.79.0
       ts-jest: 29.1.0_3nkkeoy3lyueufskz2q34rbm4a
@@ -6055,16 +6055,16 @@ packages:
     dependencies:
       '@formatjs/intl-localematcher': 0.2.25
       tslib: 2.5.0
+    dev: false
 
   /@formatjs/ecma402-abstract/1.14.3:
     resolution: {integrity: sha512-SlsbRC/RX+/zg4AApWIFNDdkLtFbkq3LNoZWXZCE/nHVKqoIJyaoQyge/I0Y38vLxowUn9KTtXgusLD91+orbg==}
     dependencies:
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.0
-    dev: false
 
-  /@formatjs/fast-memoize/1.2.1:
-    resolution: {integrity: sha512-Rg0e76nomkz3vF9IPlKeV+Qynok0r7YZjL6syLz4/urSg0IbjPZCB/iYUMNsYA643gh4mgrX3T7KEIFIxJBQeg==}
+  /@formatjs/fast-memoize/2.0.1:
+    resolution: {integrity: sha512-M2GgV+qJn5WJQAYewz7q2Cdl6fobQa69S1AzSM2y0P68ZDbK5cWrJIcPCO395Of1ksftGZoOt4LYCO/j9BKBSA==}
     dependencies:
       tslib: 2.5.0
 
@@ -6074,6 +6074,7 @@ packages:
       '@formatjs/ecma402-abstract': 1.11.4
       '@formatjs/icu-skeleton-parser': 1.3.6
       tslib: 2.5.0
+    dev: false
 
   /@formatjs/icu-messageformat-parser/2.3.1:
     resolution: {integrity: sha512-knF2AkAKN4Upv4oIiKY4Wd/dLH68TNMPgV/tJMu/T6FP9aQwbv8fpj7U3lkyniPaNVxvia56Gxax8MKOjtxLSQ==}
@@ -6081,60 +6082,59 @@ packages:
       '@formatjs/ecma402-abstract': 1.14.3
       '@formatjs/icu-skeleton-parser': 1.3.18
       tslib: 2.5.0
-    dev: false
 
   /@formatjs/icu-skeleton-parser/1.3.18:
     resolution: {integrity: sha512-ND1ZkZfmLPcHjAH1sVpkpQxA+QYfOX3py3SjKWMUVGDow18gZ0WPqz3F+pJLYQMpS2LnnQ5zYR2jPVYTbRwMpg==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.14.3
       tslib: 2.5.0
-    dev: false
 
   /@formatjs/icu-skeleton-parser/1.3.6:
     resolution: {integrity: sha512-I96mOxvml/YLrwU2Txnd4klA7V8fRhb6JG/4hm3VMNmeJo1F03IpV2L3wWt7EweqNLES59SZ4d6hVOPCSf80Bg==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.11.4
       tslib: 2.5.0
+    dev: false
 
-  /@formatjs/intl-displaynames/5.4.3:
-    resolution: {integrity: sha512-4r12A3mS5dp5hnSaQCWBuBNfi9Amgx2dzhU4lTFfhSxgb5DOAiAbMpg6+7gpWZgl4ahsj3l2r/iHIjdmdXOE2Q==}
+  /@formatjs/intl-displaynames/6.3.1:
+    resolution: {integrity: sha512-TlxguMDUbnFrJ4NA8fSyqXC62M7czvlRJ5mrJgtB91JVA+QPjjNdcRm1qPIC/DcU/pGUDcEzThn/x5A+jp15gg==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.11.4
-      '@formatjs/intl-localematcher': 0.2.25
+      '@formatjs/ecma402-abstract': 1.14.3
+      '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.0
 
-  /@formatjs/intl-listformat/6.5.3:
-    resolution: {integrity: sha512-ozpz515F/+3CU+HnLi5DYPsLa6JoCfBggBSSg/8nOB5LYSFW9+ZgNQJxJ8tdhKYeODT+4qVHX27EeJLoxLGLNg==}
+  /@formatjs/intl-listformat/7.2.1:
+    resolution: {integrity: sha512-fRJFWLrGa7d25I4JSxNjKX29oXGcIXx8fJjgURnvs2C3ijS4gurUgFrUwLbv/2KfPfyJ5g567pz2INelNJZBdw==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.11.4
-      '@formatjs/intl-localematcher': 0.2.25
+      '@formatjs/ecma402-abstract': 1.14.3
+      '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.0
 
   /@formatjs/intl-localematcher/0.2.25:
     resolution: {integrity: sha512-YmLcX70BxoSopLFdLr1Ds99NdlTI2oWoLbaUW2M406lxOIPzE1KQhRz2fPUkq34xVZQaihCoU29h0KK7An3bhA==}
     dependencies:
       tslib: 2.5.0
+    dev: false
 
   /@formatjs/intl-localematcher/0.2.32:
     resolution: {integrity: sha512-k/MEBstff4sttohyEpXxCmC3MqbUn9VvHGlZ8fauLzkbwXmVrEeyzS+4uhrvAk9DWU9/7otYWxyDox4nT/KVLQ==}
     dependencies:
       tslib: 2.5.0
-    dev: false
 
-  /@formatjs/intl/2.2.1_typescript@5.0.2:
-    resolution: {integrity: sha512-vgvyUOOrzqVaOFYzTf2d3+ToSkH2JpR7x/4U1RyoHQLmvEaTQvXJ7A2qm1Iy3brGNXC/+/7bUlc3lpH+h/LOJA==}
+  /@formatjs/intl/2.7.1_typescript@5.0.2:
+    resolution: {integrity: sha512-se6vxidsN3PCmzqTsDd3YDT4IX9ZySPy39LYhF7x2ssNvlGMOuW3umkrIhKkXB7ZskqsJGY53LVCdiHsSwhGng==}
     peerDependencies:
-      typescript: ^4.5
+      typescript: ^4.7 || 5
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.11.4
-      '@formatjs/fast-memoize': 1.2.1
-      '@formatjs/icu-messageformat-parser': 2.1.0
-      '@formatjs/intl-displaynames': 5.4.3
-      '@formatjs/intl-listformat': 6.5.3
-      intl-messageformat: 9.13.0
+      '@formatjs/ecma402-abstract': 1.14.3
+      '@formatjs/fast-memoize': 2.0.1
+      '@formatjs/icu-messageformat-parser': 2.3.1
+      '@formatjs/intl-displaynames': 6.3.1
+      '@formatjs/intl-listformat': 7.2.1
+      intl-messageformat: 10.3.4
       tslib: 2.5.0
       typescript: 5.0.2
 
@@ -15884,12 +15884,12 @@ packages:
     resolution: {integrity: sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw==}
     engines: {node: '>= 0.10'}
 
-  /intl-messageformat/9.13.0:
-    resolution: {integrity: sha512-7sGC7QnSQGa5LZP7bXLDhVDtQOeKGeBFGHF2Y8LVBwYZoQZCgWeKoPGTa5GMG8g/TzDgeXuYJQis7Ggiw2xTOw==}
+  /intl-messageformat/10.3.4:
+    resolution: {integrity: sha512-/FxUIrlbPtuykSNX85CB5sp2FjLVeTmdD7TfRkVFPft2n4FgcSlAcilFytYiFAEmPHc+0PvpLCIPXeaGFzIvOg==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.11.4
-      '@formatjs/fast-memoize': 1.2.1
-      '@formatjs/icu-messageformat-parser': 2.1.0
+      '@formatjs/ecma402-abstract': 1.14.3
+      '@formatjs/fast-memoize': 2.0.1
+      '@formatjs/icu-messageformat-parser': 2.3.1
       tslib: 2.5.0
 
   /into-stream/3.1.0:
@@ -19898,24 +19898,24 @@ packages:
       react: 17.0.2
     dev: false
 
-  /react-intl/5.25.1_ghte4c7xq6n6coodbl2sbzyrgu:
-    resolution: {integrity: sha512-pkjdQDvpJROoXLMltkP/5mZb0/XqrqLoPGKUCfbdkP8m6U9xbK40K51Wu+a4aQqTEvEK5lHBk0fWzUV72SJ3Hg==}
+  /react-intl/6.4.1_ghte4c7xq6n6coodbl2sbzyrgu:
+    resolution: {integrity: sha512-/aT5595AEMZ+Pjmt8W2R5/ZkYJmyyd6jTzHzqhJ1LnfeG36+N5huBtykxYhHqLc1BrIRQ1fTX1orYC0Ej5ojtg==}
     peerDependencies:
-      react: ^16.3.0 || 17 || 18
-      typescript: ^4.5
+      react: ^16.6.0 || 17 || 18
+      typescript: ^4.7 || 5
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.11.4
-      '@formatjs/icu-messageformat-parser': 2.1.0
-      '@formatjs/intl': 2.2.1_typescript@5.0.2
-      '@formatjs/intl-displaynames': 5.4.3
-      '@formatjs/intl-listformat': 6.5.3
+      '@formatjs/ecma402-abstract': 1.14.3
+      '@formatjs/icu-messageformat-parser': 2.3.1
+      '@formatjs/intl': 2.7.1_typescript@5.0.2
+      '@formatjs/intl-displaynames': 6.3.1
+      '@formatjs/intl-listformat': 7.2.1
       '@types/hoist-non-react-statics': 3.3.1
       '@types/react': 17.0.58
       hoist-non-react-statics: 3.3.2
-      intl-messageformat: 9.13.0
+      intl-messageformat: 10.3.4
       react: 17.0.2
       tslib: 2.5.0
       typescript: 5.0.2
