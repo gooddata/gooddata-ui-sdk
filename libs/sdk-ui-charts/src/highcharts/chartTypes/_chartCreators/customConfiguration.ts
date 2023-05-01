@@ -68,6 +68,7 @@ import { IntlShape } from "react-intl";
 import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
 import { AxisLabelsFormatterCallbackFunction } from "highcharts";
 import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
+import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -1386,6 +1387,7 @@ export function getCustomizedConfiguration(
         getTargetCursorConfigurationForBulletChart,
         getZoomingAndPanningConfiguration,
         getReversedStacking,
+        getContinuousLineConfiguration,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

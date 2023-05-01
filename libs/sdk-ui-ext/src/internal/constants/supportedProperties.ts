@@ -68,6 +68,7 @@ export const AREA_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_CHART_SUPPORTED_PROPERTIES,
     ...OPTIONAL_STACKING_PROPERTIES,
     "dataPoints.visible",
+    "continuousLine.enabled",
 ];
 
 export const COLUMN_CHART_SUPPORTED_PROPERTIES = {
@@ -86,17 +87,19 @@ export const COLUMN_CHART_SUPPORTED_PROPERTIES = {
 };
 
 export const LINE_CHART_SUPPORTED_PROPERTIES = {
-    [AXIS.PRIMARY]: [...BASE_CHART_SUPPORTED_PROPERTIES, "dataPoints.visible"],
+    [AXIS.PRIMARY]: [...BASE_CHART_SUPPORTED_PROPERTIES, "dataPoints.visible", "continuousLine.enabled"],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
         ...BASE_X_AXIS_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         "dataPoints.visible",
+        "continuousLine.enabled",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         "dataPoints.visible",
+        "continuousLine.enabled",
     ],
 };
 
@@ -128,6 +131,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...CHART_TYPE_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
+        "continuousLine.enabled",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -136,6 +140,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...CHART_TYPE_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
+        "continuousLine.enabled",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -143,6 +148,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...CHART_TYPE_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
+        "continuousLine.enabled",
     ],
 };
 

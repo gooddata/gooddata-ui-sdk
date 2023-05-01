@@ -189,6 +189,7 @@ export interface IChartConfig {
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
     colors?: string[];
+    continuousLine?: IContinuousLineConfig;
     dataLabels?: IDataLabelsConfig;
     dataPoints?: IDataPointsConfig;
     disableDrillUnderline?: boolean;
@@ -273,6 +274,11 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     execConfig?: IExecutionConfig;
     height?: number;
     width?: number;
+}
+
+// @public
+export interface IContinuousLineConfig {
+    enabled?: boolean;
 }
 
 // @internal

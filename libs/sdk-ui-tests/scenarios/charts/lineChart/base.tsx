@@ -50,6 +50,11 @@ export const LineChartWithTrendByDateAndSegmentByDate = {
     segmentBy: ReferenceMd.DateDatasets.Closed.Year.Default,
 };
 
+export const LineChartViewByDate = {
+    measures: [ReferenceMd.Amount, ReferenceMd.Won],
+    trendBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+};
+
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
@@ -84,4 +89,8 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     .addScenario(
         "with one measure and trend by date and segment by date",
         LineChartWithTrendByDateAndSegmentByDate,
+    )
+    .addScenario(
+        "with two measures and null values",
+        LineChartViewByDate,
     );

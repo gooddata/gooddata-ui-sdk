@@ -172,4 +172,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     colors: { id: "properties.colors" },
     position: { id: "properties.legend.position" },
     title: { id: "properties.legend.title" },
+    canvasContinuousLineLabel: { id: "properties.canvas.continuousLine.label" },
+    canvasContinuousLineTooltip: { id: "properties.canvas.continuousLine.tooltip" },
 });

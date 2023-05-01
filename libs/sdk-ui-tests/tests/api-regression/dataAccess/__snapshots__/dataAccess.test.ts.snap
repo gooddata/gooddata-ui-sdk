@@ -2489,6 +2489,34 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: ComboChart - two measures with null values 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": Array [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: ComboChart - two secondary measure with viewBy 1`] = `
 Object {
   "seriesDigest": Object {
@@ -3649,6 +3677,34 @@ Object {
       "2010 > Amount",
       "2011 > Amount",
       "2012 > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 7,
+    "attributes": 1,
+    "sliceNames": Array [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2016",
+      "2017",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: LineChart - with two measures and null values 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
     ],
   },
   "slicesDigest": Object {

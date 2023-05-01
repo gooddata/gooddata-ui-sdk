@@ -51,4 +51,7 @@ export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .addScenario("undefined values and disabled stacking", {
         ...AreaChartViewByDate,
         config: { stacking: false },
+    }).addScenario("undefined values, disabled stacking and the continuous line enabled", {
+        ...AreaChartViewByDate,
+        config: { stacking: false, continuousLine: { enabled: true } },
     });

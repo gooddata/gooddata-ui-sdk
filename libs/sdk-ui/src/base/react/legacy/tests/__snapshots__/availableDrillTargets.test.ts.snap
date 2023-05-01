@@ -11105,6 +11105,127 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: ComboChart - two measures with null values 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "closed.year",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/497",
+          },
+          "identifier": "closed.aag81lMifn6q",
+          "localIdentifier": "a_closed.aag81lMifn6q",
+          "name": "Year (Closed)",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/515",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: ComboChart - two secondary measure with viewBy 1`] = `
 Object {
   "attributes": Array [
@@ -14937,6 +15058,127 @@ Object {
             "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: LineChart - with two measures and null values 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "closed.year",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/497",
+          },
+          "identifier": "closed.aag81lMifn6q",
+          "localIdentifier": "a_closed.aag81lMifn6q",
+          "name": "Year (Closed)",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/515",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "closed.year",
+              "name": "Year (Closed)",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/497",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/497",
+            },
+            "identifier": "closed.aag81lMifn6q",
+            "localIdentifier": "a_closed.aag81lMifn6q",
+            "name": "Year (Closed)",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/515",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/515",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "acugFHNJgsBy",
+          "localIdentifier": "m_acugFHNJgsBy",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1272",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1272",
         },
       },
     },

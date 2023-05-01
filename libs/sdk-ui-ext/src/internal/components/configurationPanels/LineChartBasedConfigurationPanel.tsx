@@ -1,9 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
+import ContinuousLineControl from "../configurationControls/ContinuousLineControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
 import DataPointsControl from "../configurationControls/DataPointsControl";
 import {
@@ -15,6 +16,9 @@ import {
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
 import { messages } from "../../../locales";
+import { insightBucket } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { isAreaChart } from "@gooddata/sdk-ui-charts";
 
 export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
     dataLabelDefaultValue?: string | boolean;
@@ -32,9 +36,11 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
             panelConfig,
             dataLabelDefaultValue = false,
         } = this.props;
-        const { isDataPointsControlDisabled } = panelConfig;
+        const { isDataPointsControlDisabled, isContinuousLineControlDisabled } = panelConfig;
 
         const controlsDisabled = this.isControlDisabled();
+        const continuousLineEnabled = properties?.controls?.continuousLine?.enabled;
+        const continuousLineSelectable = this.isContinuousLineSelectable();
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -74,6 +80,17 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             disabled={controlsDisabled}
                             pushData={pushData}
                         />
+
+                        <ContinuousLineControl
+                            properties={properties}
+                            checked={continuousLineSelectable ? continuousLineEnabled : false}
+                            disabled={
+                                controlsDisabled ||
+                                !continuousLineSelectable ||
+                                isContinuousLineControlDisabled
+                            }
+                            pushData={pushData}
+                        />
                     </ConfigSection>
                 </div>
                 <Bubble
@@ -85,5 +102,17 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                 </Bubble>
             </BubbleHoverTrigger>
         );
+    }
+
+    private isContinuousLineSelectable(): boolean {
+        const { insight, properties, type } = this.props;
+        let isStackingMeasures = properties?.controls?.stackMeasures;
+        if (isStackingMeasures) {
+            return false;
+        } else if (typeof isStackingMeasures === "undefined" && isAreaChart(type)) {
+            const buckets = insightBucket(insight, BucketNames.MEASURES);
+            isStackingMeasures = buckets?.items?.length > 1;
+        }
+        return !isStackingMeasures;
     }
 }
