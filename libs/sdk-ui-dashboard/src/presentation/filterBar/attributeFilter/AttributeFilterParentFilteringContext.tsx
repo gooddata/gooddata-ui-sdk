@@ -52,6 +52,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
 export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
     attributes?: IAttributeMetadataObject[];
+    children?: React.ReactNode;
 };
 
 /**

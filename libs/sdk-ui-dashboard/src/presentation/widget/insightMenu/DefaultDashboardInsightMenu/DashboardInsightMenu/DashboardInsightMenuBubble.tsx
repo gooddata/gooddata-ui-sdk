@@ -28,6 +28,7 @@ interface IDashboardInsightMenuBubbleProps {
     widget: IWidget;
     onClose: () => void;
     isSubmenu?: boolean;
+    children?: React.ReactNode;
 }
 
 export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {

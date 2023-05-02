@@ -4,4 +4,6 @@ import React from "react";
 /**
  * @internal
  */
-export const Footer: React.FC = ({ children }) => <div className="gd-flex-dialog-footer">{children}</div>;
+export const Footer: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
+    <div className="gd-flex-dialog-footer">{children}</div>
+);

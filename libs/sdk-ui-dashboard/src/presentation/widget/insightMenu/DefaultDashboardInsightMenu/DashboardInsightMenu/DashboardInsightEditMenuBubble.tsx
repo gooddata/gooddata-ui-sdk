@@ -8,6 +8,7 @@ import { ConfigurationBubble } from "../../../common";
 interface IDashboardInsightMenuBubbleProps {
     onClose: () => void;
     isSubmenu?: boolean;
+    children?: React.ReactNode;
 }
 
 export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {

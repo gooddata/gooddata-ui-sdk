@@ -4,7 +4,7 @@ import React from "react";
 /**
  * @internal
  */
-export const FooterButtons: React.FC = ({ children }) => (
+export const FooterButtons: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
     <span className="gd-widget-footer-buttons">
         <div className="gd-widget-footer-buttons-separator" />
         {children}

@@ -1,8 +1,9 @@
 // (C) 2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { ILocale } from "@gooddata/sdk-ui";
 
-import { IWebComponentsOptions } from "../types";
+import { IWebComponentsOptions, UnitsType } from "../types";
 import { dialogChangeMessageLabels } from "../../../../locales";
 
 import { HeightSetting } from "./HeightSetting";
@@ -40,7 +41,7 @@ export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
     }, [option, onChange]);
 
     const onLocaleValueChange = useCallback(
-        (locale) => {
+        (locale: ILocale) => {
             const opt = { ...option, locale };
             onChange(opt);
         },
@@ -53,7 +54,7 @@ export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
     }, [option, onChange]);
 
     const onCustomHeightValueChange = useCallback(
-        (height, unit) => {
+        (height: string, unit: UnitsType) => {
             const opt = { ...option, height, unit };
             onChange(opt);
         },

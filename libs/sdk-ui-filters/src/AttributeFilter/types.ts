@@ -208,6 +208,11 @@ export interface IAttributeFilterCoreProps {
      * Callback that will be triggered when error is thrown.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**
@@ -354,4 +359,9 @@ export interface IAttributeFilterCustomComponentProps {
      * @deprecated use {@link IAttributeFilterCustomComponentProps.LoadingComponent} instead
      */
     FilterLoading?: React.ComponentType;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }

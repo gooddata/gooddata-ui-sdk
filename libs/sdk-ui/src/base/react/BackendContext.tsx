@@ -16,6 +16,11 @@ export interface IBackendProviderProps {
      * Specify instance of backend which should be used by components to communicate with the server.
      */
     backend: IAnalyticalBackend;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**

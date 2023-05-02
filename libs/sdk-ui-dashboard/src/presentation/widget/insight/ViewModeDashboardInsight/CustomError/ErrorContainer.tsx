@@ -6,7 +6,7 @@ const fullHeightWidthStyle: React.CSSProperties = {
     width: "100%",
 };
 
-export const ErrorContainer: React.FC = ({ children }) => {
+export const ErrorContainer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     return (
         <div className="gd-visualization-content" style={fullHeightWidthStyle}>
             <div className="info-label">

@@ -22,8 +22,10 @@ export function updateStickyRowPosition(gridApi: GridApi | null, apiWrapper: any
     }
 
     const headerHeight = apiWrapper.getHeaderHeight(gridApi);
-    apiWrapper.setPinnedTopRowStyle(gridApi, "top", `${headerHeight}px`);
-    apiWrapper.setPinnedTopRowStyle(gridApi, "padding-right", `${getScrollbarWidth()}px`);
+    apiWrapper.setPinnedTopRowStyles(gridApi, {
+        top: `${headerHeight}px`,
+        "padding-right": `${getScrollbarWidth()}px`,
+    });
 }
 
 export function stickyRowExists(gridApi: GridApi, apiWrapper: any = ApiWrapper): boolean {

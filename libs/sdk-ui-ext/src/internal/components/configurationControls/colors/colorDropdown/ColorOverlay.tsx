@@ -11,6 +11,7 @@ export interface IColorOverlayProps {
     alignTo: string;
     dropdownVersion: DropdownVersionType;
     onClose: () => void;
+    children?: React.ReactNode;
 }
 
 const ALIGN_POINTS_COLOR_PALETTE_PICKER = [

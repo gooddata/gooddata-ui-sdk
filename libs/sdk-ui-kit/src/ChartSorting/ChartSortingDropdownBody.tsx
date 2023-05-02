@@ -11,6 +11,7 @@ const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr"
 interface ChartSortingDropdownBodyProps {
     buttonNode?: HTMLElement | string;
     onClose?: () => void;
+    children?: React.ReactNode;
 }
 
 /**

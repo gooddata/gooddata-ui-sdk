@@ -58,8 +58,8 @@ const RawExecuteExample: React.FC = () => {
                                 <li key={locationState}>
                                     <strong>{locationState}</strong>
                                     <ul>
-                                        {_locations.map((location) => (
-                                            <li key={location as string}>{location}</li>
+                                        {_locations.map((location: any) => (
+                                            <li key={location}>{location}</li>
                                         ))}
                                     </ul>
                                 </li>

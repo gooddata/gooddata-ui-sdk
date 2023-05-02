@@ -13,6 +13,7 @@ export const isDarkTheme: (theme: ITheme) => boolean;
 
 // @public (undocumented)
 export interface IThemeContextProviderProps {
+    children?: React_2.ReactNode;
     theme: ITheme;
     themeIsLoading: boolean;
 }
@@ -20,6 +21,7 @@ export interface IThemeContextProviderProps {
 // @public (undocumented)
 export interface IThemeProviderProps {
     backend?: IAnalyticalBackend;
+    children?: React_2.ReactNode;
     enableComplementaryPalette?: boolean;
     modifier?: ThemeModifier;
     removeGlobalStylesOnUnmout?: boolean;

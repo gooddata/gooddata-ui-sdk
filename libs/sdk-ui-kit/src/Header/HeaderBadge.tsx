@@ -7,6 +7,7 @@ import React from "react";
 export interface IHeaderBadgeProps {
     color?: string;
     backgroundColor?: string;
+    children?: React.ReactNode;
 }
 
 /**

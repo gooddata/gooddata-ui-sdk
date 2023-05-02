@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { dialogEmptyInsightMessageLabels } from "../../../../locales";
@@ -16,7 +16,7 @@ export interface ICodeAreaProps {
 /**
  * @internal
  */
-export const CodeArea: React.VFC<ICodeAreaProps> = (props) => {
+export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
     const { code, onCopyCode } = props;
 
     const onAreaCopyCode = useCallback(() => {
@@ -57,7 +57,7 @@ export const CodeAreaDisableMessage: React.VFC<ICodeAreaDisableMessageProps> = (
             <FormattedMessage
                 id={dialogEmptyInsightMessageLabels[isDefinitionMsg ? "definition" : "reference"].id}
                 values={{
-                    a: (chunk: string) => {
+                    a: (chunk: ReactNode) => {
                         return <a onClick={openSaveInsightDialog}>{chunk}</a>;
                     },
                 }}

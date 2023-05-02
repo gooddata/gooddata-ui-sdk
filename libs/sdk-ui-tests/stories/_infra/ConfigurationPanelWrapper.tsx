@@ -5,6 +5,7 @@ import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/dist/internal";
 export interface IConfigurationPanelWrapperProps {
     className?: string;
     expandAllClassName?: string;
+    children?: React.ReactNode;
 }
 
 /**

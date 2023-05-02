@@ -26,6 +26,6 @@ const customMessages = {
     "gs.filterLabel.all": "All",
 };
 
-const WithIntl = withIntl<unknown>(FilterLabelExamples, undefined, customMessages);
+const WithIntl = withIntl(FilterLabelExamples, undefined, customMessages);
 
 storiesOf(`${UiKit}/FilterLabel`).add("full-featured", () => <WithIntl />, { screenshot: true });

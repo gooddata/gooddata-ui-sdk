@@ -10,6 +10,7 @@ export interface IBubbleMessageOwnProps {
     showDisabledMessage: boolean;
     messageId?: string;
     className?: string;
+    children?: React.ReactNode;
 }
 
 export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;

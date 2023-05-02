@@ -23,6 +23,7 @@ export interface IConfigSectionOwnProps {
     showDisabledMessage?: boolean;
     className?: string;
     pushData?(data: any): void;
+    children?: React.ReactNode;
 }
 
 export interface IConfigSectionState {

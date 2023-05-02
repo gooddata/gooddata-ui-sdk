@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import "@babel/polyfill";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
@@ -14,7 +14,9 @@ import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 import { App } from "./App";
 import "./react-ga";
 
-const root = document.createElement("div");
-root.className = "root";
-document.body.appendChild(root);
-ReactDOM.render(<App />, root);
+const rootDOMNode = document.createElement("div");
+rootDOMNode.className = "root";
+document.body.appendChild(rootDOMNode);
+
+const root = createRoot(rootDOMNode);
+root.render(<App />);

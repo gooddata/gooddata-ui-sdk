@@ -5,6 +5,7 @@ import { IMenuButtonConfiguration } from "../topBar/types";
 
 interface IDashboardConfigContext {
     menuButtonConfig: IMenuButtonConfiguration | undefined;
+    children?: React.ReactNode;
 }
 
 const DashboardConfigContext = createContext<IDashboardConfigContext>({

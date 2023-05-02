@@ -24,7 +24,7 @@ const defaultContext: IAuthContext = {
 
 export const AuthContext = createContext<IAuthContext>(defaultContext);
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const {
         onLoginStart,
         onLoginSuccess,
@@ -45,7 +45,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             await newBackend.authenticate();
             setBackend(newBackend);
             onLoginSuccess();
-        } catch (err) {
+        } catch (err: any) {
             onLoginError(err);
             throw err;
         }
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         try {
             await backend.deauthenticate();
             onLogoutSuccess();
-        } catch (err) {
+        } catch (err: any) {
             onLogoutError(err);
             throw err;
         }

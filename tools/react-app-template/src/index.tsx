@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import { App } from "./App";
 
@@ -16,4 +16,7 @@ import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
 import "./index.css";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const rootDOMNode = document.getElementById("root");
+const root = createRoot(rootDOMNode!);
+
+root.render(<App />);

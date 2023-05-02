@@ -19,6 +19,7 @@ export interface IConfigSubsectionOwnProps {
     properties?: any;
     pushData?(data: any): void;
     axisType?: AxisType;
+    children?: React.ReactNode;
 }
 
 export interface IConfigSubsectionState {

@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -26,7 +26,7 @@ export const LockedStatusIndicator = (props: ILockedStatusProps): JSX.Element | 
                 <Bubble alignPoints={[{ align: "bc tl" }]} alignTo={`.gd-icon-locked`}>
                     <FormattedMessage
                         id="header.lockStatus.tooltip"
-                        values={{ b: (chunks: string) => <b>{chunks}</b> }}
+                        values={{ b: (chunks: ReactNode) => <b>{chunks}</b> }}
                     />
                 </Bubble>
             </BubbleHoverTrigger>

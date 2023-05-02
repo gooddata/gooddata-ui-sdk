@@ -75,6 +75,7 @@ export interface IBubbleProps {
     onMouseLeave?: () => void;
     onKeyDown?: () => void;
     overlayClassName?: string;
+    children?: React.ReactNode;
 }
 
 /**

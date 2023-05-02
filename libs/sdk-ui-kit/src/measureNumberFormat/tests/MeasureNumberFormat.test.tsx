@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cx from "classnames";
@@ -70,8 +70,10 @@ describe("Measure number format", () => {
     };
 
     const setCustomFormatValue = (value: string) => {
-        const codeMirrorEditor = getCodeMirrorInstance();
-        codeMirrorEditor.setValue(value);
+        act(() => {
+            const codeMirrorEditor = getCodeMirrorInstance();
+            codeMirrorEditor.setValue(value);
+        });
     };
 
     const togglePresetsDropdown = async () => {

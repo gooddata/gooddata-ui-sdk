@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -21,12 +21,12 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
                             {isLast ? (
                                 <FormattedMessage
                                     id="dropzone.widget.last.in.row.desc"
-                                    values={{ b: (chunks: string) => <b>{chunks}</b> }}
+                                    values={{ b: (chunks: ReactNode) => <b>{chunks}</b> }}
                                 />
                             ) : (
                                 <FormattedMessage
                                     id="dropzone.widget.desc"
-                                    values={{ b: (chunks: string) => <b>{chunks}</b> }}
+                                    values={{ b: (chunks: ReactNode) => <b>{chunks}</b> }}
                                 />
                             )}
                         </Typography>

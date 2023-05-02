@@ -9,7 +9,7 @@ import { DialogListItemBasic, Icon } from "@gooddata/sdk-ui-kit";
 import { action } from "@storybook/addon-actions";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-const Wrapper: React.FC = (props) => {
+const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     const { children } = props;
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
 };

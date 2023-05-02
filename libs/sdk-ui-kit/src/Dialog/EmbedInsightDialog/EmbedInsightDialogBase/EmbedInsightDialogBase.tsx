@@ -83,7 +83,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                     : undefined
             }
         >
-            {showWebComponentsTab && (
+            {showWebComponentsTab ? (
                 <Tabs
                     tabs={getTabIds()}
                     onTabSelect={(tab) => {
@@ -91,7 +91,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                     }}
                     selectedTabId={dialogEmbedTabLabels[embedTab].id}
                 />
-            )}
+            ) : null}
             <EmbedInsightContent
                 integrationDocLink={integrationDocLink}
                 code={code}

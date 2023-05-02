@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { Message } from "../../../../Messages";
 
@@ -16,7 +16,7 @@ export const PrepareEnvMessage: React.VFC<IPrepareEnvMessageProps> = (props) => 
                 <span>
                     <FormattedMessage
                         id="embedInsightDialog.prepareEnvironmentMessage"
-                        values={{ b: (chunks: string) => <strong>{chunks}</strong> }}
+                        values={{ b: (chunks: ReactNode) => <strong>{chunks}</strong> }}
                     />
                 </span>
                 <a href={integrationDocLink} target="_blank" rel="noreferrer">

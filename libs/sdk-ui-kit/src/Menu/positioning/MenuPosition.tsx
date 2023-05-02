@@ -58,7 +58,7 @@ export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPosit
         const {
             portalTarget,
             topLevelMenu,
-            contentWrapper,
+            contentWrapper: ContentWrapper,
             toggler,
             opened,
             alignment,
@@ -70,8 +70,6 @@ export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPosit
         // Top level menu uses React portals to be rendered in body element (or
         // any element specified in targetElement prop). Any submenus are rendered
         // inside of previous menu, so they do not need any portals.
-
-        const ContentWrapper = contentWrapper as React.ComponentType;
 
         const MaybeWrapper = topLevelMenu ? React.Fragment : Wrapper;
 

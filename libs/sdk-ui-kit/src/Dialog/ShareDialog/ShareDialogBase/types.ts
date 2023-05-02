@@ -165,6 +165,7 @@ export const isGranteeItem = (obj: unknown): obj is GranteeItem => {
  */
 export type IComponentLabelsProviderProps = {
     labels: IShareDialogLabels;
+    children?: React.ReactNode;
 };
 
 /**

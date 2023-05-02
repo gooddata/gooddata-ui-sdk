@@ -9,7 +9,7 @@ import { handleOnScrollEvent } from "../utils/scroll";
  */
 export interface IScrollablePanelProps extends React.HTMLAttributes<HTMLDivElement> {
     scrollToVisible?: (element: HTMLElement, container: HTMLElement, bottomMargin: number) => void;
-    tagName?: React.ReactType;
+    tagName?: React.ElementType;
 }
 
 const DEFAULT_BOTTOM_MARGIN = 5;

@@ -148,7 +148,7 @@ const customMessages = {
     "gs.list.notAvailableAbbreviation": "N/A",
 };
 
-const WithIntl = withIntl<unknown>(LegacyListExamples, undefined, customMessages);
+const WithIntl = withIntl(LegacyListExamples, undefined, customMessages);
 
 storiesOf(`${UiKit}/Legacy Lists`)
     .add("full-featured", () => <WithIntl />, { screenshot: true })

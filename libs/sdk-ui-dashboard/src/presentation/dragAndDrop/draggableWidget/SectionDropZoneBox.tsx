@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -29,7 +29,7 @@ export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = (props) =>
                                     <FormattedMessage
                                         id="dropzone.new.row.desc"
                                         values={{
-                                            b: (chunks: string) => <b>{chunks}</b>,
+                                            b: (chunks: ReactNode) => <b>{chunks}</b>,
                                             nbsp: <>&nbsp;</>,
                                         }}
                                     />

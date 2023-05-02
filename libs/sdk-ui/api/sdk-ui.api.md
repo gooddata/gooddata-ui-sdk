@@ -585,6 +585,7 @@ export interface IAvailableDrillTargets {
 // @public
 export interface IBackendProviderProps {
     backend: IAnalyticalBackend;
+    children?: React_2.ReactNode;
 }
 
 // @internal (undocumented)
@@ -619,6 +620,7 @@ export interface ICatalog {
 
 // @alpha
 export interface IClientWorkspaceIdentifiers {
+    children?: React.ReactNode;
     client?: string;
     dataProduct?: string;
     segment?: string;
@@ -1061,6 +1063,8 @@ export interface IIdentifierWithTags {
 // @internal (undocumented)
 export interface IIntlWrapperProps {
     // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
     locale?: string;
 }
 
@@ -1332,6 +1336,7 @@ export interface ITranslationsComponentProps {
 
 // @beta (undocumented)
 export interface ITranslationsCustomizationContextProviderProps {
+    children?: React_2.ReactNode;
     translations: Record<string, string>;
     translationsCustomizationIsLoading: boolean;
 }
@@ -1463,6 +1468,7 @@ export interface IWithLoadingEvents<TProps> {
 
 // @public
 export interface IWorkspaceProviderProps {
+    children?: React_2.ReactNode;
     workspace: string;
 }
 

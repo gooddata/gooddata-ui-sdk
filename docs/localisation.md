@@ -131,8 +131,8 @@ Html placeholders (like `<b></b>`) are not supported directly in the newest vers
 <FormattedMessage
     id="message.id"
     values={{
-        strong: (chunks: string) => <strong>{chunks}</strong>,
-        msg: (chunks: string) => (
+        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+        msg: (chunks: ReactNode) => (
             <strong>
                 <i>{chunks}</i>
             </strong>

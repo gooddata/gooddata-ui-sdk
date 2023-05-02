@@ -6,6 +6,7 @@ import React from "react";
  */
 export interface IDefaultDashboardToolbarGroupProps {
     title: string;
+    children?: React.ReactNode;
 }
 
 /**

@@ -5,6 +5,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 export interface IDropdownSectionHeaderProps {
     className?: string;
+    children?: React.ReactNode;
 }
 
 export const DropdownSectionHeader: React.FC<IDropdownSectionHeaderProps> = ({ className, children }) => (

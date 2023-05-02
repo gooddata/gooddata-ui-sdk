@@ -20,7 +20,7 @@ export interface IAttachmentsProps {
     onAttachmentsConfigurationChanged(configuration: IWidgetExportConfiguration): void;
 }
 
-const AttachmentItem: React.FC<{ format: string }> = ({ format, children }) => (
+const AttachmentItem: React.FC<{ format: string; children?: React.ReactNode }> = ({ format, children }) => (
     <div aria-label="dashboard-attachment" className="gd-dashboard-attachment s-gd-dashboard-attachment">
         <span className="gd-dashboard-attachment-format">{format}</span>
         <span className="gd-dashboard-attachment-name">{children}</span>

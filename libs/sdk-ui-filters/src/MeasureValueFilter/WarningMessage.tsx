@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { IWarningMessage, WarningMessage } from "./typings";
+import { WarningMessage, isWarningMessage } from "./typings";
 import cx from "classnames";
 
 interface IWarningMessageProps {
@@ -32,6 +32,8 @@ export const WarningMessageComponent: React.FC<IWarningMessageProps> = ({ warnin
     );
 
     return (
-        <div className={messageClassName}>{(warningMessage as IWarningMessage).text || warningMessage}</div>
+        <div className={messageClassName}>
+            {isWarningMessage(warningMessage) ? warningMessage.text : warningMessage}
+        </div>
     );
 };

@@ -209,11 +209,11 @@ describe("agGridApiWrapper", () => {
             });
         });
 
-        describe("setPinnedTopRowStyle", () => {
+        describe("setPinnedTopRowStyles", () => {
             it("should set style of the DOM element", async () => {
                 const api = await renderGridReady();
 
-                ApiWrapper.setPinnedTopRowStyle(api, "max-width", "123px");
+                ApiWrapper.setPinnedTopRowStyles(api, { "max-width": "123px" });
 
                 const pinnedTopRowElement = ApiWrapper.getPinnedTopRowElement(api);
 

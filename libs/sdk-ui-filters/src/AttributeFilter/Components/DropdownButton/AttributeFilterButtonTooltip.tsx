@@ -14,7 +14,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 5
  *
  * @beta
  */
-export const AttributeFilterButtonToolip: React.FC = ({ children }) => {
+export const AttributeFilterButtonToolip: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     return (
         <span className="gd-list-item-tooltip">
             <BubbleHoverTrigger>

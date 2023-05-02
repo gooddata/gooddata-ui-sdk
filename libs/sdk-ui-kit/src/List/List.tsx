@@ -100,7 +100,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
     );
 
     const handleScrollStart = useCallback(
-        (_, y: number) => {
+        (_: unknown, y: number) => {
             if (onScrollStart) {
                 const [startIndex, endIndex] = getVisibleScrollRange(y);
                 onScrollStart(startIndex, endIndex);
@@ -110,7 +110,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
     );
 
     const handleScrollEnd = useCallback(
-        (_, y: number) => {
+        (_: unknown, y: number) => {
             if (onScrollEnd) {
                 const [startIndex, endIndex] = getVisibleScrollRange(y);
                 onScrollEnd(startIndex, endIndex);

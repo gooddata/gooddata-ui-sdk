@@ -22,6 +22,11 @@ export interface ITranslationsCustomizationContextProviderProps {
      * Customized translations.
      */
     translations: Record<string, string>;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**

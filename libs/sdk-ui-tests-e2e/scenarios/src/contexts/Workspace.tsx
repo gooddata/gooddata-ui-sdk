@@ -18,7 +18,7 @@ const WorkspaceContext = createContext<IWorkspaceContext>({
     setWorkspace: identity,
 });
 
-export const WorkspaceProvider: React.FC = ({ children }) => {
+export const WorkspaceProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const workspaceList = useWorkspaceList();
     const [workspace, setWorkspace] = useState<string>(defaultWorkspace);
 

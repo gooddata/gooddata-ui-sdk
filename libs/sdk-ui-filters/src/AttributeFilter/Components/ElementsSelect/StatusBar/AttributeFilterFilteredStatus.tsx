@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
@@ -42,7 +42,7 @@ export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredSta
                         id="attributesDropdown.itemsFiltered.tooltip"
                         values={{
                             filters: tooltipText,
-                            strong: (chunks: string) => <strong>{chunks}</strong>,
+                            strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                         }}
                     />
                 </Bubble>

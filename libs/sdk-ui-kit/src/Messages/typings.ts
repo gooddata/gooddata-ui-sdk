@@ -16,7 +16,7 @@ export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
  * @internal
  */
 export interface IMessageDefinition {
-    component?: React.Component;
+    component?: React.ComponentType;
     showMore?: string;
     showLess?: string;
     errorDetail?: string;
@@ -49,6 +49,7 @@ export interface IMessageProps {
     type: MessageType;
     contrast?: boolean;
     intensive?: boolean;
+    children?: React.ReactNode;
 }
 
 /**

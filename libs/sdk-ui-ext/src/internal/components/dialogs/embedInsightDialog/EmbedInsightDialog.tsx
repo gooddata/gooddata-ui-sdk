@@ -207,7 +207,7 @@ const generateCodeByWebComponents = (input: ICodeGenInput<IWebComponentsOptions>
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cc cc" }];
 
-const ModalOverlay: React.FC = (props) => {
+const ModalOverlay: React.FC<{ children?: React.ReactNode }> = (props) => {
     const { children } = props;
     return (
         <Overlay alignPoints={BUBBLE_ALIGN_POINTS} isModal positionType="fixed">

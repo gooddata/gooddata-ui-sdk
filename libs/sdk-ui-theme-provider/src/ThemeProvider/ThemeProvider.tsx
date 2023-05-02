@@ -67,6 +67,11 @@ export interface IThemeProviderProps {
      * Default: true
      */
     removeGlobalStylesOnUnmout?: boolean;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**

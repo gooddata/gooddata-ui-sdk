@@ -33,7 +33,7 @@ const getFirstWorkspace = (workspaces: IWorkspaceDescriptor[]) => {
     return undefined;
 };
 
-export const WorkspaceListProvider: React.FC = ({ children }) => {
+export const WorkspaceListProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const { authStatus } = useAuth();
     const backend = useBackend();
     const [workspaceListState, setWorkspaceListState] = useState<IWorkspaceSourceState>({
@@ -67,7 +67,7 @@ export const WorkspaceListProvider: React.FC = ({ children }) => {
                     data: filteredWorkspaces,
                 });
                 setFirstWorkspace(getFirstWorkspace(filteredWorkspaces));
-            } catch (error) {
+            } catch (error: any) {
                 setWorkspaceListState({ isLoading: false, error });
             }
         };

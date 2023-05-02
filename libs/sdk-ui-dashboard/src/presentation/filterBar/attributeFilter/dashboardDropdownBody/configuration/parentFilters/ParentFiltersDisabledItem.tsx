@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import React from "react";
+import React, { ReactNode } from "react";
 import cx from "classnames";
 
 import { stringUtils } from "@gooddata/util";
@@ -73,7 +73,7 @@ export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps
                                 childTitle: currentFilterTitle,
                                 parentTitle: itemTitle,
                                 // eslint-disable-next-line react/display-name
-                                strong: (chunks: string) => <strong>{chunks}</strong>,
+                                strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                             }}
                         />
                     </div>
@@ -85,7 +85,7 @@ export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps
                                 childTitle: currentFilterTitle,
                                 parentTitle: itemTitle,
                                 // eslint-disable-next-line react/display-name
-                                strong: (chunks: string) => <strong>{chunks}</strong>,
+                                strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                             }}
                         />
                     </div>

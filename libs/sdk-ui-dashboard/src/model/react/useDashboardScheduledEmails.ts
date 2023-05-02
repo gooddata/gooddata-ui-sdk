@@ -124,12 +124,15 @@ export const useDashboardScheduledEmails = () => {
         openScheduleEmailingDialog();
     }, []);
 
-    const onScheduleEmailingManagementEdit = useCallback((schedule, users) => {
-        closeScheduleEmailingManagementDialog();
-        setScheduledEmailToEdit(schedule);
-        setUsers(users);
-        openScheduleEmailingDialog();
-    }, []);
+    const onScheduleEmailingManagementEdit = useCallback(
+        (schedule: IScheduledMail, users: IWorkspaceUser[]) => {
+            closeScheduleEmailingManagementDialog();
+            setScheduledEmailToEdit(schedule);
+            setUsers(users);
+            openScheduleEmailingDialog();
+        },
+        [],
+    );
 
     const onScheduleEmailingManagementClose = useCallback(() => {
         closeScheduleEmailingManagementDialog();

@@ -18,6 +18,11 @@ export interface IOverlayControllerProviderProps {
      * Overlay controller singleton class for z-index handling.
      */
     overlayController: OverlayController;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**

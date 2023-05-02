@@ -59,17 +59,19 @@ describe("withLoading", () => {
 
     it("should stop loading when promise is resolved and inject result prop", async () => {
         renderEnhancedComponent({ result: RESULT, delay: 100 });
-        await createDummyPromise({ delay: 150 });
-        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
-        expect(screen.queryByText("Result")).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+            expect(screen.queryByText("Result")).toBeInTheDocument();
+        });
     });
 
     it("should stop loading when promise is rejected and inject error prop", async () => {
         renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
-        await createDummyPromise({ delay: 150 });
-        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
-        expect(screen.queryByText("ERROR_MESSAGE")).toBeInTheDocument();
-        expect(screen.queryByText("Error")).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+            expect(screen.queryByText("ERROR_MESSAGE")).toBeInTheDocument();
+            expect(screen.queryByText("Error")).toBeInTheDocument();
+        });
     });
 
     it("should start loading again after invoking injected fetch function", async () => {

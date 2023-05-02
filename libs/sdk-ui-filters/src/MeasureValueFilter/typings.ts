@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/sdk-ui";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @beta
@@ -30,3 +31,10 @@ export type IWarningMessage = {
     text: string;
     severity: "low" | "medium" | "high";
 };
+
+/**
+ * @alpha
+ */
+export function isWarningMessage(obj: unknown): obj is IWarningMessage {
+    return !isEmpty(obj) && !!(obj as IWarningMessage).severity;
+}

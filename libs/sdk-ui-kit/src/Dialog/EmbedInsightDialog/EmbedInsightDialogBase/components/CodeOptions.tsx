@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IReactOptions } from "../types";
+import { IReactOptions, UnitsType } from "../types";
 
 import { HeightSetting } from "./HeightSetting";
 import { ToggleSwitch } from "./ToggleSwitch";
@@ -33,7 +33,7 @@ export const CodeOptions: React.VFC<ICodeOptionsProps> = (props) => {
     }, [option, onChange]);
 
     const onHeightValueChange = useCallback(
-        (height, unit) => {
+        (height: string, unit: UnitsType) => {
             const opt = { ...option, height, unit };
             onChange(opt);
         },

@@ -2,7 +2,7 @@
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { AttributeElements } from "../AttributeElements";
@@ -47,12 +47,14 @@ describe("AttributeElements", () => {
             expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("CompuSci");
         });
 
-        await children.mock.calls[1][0].loadMore();
+        await act(async () => {
+            await children.mock.calls[1][0].loadMore();
+        });
 
-        expect(children.mock.calls[2][0].isLoading).toEqual(true);
-
-        expect(children.mock.calls[3][0].isLoading).toEqual(false);
-        expect(children.mock.calls[3][0].validElements.items.length).toEqual(2);
-        expect(children.mock.calls[3][0].validElements.items[1].title).toEqual("Educationly");
+        await waitFor(() => {
+            expect(children.mock.calls[2][0].isLoading).toEqual(false);
+            expect(children.mock.calls[2][0].validElements.items.length).toEqual(2);
+            expect(children.mock.calls[2][0].validElements.items[1].title).toEqual("Educationly");
+        });
     });
 });

@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IScheduledMail } from "@gooddata/sdk-model";
 import { GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -47,7 +47,7 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
                 <FormattedMessage
                     id="dialogs.schedule.management.delete.dialog.confirm"
                     values={{
-                        b: (chunks: string) => (
+                        b: (chunks: ReactNode) => (
                             <span className="gd-scheduled-email-delete-dialog-text">
                                 {chunks} <strong>{subject}</strong>
                             </span>

@@ -8,6 +8,7 @@ import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge";
  */
 export interface IHeaderBadgeWithModalProps extends IHeaderBadgeProps {
     renderModalContent: (parameters: { closeModal: () => void }) => React.ReactNode;
+    children?: React.ReactNode;
 }
 
 /**

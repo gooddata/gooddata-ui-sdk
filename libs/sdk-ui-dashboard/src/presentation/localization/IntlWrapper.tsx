@@ -34,6 +34,7 @@ const formats: CustomFormats = {
  */
 export interface IIntlWrapperProps {
     locale?: string;
+    children?: React.ReactNode;
 }
 
 /**

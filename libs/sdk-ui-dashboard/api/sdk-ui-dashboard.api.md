@@ -146,7 +146,6 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
 import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
-import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { RefAttributes } from 'react';
@@ -3524,6 +3523,8 @@ export interface IDashboardStoreProviderProps {
     // (undocumented)
     backend?: IAnalyticalBackend;
     // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
     config?: DashboardConfig;
     // (undocumented)
     customizationFns?: DashboardModelCustomizationFns;
@@ -3626,6 +3627,8 @@ export interface IDefaultDashboardToolbarButtonProps {
 
 // @internal (undocumented)
 export interface IDefaultDashboardToolbarGroupProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
     // (undocumented)
     title: string;
 }
@@ -4590,6 +4593,8 @@ export interface ITitleProps {
 
 // @internal (undocumented)
 export interface IToolbarProps {
+    // (undocumented)
+    children?: React.ReactNode;
 }
 
 // @alpha (undocumented)
@@ -4743,14 +4748,10 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
 }
 
 // @internal (undocumented)
-export const LegacyDashboardInsightMenu: ComponentType<(IDashboardInsightMenuProps & {
-children?: ReactNode;
-}) | (IDashboardInsightMenuProps & RefAttributes<Component<IDashboardInsightMenuProps, any, any>>)>;
+export const LegacyDashboardInsightMenu: ComponentType<IDashboardInsightMenuProps | (IDashboardInsightMenuProps & RefAttributes<Component<IDashboardInsightMenuProps, any, any>>)>;
 
 // @internal (undocumented)
-export const LegacyDashboardInsightMenuButton: ComponentType<(IDashboardInsightMenuButtonProps & RefAttributes<Component<IDashboardInsightMenuButtonProps, any, any>>) | (IDashboardInsightMenuButtonProps & {
-children?: ReactNode;
-})>;
+export const LegacyDashboardInsightMenuButton: ComponentType<IDashboardInsightMenuButtonProps | (IDashboardInsightMenuButtonProps & RefAttributes<Component<IDashboardInsightMenuButtonProps, any, any>>)>;
 
 // @public (undocumented)
 export interface LegacyDashboardsState {
@@ -5491,9 +5492,7 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
-export const RenderModeAwareTitle: ComponentType<(ITitleProps & {
-children?: ReactNode;
-}) | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
+export const RenderModeAwareTitle: ComponentType<ITitleProps | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
 
 // @beta (undocumented)
 export interface RenderModeChangeOptions {
@@ -7263,7 +7262,7 @@ export const useDashboardScheduledEmails: () => {
     isScheduleEmailingDialogOpen: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
     onScheduleEmailingOpen: (attachmentRef?: ObjRef) => void;
-    onScheduleEmailingManagementEdit: (schedule: any, users: any) => void;
+    onScheduleEmailingManagementEdit: (schedule: IScheduledMail, users: IWorkspaceUser[]) => void;
     scheduledEmailToEdit: IScheduledMail | undefined;
     users: IWorkspaceUser[];
     onScheduleEmailingCancel: () => void;

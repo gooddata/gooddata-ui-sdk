@@ -12,7 +12,7 @@ import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator";
 import { useFilterBarState } from "./hooks/useFilterBarState";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop";
 
-const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
+const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
         useFilterBarState();
 
@@ -44,10 +44,10 @@ const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
     );
 };
 
-const AllFiltersContainer: React.FC<{ setCalculatedRows: (data: CalculatedRows) => void }> = ({
-    setCalculatedRows,
-    children,
-}) => {
+const AllFiltersContainer: React.FC<{
+    setCalculatedRows: (data: CalculatedRows) => void;
+    children?: React.ReactNode;
+}> = ({ setCalculatedRows, children }) => {
     const ref = useRef<Element | null>(null);
     const rowCalculator = useRowsCalculator(ref);
 
@@ -83,7 +83,7 @@ const FiltersRows: React.FC<{ rows: number[] }> = ({ rows }) => {
 /**
  * @internal
  */
-export const DefaultFilterBarContainer: React.FC = ({ children }) => {
+export const DefaultFilterBarContainer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const locale = useDashboardSelector(selectLocale);
 
     return (

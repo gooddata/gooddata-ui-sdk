@@ -3,6 +3,7 @@ import React from "react";
 
 interface IScrollNotificationDiv {
     style?: React.CSSProperties;
+    children?: React.ReactNode;
 }
 
 export class ScrollNotificationDiv extends React.PureComponent<IScrollNotificationDiv> {

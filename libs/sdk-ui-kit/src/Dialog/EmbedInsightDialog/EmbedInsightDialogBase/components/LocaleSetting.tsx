@@ -62,11 +62,11 @@ interface ILocaleDropdownItem {
 
 const localeItems: ILocaleDropdownItem[] = LOCALES.map((u) => ({ id: u as ILocale, title: u }));
 
-const LocaleSelect: React.VFC<LocaleSelectProps> = (props) => {
+const LocaleSelect: React.FC<LocaleSelectProps> = (props) => {
     const { selectedLocale, onSelectLocale } = props;
 
     const renderDropdownBody = useCallback(
-        ({ closeDropdown }) => {
+        ({ closeDropdown }: { closeDropdown: () => void }) => {
             return (
                 <DropdownList
                     items={localeItems}
@@ -90,7 +90,7 @@ const LocaleSelect: React.VFC<LocaleSelectProps> = (props) => {
     );
 
     const renderDropdownButton = useCallback(
-        ({ openDropdown, isOpen }): React.ReactNode => {
+        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): React.ReactNode => {
             return <DropdownButton value={selectedLocale} isOpen={isOpen} onClick={openDropdown} />;
         },
         [selectedLocale],

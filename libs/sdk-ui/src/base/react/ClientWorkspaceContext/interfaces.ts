@@ -25,6 +25,11 @@ export interface IClientWorkspaceIdentifiers {
      * Workspace identifier.
      */
     workspace?: string;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**

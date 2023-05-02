@@ -14,6 +14,7 @@ export interface IWorkspacePickerHomeFooterProps {
     onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     className?: string;
     theme?: ITheme;
+    children?: React.ReactNode;
 }
 
 const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterProps> = ({

@@ -848,8 +848,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
 
         if (this.isStickyRowAvailable()) {
-            this.internal.table.updateStickyRowPosition();
-
             const scrollPosition: IScrollPosition = { ...this.internal.lastScrollPosition };
             this.internal.lastScrollPosition = {
                 top: 0,
@@ -864,6 +862,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         invariant(this.internal.table);
 
         if (this.isStickyRowAvailable()) {
+            // Position update was moved here because in some complicated cases with totals,
+            // it was not behaving properly. This was mainly visible in storybook, but it may happen
+            // in other environments as well.
+            this.internal.table.updateStickyRowPosition();
+
             this.internal.table.updateStickyRowContent({
                 scrollPosition,
                 lastScrollPosition: this.internal.lastScrollPosition,

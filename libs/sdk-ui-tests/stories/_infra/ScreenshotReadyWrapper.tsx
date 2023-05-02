@@ -12,6 +12,7 @@ export interface IScreenshotReadyWrapperProps {
     resolver: ReadyResolverFunction;
     interval?: number;
     className?: string;
+    children?: React.ReactNode;
 }
 
 export interface IScreenshotReadyWrapperState {

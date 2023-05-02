@@ -77,7 +77,7 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
     );
 
     const handleScrollEnd = useCallback(
-        (_, endRowIndex) => {
+        (_: unknown, endRowIndex: number) => {
             if (endRowIndex > items.length && !isLoadingNextPage) {
                 onLoadNextPage?.();
             }

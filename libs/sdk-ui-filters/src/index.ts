@@ -53,6 +53,7 @@ export {
     IMeasureValueFilterCommonProps,
     WarningMessage,
     IWarningMessage,
+    isWarningMessage,
 } from "./MeasureValueFilter/typings";
 export { RankingFilter, IRankingFilterProps } from "./RankingFilter/RankingFilter";
 export { RankingFilterDropdown, IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown";

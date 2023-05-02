@@ -31,4 +31,5 @@ export interface IDashboardStoreProviderProps {
     customizationFns?: DashboardModelCustomizationFns;
     widgetsOverlayFn?: WidgetsOverlayFn;
     initialRenderMode?: RenderMode;
+    children?: React.ReactNode;
 }

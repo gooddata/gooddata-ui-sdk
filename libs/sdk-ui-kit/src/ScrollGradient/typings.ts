@@ -11,4 +11,5 @@ export interface IScrollGradientProps {
     className?: string;
     contentClassName?: string;
     backgroundColor?: string;
+    children?: React.ReactNode;
 }

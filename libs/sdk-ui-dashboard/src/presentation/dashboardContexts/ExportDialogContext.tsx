@@ -34,7 +34,7 @@ export const useExportDialogContext = (): IExportDialogContext => {
 /**
  * @internal
  */
-export const ExportDialogContextProvider: React.FC = ({ children }) => {
+export const ExportDialogContextProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [dialogConfig, setDialogConfig] = useState<ExportDialogConfig>({});
 

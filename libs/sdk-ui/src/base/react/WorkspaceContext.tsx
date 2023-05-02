@@ -15,6 +15,11 @@ export interface IWorkspaceProviderProps {
      * Workspace with which the components should work with.
      */
     workspace: string;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**
