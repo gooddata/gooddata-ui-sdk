@@ -14,11 +14,12 @@ export interface ICheckboxControlProps {
     checked?: boolean;
     disabled?: boolean;
     showDisabledMessage?: boolean;
+    disabledMessageId?: string;
     pushData(data: any): void;
 }
 
 class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedComponentProps> {
-    public static defaultProps = {
+    public static defaultProps: Partial<ICheckboxControlProps & WrappedComponentProps> = {
         checked: false,
         disabled: false,
         showDisabledMessage: false,
@@ -31,9 +32,10 @@ class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedCom
     }
 
     public render() {
-        const { checked, disabled, labelText, showDisabledMessage, intl, valuePath } = this.props;
+        const { checked, disabled, labelText, showDisabledMessage, intl, valuePath, disabledMessageId } =
+            this.props;
         return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} messageId={disabledMessageId}>
                 <label className="input-checkbox-label">
                     <input
                         aria-label={valuePath}

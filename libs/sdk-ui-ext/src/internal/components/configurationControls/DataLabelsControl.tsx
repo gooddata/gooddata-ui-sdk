@@ -42,6 +42,17 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
         const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
         const totalLabels = properties?.controls?.dataLabels?.totalsVisible ?? defaultValue;
         const percentLabels = properties?.controls?.dataLabels?.percentsVisible ?? true;
+        const percentLabelsDisabled = isDisabled || !dataLabels;
+
+        // Decide about percents tooltip message: show info variant when not disabled,
+        // show special message when disabled by hidden data labels and don't show for
+        // other  disabled situations (like loading state, missing metrics state etc.)
+        let percentLabelsMessageId;
+        if (!dataLabels) {
+            percentLabelsMessageId = messages.canvasLabelsPercentagesDisabled.id;
+        } else if (!percentLabelsDisabled) {
+            percentLabelsMessageId = messages.canvasLabelsPercentagesInfo.id;
+        }
 
         return (
             <div className="s-data-labels-config">
@@ -73,7 +84,9 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                         labelText={messages.canvasLabelsPercentages.id}
                         properties={properties}
                         checked={percentLabels}
-                        disabled={isDisabled}
+                        disabled={percentLabelsDisabled}
+                        disabledMessageId={percentLabelsMessageId}
+                        showDisabledMessage={!!percentLabelsMessageId}
                         pushData={pushData}
                     />
                 ) : null}
