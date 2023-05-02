@@ -116,13 +116,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableKPIAttributeFilterRenaming,
-            "enableKPIAttributeFilterRenaming",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKPIAttributeFilterRenaming,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableSqlDatasets,
             "enableSqlDatasets",
             "BOOLEAN",

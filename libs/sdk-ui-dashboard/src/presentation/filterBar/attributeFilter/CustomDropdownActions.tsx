@@ -6,33 +6,20 @@ import {
     areObjRefsEqual,
     DashboardAttributeFilterSelectionMode,
     IAttributeMetadataObject,
-    isAttributeMetadataObject,
     ObjRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
-    selectFilterContextAttributeFilters,
-    selectIsAlternativeDisplayFormSelectionEnabled,
     selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
-    selectIsKPIDashboardDependentFiltersEnabled,
     selectSettings,
     useDashboardSelector,
 } from "../../../model";
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const { enableKPIAttributeFilterRenaming, enableSingleSelectionFilter } =
-        useDashboardSelector(selectSettings);
-    const allAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
-
-    const isDependentFiltersEnabled = useDashboardSelector(selectIsKPIDashboardDependentFiltersEnabled);
-    const isDisplayFormSelectionEnabled = useDashboardSelector(
-        selectIsAlternativeDisplayFormSelectionEnabled,
-    );
-
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const filterDisplayForm = dfMap.get(filterDisplayFormRef);
     invariant(filterDisplayForm);
@@ -49,20 +36,7 @@ function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAt
     const filterAttribute = attributesMap.get(filterDisplayForm.attribute) || attributeByDisplayForm;
     invariant(filterAttribute);
 
-    const hasMultipleDisplayForms = isAttributeMetadataObject(filterAttribute)
-        ? filterAttribute.displayForms.length > 1
-        : filterAttribute.attribute.displayForms.length > 1;
-
-    const canConfigureDependentFilters = isDependentFiltersEnabled && allAttributeFilters.length > 1;
-    const canConfigureDisplayForm = isDisplayFormSelectionEnabled && hasMultipleDisplayForms;
-
-    return (
-        isEditMode &&
-        (canConfigureDependentFilters ||
-            canConfigureDisplayForm ||
-            enableKPIAttributeFilterRenaming ||
-            enableSingleSelectionFilter)
-    );
+    return isEditMode;
 }
 
 /**

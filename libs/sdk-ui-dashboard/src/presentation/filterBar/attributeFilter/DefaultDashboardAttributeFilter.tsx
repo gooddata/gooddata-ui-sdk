@@ -56,8 +56,7 @@ export const DefaultDashboardAttributeFilter = (
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const { enableKPIAttributeFilterRenaming, enableSingleSelectionFilter } =
-        useDashboardSelector(selectSettings);
+    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
@@ -73,7 +72,6 @@ export const DefaultDashboardAttributeFilter = (
 
     const intl = useIntl();
 
-    const shouldDisplayAttributeTooltip = isEditMode && enableKPIAttributeFilterRenaming;
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
     const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
@@ -114,8 +112,7 @@ export const DefaultDashboardAttributeFilter = (
 
             const { attributeDataSet } = useAttributeDataSet(attributeFilterDisplayForm);
 
-            const displayAttributeTooltip =
-                shouldDisplayAttributeTooltip && displayFormChangeStatus !== "running";
+            const displayAttributeTooltip = isEditMode && displayFormChangeStatus !== "running";
 
             const CustomTooltipComponent = useMemo(() => {
                 if (displayAttributeTooltip && attributeDataSet && isOpen) {
@@ -139,7 +136,7 @@ export const DefaultDashboardAttributeFilter = (
                 />
             );
         };
-    }, [isDraggable, autoOpen, shouldDisplayAttributeTooltip, onCloseFilter]);
+    }, [isDraggable, autoOpen, isEditMode, onCloseFilter]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
@@ -255,7 +252,7 @@ export const DefaultDashboardAttributeFilter = (
     return (
         <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
             <AttributeFilterButton
-                title={enableKPIAttributeFilterRenaming ? filter.attributeFilter.title : undefined}
+                title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
                 onApply={(newFilter) => {

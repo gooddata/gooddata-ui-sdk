@@ -8,7 +8,6 @@ import {
     selectSupportsElementsQueryParentFiltering,
     IDashboardAttributeFilterParentItem,
     IConnectingAttribute,
-    selectSettings,
 } from "../../../../../../model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
@@ -38,7 +37,6 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
         disabledTooltip,
     } = props;
 
-    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
     const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
 
     if (!isDependentFiltersEnabled || parents.length < 1) {
@@ -58,11 +56,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
                             onClick={setParents}
                             onConnectingAttributeSelect={onConnectingAttributeChanged}
                             connectingAttributes={connectingAttributes[index]}
-                            title={
-                                enableKPIAttributeFilterRenaming
-                                    ? item.title ?? attributes[index].title
-                                    : attributes[index].title
-                            }
+                            title={item.title ?? attributes[index].title}
                         />
                     );
                 })}

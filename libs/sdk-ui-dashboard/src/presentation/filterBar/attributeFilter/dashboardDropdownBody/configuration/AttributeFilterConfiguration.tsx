@@ -59,8 +59,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         };
     }, [closeHandler]);
 
-    const { enableKPIAttributeFilterRenaming, enableSingleSelectionFilter } =
-        useDashboardSelector(selectSettings);
+    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
@@ -125,16 +124,14 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration sdk-edit-mode-on">
             <ConfigurationPanelHeader />
-            {Boolean(enableKPIAttributeFilterRenaming) && (
-                <AttributeTitleRenaming
-                    categoryTitle={titleText}
-                    resetTitleText={resetTitleText}
-                    onClick={onTitleReset}
-                    onChange={onTitleUpdate}
-                    showResetTitle={showResetTitle}
-                    attributeTitle={title ?? defaultAttributeFilterTitle}
-                />
-            )}
+            <AttributeTitleRenaming
+                categoryTitle={titleText}
+                resetTitleText={resetTitleText}
+                onClick={onTitleReset}
+                onChange={onTitleUpdate}
+                showResetTitle={showResetTitle}
+                attributeTitle={title ?? defaultAttributeFilterTitle}
+            />
             {Boolean(enableSingleSelectionFilter) && (
                 <SelectionMode
                     selectionTitleText={selectionTitleText}

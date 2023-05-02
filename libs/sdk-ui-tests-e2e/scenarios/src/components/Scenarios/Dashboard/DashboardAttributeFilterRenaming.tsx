@@ -7,10 +7,5 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 const dashboardRef = idRef(Dashboards.DrillToAttributeUrl);
 
 export const DashboardAttributeFilterRenaming: React.FC = () => {
-    return (
-        <Dashboard
-            dashboard={dashboardRef}
-            config={{ initialRenderMode: "edit", settings: { enableKPIAttributeFilterRenaming: true } }}
-        />
-    );
+    return <Dashboard dashboard={dashboardRef} config={{ initialRenderMode: "edit" }} />;
 };

@@ -260,11 +260,6 @@ export interface ISettings {
     formatLocale?: string;
 
     /**
-     * Enable attribute filter title renaming in KPI Dashboards.
-     */
-    enableKPIAttributeFilterRenaming?: boolean;
-
-    /**
      * Enable single selection attribute filters
      */
     enableSingleSelectionFilter?: boolean;

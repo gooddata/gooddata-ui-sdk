@@ -6,7 +6,6 @@ import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
-    selectSettings,
     useDashboardSelector,
 } from "../../../../model";
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem";
@@ -22,7 +21,6 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const attributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
-    const { enableKPIAttributeFilterRenaming } = useDashboardSelector(selectSettings);
 
     const displayForms = useMemo(() => {
         return attributeFilters.map((filter) => filter.attributeFilter.displayForm);
@@ -57,11 +55,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                     <AttributeFilterConfigurationItem
                         key={objRefToString(displayForm.ref)}
                         displayFormRef={displayForm.ref}
-                        title={
-                            enableKPIAttributeFilterRenaming
-                                ? filter.attributeFilter.title ?? attributeTitle
-                                : attributeTitle
-                        }
+                        title={filter.attributeFilter.title ?? attributeTitle}
                         widget={widget}
                     />
                 );
