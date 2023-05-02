@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { factory as createSdk, SDK } from "@gooddata/api-client-bear";
+import { getFactory as createSdk, SDK } from "@gooddata/api-client-bear";
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,

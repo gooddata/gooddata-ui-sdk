@@ -5,7 +5,7 @@ import {
     IAuthenticationContext,
 } from "@gooddata/sdk-backend-spi";
 import bearFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
-import { factory as sdkFactory } from "@gooddata/api-client-bear";
+import { getFactory as sdkFactory } from "@gooddata/api-client-bear";
 
 /**
  * A factory to create a new instance of the Bear backend.
