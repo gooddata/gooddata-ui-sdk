@@ -31,7 +31,7 @@
      * The default value is false to avoid legacy compatibility issues.
      * It is strongly recommended to set `strictPeerDependencies=true`.
      */
-    "strictPeerDependencies": false, // // goodstrap is not compatible with this unfortunately not sure if this is still valid
+    "strictPeerDependencies": true,
   
     /**
      * Environment variables that will be provided to PNPM.
@@ -109,9 +109,9 @@
       "ignoreMissing": [
         "redux", // in sdk-ui-dashboard redux-batched-actions has peer dependency to redux@>=1.0.0 but is installed as transitive dependency  
         "webpack" // in sdk-ui-tests need peer dependency but its installed by storybook
-      ]
-      // "allowedVersions": { "react": "17" },
-      // "allowAny": ["@babel/*"]
+      ],
+      "allowedVersions": { "@nestjs/common": "9.3.11" } // TODO: FET-1220
+      //"allowAny": ["@babel/*"]
     },
   
     /**
