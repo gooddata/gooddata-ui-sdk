@@ -4,7 +4,7 @@ import fetchMock from "fetch-mock";
 
 import cloneDeep from "lodash/cloneDeep";
 import * as fixtures from "./catalogue.fixtures";
-import { CatalogueModule } from "../catalogue";
+import { CatalogueModule, unwrapItemDescriptionObject } from "../catalogue";
 import { XhrModule } from "../xhr";
 import { ExecutionModule } from "../execution";
 import { MetadataModule } from "../metadata";
@@ -338,9 +338,20 @@ describe("Catalogue", () => {
                 .fn()
                 .mockReturnValue(Promise.resolve(loadItemDescriptionObjectsMockResult));
 
-            const result = await catalogueModule.loadItemDescriptions(projectId, {}, {});
+            const result = await catalogueModule.loadItemDescriptionObjects(
+                projectId,
+                {
+                    visualizationClass: {
+                        uri: "/gdc/dummy/uri",
+                    },
+                    buckets: [],
+                },
+                {},
+            );
 
-            expect(result).toEqual(["expression", "/uri/2"]);
+            const unwrappedResult = result.map(unwrapItemDescriptionObject);
+
+            expect(unwrappedResult).toEqual(["expression", "/uri/2"]);
         });
 
         describe("loadItemDescriptionObjects", () => {

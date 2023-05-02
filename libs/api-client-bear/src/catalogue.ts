@@ -96,7 +96,10 @@ const isAdHocItemDescription = (
     return !!(itemDescription as IAdHocItemDescription).expression;
 };
 
-const unwrapItemDescriptionObject = (itemDescription: ItemDescription): string => {
+/**
+ * @internal
+ */
+export const unwrapItemDescriptionObject = (itemDescription: ItemDescription): string => {
     if (isStoredItemDescription(itemDescription)) {
         return itemDescription.uri;
     }
@@ -211,8 +214,12 @@ export class CatalogueModule {
         const attributesMap = options?.attributesMap;
         const hasBuckets = mdObj?.buckets !== undefined;
         if (hasBuckets) {
-            return this.loadItemDescriptions(projectId, mdObj, attributesMap).then((bucketItems: any) =>
-                this.loadCatalog(projectId, { ...request, bucketItems }),
+            return this.loadItemDescriptionObjects(projectId, mdObj, attributesMap).then(
+                (descriptionObjects) =>
+                    this.loadCatalog(projectId, {
+                        ...request,
+                        bucketItems: descriptionObjects.map(unwrapItemDescriptionObject),
+                    }),
             );
         }
 
@@ -227,9 +234,11 @@ export class CatalogueModule {
         unavailableDateDataSetsCount?: number | undefined;
     }> {
         const mdObj = cloneDeep(options).bucketItems;
-        const bucketItems = mdObj
-            ? await this.loadItemDescriptions(projectId, mdObj, options.attributesMap!)
+        const descriptionObjects = mdObj
+            ? await this.loadItemDescriptionObjects(projectId, mdObj, options.attributesMap!)
             : undefined;
+
+        const bucketItems = descriptionObjects?.map(unwrapItemDescriptionObject);
 
         const omittedOptions = [
             "filter",
@@ -284,33 +293,6 @@ export class CatalogueModule {
         );
 
         return buildItemDescriptionObjects(definitionsAndColumns);
-    }
-
-    /**
-     * ItemDescription is either URI or MAQL expression
-     * https://github.com/gooddata/gdc-bear/blob/185.4/resources/specification/md/obj.res#L284
-     *
-     * @param projectId - id of the project to load from
-     * @param mdObj - metadata object containing buckets, visualization class, properties etc.
-     * @param attributesMap - contains map of attributes where the keys are the attributes display forms URIs
-     * @param removeDateItems - whether to skip date items
-     * @deprecated Use {@link loadItemDescriptionObjects}.
-     */
-    public async loadItemDescriptions(
-        projectId: string,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-        mdObj: any,
-        attributesMap: Record<string, unknown>,
-        removeDateItems = false,
-    ): Promise<string[]> {
-        const itemDescriptions = await this.loadItemDescriptionObjects(
-            projectId,
-            mdObj,
-            attributesMap,
-            removeDateItems,
-        );
-
-        return itemDescriptions.map(unwrapItemDescriptionObject);
     }
 
     /**
