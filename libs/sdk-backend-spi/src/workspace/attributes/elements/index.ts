@@ -113,23 +113,6 @@ export interface IElementsQueryOptions {
     filter?: string;
 
     /**
-     * @privateRemarks
-     * TODO what is this doing?
-     * @deprecated do not use.
-     */
-    prompt?: string;
-
-    /**
-     * With this option you can specify concrete attribute elements uris to load.
-     *
-     * @remarks
-     * This is commonly used to preload selected elements in the attribute filter.
-     *
-     * @deprecated use {@link IElementsQueryOptions.elements} instead
-     */
-    uris?: string[];
-
-    /**
      * If true, the `filter` prop will behave negatively - i.e. it will not include items matching the `filter` value.
      */
     complement?: boolean;

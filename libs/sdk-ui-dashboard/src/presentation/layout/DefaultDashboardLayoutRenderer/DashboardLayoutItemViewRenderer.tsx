@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { ScreenSize } from "@gooddata/sdk-backend-spi";
+import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isNil from "lodash/isNil";
 import React, { useMemo } from "react";

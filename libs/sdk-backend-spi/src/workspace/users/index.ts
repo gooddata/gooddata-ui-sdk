@@ -1,14 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-empty-interface, import/namespace */
-import * as m from "@gooddata/sdk-model";
+import { IWorkspaceUser } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
-
-/**
- * Represents platform user in context of the workspace.
- * @deprecated Use {@link @gooddata/sdk-model#IWorkspaceUser}
- * @public
- */
-export interface IWorkspaceUser extends m.IWorkspaceUser {}
 
 /**
  * Configuration options for querying users

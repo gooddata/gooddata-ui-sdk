@@ -106,14 +106,8 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     private getExactFilterSpec(options: IElementsQueryOptions): Partial<ElementsRequest> {
-        const { elements, uris } = options;
+        const { elements } = options;
         if (elements) {
-            if (uris) {
-                console.warn(
-                    "Both 'elements' and 'uris' used in IElementsQueryOptions, 'uris' property will be ignored.",
-                );
-            }
-
             invariant(
                 isValueBasedElementsQueryOptionsElements(elements),
                 "Specifying elements by URIs is not supported. Use specification by value instead.",
@@ -132,15 +126,6 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                           labelType: FilterByLabelTypeEnum.PRIMARY,
                       },
                   };
-        } else if (uris) {
-            return {
-                exactFilter: uris,
-                // filtering by uris on tiger forces filtering by primary label value
-                // this is way how we load non-primary label by primary label values list in uris option (related to NAS-137)
-                filterBy: {
-                    labelType: FilterByLabelTypeEnum.PRIMARY,
-                },
-            };
         }
 
         return {};
