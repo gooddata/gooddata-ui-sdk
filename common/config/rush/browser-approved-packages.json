@@ -79,7 +79,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@formatjs/cli",
+      "name": "@formatjs/cli-lib",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -265,6 +265,10 @@
     {
       "name": "@storybook/theming",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@testing-library/dom",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@testing-library/jest-dom",
@@ -859,6 +863,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "prop-types",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "qs",
       "allowedCategories": [ "production" ]
     },
@@ -976,6 +984,10 @@
     },
     {
       "name": "redux-saga",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "require-from-string",
       "allowedCategories": [ "production" ]
     },
     {

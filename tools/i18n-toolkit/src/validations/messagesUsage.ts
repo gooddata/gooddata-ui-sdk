@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { extract } from "@formatjs/cli";
+import { extract } from "@formatjs/cli-lib";
 import { sync } from "fast-glob";
 import * as path from "path";
 
