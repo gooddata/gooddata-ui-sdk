@@ -3207,11 +3207,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette"
-/**
-* @deprecated will be removed in the next major release, use "insight" instead
-*/
-| "visualizationObject" | "filterContext" | "dashboardPlugin";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -3367,9 +3363,6 @@ export function widgetRef(widget: IWidget): ObjRef;
 
 // @alpha
 export function widgetTitle(widget: IWidget): string;
-
-// @alpha @deprecated (undocumented)
-export type WidgetType = AnalyticalWidgetType;
 
 // @alpha
 export function widgetType(widget: IWidget): AnalyticalWidgetType;

@@ -14,12 +14,6 @@ import { IKpi } from "./kpi";
 export type AnalyticalWidgetType = "kpi" | "insight";
 
 /**
- * @deprecated use {@link AnalyticalWidgetType} instead
- * @alpha
- */
-export type WidgetType = AnalyticalWidgetType;
-
-/**
  * Analytical Widgets are a sub-type of dashboard widgets that display analytics. Be it charts rendering
  * insights (reports) or KPIs rendering measure values optionally with their comparison.
  *

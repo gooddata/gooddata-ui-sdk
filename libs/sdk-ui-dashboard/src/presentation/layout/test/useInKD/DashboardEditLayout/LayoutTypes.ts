@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { IInsight, IKpi, ObjRef, WidgetType } from "@gooddata/sdk-model";
+import { IInsight, IKpi, ObjRef, AnalyticalWidgetType } from "@gooddata/sdk-model";
 
 export type SdkCompliantWidgetContent = IKpi | IInsight;
 
@@ -22,7 +22,7 @@ export enum WidgetPosition {
 
 export interface IDragZoneWidget {
     dropzone: {
-        widgetType: WidgetType;
+        widgetType: AnalyticalWidgetType;
         content?: SdkCompliantWidgetContent;
         ref?: ObjRef;
         position?: WidgetPosition;

@@ -532,7 +532,6 @@ export {
 
 export {
     AnalyticalWidgetType,
-    WidgetType,
     IAnalyticalWidget,
     IKpiWidget,
     IKpiWidgetBase,
