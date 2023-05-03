@@ -23,8 +23,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableDescriptions = "enableDescriptions",
     //boolean + possible values: enabled, disabled
-    EnableKPIAttributeFilterRenaming = "enableKPIAttributeFilterRenaming",
-    //boolean + possible values: enabled, disabled
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
     //boolean + possible values: enabled, disabled
     EnableSqlDatasets = "enableSqlDatasets",
@@ -53,7 +51,6 @@ export type ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
-    enableKPIAttributeFilterRenaming: typeof FeatureFlagsValues["enableKPIAttributeFilterRenaming"][number];
     enableKPIDashboardExportPDF: typeof FeatureFlagsValues["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: typeof FeatureFlagsValues["enableSqlDatasets"][number];
     enableSingleSelectionFilter: typeof FeatureFlagsValues["enableSingleSelectionFilter"][number];
@@ -74,7 +71,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: true,
     enableDescriptions: true,
-    enableKPIAttributeFilterRenaming: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
     enableSingleSelectionFilter: true,
@@ -99,7 +95,6 @@ export const FeatureFlagsValues = {
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableLongitudeAndLatitudeLabels: [true, false] as const,
     enableDescriptions: [true, false] as const,
-    enableKPIAttributeFilterRenaming: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableSingleSelectionFilter: [true, false] as const,
