@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
-import { useCallback, useMemo } from "react";
-import { IAttributeFilter, idRef, newNegativeAttributeFilter } from "@gooddata/sdk-model";
+import { useCallback } from "react";
+import { IAttributeFilter } from "@gooddata/sdk-model";
 import { IPlaceholder, usePlaceholder } from "@gooddata/sdk-ui";
 
 /**
@@ -9,13 +9,10 @@ import { IPlaceholder, usePlaceholder } from "@gooddata/sdk-ui";
 export const useResolveFilterInput = (
     filter?: IAttributeFilter,
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>,
-    identifier?: string,
 ) => {
     const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(connectToPlaceholder);
 
-    const currentFilter = useMemo(() => {
-        return resolvedPlaceholder ?? filter ?? createFilterFromIdentifier(identifier);
-    }, [resolvedPlaceholder, filter, identifier]);
+    const currentFilter = resolvedPlaceholder ?? filter;
 
     const setConnectedPlaceholderValue = useCallback(
         (filter: IAttributeFilter) => {
@@ -30,10 +27,4 @@ export const useResolveFilterInput = (
         filter: currentFilter,
         setConnectedPlaceholderValue,
     };
-};
-
-const createFilterFromIdentifier = (identifier: string) => {
-    return newNegativeAttributeFilter(idRef(identifier), {
-        uris: [],
-    });
 };

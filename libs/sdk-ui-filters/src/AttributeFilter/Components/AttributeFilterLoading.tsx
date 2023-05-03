@@ -5,6 +5,24 @@ import { AttributeFilterDropdownButton } from "./DropdownButton/AttributeFilterD
 /**
  * Component that displays a loading indicator.
  *
+ * @remarks
+ * It will be rendered during the initialization instead of the component that implements {@link IAttributeFilterDropdownButtonProps}.
  * @beta
  */
-export const AttributeFilterLoading: React.VFC = () => <AttributeFilterDropdownButton isLoading />;
+export interface IAttributeFilterLoadingProps {
+    /**
+     * Callback to open or close AttributeFilter dropdown.
+     *
+     * @beta
+     */
+    onClick?: () => void;
+}
+
+/**
+ * AttributeFilter component that displays a loading indicator.
+ *
+ * @beta
+ */
+export const AttributeFilterLoading: React.FC<IAttributeFilterLoadingProps> = ({ onClick }) => (
+    <AttributeFilterDropdownButton isLoading onClick={onClick} />
+);

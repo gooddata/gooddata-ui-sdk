@@ -25,7 +25,8 @@ const ALIGN_POINTS = [
  * @internal
  */
 export const AttributeFilterDropdown: React.VFC = () => {
-    const { DropdownButtonComponent, DropdownBodyComponent } = useAttributeFilterComponentsContext();
+    const { DropdownButtonComponent, DropdownBodyComponent, LoadingComponent, ErrorComponent } =
+        useAttributeFilterComponentsContext();
 
     const {
         title,
@@ -61,17 +62,23 @@ export const AttributeFilterDropdown: React.VFC = () => {
             fullscreenOnMobile={fullscreenOnMobile}
             renderButton={({ toggleDropdown, isOpen }) => (
                 <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
-                    <DropdownButtonComponent
-                        title={title}
-                        subtitle={subtitle}
-                        isFiltering={isFiltering}
-                        isLoaded={!isInitializing && !initError}
-                        isLoading={isInitializing}
-                        isOpen={isOpen}
-                        selectedItemsCount={committedSelectionElements.length}
-                        showSelectionCount={showSelectionCount}
-                        onClick={toggleDropdown}
-                    />
+                    {!!isInitializing && <LoadingComponent onClick={toggleDropdown} />}
+                    {!isInitializing && !!initError && (
+                        <ErrorComponent message={initError.message} error={initError} />
+                    )}
+                    {!isInitializing && !initError && (
+                        <DropdownButtonComponent
+                            title={title}
+                            subtitle={subtitle}
+                            isFiltering={isFiltering}
+                            isLoaded={!isInitializing && !initError}
+                            isLoading={isInitializing}
+                            isOpen={isOpen}
+                            selectedItemsCount={committedSelectionElements.length}
+                            showSelectionCount={showSelectionCount}
+                            onClick={toggleDropdown}
+                        />
+                    )}
                 </div>
             )}
             onOpenStateChanged={(isOpen) => {

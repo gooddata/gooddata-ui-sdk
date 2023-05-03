@@ -47,8 +47,6 @@ const AttributeFilterComponentsContext = createContext<IAttributeFilterCustomCom
         "AttributeFilterComponentsContext",
     ),
     StatusBarComponent: ThrowMissingComponentError("StatusBarComponent", "AttributeFilterComponentsContext"),
-    FilterError: ThrowMissingComponentError("FilterError", "AttributeFilterComponentsContext"),
-    FilterLoading: ThrowMissingComponentError("FilterLoading", "AttributeFilterComponentsContext"),
 });
 
 AttributeFilterComponentsContext.displayName = "AttributeFilterComponentsContext";
@@ -63,7 +61,9 @@ export const useAttributeFilterComponentsContext = (): IAttributeFilterCustomCom
 /**
  * @internal
  */
-export const AttributeFilterComponentsProvider: React.FC<IAttributeFilterCustomComponentProps> = (props) => {
+export const AttributeFilterComponentsProvider: React.FC<
+    IAttributeFilterCustomComponentProps & { children: React.ReactNode }
+> = (props) => {
     const { children, ...components } = props;
 
     return (

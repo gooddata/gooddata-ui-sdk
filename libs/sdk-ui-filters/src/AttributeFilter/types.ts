@@ -4,7 +4,6 @@ import {
     DashboardAttributeFilterSelectionMode,
     IAttributeElement,
     IAttributeFilter,
-    Identifier,
     ObjRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -12,6 +11,7 @@ import { AttributeFiltersOrPlaceholders, ILocale, IPlaceholder, GoodDataSdkError
 
 import { IAttributeFilterElementsActionsProps } from "./Components/ElementsSelect/AttributeFilterElementsActions";
 import { IAttributeFilterErrorProps } from "./Components/AttributeFilterError";
+import { IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading";
 import { IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton";
 import { IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types";
 import { IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions";
@@ -116,16 +116,6 @@ export interface IAttributeFilterCoreProps {
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
 
     /**
-     * Specify identifier of attribute display form, for which you want to construct the filter.
-     *
-     * @remarks
-     * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the 'filter' prop or 'connectToPlaceholder' prop.
-     *
-     * @deprecated - use the filter prop instead
-     */
-    identifier?: Identifier;
-
-    /**
      * Specify title for the attribute filter.
      *
      * @remarks
@@ -208,11 +198,6 @@ export interface IAttributeFilterCoreProps {
      * Callback that will be triggered when error is thrown.
      */
     onError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * React children
-     */
-    children?: React.ReactNode;
 }
 
 /**
@@ -237,10 +222,13 @@ export interface IAttributeFilterCustomComponentProps {
 
     /**
      * Customize attribute filter with a component to be rendered if attribute filter is loading.
+     * Note that this will be rendered only during the initialization of the attribute filter.
      *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterLoading} will be used.
      * @beta
      */
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: React.ComponentType<IAttributeFilterLoadingProps>;
 
     /**
      * Customize attribute filter dropdown button component.
@@ -345,23 +333,4 @@ export interface IAttributeFilterCustomComponentProps {
      * @beta
      */
     StatusBarComponent?: React.ComponentType<IAttributeFilterStatusBarProps>;
-
-    /**
-     * Customize attribute filter with a component to be rendered if initialization fails.
-     *
-     * @deprecated use {@link IAttributeFilterCustomComponentProps.ErrorComponent} instead
-     */
-    FilterError?: React.ComponentType<{ error?: any }>;
-
-    /**
-     * Customize attribute filter with a component to be rendered if attribute filter is loading.
-     *
-     * @deprecated use {@link IAttributeFilterCustomComponentProps.LoadingComponent} instead
-     */
-    FilterLoading?: React.ComponentType;
-
-    /**
-     * React children
-     */
-    children?: React.ReactNode;
 }

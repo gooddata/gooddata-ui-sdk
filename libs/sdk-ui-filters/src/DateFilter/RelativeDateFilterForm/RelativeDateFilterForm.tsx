@@ -9,9 +9,6 @@ import { DateFilterGranularity } from "@gooddata/sdk-model";
  * @internal
  */
 export interface IRelativeDateFilterFormProps {
-    /**
-     * @deprecated use availableGranularities in {@link IDateFilterOwnProps} instead
-     */
     availableGranularities: DateFilterGranularity[];
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;

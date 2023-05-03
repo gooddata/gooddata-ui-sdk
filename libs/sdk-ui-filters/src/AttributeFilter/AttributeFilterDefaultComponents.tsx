@@ -23,7 +23,7 @@ import { SingleSelectionAttributeFilterDropdownActions } from "./Components/Drop
  */
 export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomComponentProps> = {
     ErrorComponent: AttributeFilterError,
-    LoadingComponent: undefined,
+    LoadingComponent: AttributeFilterLoading,
     DropdownButtonComponent: AttributeFilterDropdownButton,
     DropdownBodyComponent: AttributeFilterDropdownBody,
     DropdownActionsComponent: AttributeFilterDropdownActions,
@@ -35,9 +35,6 @@ export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomCo
     ElementsSelectActionsComponent: AttributeFilterElementsActions,
     EmptyResultComponent: AttributeFilterEmptyResult,
     StatusBarComponent: AttributeFilterStatusBar,
-    FilterError: AttributeFilterError,
-    FilterLoading: AttributeFilterLoading,
-    children: undefined,
 };
 
 /**
