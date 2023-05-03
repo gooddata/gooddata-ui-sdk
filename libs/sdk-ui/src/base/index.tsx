@@ -320,16 +320,6 @@ export {
 } from "./vis/visualizationTypes";
 export { Subtract } from "./typings/subtract";
 export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
-export {
-    CatalogHelper,
-    IAttrItem,
-    IAttrs,
-    ICatalog,
-    IDataSet,
-    IDisplayForms,
-    IIdentifierWithTags,
-} from "./helpers/CatalogHelper";
-
 /*
  *
  */

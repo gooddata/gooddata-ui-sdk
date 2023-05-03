@@ -155,55 +155,6 @@ export class CancelledSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
-// @public @deprecated
-export class CatalogHelper {
-    constructor(catalog: ICatalog);
-    // (undocumented)
-    attribute(attributeName: string): string;
-    // (undocumented)
-    attributeDisplayForm(attributeName: string, displayFormName?: string): string;
-    // (undocumented)
-    attributeDisplayFormTags(attributeName: string, displayFormName?: string): string;
-    // (undocumented)
-    attributes: {
-        [key: string]: IAttrItem;
-    };
-    // (undocumented)
-    attributeTags(attributeName: string): string;
-    // (undocumented)
-    dateDataSet(dataSetName: string): string;
-    // (undocumented)
-    dateDataSetAttribute(dataSetName: string, attrName: string): string;
-    // (undocumented)
-    dateDataSetAttributeTags(dataSetName: string, attrName: string): string;
-    // (undocumented)
-    dateDataSetDisplayForm(dataSetName: string, attributeName: string, displayFormName?: string): string;
-    // (undocumented)
-    dateDataSetDisplayFormTags(dataSetName: string, attributeName: string, displayFormName?: string): string;
-    // (undocumented)
-    dateDataSets: {
-        [key: string]: IDataSet;
-    };
-    // (undocumented)
-    dateDataSetTags(dataSetName: string): string;
-    // (undocumented)
-    measure(name: string): string;
-    // (undocumented)
-    measures: {
-        [key: string]: IIdentifierWithTags;
-    };
-    // (undocumented)
-    measureTags(name: string): string;
-    // (undocumented)
-    visualization(name: string): string;
-    // (undocumented)
-    visualizations: {
-        [key: string]: IIdentifierWithTags;
-    };
-    // (undocumented)
-    visualizationTags(name: string): string;
-}
-
 // @public (undocumented)
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
@@ -541,24 +492,6 @@ export interface IArithmeticMeasureTitleProps {
     operator: string;
 }
 
-// @public @deprecated (undocumented)
-export interface IAttrItem {
-    // (undocumented)
-    defaultDisplayForm: IIdentifierWithTags;
-    // (undocumented)
-    displayForms: IDisplayForms;
-    // (undocumented)
-    identifier: string;
-    // (undocumented)
-    tags: string;
-}
-
-// @public @deprecated (undocumented)
-export interface IAttrs {
-    // (undocumented)
-    [key: string]: IAttrItem;
-}
-
 // @internal (undocumented)
 export interface IAvailableDrillTargetAttribute {
     // (undocumented)
@@ -599,24 +532,6 @@ export interface ICancelablePromise<T> {
     getHasFulfilled: () => boolean;
     // (undocumented)
     promise: Promise<T>;
-}
-
-// @public @deprecated (undocumented)
-export interface ICatalog {
-    // (undocumented)
-    attributes: IAttrs;
-    // (undocumented)
-    dateDataSets: {
-        [key: string]: IDataSet;
-    };
-    // (undocumented)
-    measures?: {
-        [key: string]: IIdentifierWithTags;
-    };
-    // (undocumented)
-    visualizations: {
-        [key: string]: IIdentifierWithTags;
-    };
 }
 
 // @alpha
@@ -712,16 +627,6 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     toArray(): IDataSeries[];
 }
 
-// @public @deprecated (undocumented)
-export interface IDataSet {
-    // (undocumented)
-    attributes: IAttrs;
-    // (undocumented)
-    identifier: string;
-    // (undocumented)
-    tags: string;
-}
-
 // @public
 export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoint> {
     // (undocumented)
@@ -746,12 +651,6 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
 
 // @public
 export function identifierMatch(identifier: string): IHeaderPredicate;
-
-// @public @deprecated (undocumented)
-export interface IDisplayForms {
-    // (undocumented)
-    [key: string]: IIdentifierWithTags;
-}
 
 // @public (undocumented)
 export type IDrillableItem = IDrillableItemUri | IDrillableItemIdentifier | (IDrillableItemUri & IDrillableItemIdentifier);
@@ -1051,14 +950,6 @@ export interface IHighchartsParentTick {
     leaves: number;
     // (undocumented)
     startAt: number;
-}
-
-// @public @deprecated (undocumented)
-export interface IIdentifierWithTags {
-    // (undocumented)
-    identifier: string;
-    // (undocumented)
-    tags: string;
 }
 
 // @internal (undocumented)
@@ -1371,19 +1262,6 @@ export type ITranslationsProviderProps = ITranslationsProviderOwnProps & Wrapped
 
 // @public
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
-
-// @beta @deprecated (undocumented)
-export interface IUseExecutionConfig {
-    backend?: IAnalyticalBackend;
-    componentName?: string;
-    filters?: NullableFiltersOrPlaceholders;
-    placeholdersResolutionContext?: any;
-    seriesBy: AttributesMeasuresOrPlaceholders;
-    slicesBy?: AttributesOrPlaceholders;
-    sortBy?: SortsOrPlaceholders;
-    totals?: TotalsOrPlaceholders;
-    workspace?: string;
-}
 
 // @public
 export interface IUseExecutionDataViewConfig {
@@ -1770,21 +1648,6 @@ export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodD
 
 // @public
 export type UseDataExportState = UseCancelablePromiseState<string, GoodDataSdkError>;
-
-// @beta @deprecated
-export function useDataView({ execution, window, onCancel, onError, onLoading, onPending, onSuccess, }: {
-    execution: IPreparedExecution | undefined | null;
-    window?: DataViewWindow;
-} & UseDataViewCallbacks, deps?: DependencyList): UseDataViewState;
-
-// @beta @deprecated
-export type UseDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
-
-// @beta @deprecated
-export type UseDataViewState = UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
-
-// @beta @deprecated
-export function useExecution(config: IUseExecutionConfig): IPreparedExecution;
 
 // @public
 export function useExecutionDataView(config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
