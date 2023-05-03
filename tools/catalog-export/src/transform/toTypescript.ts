@@ -1,5 +1,4 @@
 // (C) 2007-2022 GoodData Corporation
-import flatten from "lodash/flatten";
 import {
     ImportDeclarationStructure,
     OptionalKind,
@@ -224,16 +223,11 @@ function generateDisplayFormPropertyInitializers(
 function generateAttributeConstant(
     attribute: Attribute,
     naming: NamingStrategies = DefaultNaming,
-    deprecated?: string,
 ): OptionalKind<VariableStatementStructure> {
     const { meta } = attribute.attribute;
     const variableName = naming.attribute(meta.title, GlobalNameScope);
     const { displayForms } = attribute.attribute.content;
     const comments = [`Attribute Title: ${meta.title}`, `Attribute ID: ${meta.identifier}`];
-
-    if (deprecated) {
-        comments.push(`@deprecated ${deprecated}`);
-    }
 
     const docs = [comments.join("\n")];
 
@@ -349,29 +343,6 @@ function generateMeasures(
     return fromMetrics.concat(fromFacts);
 }
 
-/**
- * Keeping it simple for now - generate per-attr constants for each attribute in date data set. For now there's
- * no thing that connects all date data sets under one umbrella.
- *
- * @param dd - date data set
- * @param naming - naming strategies to use for date datasets and attributes; some variability is needed
- *  due to how different backends name date dimensions and their attributes
- */
-function generateDateDataSet(
-    dd: DateDataSet,
-    naming: NamingStrategies,
-): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    const { content } = dd.dateDataSet;
-
-    return content.attributes.map((a) =>
-        generateAttributeConstant(
-            a,
-            naming,
-            "constants generated for date attributes are deprecated in favor of DateDatasets mapping",
-        ),
-    );
-}
-
 function generateDateDataSetAttributes(dd: DateDataSet, naming: NamingStrategies): string[] {
     const ddScope = {};
 
@@ -444,9 +415,7 @@ function generateDateDataSets(
         naming = DefaultNaming;
     }
 
-    return flatten(projectMeta.dateDataSets.map((dd) => generateDateDataSet(dd, naming))).concat(
-        generateDateDataSetMapping(projectMeta.dateDataSets, naming),
-    );
+    return [generateDateDataSetMapping(projectMeta.dateDataSets, naming)];
 }
 
 /**

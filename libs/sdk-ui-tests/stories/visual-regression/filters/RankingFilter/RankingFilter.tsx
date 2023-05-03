@@ -75,7 +75,7 @@ const attributeDropdownItems: IAttributeDropdownItem[] = [
     },
     {
         title: "Date",
-        ref: localIdRef(attributeLocalId(ExperimentalMd.ClosedDate.DdMmYyyy)),
+        ref: localIdRef(attributeLocalId(ExperimentalMd.DateDatasets.Closed.Date.DdMmYyyy)),
         type: "DATE",
     },
 ];

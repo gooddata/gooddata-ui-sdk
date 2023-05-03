@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-03-09T07:06:19.896Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-01T15:50:57.806Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -88,10 +88,18 @@ export const CountyName: IAttribute = newAttribute("county_name");
  */
 export const City = {
     /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */
+    ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
-     */
-    Location: newAttribute("f_city.id.location"),
+     */ Location: newAttribute("f_city.id.location"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
     /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
@@ -101,21 +109,13 @@ export const City = {
      * Display Form ID: f_city.id.cityname
      */ Name: newAttribute("f_city.id.cityname"),
     /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
-    /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */ Default: newAttribute("f_city.id"),
-    /**
      * Display Form Title: Longitude
      * Display Form ID: f_city.id.longitude
      */ Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
 };
 /**
  * Attribute Title: State
@@ -123,14 +123,14 @@ export const City = {
  */
 export const State = {
     /**
-     * Display Form Title: State
-     * Display Form ID: state_id
-     */
-    Default: newAttribute("state_id"),
-    /**
      * Display Form Title: State name
      * Display Form ID: state_id.statename
-     */ Name: newAttribute("state_id.statename"),
+     */
+    Name: newAttribute("state_id.statename"),
+    /**
+     * Display Form Title: State
+     * Display Form ID: state_id
+     */ Default: newAttribute("state_id"),
 };
 /**
  * Attribute Title: Opportunity
@@ -904,456 +904,6 @@ export const TimelineDate = {
      * Fact Aggregation: runsum
      */ Runsum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("runsum")),
 };
-/**
- * Attribute Title: Activity - Minute
- * Attribute ID: dt_activity_timestamp.minute
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityMinute: IAttribute = newAttribute("dt_activity_timestamp.minute");
-/**
- * Attribute Title: Activity - Hour
- * Attribute ID: dt_activity_timestamp.hour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityHour: IAttribute = newAttribute("dt_activity_timestamp.hour");
-/**
- * Attribute Title: Activity - Date
- * Attribute ID: dt_activity_timestamp.day
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityDate_1: IAttribute = newAttribute("dt_activity_timestamp.day");
-/**
- * Attribute Title: Activity - Week/Year
- * Attribute ID: dt_activity_timestamp.week
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityWeekYear: IAttribute = newAttribute("dt_activity_timestamp.week");
-/**
- * Attribute Title: Activity - Month/Year
- * Attribute ID: dt_activity_timestamp.month
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityMonthYear: IAttribute = newAttribute("dt_activity_timestamp.month");
-/**
- * Attribute Title: Activity - Quarter/Year
- * Attribute ID: dt_activity_timestamp.quarter
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityQuarterYear: IAttribute = newAttribute("dt_activity_timestamp.quarter");
-/**
- * Attribute Title: Activity - Year
- * Attribute ID: dt_activity_timestamp.year
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityYear: IAttribute = newAttribute("dt_activity_timestamp.year");
-/**
- * Attribute Title: Activity - Minute of Hour
- * Attribute ID: dt_activity_timestamp.minuteOfHour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityMinuteOfHour: IAttribute = newAttribute("dt_activity_timestamp.minuteOfHour");
-/**
- * Attribute Title: Activity - Hour of Day
- * Attribute ID: dt_activity_timestamp.hourOfDay
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityHourOfDay: IAttribute = newAttribute("dt_activity_timestamp.hourOfDay");
-/**
- * Attribute Title: Activity - Day of Week
- * Attribute ID: dt_activity_timestamp.dayOfWeek
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityDayOfWeek: IAttribute = newAttribute("dt_activity_timestamp.dayOfWeek");
-/**
- * Attribute Title: Activity - Day of Month
- * Attribute ID: dt_activity_timestamp.dayOfMonth
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityDayOfMonth: IAttribute = newAttribute("dt_activity_timestamp.dayOfMonth");
-/**
- * Attribute Title: Activity - Day of Year
- * Attribute ID: dt_activity_timestamp.dayOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityDayOfYear: IAttribute = newAttribute("dt_activity_timestamp.dayOfYear");
-/**
- * Attribute Title: Activity - Week of Year
- * Attribute ID: dt_activity_timestamp.weekOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityWeekOfYear: IAttribute = newAttribute("dt_activity_timestamp.weekOfYear");
-/**
- * Attribute Title: Activity - Month of Year
- * Attribute ID: dt_activity_timestamp.monthOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityMonthOfYear: IAttribute = newAttribute("dt_activity_timestamp.monthOfYear");
-/**
- * Attribute Title: Activity - Quarter of Year
- * Attribute ID: dt_activity_timestamp.quarterOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ActivityQuarterOfYear: IAttribute = newAttribute("dt_activity_timestamp.quarterOfYear");
-/**
- * Attribute Title: Closed - Minute
- * Attribute ID: dt_closedate_timestamp.minute
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedMinute: IAttribute = newAttribute("dt_closedate_timestamp.minute");
-/**
- * Attribute Title: Closed - Hour
- * Attribute ID: dt_closedate_timestamp.hour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedHour: IAttribute = newAttribute("dt_closedate_timestamp.hour");
-/**
- * Attribute Title: Closed - Date
- * Attribute ID: dt_closedate_timestamp.day
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedDate: IAttribute = newAttribute("dt_closedate_timestamp.day");
-/**
- * Attribute Title: Closed - Week/Year
- * Attribute ID: dt_closedate_timestamp.week
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedWeekYear: IAttribute = newAttribute("dt_closedate_timestamp.week");
-/**
- * Attribute Title: Closed - Month/Year
- * Attribute ID: dt_closedate_timestamp.month
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedMonthYear: IAttribute = newAttribute("dt_closedate_timestamp.month");
-/**
- * Attribute Title: Closed - Quarter/Year
- * Attribute ID: dt_closedate_timestamp.quarter
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedQuarterYear: IAttribute = newAttribute("dt_closedate_timestamp.quarter");
-/**
- * Attribute Title: Closed - Year
- * Attribute ID: dt_closedate_timestamp.year
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedYear: IAttribute = newAttribute("dt_closedate_timestamp.year");
-/**
- * Attribute Title: Closed - Minute of Hour
- * Attribute ID: dt_closedate_timestamp.minuteOfHour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedMinuteOfHour: IAttribute = newAttribute("dt_closedate_timestamp.minuteOfHour");
-/**
- * Attribute Title: Closed - Hour of Day
- * Attribute ID: dt_closedate_timestamp.hourOfDay
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedHourOfDay: IAttribute = newAttribute("dt_closedate_timestamp.hourOfDay");
-/**
- * Attribute Title: Closed - Day of Week
- * Attribute ID: dt_closedate_timestamp.dayOfWeek
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedDayOfWeek: IAttribute = newAttribute("dt_closedate_timestamp.dayOfWeek");
-/**
- * Attribute Title: Closed - Day of Month
- * Attribute ID: dt_closedate_timestamp.dayOfMonth
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedDayOfMonth: IAttribute = newAttribute("dt_closedate_timestamp.dayOfMonth");
-/**
- * Attribute Title: Closed - Day of Year
- * Attribute ID: dt_closedate_timestamp.dayOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedDayOfYear: IAttribute = newAttribute("dt_closedate_timestamp.dayOfYear");
-/**
- * Attribute Title: Closed - Week of Year
- * Attribute ID: dt_closedate_timestamp.weekOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedWeekOfYear: IAttribute = newAttribute("dt_closedate_timestamp.weekOfYear");
-/**
- * Attribute Title: Closed - Month of Year
- * Attribute ID: dt_closedate_timestamp.monthOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedMonthOfYear: IAttribute = newAttribute("dt_closedate_timestamp.monthOfYear");
-/**
- * Attribute Title: Closed - Quarter of Year
- * Attribute ID: dt_closedate_timestamp.quarterOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const ClosedQuarterOfYear: IAttribute = newAttribute("dt_closedate_timestamp.quarterOfYear");
-/**
- * Attribute Title: Created - Minute
- * Attribute ID: dt_oppcreated_timestamp.minute
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedMinute: IAttribute = newAttribute("dt_oppcreated_timestamp.minute");
-/**
- * Attribute Title: Created - Hour
- * Attribute ID: dt_oppcreated_timestamp.hour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedHour: IAttribute = newAttribute("dt_oppcreated_timestamp.hour");
-/**
- * Attribute Title: Created - Date
- * Attribute ID: dt_oppcreated_timestamp.day
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedDate: IAttribute = newAttribute("dt_oppcreated_timestamp.day");
-/**
- * Attribute Title: Created - Week/Year
- * Attribute ID: dt_oppcreated_timestamp.week
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedWeekYear: IAttribute = newAttribute("dt_oppcreated_timestamp.week");
-/**
- * Attribute Title: Created - Month/Year
- * Attribute ID: dt_oppcreated_timestamp.month
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedMonthYear: IAttribute = newAttribute("dt_oppcreated_timestamp.month");
-/**
- * Attribute Title: Created - Quarter/Year
- * Attribute ID: dt_oppcreated_timestamp.quarter
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedQuarterYear: IAttribute = newAttribute("dt_oppcreated_timestamp.quarter");
-/**
- * Attribute Title: Created - Year
- * Attribute ID: dt_oppcreated_timestamp.year
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedYear: IAttribute = newAttribute("dt_oppcreated_timestamp.year");
-/**
- * Attribute Title: Created - Minute of Hour
- * Attribute ID: dt_oppcreated_timestamp.minuteOfHour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedMinuteOfHour: IAttribute = newAttribute("dt_oppcreated_timestamp.minuteOfHour");
-/**
- * Attribute Title: Created - Hour of Day
- * Attribute ID: dt_oppcreated_timestamp.hourOfDay
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedHourOfDay: IAttribute = newAttribute("dt_oppcreated_timestamp.hourOfDay");
-/**
- * Attribute Title: Created - Day of Week
- * Attribute ID: dt_oppcreated_timestamp.dayOfWeek
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedDayOfWeek: IAttribute = newAttribute("dt_oppcreated_timestamp.dayOfWeek");
-/**
- * Attribute Title: Created - Day of Month
- * Attribute ID: dt_oppcreated_timestamp.dayOfMonth
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedDayOfMonth: IAttribute = newAttribute("dt_oppcreated_timestamp.dayOfMonth");
-/**
- * Attribute Title: Created - Day of Year
- * Attribute ID: dt_oppcreated_timestamp.dayOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedDayOfYear: IAttribute = newAttribute("dt_oppcreated_timestamp.dayOfYear");
-/**
- * Attribute Title: Created - Week of Year
- * Attribute ID: dt_oppcreated_timestamp.weekOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedWeekOfYear: IAttribute = newAttribute("dt_oppcreated_timestamp.weekOfYear");
-/**
- * Attribute Title: Created - Month of Year
- * Attribute ID: dt_oppcreated_timestamp.monthOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedMonthOfYear: IAttribute = newAttribute("dt_oppcreated_timestamp.monthOfYear");
-/**
- * Attribute Title: Created - Quarter of Year
- * Attribute ID: dt_oppcreated_timestamp.quarterOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const CreatedQuarterOfYear: IAttribute = newAttribute("dt_oppcreated_timestamp.quarterOfYear");
-/**
- * Attribute Title: Snapshot - Minute
- * Attribute ID: dt_snapshotdate_timestamp.minute
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotMinute: IAttribute = newAttribute("dt_snapshotdate_timestamp.minute");
-/**
- * Attribute Title: Snapshot - Hour
- * Attribute ID: dt_snapshotdate_timestamp.hour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotHour: IAttribute = newAttribute("dt_snapshotdate_timestamp.hour");
-/**
- * Attribute Title: Snapshot - Date
- * Attribute ID: dt_snapshotdate_timestamp.day
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotDate: IAttribute = newAttribute("dt_snapshotdate_timestamp.day");
-/**
- * Attribute Title: Snapshot - Week/Year
- * Attribute ID: dt_snapshotdate_timestamp.week
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotWeekYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.week");
-/**
- * Attribute Title: Snapshot - Month/Year
- * Attribute ID: dt_snapshotdate_timestamp.month
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotMonthYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.month");
-/**
- * Attribute Title: Snapshot - Quarter/Year
- * Attribute ID: dt_snapshotdate_timestamp.quarter
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotQuarterYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.quarter");
-/**
- * Attribute Title: Snapshot - Year
- * Attribute ID: dt_snapshotdate_timestamp.year
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.year");
-/**
- * Attribute Title: Snapshot - Minute of Hour
- * Attribute ID: dt_snapshotdate_timestamp.minuteOfHour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotMinuteOfHour: IAttribute = newAttribute("dt_snapshotdate_timestamp.minuteOfHour");
-/**
- * Attribute Title: Snapshot - Hour of Day
- * Attribute ID: dt_snapshotdate_timestamp.hourOfDay
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotHourOfDay: IAttribute = newAttribute("dt_snapshotdate_timestamp.hourOfDay");
-/**
- * Attribute Title: Snapshot - Day of Week
- * Attribute ID: dt_snapshotdate_timestamp.dayOfWeek
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotDayOfWeek: IAttribute = newAttribute("dt_snapshotdate_timestamp.dayOfWeek");
-/**
- * Attribute Title: Snapshot - Day of Month
- * Attribute ID: dt_snapshotdate_timestamp.dayOfMonth
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotDayOfMonth: IAttribute = newAttribute("dt_snapshotdate_timestamp.dayOfMonth");
-/**
- * Attribute Title: Snapshot - Day of Year
- * Attribute ID: dt_snapshotdate_timestamp.dayOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotDayOfYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.dayOfYear");
-/**
- * Attribute Title: Snapshot - Week of Year
- * Attribute ID: dt_snapshotdate_timestamp.weekOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotWeekOfYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.weekOfYear");
-/**
- * Attribute Title: Snapshot - Month of Year
- * Attribute ID: dt_snapshotdate_timestamp.monthOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotMonthOfYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.monthOfYear");
-/**
- * Attribute Title: Snapshot - Quarter of Year
- * Attribute ID: dt_snapshotdate_timestamp.quarterOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const SnapshotQuarterOfYear: IAttribute = newAttribute("dt_snapshotdate_timestamp.quarterOfYear");
-/**
- * Attribute Title: Timeline - Minute
- * Attribute ID: dt_timeline_timestamp.minute
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineMinute: IAttribute = newAttribute("dt_timeline_timestamp.minute");
-/**
- * Attribute Title: Timeline - Hour
- * Attribute ID: dt_timeline_timestamp.hour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineHour: IAttribute = newAttribute("dt_timeline_timestamp.hour");
-/**
- * Attribute Title: Timeline - Date
- * Attribute ID: dt_timeline_timestamp.day
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineDate_1: IAttribute = newAttribute("dt_timeline_timestamp.day");
-/**
- * Attribute Title: Timeline - Week/Year
- * Attribute ID: dt_timeline_timestamp.week
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineWeekYear: IAttribute = newAttribute("dt_timeline_timestamp.week");
-/**
- * Attribute Title: Timeline - Month/Year
- * Attribute ID: dt_timeline_timestamp.month
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineMonthYear: IAttribute = newAttribute("dt_timeline_timestamp.month");
-/**
- * Attribute Title: Timeline - Quarter/Year
- * Attribute ID: dt_timeline_timestamp.quarter
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineQuarterYear: IAttribute = newAttribute("dt_timeline_timestamp.quarter");
-/**
- * Attribute Title: Timeline - Year
- * Attribute ID: dt_timeline_timestamp.year
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineYear: IAttribute = newAttribute("dt_timeline_timestamp.year");
-/**
- * Attribute Title: Timeline - Minute of Hour
- * Attribute ID: dt_timeline_timestamp.minuteOfHour
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineMinuteOfHour: IAttribute = newAttribute("dt_timeline_timestamp.minuteOfHour");
-/**
- * Attribute Title: Timeline - Hour of Day
- * Attribute ID: dt_timeline_timestamp.hourOfDay
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineHourOfDay: IAttribute = newAttribute("dt_timeline_timestamp.hourOfDay");
-/**
- * Attribute Title: Timeline - Day of Week
- * Attribute ID: dt_timeline_timestamp.dayOfWeek
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineDayOfWeek: IAttribute = newAttribute("dt_timeline_timestamp.dayOfWeek");
-/**
- * Attribute Title: Timeline - Day of Month
- * Attribute ID: dt_timeline_timestamp.dayOfMonth
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineDayOfMonth: IAttribute = newAttribute("dt_timeline_timestamp.dayOfMonth");
-/**
- * Attribute Title: Timeline - Day of Year
- * Attribute ID: dt_timeline_timestamp.dayOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineDayOfYear: IAttribute = newAttribute("dt_timeline_timestamp.dayOfYear");
-/**
- * Attribute Title: Timeline - Week of Year
- * Attribute ID: dt_timeline_timestamp.weekOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineWeekOfYear: IAttribute = newAttribute("dt_timeline_timestamp.weekOfYear");
-/**
- * Attribute Title: Timeline - Month of Year
- * Attribute ID: dt_timeline_timestamp.monthOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineMonthOfYear: IAttribute = newAttribute("dt_timeline_timestamp.monthOfYear");
-/**
- * Attribute Title: Timeline - Quarter of Year
- * Attribute ID: dt_timeline_timestamp.quarterOfYear
- * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
- */
-export const TimelineQuarterOfYear: IAttribute = newAttribute("dt_timeline_timestamp.quarterOfYear");
 /** Available Date Data Sets */
 export const DateDatasets = {
     /**
