@@ -8,6 +8,7 @@ import { messages } from "../../locales";
 
 export interface IBubbleMessageOwnProps {
     showDisabledMessage: boolean;
+    messageId?: string;
     className?: string;
 }
 
@@ -15,12 +16,12 @@ export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps
 
 export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps> {
     public render() {
-        const { className, children, intl } = this.props;
+        const { className, children, intl, messageId = messages.notApplicable.id } = this.props;
         return (
             <BubbleHoverTrigger className={className}>
                 {children}
                 <Bubble className={this.getBubbleClassNames()} alignPoints={[{ align: "cr cl" }]}>
-                    {getTranslation(messages.notApplicable.id, intl)}
+                    {getTranslation(messageId, intl)}
                 </Bubble>
             </BubbleHoverTrigger>
         );

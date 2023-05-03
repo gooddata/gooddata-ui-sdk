@@ -11,7 +11,7 @@ import isNil from "lodash/isNil";
 import cx from "classnames";
 import { OnLegendReady } from "../../interfaces";
 import { Chart, IChartProps } from "./Chart";
-import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/common";
+import { isFunnel, isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
@@ -26,7 +26,7 @@ import {
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 import { ITheme } from "@gooddata/sdk-model";
-import { IChartOptions } from "../typings/unsafe";
+import { IChartOptions, ISeriesDataItem } from "../typings/unsafe";
 
 /**
  * @internal
@@ -226,6 +226,16 @@ export class HighChartsRenderer extends React.PureComponent<
         return undefined;
     };
 
+    private skipLeadingZeros(values: ISeriesDataItem[]) {
+        const result = [...values];
+
+        while (result[0]?.y === 0) {
+            result.shift();
+        }
+
+        return result;
+    }
+
     private createChartConfig(chartConfig: HighchartsOptions, legendItemsEnabled: any[]): HighchartsOptions {
         const { series, chart, xAxis, yAxis } = chartConfig;
 
@@ -244,7 +254,12 @@ export class HighChartsRenderer extends React.PureComponent<
         ];
         const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
 
-        const items: any[] = isOneOfTypes(chart.type, firstSeriesTypes) ? (series?.[0] as any)?.data : series;
+        let items: any[] = isOneOfTypes(chart.type, firstSeriesTypes) ? (series?.[0] as any)?.data : series;
+
+        if (isFunnel(chart.type)) {
+            items = this.skipLeadingZeros(items).filter((i) => !isNil(i.y));
+        }
+
         const updatedItems = items.map((item: any, itemIndex: number) => {
             const visible =
                 legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;

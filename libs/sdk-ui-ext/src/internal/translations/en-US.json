@@ -702,8 +702,18 @@
         "limit": 0
     },
     "properties.canvas.labels.percentages": {
-        "value": "Percent from top value",
+        "value": "Percentage",
         "comment": "applicable for funnel chart special data labels which can include percentages",
+        "limit": 0
+    },
+    "properties.canvas.labels.percentages.info": {
+        "value": "Display percentages on each slice, with the top-most slice as 100% and the others as fractions of that value.",
+        "comment": "this is an explanation tooltip for the Percentage option for funnel chart (properties.canvas.labels.percentages)",
+        "limit": 0
+    },
+    "properties.canvas.labels.percentages.disabled": {
+        "value": "Percentages are hidden due to hidden data labels.",
+        "comment": "this is an explanation tooltip when the Percentage option for funnel chart is disabled (properties.canvas.labels.percentages)",
         "limit": 0
     },
     "properties.canvas.dataLabels": {

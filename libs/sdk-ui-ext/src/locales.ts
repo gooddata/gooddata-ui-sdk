@@ -139,6 +139,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     canvasTitle: { id: "properties.canvas.title" },
     canvasGridLine: { id: "properties.canvas.gridline" },
     canvasLabelsPercentages: { id: "properties.canvas.labels.percentages" },
+    canvasLabelsPercentagesInfo: { id: "properties.canvas.labels.percentages.info" },
+    canvasLabelsPercentagesDisabled: { id: "properties.canvas.labels.percentages.disabled" },
     yaxisTitle: { id: "properties.yaxis.title" },
     xaxisTitle: { id: "properties.xaxis.title" },
     pointsTitle: { id: "properties.points.title" },
