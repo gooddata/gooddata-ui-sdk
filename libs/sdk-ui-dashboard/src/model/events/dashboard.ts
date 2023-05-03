@@ -574,10 +574,6 @@ export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfRes
  */
 export interface DashboardSharingChangedPayload {
     /**
-     * @deprecated Use the dashboardRef in the event.ctx instead.
-     */
-    dashboardRef: ObjRef;
-    /**
      * New properties related to the sharing.
      */
     newSharingProperties: ISharingProperties;
@@ -595,7 +591,6 @@ export interface DashboardSharingChanged extends IDashboardEvent {
 
 export function dashboardSharingChanged(
     ctx: DashboardContext,
-    dashboardRef: ObjRef,
     newSharingProperties: ISharingProperties,
     correlationId?: string,
 ): DashboardSharingChanged {
@@ -604,7 +599,6 @@ export function dashboardSharingChanged(
         ctx,
         correlationId,
         payload: {
-            dashboardRef,
             newSharingProperties,
         },
     };

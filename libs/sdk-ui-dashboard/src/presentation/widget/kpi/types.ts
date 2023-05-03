@@ -57,14 +57,6 @@ export interface IDashboardKpiProps {
     alert?: IWidgetAlert;
 
     /**
-     * Specify filters to be applied to the KPI.
-     *
-     * @deprecated Do not use, made part of the public API by accident. Will do nothing.
-     * @public
-     */
-    filters?: FilterContextItem[];
-
-    /**
      * Component to render if embedding fails.
      *
      * @alpha

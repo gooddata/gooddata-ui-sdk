@@ -2190,8 +2190,6 @@ export interface DashboardSharingChanged extends IDashboardEvent {
 
 // @public
 export interface DashboardSharingChangedPayload {
-    // @deprecated (undocumented)
-    dashboardRef: ObjRef;
     newSharingProperties: ISharingProperties;
 }
 
@@ -3454,8 +3452,6 @@ export interface IDashboardKpiProps {
     backend?: IAnalyticalBackend;
     // @alpha
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
-    // @deprecated
-    filters?: FilterContextItem[];
     kpiWidget: IKpiWidget;
     // @alpha
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
