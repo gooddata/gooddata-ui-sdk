@@ -199,6 +199,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
         {
             visualizationClass: {
                 checksum: "local",
+                icon: "local:waterfall",
+                orderIndex: 19.1,
+                iconSelected: "local:waterfall.selected",
+                url: "local:waterfall",
+                title: "Waterfall chart",
+                identifier: "gdc.visualization.waterfall",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1119",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
                 icon: "local:dependencywheel",
                 orderIndex: 19.2,
                 iconSelected: "local:dependencywheel.selected",
