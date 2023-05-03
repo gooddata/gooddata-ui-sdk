@@ -134,7 +134,7 @@ function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
     return getDefaultHeatmapSortFromBuckets(insightBucket(insight, BucketNames.VIEW));
 }
 
-function getDefaultPieDonutSort(insight: IInsightDefinition): ISortItem[] {
+function getDefaultPieDonutPyramidFunnelSort(insight: IInsightDefinition): ISortItem[] {
     const measures = insightMeasures(insight);
     const viewBucket = insightBucket(insight, BucketNames.VIEW);
     const viewBy = viewBucket ? bucketAttributes(viewBucket) : [];
@@ -172,8 +172,10 @@ export function createSorts(
             return getDefaultHeatmapSort(insight);
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
+        case VisualizationTypes.PYRAMID:
+        case VisualizationTypes.FUNNEL:
             if (featureFlags.enableChartsSorting) {
-                return getDefaultPieDonutSort(insight);
+                return getDefaultPieDonutPyramidFunnelSort(insight);
             }
     }
     return [];
