@@ -293,6 +293,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
         const dashboardContent = convertAnalyticalDashboard(updatedDashboard, filterContext?.ref);
+
         const result = await this.authCall((client) => {
             return client.entities.updateEntityAnalyticalDashboards(
                 {
@@ -306,6 +307,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                 content: dashboardContent,
                                 title: updatedDashboard.title,
                                 description: updatedDashboard.description || "",
+                                ...(updatedDashboard.tags ? { tags: updatedDashboard.tags } : {}),
                             },
                         },
                     },
