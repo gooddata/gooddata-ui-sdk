@@ -1,0 +1,40 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            { "items": [], "localIdentifier": "attribute_to" }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.0a9ae5995827e79c5e8f26494b1fef49",
+        "properties": { "controls": { "legend": { "enabled": true, "position": "auto" } } },
+        "sorts": [],
+        "title": "DependencyWheelChart - legend position - 1 measure and 1 attribute - auto legend",
+        "uri": "DependencyWheelChart.0a9ae5995827e79c5e8f26494b1fef49",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

@@ -120,6 +120,16 @@ export const isSankey = isEqual(VisualizationTypes.SANKEY);
 /**
  * @internal
  */
+export const isDependencyWheel = isEqual(VisualizationTypes.DEPENDENCY_WHEEL);
+
+/**
+ * @internal
+ */
+export const isSankeyOrDependencyWheel = (type: string): boolean => isSankey(type) || isDependencyWheel(type);
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 

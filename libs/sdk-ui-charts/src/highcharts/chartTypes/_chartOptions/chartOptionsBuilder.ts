@@ -34,7 +34,7 @@ import {
     isTreemap,
     stringifyChartTypes,
     unwrap,
-    isSankey,
+    isSankeyOrDependencyWheel,
 } from "../_util/common";
 import { setMeasuresToSecondaryAxis } from "./dualAxis";
 import {
@@ -606,7 +606,7 @@ export function getChartOptions(
         };
     }
 
-    if (isSankey(type)) {
+    if (isSankeyOrDependencyWheel(type)) {
         const sankeySeries = buildSankeyChartSeries(
             dv,
             [viewByParentAttribute, viewByAttribute],

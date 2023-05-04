@@ -969,6 +969,7 @@
                                                     "type": "visualizationObject"
                                                 }
                                             },
+                                            "properties": {},
                                             "title": "Sankey chart",
                                             "type": "insight"
                                         }
@@ -999,6 +1000,34 @@
                                             },
                                             "properties": {},
                                             "title": "Pyramid chart",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "75e08348-d27f-42b8-a360-41bee971fb6d",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Dependency wheel chart",
                                             "type": "insight"
                                         }
                                     }
@@ -3621,6 +3650,74 @@
                 "description": "",
                 "id": "684a2cf2-3b5c-44d3-9287-61e428d0eac2",
                 "title": "Sankey chart"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "ebf774d29af346b2915d72e74b6527a5",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "7d5bbdfea48a419d92e14444fa47bdb5"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute_from"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.region_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "fa674d6055324a23bceb93f624a4844b"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute_to"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:dependencywheel"
+                },
+                "description": "",
+                "id": "75e08348-d27f-42b8-a360-41bee971fb6d",
+                "title": "Dependency wheel chart"
             },
             {
                 "content": {

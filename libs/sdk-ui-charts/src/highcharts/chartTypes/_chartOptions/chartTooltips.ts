@@ -317,12 +317,14 @@ export function generateTooltipSankeyChartFn(
 
         if (point.isNode) {
             const formattedValue = formatValueForTooltip(point.sum, format, separators);
-            textData.push(["", point.name]);
+            if (point.name) {
+                textData.push(["", point.name]);
+            }
             textData.push([measure.measureHeaderItem.name, formattedValue]);
         } else {
             const formattedValue = formatValueForTooltip(point.weight, format, separators);
-            textData.push([viewByParentAttribute.name, point.from]);
-            textData.push([viewByAttribute.name, point.to]);
+            textData.push([viewByParentAttribute.formOf.name, point.from]);
+            textData.push([viewByAttribute.formOf.name, point.to]);
             textData.push([measure.measureHeaderItem.name, formattedValue]);
         }
 

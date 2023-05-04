@@ -68,11 +68,11 @@ describe("PluggableSankeyChart", () => {
 
     describe("Arithmetic measures", () => {
         it("should skip measures that cannot be placed together with their operands", async () => {
-            const heatmap = createComponent();
+            const sankey = createComponent();
             const originalRefPoint =
                 referencePointMocks.firstMeasureArithmeticAlongWithAttributeReferencePoint;
 
-            const extendedReferencePoint = await heatmap.getExtendedReferencePoint(originalRefPoint);
+            const extendedReferencePoint = await sankey.getExtendedReferencePoint(originalRefPoint);
 
             const expectedBuckets: IBucketOfFun[] = [
                 {

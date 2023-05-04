@@ -23,6 +23,7 @@ import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor";
 import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor";
 import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor";
 import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor";
+import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -139,6 +140,7 @@ const DefaultVisualizations = {
     pyramid: PyramidChartDescriptor,
     pushpin: GeoPushpinChartDescriptor,
     sankey: SankeyChartDescriptor,
+    dependencywheel: DependencyWheelChartDescriptor,
 };
 
 /**

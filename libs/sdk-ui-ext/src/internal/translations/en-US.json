@@ -234,6 +234,26 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.attribute_from_title.dependencywheel": {
+        "value": "Attribute",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.attribute_from_subtitle.dependencywheel": {
+        "value": "from",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.attribute_to_title.dependencywheel": {
+        "value": "Attribute",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.attribute_to_subtitle.dependencywheel": {
+        "value": "to",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.combo.subtitle.column": {
         "value": "as columns",
         "comment": "Display measures in column chart = 'as columns'.",
@@ -601,6 +621,16 @@
         "limit": 0
     },
     "dashboard.bucket.measures_title.sankey._metric": {
+        "value": "METRIC",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.dependencywheel._measure": {
+        "value": "MEASURE",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.dependencywheel._metric": {
         "value": "METRIC",
         "comment": "",
         "limit": 0

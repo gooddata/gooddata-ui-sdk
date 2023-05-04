@@ -20,6 +20,7 @@ import { BubbleChartExample } from "./BubbleChartExample";
 import { TreemapExample } from "./TreemapExample";
 import { HeatmapExample } from "./HeatmapExample";
 import { SankeyChartExample } from "./SankeyChartExample";
+import { DependencyWheelChartExample } from "./DependencyWheelChartExample";
 import { HeadlineExample } from "./HeadlineExample";
 import { KpiExample } from "./KpiExample";
 
@@ -39,6 +40,7 @@ import BubbleChartExampleSRC from "./BubbleChartExample?raw";
 import TreemapExampleSRC from "./TreemapExample?raw";
 import HeatmapExampleSRC from "./HeatmapExample?raw";
 import SankeyChartExampleSRC from "./SankeyChartExample?raw";
+import DependencyWheelChartExampleSRC from "./DependencyWheelChartExample?raw";
 import HeadlineExampleSRC from "./HeadlineExample?raw";
 import KpiExampleSRC from "./KpiExample?raw";
 
@@ -58,6 +60,7 @@ import BubbleChartExampleSRCJS from "./BubbleChartExample?rawJS";
 import TreemapExampleSRCJS from "./TreemapExample?rawJS";
 import HeatmapExampleSRCJS from "./HeatmapExample?rawJS";
 import SankeyChartExampleSRCJS from "./SankeyChartExample?rawJS";
+import DependencyWheelChartExampleSRCJS from "./DependencyWheelChartExample?rawJS";
 import HeadlineExampleSRCJS from "./HeadlineExample?rawJS";
 import KpiExampleSRCJS from "./KpiExample?rawJS";
 
@@ -180,6 +183,13 @@ export const BasicComponents: React.FC = () => (
             for={SankeyChartExample}
             source={SankeyChartExampleSRC}
             sourceJS={SankeyChartExampleSRCJS}
+        />
+
+        <h2 id="sankey">Dependency wheel chart</h2>
+        <ExampleWithSource
+            for={DependencyWheelChartExample}
+            source={DependencyWheelChartExampleSRC}
+            sourceJS={DependencyWheelChartExampleSRCJS}
         />
 
         <hr className="separator" />

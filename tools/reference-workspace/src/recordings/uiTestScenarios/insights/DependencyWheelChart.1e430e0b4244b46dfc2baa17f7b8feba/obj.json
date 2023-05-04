@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.1e430e0b4244b46dfc2baa17f7b8feba",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "right", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right",
+        "uri": "DependencyWheelChart.1e430e0b4244b46dfc2baa17f7b8feba",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

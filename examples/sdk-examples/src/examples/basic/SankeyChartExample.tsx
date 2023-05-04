@@ -10,7 +10,7 @@ const style = { height: 300 };
 const config: IChartConfig = {
     separators: { decimal: ".", thousand: "," },
     legend: { position: "auto", enabled: true },
-    dataPoints: { visible: "auto" },
+    dataLabels: { visible: "auto" },
 };
 
 export const SankeyChartExample: React.FC = () => {

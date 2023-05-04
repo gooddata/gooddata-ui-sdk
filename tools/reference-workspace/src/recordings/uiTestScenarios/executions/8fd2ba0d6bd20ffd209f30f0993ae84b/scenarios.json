@@ -257,5 +257,49 @@
         },
         "scenario": "measure only",
         "vis": "SankeyChart"
+    },
+    {
+        "n2oMap": { "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "attribute_from" },
+                { "items": [], "localIdentifier": "attribute_to" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "measure only",
+        "vis": "DependencyWheelChart"
     }
 ]

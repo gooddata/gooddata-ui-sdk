@@ -125,5 +125,69 @@
         },
         "scenario": "measure and attributeTo",
         "vis": "SankeyChart"
+    },
+    {
+        "n2oMap": { "a_label.owner.region": "a_label.owner.region", "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "attribute_from" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                                "localIdentifier": "a_label.owner.region"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute_to"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.owner.region"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "measure and attributeTo",
+        "vis": "DependencyWheelChart"
     }
 ]

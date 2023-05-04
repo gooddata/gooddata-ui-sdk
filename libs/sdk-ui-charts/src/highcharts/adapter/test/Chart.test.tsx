@@ -40,6 +40,10 @@ jest.mock("highcharts/modules/sankey", () => {
     return (H: any) => H;
 });
 
+jest.mock("highcharts/modules/dependency-wheel", () => {
+    return (H: any) => H;
+});
+
 jest.mock("highcharts/highcharts-more", () => {
     return (H: any) => H;
 });

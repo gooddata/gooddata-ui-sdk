@@ -1,0 +1,30 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "attribute_from" },
+            { "items": [], "localIdentifier": "attribute_to" }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.ba0b61f4fa61426383fbbc5674e012fe",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "DependencyWheelChart - measure only",
+        "uri": "DependencyWheelChart.ba0b61f4fa61426383fbbc5674e012fe",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

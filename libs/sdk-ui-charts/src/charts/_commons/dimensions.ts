@@ -92,3 +92,7 @@ export function sankeyDimensions(def: IExecutionDefinition): IDimension[] {
         compact([...attributeFromByAttributes, ...attributeToByAttributes]),
     );
 }
+
+export function dependencyWheelDimensions(def: IExecutionDefinition): IDimension[] {
+    return sankeyDimensions(def);
+}

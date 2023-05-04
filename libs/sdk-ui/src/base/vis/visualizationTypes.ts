@@ -27,8 +27,9 @@ export const VisualizationTypes = {
     PYRAMID: "pyramid" as const,
     PARETO: "pareto" as const,
     ALLUVIAL: "alluvial" as const,
-    XIRR: "xirr" as const,
     SANKEY: "sankey" as const,
+    DEPENDENCY_WHEEL: "dependencywheel" as const,
+    XIRR: "xirr" as const,
 };
 
 /**
@@ -56,7 +57,8 @@ export type ChartType =
     | "pyramid"
     | "pareto"
     | "alluvial"
-    | "sankey";
+    | "sankey"
+    | "dependencywheel";
 
 /**
  * @public

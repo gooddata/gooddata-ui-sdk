@@ -292,37 +292,35 @@ export function getComparisonTypeFromFilters(filtersBucket: IFilters): OverTimeC
 }
 
 function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier: string) {
-    if (visualizationType === VisualizationTypes.HEADLINE) {
-        return true;
-    }
+    switch (visualizationType) {
+        case VisualizationTypes.HEADLINE:
+            return true;
 
-    if (visualizationType === VisualizationTypes.SCATTER) {
-        return bucketLocalIdentifier !== BucketNames.ATTRIBUTE;
-    }
+        case VisualizationTypes.SCATTER:
+            return bucketLocalIdentifier !== BucketNames.ATTRIBUTE;
 
-    if (visualizationType === VisualizationTypes.BUBBLE) {
-        return bucketLocalIdentifier !== BucketNames.VIEW;
-    }
+        case VisualizationTypes.BUBBLE:
+            return bucketLocalIdentifier !== BucketNames.VIEW;
 
-    if (visualizationType === VisualizationTypes.COMBO) {
-        return bucketLocalIdentifier !== BucketNames.VIEW;
-    }
+        case VisualizationTypes.COMBO:
+            return bucketLocalIdentifier !== BucketNames.VIEW;
 
-    if (visualizationType === VisualizationTypes.BULLET) {
-        return bucketLocalIdentifier !== BucketNames.VIEW;
-    }
+        case VisualizationTypes.BULLET:
+            return bucketLocalIdentifier !== BucketNames.VIEW;
 
-    if (visualizationType === VisualizationTypes.PUSHPIN) {
-        return (
-            bucketLocalIdentifier !== BucketNames.LOCATION && bucketLocalIdentifier !== BucketNames.SEGMENT
-        );
-    }
+        case VisualizationTypes.PUSHPIN:
+            return (
+                bucketLocalIdentifier !== BucketNames.LOCATION &&
+                bucketLocalIdentifier !== BucketNames.SEGMENT
+            );
 
-    if (visualizationType === VisualizationTypes.SANKEY) {
-        return bucketLocalIdentifier !== BucketNames.MEASURES;
-    }
+        case VisualizationTypes.SANKEY:
+        case VisualizationTypes.DEPENDENCY_WHEEL:
+            return bucketLocalIdentifier !== BucketNames.MEASURES;
 
-    return false;
+        default:
+            return false;
+    }
 }
 
 export function setBucketTitles(

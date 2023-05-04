@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2023 GoodData Corporation
 import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";

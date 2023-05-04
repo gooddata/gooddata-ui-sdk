@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.20df365d708a4ce50afc15775e2d9a01",
+        "properties": { "controls": { "legend": { "responsive": "autoPositionWithPopup" } } },
+        "sorts": [],
+        "title": "DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend",
+        "uri": "DependencyWheelChart.20df365d708a4ce50afc15775e2d9a01",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

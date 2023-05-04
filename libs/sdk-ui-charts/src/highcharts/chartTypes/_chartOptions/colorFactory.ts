@@ -7,7 +7,7 @@ import {
     isBulletChart,
     isHeatmap,
     isOneOfTypes,
-    isSankey,
+    isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
 } from "../_util/common";
@@ -28,6 +28,7 @@ const attributeChartSupportedTypes = [
     VisualizationTypes.SCATTER,
     VisualizationTypes.BUBBLE,
     VisualizationTypes.SANKEY,
+    VisualizationTypes.DEPENDENCY_WHEEL,
 ];
 
 function isAttributeColorPalette(type: string, dv: DataViewFacade, stackByAttribute: any) {
@@ -104,7 +105,7 @@ export class ColorFactory {
             );
         }
 
-        if (isSankey(type)) {
+        if (isSankeyOrDependencyWheel(type)) {
             return new SankeyChartColorStrategy(
                 colorPalette,
                 colorMapping,

@@ -2,7 +2,7 @@
 
 exports[`SankeyChart tooltip should render tooltip for connection correctly ( show in percent ) 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
-                        <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product Name</span>
+                        <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
                             <span class=\\"gd-viz-tooltip-value gd-clamp-two-line\\" style=\\"max-width: 300px;\\">Explorer</span>
                         </div>
@@ -32,7 +32,7 @@ exports[`SankeyChart tooltip should render tooltip for connection correctly ( sh
 
 exports[`SankeyChart tooltip should render tooltip for connection correctly 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
-                        <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product Name</span>
+                        <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
                             <span class=\\"gd-viz-tooltip-value gd-clamp-two-line\\" style=\\"max-width: 300px;\\">Explorer</span>
                         </div>

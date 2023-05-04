@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.ba9d303366ed1b501a7510561ad58d1b",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "auto", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend",
+        "uri": "DependencyWheelChart.ba9d303366ed1b501a7510561ad58d1b",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

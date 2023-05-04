@@ -8,7 +8,7 @@ import {
     isHeatmap,
     isLineChart,
     isOneOfTypes,
-    isSankey,
+    isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
 } from "../chartTypes/_util/common";
@@ -42,6 +42,8 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
         VisualizationTypes.DONUT,
         VisualizationTypes.PYRAMID,
         VisualizationTypes.FUNNEL,
+        VisualizationTypes.SANKEY,
+        VisualizationTypes.DEPENDENCY_WHEEL,
     ];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
         isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
@@ -49,7 +51,6 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
     const isTreemapWithViewByAttribute = isTreemap(type) && hasViewByAttribute;
     const isTreemapWithManyCategories = isTreemap(type) && chartOptions.data.categories.length > 1;
-    const isSankeyChart = isSankey(type);
 
     return (
         hasMoreThanOneSeries ||
@@ -60,7 +61,6 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
         isTreemapWithViewByAttribute ||
         isBubbleWithViewByAttribute ||
         isTreemapWithManyCategories ||
-        isSankeyChart ||
         isHeatmapWithMultipleValues(chartOptions)
     );
 }
@@ -95,7 +95,7 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
         });
     }
 
-    if (isSankey(type)) {
+    if (isSankeyOrDependencyWheel(type)) {
         return chartOptions.data.series[0].nodes.map((it: ISeriesNodeItem, index: number) => {
             return {
                 name: it.id,
@@ -137,6 +137,7 @@ export default function buildLegendOptions(
         VisualizationTypes.FUNNEL,
         VisualizationTypes.PYRAMID,
         VisualizationTypes.SANKEY,
+        VisualizationTypes.DEPENDENCY_WHEEL,
     ];
     const defaultTopLegendCharts = [
         VisualizationTypes.COLUMN,
@@ -147,7 +148,7 @@ export default function buildLegendOptions(
         VisualizationTypes.PIE,
         VisualizationTypes.DONUT,
     ];
-    const defaultHideLegendCharts = [VisualizationTypes.SANKEY];
+    const defaultHideLegendCharts = [VisualizationTypes.SANKEY, VisualizationTypes.DEPENDENCY_WHEEL];
 
     if (legendConfig.position === "auto" || !legendConfig.position) {
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {

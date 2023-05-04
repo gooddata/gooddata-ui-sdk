@@ -32,6 +32,8 @@ export {
     isScatterPlot,
     isTreemap,
     isSankey,
+    isDependencyWheel,
+    isSankeyOrDependencyWheel,
     updateConfigWithSettings,
 } from "./highcharts";
 
