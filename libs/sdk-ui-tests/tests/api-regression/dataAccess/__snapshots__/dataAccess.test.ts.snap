@@ -4092,6 +4092,169 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: SankeyChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": Array [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure and attributeFrom 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure and attributeTo 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": Array [
+      "East Coast",
+      "West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure only 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure, attributeFrom and attributeTo 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": Array [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: SankeyChart - themed 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 12,
+    "attributes": 2,
+    "sliceNames": Array [
+      "CompuSci > East Coast",
+      "CompuSci > West Coast",
+      "Educationly > East Coast",
+      "Educationly > West Coast",
+      "Explorer > East Coast",
+      "Explorer > West Coast",
+      "Grammar Plus > East Coast",
+      "Grammar Plus > West Coast",
+      "PhoenixSoft > East Coast",
+      "PhoenixSoft > West Coast",
+      "WonderKid > East Coast",
+      "WonderKid > West Coast",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: ScatterPlot - font 1`] = `
 Object {
   "seriesDigest": Object {

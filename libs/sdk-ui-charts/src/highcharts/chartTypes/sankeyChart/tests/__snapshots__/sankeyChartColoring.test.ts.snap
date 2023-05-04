@@ -1,0 +1,431 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SankeyChartColorStrategy should return correct colors for each attribute header items in cases 1 measure and 1 attribute_from 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Educationly",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Explorer",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Grammar Plus",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "PhoenixSoft",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "WonderKid",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy should return correct colors for each attribute header items in cases 1 measure and 1 attribute_to 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "West Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy should return correct colors for each attribute header items in cases 1 measure and 2 attributes 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=165678",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Educationly",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=165847",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Explorer",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=342345",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Grammar Plus",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=168737",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "PhoenixSoft",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=166339",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "WonderKid",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=166497",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1125/elements?id=460492",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "West Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1125/elements?id=460500",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy should return correct colors for each attribute header items when color mapping in cases 1 measure and 1 attribute_from 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Educationly",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "rgb",
+      "value": Object {
+        "b": 0,
+        "g": 0,
+        "r": 255,
+      },
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Explorer",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Grammar Plus",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "PhoenixSoft",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "rgb",
+      "value": Object {
+        "b": 0,
+        "g": 0,
+        "r": 0,
+      },
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "WonderKid",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy should return correct colors for each attribute header items when color mapping in cases 1 measure and 1 attribute_to 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "West Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
+      },
+    },
+  },
+]
+`;
+
+exports[`SankeyChartColorStrategy should return correct colors for each attribute header items when color mapping in cases 1 measure and 2 attributes 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "01",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=165678",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Educationly",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=165847",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "rgb",
+      "value": Object {
+        "b": 0,
+        "g": 0,
+        "r": 255,
+      },
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Explorer",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=342345",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "04",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "Grammar Plus",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=168737",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "05",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "PhoenixSoft",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=166339",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "rgb",
+      "value": Object {
+        "b": 0,
+        "g": 0,
+        "r": 0,
+      },
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "WonderKid",
+        "uri": "/gdc/md/referenceworkspace/obj/1093/elements?id=166497",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "02",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1125/elements?id=460492",
+      },
+    },
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "03",
+    },
+    "headerItem": Object {
+      "attributeHeaderItem": Object {
+        "name": "West Coast",
+        "uri": "/gdc/md/referenceworkspace/obj/1125/elements?id=460500",
+      },
+    },
+  },
+]
+`;

@@ -3263,6 +3263,243 @@
         "scenarioName": "two measures",
         "visName": "PyramidChart"
     },
+    "SankeyChart.028319311f1a319d889aee5ec859c3bc": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
+    },
+    "SankeyChart.03046555df983753f0b597952ae43d81": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - themed.",
+        "scenarioName": "themed",
+        "visName": "SankeyChart"
+    },
+    "SankeyChart.0ebbf1cd21c2bd6499bf93d9ce555584": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
+    },
+    "SankeyChart.169be893ef06f1e5937be29313188266": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend."
+    },
+    "SankeyChart.17298ab3175e5351c64e731b846a9c44": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - default legend."
+    },
+    "SankeyChart.1da4d9d9518be90fb969886eb19956cb": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "SankeyChart.1df61537b87db98c5ead502a26efa568": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - auto legend."
+    },
+    "SankeyChart.241b4cb8234e57d76c9bab20305c628e": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend."
+    },
+    "SankeyChart.26a29437e43d9e878175e704d014e33c": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - default legend."
+    },
+    "SankeyChart.283dd7f0bdfbce313ad67c3ad556d6fe": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
+    },
+    "SankeyChart.32c5c274c34fd278f29dcc0c37580dcd": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - default legend."
+    },
+    "SankeyChart.3880e984ddebd8bf9d68cea120b0b4f9": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - default legend."
+    },
+    "SankeyChart.3bfdb9ae4b304c050257df2ec34ae52b": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - default legend."
+    },
+    "SankeyChart.3da00303401a1d9e4785bb8a80a21c96": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
+    },
+    "SankeyChart.3de3cff17ba2f232580a8f7dceba65c9": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - data labels - auto visibility."
+    },
+    "SankeyChart.3fed942cabb1ed3c3194edd495fbb9e7": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom."
+    },
+    "SankeyChart.41153cbfe21ac8772640aaea11f81855": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "SankeyChart.4929c4c82b8a91c9afab8467e8b3dc55": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - disabled."
+    },
+    "SankeyChart.4a6e7e212cd5b745c5f024effa5e6fbc": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - default legend."
+    },
+    "SankeyChart.4cc5c3d7c2418eaa47caee1514680f86": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
+    },
+    "SankeyChart.4cd1362e22ccb034385f3d55f239d30c": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "SankeyChart.4d5f253d4d846ad70b1d945be616a9aa": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - measure and attributeFrom.",
+        "scenarioName": "measure and attributeFrom",
+        "visName": "SankeyChart"
+    },
+    "SankeyChart.525d19d275c7b582067eb7d4d2d05179": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "SankeyChart.55a48eb8d61b3d83d3aad135fc959bb6": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "SankeyChart.578a9619ebf0205e77f09289f6490857": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
+    },
+    "SankeyChart.59c81fe1ccc2b8583662b7babe98ecd1": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x154 - Force position RIGHT - auto legend."
+    },
+    "SankeyChart.5a16c69d1c7a7a0b75d6e2d199b8e2a3": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - coloring - custom palette."
+    },
+    "SankeyChart.5ae958ccc1a050766a1910e09d815d23": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x154 - Force position RIGHT - legend at bottom."
+    },
+    "SankeyChart.5cc814295c648e0b7103100615e54156": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - legend at bottom."
+    },
+    "SankeyChart.5f1b7c5c5d91d2be6f45a962b8fa111f": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend."
+    },
+    "SankeyChart.6102df0fa250b7cf5c298cfbd82e1e23": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
+    },
+    "SankeyChart.61cad6fc5351b1ece82d50b00f527525": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - auto legend."
+    },
+    "SankeyChart.62028c5cce6bfb1c2331cace837a5e11": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
+    },
+    "SankeyChart.645bca47a95402dd61a649c98d816248": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "SankeyChart.6e477355693d3df1aa8fb931cfdbd523": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend."
+    },
+    "SankeyChart.6e72546b6c0954f45bae08457232ab32": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
+    },
+    "SankeyChart.76dc606afb1b0c7ea85db343e1dc20fb": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - legend on left."
+    },
+    "SankeyChart.7dcdc9ad675f527f1275e532e3038528": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
+    },
+    "SankeyChart.7e3c5f7972035e9de975c93cd7b21643": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - font.",
+        "scenarioName": "font",
+        "visName": "SankeyChart"
+    },
+    "SankeyChart.7f0084af47a4b7b2096293d7ebb2d259": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - data labels - default."
+    },
+    "SankeyChart.84a6723c4ba29369af0643189c08a7b1": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - measure only.",
+        "scenarioName": "measure only",
+        "visName": "SankeyChart"
+    },
+    "SankeyChart.84eca319c15734a47da60ef80dd8f550": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - legend on top."
+    },
+    "SankeyChart.86755c818c29685a3a33047790425464": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - assign color to nodes."
+    },
+    "SankeyChart.8d52f864e8d77a6a7077f13a46d18fea": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - legend on top."
+    },
+    "SankeyChart.8f4934490470e702e8311080961cb047": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x154 - Force position RIGHT - legend on top."
+    },
+    "SankeyChart.9014d066544e853e1569a1b36974c483": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - data labels - forced hidden."
+    },
+    "SankeyChart.921bb32766b1a60d38d467a02100a0fb": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
+    },
+    "SankeyChart.995da609d542c0253b931f78086aa276": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - data labels - forced visible."
+    },
+    "SankeyChart.9b04293a2c1f6c9c965edc738e1484aa": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
+    },
+    "SankeyChart.9c2cb40ad4c8506587a72dba13491ef0": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - legend on right."
+    },
+    "SankeyChart.9c49f8fee7c8b721b3d1e82268695943": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "SankeyChart.9e48617eddcab2d54de5634c1865de04": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "SankeyChart.a0cadf8afe4c7cabc13dc2c2becefdff": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "SankeyChart.a1ff56fed39f537e11b2d4f7cd6910a6": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
+    },
+    "SankeyChart.a21201173b4f055490a3c4ad06c65897": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - measure, attributeFrom and attributeTo.",
+        "scenarioName": "measure, attributeFrom and attributeTo",
+        "visName": "SankeyChart"
+    },
+    "SankeyChart.a42fe7cb8c8806fb485aa2b58c0c33ca": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - default legend."
+    },
+    "SankeyChart.a44a5a9c3b32c19a7372d9f61c57edfa": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
+    },
+    "SankeyChart.bf0969978874f81502ad9368f2ea5dd0": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x154 - Force position RIGHT - legend on right."
+    },
+    "SankeyChart.c0cd1545784e0d9da3d54cff7f8aa30a": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - data labels - forced visible and german separators."
+    },
+    "SankeyChart.d07948721798befe8b66e4cc48a235d5": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x154 - Force position RIGHT - legend on left."
+    },
+    "SankeyChart.d682fc63837a781970140c20b364c845": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top."
+    },
+    "SankeyChart.d7155c4db7beaff54f6a33cab34c2b77": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
+    },
+    "SankeyChart.d8675f353332366cb05829a5eac26268": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
+    },
+    "SankeyChart.d8cb3862f0615a277d75aece98daffd1": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "SankeyChart.ddc8c586877c0450182dc107afa40628": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
+    },
+    "SankeyChart.de25217f5081805d2a97693b2e644ad0": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - legend at bottom."
+    },
+    "SankeyChart.e0a03b19a47af35b9f288d867888dccc": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 2 attributes - legend on right."
+    },
+    "SankeyChart.e2358b2eb8272c27a72828149c7f5903": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - legend on left."
+    },
+    "SankeyChart.e2d55dacf5c5ce8ffc0ec40d68203747": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 610x154 - Force position RIGHT - default legend."
+    },
+    "SankeyChart.e74da5d05ccc2d18e5604d2eb8c5e788": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "SankeyChart.e8ca4c0227e2eb78988211a009556cbd": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - measure and attributeTo.",
+        "scenarioName": "measure and attributeTo",
+        "visName": "SankeyChart"
+    },
+    "SankeyChart.f14941f41deaf52d301de5876ebdeaec": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - legend position - 1 measure and 1 attribute - disabled."
+    },
+    "SankeyChart.f155bb5714a7a0672fb21a3e5044d043": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
+    },
+    "SankeyChart.f413849f91796478c80743387474d5c4": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
+    },
+    "SankeyChart.fbe0abecfb74e515153ae491b739c9ba": {
+        "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
+    },
     "ScatterPlot.0596d6b98f5e4ea7da9b7efd2acd2ee2": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - themed.",
         "scenarioName": "themed",

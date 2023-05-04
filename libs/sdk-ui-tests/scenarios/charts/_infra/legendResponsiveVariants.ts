@@ -27,14 +27,38 @@ const legendVariants: Array<[string, ILegendConfig]> = [
     ["auto legend", { position: "auto", responsive: "autoPositionWithPopup" }],
 ];
 
-export function legendResponsiveVariants<T extends IBucketChartProps>(
+const legendForceEnabledVariants: Array<[string, ILegendConfig]> = [
+    ["default legend", { responsive: "autoPositionWithPopup" }],
+    ["legend on top", { position: "top", enabled: true, responsive: "autoPositionWithPopup" }],
+    ["legend at bottom", { position: "bottom", enabled: true, responsive: "autoPositionWithPopup" }],
+    ["legend on left", { position: "left", enabled: true, responsive: "autoPositionWithPopup" }],
+    ["legend on right", { position: "right", enabled: true, responsive: "autoPositionWithPopup" }],
+    ["auto legend", { position: "auto", enabled: true, responsive: "autoPositionWithPopup" }],
+];
+
+function buildLegendResponsiveVariants<T extends IBucketChartProps>(
+    variants: Array<[string, ILegendConfig]>,
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {
-    return legendVariants.map(([variantName, legendConfig]) => {
+    return variants.map(([variantName, legendConfig]) => {
         return [
             `${baseName} - ${variantName}`,
             { ...baseProps, config: { ...baseProps.config, legend: legendConfig } },
         ];
     });
+}
+
+export function legendResponsiveVariants<T extends IBucketChartProps>(
+    baseName: string,
+    baseProps: UnboundVisProps<T>,
+): Array<CustomizedScenario<T>> {
+    return buildLegendResponsiveVariants(legendVariants, baseName, baseProps);
+}
+
+export function legendForceEnabledResponsiveVariants<T extends IBucketChartProps>(
+    baseName: string,
+    baseProps: UnboundVisProps<T>,
+): Array<CustomizedScenario<T>> {
+    return buildLegendResponsiveVariants(legendForceEnabledVariants, baseName, baseProps);
 }

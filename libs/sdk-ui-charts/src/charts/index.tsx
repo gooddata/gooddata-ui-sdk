@@ -33,6 +33,8 @@ export { ScatterPlot, IScatterPlotProps, IScatterPlotBucketProps } from "./scatt
 
 export { Treemap, ITreemapProps, ITreemapBucketProps } from "./treemap/Treemap";
 
+export { SankeyChart, ISankeyChartProps, ISankeyChartBucketProps } from "./sankeyChart/SankeyChart";
+
 export { Xirr, IXirrProps, IXirrBucketProps } from "./xirr/Xirr";
 
 export { CoreXirr } from "./xirr/CoreXirr";

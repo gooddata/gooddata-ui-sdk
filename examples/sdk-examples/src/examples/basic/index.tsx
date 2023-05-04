@@ -19,6 +19,7 @@ import { ScatterPlotExample } from "./ScatterPlotExample";
 import { BubbleChartExample } from "./BubbleChartExample";
 import { TreemapExample } from "./TreemapExample";
 import { HeatmapExample } from "./HeatmapExample";
+import { SankeyChartExample } from "./SankeyChartExample";
 import { HeadlineExample } from "./HeadlineExample";
 import { KpiExample } from "./KpiExample";
 
@@ -37,6 +38,7 @@ import ScatterPlotExampleSRC from "./ScatterPlotExample?raw";
 import BubbleChartExampleSRC from "./BubbleChartExample?raw";
 import TreemapExampleSRC from "./TreemapExample?raw";
 import HeatmapExampleSRC from "./HeatmapExample?raw";
+import SankeyChartExampleSRC from "./SankeyChartExample?raw";
 import HeadlineExampleSRC from "./HeadlineExample?raw";
 import KpiExampleSRC from "./KpiExample?raw";
 
@@ -55,6 +57,7 @@ import ScatterPlotExampleSRCJS from "./ScatterPlotExample?rawJS";
 import BubbleChartExampleSRCJS from "./BubbleChartExample?rawJS";
 import TreemapExampleSRCJS from "./TreemapExample?rawJS";
 import HeatmapExampleSRCJS from "./HeatmapExample?rawJS";
+import SankeyChartExampleSRCJS from "./SankeyChartExample?rawJS";
 import HeadlineExampleSRCJS from "./HeadlineExample?rawJS";
 import KpiExampleSRCJS from "./KpiExample?rawJS";
 
@@ -171,6 +174,13 @@ export const BasicComponents: React.FC = () => (
 
         <h2 id="heatmap">Heatmap</h2>
         <ExampleWithSource for={HeatmapExample} source={HeatmapExampleSRC} sourceJS={HeatmapExampleSRCJS} />
+
+        <h2 id="sankey">Sankey chart</h2>
+        <ExampleWithSource
+            for={SankeyChartExample}
+            source={SankeyChartExampleSRC}
+            sourceJS={SankeyChartExampleSRCJS}
+        />
 
         <hr className="separator" />
 

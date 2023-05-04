@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper";
 import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
@@ -23,6 +23,7 @@ describe("TreemapColorStrategy", () => {
             colorPalette,
             undefined,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,
@@ -57,6 +58,7 @@ describe("TreemapColorStrategy", () => {
             TwoColorPalette,
             colorMapping,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,

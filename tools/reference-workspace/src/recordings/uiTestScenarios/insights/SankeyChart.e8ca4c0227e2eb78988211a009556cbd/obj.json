@@ -1,0 +1,40 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "attribute_from" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "SankeyChart.e8ca4c0227e2eb78988211a009556cbd",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "SankeyChart - measure and attributeTo",
+        "uri": "SankeyChart.e8ca4c0227e2eb78988211a009556cbd",
+        "visualizationUrl": "local:sankey"
+    }
+}

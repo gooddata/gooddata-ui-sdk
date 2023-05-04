@@ -3,6 +3,8 @@ const MEASURES = "measures";
 const SECONDARY_MEASURES = "secondary_measures";
 const TERTIARY_MEASURES = "tertiary_measures";
 const ATTRIBUTE = "attribute";
+const ATTRIBUTE_FROM = "attribute_from";
+const ATTRIBUTE_TO = "attribute_to";
 const ATTRIBUTES = "attributes";
 const VIEW = "view";
 const STACK = "stack";
@@ -26,6 +28,8 @@ export const BucketNames = {
     TERTIARY_MEASURES,
     ATTRIBUTE,
     ATTRIBUTES,
+    ATTRIBUTE_FROM,
+    ATTRIBUTE_TO,
     VIEW,
     STACK,
     TREND,

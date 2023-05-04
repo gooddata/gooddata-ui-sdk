@@ -115,6 +115,11 @@ export const isPyramid = isEqual(VisualizationTypes.PYRAMID);
 /**
  * @internal
  */
+export const isSankey = isEqual(VisualizationTypes.SANKEY);
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 

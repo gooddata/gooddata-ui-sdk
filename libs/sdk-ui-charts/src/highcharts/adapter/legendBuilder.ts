@@ -8,13 +8,14 @@ import {
     isHeatmap,
     isLineChart,
     isOneOfTypes,
+    isSankey,
     isScatterPlot,
     isTreemap,
 } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { isStackedChart, getComboChartSeries, createDualAxesSeriesMapper } from "./legendHelpers";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
-import { IChartOptions } from "../typings/unsafe";
+import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe";
 import {
     LegendOptionsItemType,
     ILegendOptions,
@@ -48,6 +49,7 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
     const isTreemapWithViewByAttribute = isTreemap(type) && hasViewByAttribute;
     const isTreemapWithManyCategories = isTreemap(type) && chartOptions.data.categories.length > 1;
+    const isSankeyChart = isSankey(type);
 
     return (
         hasMoreThanOneSeries ||
@@ -58,6 +60,7 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
         isTreemapWithViewByAttribute ||
         isBubbleWithViewByAttribute ||
         isTreemapWithManyCategories ||
+        isSankeyChart ||
         isHeatmapWithMultipleValues(chartOptions)
     );
 }
@@ -87,6 +90,16 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
             return {
                 range,
                 color,
+                legendIndex: index,
+            };
+        });
+    }
+
+    if (isSankey(type)) {
+        return chartOptions.data.series[0].nodes.map((it: ISeriesNodeItem, index: number) => {
+            return {
+                name: it.id,
+                color: it.color,
                 legendIndex: index,
             };
         });
@@ -123,6 +136,7 @@ export default function buildLegendOptions(
         VisualizationTypes.HEATMAP,
         VisualizationTypes.FUNNEL,
         VisualizationTypes.PYRAMID,
+        VisualizationTypes.SANKEY,
     ];
     const defaultTopLegendCharts = [
         VisualizationTypes.COLUMN,
@@ -133,6 +147,7 @@ export default function buildLegendOptions(
         VisualizationTypes.PIE,
         VisualizationTypes.DONUT,
     ];
+    const defaultHideLegendCharts = [VisualizationTypes.SANKEY];
 
     if (legendConfig.position === "auto" || !legendConfig.position) {
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
@@ -142,6 +157,13 @@ export default function buildLegendOptions(
         if (isOneOfTypes(chartOptions.type, defaultTopLegendCharts) && !chartOptions.hasStackByAttribute) {
             set(defaultLegendConfigByType, "position", "top");
         }
+    }
+
+    if (
+        (legendConfig.enabled === undefined || legendConfig.enabled === null) &&
+        isOneOfTypes(chartOptions.type, defaultHideLegendCharts)
+    ) {
+        set(defaultLegendConfigByType, "enabled", false);
     }
 
     const baseConfig = {

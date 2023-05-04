@@ -7,6 +7,7 @@ import {
     isBulletChart,
     isHeatmap,
     isOneOfTypes,
+    isSankey,
     isScatterPlot,
     isTreemap,
 } from "../_util/common";
@@ -17,6 +18,7 @@ import { HeatmapColorStrategy } from "../heatmap/heatmapColoring";
 import { TreemapColorStrategy } from "../treemap/treemapColoring";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring";
 import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring";
+import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,
@@ -25,6 +27,7 @@ const attributeChartSupportedTypes = [
     VisualizationTypes.PYRAMID,
     VisualizationTypes.SCATTER,
     VisualizationTypes.BUBBLE,
+    VisualizationTypes.SANKEY,
 ];
 
 function isAttributeColorPalette(type: string, dv: DataViewFacade, stackByAttribute: any) {
@@ -38,6 +41,8 @@ export class ColorFactory {
         colorMapping: IColorMapping[],
         // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+        viewByParentAttribute: any,
         // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -94,6 +99,17 @@ export class ColorFactory {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
+                dv,
+                theme,
+            );
+        }
+
+        if (isSankey(type)) {
+            return new SankeyChartColorStrategy(
+                colorPalette,
+                colorMapping,
+                viewByParentAttribute,
+                viewByAttribute,
                 dv,
                 theme,
             );

@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-04-25T10:58:29.565Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-04T10:37:13.237Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -86,34 +86,34 @@ export const CountyName: IAttribute = newAttribute("county_name");
  */
 export const City = {
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
      */
-    Default: newAttribute("f_city.id"),
-    /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
-    /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
+    Latitude: newAttribute("f_city.id.latitude"),
     /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
      */ ShortName: newAttribute("f_city.id.cityshortname"),
     /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
+    /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */ Name: newAttribute("f_city.id.cityname"),
+    /**
      * Display Form Title: Longitude
      * Display Form ID: f_city.id.longitude
      */ Longitude: newAttribute("f_city.id.longitude"),
     /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
 };
 /**
  * Attribute Title: State
@@ -121,14 +121,14 @@ export const City = {
  */
 export const State = {
     /**
-     * Display Form Title: State
-     * Display Form ID: state_id
-     */
-    Default: newAttribute("state_id"),
-    /**
      * Display Form Title: State name
      * Display Form ID: state_id.statename
-     */ Name: newAttribute("state_id.statename"),
+     */
+    Name: newAttribute("state_id.statename"),
+    /**
+     * Display Form Title: State
+     * Display Form ID: state_id
+     */ Default: newAttribute("state_id"),
 };
 /**
  * Attribute Title: Opportunity
@@ -205,14 +205,14 @@ export const Region: IAttribute = newAttribute("f_owner.region_id");
  */
 export const Product = {
     /**
-     * Display Form Title: Product Name
-     * Display Form ID: label.f_product.product.name
-     */
-    Name: newAttribute("label.f_product.product.name"),
-    /**
      * Display Form Title: Product
      * Display Form ID: attr.f_product.product
-     */ Default: newAttribute("attr.f_product.product"),
+     */
+    Default: newAttribute("attr.f_product.product"),
+    /**
+     * Display Form Title: Product Name
+     * Display Form ID: label.f_product.product.name
+     */ Name: newAttribute("label.f_product.product.name"),
 };
 /**
  * Attribute Title: Product Id
@@ -225,14 +225,14 @@ export const ProductId: IAttribute = newAttribute("f_product.id");
  */
 export const StageName = {
     /**
-     * Display Form Title: Stage Name
-     * Display Form ID: label.f_stage.stagename.stagename
-     */
-    Default: newAttribute("label.f_stage.stagename.stagename"),
-    /**
      * Display Form Title: Order
      * Display Form ID: label.f_stage.stagename.order
-     */ Order: newAttribute("label.f_stage.stagename.order"),
+     */
+    Order: newAttribute("label.f_stage.stagename.order"),
+    /**
+     * Display Form Title: Stage Name
+     * Display Form ID: label.f_stage.stagename.stagename
+     */ Default: newAttribute("label.f_stage.stagename.stagename"),
     /**
      * Display Form Title: Stage Name
      * Display Form ID: attr.f_stage.stagename
@@ -2266,6 +2266,10 @@ export const Insights = {
      * Insight Title: Table Sales rep, Forecast category
      * Insight ID: 63a1281d-2ad1-42b2-9577-d653cbe7562c
      */ TableSalesRepForecastCategory: "63a1281d-2ad1-42b2-9577-d653cbe7562c",
+    /**
+     * Insight Title: Sankey chart
+     * Insight ID: 684a2cf2-3b5c-44d3-9287-61e428d0eac2
+     */ SankeyChart: "684a2cf2-3b5c-44d3-9287-61e428d0eac2",
     /**
      * Insight Title: Amount
      * Insight ID: 87e5c951-0ae6-4a71-a38d-843457bdfc0b

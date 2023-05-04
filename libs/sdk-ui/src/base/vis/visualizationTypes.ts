@@ -28,6 +28,7 @@ export const VisualizationTypes = {
     PARETO: "pareto" as const,
     ALLUVIAL: "alluvial" as const,
     XIRR: "xirr" as const,
+    SANKEY: "sankey" as const,
 };
 
 /**
@@ -54,7 +55,8 @@ export type ChartType =
     | "funnel"
     | "pyramid"
     | "pareto"
-    | "alluvial";
+    | "alluvial"
+    | "sankey";
 
 /**
  * @public

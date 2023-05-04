@@ -11,7 +11,7 @@ import isNil from "lodash/isNil";
 import cx from "classnames";
 import { OnLegendReady } from "../../interfaces";
 import { Chart, IChartProps } from "./Chart";
-import { isFunnel, isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/common";
+import { isFunnel, isPieOrDonutChart, isOneOfTypes, isHeatmap, isSankey } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
@@ -326,13 +326,14 @@ export class HighChartsRenderer extends React.PureComponent<
         if (isPieOrDonutChart(type)) {
             type = VisualizationTypes.PIE;
         }
+        const onItemClick = isSankey(type) ? noop : this.onLegendItemClick;
 
         const legendProps: ILegendProps = {
             responsive: legend.responsive,
             enableBorderRadius: legend.enableBorderRadius,
             seriesMapper: legend.seriesMapper,
             series: items,
-            onItemClick: this.onLegendItemClick,
+            onItemClick,
             legendItemsEnabled: this.state.legendItemsEnabled,
             heatmapLegend: isHeatmap(type),
             height,

@@ -1,0 +1,53 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1285"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.product.id",
+                            "name": "Product",
+                            "uri": "/gdc/md/referenceworkspace/obj/1093"
+                        },
+                        "identifier": "label.product.id.name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "name": "Product Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1094"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.region",
+                            "name": "Region",
+                            "uri": "/gdc/md/referenceworkspace/obj/1125"
+                        },
+                        "identifier": "label.owner.region",
+                        "localIdentifier": "a_label.owner.region",
+                        "name": "Region",
+                        "uri": "/gdc/md/referenceworkspace/obj/1126"
+                    }
+                }
+            ]
+        }
+    ]
+}

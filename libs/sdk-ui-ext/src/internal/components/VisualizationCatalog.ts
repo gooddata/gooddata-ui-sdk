@@ -22,6 +22,7 @@ import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDesc
 import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor";
 import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor";
 import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor";
+import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -137,6 +138,7 @@ const DefaultVisualizations = {
     funnel: FunnelChartDescriptor,
     pyramid: PyramidChartDescriptor,
     pushpin: GeoPushpinChartDescriptor,
+    sankey: SankeyChartDescriptor,
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper";
 import { IColorMapping } from "../../../../interfaces";
@@ -38,6 +38,7 @@ describe("ScatterPlotColorStrategy", () => {
             CUSTOM_COLOR_PALETTE,
             colorMapping,
             viewByAttribute,
+            undefined,
             stackByAttribute,
             dv,
             type,

@@ -27,6 +27,7 @@ import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
 import { HighchartsOptions } from "../../lib";
+import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration";
 
 type ChartConfigurationValueType = (
     ...args: any
@@ -55,6 +56,7 @@ const chartConfigurationMap: {
     [VisualizationTypes.PYRAMID]: getPyramidConfiguration,
     [VisualizationTypes.HEATMAP]: getHeatmapConfiguration,
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration,
+    [VisualizationTypes.SANKEY]: getSankeyConfiguration,
 };
 
 export function getHighchartsOptions(

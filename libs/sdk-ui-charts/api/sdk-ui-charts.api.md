@@ -15,6 +15,7 @@ import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
@@ -428,6 +429,20 @@ export interface IPyramidChartBucketProps {
 export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
 }
 
+// @public (undocumented)
+export interface ISankeyChartBucketProps {
+    attributeFrom?: AttributeOrPlaceholder;
+    attributeTo?: AttributeOrPlaceholder;
+    filters?: NullableFiltersOrPlaceholders;
+    measure: IAttributeOrMeasure;
+    placeholdersResolutionContext?: any;
+    sortBy?: SortsOrPlaceholders;
+}
+
+// @public (undocumented)
+export interface ISankeyChartProps extends IBucketChartProps, ISankeyChartBucketProps {
+}
+
 // @internal (undocumented)
 export const isAreaChart: LodashIsEqual1x1;
 
@@ -482,6 +497,9 @@ export const isPieOrDonutChart: (type: string) => boolean;
 export const isPyramid: LodashIsEqual1x1;
 
 // @internal (undocumented)
+export const isSankey: LodashIsEqual1x1;
+
+// @internal (undocumented)
 export const isScatterPlot: LodashIsEqual1x1;
 
 // @internal (undocumented)
@@ -534,6 +552,9 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
 export const PyramidChart: (props: IPyramidChartProps) => JSX.Element;
+
+// @public
+export const SankeyChart: (props: ISankeyChartProps) => JSX.Element;
 
 // @public
 export const ScatterPlot: (props: IScatterPlotProps) => JSX.Element;

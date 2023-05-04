@@ -1,8 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IChartConfig } from "../../../interfaces";
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe";
-import { customEscape, isCssMultiLineTruncationSupported, isOneOfTypes, isTreemap } from "../_util/common";
+import {
+    customEscape,
+    isCssMultiLineTruncationSupported,
+    isOneOfTypes,
+    isTreemap,
+    unwrap,
+} from "../_util/common";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
@@ -291,6 +297,33 @@ export function buildTooltipTreemapFactory(
             textData.push([customEscape(point.series.name), formattedValue]);
         } else {
             textData.push([customEscape(point.category?.name), formattedValue]);
+        }
+
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
+    };
+}
+
+export function generateTooltipSankeyChartFn(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    measure: IMeasureDescriptor,
+    config: IChartConfig = {},
+): ITooltipFactory {
+    const { separators } = config;
+
+    return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number): string => {
+        const textData: string[][] = [];
+        const format = unwrap(measure).format;
+
+        if (point.isNode) {
+            const formattedValue = formatValueForTooltip(point.sum, format, separators);
+            textData.push(["", point.name]);
+            textData.push([measure.measureHeaderItem.name, formattedValue]);
+        } else {
+            const formattedValue = formatValueForTooltip(point.weight, format, separators);
+            textData.push([viewByParentAttribute.name, point.from]);
+            textData.push([viewByAttribute.name, point.to]);
+            textData.push([measure.measureHeaderItem.name, formattedValue]);
         }
 
         return renderTooltipHTML(textData, maxTooltipContentWidth);

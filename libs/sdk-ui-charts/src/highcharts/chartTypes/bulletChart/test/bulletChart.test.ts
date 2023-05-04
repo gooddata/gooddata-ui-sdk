@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import range from "lodash/range";
 import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { IColorPalette, IMeasure, ITheme } from "@gooddata/sdk-model";
@@ -31,7 +31,16 @@ const getBulletColorStrategy = (props: {
 }): IColorStrategy => {
     const { palette, colorMapping = defaultColorMapping, dv, theme } = props;
 
-    return ColorFactory.getColorStrategy(palette, colorMapping, undefined, undefined, dv, "bullet", theme);
+    return ColorFactory.getColorStrategy(
+        palette,
+        colorMapping,
+        undefined,
+        undefined,
+        undefined,
+        dv,
+        "bullet",
+        theme,
+    );
 };
 
 const PrimaryAndComparative = recordedDataFacade(

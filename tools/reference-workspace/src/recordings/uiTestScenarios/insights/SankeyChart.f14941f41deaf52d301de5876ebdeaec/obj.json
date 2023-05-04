@@ -1,0 +1,40 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            { "items": [], "localIdentifier": "attribute_to" }
+        ],
+        "filters": [],
+        "identifier": "SankeyChart.f14941f41deaf52d301de5876ebdeaec",
+        "properties": { "controls": { "legend": { "enabled": false } } },
+        "sorts": [],
+        "title": "SankeyChart - legend position - 1 measure and 1 attribute - disabled",
+        "uri": "SankeyChart.f14941f41deaf52d301de5876ebdeaec",
+        "visualizationUrl": "local:sankey"
+    }
+}

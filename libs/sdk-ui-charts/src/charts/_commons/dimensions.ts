@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import compact from "lodash/compact";
 import {
     bucketAttribute,
@@ -78,4 +78,17 @@ export function treemapDimensions(def: IExecutionDefinition): IDimension[] {
     return attributes.length === 1
         ? newTwoDimensional([MeasureGroupIdentifier], attributes)
         : newTwoDimensional(attributes, [MeasureGroupIdentifier]);
+}
+
+export function sankeyDimensions(def: IExecutionDefinition): IDimension[] {
+    const attributeFromBucket = bucketsFind(def.buckets, BucketNames.ATTRIBUTE_FROM);
+    const attributeFromByAttributes = attributeFromBucket ? bucketAttributes(attributeFromBucket) : [];
+
+    const attributeToBucket = bucketsFind(def.buckets, BucketNames.ATTRIBUTE_TO);
+    const attributeToByAttributes = attributeToBucket ? bucketAttributes(attributeToBucket) : [];
+
+    return newTwoDimensional(
+        [MeasureGroupIdentifier],
+        compact([...attributeFromByAttributes, ...attributeToByAttributes]),
+    );
 }

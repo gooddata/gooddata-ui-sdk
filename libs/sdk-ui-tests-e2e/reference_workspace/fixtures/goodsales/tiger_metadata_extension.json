@@ -940,7 +940,36 @@
                                                     "type": "visualizationObject"
                                                 }
                                             },
+                                            "properties": {},
                                             "title": "Funnel chart",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "684a2cf2-3b5c-44d3-9287-61e428d0eac2",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Sankey chart",
                                             "type": "insight"
                                         }
                                     },
@@ -968,6 +997,7 @@
                                                     "type": "visualizationObject"
                                                 }
                                             },
+                                            "properties": {},
                                             "title": "Pyramid chart",
                                             "type": "insight"
                                         }
@@ -3523,6 +3553,74 @@
                 "description": "Table Sales rep, Forecast category",
                 "id": "63a1281d-2ad1-42b2-9577-d653cbe7562c",
                 "title": "Table Sales rep, Forecast category"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "32cc1107a59e4470877b9a65048cd9aa",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "e9ec10ae19fc45e888fceb310d8ba1d0"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute_from"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.region_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "c572befecec64970bcecf3af3dcbdc7e"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute_to"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:sankey"
+                },
+                "description": "",
+                "id": "684a2cf2-3b5c-44d3-9287-61e428d0eac2",
+                "title": "Sankey chart"
             },
             {
                 "content": {
