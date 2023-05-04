@@ -85,6 +85,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
+        "icon": "local:sankey/bucket-title-from.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -102,6 +103,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
+        "icon": "local:sankey/bucket-title-to.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -139,12 +141,6 @@ Object {
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
         "title": "MEASURE",
-      },
-      "stack": Object {
-        "icon": "local:sankey/bucket-title-to.svg",
-      },
-      "view": Object {
-        "icon": "local:sankey/bucket-title-from.svg",
       },
     },
     "exportConfig": Object {
@@ -222,6 +218,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
+        "icon": "local:sankey/bucket-title-from.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -239,6 +236,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
+        "icon": "local:sankey/bucket-title-to.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -276,12 +274,6 @@ Object {
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
         "title": "MEASURE",
-      },
-      "stack": Object {
-        "icon": "local:sankey/bucket-title-to.svg",
-      },
-      "view": Object {
-        "icon": "local:sankey/bucket-title-from.svg",
       },
     },
     "exportConfig": Object {
@@ -411,6 +403,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
+        "icon": "local:sankey/bucket-title-from.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -428,6 +421,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
+        "icon": "local:sankey/bucket-title-to.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -465,12 +459,6 @@ Object {
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
         "title": "MEASURE",
-      },
-      "stack": Object {
-        "icon": "local:sankey/bucket-title-to.svg",
-      },
-      "view": Object {
-        "icon": "local:sankey/bucket-title-from.svg",
       },
     },
     "exportConfig": Object {

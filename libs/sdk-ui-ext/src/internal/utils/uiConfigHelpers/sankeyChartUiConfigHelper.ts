@@ -94,8 +94,8 @@ export const configSankeyUiConfig = (
     );
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], measureIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], fromIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "icon"], toIcon);
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_FROM, "icon"], fromIcon);
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_TO, "icon"], toIcon);
 
     return referencePointConfigured;
 };
