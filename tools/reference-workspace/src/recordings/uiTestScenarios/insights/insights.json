@@ -11,6 +11,9 @@
     "AreaChart.0e549d862b33f56aa1c153013ff70237": {
         "comment": "Auto-generated insight for test scenario AreaChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
     },
+    "AreaChart.0eacd196b05830ea3a6c9a5b3d899915": {
+        "comment": "Auto-generated insight for test scenario AreaChart - undefined values, disabled stacking and the continuous line enabled."
+    },
     "AreaChart.112fcccbed8de49ac416faaa00b8ec12": {
         "comment": "Auto-generated insight for test scenario AreaChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
     },
@@ -1580,6 +1583,9 @@
     "ComboChart.1622769ec118069d1bbeea322010715a": {
         "comment": "Auto-generated insight for test scenario ComboChart - 610x154 - Force position RIGHT - auto legend."
     },
+    "ComboChart.192d7a15479e526bb0890b1877e7d75d": {
+        "comment": "Auto-generated insight for test scenario ComboChart - connect nulls values."
+    },
     "ComboChart.1a9dcb5ff33d7a966dae20ac74909def": {
         "comment": "Auto-generated insight for test scenario ComboChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
     },
@@ -1820,6 +1826,11 @@
     },
     "ComboChart.9b32690850955f18ab73cd548d3517b6": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures with slicingcolumn-area."
+    },
+    "ComboChart.9c15797a3176f044ff23129abd7608ea": {
+        "comment": "Auto-generated insight for test scenario ComboChart - two measures with null values.",
+        "scenarioName": "two measures with null values",
+        "visName": "ComboChart"
     },
     "ComboChart.9d9f846c782f9382334a035dc9d0bd3e": {
         "comment": "Auto-generated insight for test scenario ComboChart - data labels - default."
@@ -2507,6 +2518,11 @@
         "scenarioName": "two measures with trendBy",
         "visName": "LineChart"
     },
+    "LineChart.68c689fcb9e8f545528cee343d99e5e9": {
+        "comment": "Auto-generated insight for test scenario LineChart - with two measures and null values.",
+        "scenarioName": "with two measures and null values",
+        "visName": "LineChart"
+    },
     "LineChart.68fdde55c7d0a26020e17add08058057": {
         "comment": "Auto-generated insight for test scenario LineChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
     },
@@ -2648,6 +2664,9 @@
     },
     "LineChart.e7e8c59a406f3a142124f1ccfe33e17e": {
         "comment": "Auto-generated insight for test scenario LineChart - single axis name configuration - low."
+    },
+    "LineChart.f08c92332b746f94d3c08c53ecf330d0": {
+        "comment": "Auto-generated insight for test scenario LineChart - null values with continuous line."
     },
     "LineChart.f1549e99b31f4a59bd086b37c25e48d0": {
         "comment": "Auto-generated insight for test scenario LineChart - 140x354 - without y axis title."

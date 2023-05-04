@@ -47,6 +47,12 @@ export const ComboChartWithManyDataPoints = {
     viewBy: ReferenceMd.Opportunity.Name,
 };
 
+export const ComboChartViewByDate = {
+    primaryMeasures: [ReferenceMd.Amount],
+    secondaryMeasures: [ReferenceMd.Won],
+    viewBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+};
+
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("one primary measure", {
@@ -86,4 +92,5 @@ export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
         ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     )
     .addScenario("multiple measures and no viewBy", ComboChartWithMultipleMeasuresAndNoViewBy)
-    .addScenario("arithmetic measures", ComboChartWithArithmeticMeasuresAndViewBy);
+    .addScenario("arithmetic measures", ComboChartWithArithmeticMeasuresAndViewBy)
+    .addScenario("two measures with null values", ComboChartViewByDate);

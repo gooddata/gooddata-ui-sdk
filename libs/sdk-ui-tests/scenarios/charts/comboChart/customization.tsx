@@ -8,6 +8,7 @@ import {
     ComboChartWithTwoMeasuresAndViewBy,
     ComboChartWithManyDataPoints,
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
+    ComboChartViewByDate,
 } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { responsiveScenarios } from "../_infra/responsiveScenarios";
@@ -67,4 +68,12 @@ const legendResponziveScenarios = responsiveScenarios(
     legendResponsiveVariants,
 );
 
-export default [legendScenarios, dataLabelScenarios, dataPointScenarios, ...legendResponziveScenarios];
+const connectNullsScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario("connect nulls values", {
+        ...ComboChartViewByDate,
+        config: { continuousLine: { enabled: true }}
+    });
+
+export default [legendScenarios, dataLabelScenarios, dataPointScenarios, connectNullsScenarios, ...legendResponziveScenarios];

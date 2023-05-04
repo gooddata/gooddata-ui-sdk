@@ -64,6 +64,11 @@ export interface IChartConfig {
     grid?: IGridConfig;
 
     /**
+     * Configure chart continuous line.
+     */
+    continuousLine?: IContinuousLineConfig;
+
+    /**
      * Customize format string to use for numeric tics on the X axis.
      */
     xFormat?: string;
@@ -264,6 +269,17 @@ export interface IChartConfig {
  * @public
  */
 export interface IGridConfig {
+    enabled?: boolean;
+}
+
+/**
+ * Indicates whether the continuous line for the missing value display or not on Area, Line, and Combo chart
+ * @public
+ */
+export interface IContinuousLineConfig {
+    /**
+     * Enables the continuous line on Area, Line, and Combo chart.
+     */
     enabled?: boolean;
 }
 

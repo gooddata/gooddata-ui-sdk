@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
@@ -270,6 +270,17 @@ export class PluggableComboChart extends PluggableBaseChart {
         );
     }
 
+    private isContinuousLineControlDisabled(insight: IInsightDefinition): boolean {
+        const measureBucketsOfLineCharts = [[this.secondaryChartType, BucketNames.SECONDARY_MEASURES]]
+            .filter(([chartType]) => chartType === VisualizationTypes.LINE)
+            .map(([, bucketId]) => insightBuckets(insight, bucketId));
+
+        return (
+            measureBucketsOfLineCharts.length === 0 ||
+            measureBucketsOfLineCharts.every((bucket) => bucketsIsEmpty(bucket))
+        );
+    }
+
     protected getDefaultAndAvailableSort(buckets: IBucketOfFun[]): {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
@@ -370,6 +381,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     axis={this.axis}
                     panelConfig={{
                         isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
+                        isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
                     }}
                     dataLabelDefaultValue="auto"
                 />,

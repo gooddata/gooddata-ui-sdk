@@ -716,6 +716,16 @@
         "comment": "this is an explanation tooltip when the Percentage option for funnel chart is disabled (properties.canvas.labels.percentages)",
         "limit": 0
     },
+    "properties.canvas.continuousLine.label": {
+        "value": "Continuous line",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.continuousLine.tooltip": {
+        "value": "Draw a line between points with missing values.",
+        "comment": "",
+        "limit": 0
+    },
     "properties.canvas.dataLabels": {
         "value": "Data Labels",
         "comment": "",
