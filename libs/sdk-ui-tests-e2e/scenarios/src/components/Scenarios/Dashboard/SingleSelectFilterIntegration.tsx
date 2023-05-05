@@ -5,10 +5,5 @@ import { idRef } from "@gooddata/sdk-model";
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
 export const SingleSelectFilterIntegration: React.FC = () => {
-    return (
-        <Dashboard
-            dashboard={idRef(Dashboards.SingleSelectFilters)}
-            config={{ settings: { enableSingleSelectionFilter: true } }}
-        />
-    );
+    return <Dashboard dashboard={idRef(Dashboards.SingleSelectFilters)} />;
 };

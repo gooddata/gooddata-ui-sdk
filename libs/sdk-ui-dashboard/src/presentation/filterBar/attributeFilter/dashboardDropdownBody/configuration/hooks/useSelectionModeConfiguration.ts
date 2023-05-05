@@ -5,8 +5,6 @@ import {
     useDashboardCommandProcessing,
     setAttributeFilterSelectionMode,
     changeAttributeFilterSelection,
-    useDashboardSelector,
-    selectSettings,
 } from "../../../../../../model";
 
 export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttributeFilter) => {
@@ -22,34 +20,20 @@ export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttribu
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });
 
-    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
-
     const originalSelectionMode = attributeFilter.attributeFilter.selectionMode ?? "multi";
     const [selectionMode, setSelectionMode] =
         useState<DashboardAttributeFilterSelectionMode>(originalSelectionMode);
     const selectionModeChanged = originalSelectionMode !== selectionMode;
 
-    const onSelectionModeUpdate = useCallback(
-        (value: DashboardAttributeFilterSelectionMode) => {
-            if (!enableSingleSelectionFilter) {
-                return;
-            }
-            setSelectionMode(value);
-        },
-        [enableSingleSelectionFilter],
-    );
+    const onSelectionModeUpdate = useCallback((value: DashboardAttributeFilterSelectionMode) => {
+        setSelectionMode(value);
+    }, []);
 
     const onConfigurationClose = useCallback(() => {
-        if (!enableSingleSelectionFilter) {
-            return;
-        }
         setSelectionMode(originalSelectionMode);
-    }, [originalSelectionMode, enableSingleSelectionFilter]);
+    }, [originalSelectionMode]);
 
     const onSelectionModeChange = useCallback(() => {
-        if (!enableSingleSelectionFilter) {
-            return;
-        }
         if (selectionMode === originalSelectionMode) {
             return;
         }
@@ -63,14 +47,7 @@ export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttribu
             changeSelectionMode(localIdentifier!, selectionMode);
             changeSelection(localIdentifier!, { uris: [] }, "NOT_IN");
         }
-    }, [
-        enableSingleSelectionFilter,
-        originalSelectionMode,
-        selectionMode,
-        attributeFilter,
-        changeSelectionMode,
-        changeSelection,
-    ]);
+    }, [originalSelectionMode, selectionMode, attributeFilter, changeSelectionMode, changeSelection]);
 
     return {
         selectionMode,

@@ -31,7 +31,6 @@ import {
     useDashboardDispatch,
     selectLocale,
     useDashboardSelector,
-    selectSettings,
     selectIsInEditMode,
 } from "../../../model";
 import {
@@ -56,7 +55,6 @@ export const DefaultDashboardAttributeFilter = (
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
@@ -271,8 +269,8 @@ export const DefaultDashboardAttributeFilter = (
                 DropdownActionsComponent={CustomDropdownActions}
                 ElementsSelectComponent={CustomElementsSelect}
                 fullscreenOnMobile
-                selectionMode={enableSingleSelectionFilter ? filter.attributeFilter.selectionMode : undefined}
-                selectFirst={enableSingleSelectionFilter}
+                selectionMode={filter.attributeFilter.selectionMode}
+                selectFirst={true}
             />
         </AttributeFilterParentFilteringProvider>
     );

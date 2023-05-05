@@ -27,8 +27,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableSqlDatasets = "enableSqlDatasets",
     //boolean + possible values: enabled, disabled
-    EnableSingleSelectionFilter = "enableSingleSelectionFilter",
-    //boolean + possible values: enabled, disabled
     EnableFunnelChart = "enableFunnelChart",
     //boolean + possible values: enabled, disabled
     EnablePyramidChart = "enablePyramidChart",
@@ -53,7 +51,6 @@ export type ITigerFeatureFlags = {
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
     enableKPIDashboardExportPDF: typeof FeatureFlagsValues["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: typeof FeatureFlagsValues["enableSqlDatasets"][number];
-    enableSingleSelectionFilter: typeof FeatureFlagsValues["enableSingleSelectionFilter"][number];
     enableFunnelChart: typeof FeatureFlagsValues["enableFunnelChart"][number];
     enablePyramidChart: typeof FeatureFlagsValues["enablePyramidChart"][number];
     enableSankeyChart: typeof FeatureFlagsValues["enableSankeyChart"][number];
@@ -73,7 +70,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDescriptions: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
-    enableSingleSelectionFilter: true,
     enableFunnelChart: false,
     enablePyramidChart: false,
     enableSankeyChart: false,
@@ -97,7 +93,6 @@ export const FeatureFlagsValues = {
     enableDescriptions: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
-    enableSingleSelectionFilter: [true, false] as const,
     enableFunnelChart: [true, false] as const,
     enablePyramidChart: [true, false] as const,
     enableSankeyChart: [true, false] as const,
