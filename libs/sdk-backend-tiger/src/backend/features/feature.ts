@@ -123,13 +123,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableSingleSelectionFilter,
-            "enableSingleSelectionFilter",
-            "BOOLEAN",
-            FeatureFlagsValues.enableSingleSelectionFilter,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableCompositeGrain,
             "enableCompositeGrain",
             "BOOLEAN",

@@ -260,11 +260,6 @@ export interface ISettings {
     formatLocale?: string;
 
     /**
-     * Enable single selection attribute filters
-     */
-    enableSingleSelectionFilter?: boolean;
-
-    /**
      * Enable Dashboard component edit mode
      */
     dashboardEditModeDevRollout?: boolean;

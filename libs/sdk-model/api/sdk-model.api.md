@@ -2246,7 +2246,6 @@ export interface ISettings {
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
     enableSeparateTotalLabels?: boolean;
-    enableSingleSelectionFilter?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;

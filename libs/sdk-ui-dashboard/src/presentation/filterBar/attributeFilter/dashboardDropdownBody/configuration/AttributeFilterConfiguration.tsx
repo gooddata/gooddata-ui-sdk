@@ -8,7 +8,6 @@ import {
     selectOtherContextAttributeFilters,
     selectFilterContextAttributeFilters,
     selectSupportsElementsQueryParentFiltering,
-    selectSettings,
 } from "../../../../../model";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList";
@@ -58,8 +57,6 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             closeHandler();
         };
     }, [closeHandler]);
-
-    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
@@ -132,17 +129,15 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 showResetTitle={showResetTitle}
                 attributeTitle={title ?? defaultAttributeFilterTitle}
             />
-            {Boolean(enableSingleSelectionFilter) && (
-                <SelectionMode
-                    selectionTitleText={selectionTitleText}
-                    multiSelectionOptionText={multiSelectionOptionText}
-                    singleSelectionOptionText={singleSelectionOptionText}
-                    singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
-                    selectionMode={selectionMode}
-                    onSelectionModeChange={onSelectionModeUpdate}
-                    disabled={parentsSelected()}
-                />
-            )}
+            <SelectionMode
+                selectionTitleText={selectionTitleText}
+                multiSelectionOptionText={multiSelectionOptionText}
+                singleSelectionOptionText={singleSelectionOptionText}
+                singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
+                selectionMode={selectionMode}
+                onSelectionModeChange={onSelectionModeUpdate}
+                disabled={parentsSelected()}
+            />
             {isDependentFiltersEnabled && parents.length > 0 ? (
                 <ConfigurationCategory categoryTitle={filterByText} />
             ) : null}
@@ -153,7 +148,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 onConnectingAttributeChanged={onConnectingAttributeChanged}
                 connectingAttributes={connectingAttributes}
                 attributes={attributes}
-                disabled={enableSingleSelectionFilter ? selectionMode === "single" : false}
+                disabled={selectionMode === "single"}
                 disabledTooltip={parentFiltersDisabledTooltip}
             />
             {showDisplayFormPicker ? (

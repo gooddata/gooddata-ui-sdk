@@ -14,7 +14,6 @@ import {
     selectAttributeFilterDisplayFormsMap,
     selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
-    selectSettings,
     useDashboardSelector,
 } from "../../../model";
 
@@ -73,9 +72,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
-
-    const { enableSingleSelectionFilter } = useDashboardSelector(selectSettings);
-    const isSingleSelect = enableSingleSelectionFilter && filterSelectionMode === "single";
+    const isSingleSelect = filterSelectionMode === "single";
 
     if (!isEditMode && isSingleSelect) {
         return null;
