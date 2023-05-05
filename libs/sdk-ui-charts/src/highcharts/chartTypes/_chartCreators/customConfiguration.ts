@@ -561,7 +561,7 @@ function getTreemapLabelsConfiguration(
 }
 
 function shouldDisableHeatmapDataLabels(series: ISeriesItem[]): boolean {
-    return series.some((item) => item.data.length >= HEATMAP_DATA_LABELS_LIMIT);
+    return series.some((item) => item.data?.length >= HEATMAP_DATA_LABELS_LIMIT);
 }
 
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
