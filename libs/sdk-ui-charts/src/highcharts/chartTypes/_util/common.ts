@@ -130,6 +130,11 @@ export const isSankeyOrDependencyWheel = (type: string): boolean => isSankey(typ
 /**
  * @internal
  */
+export const isWaterfall = isEqual(VisualizationTypes.WATERFALL);
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 

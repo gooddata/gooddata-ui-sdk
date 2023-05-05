@@ -53,6 +53,11 @@ export interface ISettings {
     enablePushpinGeoChart?: boolean;
 
     /**
+     * Indicates whether the Waterfall Chart is available in AD.
+     */
+    enableWaterfallChart?: boolean;
+
+    /**
      * Indicates whether week filtering is available in AD.
      */
     enableWeekFilters?: boolean;

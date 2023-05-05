@@ -1027,7 +1027,46 @@
                                                     "type": "visualizationObject"
                                                 }
                                             },
+                                            "properties": {},
                                             "title": "Dependency wheel chart",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "configuration": {
+                                                "hideTitle": false
+                                            },
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "cbe62312-b02c-45a8-b641-b13ea473f0f6",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Waterfall chart",
                                             "type": "insight"
                                         }
                                     }
@@ -3994,6 +4033,67 @@
                 "description": "Table with order",
                 "id": "c796d21d-a705-439d-a727-23b144591617",
                 "title": "Table with order"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_amount",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "dce0ee15ed1c46d08362f44099186f47",
+                                        "title": "Sum of Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "50b1f058a0854ecabca2eaa8802932b8"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {
+                        "controls": {
+                            "total": {
+                                "enabled": true,
+                                "name": "Total"
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:waterfall"
+                },
+                "description": "",
+                "id": "cbe62312-b02c-45a8-b641-b13ea473f0f6",
+                "title": "Waterfall chart"
             },
             {
                 "content": {

@@ -10,6 +10,7 @@ import {
     isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
+    isWaterfall,
 } from "../_util/common";
 import BulletChartColorStrategy from "../bulletChart/bulletChartColoring";
 import { MeasureColorStrategy } from "../_chartColoring/measure";
@@ -19,6 +20,7 @@ import { TreemapColorStrategy } from "../treemap/treemapColoring";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring";
 import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring";
 import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring";
+import { WaterfallChartColorStrategy } from "../warterfallChart/waterfallChartColoring";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,
@@ -113,6 +115,16 @@ export class ColorFactory {
                 viewByAttribute,
                 dv,
                 theme,
+            );
+        }
+
+        if (isWaterfall(type)) {
+            return new WaterfallChartColorStrategy(
+                colorPalette,
+                colorMapping,
+                viewByParentAttribute,
+                viewByAttribute,
+                dv,
             );
         }
 

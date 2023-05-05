@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-05T03:19:51.716Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-17T08:38:25.263Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -905,6 +905,18 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 = {
+    definition: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/scenarios.json"),
+};
+const fp_ecad8b212ff0fc45b3c5838e39285beb = {
+    definition: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1362,6 +1374,11 @@ export const Scenarios = {
             execution: fp_e6413584349322c0dbc6dae41178acb4,
         },
         ThemedWithNullValues: { scenarioIndex: 1, execution: fp_e6413584349322c0dbc6dae41178acb4 },
+    },
+    WaterfallChart: {
+        SingleMeasure: { scenarioIndex: 9, execution: fp_46588b57054306cfdb4d67c9ce0f0362 },
+        SingleMeasureWithViewBy: { scenarioIndex: 0, execution: fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 },
+        MultiMeasures: { scenarioIndex: 0, execution: fp_ecad8b212ff0fc45b3c5838e39285beb },
     },
     Xirr: {
         CorrectConfig: { scenarioIndex: 0, execution: fp_50b382d97968e85d5afe9cfb78e4c346 },
@@ -5021,6 +5038,15 @@ const i_Treemap_f9d30ca2da6044849becb6641771d6b0 = {
 const i_Treemap_feee56882501919c10d216c52d47c1a8 = {
     obj: require("./uiTestScenarios/insights/Treemap.feee56882501919c10d216c52d47c1a8/obj.json"),
 };
+const i_WaterfallChart_2a797bfd967c0ddf55985ff0123392e5 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.2a797bfd967c0ddf55985ff0123392e5/obj.json"),
+};
+const i_WaterfallChart_917b7a14a68849c9f98511b705dcdfd1 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.917b7a14a68849c9f98511b705dcdfd1/obj.json"),
+};
+const i_WaterfallChart_c33d1b9464b049310aebe038257c2b04 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c33d1b9464b049310aebe038257c2b04/obj.json"),
+};
 const i_Xirr_2dd4cca9665e247c85d40e207b212db7 = {
     obj: require("./uiTestScenarios/insights/Xirr.2dd4cca9665e247c85d40e207b212db7/obj.json"),
 };
@@ -5288,6 +5314,11 @@ export const Insights = {
         SingleMeasure: i_Treemap_eb6fa806d3f977e0a1431a0e08496c8b,
         SingleMeasureAndViewByFilteredToOneElement: i_Treemap_f92fe7048e24a76694640e2707aea183,
     },
+    WaterfallChart: {
+        SingleMeasureWithViewBy: i_WaterfallChart_2a797bfd967c0ddf55985ff0123392e5,
+        SingleMeasure: i_WaterfallChart_917b7a14a68849c9f98511b705dcdfd1,
+        MultiMeasures: i_WaterfallChart_c33d1b9464b049310aebe038257c2b04,
+    },
     Xirr: {
         CorrectConfig: i_Xirr_2dd4cca9665e247c85d40e207b212db7,
         OnlyMeasure: i_Xirr_74456ce90909b92d28a01949e02ac574,
@@ -5487,6 +5518,8 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2,
+        fp_ecad8b212ff0fc45b3c5838e39285beb,
     },
     metadata: {
         catalog,
@@ -6706,6 +6739,9 @@ export const Recordings = {
             i_Treemap_f9d0fe254f0cf5a8c3486ee7e13ba371,
             i_Treemap_f9d30ca2da6044849becb6641771d6b0,
             i_Treemap_feee56882501919c10d216c52d47c1a8,
+            i_WaterfallChart_2a797bfd967c0ddf55985ff0123392e5,
+            i_WaterfallChart_917b7a14a68849c9f98511b705dcdfd1,
+            i_WaterfallChart_c33d1b9464b049310aebe038257c2b04,
             i_Xirr_2dd4cca9665e247c85d40e207b212db7,
             i_Xirr_74456ce90909b92d28a01949e02ac574,
             i_Xirr_e5deb6dfe7ff06cdc5210a56fc84c841,

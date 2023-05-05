@@ -179,6 +179,10 @@ export function isStackingToPercent(properties: IVisualizationProperties): boole
     return properties?.controls?.stackMeasuresToPercent ?? false;
 }
 
+export function isTotalSectionEnabled(properties: IVisualizationProperties): boolean {
+    return properties?.controls?.total?.enabled ?? true;
+}
+
 export function isDualAxisOrSomeSecondaryAxisMeasure(
     extReferencePoint: IExtendedReferencePoint,
     secondaryMeasures: IBucketItem[],

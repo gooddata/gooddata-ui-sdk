@@ -29,6 +29,7 @@ import { IntlShape } from "react-intl";
 import { HighchartsOptions } from "../../lib";
 import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration";
 import { getDependencyWheelConfiguration } from "../dependencyWheelChart/dependencyWheelConfiguration";
+import { getWaterfallConfiguration } from "../warterfallChart/waterfallConfiguration";
 
 type ChartConfigurationValueType = (
     ...args: any
@@ -59,6 +60,7 @@ const chartConfigurationMap: {
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration,
     [VisualizationTypes.SANKEY]: getSankeyConfiguration,
     [VisualizationTypes.DEPENDENCY_WHEEL]: getDependencyWheelConfiguration,
+    [VisualizationTypes.WATERFALL]: getWaterfallConfiguration,
 };
 
 export function getHighchartsOptions(

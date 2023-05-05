@@ -332,6 +332,32 @@ export function generateTooltipSankeyChartFn(
     };
 }
 
+export function getTooltipWaterfallChart(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    config: IChartConfig = {},
+) {
+    const { separators } = config;
+
+    return (
+        point: IUnsafeHighchartsTooltipPoint,
+        maxTooltipContentWidth: number,
+        percentageValue?: number,
+    ): string => {
+        const formattedValue = getFormattedValueForTooltip(false, false, point, separators, percentageValue);
+        const textData = [[customEscape(point.series.name), formattedValue]];
+
+        if (viewByAttribute) {
+            textData.unshift([
+                customEscape(viewByAttribute.formOf.name),
+                customEscape(point.category?.name || point.name),
+            ]);
+        } else {
+            textData[0][0] = customEscape(point.category?.name);
+        }
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
+    };
+}
+
 export function getTooltipFactory(
     isViewByTwoAttributes: boolean,
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,

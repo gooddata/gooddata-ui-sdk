@@ -31,6 +31,12 @@ export const DEFAULT_BULLET_GRAY_COLOR: IRgbColorValue = {
     b: 226,
 };
 
+export const DEFAULT_WATERFALL_COLORS = [
+    "properties.color.total",
+    "properties.color.positive",
+    "properties.color.negative",
+];
+
 /**
  * @internal
  */

@@ -112,6 +112,25 @@ export interface ITotalDescriptor {
 }
 
 /**
+ * Describes color included in a dimension.
+ *
+ * @public
+ */
+export interface IColorDescriptorItem {
+    id: string;
+    name: string;
+}
+
+/**
+ * Describes color included in a dimension.
+ *
+ * @public
+ */
+export interface IColorDescriptor {
+    colorHeaderItem: IColorDescriptorItem;
+}
+
+/**
  * Describes attributes to which the display form belongs.
  *
  * @public
@@ -464,6 +483,15 @@ export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor {
  */
 export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor {
     return !isEmpty(obj) && (obj as ITotalDescriptor).totalHeaderItem !== undefined;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IColorDescriptor}.
+ *
+ * @public
+ */
+export function isColorDescriptor(obj: unknown): obj is IColorDescriptor {
+    return !isEmpty(obj) && (obj as IColorDescriptor).colorHeaderItem !== undefined;
 }
 
 /**

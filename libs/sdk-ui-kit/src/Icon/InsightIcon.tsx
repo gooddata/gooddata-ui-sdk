@@ -23,6 +23,7 @@ const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
     "local:dependencywheel": Icon.DependencyWheel,
     "local:funnel": Icon.Funnel,
     "local:pyramid": Icon.Pyramid,
+    "local:waterfall": Icon.Waterfall,
 };
 
 /**

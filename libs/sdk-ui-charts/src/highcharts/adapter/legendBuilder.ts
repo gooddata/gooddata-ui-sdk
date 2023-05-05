@@ -1,4 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
+import { IntlShape } from "react-intl";
 import pick from "lodash/pick";
 import set from "lodash/set";
 import {
@@ -11,9 +12,15 @@ import {
     isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
+    isWaterfall,
 } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { isStackedChart, getComboChartSeries, createDualAxesSeriesMapper } from "./legendHelpers";
+import {
+    isStackedChart,
+    getComboChartSeries,
+    createDualAxesSeriesMapper,
+    createWaterfallLegendItems,
+} from "./legendHelpers";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
 import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe";
 import {
@@ -51,6 +58,8 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
     const isTreemapWithViewByAttribute = isTreemap(type) && hasViewByAttribute;
     const isTreemapWithManyCategories = isTreemap(type) && chartOptions.data.categories.length > 1;
+    const isSankeyChart = isSankeyOrDependencyWheel(type);
+    const isWaterfallChart = isWaterfall(type);
 
     return (
         hasMoreThanOneSeries ||
@@ -61,11 +70,13 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
         isTreemapWithViewByAttribute ||
         isBubbleWithViewByAttribute ||
         isTreemapWithManyCategories ||
+        isSankeyChart ||
+        isWaterfallChart ||
         isHeatmapWithMultipleValues(chartOptions)
     );
 }
 
-export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemType[] {
+export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): LegendOptionsItemType[] {
     const { type } = chartOptions;
     const firstSeriesDataTypes = [
         VisualizationTypes.PIE,
@@ -105,6 +116,10 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
         });
     }
 
+    if (isWaterfall(type)) {
+        return createWaterfallLegendItems(chartOptions, intl) as LegendOptionsItemType[];
+    }
+
     const legendDataSource = isOneOfTypes(type, firstSeriesDataTypes)
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
@@ -127,6 +142,7 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
 export default function buildLegendOptions(
     legendConfig: any = {},
     chartOptions: IChartOptions,
+    intl?: IntlShape,
 ): ILegendOptions {
     const defaultLegendConfigByType = {};
     const rightLegendCharts = [
@@ -147,8 +163,13 @@ export default function buildLegendOptions(
         VisualizationTypes.AREA,
         VisualizationTypes.PIE,
         VisualizationTypes.DONUT,
+        VisualizationTypes.WATERFALL,
     ];
-    const defaultHideLegendCharts = [VisualizationTypes.SANKEY, VisualizationTypes.DEPENDENCY_WHEEL];
+    const defaultHideLegendCharts = [
+        VisualizationTypes.SANKEY,
+        VisualizationTypes.DEPENDENCY_WHEEL,
+        VisualizationTypes.WATERFALL,
+    ];
 
     if (legendConfig.position === "auto" || !legendConfig.position) {
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
@@ -180,7 +201,7 @@ export default function buildLegendOptions(
         enabled: baseConfig.enabled && isLegendEnabled,
         toggleEnabled: isLegendEnabled,
         format: chartOptions?.title?.format ?? "",
-        items: getLegendItems(chartOptions),
+        items: getLegendItems(chartOptions, intl),
         enableBorderRadius: createItemBorderRadiusPredicate(chartOptions.type),
         seriesMapper: createSeriesMapper(chartOptions.type),
     };

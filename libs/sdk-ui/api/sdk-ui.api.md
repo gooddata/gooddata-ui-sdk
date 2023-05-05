@@ -18,6 +18,7 @@ import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
+import { IColorDescriptor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -1122,7 +1123,7 @@ export interface ILoadingState {
 export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU";
 
 // @public (undocumented)
-export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor;
+export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;
 
 // @internal
 export interface IMeasureTitleProps {
@@ -1641,6 +1642,9 @@ export type TableElementType = "cell";
 
 // @public (undocumented)
 export type TableType = "table";
+
+// @internal
+export function totalColumnTitleFromIntl(intl: IntlShape): string;
 
 // @public
 export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;

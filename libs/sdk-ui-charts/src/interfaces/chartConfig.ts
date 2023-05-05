@@ -54,6 +54,11 @@ export interface IChartConfig {
     legend?: ILegendConfig;
 
     /**
+     * Configure for the total column of Waterfall chart.
+     */
+    total?: ITotalConfig;
+
+    /**
      * Configure whether legend items should be laid-out vertically (column legend) or horizontally (line legend).
      */
     legendLayout?: "vertical" | "horizontal";
@@ -360,6 +365,21 @@ export interface ILegendConfig {
      * screens smaller than 767px.
      */
     responsive?: boolean | "autoPositionWithPopup";
+}
+
+/**
+ * @public
+ */
+export interface ITotalConfig {
+    /**
+     * Indicates whether total column should be rendered or not.
+     */
+    enabled?: boolean;
+
+    /**
+     * Custom title for the total column (Total is default)
+     */
+    name?: string;
 }
 
 /**

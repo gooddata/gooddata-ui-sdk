@@ -7,6 +7,7 @@ import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem } from "../../../../interfaces/Colors";
 import { getMappingHeaderFormattedName, IMappingHeader } from "@gooddata/sdk-ui";
 import { getTranslation } from "../../../../utils/translations";
+import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
@@ -25,7 +26,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
     };
 
     public render() {
-        const { item, intl, colorPalette, showCustomPicker } = this.props;
+        const { item, colorPalette, showCustomPicker } = this.props;
         const coloredItem: IColoredItem = item ? item : null;
 
         if (!coloredItem) {
@@ -34,8 +35,6 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
 
         const headerItem: IMappingHeader = coloredItem.mappingHeader;
         const headerText = this.getText(headerItem);
-        const emptyText = `(${getTranslation("empty_value", intl)})`;
-        const text = headerText === null || headerText === "" ? emptyText : headerText;
 
         return (
             <ColorDropdown
@@ -44,7 +43,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
                 onColorSelected={this.onColorSelected}
                 showCustomPicker={showCustomPicker}
             >
-                <ColoredItemContent text={text} color={coloredItem.color} />
+                <ColoredItemContent text={headerText} color={coloredItem.color} />
             </ColorDropdown>
         );
     }
@@ -61,7 +60,13 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
     };
 
     private getText(mappingHeader: IMappingHeader) {
-        return getMappingHeaderFormattedName(mappingHeader) || "";
+        const { intl } = this.props;
+        const headerText = getMappingHeaderFormattedName(mappingHeader) || "";
+
+        if (headerText === null || headerText === "") {
+            return `(${getTranslation("empty_value", intl)})`;
+        }
+        return isWaterfallColorHeaderItemKey(headerText) ? getTranslation(headerText, intl) : headerText;
     }
 }
 

@@ -669,6 +669,11 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                     verticalAlign: "middle",
                 },
             },
+            waterfall: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                },
+            },
             pyramid: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
@@ -975,6 +980,7 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.TREEMAP:
+        case VisualizationTypes.WATERFALL:
         case VisualizationTypes.FUNNEL:
         case VisualizationTypes.PYRAMID:
         case VisualizationTypes.SANKEY:

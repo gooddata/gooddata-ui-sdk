@@ -23,6 +23,7 @@ import { SankeyChartExample } from "./SankeyChartExample";
 import { DependencyWheelChartExample } from "./DependencyWheelChartExample";
 import { HeadlineExample } from "./HeadlineExample";
 import { KpiExample } from "./KpiExample";
+import { WaterfallChartExample } from "./WaterfallChartExample";
 
 import BarChartExampleSRC from "./BarChartExample?raw";
 import BulletChartExampleSRC from "./BulletChartExample?raw";
@@ -43,6 +44,7 @@ import SankeyChartExampleSRC from "./SankeyChartExample?raw";
 import DependencyWheelChartExampleSRC from "./DependencyWheelChartExample?raw";
 import HeadlineExampleSRC from "./HeadlineExample?raw";
 import KpiExampleSRC from "./KpiExample?raw";
+import WaterfallChartExampleSRC from "./WaterfallChartExample?raw";
 
 import BarChartExampleSRCJS from "./BarChartExample?rawJS";
 import BulletChartExampleSRCJS from "./BulletChartExample?rawJS";
@@ -63,6 +65,7 @@ import SankeyChartExampleSRCJS from "./SankeyChartExample?rawJS";
 import DependencyWheelChartExampleSRCJS from "./DependencyWheelChartExample?rawJS";
 import HeadlineExampleSRCJS from "./HeadlineExample?rawJS";
 import KpiExampleSRCJS from "./KpiExample?rawJS";
+import WaterfallChartExampleSRCJS from "./WaterfallChartExample?rawJS";
 
 export const BasicComponents: React.FC = () => (
     <div>
@@ -190,6 +193,13 @@ export const BasicComponents: React.FC = () => (
             for={DependencyWheelChartExample}
             source={DependencyWheelChartExampleSRC}
             sourceJS={DependencyWheelChartExampleSRCJS}
+        />
+
+        <h2 id="table">Waterfall chart</h2>
+        <ExampleWithSource
+            for={WaterfallChartExample}
+            source={WaterfallChartExampleSRC}
+            sourceJS={WaterfallChartExampleSRCJS}
         />
 
         <hr className="separator" />

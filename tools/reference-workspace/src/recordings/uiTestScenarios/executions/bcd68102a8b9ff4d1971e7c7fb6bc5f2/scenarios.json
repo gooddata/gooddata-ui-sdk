@@ -1,0 +1,71 @@
+[
+    {
+        "n2oMap": {
+            "a_label.stage.name.stagename": "a_label.stage.name.stagename",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.stage.name.stagename", "type": "displayForm" },
+                        "localIdentifier": "a_label.stage.name.stagename"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.stage.name.stagename",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.stage.name.stagename"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.stage.name.stagename"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure with viewBy",
+        "vis": "WaterfallChart"
+    }
+]

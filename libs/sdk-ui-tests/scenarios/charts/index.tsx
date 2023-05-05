@@ -18,6 +18,7 @@ import treemap from "./treemap";
 import sankeyChart from "./sankeyChart";
 import xirr from "./xirr";
 import dependencyWheelChart from "./dependencyWheelChart";
+import waterfallChart from "./waterfallChart";
 
 export default [
     ...areaChart,
@@ -38,4 +39,5 @@ export default [
     ...sankeyChart,
     ...dependencyWheelChart,
     ...xirr,
+    ...waterfallChart
 ];
