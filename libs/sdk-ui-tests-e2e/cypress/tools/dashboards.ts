@@ -156,6 +156,16 @@ export class TopBar {
         return this;
     }
 
+    isEditing(expect: boolean): this {
+        cy.get(".s-gd-dashboard-title.is-editing").should(expect ? "exist" : "not.exist");
+        return this;
+    }
+
+    hasDashboardTitlePlaceholder(text: string): this {
+        cy.get(".s-gd-dashboard-title div.gd-editable-label-inner").should("have.text", text);
+        return this;
+    }
+
     getMenuButtonItemElement(itemClass: string): this {
         cy.get(`.${itemClass}`);
         return this;
@@ -164,6 +174,16 @@ export class TopBar {
     enterSharing(): this {
         this.shareButtonExists();
         this.clickShareButton();
+        return this;
+    }
+
+    deleteDashboard(confirm: boolean) {
+        this.getDeleteButtonElement().click();
+        if (confirm == true) {
+            cy.get(".s-delete").click();
+        } else {
+            cy.get(".s-cancel").click();
+        }
         return this;
     }
 }

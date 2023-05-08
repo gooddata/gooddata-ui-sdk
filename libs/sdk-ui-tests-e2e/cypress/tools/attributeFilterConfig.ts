@@ -83,13 +83,11 @@ export class AttributeFilterConfiguration {
 
     cancel() {
         cy.get(".dropdown-body .cancel-button").click();
-        cy.wait(200);
         return this;
     }
 
     save() {
         cy.get(".s-attribute-filter-dropdown-configuration-save-button").click();
-        cy.wait(200);
         return this;
     }
 }

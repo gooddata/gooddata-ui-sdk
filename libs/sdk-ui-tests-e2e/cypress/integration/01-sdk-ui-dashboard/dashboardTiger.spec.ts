@@ -87,6 +87,22 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
                 widget.isLoading(true);
             },
         );
+
+        //Cover ticket: RAIL-4772
+        it(
+            "should able to delete dashboard after save as new",
+            { tags: ["checklist_integrated_tiger"] },
+            () => {
+                Navigation.visitCopyOf("dashboard/dashboard-tiger");
+
+                new EditMode().edit();
+                topBar
+                    .menuButtonIsVisible(true)
+                    .clickMenuButton()
+                    .deleteDashboard(true)
+                    .dashboardTitleHasValue("Untitled");
+            },
+        );
     });
 
     describe("FilterBar rendering", () => {

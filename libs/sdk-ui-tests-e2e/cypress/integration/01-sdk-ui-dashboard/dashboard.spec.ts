@@ -2,6 +2,9 @@
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
+import { EditMode } from "../../tools/editMode";
+
+const topBar = new TopBar();
 
 describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
@@ -16,13 +19,10 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         });
 
         it("should render title", () => {
-            const topBar = new TopBar();
-
             topBar.dashboardTitleExist().dashboardTitleHasValue("Test dashboard");
         });
 
         it("should render edit button", () => {
-            const topBar = new TopBar();
             const dashboard = new Dashboard();
 
             dashboard.topBarExist();
@@ -30,20 +30,32 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         });
 
         it("should menu button render", () => {
-            const topBar = new TopBar();
-
             topBar.menuButtonIsVisible();
         });
 
         it("should open menu button and contain items", () => {
-            const topBar = new TopBar();
-
             topBar
                 .menuButtonIsVisible()
                 .clickMenuButton()
                 .topBarMenuItemExist(".s-export_to_pdf")
                 .topBarMenuItemExist(".s-schedule_emailing");
         });
+
+        //Cover ticket: RAIL-4772
+        it(
+            "should able to delete dashboard after save as new",
+            { tags: ["checklist_integrated_bear"] },
+            () => {
+                Navigation.visitCopyOf("dashboard/dashboard");
+
+                new EditMode().edit();
+                topBar
+                    .menuButtonIsVisible(true)
+                    .clickMenuButton()
+                    .deleteDashboard(true)
+                    .dashboardTitleHasValue("Untitled");
+            },
+        );
     });
 
     describe("FilterBar rendering", () => {
