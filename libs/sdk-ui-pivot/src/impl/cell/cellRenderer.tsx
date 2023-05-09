@@ -2,7 +2,6 @@
 import React from "react";
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { isSomeTotal } from "../data/dataSourceUtils";
-import escape from "lodash/escape";
 import { VALUE_CLASS } from "../base/constants";
 import { IGridTotalsRow } from "../data/resultTypes";
 import { agColId } from "../structure/tableDescriptorTypes";
@@ -32,7 +31,7 @@ export function createCellRenderer(): (params: ICellRendererParams) => JSX.Eleme
         const formattedValue =
             isRowTotalOrSubtotal && !isActiveRowTotal && !params.value
                 ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
-                : escape(params.formatValue!(params.value));
+                : params.formatValue!(params.value);
         const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : VALUE_CLASS;
 
         return <span className={className}>{formattedValue || ""}</span>;
