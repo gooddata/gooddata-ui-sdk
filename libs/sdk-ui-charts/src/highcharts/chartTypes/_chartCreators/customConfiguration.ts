@@ -714,7 +714,7 @@ function getStackingConfiguration(
     _config: any,
     chartConfig?: IChartConfig,
 ): HighchartsOptions {
-    const { stacking, yAxes = [], type } = chartOptions;
+    const { stacking, yAxes = [], type, data } = chartOptions;
 
     if (!stacking) {
         return {};
@@ -730,6 +730,9 @@ function getStackingConfiguration(
     }));
 
     const connectNulls = isAreaChart(type) ? { connectNulls: true } : {};
+    //should remove default stacking when the area chart has 1 measure and the continuous line is enabled.
+    const nonStacking =
+        isAreaChart(type) && chartConfig?.continuousLine?.enabled && data?.series?.length === 1;
 
     // extra space allocation for total labels if available
     const totalsVisibleByLabelsConfig =
@@ -750,7 +753,7 @@ function getStackingConfiguration(
     return {
         plotOptions: {
             series: {
-                stacking, // this stacking config will be applied to all series
+                stacking: nonStacking ? undefined : stacking, // this stacking config will be applied to all series
                 ...connectNulls,
             },
         },
