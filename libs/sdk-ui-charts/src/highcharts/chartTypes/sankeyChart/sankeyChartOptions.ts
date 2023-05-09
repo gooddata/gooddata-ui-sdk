@@ -70,6 +70,7 @@ export const buildSankeyChartSeries = (
             keys: KEYS,
             data: buildData(dv, attributeHeaders, emptyHeaderTitle),
             nodes: buildNodes(colorStrategy, emptyHeaderTitle),
+            seriesIndex: 0,
         },
     ];
 };

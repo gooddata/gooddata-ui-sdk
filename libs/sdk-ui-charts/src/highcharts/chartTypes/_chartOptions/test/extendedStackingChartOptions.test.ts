@@ -221,6 +221,7 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         dv,
         measureGroup,
         viewByAttribute,
+        undefined,
         stackByAttribute,
         type,
         metricColorStrategy,

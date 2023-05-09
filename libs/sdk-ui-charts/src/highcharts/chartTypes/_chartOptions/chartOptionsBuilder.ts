@@ -69,7 +69,6 @@ import {
 } from "./chartTooltips";
 import { getDrillableSeries } from "./chartDrilling";
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
-import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -388,6 +387,7 @@ export function getChartOptions(
         dv,
         measureGroup,
         viewByAttribute,
+        viewByParentAttribute,
         stackByAttribute,
         type,
         colorStrategy,
@@ -607,16 +607,10 @@ export function getChartOptions(
     }
 
     if (isSankeyOrDependencyWheel(type)) {
-        const sankeySeries = buildSankeyChartSeries(
-            dv,
-            [viewByParentAttribute, viewByAttribute],
-            colorStrategy,
-            emptyHeaderTitle,
-        );
         return {
             type,
             data: {
-                series: sankeySeries,
+                series,
                 categories: [[""]],
             },
             actions: {

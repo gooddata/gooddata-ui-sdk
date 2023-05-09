@@ -8,6 +8,7 @@ import {
     isBulletChart,
     isHeatmap,
     isOneOfTypes,
+    isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
     parseValue,
@@ -20,6 +21,7 @@ import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries";
 import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries";
 import { getTreemapStackedSeries } from "../treemap/treemapChartSeries";
 import { getBulletChartSeries } from "../bulletChart/bulletChartSeries";
+import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
 
 export function getSeriesItemData(
     seriesItem: string[],
@@ -166,6 +168,7 @@ export function getSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
@@ -189,6 +192,13 @@ export function getSeries(
         );
     } else if (isBulletChart(type)) {
         return getBulletChartSeries(dv, measureGroup, colorStrategy);
+    } else if (isSankeyOrDependencyWheel(type)) {
+        return buildSankeyChartSeries(
+            dv,
+            [viewByParentAttribute, viewByAttribute],
+            colorStrategy,
+            emptyHeaderTitle,
+        );
     }
 
     return getDefaultSeries(

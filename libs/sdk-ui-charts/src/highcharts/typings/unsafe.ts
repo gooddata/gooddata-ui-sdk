@@ -102,6 +102,7 @@ export interface ISeriesItem {
     type?: string;
     isDrillable?: boolean;
     legendIndex?: number;
+    seriesIndex?: number;
     yAxis?: number;
     zIndex?: number;
     labelKey?: string;
