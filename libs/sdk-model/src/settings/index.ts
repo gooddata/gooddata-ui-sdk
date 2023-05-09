@@ -269,6 +269,11 @@ export interface ISettings {
      */
     enableCompositeGrain?: boolean;
 
+    /**
+     * Enable pivot table rows subtotal/total.
+     */
+    enableTableTotalRows?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
