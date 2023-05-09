@@ -86,4 +86,17 @@ export class TigerUserSettingsService
             });
         });
     }
+
+    protected async deleteSettingByType(type: TigerSettingsType): Promise<any> {
+        const settings = await this.getSettingByType(type);
+        for (const setting of settings.data.data) {
+            await this.authCall(async (client) => {
+                const profile = await client.profile.getCurrent();
+                return client.entities.deleteEntityUserSettings({
+                    userId: profile.userId,
+                    id: setting.id,
+                });
+            });
+        }
+    }
 }

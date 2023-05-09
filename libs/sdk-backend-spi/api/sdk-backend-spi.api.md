@@ -1053,9 +1053,13 @@ export interface IOrganizations {
 
 // @public
 export interface IOrganizationSettingsService {
+    deleteColorPalette(): Promise<void>;
+    deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings_2>;
+    setColorPalette(colorPaletteId: string): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 }

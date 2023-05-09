@@ -46,6 +46,38 @@ export interface IOrganizationSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
 
     /**
+     * Sets theme for organization.
+     *
+     * @param themeId - ID of the theme to apply to workspaces in organization.
+     *
+     * @returns promise
+     */
+    setTheme(themeId: string): Promise<void>;
+
+    /**
+     * Sets color palette for organization.
+     *
+     * @param colorPaletteId - ID of the color palette to apply to charts in organization.
+     *
+     * @returns promise
+     */
+    setColorPalette(colorPaletteId: string): Promise<void>;
+
+    /**
+     * Deletes theme from organization settings returning workspace styling to default.
+     *
+     * @returns promise
+     */
+    deleteTheme(): Promise<void>;
+
+    /**
+     * Deletes color palette from organization settings returning chart colors to default.
+     *
+     * @returns promise
+     */
+    deleteColorPalette(): Promise<void>;
+
+    /**
      * Get all current organization settings.
      *
      * @remarks

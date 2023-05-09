@@ -343,6 +343,10 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 getSettings: () => Promise.resolve({}),
+                setTheme: () => Promise.resolve(),
+                setColorPalette: () => Promise.resolve(),
+                deleteTheme: () => Promise.resolve(),
+                deleteColorPalette: () => Promise.resolve(),
             };
         },
     };

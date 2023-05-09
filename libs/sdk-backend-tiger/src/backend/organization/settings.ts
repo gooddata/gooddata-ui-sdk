@@ -26,6 +26,22 @@ export class OrganizationSettingsService
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }
 
+    public async setTheme(activeThemeId: string) {
+        return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
+    }
+
+    public async deleteTheme() {
+        return this.deleteSettingByType("ACTIVE_THEME");
+    }
+
+    public async setColorPalette(activeColorPaletteId: string) {
+        return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
+    }
+
+    public async deleteColorPalette() {
+        return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
+    }
+
     public async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
             client.entities.getAllEntitiesOrganizationSettings({}),
@@ -82,5 +98,14 @@ export class OrganizationSettingsService
                 },
             }),
         );
+    }
+
+    protected async deleteSettingByType(type: TigerSettingsType): Promise<void> {
+        const settings = await this.getSettingByType(type);
+        for (const setting of settings.data.data) {
+            await this.authCall((client) =>
+                client.entities.deleteEntityOrganizationSettings({ id: setting.id }),
+            );
+        }
     }
 }

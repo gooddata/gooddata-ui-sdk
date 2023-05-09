@@ -88,6 +88,18 @@ export class TigerWorkspaceSettings
             }),
         );
     }
+
+    protected async deleteSettingByType(type: TigerSettingsType): Promise<any> {
+        const settings = await this.getSettingByType(type);
+        for (const setting of settings.data.data) {
+            await this.authCall(async (client) =>
+                client.entities.deleteEntityWorkspaceSettings({
+                    workspaceId: this.workspace,
+                    objectId: setting.id,
+                }),
+            );
+        }
+    }
 }
 
 /**

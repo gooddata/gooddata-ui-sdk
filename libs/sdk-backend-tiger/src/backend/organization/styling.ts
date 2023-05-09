@@ -33,9 +33,12 @@ import { convertTheme as convertThemeToBackend } from "../../convertors/toBacken
 import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter";
 import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter";
 import { TigerAuthenticatedCallGuard } from "../../types";
+import { OrganizationSettingsService } from "./settings";
 
 export class OrganizationStylingService implements IOrganizationStylingService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
+
+    private settingsService = new OrganizationSettingsService(this.authCall);
 
     public async getThemes(): Promise<IThemeMetadataObject[]> {
         return await this.authCall((client) =>
@@ -48,50 +51,20 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     }
 
     private async getActiveSetting(setting: string): Promise<ObjRef | undefined> {
-        return await this.authCall((client) =>
-            client.entities
-                .getAllEntitiesOrganizationSettings({ filter: `id==${setting}` })
-                .then((result) => {
-                    const { data } = result;
-
-                    if (data.data.length) {
-                        return idRef((data.data[0].attributes?.content as JsonApiId).id);
-                    }
-
-                    return undefined;
-                }),
-        );
+        const settings = await this.settingsService.getSettings();
+        const foundSetting = settings?.[setting] as JsonApiId;
+        return foundSetting?.id ? idRef(foundSetting.id) : undefined;
     }
 
     public getActiveTheme = () => this.getActiveSetting("activeTheme");
 
     public async setActiveTheme(themeRef: ObjRef): Promise<void> {
         const themeId = await objRefToIdentifier(themeRef, this.authCall);
-
-        // It is not possible to PUT activeTheme if it does not exist already,
-        // therefore we first clear it and POST a new one
-        await this.clearActiveTheme();
-        await this.authCall((client) =>
-            client.entities.createEntityOrganizationSettings({
-                jsonApiOrganizationSettingInDocument: {
-                    data: {
-                        type: "organizationSetting",
-                        id: "activeTheme",
-                        attributes: {
-                            content: { id: themeId, type: "theme" },
-                        },
-                    },
-                },
-            }),
-        );
+        await this.settingsService.setTheme(themeId);
     }
 
     public async clearActiveTheme(): Promise<void> {
-        await this.authCall((client) =>
-            client.entities.deleteEntityOrganizationSettings({
-                id: "activeTheme",
-            }),
-        );
+        await this.settingsService.deleteTheme();
     }
 
     public async createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject> {
@@ -134,9 +107,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     }
 
     private parseResult(result: AxiosResponse<JsonApiThemeOutDocument>): IThemeMetadataObject {
-        const { data } = result;
-
-        return convertThemeFromBackend(data);
+        return convertThemeFromBackend(result.data);
     }
 
     public async deleteTheme(themeRef: ObjRef): Promise<void> {
@@ -168,31 +139,11 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void> {
         const colorPaletteId = await objRefToIdentifier(colorPaletteRef, this.authCall);
-
-        // It is not possible to PUT activeColorPalette if it does not exist already,
-        // therefore we first clear it and POST a new one
-        await this.clearActiveColorPalette();
-        await this.authCall((client) =>
-            client.entities.createEntityOrganizationSettings({
-                jsonApiOrganizationSettingInDocument: {
-                    data: {
-                        type: "organizationSetting",
-                        id: "activeColorPalette",
-                        attributes: {
-                            content: { id: colorPaletteId, type: "colorPalette" },
-                        },
-                    },
-                },
-            }),
-        );
+        await this.settingsService.setColorPalette(colorPaletteId);
     }
 
     public async clearActiveColorPalette(): Promise<void> {
-        await this.authCall((client) =>
-            client.entities.deleteEntityOrganizationSettings({
-                id: "activeColorPalette",
-            }),
-        );
+        await this.settingsService.deleteColorPalette();
     }
 
     public async createColorPalette(

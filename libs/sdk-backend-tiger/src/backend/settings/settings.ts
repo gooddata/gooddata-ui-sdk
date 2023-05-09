@@ -37,6 +37,10 @@ export class TigerSettingsService<T> {
         throw new UnexpectedError("This method needs to be implemented.");
     }
 
+    protected async deleteSettingByType(_type: TigerSettingsType): Promise<any> {
+        throw new UnexpectedError("This method needs to be implemented.");
+    }
+
     protected async updateSetting(_type: TigerSettingsType, _id: string, _content: any): Promise<any> {
         throw new UnexpectedError("This method needs to be implemented.");
     }
