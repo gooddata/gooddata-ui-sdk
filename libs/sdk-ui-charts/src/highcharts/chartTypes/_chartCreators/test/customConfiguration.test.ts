@@ -141,6 +141,46 @@ describe("getCustomizedConfiguration", () => {
         expect(result.plotOptions.series).toEqual({});
     });
 
+    it("should NOT set stacking for the Area chart only has one metric", () => {
+        const result = getCustomizedConfiguration(
+            {
+                ...chartOptions,
+                type: VisualizationTypes.AREA,
+                stacking: "normal",
+            },
+            { continuousLine: { enabled: true } },
+        );
+
+        expect(result.plotOptions.series.stacking).toBeUndefined();
+    });
+
+    it("should set stacking for the Area chart has more than one metric", () => {
+        const result = getCustomizedConfiguration(
+            {
+                ...chartOptions,
+                type: VisualizationTypes.AREA,
+                stacking: "normal",
+                data: {
+                    series: [
+                        {
+                            color: "rgb(20,178,226)",
+                            data: ["45", "56"],
+                            name: "Sum of Value",
+                        },
+                        {
+                            color: "rgb(20,178,226)",
+                            data: ["45", "56"],
+                            name: "Sum of Value1",
+                        },
+                    ],
+                },
+            },
+            { continuousLine: { enabled: true } },
+        );
+
+        expect(result.plotOptions.series.stacking).toBe("normal");
+    });
+
     it("should NOT set connectNulls for stacked Line chart", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
