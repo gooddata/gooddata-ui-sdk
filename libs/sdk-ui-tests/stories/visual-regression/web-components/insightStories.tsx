@@ -18,6 +18,7 @@ const insightIds = [
     ReferenceRecordings.Insights.FunnelChart.SingleMeasureWithViewBy,
     ReferenceRecordings.Insights.PyramidChart.SingleMeasureWithViewBy,
     ReferenceRecordings.Insights.SankeyChart.MeasureAttributeFromAndAttributeTo,
+    ReferenceRecordings.Insights.DependencyWheelChart.MeasureAttributeFromAndAttributeTo,
     ReferenceRecordings.Insights.Headline.TwoMeasures,
     ReferenceRecordings.Insights.Heatmap.MeasureRowsAndColumns,
     ReferenceRecordings.Insights.LineChart.TwoMeasuresWithTrendBy,

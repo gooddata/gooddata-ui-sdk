@@ -39,6 +39,8 @@ export const unsupportedNegativeValuesTypes = [
     VisualizationTypes.FUNNEL,
     VisualizationTypes.PYRAMID,
     VisualizationTypes.TREEMAP,
+    VisualizationTypes.SANKEY,
+    VisualizationTypes.DEPENDENCY_WHEEL,
 ];
 export const showingNameInLegendWhenViewByPresent = [
     VisualizationTypes.PIE,

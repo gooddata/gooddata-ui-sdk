@@ -19,7 +19,9 @@ export interface IValidationResult {
 
 export function isNegativeValueIncluded(series: ISeriesItem[]): boolean {
     return series.some((seriesItem: ISeriesItem) =>
-        (seriesItem.data || []).some(({ y, value }: ISeriesDataItem) => y < 0 || value < 0),
+        (seriesItem.data || []).some(
+            ({ y, value, weight }: ISeriesDataItem) => y < 0 || value < 0 || weight < 0,
+        ),
     );
 }
 

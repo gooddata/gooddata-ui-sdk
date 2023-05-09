@@ -17,6 +17,7 @@ import scatterPlot from "./scatterPlot";
 import treemap from "./treemap";
 import sankeyChart from "./sankeyChart";
 import xirr from "./xirr";
+import dependencyWheelChart from "./dependencyWheelChart";
 
 export default [
     ...areaChart,
@@ -35,5 +36,6 @@ export default [
     ...scatterPlot,
     ...treemap,
     ...sankeyChart,
+    ...dependencyWheelChart,
     ...xirr,
 ];

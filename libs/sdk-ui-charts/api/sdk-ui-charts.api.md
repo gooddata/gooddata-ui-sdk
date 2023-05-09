@@ -73,6 +73,9 @@ export const CoreHeadline: React_2.ComponentClass<ICoreChartProps, any>;
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
 
 // @public
+export const DependencyWheelChart: (props: IDependencyWheelChartProps) => JSX.Element;
+
+// @public
 export const DonutChart: (props: IDonutChartProps) => JSX.Element;
 
 // @public
@@ -309,6 +312,20 @@ export interface IDataPointsConfig {
 export type IDataPointsVisible = boolean | "auto";
 
 // @public (undocumented)
+export interface IDependencyWheelChartBucketProps {
+    attributeFrom?: AttributeOrPlaceholder;
+    attributeTo?: AttributeOrPlaceholder;
+    filters?: NullableFiltersOrPlaceholders;
+    measure: IAttributeOrMeasure;
+    placeholdersResolutionContext?: any;
+    sortBy?: SortsOrPlaceholders;
+}
+
+// @public (undocumented)
+export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
+}
+
+// @public (undocumented)
 export interface IDonutChartBucketProps {
     filters?: NullableFiltersOrPlaceholders;
     measures: AttributeMeasureOrPlaceholder | AttributesMeasuresOrPlaceholders;
@@ -476,6 +493,9 @@ export const isColumnChart: LodashIsEqual1x1;
 export const isComboChart: (type: string) => boolean;
 
 // @internal (undocumented)
+export const isDependencyWheel: LodashIsEqual1x1;
+
+// @internal (undocumented)
 export const isDonutChart: LodashIsEqual1x1;
 
 // @internal (undocumented)
@@ -498,6 +518,9 @@ export const isPyramid: LodashIsEqual1x1;
 
 // @internal (undocumented)
 export const isSankey: LodashIsEqual1x1;
+
+// @internal (undocumented)
+export const isSankeyOrDependencyWheel: (type: string) => boolean;
 
 // @internal (undocumented)
 export const isScatterPlot: LodashIsEqual1x1;

@@ -30,6 +30,8 @@ export {
     isPieOrDonutChart,
     isBulletChart,
     isSankey,
+    isDependencyWheel,
+    isSankeyOrDependencyWheel,
 } from "./chartTypes/_util/common";
 
 export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";

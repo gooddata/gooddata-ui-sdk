@@ -1970,6 +1970,243 @@
     "ComboChart.fffb333237c8b044a6a7fcc495cd0cd1": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingcolumn-column."
     },
+    "DependencyWheelChart.00a252d5baefec673fcd0f6a04c682f7": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "DependencyWheelChart.0616f6ed6e45125e5da8724b3a30a200": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - font.",
+        "scenarioName": "font",
+        "visName": "DependencyWheelChart"
+    },
+    "DependencyWheelChart.0a9ae5995827e79c5e8f26494b1fef49": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - auto legend."
+    },
+    "DependencyWheelChart.0ed96ee13779f5f97d531c636a742566": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom."
+    },
+    "DependencyWheelChart.10a432e6607287f4d5c4abf5afe841a7": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
+    },
+    "DependencyWheelChart.1688628dd6f76ee662e29bfc5c8af30a": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x154 - Force position RIGHT - legend on right."
+    },
+    "DependencyWheelChart.1b8e769fcd0c5dc6f99481f375d02dec": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x154 - Force position RIGHT - default legend."
+    },
+    "DependencyWheelChart.1e430e0b4244b46dfc2baa17f7b8feba": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
+    },
+    "DependencyWheelChart.20df365d708a4ce50afc15775e2d9a01": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend."
+    },
+    "DependencyWheelChart.222ad03004a64fcc8e103892092bb772": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
+    },
+    "DependencyWheelChart.237f01c06c3875aad94f176e10beb43a": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - data labels - forced visible."
+    },
+    "DependencyWheelChart.23d0a00fa9eb5139ff20d2a00d1db1a8": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x154 - Force position RIGHT - legend at bottom."
+    },
+    "DependencyWheelChart.2504500ec1a4a3b13afdcdcb442149ba": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
+    },
+    "DependencyWheelChart.2a83f6159837c61050611b02cc032b7e": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend."
+    },
+    "DependencyWheelChart.2fd1af51cece7d339c55347838419337": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend."
+    },
+    "DependencyWheelChart.32586184fd3052afca5eba277b04642c": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
+    },
+    "DependencyWheelChart.33accd64bac55aa2ccdcebaa74a7751f": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
+    },
+    "DependencyWheelChart.36d70bcd9d840a69df3a58da912cc6df": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - data labels - forced hidden."
+    },
+    "DependencyWheelChart.3712a45c81b539fdcc16346eb4ea9f56": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
+    },
+    "DependencyWheelChart.3759a5c8fba20389ebe1bccdcbe8f109": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - disabled."
+    },
+    "DependencyWheelChart.37b462959360c4d603a2fa26899e1a74": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - legend on right."
+    },
+    "DependencyWheelChart.3fdb2c12ae227f48eb93d2967c9c1bd6": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - default legend."
+    },
+    "DependencyWheelChart.491237a010573a201977968db03b928d": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - assign color to nodes."
+    },
+    "DependencyWheelChart.4cf999280016ec349f933d161eb416bc": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - measure and attributeTo.",
+        "scenarioName": "measure and attributeTo",
+        "visName": "DependencyWheelChart"
+    },
+    "DependencyWheelChart.4e02e90472a7b332920bbfb441a32a09": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - legend at bottom."
+    },
+    "DependencyWheelChart.4fe1ab8981f8ac4a298f430269caab0e": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - data labels - auto visibility."
+    },
+    "DependencyWheelChart.51cc1580bf7af45ff15a62c31da501de": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - measure and attributeFrom.",
+        "scenarioName": "measure and attributeFrom",
+        "visName": "DependencyWheelChart"
+    },
+    "DependencyWheelChart.5535b2bfef4de9700507d8dd29588e44": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x154 - Force position RIGHT - auto legend."
+    },
+    "DependencyWheelChart.5e5836a150b6ba99d3daa301479ddff7": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
+    },
+    "DependencyWheelChart.60f56271b8c86c47afe730285613abfd": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - legend on top."
+    },
+    "DependencyWheelChart.688811fb1afe101267ebe85433d0c90d": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
+    },
+    "DependencyWheelChart.69b0315c49f3df932a829895786a399e": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "DependencyWheelChart.8200545633aaad6aa72d5b7deeefab5c": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - legend on left."
+    },
+    "DependencyWheelChart.844d9c8a0ab77f3da375542c390a373e": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - legend on left."
+    },
+    "DependencyWheelChart.84fbfda99e68ed8c8ec06c79611503a8": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "DependencyWheelChart.8548c7c5ac54fa96c1a4cc8b792eba1e": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - legend on top."
+    },
+    "DependencyWheelChart.8a3c6a3f209552df7cc950a51acd424c": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "DependencyWheelChart.90a5af818530f8c9922893fe849867a9": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - data labels - default."
+    },
+    "DependencyWheelChart.9233f6c90b4fd7423b20f0ea7f8f36c6": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "DependencyWheelChart.92a603a85378a206190c30c8c4ec6fbe": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - themed.",
+        "scenarioName": "themed",
+        "visName": "DependencyWheelChart"
+    },
+    "DependencyWheelChart.955a447271c6de909065a43dfa369dc0": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
+    },
+    "DependencyWheelChart.a27b059940d4cd1a5e1dcdcf4053ed33": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - coloring - custom palette."
+    },
+    "DependencyWheelChart.a3f92e682f3374f99b2a8b9afea735cd": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - default legend."
+    },
+    "DependencyWheelChart.a4fde140447c8294b9cbd6fbe5eb9266": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
+    },
+    "DependencyWheelChart.aa7c2ee7e53433ef76837e48e8e2a386": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - auto legend."
+    },
+    "DependencyWheelChart.aabdfd433b0eeeccd54c786b49402ebd": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - default legend."
+    },
+    "DependencyWheelChart.abfead51e0e540528cb50104e3792276": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
+    },
+    "DependencyWheelChart.b05d1621993abe46df3cf11f26a1dd3b": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x154 - Force position RIGHT - legend on left."
+    },
+    "DependencyWheelChart.b15e202253d1a1ac154d0d0a8b877553": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - default legend."
+    },
+    "DependencyWheelChart.b34e7494fc1b58d4ed637c8ae9974b1a": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - default legend."
+    },
+    "DependencyWheelChart.ba0b61f4fa61426383fbbc5674e012fe": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - measure only.",
+        "scenarioName": "measure only",
+        "visName": "DependencyWheelChart"
+    },
+    "DependencyWheelChart.ba9d303366ed1b501a7510561ad58d1b": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "DependencyWheelChart.bb1657aebb168b88667f2f395ce9f705": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "DependencyWheelChart.c5302023bdecc147ed4cff33692f8307": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
+    },
+    "DependencyWheelChart.ca7e8098a323dea29a09837045f3280f": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - data labels - forced visible and german separators."
+    },
+    "DependencyWheelChart.cae0408b40cc7832664a144d0221628c": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - measure, attributeFrom and attributeTo.",
+        "scenarioName": "measure, attributeFrom and attributeTo",
+        "visName": "DependencyWheelChart"
+    },
+    "DependencyWheelChart.caf5becb76774d4b7e6a47b741b176d3": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
+    },
+    "DependencyWheelChart.cd7e776d5a477177a04850e88b3b7aaa": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x154 - Force position RIGHT - legend on top."
+    },
+    "DependencyWheelChart.cdb87596d4709c3b2c4662a01b91f758": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "DependencyWheelChart.d348e7c8afb2492fe8426258986b04e7": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend."
+    },
+    "DependencyWheelChart.d5561efeab4fea527ff9975a0dca0116": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "DependencyWheelChart.e0774974eb4e560a033ed49f4e829d15": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - default legend."
+    },
+    "DependencyWheelChart.e7315182b4419ac70e7543bf79f910f7": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
+    },
+    "DependencyWheelChart.eaf4f7085ad34e0819430a14807b8725": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - default legend."
+    },
+    "DependencyWheelChart.f0845449d01d673dce21d2f84a0abc3c": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 1 attribute - legend at bottom."
+    },
+    "DependencyWheelChart.f51ee4e728dda1e30e183d3e788d286b": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
+    },
+    "DependencyWheelChart.f5594a048a59dc85c5d9c691df478497": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top."
+    },
+    "DependencyWheelChart.f8f77d8845fe3c6009c34c5a9f9d8661": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
+    },
+    "DependencyWheelChart.f93b4366a64f909a6ea1acf06292df76": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
+    },
+    "DependencyWheelChart.fa6cc27e54c47bb287f52a41b6cc656a": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "DependencyWheelChart.fc819de6ff5e71c9e9c31e4721de0e94": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
+    },
+    "DependencyWheelChart.fc8f90a9df62d86aff2b43a8b1dd97bb": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "DependencyWheelChart.fd3bb4293060829bcba439fa9bfb12fc": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - legend on right."
+    },
+    "DependencyWheelChart.fe8cf7741d878a72ad17905fb2af58a9": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - legend position - 1 measure and 2 attributes - disabled."
+    },
+    "DependencyWheelChart.ff1db43565b7beef58ef7c5842713249": {
+        "comment": "Auto-generated insight for test scenario DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
+    },
     "DonutChart.00a15865c54d1c42c7fd63cf140e0e7a": {
         "comment": "Auto-generated insight for test scenario DonutChart - legend position - single measure and viewBy - disabled."
     },

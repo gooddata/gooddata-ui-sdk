@@ -102,6 +102,8 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
         [
             BucketNames.ATTRIBUTE,
             BucketNames.ATTRIBUTES,
+            BucketNames.ATTRIBUTE_FROM,
+            BucketNames.ATTRIBUTE_TO,
             BucketNames.VIEW,
             BucketNames.TREND,
             BucketNames.LOCATION,

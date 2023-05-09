@@ -35,6 +35,12 @@ export { Treemap, ITreemapProps, ITreemapBucketProps } from "./treemap/Treemap";
 
 export { SankeyChart, ISankeyChartProps, ISankeyChartBucketProps } from "./sankeyChart/SankeyChart";
 
+export {
+    DependencyWheelChart,
+    IDependencyWheelChartProps,
+    IDependencyWheelChartBucketProps,
+} from "./dependencyWheelChart/DependencyWheelChart";
+
 export { Xirr, IXirrProps, IXirrBucketProps } from "./xirr/Xirr";
 
 export { CoreXirr } from "./xirr/CoreXirr";

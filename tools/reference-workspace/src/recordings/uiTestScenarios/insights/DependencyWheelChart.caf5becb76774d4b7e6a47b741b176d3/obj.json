@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_from"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute_to"
+            }
+        ],
+        "filters": [],
+        "identifier": "DependencyWheelChart.caf5becb76774d4b7e6a47b741b176d3",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "auto", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend",
+        "uri": "DependencyWheelChart.caf5becb76774d4b7e6a47b741b176d3",
+        "visualizationUrl": "local:dependencywheel"
+    }
+}

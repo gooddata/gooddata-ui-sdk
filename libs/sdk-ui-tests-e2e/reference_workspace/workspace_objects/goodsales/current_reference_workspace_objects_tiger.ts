@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-04T10:36:59.200Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-05T03:55:36.261Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -2330,6 +2330,10 @@ export const Insights = {
      * Insight Title: Table with stage name and atribute filter
      * Insight ID: fbcca86f-c473-446b-b316-eb4f4e5de909
      */ TableWithStageNameAndAtributeFilter: "fbcca86f-c473-446b-b316-eb4f4e5de909",
+    /**
+     * Insight Title: Dependency wheel chart
+     * Insight ID: 75e08348-d27f-42b8-a360-41bee971fb6d
+     */ DependencyWheelChart: "75e08348-d27f-42b8-a360-41bee971fb6d",
 };
 export const Dashboards = {
     /**

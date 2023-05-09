@@ -24353,6 +24353,2440 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x154 - Force position RIGHT - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x154 - Force position RIGHT - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x154 - Force position RIGHT - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x154 - Force position RIGHT - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x154 - Force position RIGHT - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x154 - Force position RIGHT - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"auto\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        responsive: \\"autoPositionWithPopup\\",
+        position: \\"auto\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"bottom\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"left\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"right\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {
+        enabled: true,
+        position: \\"top\\",
+        responsive: \\"autoPositionWithPopup\\"
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - assign color to nodes 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    colorMapping: [
+        {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1093/elements?id=166497\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
+        {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1093/elements?id=342345\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 255}}}
+    ],
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - coloring - custom palette 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - data labels - auto visibility 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    dataLabels: {visible: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - data labels - default 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - data labels - forced hidden 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    dataLabels: {visible: false},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - data labels - forced visible 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - data labels - forced visible and german separators 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    dataLabels: {visible: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - font 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {position: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - disabled 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: false, position: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"bottom\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"left\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"right\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 1 attribute - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"top\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - auto legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - default legend 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {position: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - disabled 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: false, position: \\"auto\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - legend at bottom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"bottom\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - legend on left 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"left\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - legend on right 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"right\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - legend position - 1 measure and 2 attributes - legend on top 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    legend: {enabled: true, position: \\"top\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - measure and attributeFrom 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - measure and attributeTo 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - measure only 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - measure, attributeFrom and attributeTo 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - themed 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <DependencyWheelChart
+                measure={measure}
+                attributeFrom={attributeFrom}
+                attributeTo={attributeTo}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for DonutChart -  - custom palette 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
@@ -31642,6 +34076,37 @@ export function MyComponent() {
                 measures={measures}
                 trendBy={trendBy}
                 segmentBy={segmentBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for LineChart - with two measures and null values 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, LineChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const trendBy: IAttribute = newAttribute(idRef(\\"closed.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_closed.aag81lMifn6q\\"));
+const config: IChartConfig = {
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <LineChart
+                measures={measures}
+                trendBy={trendBy}
                 config={config}
             />
         </div>

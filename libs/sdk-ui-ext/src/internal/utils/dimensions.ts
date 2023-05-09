@@ -157,6 +157,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
             return getBubbleDimensions(insight);
 
         case VisualizationTypes.SANKEY:
+        case VisualizationTypes.DEPENDENCY_WHEEL:
             return getSankeyDimensions(insight);
     }
     return [];

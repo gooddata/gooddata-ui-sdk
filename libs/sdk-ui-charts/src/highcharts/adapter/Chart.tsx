@@ -13,12 +13,14 @@ import funnelModule from "highcharts/modules/funnel";
 import heatmap from "highcharts/modules/heatmap";
 import patternFill from "highcharts/modules/pattern-fill";
 import sankeyModule from "highcharts/modules/sankey";
+import dependencyWheelModule from "highcharts/modules/dependency-wheel";
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
 bulletModule(Highcharts);
 funnelModule(Highcharts);
 sankeyModule(Highcharts);
+dependencyWheelModule(Highcharts);
 heatmap(Highcharts);
 HighchartsMore(Highcharts);
 patternFill(Highcharts);
