@@ -6,7 +6,12 @@ import {
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
 } from "../_chartCreators/commonConfiguration";
-import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../../constants/limits";
+import {
+    HEATMAP_DATA_POINTS_LIMIT,
+    PIE_CHART_LIMIT,
+    SANKEY_CHART_DATA_POINT_LIMIT,
+    SANKEY_CHART_NODE_LIMIT,
+} from "../../constants/limits";
 import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
 import { isOneOfTypes, isTreemap } from "../_util/common";
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities";
@@ -51,6 +56,14 @@ function getChartLimits(type: string): IChartLimits {
                 series: DEFAULT_SERIES_LIMIT,
                 categories: DEFAULT_CATEGORIES_LIMIT,
                 dataPoints: HEATMAP_DATA_POINTS_LIMIT,
+            };
+
+        case VisualizationTypes.SANKEY:
+        case VisualizationTypes.DEPENDENCY_WHEEL:
+            return {
+                series: 1,
+                nodes: SANKEY_CHART_NODE_LIMIT,
+                dataPoints: SANKEY_CHART_DATA_POINT_LIMIT,
             };
         default:
             return {

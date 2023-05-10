@@ -610,8 +610,7 @@ export function getChartOptions(
         const sankeySeries = buildSankeyChartSeries(
             dv,
             [viewByParentAttribute, viewByAttribute],
-            colorAssignments,
-            colorPalette,
+            colorStrategy,
             emptyHeaderTitle,
         );
         return {

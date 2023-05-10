@@ -239,6 +239,8 @@ export interface IChartLimits {
     // (undocumented)
     dataPoints?: number;
     // (undocumented)
+    nodes?: number;
+    // (undocumented)
     series?: number;
 }
 
