@@ -23,8 +23,7 @@ describe("SankeyChart buildSankeyChartSeries", () => {
         const series = buildSankeyChartSeries(
             dv,
             [viewByParentAttribute, viewByAttribute],
-            colorStrategy.getColorAssignment(),
-            CUSTOM_COLOR_PALETTE,
+            colorStrategy,
             EMPTY_HEADER_TITLE_VALUE,
         );
         expect(series).toMatchSnapshot();
@@ -48,8 +47,7 @@ describe("SankeyChart buildSankeyChartSeries", () => {
             const series = buildSankeyChartSeries(
                 dv,
                 [viewByParentAttribute, viewByAttribute],
-                colorStrategy.getColorAssignment(),
-                CUSTOM_COLOR_PALETTE,
+                colorStrategy,
                 EMPTY_HEADER_TITLE_VALUE,
             );
             expect(series).toMatchSnapshot();

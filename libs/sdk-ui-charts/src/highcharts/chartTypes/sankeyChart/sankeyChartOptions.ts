@@ -1,28 +1,21 @@
 // (C) 2023 GoodData Corporation
 import { ISeriesItem } from "../../typings/unsafe";
-import { DataViewFacade, getMappingHeaderFormattedName, IColorAssignment } from "@gooddata/sdk-ui";
+import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import { getColorByGuid, getRgbStringFromRGB, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { IColorPalette, isRgbColor } from "@gooddata/sdk-model";
+import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import compact from "lodash/compact";
 
 const KEYS = ["from", "to", "weight", "name"];
 const DEFAULT_ATTRIBUTE_HEADER = "";
 const DEFAULT_WEIGHT = 1;
 
-const buildNodes = (
-    colorAssignments: IColorAssignment[],
-    colorPalette: IColorPalette,
-    emptyHeaderTitle: string,
-) => {
-    return colorAssignments.map((colorAssignment) => ({
+const buildNodes = (colorStrategy: IColorStrategy, emptyHeaderTitle: string) => {
+    return colorStrategy.getColorAssignment().map((colorAssignment, index) => ({
         id: valueWithEmptyHandling(
             getMappingHeaderFormattedName(colorAssignment.headerItem),
             emptyHeaderTitle,
         ),
-        color: isRgbColor(colorAssignment.color)
-            ? getRgbStringFromRGB(colorAssignment.color.value)
-            : getRgbStringFromRGB(getColorByGuid(colorPalette, colorAssignment.color.value, 0)),
+        color: colorStrategy.getColorByIndex(index),
     }));
 };
 
@@ -69,15 +62,14 @@ const buildData = (
 export const buildSankeyChartSeries = (
     dv: DataViewFacade,
     attributeHeaders: IUnwrappedAttributeHeadersWithItems[],
-    colorAssignments: IColorAssignment[],
-    colorPalette: IColorPalette,
+    colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
 ): ISeriesItem[] => {
     return [
         {
             keys: KEYS,
             data: buildData(dv, attributeHeaders, emptyHeaderTitle),
-            nodes: buildNodes(colorAssignments, colorPalette, emptyHeaderTitle),
+            nodes: buildNodes(colorStrategy, emptyHeaderTitle),
         },
     ];
 };

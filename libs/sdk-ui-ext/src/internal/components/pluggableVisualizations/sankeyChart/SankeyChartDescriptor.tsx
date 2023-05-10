@@ -34,7 +34,7 @@ export class SankeyChartDescriptor extends BaseChartDescriptor implements IVisua
         insightToProps: getInsightToPropsConverter<ISankeyChartProps>({
             measure: singleAttributeOrMeasureBucketConversion("measure", BucketNames.MEASURES),
             attributeFrom: singleAttributeBucketConversion("attributeFrom", BucketNames.ATTRIBUTE_FROM),
-            attributeTo: singleAttributeBucketConversion("attributeTo", BucketNames.ATTRIBUTE_FROM),
+            attributeTo: singleAttributeBucketConversion("attributeTo", BucketNames.ATTRIBUTE_TO),
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),

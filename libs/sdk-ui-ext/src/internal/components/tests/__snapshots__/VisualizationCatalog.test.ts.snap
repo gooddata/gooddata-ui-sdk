@@ -24360,7 +24360,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24394,7 +24394,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -24427,7 +24427,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24461,7 +24461,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24495,7 +24495,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24529,7 +24529,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24563,7 +24563,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24597,7 +24597,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -24630,7 +24630,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24664,7 +24664,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24698,7 +24698,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24732,7 +24732,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24766,7 +24766,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24800,7 +24800,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -24833,7 +24833,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24867,7 +24867,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24901,7 +24901,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24935,7 +24935,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -24969,7 +24969,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25003,7 +25003,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -25036,7 +25036,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25070,7 +25070,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25104,7 +25104,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25138,7 +25138,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25172,7 +25172,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25206,7 +25206,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -25239,7 +25239,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25273,7 +25273,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25307,7 +25307,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25341,7 +25341,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25375,7 +25375,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25409,7 +25409,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -25442,7 +25442,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25476,7 +25476,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25510,7 +25510,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25544,7 +25544,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25578,7 +25578,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25612,7 +25612,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -25645,7 +25645,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25679,7 +25679,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25713,7 +25713,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25747,7 +25747,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25781,7 +25781,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25815,7 +25815,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -25848,7 +25848,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25882,7 +25882,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25916,7 +25916,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25950,7 +25950,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -25984,7 +25984,7 @@ import { DependencyWheelChart, getColorMappingPredicate, IChartConfig } from \\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     colorMapping: [
         {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1093/elements?id=166497\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
@@ -26018,7 +26018,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -26048,7 +26048,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26079,7 +26079,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -26109,7 +26109,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: false},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26140,7 +26140,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26171,7 +26171,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26202,7 +26202,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -26232,7 +26232,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26246,7 +26245,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26262,7 +26260,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26276,7 +26273,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26292,7 +26288,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26306,7 +26301,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26322,7 +26316,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"bottom\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26336,7 +26329,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26352,7 +26344,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"left\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26366,7 +26357,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26382,7 +26372,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26396,7 +26385,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26412,7 +26400,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"top\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26426,7 +26413,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26442,7 +26428,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26472,7 +26458,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26502,7 +26488,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26532,7 +26518,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"bottom\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26562,7 +26548,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"left\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26592,7 +26578,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26622,7 +26608,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"top\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -26652,7 +26638,6 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -26666,7 +26651,6 @@ export function MyComponent() {
             <DependencyWheelChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26677,10 +26661,11 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for DependencyWheelChart - measure and attributeTo 1`] = `
 "import React from \\"react\\";
-import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
 import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -26693,6 +26678,7 @@ export function MyComponent() {
         <div style={style}>
             <DependencyWheelChart
                 measure={measure}
+                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -26734,7 +26720,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -26764,7 +26750,7 @@ import { DependencyWheelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\"
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -39495,7 +39481,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39529,7 +39515,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -39562,7 +39548,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39596,7 +39582,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39630,7 +39616,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39664,7 +39650,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39698,7 +39684,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39732,7 +39718,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -39765,7 +39751,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39799,7 +39785,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39833,7 +39819,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39867,7 +39853,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39901,7 +39887,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -39935,7 +39921,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -39968,7 +39954,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40002,7 +39988,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40036,7 +40022,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40070,7 +40056,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40104,7 +40090,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40138,7 +40124,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -40171,7 +40157,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40205,7 +40191,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40239,7 +40225,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40273,7 +40259,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40307,7 +40293,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40341,7 +40327,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -40374,7 +40360,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40408,7 +40394,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40442,7 +40428,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40476,7 +40462,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40510,7 +40496,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40544,7 +40530,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -40577,7 +40563,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40611,7 +40597,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40645,7 +40631,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40679,7 +40665,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40713,7 +40699,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40747,7 +40733,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -40780,7 +40766,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40814,7 +40800,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40848,7 +40834,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40882,7 +40868,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40916,7 +40902,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -40950,7 +40936,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -40983,7 +40969,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -41017,7 +41003,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -41051,7 +41037,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -41085,7 +41071,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -41119,7 +41105,7 @@ import { getColorMappingPredicate, IChartConfig, SankeyChart } from \\"@gooddata
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     colorMapping: [
         {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1093/elements?id=166497\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
@@ -41153,7 +41139,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -41183,7 +41169,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41214,7 +41200,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -41244,7 +41230,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: false},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41275,7 +41261,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41306,7 +41292,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41337,7 +41323,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -41367,7 +41353,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41381,7 +41366,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41397,7 +41381,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41411,7 +41394,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41427,7 +41409,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41441,7 +41422,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41457,7 +41437,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"bottom\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41471,7 +41450,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41487,7 +41465,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"left\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41501,7 +41478,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41517,7 +41493,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41531,7 +41506,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41547,7 +41521,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"top\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41561,7 +41534,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41577,7 +41549,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41607,7 +41579,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41637,7 +41609,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41667,7 +41639,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"bottom\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41697,7 +41669,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"left\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41727,7 +41699,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41757,7 +41729,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"top\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -41787,7 +41759,6 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -41801,7 +41772,6 @@ export function MyComponent() {
             <SankeyChart
                 measure={measure}
                 attributeFrom={attributeFrom}
-                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41812,10 +41782,11 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for SankeyChart - measure and attributeTo 1`] = `
 "import React from \\"react\\";
-import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
 import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -41828,6 +41799,7 @@ export function MyComponent() {
         <div style={style}>
             <SankeyChart
                 measure={measure}
+                attributeTo={attributeTo}
                 config={config}
             />
         </div>
@@ -41869,7 +41841,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -41899,7 +41871,7 @@ import { IChartConfig, SankeyChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const attributeFrom: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
-const attributeTo: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const attributeTo: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},

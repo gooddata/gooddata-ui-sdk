@@ -369,6 +369,7 @@ export interface ILegendConfig {
 export interface IChartLimits {
     series?: number;
     categories?: number;
+    nodes?: number;
     dataPoints?: number;
 }
 

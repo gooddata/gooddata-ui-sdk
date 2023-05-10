@@ -24,7 +24,7 @@ import { getPyramidConfiguration } from "../pyramidChart/pyramidConfiguration";
 import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration";
 import { getBubbleConfiguration } from "../bubbleChart/bubbleConfiguration";
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { IChartOptions } from "../../typings/unsafe";
+import { IChartOptions, ISeriesItem } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
 import { HighchartsOptions } from "../../lib";
 import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration";
@@ -107,9 +107,15 @@ export function isDataOfReasonableSize(
         }
     }
 
+    const nodesLimit = limits.nodes;
+    if (nodesLimit !== undefined) {
+        result = result && chartData.series.every((serie: ISeriesItem) => serie.nodes.length <= nodesLimit);
+    }
+
     const dataPointsLimit = limits?.dataPoints;
     if (dataPointsLimit !== undefined) {
-        result = result && chartData.series.every((serie: any) => serie.data.length <= dataPointsLimit);
+        result =
+            result && chartData.series.every((serie: ISeriesItem) => serie.data.length <= dataPointsLimit);
     }
 
     return result;

@@ -11,7 +11,7 @@ import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuil
 import { DEFAULT_CATEGORIES_LIMIT } from "../../_chartCreators/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../../_util/test/helper";
 import * as fixtures from "../../../../../__mocks__/fixtures";
-import { PIE_CHART_LIMIT } from "../../../constants/limits";
+import { PIE_CHART_LIMIT, SANKEY_CHART_NODE_LIMIT } from "../../../constants/limits";
 import {
     getLighterColor,
     getRgbString,
@@ -42,6 +42,8 @@ import {
 } from "../chartTooltips";
 import { getDrillableSeries } from "../chartDrilling";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
@@ -160,6 +162,20 @@ describe("chartOptionsBuilder", () => {
                     hasNegativeValue: false,
                 });
             });
+            it('should validate with "dataTooLarge: true" against nodes limit', () => {
+                const dv = recordedDataFacade(
+                    ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+                );
+                const sankeyChartOptions = generateChartOptions(dv, {
+                    type: "sankey",
+                    stacking: false,
+                });
+                const validationResult = validateData({ nodes: 1 }, sankeyChartOptions);
+                expect(validationResult).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false,
+                });
+            });
         });
 
         describe("default limits", () => {
@@ -222,6 +238,27 @@ describe("chartOptionsBuilder", () => {
                     });
                 },
             );
+
+            it('should validate with "dataTooLarge: true" against default sankey chart nodes limit', () => {
+                const dv = recordedDataFacade(
+                    ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
+                );
+                const sankeyChartOptions = generateChartOptions(dv, {
+                    type: "sankey",
+                    stacking: false,
+                });
+
+                sankeyChartOptions.data.series[0].nodes = range(SANKEY_CHART_NODE_LIMIT + 1).map((index) => ({
+                    id: index,
+                }));
+                const validationResult = validateData(undefined, sankeyChartOptions);
+
+                expect(validationResult).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false,
+                });
+            });
+
             it('should validate with "hasNegativeValue: true" for pie chart if its series contains a negative value', () => {
                 const chartOptions = pieChartOptionsWithNegativeValue;
                 const validationResult = validateData(undefined, chartOptions);
