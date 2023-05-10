@@ -61,6 +61,9 @@ export {
 export {
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,
+    SetJwtCallback,
+    JwtIsAboutToExpireHandler,
+    TigerJwtAuthProvider,
     TigerAuthProviderBase,
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,

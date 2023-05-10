@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`jwt > decodeJwtPayload > should parse payload of JWT 1`] = `
+{
+  "exp": 1689164227,
+  "iat": 1689164197,
+  "jti": "77fdd289-4092-4d34-98f4-4d4d7f25fc14",
+  "name": "Petr Dolejsi",
+  "sub": "petr.dolejsi",
+}
+`;

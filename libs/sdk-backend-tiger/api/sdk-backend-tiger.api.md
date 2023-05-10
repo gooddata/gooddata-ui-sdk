@@ -258,6 +258,9 @@ export interface IInvitationUserResponse {
     successful?: boolean;
 }
 
+// @alpha
+export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
+
 // @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
@@ -306,6 +309,9 @@ export interface ScanResult {
 // @internal (undocumented)
 export type ScanSqlResult = ScanSqlResponse;
 
+// @alpha
+export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
+
 // @internal (undocumented)
 export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
 
@@ -326,6 +332,13 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
 // @public
 function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 export default tigerFactory;
+
+// @alpha
+export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
+    constructor(jwt: string, notAuthenticatedHandler?: NotAuthenticatedHandler, tokenIsAboutToExpireHandler?: JwtIsAboutToExpireHandler | undefined, secondsBeforeTokenExpirationToCallReminder?: number);
+    // (undocumented)
+    initializeClient(client: ITigerClient): void;
+}
 
 // @internal
 export type TigerSpecificFunctions = {
