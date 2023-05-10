@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
@@ -71,7 +71,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                 <FormattedMessage
                     id="configurationPanel.drillConfig.clickHintItem"
                     values={{
-                        addon: (chunks: string) => <span className="addon">{chunks}</span>,
+                        addon: (chunks: ReactNode) => <span className="addon">{chunks}</span>,
                     }}
                 />
             </div>

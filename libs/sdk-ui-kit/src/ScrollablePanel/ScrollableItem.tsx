@@ -14,12 +14,13 @@ export interface IScrollableItemProps {
     isElementInvisibleCheck?: isElementInvisibleType;
     tagName?: React.ElementType;
     onItemScrolled?: () => void;
+    children?: React.ReactNode;
 }
 
 /**
  * @internal
  */
-export const ScrollableItem: React.FunctionComponent<IScrollableItemProps> = (props) => {
+export const ScrollableItem: React.FC<IScrollableItemProps> = (props) => {
     const item = useRef<HTMLDivElement>(null);
     const scroll = useScrollContext();
     const {

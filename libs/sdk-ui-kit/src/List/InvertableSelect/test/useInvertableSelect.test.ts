@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-//import { act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { IUseInvertableSelectProps, SelectionStatusType, useInvertableSelect } from "../useInvertableSelect";
 
 const defaultProps: IUseInvertableSelectProps<number> = {

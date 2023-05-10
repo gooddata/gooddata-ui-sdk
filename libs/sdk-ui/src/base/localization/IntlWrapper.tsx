@@ -12,6 +12,7 @@ import { messagesMap } from "./messagesMap";
  */
 export interface IIntlWrapperProps {
     locale?: string;
+    children?: React.ReactNode;
 }
 
 /**

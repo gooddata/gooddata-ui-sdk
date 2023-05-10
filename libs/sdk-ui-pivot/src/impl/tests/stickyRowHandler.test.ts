@@ -63,7 +63,7 @@ describe("stickyRowHandler", () => {
             getPinnedTopRowElement: jest.fn(),
             addPinnedTopRowClass: jest.fn(),
             removePinnedTopRowClass: jest.fn(),
-            setPinnedTopRowStyle: jest.fn(),
+            setPinnedTopRowStyles: jest.fn(),
         };
     }
 
@@ -354,11 +354,11 @@ describe("stickyRowHandler", () => {
 
         updateStickyRowPosition(api, apiWrapper);
 
-        it("should set top style", () => {
-            expect(apiWrapper.setPinnedTopRowStyle).toHaveBeenNthCalledWith(1, api, "top", "0px");
-        });
-        it("should set padding-right style", () => {
-            expect(apiWrapper.setPinnedTopRowStyle).toHaveBeenNthCalledWith(2, api, "padding-right", "0px");
+        it("should set top and padding-right styles", () => {
+            expect(apiWrapper.setPinnedTopRowStyles).toHaveBeenCalledWith(api, {
+                top: "0px",
+                "padding-right": "0px",
+            });
         });
     });
 

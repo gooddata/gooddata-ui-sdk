@@ -146,7 +146,7 @@ export const customMessages = {
     "gs.noData.noDataAvailable": "No data available",
 };
 
-const WithIntl = withIntl<unknown>(DropdownExamples, undefined, customMessages);
+const WithIntl = withIntl(DropdownExamples, undefined, customMessages);
 
 storiesOf(`${UiKit}/Dropdown`)
     .add("full-featured", () => <WithIntl />, { screenshot: true })

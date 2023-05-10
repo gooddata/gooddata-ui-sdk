@@ -5,6 +5,7 @@ export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
     toggler: HTMLDivElement;
     useCapture?: boolean;
+    children?: React.ReactNode;
 }
 
 export class OutsideClickHandler extends React.Component<IOutsideClickHandlerProps> {

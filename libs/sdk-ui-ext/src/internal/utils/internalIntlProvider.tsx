@@ -37,6 +37,7 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
 interface IInternalIntlWrapperProps {
     locale?: string;
     workspace?: string;
+    children?: React.ReactNode;
 }
 
 export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({

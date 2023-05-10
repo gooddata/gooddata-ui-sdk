@@ -44,6 +44,7 @@ function getOuterStyle(
 const DashboardItemHeadlineContainerInner: React.FC<{
     hasCustomMargin: boolean;
     isCustomHeightSmall: boolean;
+    children?: React.ReactNode;
 }> = memo(function DashboardItemHeadlineContainerInner({ hasCustomMargin, isCustomHeightSmall, children }) {
     return (
         <div className={"item-headline-outer"} style={getOuterStyle(hasCustomMargin, isCustomHeightSmall)}>

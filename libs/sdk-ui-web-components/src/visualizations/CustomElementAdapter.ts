@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 import React from "react";
-import ReactDom from "react-dom";
+import { createRoot, Root } from "react-dom/client";
 import invariant from "ts-invariant";
 import { LoadingComponent } from "@gooddata/sdk-ui/esm/base/react/LoadingComponent";
 import { CustomElementContext, getContext } from "../context";
@@ -31,6 +31,8 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      */
     private [CONTEXT]!: CustomElementContext;
 
+    private root: Root | undefined;
+
     constructor() {
         super();
 
@@ -39,6 +41,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
             .then(([Component, context]) => {
                 this[COMPONENT] = Component;
                 this[CONTEXT] = context;
+                this.root = createRoot(this);
 
                 // Trigger rendering once all dependencies are provided
                 this[RENDER]();
@@ -63,7 +66,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
 
     disconnectedCallback() {
         // Clean-up React app before custom element is unmounted
-        ReactDom.unmountComponentAtNode(this);
+        this.root?.unmount();
     }
 
     /**
@@ -76,7 +79,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         // Ensure all dependencies are ready and we are mounted
         if (!this.isConnected || !this[COMPONENT] || !this[CONTEXT]) {
             // Render LoadingComponent instead
-            ReactDom.render(React.createElement(LoadingComponent), this);
+            this.root?.render(React.createElement(LoadingComponent));
             return;
         }
 
@@ -92,7 +95,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         });
 
         // Mount / update the React app
-        ReactDom.render(reactElement, this);
+        this.root?.render(reactElement);
     }
 
     /**

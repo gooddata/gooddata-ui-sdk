@@ -8,7 +8,7 @@ import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import { code } from "./CodeMock";
-const AreaWrapper: React.FC = (props) => {
+const AreaWrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     const { children } = props;
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;
 };

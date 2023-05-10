@@ -51,7 +51,7 @@ const DropdownListExamples: React.FC = () => {
     );
 };
 
-const WithIntl = withIntl<unknown>(DropdownListExamples, undefined, {});
+const WithIntl = withIntl(DropdownListExamples, undefined, {});
 
 storiesOf(`${UiKit}/DropdownList`)
     .add("full-featured", () => <WithIntl />, { screenshot: true })

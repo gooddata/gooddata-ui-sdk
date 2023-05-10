@@ -7,6 +7,7 @@ import cx from "classnames";
  */
 export interface ISettingWidgetProps {
     className?: string;
+    children?: React.ReactNode;
 }
 
 /**

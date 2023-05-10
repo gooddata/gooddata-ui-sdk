@@ -13,7 +13,7 @@ export interface IMenuProps extends ISubMenuProps {
     closeOnScroll?: boolean;
     portalTarget?: Element;
     togglerWrapperClassName?: string;
-    children: ((props: { closeMenu: () => void }) => React.ReactNode) | React.ReactNode;
+    children: React.ReactNode;
 }
 
 /**

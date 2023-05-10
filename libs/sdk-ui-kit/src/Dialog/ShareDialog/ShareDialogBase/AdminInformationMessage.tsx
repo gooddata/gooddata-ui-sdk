@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Message } from "../../../Messages";
@@ -24,7 +24,7 @@ export const AdminInformationMessage: React.FC<IAdminInformationMessageProps> = 
             <span aria-label="Share dialog admin information message">
                 <FormattedMessage
                     id="shareDialog.share.granular.administrator.info"
-                    values={{ b: (chunks: string) => <strong>{chunks}</strong> }}
+                    values={{ b: (chunks: ReactNode) => <strong>{chunks}</strong> }}
                 />
             </span>
         </Message>

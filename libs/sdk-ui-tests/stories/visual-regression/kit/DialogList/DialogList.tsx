@@ -8,7 +8,7 @@ import { action } from "@storybook/addon-actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
 import { itemsMock as items } from "./itemsMock";
 
-const Wrapper: React.FC = (props) => {
+const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     const { children } = props;
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;
 };

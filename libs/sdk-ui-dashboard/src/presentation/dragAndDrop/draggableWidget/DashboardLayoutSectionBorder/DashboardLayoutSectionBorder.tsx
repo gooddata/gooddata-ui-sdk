@@ -6,6 +6,7 @@ import { DashboardLayoutSectionBorderStatus } from "./types";
 
 interface IDashboardLayoutSectionBorderProps {
     status: DashboardLayoutSectionBorderStatus;
+    children?: React.ReactNode;
 }
 
 export const DashboardLayoutSectionBorder: React.FC<IDashboardLayoutSectionBorderProps> = (props) => (

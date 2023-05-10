@@ -17,7 +17,7 @@ const DEFAULT_FORMAT = "#,#.##";
 /**
  * @internal
  */
-export const FormattedNumber: React.StatelessComponent<IFormattedNumberProps> = ({
+export const FormattedNumber: React.FC<IFormattedNumberProps> = ({
     className,
     value,
     format = DEFAULT_FORMAT,

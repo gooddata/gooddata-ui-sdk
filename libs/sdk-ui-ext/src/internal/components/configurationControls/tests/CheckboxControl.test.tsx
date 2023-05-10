@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
@@ -49,15 +49,15 @@ describe("CheckboxControl", () => {
         expect(screen.getByRole("checkbox")).toBeDisabled();
     });
 
-    it("should display tooltip message when configured", () => {
-        jest.useFakeTimers();
+    it("should display tooltip message when configured", async () => {
         createComponent({ disabled: true, showDisabledMessage: true });
         fireEvent.mouseOver(screen.getByRole("checkbox"));
-        jest.runAllTimers();
-        expect(
-            screen.getByText("Property is not applicable for this configuration of the insight"),
-        ).toBeInTheDocument();
-        jest.useRealTimers();
+
+        await waitFor(() =>
+            expect(
+                screen.getByText("Property is not applicable for this configuration of the insight"),
+            ).toBeInTheDocument(),
+        );
     });
 
     it("should call pushData when checkbox value changes", async () => {
@@ -67,7 +67,7 @@ describe("CheckboxControl", () => {
             pushData,
         });
 
-        await userEvent.click(screen.getByRole("checkbox"));
+        await act(() => userEvent.click(screen.getByRole("checkbox")));
         expect(pushData).toHaveBeenCalledTimes(1);
     });
 });

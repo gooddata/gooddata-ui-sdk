@@ -17,7 +17,6 @@ import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
-import { OverlayController } from "./OverlayController";
 import { OverlayContext } from "./OverlayContext";
 
 const events = [
@@ -97,7 +96,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private clickedInside: boolean;
     private id = uuid();
     private alignmentTimeoutId: number;
-    static contextType: React.Context<OverlayController> = OverlayContext;
+    static contextType = OverlayContext;
+    declare context: React.ContextType<typeof OverlayContext>;
 
     constructor(props: IOverlayProps<T>) {
         super(props);

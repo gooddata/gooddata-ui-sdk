@@ -42,6 +42,7 @@ interface IComponentInteractionProps {
     isCurrentUserWorkspaceManager: boolean;
     sharedObjectStatus: ShareStatus;
     isSharedObjectLocked: boolean;
+    children?: React.ReactNode;
 }
 
 /**

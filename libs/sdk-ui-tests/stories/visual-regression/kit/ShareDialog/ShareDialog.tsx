@@ -31,7 +31,7 @@ const BasicExample: React.FC = () => {
     }, [setOpen]);
 
     const onSubmit = useCallback(
-        (...args) => {
+        (...args: any) => {
             setOpen((open) => !open);
             action("onSubmit")(args);
         },

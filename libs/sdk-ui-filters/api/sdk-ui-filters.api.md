@@ -76,7 +76,9 @@ export const AttributeFilterAllValuesFilteredResult: React_2.FC<IAttributeFilter
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
 
 // @beta
-export const AttributeFilterButtonToolip: React_2.FC;
+export const AttributeFilterButtonToolip: React_2.FC<{
+    children?: React_2.ReactNode;
+}>;
 
 // @internal (undocumented)
 export const AttributeFilterConfigurationButton: React_2.VFC<IAttributeFilterConfigurationButtonProps>;
@@ -489,6 +491,7 @@ export type IAttributeFilterContext = AttributeFilterController & Pick<IAttribut
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
     backend?: IAnalyticalBackend;
+    children?: React.ReactNode;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
@@ -511,6 +514,7 @@ export interface IAttributeFilterCoreProps {
 
 // @public
 export interface IAttributeFilterCustomComponentProps {
+    children?: React.ReactNode;
     // @beta
     DropdownActionsComponent?: React.ComponentType<IAttributeFilterDropdownActionsProps>;
     // @beta
@@ -1058,6 +1062,9 @@ export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionH
 
 // @public
 export const isUiRelativeDateFilterForm: (obj: unknown) => obj is IUiRelativeDateFilterForm;
+
+// @alpha (undocumented)
+export function isWarningMessage(obj: unknown): obj is IWarningMessage;
 
 // @public
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {

@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 
@@ -34,7 +34,7 @@ export const Preview: React.FC<IPreviewProps> = ({ operator, value, measure, att
                 attribute: attribute?.title,
                 operator,
                 value,
-                strong: (chunks: string) => <strong>{chunks}</strong>,
+                strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
             }}
         />
     </div>

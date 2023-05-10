@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
@@ -216,7 +216,9 @@ describe("AggregationsMenu", () => {
     it("should close on scroll", () => {
         const onMenuOpenedChange = jest.fn();
         renderComponent({ onMenuOpenedChange });
-        window.dispatchEvent(new Event("scroll"));
+        act(() => {
+            window.dispatchEvent(new Event("scroll"));
+        });
         expect(onMenuOpenedChange).toHaveBeenCalledWith({ opened: false, source: "SCROLL" });
     });
 });

@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { idRef } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
 
@@ -72,8 +72,10 @@ describe("useShareDialogBase", () => {
     describe("granular permissions", () => {
         it("isShareDialogDirty should be true when granular permission is changed and onSubmitShareGrantee should be called with correct parameters", async () => {
             const onSubmit = jest.fn();
-            const { result, waitForNextUpdate } = renderTestedHook({ onSubmit });
-            await waitForNextUpdate();
+            const { result } = renderTestedHook({ onSubmit });
+            await waitFor(() => {
+                expect(result.current.isGranteesLoading).toEqual(false);
+            });
 
             const updatedGrantee: IGranularGranteeUser = {
                 ...granularGranteeUser,
@@ -81,11 +83,10 @@ describe("useShareDialogBase", () => {
             };
 
             expect(result.current.isShareDialogDirty).toEqual(false);
-
             act(() => result.current.onGranularGranteeShareChange(updatedGrantee));
             expect(result.current.isShareDialogDirty).toEqual(true);
+            act(() => result.current.onSubmitShareGrantee());
 
-            result.current.onSubmitShareGrantee();
             expect(onSubmit).toHaveBeenCalledWith(
                 [updatedGrantee, granularGranteeGroup],
                 [updatedGrantee],
@@ -97,15 +98,16 @@ describe("useShareDialogBase", () => {
 
         it("isShareDialogDirty should be true when grantee is removed and onSubmitShareGrantee should be called with correct parameters", async () => {
             const onSubmit = jest.fn();
-            const { result, waitForNextUpdate } = renderTestedHook({ onSubmit });
-            await waitForNextUpdate();
+            const { result } = renderTestedHook({ onSubmit });
+            await waitFor(() => {
+                expect(result.current.isGranteesLoading).toEqual(false);
+            });
 
             expect(result.current.isShareDialogDirty).toEqual(false);
-
             act(() => result.current.onSharedGranteeDelete(granularGranteeUser));
             expect(result.current.isShareDialogDirty).toEqual(true);
+            act(() => result.current.onSubmitShareGrantee());
 
-            result.current.onSubmitShareGrantee();
             expect(onSubmit).toHaveBeenCalledWith(
                 granularGranteeItems,
                 [],
@@ -117,8 +119,10 @@ describe("useShareDialogBase", () => {
 
         it("isAddDialogDirty should be true when grantee is added and onSubmitAddGrantee should be called with correct parameters", async () => {
             const onSubmit = jest.fn();
-            const { result, waitForNextUpdate } = renderTestedHook({ onSubmit });
-            await waitForNextUpdate();
+            const { result } = renderTestedHook({ onSubmit });
+            await waitFor(() => {
+                expect(result.current.isGranteesLoading).toEqual(false);
+            });
 
             expect(result.current.granteesToAdd).toEqual([]);
 
@@ -129,7 +133,8 @@ describe("useShareDialogBase", () => {
             expect(result.current.isAddDialogDirty).toEqual(true);
             expect(result.current.granteesToAdd).toEqual([granularGranteeUser2]);
 
-            result.current.onSubmitAddGrantee();
+            act(() => result.current.onSubmitAddGrantee());
+
             expect(onSubmit).toHaveBeenCalledWith(
                 granularGranteeItems,
                 [granularGranteeUser2],
@@ -141,8 +146,10 @@ describe("useShareDialogBase", () => {
 
         it("isShareDialogDirty should be true when granular permission is changed, grantee is added and back button action is used", async () => {
             const onSubmit = jest.fn();
-            const { result, waitForNextUpdate } = renderTestedHook({ onSubmit });
-            await waitForNextUpdate();
+            const { result } = renderTestedHook({ onSubmit });
+            await waitFor(() => {
+                expect(result.current.isGranteesLoading).toEqual(false);
+            });
 
             const updatedGrantee: IGranularGranteeUser = {
                 ...granularGranteeUser,
@@ -173,7 +180,8 @@ describe("useShareDialogBase", () => {
             expect(result.current.isShareDialogDirty).toEqual(true);
             expect(result.current.isAddDialogDirty).toEqual(false);
 
-            result.current.onSubmitShareGrantee();
+            act(() => result.current.onSubmitShareGrantee());
+
             expect(onSubmit).toHaveBeenCalledWith(
                 [updatedGrantee, granularGranteeGroup],
                 [updatedGrantee],

@@ -88,7 +88,7 @@ export function CustomAttributeFilter(props: IUseAttributeFilterControllerProps)
     const isLoading = isInitializing || isLoadingInitialElementsPage || isLoadingNextElementsPage;
 
     if (error) {
-        return <div>{error}</div>;
+        return <div>{error.message}</div>;
     }
 
     return (

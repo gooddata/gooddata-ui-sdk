@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component, ReactText } from "react";
+import React, { Component, ReactNode, ReactText } from "react";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
@@ -426,7 +426,7 @@ export class KpiAlertDialog extends Component<
                     <FormattedMessage
                         id="kpiAlertDialog.invalidNumber"
                         values={{
-                            strong: (chunks: string) => <strong>{chunks}</strong>,
+                            strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                             br: <br />,
                         }}
                     />

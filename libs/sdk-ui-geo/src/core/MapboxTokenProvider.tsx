@@ -13,7 +13,10 @@ export const MapboxTokenContext = React.createContext<{ mapboxToken: string | un
 /**
  * @alpha
  */
-export const MapboxTokenProvider: React.FC<{ token: string }> = ({ token, children }) => {
+export const MapboxTokenProvider: React.FC<{ token: string; children?: React.ReactNode }> = ({
+    token,
+    children,
+}) => {
     return (
         <MapboxTokenContext.Provider value={{ mapboxToken: token }}>{children}</MapboxTokenContext.Provider>
     );

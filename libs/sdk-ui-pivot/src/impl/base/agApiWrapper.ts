@@ -64,10 +64,12 @@ function removePinnedTopRowClass(gridApi: GridApi, className: string): void {
     }
 }
 
-function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyValue: string): void {
+function setPinnedTopRowStyles(gridApi: GridApi, styles: Record<string, string>): void {
     const rowElement = getPinnedTopRowElement(gridApi);
     if (rowElement) {
-        (rowElement.style as unknown as Record<string, string>)[propertyName] = propertyValue;
+        for (const [key, value] of Object.entries(styles)) {
+            (rowElement.style as unknown as Record<string, string>)[key] = value;
+        }
     }
 }
 
@@ -81,7 +83,7 @@ export default {
     getPinnedTopRowElement,
     addPinnedTopRowClass,
     removePinnedTopRowClass,
-    setPinnedTopRowStyle,
+    setPinnedTopRowStyles,
     // pinned row cell element
     getPaginationBottomRowIndex,
 };

@@ -2,6 +2,9 @@
 /* eslint-disable import/no-unassigned-import */
 import "@testing-library/jest-dom/extend-expect";
 import * as raf from "raf";
+import { TextEncoder } from "util";
+
+global.TextEncoder = TextEncoder;
 
 /*
  * this is needed as soon as code imports from the sdk-ui-ext index. that in turn imports a lot of stuff and eventually

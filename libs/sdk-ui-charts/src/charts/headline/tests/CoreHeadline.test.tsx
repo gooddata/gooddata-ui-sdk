@@ -1,7 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
-import { testUtils } from "@gooddata/util";
+import { render, waitFor } from "@testing-library/react";
 import { CoreHeadline } from "../CoreHeadline";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
 import { ICoreChartProps } from "../../../interfaces/chartProps";
@@ -34,36 +33,35 @@ describe("CoreHeadline", () => {
     const twoMeasureExec = twoMeasureHeadline.result().transform();
 
     describe("one measure", () => {
-        it("should render HeadlineTransformation and pass down given props and props from execution", () => {
+        it("should render HeadlineTransformation and pass down given props and props from execution", async () => {
             const drillEventCallback = jest.fn();
             createComponent({
                 execution: singleMeasureExec,
                 onDrill: drillEventCallback,
-            });
-
-            return testUtils.delay().then(() => {
-                expect(HeadlineTransformation).toHaveBeenCalledWith(
-                    expect.objectContaining({
-                        dataView: expect.objectContaining({
-                            definition: singleMeasureExec.definition,
+            }),
+                await waitFor(() => {
+                    expect(HeadlineTransformation).toHaveBeenCalledWith(
+                        expect.objectContaining({
+                            dataView: expect.objectContaining({
+                                definition: singleMeasureExec.definition,
+                            }),
+                            onAfterRender: afterRender,
+                            drillableItems: [],
+                            onDrill: drillEventCallback,
                         }),
-                        onAfterRender: afterRender,
-                        drillableItems: [],
-                        onDrill: drillEventCallback,
-                    }),
-                    {},
-                );
-            });
+                        {},
+                    );
+                });
         });
     });
 
     describe("two measures", () => {
-        it("should render HeadlineTransformation and pass down given props and props from execution", () => {
+        it("should render HeadlineTransformation and pass down given props and props from execution", async () => {
             createComponent({
                 execution: twoMeasureExec,
             });
 
-            return testUtils.delay().then(() => {
+            await waitFor(() => {
                 expect(HeadlineTransformation).toHaveBeenCalledWith(
                     expect.objectContaining({
                         dataView: expect.objectContaining({

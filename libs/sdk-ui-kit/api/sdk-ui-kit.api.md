@@ -262,7 +262,7 @@ export interface CheckboxProps {
 }
 
 // @internal (undocumented)
-export const CodeArea: React_2.VFC<ICodeAreaProps>;
+export const CodeArea: React_2.FC<ICodeAreaProps>;
 
 // @internal (undocumented)
 export const CodeLanguageSelect: React_2.VFC<ICodeLanguageSelectProps>;
@@ -939,6 +939,8 @@ export interface IBubbleProps {
     // (undocumented)
     arrowStyle?: React_2.CSSProperties;
     // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
     className?: string;
     // (undocumented)
     closeOnOutsideClick?: boolean;
@@ -1103,6 +1105,7 @@ export interface ICommunityEditionDialogProps {
 // @internal (undocumented)
 export type IComponentLabelsProviderProps = {
     labels: IShareDialogLabels;
+    children?: React.ReactNode;
 };
 
 // @internal (undocumented)
@@ -1830,11 +1833,15 @@ export interface IHeaderBadgeProps {
     // (undocumented)
     backgroundColor?: string;
     // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
     color?: string;
 }
 
 // @internal (undocumented)
 export interface IHeaderBadgeWithModalProps extends IHeaderBadgeProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
     // (undocumented)
     renderModalContent: (parameters: {
         closeModal: () => void;
@@ -2661,9 +2668,7 @@ export interface IMenuPositionConfig {
 // @internal (undocumented)
 export interface IMenuProps extends ISubMenuProps {
     // (undocumented)
-    children: ((props: {
-        closeMenu: () => void;
-    }) => React_2.ReactNode) | React_2.ReactNode;
+    children: React_2.ReactNode;
     // (undocumented)
     closeOnScroll?: boolean;
     // (undocumented)
@@ -2700,7 +2705,7 @@ export interface IMessage extends IMessageDefinition {
 // @internal (undocumented)
 export interface IMessageDefinition {
     // (undocumented)
-    component?: React.Component;
+    component?: React.ComponentType;
     // (undocumented)
     contrast?: boolean;
     duration?: number;
@@ -2724,6 +2729,8 @@ export interface IMessageDefinition {
 
 // @internal (undocumented)
 export interface IMessageProps {
+    // (undocumented)
+    children?: React.ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -3120,6 +3127,7 @@ export interface IOptimalAlignment {
 
 // @internal
 export interface IOverlayControllerProviderProps {
+    children?: React_2.ReactNode;
     overlayController: OverlayController;
 }
 
@@ -3278,6 +3286,8 @@ export interface IScrollableItemProps {
     // (undocumented)
     bottomMargin?: number;
     // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
     className?: string;
     // (undocumented)
     isElementInvisibleCheck?: isElementInvisibleType;
@@ -3294,13 +3304,15 @@ export interface IScrollablePanelProps extends React_2.HTMLAttributes<HTMLDivEle
     // (undocumented)
     scrollToVisible?: (element: HTMLElement, container: HTMLElement, bottomMargin: number) => void;
     // (undocumented)
-    tagName?: React_2.ReactType;
+    tagName?: React_2.ElementType;
 }
 
 // @internal (undocumented)
 export interface IScrollGradientProps {
     // (undocumented)
     backgroundColor?: string;
+    // (undocumented)
+    children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -3910,6 +3922,8 @@ export interface IWithBubbleProps {
 // @internal (undocumented)
 export interface IWorkspacePickerHomeFooterProps {
     // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
     className?: string;
     // (undocumented)
     href?: string;
@@ -4119,6 +4133,8 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
+    context: React_2.ContextType<typeof OverlayContext>;
+    // (undocumented)
     static contextType: React_2.Context<OverlayController>;
     // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
@@ -4184,7 +4200,7 @@ export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
 export type SameAsTargetPosition = "sameAsTarget";
 
 // @internal (undocumented)
-export const ScrollableItem: React_2.FunctionComponent<IScrollableItemProps>;
+export const ScrollableItem: React_2.FC<IScrollableItemProps>;
 
 // @internal (undocumented)
 export const ScrollablePanel: React_2.ForwardRefExoticComponent<IScrollablePanelProps & React_2.RefAttributes<HTMLDivElement>>;
@@ -4452,7 +4468,9 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
 
 // @internal (undocumented)
-export const ToastMessageContextProvider: React_2.FC;
+export const ToastMessageContextProvider: React_2.FC<{
+    children?: React_2.ReactNode;
+}>;
 
 // @internal (undocumented)
 export interface ToastMessageContextType {

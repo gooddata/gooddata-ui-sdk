@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
@@ -107,18 +107,17 @@ describe("DataLabelsControl", () => {
             expect(buttons[1]).toHaveClass("disabled");
         });
 
-        it("should show the tooltip while hover on the disabled total labels control", () => {
-            jest.useFakeTimers();
+        it("should show the tooltip while hover on the disabled total labels control", async () => {
             createComponent({
                 isTotalsDisabled: true,
                 enableSeparateTotalLabels: true,
             });
 
             fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT));
-            jest.advanceTimersByTime(500);
-            expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();
 
-            jest.useRealTimers();
+            await waitFor(() => {
+                expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();
+            });
         });
     });
 });

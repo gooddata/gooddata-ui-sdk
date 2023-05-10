@@ -11,7 +11,7 @@ if (process.env.WDYR === "true") {
 }
 import "@babel/polyfill";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
@@ -22,7 +22,9 @@ import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
 import { App } from "./App";
 
-const root = document.createElement("div");
-root.className = "root";
-document.body.appendChild(root);
-ReactDOM.render(<App />, root);
+const rootDOMNode = document.createElement("div");
+rootDOMNode.className = "root";
+document.body.appendChild(rootDOMNode);
+
+const root = createRoot(rootDOMNode);
+root.render(<App />);

@@ -24,6 +24,7 @@ export interface IColorDropdownOwnProps {
     colorPalette: IColorPalette;
     showCustomPicker: boolean;
     onColorSelected: (color: IColor) => void;
+    children?: React.ReactNode;
 }
 
 export interface IColorDropdownState {

@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
@@ -39,7 +39,7 @@ export const AttributeFilterAllValuesFilteredResult: React.FC<
                         id="attributesDropdown.itemsFiltered.tooltip"
                         values={{
                             filters: parentFilterTitles.join(", "),
-                            strong: (chunks: string) => <strong>{chunks}</strong>,
+                            strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                         }}
                     />
                 </Bubble>

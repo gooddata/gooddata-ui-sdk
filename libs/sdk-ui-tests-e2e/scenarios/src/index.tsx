@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "@babel/polyfill";
 import App from "./App";
 import { AppProviders } from "./contexts";
@@ -13,9 +13,11 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
-ReactDOM.render(
+const rootDOMNode = document.getElementById("root");
+const root = createRoot(rootDOMNode!);
+
+root.render(
     <AppProviders>
         <App />
     </AppProviders>,
-    document.getElementById("root"),
 );

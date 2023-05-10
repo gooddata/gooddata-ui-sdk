@@ -99,7 +99,7 @@ describe("DatePicker", () => {
         await openCalendar();
 
         expect(screen.getByRole("datepicker")).toHaveClass("gd-datepicker-focused");
-        expect(screen.getByText("星期日")).toBeInTheDocument();
+        expect(screen.getByLabelText("星期日")).toBeInTheDocument();
     });
 
     describe("initial state", () => {

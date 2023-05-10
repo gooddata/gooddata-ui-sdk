@@ -11,6 +11,7 @@ const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Eleme
 interface ILegendDialogContent {
     title: string;
     onCloseDialog: () => void;
+    children?: React.ReactNode;
 }
 
 const LegendDialogContent: React.FC<ILegendDialogContent> = (props) => {
@@ -40,6 +41,7 @@ export interface ILegendDialogProps {
     isOpen: boolean;
     alignTo: string;
     onCloseDialog: () => void;
+    children?: React.ReactNode;
 }
 
 export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {

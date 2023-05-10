@@ -147,7 +147,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     };
 
     const eventDispatch = useDashboardEventDispatch();
-    const createInsightRequestedEvent = useCallback((e) => {
+    const createInsightRequestedEvent = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 

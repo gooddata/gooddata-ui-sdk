@@ -6,6 +6,7 @@ import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sd
 interface IConfigurationBubbleProps {
     classNames?: string;
     onClose?: () => void;
+    children?: React.ReactNode;
 }
 
 const alignPoints: IAlignPoint[] = [

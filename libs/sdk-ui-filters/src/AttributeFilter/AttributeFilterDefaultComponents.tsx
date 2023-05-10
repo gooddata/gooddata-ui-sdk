@@ -37,6 +37,7 @@ export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomCo
     StatusBarComponent: AttributeFilterStatusBar,
     FilterError: AttributeFilterError,
     FilterLoading: AttributeFilterLoading,
+    children: undefined,
 };
 
 /**

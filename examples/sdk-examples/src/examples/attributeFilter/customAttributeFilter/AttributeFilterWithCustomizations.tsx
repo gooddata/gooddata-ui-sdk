@@ -17,6 +17,7 @@ import noop from "lodash/noop";
 
 interface ICustomProps {
     onMyCallback: () => void;
+    children?: React.ReactNode;
 }
 
 const defaultCustomProps: ICustomProps = {

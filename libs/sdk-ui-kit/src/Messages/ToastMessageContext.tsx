@@ -35,7 +35,7 @@ const DEFAULT_DURATION = 2500;
 /**
  * @internal
  */
-export const ToastMessageContextProvider: React.FC = ({ children }) => {
+export const ToastMessageContextProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     const removeMessage = useCallback((id: string) => {

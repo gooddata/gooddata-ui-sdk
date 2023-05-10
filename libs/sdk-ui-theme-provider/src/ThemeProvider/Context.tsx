@@ -23,6 +23,11 @@ export interface IThemeContextProviderProps {
      * Flag telling whether the theme object is being loaded or not
      */
     themeIsLoading: boolean;
+
+    /**
+     * React children
+     */
+    children?: React.ReactNode;
 }
 
 /**

@@ -251,6 +251,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@storybook/cli",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/manager-webpack5",
       "allowedCategories": [ "production" ]
     },
@@ -260,6 +264,10 @@
     },
     {
       "name": "@storybook/react",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@storybook/react-webpack5",
       "allowedCategories": [ "production" ]
     },
     {
@@ -277,10 +285,6 @@
     {
       "name": "@testing-library/react",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@testing-library/react-hooks",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "@testing-library/user-event",

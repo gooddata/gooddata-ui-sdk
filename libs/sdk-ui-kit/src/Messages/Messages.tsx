@@ -30,7 +30,14 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
                     <CSSTransition classNames="gd-message" timeout={220}>
                         <div>
                             {messages.map((message) => {
-                                const { id, component, showMore, type, contrast, intensive } = message;
+                                const {
+                                    id,
+                                    component: Component,
+                                    showMore,
+                                    type,
+                                    contrast,
+                                    intensive,
+                                } = message;
                                 const isExpanded = expandedMessageIds.includes(message.id);
                                 return (
                                     <div key={id}>
@@ -45,7 +52,9 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
                                             contrast={contrast}
                                             intensive={intensive}
                                         >
-                                            {component || (
+                                            {Component ? (
+                                                <Component />
+                                            ) : (
                                                 <>
                                                     <MessageWithShowMore
                                                         message={message}

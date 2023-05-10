@@ -120,10 +120,16 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
 
     const renderFooter = () => {
         const { footer, closeDropdown } = props;
-        if (footer && closeDropdown && typeof footer === "function") {
+
+        if (!footer) {
+            return null;
+        }
+
+        if (typeof footer === "function") {
             return footer(closeDropdown);
         }
-        return footer || false;
+
+        return footer;
     };
 
     const onChange = useCallback((search: string | number) => onSearch(search.toString()), [onSearch]);

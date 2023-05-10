@@ -310,6 +310,7 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
 // @alpha (undocumented)
 export const MapboxTokenProvider: React_2.FC<{
     token: string;
+    children?: React_2.ReactNode;
 }>;
 
 // @public (undocumented)
