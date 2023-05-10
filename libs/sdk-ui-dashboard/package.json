@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "8.13.0-alpha.62",
+    "version": "8.13.0-alpha.63",
     "description": "GoodData SDK - Dashboard Component",
     "repository": {
         "type": "git",
