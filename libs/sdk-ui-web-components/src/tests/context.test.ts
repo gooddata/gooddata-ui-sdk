@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("context", () => {
