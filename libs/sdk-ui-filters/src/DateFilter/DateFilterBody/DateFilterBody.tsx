@@ -11,6 +11,7 @@ import {
     DateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    WeekStart,
 } from "../interfaces";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar";
@@ -59,6 +60,8 @@ export interface IDateFilterBodyProps {
 
     errors?: IExtendedDateFilterErrors;
     dateFilterButton: JSX.Element;
+
+    weekStart?: WeekStart;
 }
 
 interface IDateFilterBodyState {
@@ -198,6 +201,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             isTimeForAbsoluteRangeEnabled,
             isMobile,
             errors,
+            weekStart,
         } = this.props;
 
         if (!filterOptions.absoluteForm) {
@@ -241,6 +245,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                             isMobile={isMobile}
                             isTimeEnabled={isTimeForAbsoluteRangeEnabled}
+                            weekStart={weekStart}
                         />
                     </DateFilterFormWrapper>
                 ) : null}

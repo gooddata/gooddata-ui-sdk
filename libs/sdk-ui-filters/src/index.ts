@@ -39,6 +39,7 @@ export {
     IDateTranslator,
     IMessageTranslator,
     getLocalizedIcuDateFormatPattern,
+    WeekStart,
 } from "./DateFilter";
 export {
     MeasureValueFilter,
