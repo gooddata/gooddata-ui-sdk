@@ -29,6 +29,7 @@ import {
     isChartSupported,
     isComboChart,
     isHeatmap,
+    isPyramid,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
@@ -340,6 +341,14 @@ function getLegendLabel(
     return legendLabel;
 }
 
+function isAutoSortableChart(type: string, viewByAttribute: IUnwrappedAttributeHeadersWithItems) {
+    const isPyramidWithViewByAttribute = isPyramid(type) && Boolean(viewByAttribute);
+    return (
+        isOneOfTypes(type, [VisualizationTypes.DONUT, VisualizationTypes.PIE, VisualizationTypes.FUNNEL]) ||
+        isPyramidWithViewByAttribute
+    );
+}
+
 export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,
@@ -410,14 +419,10 @@ export function getChartOptions(
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
 
-    // When custom sorting is enabled and is Pie|Donut|Funnel chart, need to skip this, so the sort specified by the user does not get override.
-    const isAutoSortableChart = isOneOfTypes(type, [
-        VisualizationTypes.DONUT,
-        VisualizationTypes.PIE,
-        VisualizationTypes.FUNNEL,
-    ]);
-    if (isAutoSortableChart && !config.enableChartSorting) {
-        // Pie|Donut charts dataPoints are sorted by default by value in descending order
+    // When custom sorting is enabled and is chart which does the auto-sorting,
+    // need to skip this, so the sort specified by the user does not get overriden.
+    if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting) {
+        // dataPoints are sorted by default by value in descending order
         const dataPoints = series[0].data;
         const indexSortOrder: number[] = [];
         const sortedDataPoints = dataPoints
