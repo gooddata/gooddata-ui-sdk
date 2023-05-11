@@ -81,6 +81,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAnalyticalDashboardPermissions,
+            "enableAnalyticalDashboardPermissions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAnalyticalDashboardPermissions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableFunnelChart,
             "enableFunnelChart",
             "BOOLEAN",
