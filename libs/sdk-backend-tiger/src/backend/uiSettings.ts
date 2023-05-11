@@ -84,7 +84,6 @@ export const DefaultUiSettings: ISettings = {
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
 
     enablePushpinGeoChart: true,
-    enableAnalyticalDashboardPermissions: true,
     ...DefaultFeatureFlags,
 };
 
