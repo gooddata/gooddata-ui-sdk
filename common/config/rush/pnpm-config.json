@@ -1,6 +1,7 @@
 /**
  * This configuration file provides settings specific to the PNPM package manager.
  * More documentation is available on the Rush website: https://rushjs.io
+ * 
  */
  {
     "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/pnpm-config.schema.json",
