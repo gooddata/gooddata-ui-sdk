@@ -21,6 +21,8 @@ const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
     "local:pie": Icon.Pie,
     "local:sankey": Icon.Sankey,
     "local:dependencywheel": Icon.DependencyWheel,
+    "local:funnel": Icon.Funnel,
+    "local:pyramid": Icon.Pyramid,
 };
 
 /**

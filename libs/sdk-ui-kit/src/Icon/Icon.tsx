@@ -69,6 +69,8 @@ import { Leave } from "./icons/Leave";
 import { Copy } from "./icons/Copy";
 import { Run } from "./icons/Run";
 import { Invite } from "./icons/Invite";
+import { Funnel } from "./icons/InsightIcons/Funnel";
+import { Pyramid } from "./icons/InsightIcons/Pyramid";
 
 /**
  * @internal
@@ -141,6 +143,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Copy,
     Run,
     Invite,
+    Pyramid,
+    Funnel,
 };
 
 export { IRowsIconProps };
