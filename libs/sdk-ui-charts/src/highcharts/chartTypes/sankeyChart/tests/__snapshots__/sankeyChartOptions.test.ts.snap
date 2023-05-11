@@ -18,6 +18,7 @@ Array [
       "name",
     ],
     "nodes": Array [],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -95,6 +96,7 @@ Array [
         "id": "WonderKid",
       },
     ],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -132,6 +134,7 @@ Array [
         "id": "West Coast",
       },
     ],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -253,6 +256,7 @@ Array [
         "id": "West Coast",
       },
     ],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -275,6 +279,7 @@ Array [
       "name",
     ],
     "nodes": Array [],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -352,6 +357,7 @@ Array [
         "id": "WonderKid",
       },
     ],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -389,6 +395,7 @@ Array [
         "id": "West Coast",
       },
     ],
+    "seriesIndex": 0,
   },
 ]
 `;
@@ -510,6 +517,7 @@ Array [
         "id": "West Coast",
       },
     ],
+    "seriesIndex": 0,
   },
 ]
 `;
