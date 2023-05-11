@@ -74,6 +74,7 @@ describe("getEmbeddingCode functionality", () => {
                         enableHidingOfDataPoints: true,
                         enableTableColumnsManualResizing: true,
                         enableTableColumnsAutoResizing: true,
+                        enableTableTotalRows: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",

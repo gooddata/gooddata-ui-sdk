@@ -60,6 +60,7 @@ export function createGridOptions(
         getTableDescriptor: () => table.tableDescriptor,
         getExecutionDefinition: tableMethods.getExecutionDefinition,
         getColumnTotals: tableMethods.getColumnTotals,
+        getRowTotals: tableMethods.getRowTotals,
         intl: props.intl,
     };
 

@@ -21,6 +21,7 @@ export interface IMenuAggregationClickConfig {
     measureIdentifiers: string[];
     attributeIdentifier: string;
     include: boolean;
+    isColumn?: boolean;
 }
 
 export type OnExecutionTransformed = (newExecution: IPreparedExecution) => void;
@@ -56,6 +57,7 @@ export type TableConfigAccessors = {
     getMenuConfig: () => IMenu;
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
+    getRowTotals: () => ITotal[];
 
     getResizingConfig: () => ColumnResizingConfig;
 };

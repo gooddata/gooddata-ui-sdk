@@ -22,6 +22,7 @@ export interface ICommonHeaderParams {
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     getExecutionDefinition?: () => IExecutionDefinition;
     getColumnTotals?: () => ITotal[];
+    getRowTotals?: () => ITotal[];
     intl?: IntlShape;
 }
 
@@ -113,7 +114,15 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     }
 
     private renderMenu() {
-        const { intl, colId, menu, getTableDescriptor, getExecutionDefinition, getColumnTotals } = this.props;
+        const {
+            intl,
+            colId,
+            menu,
+            getTableDescriptor,
+            getExecutionDefinition,
+            getColumnTotals,
+            getRowTotals,
+        } = this.props;
         const { isMenuOpen, isMenuButtonVisible } = this.state;
 
         if (!menu?.aggregations) {
@@ -127,10 +136,12 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 isMenuOpened={isMenuOpen}
                 isMenuButtonVisible={isMenuButtonVisible}
                 showSubmenu={menu.aggregationsSubMenu ?? false}
+                showColumnsSubMenu={menu.aggregationsSubMenuForRows ?? false}
                 availableTotalTypes={menu.aggregationTypes ?? AVAILABLE_TOTALS}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition!}
-                getTotals={getColumnTotals}
+                getColumnTotals={getColumnTotals}
+                getRowTotals={getRowTotals}
                 onMenuOpenedChange={this.handleMenuOpenedChange}
                 onAggregationSelect={this.menuItemClick}
             />

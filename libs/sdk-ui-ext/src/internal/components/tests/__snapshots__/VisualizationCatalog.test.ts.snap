@@ -36408,7 +36408,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36445,7 +36449,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36483,7 +36491,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36521,7 +36533,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36559,7 +36575,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36597,7 +36617,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36635,7 +36659,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36673,7 +36701,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36708,7 +36740,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36747,7 +36783,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36786,7 +36826,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36825,7 +36869,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36864,7 +36912,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36902,7 +36954,11 @@ const config: IPivotTableConfig = {
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36940,7 +36996,11 @@ const config: IPivotTableConfig = {
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -36978,7 +37038,11 @@ const config: IPivotTableConfig = {
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37016,7 +37080,11 @@ const config: IPivotTableConfig = {
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37054,7 +37122,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37092,7 +37164,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37130,7 +37206,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37168,7 +37248,11 @@ const config: IPivotTableConfig = {
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37197,7 +37281,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37225,7 +37313,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37253,7 +37345,11 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37295,7 +37391,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37337,7 +37437,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37379,7 +37483,11 @@ const sortBy: ISortItem[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37421,7 +37529,11 @@ const sortBy: ISortItem[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37459,7 +37571,11 @@ const sortBy: ISortItem[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37494,7 +37610,11 @@ const rows: IAttribute[] = [
 const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37531,7 +37651,11 @@ const sortBy: ISortItem[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37564,7 +37688,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37599,7 +37727,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37632,7 +37764,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37668,7 +37804,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37706,7 +37846,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37749,7 +37893,11 @@ const config: IPivotTableConfig = {
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37792,7 +37940,11 @@ const config: IPivotTableConfig = {
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37835,7 +37987,11 @@ const config: IPivotTableConfig = {
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37878,7 +38034,11 @@ const config: IPivotTableConfig = {
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37916,7 +38076,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -37959,7 +38123,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38003,7 +38171,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38045,7 +38217,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38077,7 +38253,11 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38124,7 +38304,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38170,7 +38354,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38216,7 +38404,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38259,7 +38451,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38306,7 +38502,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38351,7 +38551,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38394,7 +38598,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38440,7 +38648,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38476,7 +38688,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38512,7 +38728,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38546,7 +38766,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38580,7 +38804,11 @@ const rows: IAttribute[] = [
 const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38615,7 +38843,11 @@ const rows: IAttribute[] = [
 const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"desc\\")];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38655,7 +38887,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38693,7 +38929,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38732,7 +38972,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38766,7 +39010,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38795,7 +39043,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38835,7 +39087,11 @@ const filters: IFilter[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38876,7 +39132,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38916,7 +39176,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38954,7 +39218,11 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -38988,7 +39256,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -39021,7 +39293,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -39069,7 +39345,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -39119,7 +39399,11 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -39151,7 +39435,11 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {aggregations: true, aggregationsSubMenu: true},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};

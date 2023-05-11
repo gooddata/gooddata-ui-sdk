@@ -265,11 +265,6 @@ export interface ISettings {
     enableCompositeGrain?: boolean;
 
     /**
-     * Enable pivot table rows subtotal/total.
-     */
-    enableTableTotalRows?: boolean;
-
-    /**
      * Week start day
      */
     weekStart?: WeekStart;

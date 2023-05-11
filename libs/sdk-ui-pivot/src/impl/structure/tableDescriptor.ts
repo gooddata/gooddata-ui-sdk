@@ -130,6 +130,16 @@ export class TableDescriptor {
     }
 
     /**
+     * Gets descriptors of all attributes that are used to slice the table into columns. Note that it is perfectly
+     * OK that table has no scoping attributes.
+     *
+     * @returns empty if there are no scoping attributes
+     */
+    public getScopingAttributes(): IAttributeDescriptor[] {
+        return this.headers.scopingAttributes;
+    }
+
+    /**
      * Gets descriptors of all attributes that are used to slice the table into rows. Note that it is perfectly
      * OK that table has no slicing attributes.
      *
@@ -144,6 +154,13 @@ export class TableDescriptor {
      */
     public sliceColCount(): number {
         return this.headers.sliceCols.length;
+    }
+
+    /**
+     * Gets count of scoping attributes (columns).
+     */
+    public scopingColCount(): number {
+        return this.headers.scopingAttributes.length;
     }
 
     /**
@@ -280,12 +297,21 @@ export class TableDescriptor {
     }
 
     /**
-     * Tests whether the table can be enriched by totals. Tables that do not have any measures or do not have any
-     * slicing attributes cannot have totals. Because by definition they either have exactly 1 row with all measure grant total
-     * sum or have no rows whatsover.
+     * Tests whether the table can be enriched by row totals. Tables that do not have any measures, do not have any
+     * slicing attributes cannot have row totals. Because by definition they either have exactly 1 row with all measure grant total
+     * sum or have no rows whatsoever.
      */
-    public canTableHaveTotals(): boolean {
+    public canTableHaveRowTotals(): boolean {
         return this.sliceColCount() > 0 && this.seriesColsCount() > 0;
+    }
+
+    /**
+     * Tests whether the table can be enriched by column totals. Tables that do not have any measures, do not have any
+     * scoping attribute cannot have column totals. Because by definition they either have exactly 1 column with all measure grant total
+     * sum or have no columns whatseover.
+     */
+    public canTableHaveColumnTotals(): boolean {
+        return this.scopingColCount() > 0 && this.seriesColsCount() > 0;
     }
 
     /**

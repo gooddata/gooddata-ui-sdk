@@ -138,7 +138,10 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                         <Icon.Lock color="#0f0" />
                     </IconWrapper>
                     <IconWrapper name="Rows">
-                        <Icon.Rows colorPalette={{ odd: "#f00", even: "#0f0" }} />
+                        <Icon.Rows colorPalette={{ normalRow: "#f00", totalRow: "#0f0" }} />
+                    </IconWrapper>
+                    <IconWrapper name="Columns">
+                        <Icon.Columns colorPalette={{ normalColumn: "#f00", totalColumn: "#0f0" }} />
                     </IconWrapper>
                     <IconWrapper name="ArrowDown">
                         <Icon.ArrowDown color="#f00" />

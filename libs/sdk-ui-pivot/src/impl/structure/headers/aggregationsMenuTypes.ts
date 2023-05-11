@@ -5,3 +5,8 @@ export interface IColumnTotal {
     type: TotalType;
     attributes: string[];
 }
+
+export interface IRowTotal {
+    type: TotalType;
+    attributes: string[];
+}

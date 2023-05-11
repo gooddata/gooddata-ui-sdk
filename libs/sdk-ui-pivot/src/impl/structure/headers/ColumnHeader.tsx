@@ -75,6 +75,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 getTableDescriptor={this.props.getTableDescriptor}
                 getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
+                getRowTotals={this.props.getRowTotals}
                 intl={this.props.intl}
             />
         );

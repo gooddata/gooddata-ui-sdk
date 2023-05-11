@@ -76,45 +76,60 @@ function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: str
 
 function isTotalEnabledForAttribute(
     attributeLocalIdentifier: string,
+    columnAttributeLocalIdentifier: string,
     totalType: TotalType,
     columnTotals: IColumnTotal[],
+    rowTotals: IColumnTotal[],
 ): boolean {
-    return columnTotals.some((total: IColumnTotal) => {
+    const columns = columnTotals.some((total: IColumnTotal) => {
+        return total.type === totalType && total.attributes.includes(attributeLocalIdentifier);
+    });
+    const rows = rowTotals.some((total: IColumnTotal) => {
+        return total.type === totalType && total.attributes.includes(columnAttributeLocalIdentifier);
+    });
+
+    return columns || rows;
+}
+
+function isTotalEnabledForSubMenuAttribute(
+    attributeLocalIdentifier: string,
+    totalType: TotalType,
+    totals: IColumnTotal[],
+): boolean {
+    return totals.some((total: IColumnTotal) => {
         return total.type === totalType && total.attributes.includes(attributeLocalIdentifier);
     });
 }
 
-function includeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]) {
-    const columnTotalsChangedUnique = columnTotalsChanged.filter(
-        (totalChanged) => !columnTotals.some((total) => isEqual(total, totalChanged)),
+function includeTotals(totals: ITotal[], totalsChanged: ITotal[]) {
+    const columnTotalsChangedUnique = totalsChanged.filter(
+        (totalChanged) => !totals.some((total) => isEqual(total, totalChanged)),
     );
 
-    return [...columnTotals, ...columnTotalsChangedUnique];
+    return [...totals, ...columnTotalsChangedUnique];
 }
 
-function excludeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]): ITotal[] {
-    return columnTotals.filter(
-        (total) => !columnTotalsChanged.find((totalChanged) => isEqual(totalChanged, total)),
-    );
+function excludeTotals(totals: ITotal[], totalsChanged: ITotal[]): ITotal[] {
+    return totals.filter((total) => !totalsChanged.find((totalChanged) => isEqual(totalChanged, total)));
 }
 
-export function getUpdatedColumnTotals(
-    columnTotals: ITotal[],
+export function getUpdatedColumnOrRowTotals(
+    totals: ITotal[],
     menuAggregationClickConfig: IMenuAggregationClickConfig,
 ): ITotal[] {
     const { type, measureIdentifiers, attributeIdentifier, include } = menuAggregationClickConfig;
 
-    const columnTotalsChanged = measureIdentifiers.map((measureIdentifier) => ({
+    const totalsChanged = measureIdentifiers.map((measureIdentifier) => ({
         type,
         measureIdentifier,
         attributeIdentifier,
     }));
 
-    const updatedColumnTotals = include
-        ? includeTotals(columnTotals, columnTotalsChanged)
-        : excludeTotals(columnTotals, columnTotalsChanged);
+    const updatedTotals = include
+        ? includeTotals(totals, totalsChanged)
+        : excludeTotals(totals, totalsChanged);
 
-    return sortBy(updatedColumnTotals, (total) =>
+    return sortBy(updatedTotals, (total) =>
         findIndex(AVAILABLE_TOTALS, (rankedItem) => rankedItem === total.type),
     );
 }
@@ -123,5 +138,6 @@ export default {
     getTotalsForAttributeHeader,
     getTotalsForMeasureHeader,
     isTotalEnabledForAttribute,
-    getUpdatedColumnTotals,
+    isTotalEnabledForSubMenuAttribute,
+    getUpdatedColumnOrRowTotals,
 };

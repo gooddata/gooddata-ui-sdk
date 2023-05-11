@@ -18,6 +18,7 @@ import { Undo } from "./icons/Undo";
 import { Home } from "./icons/Home";
 import { BurgerMenu } from "./icons/BurgerMenu";
 import { Rows, IRowsIconProps } from "./icons/Rows";
+import { Columns, IColumnsIconProps } from "./icons/Columns";
 import { DragHandle } from "./icons/DragHandle";
 import { Interaction } from "./icons/Interaction";
 import { AttributeFilter } from "./icons/AttributeFilter";
@@ -92,6 +93,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Home,
     BurgerMenu,
     Rows,
+    Columns,
     DragHandle,
     Interaction,
     AttributeFilter,
@@ -147,4 +149,4 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Funnel,
 };
 
-export { IRowsIconProps };
+export { IRowsIconProps, IColumnsIconProps };

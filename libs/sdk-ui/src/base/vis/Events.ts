@@ -111,6 +111,7 @@ export interface IPushData {
         sortItems?: ISortItem[];
         totals?: ITotal[];
         controls?: Record<string, any>;
+        bucketType?: string;
     };
     propertiesMeta?: any;
     colors?: IColorsData;

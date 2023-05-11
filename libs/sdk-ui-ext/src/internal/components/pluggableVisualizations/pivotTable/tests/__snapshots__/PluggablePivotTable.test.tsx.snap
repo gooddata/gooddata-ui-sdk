@@ -473,6 +473,29 @@ Object {
 }
 `;
 
+exports[`createPivotTableConfig should create valid config with total rows if feature flag off 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with total rows if feature flag on 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
+  },
+  "separators": undefined,
+}
+`;
+
 exports[`createPivotTableConfig should create valid config without menus for dashboard env 1`] = `
 Object {
   "columnSizing": Object {},

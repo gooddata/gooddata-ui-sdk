@@ -38,12 +38,13 @@ const intlMock = createIntlMock({
 describe("AggregationsMenu", () => {
     const attributeColumnId = "c_0";
     const fixture = recordedDataFacade(
-        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
+        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndTwoColumnAttributes,
         DataViewFirstPage,
     );
     const tableDescriptor = TableDescriptor.for(fixture, "empty value");
     const getExecutionDefinition = () => emptyDef("testWorkspace");
-    const getTotals = () => [] as ITotal[];
+    const getColumnTotals = () => [] as ITotal[];
+    const getRowTotals = () => [] as ITotal[];
     const getTableDescriptor = () => tableDescriptor;
     const onMenuOpenedChange = jest.fn();
     const onAggregationSelect = jest.fn();
@@ -55,11 +56,13 @@ describe("AggregationsMenu", () => {
                 isMenuOpened={true}
                 isMenuButtonVisible={true}
                 showSubmenu={false}
+                showColumnsSubMenu={false}
                 availableTotalTypes={AVAILABLE_TOTALS}
                 colId={attributeColumnId}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition}
-                getTotals={getTotals}
+                getColumnTotals={getColumnTotals}
+                getRowTotals={getRowTotals}
                 onMenuOpenedChange={onMenuOpenedChange}
                 onAggregationSelect={onAggregationSelect}
                 {...customProps}
@@ -98,8 +101,8 @@ describe("AggregationsMenu", () => {
         expect(document.querySelectorAll(".s-menu-aggregation")).toHaveLength(2);
     });
 
-    it('should render "sum" as only selected item in main menu', () => {
-        const totals: ITotal[] = [
+    it('should render "sum" as only selected item in main menu for rows', () => {
+        const columnTotals: ITotal[] = [
             {
                 type: "sum",
                 attributeIdentifier: attributeLocalId(ReferenceMd.Product.Name), // first row attribute => grand totals, selected right in menu
@@ -111,10 +114,29 @@ describe("AggregationsMenu", () => {
                 measureIdentifier: measureLocalId(ReferenceMd.Amount),
             },
         ];
-        renderComponent({ getTotals: () => totals });
+        renderComponent({ getColumnTotals: () => columnTotals });
 
         expect(document.querySelectorAll(".is-checked")).toHaveLength(1);
         expect(document.querySelectorAll(".s-menu-aggregation-sum .is-checked")).toHaveLength(1);
+    });
+
+    it('should render "max" as only selected item in main menu for columns', () => {
+        const rowTotals: ITotal[] = [
+            {
+                type: "max",
+                attributeIdentifier: attributeLocalId(ReferenceMd.StageName.Default), // first column attribute => grand totals, selected right in menu
+                measureIdentifier: measureLocalId(ReferenceMd.Amount),
+            },
+            {
+                type: "sum",
+                attributeIdentifier: attributeLocalId(ReferenceMd.Region), // second column attr => subtotals, selected in submenu
+                measureIdentifier: measureLocalId(ReferenceMd.Amount),
+            },
+        ];
+        renderComponent({ getRowTotals: () => rowTotals, showColumnsSubMenu: true });
+
+        expect(document.querySelectorAll(".is-checked")).toHaveLength(1);
+        expect(document.querySelectorAll(".s-menu-aggregation-max .is-checked")).toHaveLength(1);
     });
 
     it("should render closed main menu when isMenuOpen is set to false", () => {
@@ -160,7 +182,7 @@ describe("AggregationsMenu", () => {
         );
     });
 
-    it("should not render any submenu when there is no row attribute", () => {
+    it("should render menu when table has column attributes but not rows", () => {
         const fixture = recordedDataFacade(
             ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute,
             DataViewFirstPage,
@@ -168,11 +190,11 @@ describe("AggregationsMenu", () => {
         const tableDescriptor = TableDescriptor.for(fixture, "empty value");
 
         renderComponent({
-            showSubmenu: true,
             getTableDescriptor: () => tableDescriptor,
+            showColumnsSubMenu: true,
         });
 
-        expect(AggregationsSubMenu).toHaveBeenCalledTimes(0);
+        expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(AVAILABLE_TOTALS.length);
     });
 
     it("should not disable any item when there is no measure value filter set", () => {

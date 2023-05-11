@@ -8,6 +8,7 @@ import { IScrollPosition } from "./impl/stickyRowHandler";
 export interface ICorePivotTableState {
     readyToRender: boolean;
     columnTotals: ITotal[];
+    rowTotals: ITotal[];
     desiredHeight: number | undefined;
     error?: string;
     resized: boolean;

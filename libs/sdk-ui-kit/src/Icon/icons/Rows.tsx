@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 
 import { Color, IIconProps } from "../typings";
@@ -8,8 +8,8 @@ import { Color, IIconProps } from "../typings";
  */
 export interface IRowsIconProps extends IIconProps {
     colorPalette?: {
-        odd?: Color;
-        even?: Color;
+        normalRow?: Color;
+        totalRow?: Color;
     };
 }
 
@@ -17,34 +17,21 @@ export interface IRowsIconProps extends IIconProps {
  * @internal
  */
 export const Rows: React.FC<IRowsIconProps> = ({ colorPalette, className, width, height }) => {
-    const odd = colorPalette?.odd ?? "#D7DCE1";
-    const even = colorPalette?.even ?? "#798795";
+    const normalRow = colorPalette?.normalRow ?? "#CCD8E2";
+    const totalRow = colorPalette?.totalRow ?? "#94A1AD";
 
     return (
         <svg
             className={className}
             width={width ?? 16}
             height={height ?? 16}
-            viewBox="0 0 12 11"
-            version="1.1"
+            viewBox="0 0 13 13"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                <g transform="translate(-519.000000, -212.000000)">
-                    <g transform="translate(244.000000, 165.000000)">
-                        <g transform="translate(259.500000, 33.000000)">
-                            <g transform="translate(15.500000, 14.000000)">
-                                <g>
-                                    <rect fill={odd} x="0" y="2.26485497e-14" width="12" height="2.2"></rect>
-                                    <rect fill={even} x="0" y="2.93333333" width="12" height="2.2"></rect>
-                                    <rect fill={odd} x="0" y="5.86666667" width="12" height="2.2"></rect>
-                                    <rect fill={even} x="0" y="8.8" width="12" height="2.2"></rect>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </g>
+            <path d="M0 1H13V3H0V1Z" fill={normalRow} />
+            <path d="M0 5H13V7H0V5Z" fill={normalRow} />
+            <rect y="9" width="13" height="2" fill={totalRow} />
         </svg>
     );
 };

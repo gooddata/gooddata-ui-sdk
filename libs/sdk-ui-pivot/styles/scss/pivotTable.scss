@@ -546,6 +546,10 @@ $subtotal-odd-background-color: var(
     }
 
     .gd-aggregation-submenu {
+        .gd-aggregation-submenu-rows-separator {
+            margin: 5px 10px 5px 10px;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        }
         .gd-list-item-header {
             position: relative;
 

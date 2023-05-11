@@ -1085,6 +1085,15 @@ export interface IColorPreviewProps {
 }
 
 // @internal (undocumented)
+export interface IColumnsIconProps extends IIconProps {
+    // (undocumented)
+    colorPalette?: {
+        normalColumn?: Color;
+        totalColumn?: Color;
+    };
+}
+
+// @internal (undocumented)
 export interface ICommunityEditionDialogProps {
     // (undocumented)
     closeButtonText: string;
@@ -3279,8 +3288,8 @@ export interface IResponsiveTextProps {
 export interface IRowsIconProps extends IIconProps {
     // (undocumented)
     colorPalette?: {
-        odd?: Color;
-        even?: Color;
+        normalRow?: Color;
+        totalRow?: Color;
     };
 }
 

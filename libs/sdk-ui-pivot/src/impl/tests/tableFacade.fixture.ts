@@ -24,6 +24,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
         hasColumnWidths: false,
         getExecutionDefinition: () => dv.definition,
         getColumnTotals: () => flatMap(dv.definition.dimensions, (dim) => dim.totals ?? []),
+        getRowTotals: () => [],
         getGroupRows: () => true,
         getMenuConfig: () => ({}),
         getResizingConfig: () => ({

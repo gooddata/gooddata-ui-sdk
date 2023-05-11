@@ -3,6 +3,7 @@ import once from "lodash/once";
 import {
     bucketsFind,
     bucketTotals,
+    IAttributeDescriptor,
     IExecutionDefinition,
     ISortItem,
     ITotal,
@@ -63,3 +64,21 @@ export function sanitizeDefTotals(
         ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy, totals ?? bucketTotals(attributeBucket))
         : [];
 }
+
+export function sanitizeDefRowTotals(
+    definition: IExecutionDefinition,
+    sortItems?: ISortItem[],
+    totals?: ITotal[],
+): ITotal[] {
+    const { buckets, sortBy } = definition;
+    const attributeBucket = bucketsFind(buckets, BucketNames.COLUMNS);
+    return attributeBucket
+        ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy, totals ?? bucketTotals(attributeBucket))
+        : [];
+}
+
+export const tableHasRowAttributes = (rowAttributes: IAttributeDescriptor[]): boolean =>
+    rowAttributes.length > 0;
+
+export const tableHasColumnAttributes = (columnAttributes: IAttributeDescriptor[]): boolean =>
+    columnAttributes.length > 0;

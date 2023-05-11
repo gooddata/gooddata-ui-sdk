@@ -518,6 +518,8 @@ export function createPivotTableConfig(
         separators: config.separators,
     };
 
+    const enableTableTotalRows = settings.enableTableTotalRows;
+
     if (environment !== DASHBOARDS_ENVIRONMENT) {
         tableConfig = {
             ...tableConfig,
@@ -527,6 +529,15 @@ export function createPivotTableConfig(
             }),
         };
     }
+
+    if (enableTableTotalRows)
+        tableConfig = {
+            ...tableConfig,
+            menu: {
+                ...tableConfig.menu,
+                aggregationsSubMenuForRows: true,
+            },
+        };
 
     const autoSize = settings.enableTableColumnsAutoResizing;
 
