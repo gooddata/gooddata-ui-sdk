@@ -22,14 +22,10 @@ stages:
 .release:
   # We want to avoid unnecessary builds and only create a new Docker image
   # for every release commit on master branch.
-  # Changes condition is not strictly needed, but should be fine as we update
-  # package.json in every release anyway.
   # Commit message condition is needed to avoid creating a new Docker image on
   # every single merge commit to master - that would be a waste.
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(master|release|hotfix\/(tiger|panther))$/ && $CI_COMMIT_MESSAGE =~ /^Release /'
-      changes:
-        - libs/sdk-ui-web-components/**/*
 
 .with-buildx:
   before_script:
