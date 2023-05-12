@@ -11,13 +11,13 @@ export const Funnel: React.FC<IIconProps> = ({ className, width, height, color }
             width={width}
             height={height}
             className={className}
-            viewBox="0 0 32 30"
+            viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
         >
             <g fill={color ?? "#B0BECA"} fillRule="evenodd">
-                <path d="M11.25 20H20.75L22.85 14H9.15002L11.25 20Z" fillOpacity="0.6" />
-                <path d="M11.6 21L13 25H19L20.4 21H11.6Z" fillOpacity="0.4" />
-                <path d="M8.8 13H23.2L26 5H6L8.8 13Z" />
+                <path d="M5.25002 15H14.75L16.85 9H3.15002L5.25002 15Z" fillOpacity="0.6" />
+                <path d="M5.6001 16L7.0001 20H13.0001L14.4001 16H5.6001Z" fillOpacity="0.4" />
+                <path d="M2.8 8H17.2L20 0H0L2.8 8Z" />
             </g>
         </svg>
     );
