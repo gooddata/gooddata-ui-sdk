@@ -715,12 +715,23 @@ function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, 
     };
 }
 
+function isNonStackingConfiguration(chartOptions: IChartOptions, chartConfig?: IChartConfig) {
+    const { type, data } = chartOptions;
+    if (chartConfig?.continuousLine?.enabled && !chartConfig?.stackMeasures) {
+        return (
+            (isAreaChart(type) && data?.series?.length === 1) ||
+            (isComboChart(type) && !isAreaChart(chartConfig?.primaryChartType))
+        );
+    }
+    return false;
+}
+
 function getStackingConfiguration(
     chartOptions: IChartOptions,
     _config: any,
     chartConfig?: IChartConfig,
 ): HighchartsOptions {
-    const { stacking, yAxes = [], type, data } = chartOptions;
+    const { stacking, yAxes = [], type } = chartOptions;
 
     if (!stacking) {
         return {};
@@ -736,9 +747,7 @@ function getStackingConfiguration(
     }));
 
     const connectNulls = isAreaChart(type) ? { connectNulls: true } : {};
-    //should remove default stacking when the area chart has 1 measure and the continuous line is enabled.
-    const nonStacking =
-        isAreaChart(type) && chartConfig?.continuousLine?.enabled && data?.series?.length === 1;
+    const nonStacking = isNonStackingConfiguration(chartOptions, chartConfig);
 
     // extra space allocation for total labels if available
     const totalsVisibleByLabelsConfig =

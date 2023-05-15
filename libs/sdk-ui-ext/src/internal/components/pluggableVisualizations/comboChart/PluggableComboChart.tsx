@@ -6,7 +6,13 @@ import without from "lodash/without";
 import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { insightBuckets, bucketsIsEmpty, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
+import {
+    insightBuckets,
+    bucketsIsEmpty,
+    IInsightDefinition,
+    newAttributeSort,
+    insightBucket,
+} from "@gooddata/sdk-model";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 
@@ -270,14 +276,30 @@ export class PluggableComboChart extends PluggableBaseChart {
         );
     }
 
+    private hasStackingAreaChart(insight: IInsightDefinition): boolean {
+        const isStackingMeasures = this.visualizationProperties?.controls?.stackMeasures;
+        if (typeof isStackingMeasures === "undefined") {
+            const buckets = insightBucket(insight, BucketNames.MEASURES);
+            return isAreaChart(this.primaryChartType) && buckets?.items.length > 1;
+        }
+        return isStackingMeasures;
+    }
+
     private isContinuousLineControlDisabled(insight: IInsightDefinition): boolean {
-        const measureBucketsOfLineCharts = [[this.secondaryChartType, BucketNames.SECONDARY_MEASURES]]
-            .filter(([chartType]) => chartType === VisualizationTypes.LINE)
+        const measureBucketsOfLineCharts = [
+            [this.primaryChartType, BucketNames.MEASURES],
+            [this.secondaryChartType, BucketNames.SECONDARY_MEASURES],
+        ]
+            .filter(
+                ([chartType]) =>
+                    chartType === VisualizationTypes.LINE || chartType === VisualizationTypes.AREA,
+            )
             .map(([, bucketId]) => insightBuckets(insight, bucketId));
 
         return (
             measureBucketsOfLineCharts.length === 0 ||
-            measureBucketsOfLineCharts.every((bucket) => bucketsIsEmpty(bucket))
+            measureBucketsOfLineCharts.every((bucket) => bucketsIsEmpty(bucket)) ||
+            this.hasStackingAreaChart(insight)
         );
     }
 

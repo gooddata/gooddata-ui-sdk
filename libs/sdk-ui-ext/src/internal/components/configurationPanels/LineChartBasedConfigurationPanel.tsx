@@ -16,9 +16,6 @@ import {
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
 import { messages } from "../../../locales";
-import { insightBucket } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { isAreaChart } from "@gooddata/sdk-ui-charts";
 
 export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
     dataLabelDefaultValue?: string | boolean;
@@ -40,7 +37,8 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
 
         const controlsDisabled = this.isControlDisabled();
         const continuousLineEnabled = properties?.controls?.continuousLine?.enabled;
-        const continuousLineSelectable = this.isContinuousLineSelectable();
+
+        const shouldContinuousLineControlDisabled = controlsDisabled || isContinuousLineControlDisabled;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -83,12 +81,8 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
 
                         <ContinuousLineControl
                             properties={properties}
-                            checked={continuousLineSelectable ? continuousLineEnabled : false}
-                            disabled={
-                                controlsDisabled ||
-                                !continuousLineSelectable ||
-                                isContinuousLineControlDisabled
-                            }
+                            checked={!shouldContinuousLineControlDisabled ? continuousLineEnabled : false}
+                            disabled={shouldContinuousLineControlDisabled}
                             pushData={pushData}
                         />
                     </ConfigSection>
@@ -102,17 +96,5 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                 </Bubble>
             </BubbleHoverTrigger>
         );
-    }
-
-    private isContinuousLineSelectable(): boolean {
-        const { insight, properties, type } = this.props;
-        let isStackingMeasures = properties?.controls?.stackMeasures;
-        if (isStackingMeasures) {
-            return false;
-        } else if (typeof isStackingMeasures === "undefined" && isAreaChart(type)) {
-            const buckets = insightBucket(insight, BucketNames.MEASURES);
-            isStackingMeasures = buckets?.items?.length > 1;
-        }
-        return !isStackingMeasures;
     }
 }

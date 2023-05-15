@@ -14,9 +14,15 @@ import { PluggableAreaChart } from "../PluggableAreaChart";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IInsight,
+    IInsightDefinition,
+    insightBucket,
+    insightSetProperties,
+} from "@gooddata/sdk-model";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import {
     createDrillDefinition,
     createDrillEvent,
@@ -487,7 +493,8 @@ describe("PluggableAreaChart", () => {
                 testMocks.insightWithSingleMeasureAndViewBy,
                 visualizationProperties,
             );
-            const expected = stackMeasures === null ? true : stackMeasures;
+            const measureBucket = insightBucket(testInsight, BucketNames.MEASURES);
+            const expected = stackMeasures === null ? measureBucket?.items.length > 1 : stackMeasures;
             chart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
