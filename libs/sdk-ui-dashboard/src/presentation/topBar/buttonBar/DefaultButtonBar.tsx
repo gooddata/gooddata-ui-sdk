@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import React, { PropsWithChildren } from "react";
+import React from "react";
 
 import { IButtonBarProps } from "./types";
 import { CancelButton, EditButton, SaveAsNewButton, SaveButton, ShareButton } from "./button";
@@ -7,7 +7,7 @@ import { CancelButton, EditButton, SaveAsNewButton, SaveButton, ShareButton } fr
 /**
  * @alpha
  */
-export const DefaultButtonBar: React.FC<PropsWithChildren<IButtonBarProps>> = (props): JSX.Element => {
+export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element => {
     const {
         children,
         cancelButtonProps,
