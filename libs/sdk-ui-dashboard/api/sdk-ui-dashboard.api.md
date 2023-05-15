@@ -144,7 +144,6 @@ import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
-import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
@@ -2390,7 +2389,7 @@ export interface DateFilterValidationFailedPayload {
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 // @alpha (undocumented)
-export const DefaultButtonBar: React_2.FC<PropsWithChildren<IButtonBarProps>>;
+export const DefaultButtonBar: React_2.FC<IButtonBarProps>;
 
 // @internal (undocumented)
 export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
@@ -3064,6 +3063,8 @@ export interface IButtonBarProps {
     cancelButtonProps: ICancelButtonProps;
     // (undocumented)
     childContentPosition?: "left" | "right";
+    // (undocumented)
+    children?: React_2.ReactNode;
     // (undocumented)
     DefaultButtonBar: CustomButtonBarComponent;
     // (undocumented)

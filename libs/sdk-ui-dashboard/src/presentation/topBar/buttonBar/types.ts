@@ -21,6 +21,7 @@ export interface IButtonBarProps {
     editButtonProps: IEditButtonProps;
     saveButtonProps: ISaveButtonProps;
     saveAsNewButtonProps: ISaveAsNewButtonProps;
+    children?: React.ReactNode;
 }
 
 /**
