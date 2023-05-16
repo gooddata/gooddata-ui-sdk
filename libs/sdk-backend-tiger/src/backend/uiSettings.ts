@@ -63,9 +63,6 @@ export const DefaultUiSettings: ISettings = {
     enableAlternativeDisplayFormSelection: true,
     enableNewAnalyticalDashboardsNavigation: true,
 
-    // enable the plugin-ready Dashboard component in gdc-dashboards
-    dashboardComponentDevRollout: true,
-
     enableRenamingProjectToWorkspace: true,
     enableRenamingMeasureToMetric: true,
 

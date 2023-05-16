@@ -119,7 +119,6 @@ describe("live features", () => {
     it("full definition - BOOLEAN", async () => {
         mockReturn([
             createFeature("ADMeasureValueFilterNullAsZeroOption", "BOOLEAN", true),
-            createFeature("dashboardEditModeDevRollout", "BOOLEAN", true),
             createFeature("enableKPIDashboardDeleteFilterButton", "BOOLEAN", true),
             createFeature("enableMultipleDates", "BOOLEAN", true),
             createFeature("enableSortingByTotalGroup", "BOOLEAN", true),
@@ -128,7 +127,6 @@ describe("live features", () => {
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
             ADMeasureValueFilterNullAsZeroOption: true,
-            dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
@@ -138,7 +136,6 @@ describe("live features", () => {
     it("full definition - STRING", async () => {
         mockReturn([
             createFeature("ADMeasureValueFilterNullAsZeroOption", "STRING", "EnabledUncheckedByDefault"),
-            createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
             createFeature("enableKPIDashboardDeleteFilterButton", "STRING", "ENABLED"),
             createFeature("enableMultipleDates", "STRING", "ENABLED"),
             createFeature("enableSortingByTotalGroup", "STRING", "TRUE"),
@@ -147,7 +144,6 @@ describe("live features", () => {
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
             ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
-            dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,

@@ -16,17 +16,9 @@ describe("changeRenderModeHandler", () => {
 
     describe("without initial config", () => {
         beforeEach(
-            preloadedTesterFactory(
-                async (tester) => {
-                    Tester = tester;
-                },
-                SimpleDashboardNoDrillsIdentifier,
-                {
-                    initCommand: initializeDashboard({
-                        settings: { dashboardEditModeDevRollout: true },
-                    }),
-                },
-            ),
+            preloadedTesterFactory(async (tester) => {
+                Tester = tester;
+            }, SimpleDashboardNoDrillsIdentifier),
         );
 
         it("should be view if initialRenderMode is not specified on config", async () => {

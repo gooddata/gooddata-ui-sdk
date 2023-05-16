@@ -53,7 +53,6 @@ export {
     selectIsSaveAsNewButtonHidden,
     selectAllowUnfinishedFeatures,
     selectAllowCreateInsightRequest,
-    selectDashboardEditModeDevRollout,
     selectIsAnalyticalDesignerEnabled,
     selectIsDeleteFilterButtonEnabled,
     selectIsKPIDashboardDependentFiltersEnabled,

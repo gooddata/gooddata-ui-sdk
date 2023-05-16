@@ -378,18 +378,6 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = c
 );
 
 /**
- * Returns whether dashboard edit mode is enabled.
- *
- * @internal
- */
-export const selectDashboardEditModeDevRollout: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.dashboardEditModeDevRollout ?? true;
-    },
-);
-
-/**
  * Returns whether analytical dashboard permissions are enabled
  *
  * @internal

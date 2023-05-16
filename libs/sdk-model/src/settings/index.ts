@@ -260,11 +260,6 @@ export interface ISettings {
     formatLocale?: string;
 
     /**
-     * Enable Dashboard component edit mode
-     */
-    dashboardEditModeDevRollout?: boolean;
-
-    /**
      * Enable use of composite grain
      */
     enableCompositeGrain?: boolean;

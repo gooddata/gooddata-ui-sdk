@@ -3,7 +3,6 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import {
     DashboardState,
-    selectDashboardEditModeDevRollout,
     selectDashboardLockStatus,
     selectDashboardRef,
     selectEnableAnalyticalDashboardPermissions,
@@ -73,16 +72,12 @@ export const hasEditLockedDashboardPermission: DashboardSelector<boolean> = crea
  * @internal
  */
 export const selectCanEnterEditMode: DashboardSelector<boolean> = createSelector(
-    selectDashboardEditModeDevRollout,
     hasEditDashboardPermission,
     hasEditLockedDashboardPermission,
     selectDashboardLockStatus,
     selectIsReadOnly,
-    (isEditModeEnabled, hasEditDashboardPermission, hasEditLockedDashboardPermission, isLocked, isReadOnly) =>
-        isEditModeEnabled &&
-        !isReadOnly &&
-        hasEditDashboardPermission &&
-        (!isLocked || hasEditLockedDashboardPermission),
+    (hasEditDashboardPermission, hasEditLockedDashboardPermission, isLocked, isReadOnly) =>
+        !isReadOnly && hasEditDashboardPermission && (!isLocked || hasEditLockedDashboardPermission),
 );
 
 /**
