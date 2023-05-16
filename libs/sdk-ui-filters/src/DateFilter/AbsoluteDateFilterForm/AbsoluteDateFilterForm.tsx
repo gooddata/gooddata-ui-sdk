@@ -4,7 +4,7 @@ import { DayPickerRangeProps } from "react-day-picker";
 import { IAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 
 import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker";
-import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces";
+import { IExtendedDateFilterErrors, DateFilterOption, WeekStart } from "../interfaces";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions";
 
@@ -18,6 +18,7 @@ export interface IAbsoluteDateFilterFormProps {
     errors: IExtendedDateFilterErrors["absoluteForm"];
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     isTimeEnabled: boolean;
+    weekStart?: WeekStart;
 }
 
 const dayPickerProps: DayPickerRangeProps = {
@@ -30,7 +31,7 @@ const dayPickerProps: DayPickerRangeProps = {
  */
 export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterFormProps> {
     public render() {
-        const { dateFormat, isMobile, selectedFilterOption, errors, isTimeEnabled } = this.props;
+        const { dateFormat, isMobile, selectedFilterOption, errors, isTimeEnabled, weekStart } = this.props;
         return (
             <DateRangePicker
                 dateFormat={dateFormat}
@@ -40,6 +41,7 @@ export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterF
                 isMobile={isMobile}
                 dayPickerProps={dayPickerProps}
                 isTimeEnabled={isTimeEnabled}
+                weekStart={weekStart}
             />
         );
     }

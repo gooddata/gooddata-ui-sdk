@@ -11,7 +11,7 @@ import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import classNames from "classnames";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { ClassNames, DayPicker } from "react-day-picker";
+import { ClassNames, DayPicker, DayPickerProps } from "react-day-picker";
 
 import { IAlignPoint } from "../typings/positioning";
 import { getOptimalAlignment } from "../utils/overlay";
@@ -19,6 +19,11 @@ import { elementRegion } from "../utils/domUtilities";
 import { DEFAULT_DATE_FORMAT } from "../constants/platform";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
+
+/**
+ * @internal
+ */
+export type WeekStart = "Monday" | "Sunday";
 
 /**
  * @internal
@@ -35,6 +40,7 @@ export interface IDatePickerOwnProps {
     onAlign?: (align: string) => void;
     locale?: string;
     dateFormat?: string;
+    weekStart?: WeekStart;
 }
 
 export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
@@ -93,6 +99,17 @@ function parseDate(str: string, dateFormat: string): Date | undefined {
     }
 }
 
+function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] {
+    switch (weekStart) {
+        case "Sunday":
+            return 0;
+        case "Monday":
+            return 1;
+        default:
+            throw new Error(`Unknown week start ${weekStart}`);
+    }
+}
+
 export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDatePickerState> {
     private rootRef: HTMLElement;
     private datePickerContainerRef = React.createRef<HTMLDivElement>();
@@ -109,6 +126,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         alignPoints: [{ align: "bl tl" }, { align: "br tr" }, { align: "tl bl" }, { align: "tr br" }],
         onAlign: noop,
         dateFormat: DEFAULT_DATE_FORMAT,
+        weekStart: "Sunday" as const,
     };
     constructor(props: DatePickerProps) {
         super(props);
@@ -362,6 +380,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                             selected={selectedDate}
                             month={monthDate}
                             onMonthChange={this.handleMonthChanged}
+                            weekStartsOn={convertWeekStart(this.props.weekStart)}
                         />
                     </div>
                 ) : null}

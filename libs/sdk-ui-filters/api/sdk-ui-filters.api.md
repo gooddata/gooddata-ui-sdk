@@ -787,6 +787,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     isTimeForAbsoluteRangeEnabled?: boolean;
     // (undocumented)
     locale?: string;
+    // (undocumented)
+    weekStart?: WeekStart;
 }
 
 // @public
@@ -1266,5 +1268,8 @@ export const useOnCloseAttributeFilterDropdownButton: (props: IAttributeFilterDr
 
 // @beta (undocumented)
 export type WarningMessage = string | IWarningMessage;
+
+// @public
+export type WeekStart = "Monday" | "Sunday";
 
 ```

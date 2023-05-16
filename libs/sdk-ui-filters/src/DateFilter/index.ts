@@ -70,6 +70,7 @@ export {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
     isUiRelativeDateFilterForm,
+    WeekStart,
 } from "./interfaces";
 
 export { defaultDateFilterOptions } from "./constants/config";

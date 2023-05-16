@@ -1211,6 +1211,8 @@ export interface IDatePickerOwnProps {
     size?: string;
     // (undocumented)
     tabIndex?: number;
+    // (undocumented)
+    weekStart?: WeekStart;
 }
 
 // @internal (undocumented)
@@ -4537,6 +4539,9 @@ export interface UseToastMessageType {
     // (undocumented)
     removeMessage: (id: string) => void;
 }
+
+// @internal (undocumented)
+export type WeekStart = "Monday" | "Sunday";
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;

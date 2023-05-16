@@ -12,7 +12,12 @@ import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion";
 
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
-import { DateFilterOption, IDateFilterOptionsByType, isUiRelativeDateFilterForm } from "./interfaces";
+import {
+    DateFilterOption,
+    IDateFilterOptionsByType,
+    isUiRelativeDateFilterForm,
+    WeekStart,
+} from "./interfaces";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization";
 
@@ -40,6 +45,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFormat?: string;
     locale?: string;
     isTimeForAbsoluteRangeEnabled?: boolean;
+    weekStart?: WeekStart;
 }
 
 /**
@@ -86,6 +92,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         onCancel: noop,
         onOpen: noop,
         onClose: noop,
+        weekStart: "Sunday" as const,
     };
 
     public static getDerivedStateFromProps(
@@ -164,6 +171,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             isEditMode,
             locale,
             isTimeForAbsoluteRangeEnabled,
+            weekStart,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -187,6 +195,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 onExcludeCurrentPeriodChange={this.handleExcludeCurrentPeriodChange}
                 onSelectedFilterOptionChange={this.handleSelectedFilterOptionChange}
                 errors={validateFilterOption(selectedFilterOption)}
+                weekStart={weekStart}
             />
         );
     }

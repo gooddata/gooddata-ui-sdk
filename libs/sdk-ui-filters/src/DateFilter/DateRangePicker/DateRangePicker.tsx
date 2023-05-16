@@ -7,13 +7,14 @@ import {
     DateRange,
     SelectRangeEventHandler,
     ClassNames,
+    DayPickerProps,
 } from "react-day-picker";
 import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { mergeDayPickerProps } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
-import { IExtendedDateFilterErrors } from "../interfaces";
+import { IExtendedDateFilterErrors, WeekStart } from "../interfaces";
 import { DateTimePickerWithInt } from "./DateTimePicker";
 
 import { DAY_END_TIME } from "../constants/Platform";
@@ -56,9 +57,21 @@ export interface IDateRangePickerProps {
     dayPickerProps?: DayPickerRangeProps;
     isMobile: boolean;
     isTimeEnabled: boolean;
+    weekStart?: WeekStart;
 }
 
 type DateRangePickerProps = IDateRangePickerProps & WrappedComponentProps;
+
+function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] {
+    switch (weekStart) {
+        case "Sunday":
+            return 0;
+        case "Monday":
+            return 1;
+        default:
+            throw new Error(`Unknown week start ${weekStart}`);
+    }
+}
 
 class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDateRangePickerState> {
     private dateRangePickerInputFrom = React.createRef<HTMLInputElement>();
@@ -105,6 +118,7 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
             isMobile,
             errors: { from: errorFrom, to: errorTo } = { from: undefined, to: undefined },
             isTimeEnabled,
+            weekStart = "Sunday",
         } = this.props;
 
         const defaultDayPickerProps: DayPickerRangeProps = {
@@ -130,6 +144,7 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                     month={this.state.monthDate}
                     classNames={classNameProps}
                     onMonthChange={this.handleMonthChanged}
+                    weekStartsOn={convertWeekStart(weekStart)}
                 />
             </div>
         );
