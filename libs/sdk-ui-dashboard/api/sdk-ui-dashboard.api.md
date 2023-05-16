@@ -5896,9 +5896,6 @@ export const selectCurrentUserRef: DashboardSelector<ObjRef>;
 // @public
 export const selectDashboardDescription: DashboardSelector<string>;
 
-// @internal
-export const selectDashboardEditModeDevRollout: DashboardSelector<boolean>;
-
 // @public
 export const selectDashboardId: DashboardSelector<string | undefined>;
 

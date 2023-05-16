@@ -15,8 +15,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableKPIDashboardDeleteFilterButton = "enableKPIDashboardDeleteFilterButton",
     //boolean + possible values: enabled, disabled
-    DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
-    //boolean + possible values: enabled, disabled
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     //boolean + possible values: enabled, disabled
     EnableLongitudeAndLatitudeLabels = "enableLongitudeAndLatitudeLabels",
@@ -49,7 +47,6 @@ export type ITigerFeatureFlags = {
     ADMeasureValueFilterNullAsZeroOption: typeof FeatureFlagsValues["ADMeasureValueFilterNullAsZeroOption"][number];
     enableMultipleDates: typeof FeatureFlagsValues["enableMultipleDates"][number];
     enableKPIDashboardDeleteFilterButton: typeof FeatureFlagsValues["enableKPIDashboardDeleteFilterButton"][number];
-    dashboardEditModeDevRollout: typeof FeatureFlagsValues["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
@@ -70,7 +67,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
     enableMultipleDates: true,
     enableKPIDashboardDeleteFilterButton: false,
-    dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: true,
     enableDescriptions: true,
@@ -95,7 +91,6 @@ export const FeatureFlagsValues = {
     ] as const,
     enableMultipleDates: [true, false] as const,
     enableKPIDashboardDeleteFilterButton: [true, false] as const,
-    dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableLongitudeAndLatitudeLabels: [true, false] as const,
     enableDescriptions: [true, false] as const,

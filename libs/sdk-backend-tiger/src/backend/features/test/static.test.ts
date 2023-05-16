@@ -21,7 +21,6 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
                 [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                 [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
-                [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
@@ -30,7 +29,6 @@ describe("static features", () => {
         );
         expect(results).toEqual({
             ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
-            dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
@@ -49,7 +47,6 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
                     [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                     [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
-                    [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
@@ -60,7 +57,6 @@ describe("static features", () => {
         );
         expect(results).toEqual({
             ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
-            dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,

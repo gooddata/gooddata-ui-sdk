@@ -5,7 +5,6 @@ import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 import {
     selectCanCreateAnalyticalDashboard,
-    selectDashboardEditModeDevRollout,
     selectEnableKPIDashboardSaveAsNew,
     selectIsSaveAsNewButtonHidden,
     selectIsExport,
@@ -23,7 +22,6 @@ import { createSelector } from "@reduxjs/toolkit";
  * @internal
  */
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = createSelector(
-    selectDashboardEditModeDevRollout,
     selectEnableKPIDashboardSaveAsNew,
     selectIsSaveAsNewButtonHidden,
     selectCanEnterEditModeAndIsLoaded,
@@ -31,7 +29,6 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
     selectIsExport,
     selectIsReadOnly,
     (
-        isEditModeDevRollout,
         isSaveAsNewEnabled,
         isSaveAsButtonHidden,
         isDashboardEditable,
@@ -42,7 +39,6 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
         /*
          * The reasoning behind this condition is as follows. Do not show separate Save As button if:
          *
-         * 0.  edit mode rollout flag enabled
          *
          * 1.  The feature is not enabled or
          * 2.  If is disabled by config
@@ -53,7 +49,6 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
          * 6.  If the dashboard is in read-only mode.
          */
         return (
-            isEditModeDevRollout &&
             isSaveAsNewEnabled &&
             !isSaveAsButtonHidden &&
             !isDashboardEditable &&

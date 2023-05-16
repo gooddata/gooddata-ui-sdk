@@ -9,7 +9,6 @@ import { uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed } from "../../../events";
 import { changeRenderMode } from "../../../commands/renderMode";
 import { selectInvalidDrillWidgetRefs } from "../../../store/ui/uiSelectors";
-import { initializeDashboard } from "../../../commands/dashboard";
 
 import {
     KpiWidgetRef,
@@ -27,6 +26,17 @@ describe("addDrillTargetsHandler", () => {
             Tester = tester;
         }, SimpleDashboardIdentifier),
     );
+
+    it("should not have invalid drills when drill targets are not set", async () => {
+        // switch to edit mode run drill validation
+        await Tester.dispatchAndWaitFor(changeRenderMode("edit"), "GDC.DASH/EVT.RENDER_MODE.CHANGED");
+
+        const drillTargets = Tester.select(selectDrillTargetsByWidgetRef(SimpleSortedTableWidgetRef));
+        const invalidDrillWidgetRefs = Tester.select(selectInvalidDrillWidgetRefs);
+
+        expect(drillTargets?.availableDrillTargets).toEqual(undefined);
+        expect(invalidDrillWidgetRefs).toEqual([]);
+    });
 
     it("should add drill target to the state for given widget", async () => {
         const event: DrillTargetsAdded = await Tester.dispatchAndWaitFor(
@@ -118,34 +128,5 @@ describe("addDrillTargetsHandler with enableKPIDashboardDrillFromAttribute set t
 
         const drillTargets = selectDrillTargetsByWidgetRef(SimpleSortedTableWidgetRef)(Tester.state());
         expect(drillTargets?.availableDrillTargets).toEqual(availableDrillWithoutAttributes);
-    });
-});
-
-describe("with dashboardEditModeDevRollout", () => {
-    let Tester: DashboardTester;
-
-    beforeEach(
-        preloadedTesterFactory(
-            async (tester) => {
-                Tester = tester;
-            },
-            SimpleDashboardIdentifier,
-            {
-                initCommand: initializeDashboard({
-                    settings: { dashboardEditModeDevRollout: true },
-                }),
-            },
-        ),
-    );
-
-    it("should not have invalid drills when drill targets are not set", async () => {
-        // switch to edit mode run drill validation
-        await Tester.dispatchAndWaitFor(changeRenderMode("edit"), "GDC.DASH/EVT.RENDER_MODE.CHANGED");
-
-        const drillTargets = Tester.select(selectDrillTargetsByWidgetRef(SimpleSortedTableWidgetRef));
-        const invalidDrillWidgetRefs = Tester.select(selectInvalidDrillWidgetRefs);
-
-        expect(drillTargets?.availableDrillTargets).toEqual(undefined);
-        expect(invalidDrillWidgetRefs).toEqual([]);
     });
 });

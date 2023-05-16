@@ -7,7 +7,6 @@ import { ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../..
 import { DashboardRenderModeChanged } from "../../events";
 import { renderModeChanged } from "../../events/renderMode";
 import { renderModeActions } from "../../store/renderMode";
-import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
 import { resetDashboardRuntime } from "../dashboard/resetDashboardHandler";
 import { validateDrills } from "../common/validateDrills";
 import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
@@ -24,35 +23,29 @@ export function* changeRenderModeHandler(
         correlationId,
     } = cmd;
 
-    const editModeEnabled = yield select(selectDashboardEditModeDevRollout);
-
-    if (renderMode === "view" || editModeEnabled) {
-        //we need reset dashboard and widgets first, change edit mode force visualizations to re-execute.
-        //To avoid sending DashboardWidgetExecutionSucceeded or DashboardWidgetExecutionFailed events
-        //for discarded widgets must be sanitization done before mode changed.
-        if (renderModeChangeOptions.resetDashboard) {
-            const data: SagaReturnType<typeof resetDashboardRuntime> = yield call(
-                resetDashboardRuntime,
-                ctx,
-                resetDashboardCommand(correlationId),
-            );
-            yield put(batchActions([data.batch, renderModeActions.setRenderMode(renderMode)]));
-            yield put(data.reset);
-        } else {
-            yield put(batchActions([renderModeActions.setRenderMode(renderMode)]));
-        }
-
-        if (renderMode === "edit") {
-            const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
-                selectAllAnalyticalWidgets,
-            );
-            yield call(loadInaccessibleDashboards, ctx, widgets);
-            yield call(validateDrills, ctx, cmd, widgets);
-            yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
-        }
-
-        return renderModeChanged(ctx, renderMode, correlationId);
+    // Reset dashboard and widgets first, as changing the edit mode forces visualizations to re-execute.
+    // To avoid sending DashboardWidgetExecutionSucceeded or DashboardWidgetExecutionFailed events
+    // for discarded widgets, sanitization must be done before the mode is changed.
+    if (renderModeChangeOptions.resetDashboard) {
+        const data: SagaReturnType<typeof resetDashboardRuntime> = yield call(
+            resetDashboardRuntime,
+            ctx,
+            resetDashboardCommand(correlationId),
+        );
+        yield put(batchActions([data.batch, renderModeActions.setRenderMode(renderMode)]));
+        yield put(data.reset);
     } else {
-        return renderModeChanged(ctx, "view", correlationId);
+        yield put(batchActions([renderModeActions.setRenderMode(renderMode)]));
     }
+
+    if (renderMode === "edit") {
+        const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
+            selectAllAnalyticalWidgets,
+        );
+        yield call(loadInaccessibleDashboards, ctx, widgets);
+        yield call(validateDrills, ctx, cmd, widgets);
+        yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
+    }
+
+    return renderModeChanged(ctx, renderMode, correlationId);
 }
