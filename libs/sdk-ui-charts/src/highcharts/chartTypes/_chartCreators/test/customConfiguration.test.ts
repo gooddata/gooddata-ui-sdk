@@ -181,6 +181,45 @@ describe("getCustomizedConfiguration", () => {
         expect(result.plotOptions.series.stacking).toBe("normal");
     });
 
+    it("should set stacking for the Combo chart has the primary chart type is Area", () => {
+        const result = getCustomizedConfiguration(
+            {
+                ...chartOptions,
+                type: VisualizationTypes.COMBO,
+                stacking: "normal",
+            },
+            { continuousLine: { enabled: true }, primaryChartType: "area" },
+        );
+
+        expect(result.plotOptions.series.stacking).toBe("normal");
+    });
+
+    it("should set stacking for the chart if the stackingMeasures is true", () => {
+        const result = getCustomizedConfiguration(
+            {
+                ...chartOptions,
+                type: VisualizationTypes.AREA,
+                stacking: "normal",
+            },
+            { continuousLine: { enabled: true }, stackMeasures: true },
+        );
+
+        expect(result.plotOptions.series.stacking).toBe("normal");
+    });
+
+    it("should NOT set stacking for the Combo chart has the secondary chart type is Area", () => {
+        const result = getCustomizedConfiguration(
+            {
+                ...chartOptions,
+                type: VisualizationTypes.COMBO,
+                stacking: "normal",
+            },
+            { continuousLine: { enabled: true }, secondaryChartType: "area" },
+        );
+
+        expect(result.plotOptions.series.stacking).toBeUndefined();
+    });
+
     it("should NOT set connectNulls for stacked Line chart", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,

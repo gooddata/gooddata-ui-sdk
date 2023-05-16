@@ -3,6 +3,7 @@ import {
     bucketsItems,
     IInsight,
     IInsightDefinition,
+    insightBucket,
     insightBuckets,
     newAttributeSort,
 } from "@gooddata/sdk-model";
@@ -237,6 +238,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    panelConfig={{
+                        isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
+                    }}
                 />,
                 configPanelElement,
             );
@@ -254,7 +258,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private updateCustomSupportedProperties(insight: IInsightDefinition): void {
-        if (bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length > 1) {
+        if (
+            bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length > 1 ||
+            !this.isContinuousLineControlDisabled(insight)
+        ) {
             this.addSupportedProperties(OPTIONAL_STACKING_PROPERTIES);
             this.setCustomControlsProperties({
                 stackMeasures: false,
@@ -422,5 +429,15 @@ export class PluggableAreaChart extends PluggableBaseChart {
             disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
             disabledExplanation,
         };
+    }
+
+    private isContinuousLineControlDisabled(insight: IInsightDefinition) {
+        const isStackingMeasures = this.visualizationProperties?.controls?.stackMeasures;
+        if (typeof isStackingMeasures === "undefined") {
+            const measuresBuckets = insightBucket(insight, BucketNames.MEASURES);
+            const stackBuckets = insightBucket(insight, BucketNames.STACK);
+            return stackBuckets?.items.length > 0 || measuresBuckets?.items?.length > 1;
+        }
+        return isStackingMeasures;
     }
 }
