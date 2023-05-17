@@ -12,10 +12,20 @@ const SANKEY_TEMPLATE = {
             showInLegend: true,
             dataLabels: {
                 enabled: true,
-                padding: 12,
+                padding: 1,
                 align: "left",
+                verticalAlign: "middle",
+                useHTML: true,
+                nodeFormat: `<span style="padding: 0 9px">{point.name}</span>`,
             },
             nodeWidth: 5,
+            linkOpacity: 0.35,
+            states: {
+                inactive: {
+                    opacity: 0.2,
+                    linkOpacity: 0.1,
+                },
+            },
         },
     },
     legend: {

@@ -1,6 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import Highcharts from "../lib";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { styleVariables } from "../chartTypes/_chartCreators/styles/variables";
 
 export const WHITE_LABEL: Highcharts.CSSObject = {
     color: "#ffffff",
@@ -9,6 +10,11 @@ export const WHITE_LABEL: Highcharts.CSSObject = {
 
 export const BLACK_LABEL: Highcharts.CSSObject = {
     color: "var(--gd-palette-complementary-9, #000000)",
+    textShadow: "none",
+};
+
+export const DATA_LABEL_C6: Highcharts.CSSObject = {
+    color: `var(--gd-palette-complementary-6, ${styleVariables.gdColorStateBlank})`,
     textShadow: "none",
 };
 
