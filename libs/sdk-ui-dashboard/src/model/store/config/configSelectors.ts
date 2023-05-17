@@ -5,6 +5,7 @@ import {
     ISeparators,
     ISettings,
     PlatformEdition,
+    WeekStart,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types";
@@ -114,6 +115,15 @@ export const selectMapboxToken: DashboardSelector<string | undefined> = createSe
         return state.mapboxToken ?? undefined;
     },
 );
+
+/**
+ * Returns week start day
+ *
+ * @internal
+ */
+export const selectWeekStart: DashboardSelector<WeekStart> = createSelector(selectConfig, (state) => {
+    return state.settings?.weekStart ?? ("Sunday" as const);
+});
 
 /**
  * Returns whether the Dashboard is executed in read-only mode.

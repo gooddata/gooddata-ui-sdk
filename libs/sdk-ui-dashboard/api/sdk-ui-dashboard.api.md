@@ -158,6 +158,7 @@ import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
+import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer/dist/internal';
 
 // @beta (undocumented)
@@ -6351,6 +6352,9 @@ export const selectSupportsKpiWidgetCapability: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
+
+// @internal
+export const selectWeekStart: DashboardSelector<WeekStart>;
 
 // @alpha
 export const selectWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<ExtendedDashboardWidget | undefined>;

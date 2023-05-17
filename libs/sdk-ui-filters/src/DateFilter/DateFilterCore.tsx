@@ -2,15 +2,10 @@
 import React, { useMemo } from "react";
 import flow from "lodash/flow";
 import noop from "lodash/noop";
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
-import {
-    IExtendedDateFilterErrors,
-    IDateFilterOptionsByType,
-    DateFilterOption,
-    WeekStart,
-} from "./interfaces";
+import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";

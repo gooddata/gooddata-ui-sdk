@@ -2687,6 +2687,7 @@ export const DeclarativeSettingTypeEnum: {
     readonly LOCALE: "LOCALE";
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
 };
 
 // @public (undocumented)
@@ -7895,6 +7896,7 @@ export const JsonApiOrganizationSettingPatchAttributesTypeEnum: {
     readonly LOCALE: "LOCALE";
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
 };
 
 // @public (undocumented)
@@ -11350,6 +11352,7 @@ export const ResolvedSettingTypeEnum: {
     readonly LOCALE: "LOCALE";
     readonly FORMAT_LOCALE: "FORMAT_LOCALE";
     readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
 };
 
 // @public (undocumented)

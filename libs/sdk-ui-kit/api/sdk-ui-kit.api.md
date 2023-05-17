@@ -38,6 +38,7 @@ import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -4539,9 +4540,6 @@ export interface UseToastMessageType {
     // (undocumented)
     removeMessage: (id: string) => void;
 }
-
-// @internal (undocumented)
-export type WeekStart = "Monday" | "Sunday";
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;

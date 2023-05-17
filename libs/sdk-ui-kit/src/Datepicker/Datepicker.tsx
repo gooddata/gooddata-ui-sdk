@@ -10,6 +10,7 @@ import isSameDay from "date-fns/isSameDay";
 import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import classNames from "classnames";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import { WeekStart } from "@gooddata/sdk-model";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ClassNames, DayPicker, DayPickerProps } from "react-day-picker";
 
@@ -19,11 +20,6 @@ import { elementRegion } from "../utils/domUtilities";
 import { DEFAULT_DATE_FORMAT } from "../constants/platform";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
-
-/**
- * @internal
- */
-export type WeekStart = "Monday" | "Sunday";
 
 /**
  * @internal

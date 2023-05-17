@@ -159,9 +159,3 @@ export interface IExtendedDateFilterErrors {
      */
     relativeForm?: IDateFilterRelativeFormErrors;
 }
-
-/**
- * Week start day
- * @public
- */
-export type WeekStart = "Monday" | "Sunday";
