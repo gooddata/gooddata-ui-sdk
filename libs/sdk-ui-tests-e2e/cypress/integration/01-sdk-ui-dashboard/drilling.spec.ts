@@ -5,10 +5,13 @@ import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
 import { DrillToModal } from "../../tools/drillToModal";
 import { getBackend, getHost, getProjectId } from "../../support/constants";
+import { EditMode } from "../../tools/editMode";
+import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
 
 const DEPARTMENT_ID = "1087";
 const PRODUCT_ID = "1054";
 const drillModal = new DrillToModal();
+const editMode = new EditMode();
 
 const postDrillDownStepAttributeDF = (value?: string) => {
     if (getBackend() !== "BEAR") {
@@ -128,4 +131,51 @@ describe("Drilling", { tags: ["post-merge_integrated_bear"] }, () => {
             drillModal.getTable().getColumnValues(0).should("deep.equal", ["2011"]);
         });
     });
+});
+
+describe("Interaction", () => {
+    const widget = new Widget(0);
+    const widgetConfig = new WidgetConfiguration(0);
+
+    beforeEach(() => {
+        Navigation.visit("dashboard/drill-to-insight");
+    });
+
+    //Cover ticket: RAIL-4559
+    it("Should able to remove existing interactions", { tags: ["checklist_integrated_tiger"] }, () => {
+        Navigation.visitCopyOf("dashboard/drill-to-insight");
+        editMode.edit();
+        widget.waitChartLoaded().focus();
+        widgetConfig.openInteractions().getDrillConfigItem("Sum of Velocity").remove();
+        editMode.save(true).edit();
+        widget.waitChartLoaded().focus();
+        widgetConfig.openInteractions().hasInteractionItems(false);
+    });
+
+    //Cover ticket: RAIL-4717
+    it(
+        "Should correctly display attribute list in custom URL dialog",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        () => {
+            editMode.edit();
+            widget.waitChartLoaded().focus();
+            widgetConfig.openInteractions().addInteraction("Sum of Probability", "measure");
+            widgetConfig
+                .getDrillConfigItem("Sum of Probability")
+                .chooseAction("Drill into URL")
+                .openCustomUrlEditor();
+            new CustomURLDialog().hasItem("Created");
+            widgetConfig.closeCustomURLDialog().close();
+
+            const widget2 = new Widget(2);
+            const widgetConfig2 = new WidgetConfiguration(2);
+            widget2.scrollIntoView().waitChartLoaded().focus();
+            widgetConfig2.openInteractions().addInteraction("Sum of Amount", "measure");
+            widgetConfig2
+                .getDrillConfigItem("Sum of Amount")
+                .chooseAction("Drill into URL")
+                .openCustomUrlEditor();
+            new CustomURLDialog().hasItem("Stage Name");
+        },
+    );
 });

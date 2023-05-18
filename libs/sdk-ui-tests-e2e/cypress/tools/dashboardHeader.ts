@@ -22,6 +22,16 @@ export class DashboardHeader {
         return this;
     }
 
+    dashboardTitleHasValue(value: string): this {
+        cy.get(".s-gd-dashboard-title").should("have.text", value);
+        return this;
+    }
+
+    dashboardTitleExist(exist = true) {
+        cy.get(".s-gd-dashboard-title").should(exist ? "exist" : "not.exist");
+        return this;
+    }
+
     isTitleFocused() {
         this.getEditableTitleElement().find("textarea").should("be.focused");
         return this;
@@ -54,6 +64,26 @@ export class DashboardHeader {
         cy.get(SAVE_AS_NEW_DIALOG).should("exist");
         cy.get(INPUT_DASHBOARD_TITLE).type(dashboardName);
         cy.get(CONFIRM_BUTTON).click();
+        return this;
+    }
+
+    menuButtonIsVisible(visible = true): this {
+        cy.get(".s-header-options-button").should(visible ? "exist" : "not.exist");
+        return this;
+    }
+
+    clickMenuButton(): this {
+        cy.get(".s-header-options-button").click({ force: true });
+        return this;
+    }
+
+    deleteDashboard(confirm: boolean) {
+        cy.get(".s-delete_dashboard").click();
+        if (confirm) {
+            cy.get(".s-delete").click();
+        } else {
+            cy.get(".s-cancel").click();
+        }
         return this;
     }
 }

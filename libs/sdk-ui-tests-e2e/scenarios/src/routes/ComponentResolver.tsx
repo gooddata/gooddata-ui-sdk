@@ -19,6 +19,7 @@ import {
     PivotTableAggregationsMenuOneTotalScenario,
     PivotTableColumnsAggregationsMenuScenario,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
+import { NewDashboardScenario } from "../components/Scenarios/Dashboard/NewDashboardScenario";
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
 import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
 import { DashboardScenarioTigerPermissions } from "../components/Scenarios/Dashboard/DashboardScenarioTigerPermissions";
@@ -59,6 +60,7 @@ import { PyramidChartScenario } from "../components/Scenarios/Visualizations/Pyr
  * the test spec within Navigation.
  */
 export const SCENARIO_KEYS = {
+    NEW_DASHBOARD: "dashboard/new-dashboard",
     DASHBOARD: "dashboard/dashboard",
     DASHBOARD_TIGER: "dashboard/dashboard-tiger",
     DASHBOARD_TIGER_PERMISSIONS: "dashboard/dashboard-tiger-permissions",
@@ -113,6 +115,7 @@ export const SCENARIO_KEYS = {
 };
 
 const scenarios = new Map<string, React.ComponentType>([
+    [SCENARIO_KEYS.NEW_DASHBOARD, NewDashboardScenario],
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
     [SCENARIO_KEYS.DASHBOARD_TIGER_PERMISSIONS, DashboardScenarioTigerPermissions],

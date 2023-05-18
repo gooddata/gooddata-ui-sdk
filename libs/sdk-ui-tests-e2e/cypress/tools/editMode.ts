@@ -38,7 +38,7 @@ export class EditMode {
 
     edit() {
         this.editButtonEnabled();
-        this.getWrapperElement().find(EDIT_BUTTON_SELECTOR).click();
+        this.getWrapperElement().find(EDIT_BUTTON_SELECTOR).click({ force: true });
         new InsightsCatalog().waitForCatalogLoad();
         return this;
     }

@@ -2,11 +2,16 @@
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
+import { EditMode } from "../../tools/editMode";
+import { DashboardHeader } from "../../tools/dashboardHeader";
+
+const topBar = new TopBar();
+const dashboardHeader = new DashboardHeader();
 
 describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard");
+            Navigation.visit("dashboard/kpis");
         });
 
         it("should render topBar", () => {
@@ -16,13 +21,10 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         });
 
         it("should render title", () => {
-            const topBar = new TopBar();
-
-            topBar.dashboardTitleExist().dashboardTitleHasValue("Test dashboard");
+            dashboardHeader.dashboardTitleExist().dashboardTitleHasValue("KPIs");
         });
 
         it("should render edit button", () => {
-            const topBar = new TopBar();
             const dashboard = new Dashboard();
 
             dashboard.topBarExist();
@@ -30,14 +32,10 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         });
 
         it("should menu button render", () => {
-            const topBar = new TopBar();
-
             topBar.menuButtonIsVisible();
         });
 
         it("should open menu button and contain items", () => {
-            const topBar = new TopBar();
-
             topBar
                 .menuButtonIsVisible()
                 .clickMenuButton()
@@ -48,7 +46,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     describe("FilterBar rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard");
+            Navigation.visit("dashboard/kpis");
         });
 
         it("should render filter bar", () => {
@@ -77,7 +75,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
             filterBar
                 .dateFilterExist()
-                .dateFilterHasSubtitle("All time")
+                .dateFilterHasSubtitle("01/01/2011 – 12/31/2011")
                 .clickDateFilter()
                 .selectDateFilterOption(".s-relative-preset-relative-last-7-days")
                 .clickApply()
@@ -87,7 +85,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     describe("Dashboard body rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard");
+            Navigation.visit("dashboard/kpis");
         });
 
         it("should render single insight", () => {
@@ -96,4 +94,22 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
             dashboard.dashboardBodyExist();
         });
     });
+});
+
+describe("Dashboard actions", () => {
+    //Cover ticket: RAIL-4772
+    it(
+        "should able to delete dashboard after save as new",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        () => {
+            Navigation.visitCopyOf("dashboard/kpis");
+
+            new EditMode().edit();
+            new DashboardHeader()
+                .menuButtonIsVisible(true)
+                .clickMenuButton()
+                .deleteDashboard(true)
+                .dashboardTitleHasValue("Untitled");
+        },
+    );
 });

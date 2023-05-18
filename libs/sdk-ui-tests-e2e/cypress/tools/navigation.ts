@@ -2,6 +2,7 @@
 import { ISettings } from "@gooddata/sdk-model";
 import { getHost } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
+import { DashboardMenu } from "./dashboardMenu";
 
 declare global {
     interface Window {
@@ -10,6 +11,7 @@ declare global {
 }
 
 const VISIT_TIMEOUT = 40000;
+const CONFIRM_BUTTON = ".s-create_dashboard";
 
 function getDashboardUrl() {
     return `${getHost()}`;
@@ -29,4 +31,10 @@ export function visit(componentName: string, workspaceSettings?: ISettings): voi
             win["customWorkspaceSettings"] = workspaceSettings;
         },
     });
+}
+
+export function visitCopyOf(componentName: string) {
+    visit(componentName);
+    new DashboardMenu().toggle().clickOption("Save as new");
+    cy.get(CONFIRM_BUTTON).click();
 }

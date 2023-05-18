@@ -1,11 +1,16 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
-import { idRef } from "@gooddata/sdk-model";
-import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
+import { idRef } from "../../../../../../sdk-model";
+import * as TigerMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
+import * as BearMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
-const dashboardRef = idRef(Dashboards.KDWithStageName);
+type MDObjectsType = typeof TigerMDObjects & typeof BearMDObjects;
+
+export const MDObject = (
+    process.env.SDK_BACKEND === "TIGER" ? TigerMDObjects : BearMDObjects
+) as MDObjectsType;
 
 export const DashboardStageNameScenario: React.FC = () => {
-    return <Dashboard dashboard={dashboardRef} />;
+    return <Dashboard dashboard={idRef(MDObject.Dashboards.KDWithStageName)} />;
 };

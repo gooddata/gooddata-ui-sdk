@@ -67,8 +67,13 @@ export class Widget {
         return new Kpi(this.getElementSelector());
     }
 
-    removeKPIWidget() {
+    removeKPIWidget(confirm: boolean) {
         this.getElement().click().get(".dash-item-action-delete").click();
+        if (confirm) {
+            this.getElement().get(".s-delete").click();
+        } else {
+            this.getElement().get(".s-cancel").click();
+        }
         return this;
     }
 
@@ -117,6 +122,11 @@ export class Widget {
 
     hover() {
         this.getElement().realHover();
+        return this;
+    }
+
+    focus() {
+        this.getElement().find(".is-selectable").click({ force: true });
         return this;
     }
 
