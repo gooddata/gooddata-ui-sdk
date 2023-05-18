@@ -17,11 +17,19 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     ): ICreateColorAssignmentReturnValue {
         let colorAssignment;
         if (stackByAttribute) {
+            const data = dv.rawData().twoDimData();
+            const filteredItems = stackByAttribute.items.filter(
+                (_item: any, index: number) => data[index][0] !== null,
+            );
+            const filteredStackByAttribute = {
+                ...stackByAttribute,
+                items: filteredItems,
+            };
             colorAssignment = super.createColorAssignment(
                 colorPalette,
                 colorMapping,
                 viewByAttribute,
-                stackByAttribute,
+                filteredStackByAttribute,
                 dv,
             ).fullColorAssignment;
         } else {
