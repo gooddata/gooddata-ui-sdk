@@ -94,6 +94,8 @@ export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> 
                             getSubtotalNameTestClass(attributeLocalIdentifier),
                             {
                                 "s-menu-aggregation-inner-selected": isSelected,
+                                "s-menu-aggregation-inner-column": !isColumn,
+                                "s-menu-aggregation-inner-row": isColumn,
                             },
                         )}
                     >

@@ -17,6 +17,7 @@ import {
     PivotTableAggregationsMenuScenario,
     PivotTableAggregationsMenuAllTotalScenario,
     PivotTableAggregationsMenuOneTotalScenario,
+    PivotTableColumnsAggregationsMenuScenario,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
 import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
@@ -81,6 +82,8 @@ export const SCENARIO_KEYS = {
     VIS_PIVOT_TABLE_AGG_MENU: "visualizations/pivot-table/pivot-table-aggregations-menu",
     VIS_PIVOT_TABLE_ONE_TOTAL_AGG_MENU: "visualizations/pivot-table/pivot-table-one-total-aggregations-menu",
     VIS_PIVOT_TABLE_ALL_TOTAL_AGG_MENU: "visualizations/pivot-table/pivot-table-all-total-aggregations-menu",
+    VIS_PIVOT_TABLE_COLUMN_TOTAL_AGG_MENU:
+        "visualizations/pivot-table/pivot-table-column-total-aggregations-menu",
     VIS_PIVOT_TABLE_SIZING_RESET: "visualizations/pivot-table/sizing/pivot-table-complex-reset",
     VIS_PIVOT_TABLE_SIZING: "visualizations/pivot-table/sizing/pivot-table-sizing",
     FILTERS_ATTRIBUTE_FILTER_PARENT_CHILD_EXAMPLE: "filters/attribute-filter-parent-child-example",
@@ -135,6 +138,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_AGG_MENU, PivotTableAggregationsMenuScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_ONE_TOTAL_AGG_MENU, PivotTableAggregationsMenuOneTotalScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_ALL_TOTAL_AGG_MENU, PivotTableAggregationsMenuAllTotalScenario],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_COLUMN_TOTAL_AGG_MENU, PivotTableColumnsAggregationsMenuScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING_RESET, PivotTableComplexResetScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING, PivotTableSizingScenario],
     [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_FILTER_CONFIG, DashboardFilterConfigurationScenario],

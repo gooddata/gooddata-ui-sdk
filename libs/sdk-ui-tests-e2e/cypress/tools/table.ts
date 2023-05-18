@@ -94,6 +94,16 @@ export class Table {
         cy.get(".s-menu-aggregation-inner").first().click();
     }
 
+    aggregationSubMenuHasColumn(element: Cypress.Chainable<JQuery<HTMLElement>>, exist = false) {
+        element.trigger("mouseover").find(".gd-menuOpenedByClick-togglerWrapped").click();
+
+        cy.get(".s-menu-aggregation-inner").first().trigger("mouseover");
+
+        cy.get(".gd-aggregation-submenu")
+            .find(".s-menu-aggregation-inner-column")
+            .should(exist ? "exist" : "not.exist");
+    }
+
     getColumnValues(columnIndex: number) {
         this.waitLoaded();
         const result = [] as string[];

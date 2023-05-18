@@ -236,10 +236,6 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 columnTotals,
                 rowTotals,
             );
-            /*
-             * TODO: (up to discussion) Used for SDK component <PivotTable {...}/> it can have custom configuration to not display submenus
-             * which was ok before since we only had totals for rows, but behaviour might change since we are adding new column totals.
-             */
             const attributeDescriptor = rowAttributeDescriptors[0] ?? columnAttributeDescriptors[0];
             const onClick = () =>
                 this.props.onAggregationSelect({
