@@ -21,7 +21,12 @@ import {
 } from "@gooddata/sdk-model";
 
 const workspace = "test workspace";
+
 const total = newTotal("nat", ReferenceMd.Won, ReferenceMd.Account.Name, "native total");
+const columnTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.Department, "native total");
+
+const rowSubTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.ForecastCategory, "native total");
+const columnSubTotal = newTotal("nat", ReferenceMd.Won, ReferenceMd.IsActive, "nativeTotal");
 
 describe("converts execution definition to AFM Execution", () => {
     const Scenarios: Array<[string, any]> = [
@@ -47,6 +52,38 @@ describe("converts execution definition to AFM Execution", () => {
                     newBucket("attributeBucket1", ReferenceMd.Account.Name),
                 ]),
                 newTwoDimensional([ReferenceMd.Account.Name], [MeasureGroupIdentifier, total]),
+            ),
+        ],
+        [
+            "dimensions with native grand totals for columns",
+            defSetDimensions(
+                newDefForBuckets("test workspace", [
+                    newBucket("mixedBucket1", ReferenceMd.Activity.Default, ReferenceMd.Won),
+                    newBucket("measureBucket1", ReferenceMd.WinRate),
+                    newBucket("attributeBucket1", ReferenceMd.Account.Name),
+                    newBucket("columnBucket1", ReferenceMd.Department),
+                ]),
+                newTwoDimensional(
+                    [ReferenceMd.Account.Name, total],
+                    [ReferenceMd.Department, MeasureGroupIdentifier, columnTotal],
+                ),
+            ),
+        ],
+        [
+            "dimensions with native sub totals for columns",
+            defSetDimensions(
+                newDefForBuckets("test workspace", [
+                    newBucket("mixedBucket1", ReferenceMd.Activity.Default, ReferenceMd.Won),
+                    newBucket("measureBucket1", ReferenceMd.WinRate),
+                    newBucket("attributeBucket1", ReferenceMd.Account.Name),
+                    newBucket("attributeBucket2", ReferenceMd.ForecastCategory),
+                    newBucket("columnBucket1", ReferenceMd.Department),
+                    newBucket("columnBucket2", ReferenceMd.IsActive),
+                ]),
+                newTwoDimensional(
+                    [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, rowSubTotal],
+                    [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+                ),
             ),
         ],
     ];
