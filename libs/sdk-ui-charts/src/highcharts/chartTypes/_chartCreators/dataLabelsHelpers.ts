@@ -12,9 +12,9 @@ import {
     IAxisRange,
     IAxisRangeForAxes,
 } from "./helpers";
-import { isAreaChart, isBarChart, isColumnChart, isOneOfTypes } from "../_util/common";
+import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common";
 import { IDataLabelsVisible, IChartConfig } from "../../../interfaces";
-import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
+import { BLACK_LABEL, DATA_LABEL_C6, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
 import { StackingType } from "../../constants/stacking";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -199,6 +199,14 @@ export function getLabelStyle(type: string, stacking: StackingType): Highcharts.
     if (isAreaChart(type)) {
         return BLACK_LABEL;
     }
+
+    if (isDependencyWheel(type)) {
+        return {
+            ...DATA_LABEL_C6,
+            fontWeight: "400",
+        };
+    }
+
     return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
 }
 

@@ -7,7 +7,6 @@ import {
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableSankeyChart } from "./PluggableSankeyChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -19,8 +18,9 @@ import {
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+import { BigChartDescriptor } from "../BigChartDescriptor";
 
-export class SankeyChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
+export class SankeyChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableSankeyChart(params);
     }

@@ -20,6 +20,13 @@ const DEPENDENCY_WHEEL_TEMPLATE = {
                 },
                 distance: 10,
             },
+            linkOpacity: 0.35,
+            states: {
+                inactive: {
+                    opacity: 0.2,
+                    linkOpacity: 0.1,
+                },
+            },
             nodeWidth: 10,
             size: "95%",
         },
