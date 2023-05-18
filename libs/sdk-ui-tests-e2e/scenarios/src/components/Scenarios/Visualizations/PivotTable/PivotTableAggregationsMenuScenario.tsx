@@ -41,7 +41,6 @@ const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCorePr
                 config={{
                     menu: {
                         aggregations: true,
-                        aggregationsSubMenu: true,
                     },
                 }}
                 totals={totals}

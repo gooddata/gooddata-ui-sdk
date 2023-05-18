@@ -19,21 +19,12 @@ import { ColumnWidthItem } from "./columnWidths";
  */
 export interface IMenu {
     /**
-     * If true, grand totals can be added to the table using table menu.
+     * If true, grand totals and subtotals can be added to the table using table menu.
      *
      * @remarks
      * Default: false
      */
     aggregations?: boolean;
-
-    /**
-     * If true, subtotals can be added to the table using table menu.
-     *
-     * @remarks
-     * Default: false
-     */
-    aggregationsSubMenu?: boolean;
-
     /**
      * Specifies which aggregation functions can be selected from the menu.
      *
@@ -47,7 +38,7 @@ export interface IMenu {
 
     /**
      * If true, total and subtotals for columns can be added to the table using table menu.
-     * This will be removed in the future. Have it under feature flag control for development purposes.
+     * This will be removed in the future, it's under feature flag control for development purposes.
      *
      * @remarks
      * Default: false

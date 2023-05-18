@@ -180,10 +180,6 @@ export function pivotTableMenuForCapabilities(
         };
     }
 
-    if (!capabilities.canCalculateSubTotals) {
-        effectiveMenu.aggregationsSubMenu = false;
-    }
-
     if (!capabilities.canCalculateNativeTotals) {
         effectiveMenu.aggregationTypes = (effectiveMenu.aggregationTypes ?? AVAILABLE_TOTALS).filter(
             (totalType) => totalType !== "nat",

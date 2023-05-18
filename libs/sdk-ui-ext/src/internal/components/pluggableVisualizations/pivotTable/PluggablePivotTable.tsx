@@ -525,7 +525,6 @@ export function createPivotTableConfig(
             ...tableConfig,
             menu: pivotTableMenuForCapabilities(capabilities, {
                 aggregations: true,
-                aggregationsSubMenu: true,
             }),
         };
     }

@@ -43,22 +43,10 @@ describe("pivotTableMenuForCapabilities", () => {
         canCalculateGrandTotals: false,
     };
 
-    const NoSubTotals: IBackendCapabilities = {
-        canCalculateGrandTotals: true,
-        canCalculateSubTotals: false,
-        canCalculateNativeTotals: true,
-    };
-
     const NoSubTotalsAndNativeTotals: IBackendCapabilities = {
         canCalculateGrandTotals: true,
         canCalculateSubTotals: false,
         canCalculateNativeTotals: false,
-    };
-
-    const NoGrandTotalsButSubTotals: IBackendCapabilities = {
-        canCalculateGrandTotals: false,
-        canCalculateSubTotals: true,
-        canCalculateNativeTotals: true,
     };
 
     const AllCapabilities: IBackendCapabilities = {
@@ -72,45 +60,25 @@ describe("pivotTableMenuForCapabilities", () => {
         [
             "disable aggregations in menu when no grand totals capability",
             NoGrandTotals,
-            { aggregations: true, aggregationsSubMenu: true },
+            { aggregations: true },
         ],
         [
-            "disable aggregations in default menu when no grand totals capability even if subtotals capability is available",
-            NoGrandTotalsButSubTotals,
-            {},
-        ],
-        [
-            "disable aggregations in menu when no grand totals capability even if subtotals capability is available",
-            NoGrandTotalsButSubTotals,
-            { aggregations: true, aggregationsSubMenu: true },
-        ],
-        ["disable subtotals in default menu when no subtotals capability", NoSubTotals, {}],
-        [
-            "disable subtotals in menu when no subtotals capability",
-            NoSubTotals,
-            { aggregations: true, aggregationsSubMenu: true },
-        ],
-        [
-            "disable subtotals and limit total types in default menu when no subtotals and no native totals capability",
+            "limit total types in default menu when no subtotals and no native totals capability",
             NoSubTotalsAndNativeTotals,
             {},
         ],
         [
-            "disable subtotals and limit total types in menu when no subtotals and no native totals capability",
+            "limit total types in menu when no subtotals and no native totals capability",
             NoSubTotalsAndNativeTotals,
-            { aggregations: true, aggregationsSubMenu: true },
+            { aggregations: true },
         ],
         [
             "disable aggregations when no available total types left",
             NoSubTotalsAndNativeTotals,
-            { aggregations: true, aggregationsSubMenu: true, aggregationTypes: ["nat"] },
+            { aggregations: true, aggregationTypes: ["nat"] },
         ],
         ["keep default menu config as is if all capabilities", AllCapabilities, {}],
-        [
-            "keep menu config as is if all capabilities",
-            AllCapabilities,
-            { aggregations: true, aggregationsSubMenu: true },
-        ],
+        ["keep menu config as is if all capabilities", AllCapabilities, { aggregations: true }],
     ];
 
     it.each(Scenarios)("should %s", (_desc, capabilities, menu) => {

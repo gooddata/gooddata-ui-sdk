@@ -28,7 +28,6 @@ const columns = [Md.DateDatasets.Date.Quarter.Default, Md.DateDatasets.Date.Mont
 const config: IPivotTableConfig = {
     menu: {
         aggregations: true,
-        aggregationsSubMenu: true,
     },
 };
 const style: React.CSSProperties = { height: 500 };

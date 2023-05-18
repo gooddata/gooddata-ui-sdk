@@ -89,13 +89,7 @@ describe("AggregationsMenu", () => {
         expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(AVAILABLE_TOTALS.length);
     });
 
-    it("should render main menu with only available total items", () => {
-        renderComponent({ availableTotalTypes: ["sum", "avg"] });
-
-        expect(document.querySelectorAll(".s-menu-aggregation")).toHaveLength(2);
-    });
-
-    it("should render main menu with submenu with only available total items", () => {
+    it("should render main menu and submenu with only available total items", () => {
         renderComponent({ availableTotalTypes: ["sum", "avg"], showSubmenu: true });
 
         expect(document.querySelectorAll(".s-menu-aggregation")).toHaveLength(2);

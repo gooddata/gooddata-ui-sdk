@@ -343,7 +343,6 @@ Object {
   },
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -354,7 +353,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -367,7 +365,6 @@ Object {
   },
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -387,7 +384,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -398,7 +394,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -409,7 +404,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -431,7 +425,6 @@ Object {
   },
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -442,7 +435,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -453,7 +445,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -464,7 +455,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": Object {
     "decimal": ".",
@@ -478,7 +468,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
   },
   "separators": undefined,
 }
@@ -489,7 +478,6 @@ Object {
   "columnSizing": Object {},
   "menu": Object {
     "aggregations": true,
-    "aggregationsSubMenu": true,
     "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
