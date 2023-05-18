@@ -677,7 +677,7 @@ export {
     IExistingDashboard,
 } from "./dashboard/dashboard";
 
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling } from "./settings";
+export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings";
 
 export { IWorkspaceUserGroup } from "./userGroup";
 

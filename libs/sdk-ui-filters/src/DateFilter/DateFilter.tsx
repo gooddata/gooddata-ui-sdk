@@ -7,17 +7,13 @@ import {
     DateFilterGranularity,
     isAbsoluteDateFilterForm,
     DashboardDateFilterConfigMode,
+    WeekStart,
 } from "@gooddata/sdk-model";
 import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion";
 
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
-import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    isUiRelativeDateFilterForm,
-    WeekStart,
-} from "./interfaces";
+import { DateFilterOption, IDateFilterOptionsByType, isUiRelativeDateFilterForm } from "./interfaces";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization";
 

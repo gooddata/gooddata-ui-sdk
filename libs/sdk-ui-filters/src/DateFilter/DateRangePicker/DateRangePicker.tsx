@@ -11,10 +11,11 @@ import {
 } from "react-day-picker";
 import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+import { WeekStart } from "@gooddata/sdk-model";
 
 import { mergeDayPickerProps } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
-import { IExtendedDateFilterErrors, WeekStart } from "../interfaces";
+import { IExtendedDateFilterErrors } from "../interfaces";
 import { DateTimePickerWithInt } from "./DateTimePicker";
 
 import { DAY_END_TIME } from "../constants/Platform";

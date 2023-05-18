@@ -59,6 +59,7 @@ export {
     selectIsAlternativeDisplayFormSelectionEnabled,
     selectEnableKPIDashboardDrillFromAttribute,
     selectIsShareButtonHidden,
+    selectWeekStart,
 } from "./config/configSelectors";
 export { EntitlementsState } from "./entitlements/entitlementsState";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors";

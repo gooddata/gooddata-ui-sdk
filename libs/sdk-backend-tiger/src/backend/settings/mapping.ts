@@ -22,6 +22,8 @@ export function mapTypeToKey(
             return "mapboxToken";
         case "TIMEZONE":
             return "timezone";
+        case "WEEK_START":
+            return "weekStart";
         case "organizationSetting":
             return "organizationSetting";
         default:

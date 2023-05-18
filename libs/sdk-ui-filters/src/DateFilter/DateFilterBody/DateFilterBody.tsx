@@ -11,7 +11,6 @@ import {
     DateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
-    WeekStart,
 } from "../interfaces";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar";
@@ -31,6 +30,7 @@ import {
     DateFilterGranularity,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
+    WeekStart,
 } from "@gooddata/sdk-model";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;

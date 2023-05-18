@@ -269,6 +269,11 @@ export interface ISettings {
      */
     enableTableTotalRows?: boolean;
 
+    /**
+     * Week start day
+     */
+    weekStart?: WeekStart;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
@@ -322,3 +327,10 @@ export interface IWhiteLabeling {
      */
     appleTouchIconUrl?: string;
 }
+
+/**
+ * Week start day
+ *
+ * @public
+ */
+export type WeekStart = "Sunday" | "Monday";

@@ -11,6 +11,7 @@ import {
     selectIsInEditMode,
     selectLocale,
     selectSettings,
+    selectWeekStart,
     useDashboardSelector,
 } from "../../../model";
 
@@ -26,6 +27,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const locale = useDashboardSelector(selectLocale);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const weekStart = useDashboardSelector(selectWeekStart);
     const { filter, onFilterChanged, config, readonly } = props;
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
@@ -61,6 +63,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             locale={locale}
             isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
             isEditMode={isInEditMode}
+            weekStart={weekStart}
         />
     );
 };

@@ -2254,6 +2254,7 @@ export interface ISettings {
     hideKpiDrillInEmbedded?: boolean;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
+    weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
 }
 
@@ -3332,6 +3333,9 @@ export function visClassUrl(vc: IVisualizationClass): string;
 export type VisualizationProperties = {
     [key: string]: any;
 };
+
+// @public
+export type WeekStart = "Sunday" | "Monday";
 
 // @alpha
 export function widgetId(widget: IWidget): string;

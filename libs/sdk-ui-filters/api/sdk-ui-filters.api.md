@@ -46,6 +46,7 @@ import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+import { WeekStart } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
@@ -1268,8 +1269,5 @@ export const useOnCloseAttributeFilterDropdownButton: (props: IAttributeFilterDr
 
 // @beta (undocumented)
 export type WarningMessage = string | IWarningMessage;
-
-// @public
-export type WeekStart = "Monday" | "Sunday";
 
 ```
