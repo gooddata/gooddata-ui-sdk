@@ -134,8 +134,16 @@ export class PluggableComboChart extends PluggableBaseChart {
             uiConfig: this.getUiConfig(),
         };
 
+        /**
+         * Disable the stackMeasures when there is more than one metric in the primary area chart
+         * Highchart won't draw the continuous line for the stacking Area chart.
+         * Should not effect the `stack measures` checkbox (on the primary buckets) on AD, it will checked by default
+         * if there is more than one metric
+         */
+        const isMoreThanOneMeasure =
+            findBucket(referencePoint.buckets, BucketNames.MEASURES)?.items.length > 1;
         this.defaultControlsProperties = {
-            stackMeasures: this.isStackMeasuresByDefault(),
+            stackMeasures: this.isStackMeasuresByDefault() && isMoreThanOneMeasure,
         };
 
         this.configureBuckets(newReferencePoint);
