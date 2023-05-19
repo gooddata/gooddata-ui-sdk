@@ -33,9 +33,9 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger"] }, ()
         });
     });
 
-    it("is able to export dashboard with temporary filter to pdf", () => {
+    it("should export invalid insight to PDF from dashboards", () => {
         cy.fixture("dashboardInfosForExport").then((data) => {
-            data["insightsAfterChangingFilterForPDFExport"].forEach(
+            data["invalidInsight"].forEach(
                 (dashboardInfo: {
                     dashboardTitle: string;
                     dashboardURL: string;
@@ -43,14 +43,37 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger"] }, ()
                     contents: string;
                 }) => {
                     Navigation.visit(dashboardInfo.dashboardURL);
+                    widget.waitChartLoaded();
                     topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                    productFilter.open().selectAttributeWithoutSearch("WonderKid");
-                    widget.waitTableLoaded();
-
                     dashboardMenu.toggle().clickOption("Export to PDF");
                     exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                 },
             );
         });
     });
+
+    it(
+        "is able to export dashboard with temporary filter to pdf",
+        { tags: ["checklist_integrated_tiger"] },
+        () => {
+            cy.fixture("dashboardInfosForExport").then((data) => {
+                data["insightsAfterChangingFilterForPDFExport"].forEach(
+                    (dashboardInfo: {
+                        dashboardTitle: string;
+                        dashboardURL: string;
+                        fileName: string;
+                        contents: string;
+                    }) => {
+                        Navigation.visit(dashboardInfo.dashboardURL);
+                        topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
+                        productFilter.open().selectAttributeWithoutSearch("PhoenixSoft");
+                        widget.waitTableLoaded();
+
+                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
+                    },
+                );
+            });
+        },
+    );
 });
