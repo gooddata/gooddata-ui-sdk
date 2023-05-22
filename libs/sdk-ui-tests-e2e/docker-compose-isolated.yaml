@@ -39,8 +39,6 @@ services:
         image: $IMAGE_ID
         volumes:
             - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
-        ports:
-            - "9500:9500"
         depends_on:
             - backend-mock
 

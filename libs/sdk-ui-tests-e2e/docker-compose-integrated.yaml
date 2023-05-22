@@ -8,8 +8,6 @@ services:
             - TEST_BACKEND_NO_PREFIX=${TEST_BACKEND_NO_PREFIX:?Check README.md for more detail}
         volumes:
             - ./nginx/templates:/etc/nginx/templates/
-        ports:
-            - "9500:9500"
 
     integrated-tests:
         image: cypress/included:12.10.0
