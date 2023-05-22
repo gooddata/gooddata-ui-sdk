@@ -26,7 +26,6 @@ const backend = StorybookBackend();
 const tableConfig: IPivotTableProps["config"] = {
     menu: {
         aggregations: true,
-        aggregationsSubMenu: true,
     },
     columnSizing: {
         defaultWidth: "autoresizeAll",

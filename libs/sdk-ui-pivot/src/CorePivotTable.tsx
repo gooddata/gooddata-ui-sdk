@@ -14,6 +14,7 @@ import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
 import {
+    BucketNames,
     createExportErrorFunction,
     DataViewFacade,
     ErrorCodes,
@@ -27,8 +28,8 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { getUpdatedColumnTotals } from "./impl/structure/headers/aggregationsMenuHelper";
-import { getScrollbarWidth, sanitizeDefTotals } from "./impl/utils";
+import { getUpdatedColumnOrRowTotals } from "./impl/structure/headers/aggregationsMenuHelper";
+import { getScrollbarWidth, sanitizeDefTotals, sanitizeDefRowTotals } from "./impl/utils";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
@@ -208,6 +209,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.state = {
             readyToRender: false,
             columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
+            rowTotals: cloneDeep(sanitizeDefRowTotals(execution.definition)),
             desiredHeight: config!.maxHeight,
             resized: false,
         };
@@ -270,6 +272,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             {
                 readyToRender: false,
                 columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
+                rowTotals: cloneDeep(sanitizeDefRowTotals(execution.definition)),
                 error: undefined,
                 desiredHeight: this.props.config!.maxHeight,
                 resized: false,
@@ -724,21 +727,43 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
         const sortItems = this.internal.table?.getSortItems();
-        const newColumnTotals = sanitizeDefTotals(
-            this.getExecutionDefinition(),
-            sortItems,
-            getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig),
-        );
+        const { isColumn } = menuAggregationClickConfig;
 
-        this.pushDataGuard({
-            properties: {
-                totals: newColumnTotals,
-            },
-        });
+        if (isColumn) {
+            const newColumnTotals = sanitizeDefTotals(
+                this.getExecutionDefinition(),
+                sortItems,
+                getUpdatedColumnOrRowTotals(this.getColumnTotals(), menuAggregationClickConfig),
+            );
 
-        this.setState({ columnTotals: newColumnTotals }, () => {
-            this.internal.table?.refreshData();
-        });
+            this.pushDataGuard({
+                properties: {
+                    totals: newColumnTotals,
+                    bucketType: BucketNames.ATTRIBUTE,
+                },
+            });
+
+            this.setState({ columnTotals: newColumnTotals }, () => {
+                this.internal.table?.refreshData();
+            });
+        } else {
+            const newRowTotals = sanitizeDefRowTotals(
+                this.getExecutionDefinition(),
+                sortItems,
+                getUpdatedColumnOrRowTotals(this.getRowTotals(), menuAggregationClickConfig),
+            );
+
+            this.setState({ rowTotals: newRowTotals }, () => {
+                this.internal.table?.refreshData();
+            });
+
+            this.pushDataGuard({
+                properties: {
+                    totals: newRowTotals,
+                    bucketType: BucketNames.COLUMNS,
+                },
+            });
+        }
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
@@ -948,6 +973,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return this.state.columnTotals;
     };
 
+    private getRowTotals = () => {
+        return this.state.rowTotals;
+    };
+
     private getExecutionDefinition = () => {
         return this.props.execution.definition;
     };
@@ -1066,6 +1095,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getMenuConfig: this.getMenuConfig,
             getGroupRows: this.getGroupRows,
             getColumnTotals: this.getColumnTotals,
+            getRowTotals: this.getRowTotals,
             getResizingConfig: this.getResizingConfig,
 
             onLoadingChanged: this.onLoadingChanged,

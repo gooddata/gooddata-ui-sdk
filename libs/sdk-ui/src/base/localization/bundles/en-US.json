@@ -501,9 +501,19 @@
         "comment": "Heading showed above row attributes of the table you may apply one of aggregation (total) on.",
         "limit": 50
     },
+    "visualizations.menu.aggregations.columns": {
+        "value": "Columns",
+        "comment": "Heading showed above columns attributes of the table you may apply one of aggregation (total) on.",
+        "limit": 50
+    },
     "visualizations.menu.aggregations.all-rows": {
         "value": "of all rows",
         "comment": "Menu option that adds row aggregation (grand total) to the table. Example: 'Sum of all rows'",
+        "limit": 50
+    },
+    "visualizations.menu.aggregations.all-columns": {
+        "value": "of all columns",
+        "comment": "Menu option that adds column aggregation (grand total) to the table. Example: 'Sum of all columns'",
         "limit": 50
     },
     "visualizations.menu.aggregations.within-attribute": {

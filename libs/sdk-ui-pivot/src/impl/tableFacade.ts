@@ -247,6 +247,7 @@ export class TableFacade {
                 tableDescriptor: this.tableDescriptor,
                 getGroupRows: tableMethods.getGroupRows,
                 getColumnTotals: tableMethods.getColumnTotals,
+                getRowTotals: tableMethods.getRowTotals,
                 onPageLoaded: this.onPageLoaded,
                 onExecutionTransformed: this.onExecutionTransformed,
                 onTransformedExecutionFailed: this.onTransformedExecutionFailed,

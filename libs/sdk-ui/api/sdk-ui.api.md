@@ -1181,6 +1181,7 @@ export interface IPushData {
         sortItems?: ISortItem[];
         totals?: ITotal[];
         controls?: Record<string, any>;
+        bucketType?: string;
     };
     // (undocumented)
     propertiesMeta?: any;

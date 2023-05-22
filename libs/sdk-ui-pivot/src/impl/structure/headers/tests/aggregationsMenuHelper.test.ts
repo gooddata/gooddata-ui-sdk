@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
-import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
+import aggregationsMenuHelper, { getUpdatedColumnOrRowTotals } from "../aggregationsMenuHelper";
 import { ITotal } from "@gooddata/sdk-model";
-import { IColumnTotal } from "../aggregationsMenuTypes";
+import { IColumnTotal, IRowTotal } from "../aggregationsMenuTypes";
 import { IMenuAggregationClickConfig } from "../../../privateTypes";
 
 describe("aggregationsMenuHelper", () => {
@@ -170,41 +170,93 @@ describe("aggregationsMenuHelper", () => {
             },
         ];
 
-        it("should return false when there is no total defined", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "sum", []);
+        const rowTotals: IRowTotal[] = [
+            {
+                type: "max",
+                attributes: ["a3", "a4"],
+            },
+            {
+                type: "sum",
+                attributes: ["a5"],
+            },
+        ];
+
+        it("should return false when there is no column and row total defined", () => {
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "a2", "sum", [], []);
             expect(result).toBe(false);
         });
 
-        it("should return false when there is different total defined for attribute", () => {
+        it("should return false when there is different column and row total defined for attribute", () => {
             const columnTotals: IColumnTotal[] = [
                 {
                     type: "min",
                     attributes: ["a1", "a2"],
                 },
             ];
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "sum", columnTotals);
+            const rowTotals: IRowTotal[] = [
+                {
+                    type: "max",
+                    attributes: ["a3", "a4"],
+                },
+            ];
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
+                "a1",
+                "a3",
+                "sum",
+                columnTotals,
+                rowTotals,
+            );
             expect(result).toBe(false);
         });
 
-        it("should return false when the provided total is not defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "min", columnTotals);
+        it("should return false when the provided column and row total is not defined for an attribute", () => {
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
+                "a1",
+                "a3",
+                "min",
+                columnTotals,
+                rowTotals,
+            );
             expect(result).toBe(false);
         });
 
-        it("should return false when no total is not defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a4", "sum", columnTotals);
+        it("should return false when no column and row total is not defined for an attribute", () => {
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
+                "a4",
+                "a6",
+                "sum",
+                columnTotals,
+                rowTotals,
+            );
             expect(result).toBe(false);
         });
 
-        it("should return true when the provided total is defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "sum", columnTotals);
+        it("should return true when the provided row total is defined for an attribute", () => {
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
+                "a1",
+                "",
+                "sum",
+                columnTotals,
+                rowTotals,
+            );
+            expect(result).toBe(true);
+        });
+
+        it("should return true when the provided column total is defined for an attribute", () => {
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
+                "",
+                "a3",
+                "max",
+                columnTotals,
+                rowTotals,
+            );
             expect(result).toBe(true);
         });
     });
 
-    describe("getUpdatedColumnTotals", () => {
+    describe("getUpdatedColumnOrRowTotals", () => {
         it("should add grandtotal", () => {
-            const columnTotals: ITotal[] = [];
+            const totals: ITotal[] = [];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a1",
@@ -217,12 +269,12 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should add grandtotal for every measure", () => {
-            const columnTotals: ITotal[] = [];
+            const totals: ITotal[] = [];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a1",
@@ -236,14 +288,12 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should remove grandtotal", () => {
-            const columnTotals: ITotal[] = [
-                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
-            ];
+            const totals: ITotal[] = [{ attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" }];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a1",
@@ -254,12 +304,12 @@ describe("aggregationsMenuHelper", () => {
 
             const expectedColumns: ITotal[] = [];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should remove grandtotal for every measure", () => {
-            const columnTotals: ITotal[] = [
+            const totals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
@@ -273,12 +323,12 @@ describe("aggregationsMenuHelper", () => {
 
             const expectedColumns: ITotal[] = [];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should not remove other types of grandtotals", () => {
-            const columnTotals: ITotal[] = [
+            const totals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
             ];
@@ -294,12 +344,12 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should not remove grandtotals of different measure", () => {
-            const columnTotals: ITotal[] = [
+            const totals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
@@ -315,12 +365,12 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should add subtotal", () => {
-            const columnTotals: ITotal[] = [];
+            const totals: ITotal[] = [];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a2",
@@ -333,12 +383,12 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should not remove subtotals of same type when removing grandtotal", () => {
-            const columnTotals: ITotal[] = [
+            const totals: ITotal[] = [
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
             ];
@@ -355,7 +405,7 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
+            const result = getUpdatedColumnOrRowTotals(totals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });

@@ -112,20 +112,43 @@ describe("TableDescriptor", () => {
         });
     });
 
-    describe("canTableHaveTotals", () => {
+    describe("canTableHaveRowTotals", () => {
         it("should return false for table without row attribute", () => {
             expect(
-                TableDescriptor.for(SingleMeasureWithColumnAttribute, "empty value").canTableHaveTotals(),
+                TableDescriptor.for(SingleMeasureWithColumnAttribute, "empty value").canTableHaveRowTotals(),
             ).toBeFalsy();
         });
 
         it("should return false for table without measures", () => {
-            expect(TableDescriptor.for(SingleAttribute, "empty value").canTableHaveTotals()).toBeFalsy();
+            expect(TableDescriptor.for(SingleAttribute, "empty value").canTableHaveRowTotals()).toBeFalsy();
         });
 
         it("should return true for table with row and measure", () => {
             expect(
-                TableDescriptor.for(SingleMeasureWithRowAttribute, "empty value").canTableHaveTotals(),
+                TableDescriptor.for(SingleMeasureWithRowAttribute, "empty value").canTableHaveRowTotals(),
+            ).toBeTruthy();
+        });
+    });
+
+    describe("canTableHaveColumnTotals", () => {
+        it("should return false for table without column attribute", () => {
+            expect(
+                TableDescriptor.for(SingleMeasureWithRowAttribute, "empty value").canTableHaveColumnTotals(),
+            ).toBeFalsy();
+        });
+
+        it("should return false for table without measures", () => {
+            expect(
+                TableDescriptor.for(SingleAttribute, "empty value").canTableHaveColumnTotals(),
+            ).toBeFalsy();
+        });
+
+        it("should return true for table with column and measure", () => {
+            expect(
+                TableDescriptor.for(
+                    SingleMeasureWithColumnAttribute,
+                    "empty value",
+                ).canTableHaveColumnTotals(),
             ).toBeTruthy();
         });
     });

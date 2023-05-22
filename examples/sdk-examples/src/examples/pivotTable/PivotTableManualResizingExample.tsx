@@ -88,7 +88,6 @@ export const PivotTableManualResizingExample: React.FC = () => {
                         },
                         menu: {
                             aggregations: true,
-                            aggregationsSubMenu: true,
                         },
                     }}
                     pageSize={20}

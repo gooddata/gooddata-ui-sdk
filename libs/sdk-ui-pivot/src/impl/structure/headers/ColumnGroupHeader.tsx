@@ -34,6 +34,7 @@ export default class ColumnGroupHeader extends React.Component<IProps> {
                 getTableDescriptor={this.props.getTableDescriptor}
                 getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
+                getRowTotals={this.props.getRowTotals}
                 intl={intl}
             />
         );

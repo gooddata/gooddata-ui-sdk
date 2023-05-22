@@ -9,7 +9,7 @@ import { uriRef } from "@gooddata/sdk-model";
 const intlMock = createIntlMock();
 
 describe("AggregationsSubMenu", () => {
-    const attributeHeaders = [
+    const rowAttributeHeaders = [
         {
             attributeHeader: {
                 formOf: {
@@ -42,17 +42,53 @@ describe("AggregationsSubMenu", () => {
         },
     ];
 
+    const columnAttributeHeaders = [
+        {
+            attributeHeader: {
+                formOf: {
+                    identifier: "3rd_attr_local_identifier",
+                    name: "Forecast Category",
+                    uri: "/gdc/md/project_id/obj/3rd_attr_uri_id",
+                    ref: uriRef("/gdc/md/project_id/obj/3rd_attr_uri_id"),
+                },
+                identifier: "3rd_attr_df_identifier",
+                localIdentifier: "3rd_attr_df_local_identifier",
+                name: "Forecast Category",
+                uri: "/gdc/md/project_id/obj/3rd_attr_df_uri_id",
+                ref: uriRef("/gdc/md/project_id/obj/3rd_attr_df_uri_id"),
+            },
+        },
+        {
+            attributeHeader: {
+                formOf: {
+                    identifier: "4th_attr_local_identifier",
+                    name: "Stage Name",
+                    uri: "/gdc/md/project_id/obj/4th_attr_uri_id",
+                    ref: uriRef("/gdc/md/project_id/obj/4th_attr_uri_id"),
+                },
+                identifier: "4th_attr_df_identifier",
+                localIdentifier: "4th_attr_df_local_identifier",
+                name: "Stage Name",
+                uri: "/gdc/md/project_id/obj/4th_attr_df_uri_id",
+                ref: uriRef("/gdc/md/project_id/obj/4th_attr_df_uri_id"),
+            },
+        },
+    ];
+
     function renderComponent(customProps: Partial<IAggregationsSubMenuProps> = {}) {
         const onAggregationSelect = jest.fn();
         return render(
             <AggregationsSubMenu
                 intl={intlMock}
                 totalType="sum"
-                rowAttributeDescriptors={attributeHeaders}
+                rowAttributeDescriptors={rowAttributeHeaders}
+                columnAttributeDescriptors={columnAttributeHeaders}
                 columnTotals={[]}
+                rowTotals={[]}
                 measureLocalIdentifiers={["m1"]}
                 onAggregationSelect={onAggregationSelect}
                 toggler={<div>Open submenu</div>}
+                showColumnsSubMenu={true}
                 isMenuOpened={true}
                 {...customProps}
             />,
@@ -65,8 +101,9 @@ describe("AggregationsSubMenu", () => {
         expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(0);
     });
 
-    it('should render submenu with attributes, first attribute as "All rows"', () => {
+    it("should render submenu with attributes, for rows only", () => {
         renderComponent({
+            showColumnsSubMenu: false,
             intl: createIntlMock({
                 "visualizations.menu.aggregations.all-rows": "all rows",
             }),
@@ -77,19 +114,56 @@ describe("AggregationsSubMenu", () => {
         expect(screen.getByText("within Department")).toBeInTheDocument();
     });
 
-    it("should render both attributes as selected", () => {
+    it("should render submenu with attributes, for columns only", () => {
+        renderComponent({
+            rowAttributeDescriptors: [],
+            intl: createIntlMock({
+                "visualizations.menu.aggregations.all-columns": "all columns",
+            }),
+        });
+
+        expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(2);
+        expect(screen.getByText("all columns")).toBeInTheDocument();
+        expect(screen.getByText("within Forecast Category")).toBeInTheDocument();
+    });
+
+    it("should render submenu with attributes, for rows and columns", () => {
+        renderComponent({
+            intl: createIntlMock({
+                "visualizations.menu.aggregations.all-rows": "all rows",
+                "visualizations.menu.aggregations.all-columns": "all columns",
+            }),
+        });
+
+        expect(document.querySelectorAll(".s-menu-aggregation-inner")).toHaveLength(4);
+        expect(screen.getByText("all rows")).toBeInTheDocument();
+        expect(screen.getByText("within Department")).toBeInTheDocument();
+        expect(screen.getByText("all columns")).toBeInTheDocument();
+        expect(screen.getByText("within Forecast Category")).toBeInTheDocument();
+    });
+
+    it("should render all attributes as selected", () => {
         const columnTotals: IColumnTotal[] = [
             {
                 type: "sum",
                 attributes: ["1st_attr_df_local_identifier", "2nd_attr_df_local_identifier"],
             },
         ];
-        renderComponent({ columnTotals });
 
-        expect(document.querySelectorAll(".is-checked")).toHaveLength(2);
+        const rowTotals: IColumnTotal[] = [
+            {
+                type: "sum",
+                attributes: ["3rd_attr_df_local_identifier", "4th_attr_df_local_identifier"],
+            },
+        ];
+        renderComponent({ columnTotals, rowTotals });
+
+        screen.logTestingPlaygroundURL();
+
+        expect(document.querySelectorAll(".is-checked")).toHaveLength(4);
     });
 
-    it("should call onAggregationSelect callback when clicked on submenu item", () => {
+    it("should call onAggregationSelect callback when clicked on submenu row item", () => {
         const onAggregationSelect = jest.fn();
         renderComponent({ onAggregationSelect });
 
@@ -101,6 +175,23 @@ describe("AggregationsSubMenu", () => {
             include: true,
             measureIdentifiers: ["m1"],
             type: "sum",
+            isColumn: true,
+        });
+    });
+
+    it("should call onAggregationSelect callback when clicked on submenu column item", () => {
+        const onAggregationSelect = jest.fn();
+        renderComponent({ onAggregationSelect });
+
+        fireEvent.click(screen.getByText("within Forecast Category"));
+
+        expect(onAggregationSelect).toHaveBeenCalledTimes(1);
+        expect(onAggregationSelect).toHaveBeenCalledWith({
+            attributeIdentifier: "4th_attr_df_local_identifier",
+            include: true,
+            measureIdentifiers: ["m1"],
+            type: "sum",
+            isColumn: false,
         });
     });
 });

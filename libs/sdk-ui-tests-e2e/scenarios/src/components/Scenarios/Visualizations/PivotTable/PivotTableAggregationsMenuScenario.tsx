@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { newTotal } from "@gooddata/sdk-model";
@@ -16,12 +16,26 @@ const totalsAll: TotalsOrPlaceholders = [
 
 const totalsOne: TotalsOrPlaceholders = [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)];
 
+const pivotTableConfig: IPivotTableConfig = {
+    menu: {
+        aggregations: true,
+    },
+};
+
+const columnPivotTableConfig: IPivotTableConfig = {
+    menu: {
+        aggregations: true,
+        aggregationsSubMenuForRows: true,
+    },
+};
+
 interface IPivotTableAggregationsMenuCoreProps {
+    config: IPivotTableConfig;
     totals?: TotalsOrPlaceholders;
 }
 
 const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCoreProps> = (props) => {
-    const { totals } = props;
+    const { totals, config } = props;
 
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
@@ -38,12 +52,7 @@ const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCorePr
                 measures={measures}
                 rows={attributes}
                 columns={columns}
-                config={{
-                    menu: {
-                        aggregations: true,
-                        aggregationsSubMenu: true,
-                    },
-                }}
+                config={config}
                 totals={totals}
             />
         </div>
@@ -51,13 +60,17 @@ const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCorePr
 };
 
 export const PivotTableAggregationsMenuScenario = () => {
-    return <PivotTableAggregationsMenuCore />;
+    return <PivotTableAggregationsMenuCore config={pivotTableConfig} />;
 };
 
 export const PivotTableAggregationsMenuAllTotalScenario = () => {
-    return <PivotTableAggregationsMenuCore totals={totalsAll} />;
+    return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsAll} />;
 };
 
 export const PivotTableAggregationsMenuOneTotalScenario = () => {
-    return <PivotTableAggregationsMenuCore totals={totalsOne} />;
+    return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsOne} />;
+};
+
+export const PivotTableColumnsAggregationsMenuScenario = () => {
+    return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} />;
 };

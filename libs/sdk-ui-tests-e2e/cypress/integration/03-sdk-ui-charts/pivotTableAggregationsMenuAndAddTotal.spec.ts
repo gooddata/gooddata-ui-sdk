@@ -155,3 +155,17 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
             });
     });
 });
+
+describe("Pivot Table Column Aggregations menu", { tags: ["pre-merge_isolated_bear"] }, () => {
+    beforeEach(() => {
+        Navigation.visit("visualizations/pivot-table/pivot-table-column-total-aggregations-menu");
+    });
+
+    it("should show aggregation sub menu for columns", () => {
+        const table = new Table(".s-pivot-table-aggregations-menu");
+        table.waitLoaded();
+
+        const element = table.getMeasureGroupCell(0).eq(0);
+        table.aggregationSubMenuHasColumn(element, true);
+    });
+});

@@ -819,6 +819,14 @@ describe("createPivotTableConfig", () => {
             { enableTableColumnsManualResizing: false },
             columnWidths,
         ],
+        ["config with total rows if feature flag on", {}, "none", { enableTableTotalRows: true }, undefined],
+        [
+            "config with total rows if feature flag off",
+            {},
+            "none",
+            { enableTableTotalRows: false },
+            undefined,
+        ],
     ];
 
     const AllTotalCapabilities: IBackendCapabilities = {

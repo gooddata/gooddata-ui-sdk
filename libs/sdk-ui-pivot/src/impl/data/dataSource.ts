@@ -24,6 +24,7 @@ export type DatasourceConfig = {
     tableDescriptor: TableDescriptor;
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
+    getRowTotals: () => ITotal[];
     onPageLoaded: OnPageLoaded;
     onExecutionTransformed: OnExecutionTransformed;
     onTransformedExecutionFailed: OnTransformedExecutionFailed;
