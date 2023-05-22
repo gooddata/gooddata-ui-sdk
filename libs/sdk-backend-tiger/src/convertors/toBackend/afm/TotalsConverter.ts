@@ -1,5 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
+import isEqual from "lodash/isEqual";
 import {
+    bucketsFind,
+    bucketItemLocalId,
+    bucketAttributes,
+    bucketTotals,
+    IAttribute,
+    IBucket,
     IDimension,
     IExecutionDefinition,
     ITotal,
@@ -10,6 +17,9 @@ import flatMap from "lodash/flatMap";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import { dimensionLocalIdentifier } from "./DimensionsConverter";
 
+const ATTRIBUTE = "attribute";
+const COLUMNS = "columns";
+
 /**
  * Extracts total definitions from execution definition dimensions and converts them into total specifications for
  * Tiger AFM. Execution definition defines totals by a measure, aggregation function, and the attribute for whose
@@ -19,13 +29,16 @@ import { dimensionLocalIdentifier } from "./DimensionsConverter";
  * but such totals are impossible to define in the execution definition.
  */
 export function convertTotals(def: IExecutionDefinition): Total[] {
-    const allTotalDimensions: TotalDimension[] = def.dimensions.map((dim, dimIdx) => {
+    const { buckets, dimensions } = def;
+
+    const allTotalDimensions: TotalDimension[] = dimensions.map((dim, dimIdx) => {
         return {
             dimensionIdentifier: dimensionLocalIdentifier(dimIdx),
             totalDimensionItems: dim.itemIdentifiers,
         };
     });
-    return flatMap(def.dimensions, (dim, dimIdx) => {
+
+    const totals = flatMap(dimensions, (dim, dimIdx) => {
         return dim.totals?.map((total) => {
             const tigerTotal: Total = {
                 localIdentifier: totalLocalIdentifier(total, dimIdx),
@@ -41,6 +54,129 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
             return tigerTotal;
         });
     }).filter((total): total is Total => total !== undefined);
+
+    /**
+     * With new column totals, we need to have in consideration the cases where same totals/subtotals are selected for rows and columns.
+     * This new cases would require extra configuration so Tiger AFM is able to compute properly the result.
+     * These new cases are -
+     *   1. Grand totals - is the value obtained from row and column totals.
+     *   2. Marginal totals - is the value obtained within the subgroups from row and column subtotals.
+     *
+     * For `Grand Totals`, in Tiger AFM, you specify that you want total of totals with total that have only "measureGroup" present.
+     * For `Marginal Total`, in Tiger AFM, would need to iterate through both dimensions and obtain the missing totalDimensions items
+     * based on the attribute and column identifiers order in buckets.
+     */
+
+    const attributeBucket = bucketsFind(buckets, ATTRIBUTE);
+    const columnBucket = bucketsFind(buckets, COLUMNS);
+
+    const matchingAttributeBucket = attributeBucket ? bucketAttributes(attributeBucket) : [];
+    const matchingColumnBucket = columnBucket ? bucketAttributes(columnBucket) : [];
+
+    let newTotals = totals;
+
+    if (hasRowOrColumnTotals(attributeBucket, columnBucket)) {
+        const attributeIdentifiers = getAttributeBucketIdentifiers(matchingAttributeBucket);
+        const columnIdentifiers = getAttributeBucketIdentifiers(matchingColumnBucket);
+
+        attributeBucket!.totals?.forEach((attributeTotal, index) => {
+            let hasRowAndColumnGrandTotals = false;
+            let hasRowAndColumnSubTotals = false;
+            let attributeDimensionIndex = 0;
+            let columnDimensionIndex = 0;
+            columnBucket!.totals?.forEach((columnTotal, columnIndex) => {
+                const attributeMeasureId = attributeTotal.measureIdentifier;
+                const attributeType = attributeTotal.type;
+                const columnMeasureId = columnTotal.measureIdentifier;
+                const columnType = columnTotal.type;
+                // Check for totals from same measure and type
+                if (
+                    attributeAndColumnHasSameTotal(
+                        attributeMeasureId,
+                        attributeType,
+                        columnMeasureId,
+                        columnType,
+                    )
+                ) {
+                    // Check for grand totals rows/columns
+                    // Grand total is always defined on the very first attribute of the attribute/columns bucket
+                    if (
+                        attributeTotal.attributeIdentifier === attributeIdentifiers[0] &&
+                        columnTotal.attributeIdentifier === columnIdentifiers[0]
+                    ) {
+                        hasRowAndColumnGrandTotals = true;
+                    }
+
+                    // Check for subtotals rows/columns
+                    if (
+                        attributeTotal.attributeIdentifier !== attributeIdentifiers[0] &&
+                        columnTotal.attributeIdentifier !== columnIdentifiers[0]
+                    ) {
+                        attributeDimensionIndex = attributeIdentifiers.findIndex(
+                            (aI) => aI === attributeTotal.attributeIdentifier,
+                        );
+                        columnDimensionIndex = columnIdentifiers.findIndex(
+                            (cI) => cI === columnTotal.attributeIdentifier,
+                        );
+
+                        hasRowAndColumnSubTotals = true;
+                    }
+                }
+
+                /**
+                 * Extend marginal totals payload
+                 *
+                 * To obtain marginal totals we need to slice through the attribute ids on each bucket, until the selected
+                 * attribute identifier for rows and totals, obtained on the previous step, is found.
+                 */
+                if (hasRowAndColumnSubTotals) {
+                    const marginalTotal: Total[] = [
+                        {
+                            function: convertTotalType(attributeTotal.type),
+                            metric: attributeTotal.measureIdentifier,
+                            localIdentifier: marginalTotalLocalIdentifier(attributeTotal, columnIndex),
+                            totalDimensions: [
+                                {
+                                    dimensionIdentifier: "dim_0",
+                                    totalDimensionItems: attributeIdentifiers.slice(
+                                        0,
+                                        attributeDimensionIndex,
+                                    ),
+                                },
+                                {
+                                    dimensionIdentifier: "dim_1",
+                                    totalDimensionItems: columnIdentifiers
+                                        .slice(0, columnDimensionIndex)
+                                        .concat(MeasureGroupIdentifier),
+                                },
+                            ],
+                        },
+                    ];
+                    newTotals = [...newTotals, ...marginalTotal];
+                }
+            });
+
+            // extend grand totals payload
+            if (hasRowAndColumnGrandTotals) {
+                const grandTotal: Total[] = [
+                    {
+                        function: convertTotalType(attributeTotal.type),
+                        metric: attributeTotal.measureIdentifier,
+                        localIdentifier: grandTotalLocalIdentifier(attributeTotal, index),
+                        totalDimensions: [
+                            {
+                                dimensionIdentifier: "dim_1",
+                                totalDimensionItems: [MeasureGroupIdentifier],
+                            },
+                        ],
+                    },
+                ];
+                newTotals = [...newTotals, ...grandTotal];
+            }
+        });
+    }
+
+    return newTotals;
 }
 
 /**
@@ -77,6 +213,14 @@ export function totalLocalIdentifier(total: ITotal, dimIdx: number): string {
     return `total_${total.type}_${total.measureIdentifier}_by_${total.attributeIdentifier}_${dimIdx}`;
 }
 
+export function grandTotalLocalIdentifier(total: ITotal, dimIdx: number): string {
+    return `total_of_totals_${total.type}_${total.measureIdentifier}_by_${total.attributeIdentifier}_${dimIdx}`;
+}
+
+export function marginalTotalLocalIdentifier(total: ITotal, dimIdx: number): string {
+    return `marginal_total_${total.type}_${total.measureIdentifier}_by_${total.attributeIdentifier}_${dimIdx}`;
+}
+
 function convertTotalType(type: TotalType): TotalFunctionEnum {
     if (type === "sum") {
         return TotalFunctionEnum.SUM;
@@ -95,4 +239,30 @@ function convertTotalType(type: TotalType): TotalFunctionEnum {
     }
     // type === "nat"
     throw new Error("Tiger backend does not support native totals.");
+}
+
+function getAttributeBucketIdentifiers(attribute: IAttribute[]) {
+    return attribute.map((a) => bucketItemLocalId(a));
+}
+
+/**
+ * Check if there are totals defined on attributes and columns (rows and columns), to extend Tiger AFM accordingly.
+ */
+function hasRowOrColumnTotals(
+    attributeBucket: IBucket | undefined,
+    columnBucket: IBucket | undefined,
+): boolean {
+    const attributeTotals = attributeBucket ? bucketTotals(attributeBucket) : [];
+    const columnTotals = columnBucket ? bucketTotals(columnBucket) : [];
+
+    return attributeTotals.length > 0 && columnTotals.length > 0;
+}
+
+function attributeAndColumnHasSameTotal(
+    attributeMeasureId: string,
+    attributeType: string,
+    columnMeasureId: string,
+    columnType: string,
+): boolean {
+    return isEqual(attributeMeasureId, columnMeasureId) && isEqual(attributeType, columnType);
 }

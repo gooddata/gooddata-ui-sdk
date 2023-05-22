@@ -75,12 +75,21 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
         }
 
         const attributeDim = attributeInDims[0];
-        // now, knowing the dimension and index of the attribute.. roll up all attributes that are before it
-        const rollupAttributes = attributeDim.dim.itemIdentifiers
-            .slice(0, attributeDim.itemIdx)
-            .filter((id) => id !== MeasureGroupIdentifier);
 
+        let rollupAttributes;
+
+        // now, knowing the dimension and index of the attribute.. roll up all attributes that are before it
         // and create native total such, that it rolls up all those attributes
+        if (attributeDim.dimIdx === 1) {
+            const mergedItemsId = [...def.dimensions[0].itemIdentifiers, ...attributeDim.dim.itemIdentifiers];
+            const index = mergedItemsId.findIndex((itemId) => itemId === t.attributeIdentifier);
+            rollupAttributes = mergedItemsId.slice(0, index).filter((id) => id !== MeasureGroupIdentifier);
+        } else {
+            rollupAttributes = attributeDim.dim.itemIdentifiers
+                .slice(0, attributeDim.itemIdx)
+                .filter((id) => id !== MeasureGroupIdentifier);
+        }
+
         return {
             measureIdentifier: t.measureIdentifier,
             attributeIdentifiers: rollupAttributes,

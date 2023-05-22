@@ -101,6 +101,208 @@ Object {
 }
 `;
 
+exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native grand totals for columns 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {
+      "attributes": Array [
+        Object {
+          "displayForm": Object {
+            "identifier": "label.activity.id",
+          },
+          "localIdentifier": "a_label.activity.id",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.account.id.name",
+          },
+          "localIdentifier": "a_label.account.id.name",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.owner.department",
+          },
+          "localIdentifier": "a_label.owner.department",
+        },
+      ],
+      "measures": Array [
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "acugFHNJgsBy",
+              },
+            },
+          },
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "abZgFKGPaGYM",
+              },
+            },
+          },
+          "localIdentifier": "m_abZgFKGPaGYM",
+        },
+      ],
+      "nativeTotals": Array [
+        Object {
+          "attributeIdentifiers": Array [],
+          "measureIdentifier": "m_acugFHNJgsBy",
+        },
+        Object {
+          "attributeIdentifiers": Array [
+            "a_label.account.id.name",
+          ],
+          "measureIdentifier": "m_acugFHNJgsBy",
+        },
+      ],
+    },
+    "resultSpec": Object {
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.account.id.name",
+          ],
+          "totals": Array [
+            Object {
+              "attributeIdentifier": "a_label.account.id.name",
+              "measureIdentifier": "m_acugFHNJgsBy",
+              "type": "nat",
+            },
+          ],
+        },
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.owner.department",
+            "measureGroup",
+          ],
+          "totals": Array [
+            Object {
+              "attributeIdentifier": "a_label.owner.department",
+              "measureIdentifier": "m_acugFHNJgsBy",
+              "type": "nat",
+            },
+          ],
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native sub totals for columns 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {
+      "attributes": Array [
+        Object {
+          "displayForm": Object {
+            "identifier": "label.activity.id",
+          },
+          "localIdentifier": "a_label.activity.id",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.account.id.name",
+          },
+          "localIdentifier": "a_label.account.id.name",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.opportunitysnapshot.forecastcategory",
+          },
+          "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.owner.department",
+          },
+          "localIdentifier": "a_label.owner.department",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.stage.isactive",
+          },
+          "localIdentifier": "a_label.stage.isactive",
+        },
+      ],
+      "measures": Array [
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "acugFHNJgsBy",
+              },
+            },
+          },
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "abZgFKGPaGYM",
+              },
+            },
+          },
+          "localIdentifier": "m_abZgFKGPaGYM",
+        },
+      ],
+      "nativeTotals": Array [
+        Object {
+          "attributeIdentifiers": Array [
+            "a_label.account.id.name",
+          ],
+          "measureIdentifier": "m_acugFHNJgsBy",
+        },
+        Object {
+          "attributeIdentifiers": Array [
+            "a_label.account.id.name",
+            "a_label.opportunitysnapshot.forecastcategory",
+            "a_label.owner.department",
+          ],
+          "measureIdentifier": "m_acugFHNJgsBy",
+        },
+      ],
+    },
+    "resultSpec": Object {
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.account.id.name",
+            "a_label.opportunitysnapshot.forecastcategory",
+          ],
+          "totals": Array [
+            Object {
+              "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+              "measureIdentifier": "m_acugFHNJgsBy",
+              "type": "nat",
+            },
+          ],
+        },
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.owner.department",
+            "a_label.stage.isactive",
+            "measureGroup",
+          ],
+          "totals": Array [
+            Object {
+              "attributeIdentifier": "a_label.stage.isactive",
+              "measureIdentifier": "m_acugFHNJgsBy",
+              "type": "nat",
+            },
+          ],
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native totals and attribute is in bucket 1`] = `
 Object {
   "execution": Object {

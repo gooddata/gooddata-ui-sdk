@@ -285,6 +285,124 @@ Array [
 ]
 `;
 
+exports[`convertTotals should correctly convert two subtotals and marginal total 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "a_label.owner.department",
+          "a_label.stage.isactive",
+          "measureGroup",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "a_label.account.id.name",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.stage.isactive_1",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "a_label.account.id.name",
+          "a_label.opportunitysnapshot.forecastcategory",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "a_label.owner.department",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "marginal_total_sum_m_abZgFKGPaGYM_by_a_label.opportunitysnapshot.forecastcategory_0",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "a_label.account.id.name",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "a_label.owner.department",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals should correctly convert two totals and grand total 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.account.id.name_0",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "a_label.owner.department",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.owner.department_1",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "a_label.account.id.name",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_of_totals_sum_m_abZgFKGPaGYM_by_a_label.account.id.name_0",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
 exports[`convertTotals should correctly convert two totals with different functions 1`] = `
 Array [
   Object {
