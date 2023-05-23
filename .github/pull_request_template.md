@@ -37,6 +37,7 @@ Supported PR commands:
 
 ---
 
+
 # PR Checklist
 
 -   [ ] commit messages adhere to the [commit message guidelines](https://github.com/gooddata/gooddata-ui-sdk/blob/master/docs/contributing.md#what-should-the-commits-look-like)
