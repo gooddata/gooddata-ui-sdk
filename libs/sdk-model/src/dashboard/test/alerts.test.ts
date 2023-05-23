@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isWidgetAlert, isWidgetAlertDefinition } from "../alert";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isWidgetAlert, isWidgetAlertDefinition } from "../alert.js";
 import { widgetAlert, widgetAlertDefinitionToCreate, widgetAlertDefinitionToUpdate } from "./alerts.fixtures";
 
 describe("dashboard widget alerts type guards", () => {

@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { Account, Department, Won } from "../../../../__mocks__/model";
+import { Account, Department, Won } from "../../../../__mocks__/model.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
@@ -7,10 +7,10 @@ import {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
     newRankingFilter,
-} from "../factory";
-import { localIdRef, idRef } from "../../../objRef/factory";
-import { IAttribute, attributeIdentifier, IdentifierRef, LocalIdRef } from "../../..";
-import { attributeLocalId } from "../../attribute";
+} from "../factory.js";
+import { localIdRef, idRef } from "../../../objRef/factory.js";
+import { IAttribute, attributeIdentifier, IdentifierRef, LocalIdRef } from "../../../index.js";
+import { attributeLocalId } from "../../attribute/index.js";
 
 describe("filter factory", () => {
     describe("newPositiveAttributeFilter", () => {

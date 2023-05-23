@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "importHelpers": true,
         "lib": ["es2017", "dom"],
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
+        "importHelpers": true,        
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
@@ -15,5 +15,6 @@
         "noImplicitReturns": true,
         "removeComments": false
     },
-    "exclude": ["**/node_modules", "dist", "esm"]
+
+    "exclude": ["**/node_modules","esm"]
 }

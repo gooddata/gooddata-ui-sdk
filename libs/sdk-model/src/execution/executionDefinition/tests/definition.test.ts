@@ -21,10 +21,10 @@ import {
     newRelativeDateFilter,
     newTotal,
     newTwoDimensional,
-} from "../../../index";
-import { Account, Activity, Won } from "../../../../__mocks__/model";
-import { IFilter } from "../../filter";
-import { defSetPostProcessing, defWithFilters, IPostProcessing } from "../index";
+} from "../../../index.js";
+import { Account, Activity, Won } from "../../../../__mocks__/model.js";
+import { IFilter } from "../../filter/index.js";
+import { defSetPostProcessing, defWithFilters, IPostProcessing } from "../index.js";
 
 const Workspace = "testWorkspace";
 

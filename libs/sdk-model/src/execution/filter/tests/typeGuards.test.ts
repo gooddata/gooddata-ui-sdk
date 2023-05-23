@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { Account, Activity, Won } from "../../../../__mocks__/model";
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
+import { Account, Activity, Won } from "../../../../__mocks__/model.js";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
@@ -9,7 +9,7 @@ import {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
     newRankingFilter,
-} from "../factory";
+} from "../factory.js";
 import {
     isAbsoluteDateFilter,
     isAttributeElementsByRef,
@@ -24,8 +24,8 @@ import {
     isRangeConditionOperator,
     isRankingFilter,
     isFilter,
-} from "../index";
-import { DateGranularity } from "../../../base/dateGranularities";
+} from "../index.js";
+import { DateGranularity } from "../../../base/dateGranularities.js";
 
 describe("filter type guards", () => {
     describe("isFilter", () => {

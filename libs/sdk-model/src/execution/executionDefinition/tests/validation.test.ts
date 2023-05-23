@@ -1,13 +1,13 @@
 // (C) 2021 GoodData Corporation
 
-import { IExecutionDefinition } from "../index";
-import { ActivityType, Department, Won, WinRate } from "../../../../__mocks__/model";
-import { modifyAttribute } from "../../attribute/factory";
-import { modifyMeasure } from "../../measure/factory";
-import { IAttribute } from "../../attribute";
-import { IMeasure } from "../../measure";
-import { emptyDef } from "../factory";
-import { defValidate } from "../validation";
+import { IExecutionDefinition } from "../index.js";
+import { ActivityType, Department, Won, WinRate } from "../../../../__mocks__/model.js";
+import { modifyAttribute } from "../../attribute/factory.js";
+import { modifyMeasure } from "../../measure/factory.js";
+import { IAttribute } from "../../attribute/index.js";
+import { IMeasure } from "../../measure/index.js";
+import { emptyDef } from "../factory.js";
+import { defValidate } from "../validation.js";
 
 describe("defValidate", () => {
     const Workspace = "testWorkspace";

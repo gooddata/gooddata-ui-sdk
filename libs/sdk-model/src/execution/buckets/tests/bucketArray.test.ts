@@ -7,9 +7,9 @@ import {
     IBucket,
     IAttributeOrMeasure,
     BucketItemModifications,
-} from "../index";
-import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model";
-import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
+} from "../index.js";
+import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model.js";
+import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute/index.js";
 import {
     bucketsAttributes,
     bucketsById,
@@ -20,9 +20,9 @@ import {
     bucketsMeasures,
     bucketsTotals,
     bucketsModifyItem,
-} from "../bucketArray";
-import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure";
-import { ITotal, newTotal } from "../../base/totals";
+} from "../bucketArray.js";
+import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure/index.js";
+import { ITotal, newTotal } from "../../base/totals.js";
 
 const Total1 = newTotal("sum", Won, Account.Name);
 const Total2 = newTotal("min", Won, Account.Name);

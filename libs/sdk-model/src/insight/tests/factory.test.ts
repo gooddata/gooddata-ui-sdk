@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 
-import { newAttributeSort, newPositiveAttributeFilter } from "../..";
-import { Department, Won } from "../../../__mocks__/model";
-import { newBucket } from "../../execution/buckets";
-import { newInsightDefinition } from "../factory";
+import { newAttributeSort, newPositiveAttributeFilter } from "../../index.js";
+import { Department, Won } from "../../../__mocks__/model.js";
+import { newBucket } from "../../execution/buckets/index.js";
+import { newInsightDefinition } from "../factory.js";
 
 describe("insight factory", () => {
     it("should create new empty insight", () => {

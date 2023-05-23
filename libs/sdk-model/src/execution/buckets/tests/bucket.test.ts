@@ -17,13 +17,13 @@ import {
     BucketItemModifications,
     IBucket,
     bucketModifyItems,
-} from "../index";
-import { Account, Activity, Velocity, Won, Duration } from "../../../../__mocks__/model";
+} from "../index.js";
+import { Account, Activity, Velocity, Won, Duration } from "../../../../__mocks__/model.js";
 import { InvariantError } from "ts-invariant";
-import { ITotal, newTotal } from "../../base/totals";
-import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
-import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure";
-import { modifySimpleMeasure } from "../../../index";
+import { ITotal, newTotal } from "../../base/totals.js";
+import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute/index.js";
+import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure/index.js";
+import { modifySimpleMeasure } from "../../../index.js";
 
 describe("newBucket", () => {
     const Scenarios: Array<[string, any, any[]]> = [

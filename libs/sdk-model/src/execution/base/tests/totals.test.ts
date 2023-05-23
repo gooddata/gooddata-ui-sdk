@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { newTotal, totalIsNative } from "../totals";
-import { Account, Won } from "../../../../__mocks__/model";
+import { newTotal, totalIsNative } from "../totals.js";
+import { Account, Won } from "../../../../__mocks__/model.js";
 import { InvariantError } from "ts-invariant";
 
 describe("newTotal", () => {

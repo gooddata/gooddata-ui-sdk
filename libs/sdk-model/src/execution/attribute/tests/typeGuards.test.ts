@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 
-import { Account, Won } from "../../../../__mocks__/model";
-import { isAttribute } from "../index";
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
+import { Account, Won } from "../../../../__mocks__/model.js";
+import { isAttribute } from "../index.js";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 
 describe("attribute type guard", () => {
     describe("isAttribute", () => {

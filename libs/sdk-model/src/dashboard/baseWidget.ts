@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
-import { ObjRef } from "../objRef";
-import { DrillDefinition } from "./drill";
-import { IDashboardFilterReference } from "./filterContext";
+import { ObjRef } from "../objRef/index.js";
+import { DrillDefinition } from "./drill.js";
+import { IDashboardFilterReference } from "./filterContext.js";
 
 /**
  * Defines properties that are used for filterable widgets. Filterable widgets allow users to specify:

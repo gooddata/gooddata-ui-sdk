@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { InvariantError } from "ts-invariant";
-import { bucketItemLocalId } from "../bucketItem";
-import { Account, Won } from "../../../../__mocks__/model";
-import { attributeLocalId } from "../../attribute";
-import { measureLocalId } from "../../measure";
+import { bucketItemLocalId } from "../bucketItem.js";
+import { Account, Won } from "../../../../__mocks__/model.js";
+import { attributeLocalId } from "../../attribute/index.js";
+import { measureLocalId } from "../../measure/index.js";
 
 describe("bucketItemLocalId", () => {
     it("should throw InvariantError if bucketItem is invalid type", () => {

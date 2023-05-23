@@ -1,9 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
-import { ICatalogAttribute, isCatalogAttribute } from "./attribute";
-import { ICatalogMeasure, isCatalogMeasure } from "./measure";
-import { ICatalogFact, isCatalogFact } from "./fact";
-import { ICatalogDateDataset } from "./dateDataset";
-import { MetadataObject } from "../metadata";
+import { ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
+import { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
+import { ICatalogFact, isCatalogFact } from "./fact/index.js";
+import { ICatalogDateDataset } from "./dateDataset/index.js";
+import { MetadataObject } from "../metadata/index.js";
 
 /**
  * Type representing catalog item - attribute, measure, fact or dateDataset
@@ -46,9 +46,9 @@ export const catalogItemMetadataObject = (catalogItem: CatalogItem): MetadataObj
  */
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
-export { CatalogItemType, ICatalogItemBase } from "./types";
-export { ICatalogAttribute, isCatalogAttribute } from "./attribute";
-export { ICatalogMeasure, isCatalogMeasure } from "./measure";
-export { ICatalogFact, isCatalogFact } from "./fact";
-export { ICatalogDateDataset, ICatalogDateAttribute, isCatalogDateDataset } from "./dateDataset";
-export { ICatalogGroup, IGroupableCatalogItemBase } from "./group";
+export { CatalogItemType, ICatalogItemBase } from "./types.js";
+export { ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
+export { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
+export { ICatalogFact, isCatalogFact } from "./fact/index.js";
+export { ICatalogDateDataset, ICatalogDateAttribute, isCatalogDateDataset } from "./dateDataset/index.js";
+export { ICatalogGroup, IGroupableCatalogItemBase } from "./group/index.js";

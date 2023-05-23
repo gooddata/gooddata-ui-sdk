@@ -1,15 +1,15 @@
 // (C) 2019-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { IAuditableDates, IAuditableUsers } from "../base/metadata";
+import isEmpty from "lodash/isEmpty.js";
+import { IAuditableDates, IAuditableUsers } from "../base/metadata.js";
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
     DateFilterGranularity,
-} from "../dateFilterConfig";
-import { Identifier, ObjRef } from "../objRef";
-import { IDashboardObjectIdentity } from "./common";
-import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
-import { IDashboardWidget, IDashboardLayout } from "./layout";
+} from "../dateFilterConfig/index.js";
+import { Identifier, ObjRef } from "../objRef/index.js";
+import { IDashboardObjectIdentity } from "./common.js";
+import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext.js";
+import { IDashboardWidget, IDashboardLayout } from "./layout.js";
 
 /**
  * Date filter configuration mode

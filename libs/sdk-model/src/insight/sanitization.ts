@@ -1,11 +1,17 @@
 // (C) 2020-2022 GoodData Corporation
 import { InvariantError } from "ts-invariant";
 
-import { IInsightDefinition, insightAttributes, insightBuckets, insightSetBuckets, insightSorts } from ".";
-import { bucketAttributeIndex, bucketSetTotals, bucketTotals, IBucket } from "../execution/buckets";
-import { isAttributeSort, isMeasureSort, ISortItem, sortEntityIds } from "../execution/base/sort";
-import { ITotal } from "../execution/base/totals";
-import { attributeLocalId } from "../execution/attribute";
+import {
+    IInsightDefinition,
+    insightAttributes,
+    insightBuckets,
+    insightSetBuckets,
+    insightSorts,
+} from "./index.js";
+import { bucketAttributeIndex, bucketSetTotals, bucketTotals, IBucket } from "../execution/buckets/index.js";
+import { isAttributeSort, isMeasureSort, ISortItem, sortEntityIds } from "../execution/base/sort.js";
+import { ITotal } from "../execution/base/totals.js";
+import { attributeLocalId } from "../execution/attribute/index.js";
 
 /**
  * Makes sure the insight does not have any nonsensical data (like totals that no longer make sense, etc.), before it is saved.

@@ -1,11 +1,11 @@
 // (C) 2020 GoodData Corporation
-import { insightSanitize } from "../sanitization";
-import { newTotal, ITotal } from "../../execution/base/totals";
-import { newMeasureSort, newAttributeSort, ISortItem } from "../../execution/base/sort";
-import { newInsightDefinition } from "../factory";
-import { bucketTotals, newBucket } from "../../execution/buckets";
-import { insightBucket } from "..";
-import { Account, ActivityType, Department, Velocity, Won } from "../../../__mocks__/model";
+import { insightSanitize } from "../sanitization.js";
+import { newTotal, ITotal } from "../../execution/base/totals.js";
+import { newMeasureSort, newAttributeSort, ISortItem } from "../../execution/base/sort.js";
+import { newInsightDefinition } from "../factory.js";
+import { bucketTotals, newBucket } from "../../execution/buckets/index.js";
+import { insightBucket } from "../index.js";
+import { Account, ActivityType, Department, Velocity, Won } from "../../../__mocks__/model.js";
 
 describe("insightSanitize", () => {
     const m1 = Won;

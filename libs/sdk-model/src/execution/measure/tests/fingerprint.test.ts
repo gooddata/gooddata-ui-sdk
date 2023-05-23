@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
-import { newPositiveAttributeFilter } from "../../..";
-import { Account, Velocity, Won } from "../../../../__mocks__/model";
-import { modifySimpleMeasure } from "../factory";
-import { measureFingerprint } from "../fingerprint";
-import { IMeasure } from "../index";
-import cloneDeep from "lodash/cloneDeep";
+import { newPositiveAttributeFilter } from "../../../index.js";
+import { Account, Velocity, Won } from "../../../../__mocks__/model.js";
+import { modifySimpleMeasure } from "../factory.js";
+import { measureFingerprint } from "../fingerprint.js";
+import { IMeasure } from "../index.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 describe("measureFingerprint", () => {
     describe("for simple measure", () => {

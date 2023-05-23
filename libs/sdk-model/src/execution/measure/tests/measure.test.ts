@@ -1,13 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { Velocity, Won } from "../../../../__mocks__/model";
+import { Velocity, Won } from "../../../../__mocks__/model.js";
 import {
     modifyMeasure,
     modifySimpleMeasure,
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-} from "../factory";
+} from "../factory.js";
 import {
     IPreviousPeriodDateDataSet,
     isMeasureFormatInPercent,
@@ -26,12 +26,12 @@ import {
     measurePreviousPeriodDateDataSets,
     measureTitle,
     measureUri,
-} from "../index";
-import { ObjRef } from "../../../objRef";
-import { newPositiveAttributeFilter } from "../../filter/factory";
-import { IFilter } from "../../filter";
-import { idRef, uriRef } from "../../../objRef/factory";
-import { applyRatioRule, ComputeRatioRule } from "../../buckets";
+} from "../index.js";
+import { ObjRef } from "../../../objRef/index.js";
+import { newPositiveAttributeFilter } from "../../filter/factory.js";
+import { IFilter } from "../../filter/index.js";
+import { idRef, uriRef } from "../../../objRef/factory.js";
+import { applyRatioRule, ComputeRatioRule } from "../../buckets/index.js";
 
 const SimpleMeasureWithIdentifier = Won;
 const SimpleMeasureWithRatio = modifySimpleMeasure(Won, (m) => m.ratio());

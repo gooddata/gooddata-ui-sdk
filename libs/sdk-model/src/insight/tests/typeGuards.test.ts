@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { newInsight } from "../../../__mocks__/insights";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isInsight, isColorMappingItem, IColorMappingItem } from "../index";
+import { newInsight } from "../../../__mocks__/insights.js";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isInsight, isColorMappingItem, IColorMappingItem } from "../index.js";
 
 describe("insight type guards", () => {
     describe("isInsight", () => {

@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { isDimension, MeasureGroupIdentifier, newDimension } from "../dimension";
-import { Won } from "../../../../__mocks__/model";
-import { isAttributeLocator, isAttributeSort, isMeasureLocator, isMeasureSort } from "../sort";
-import { isTotal } from "../totals";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { isDimension, MeasureGroupIdentifier, newDimension } from "../dimension.js";
+import { Won } from "../../../../__mocks__/model.js";
+import { isAttributeLocator, isAttributeSort, isMeasureLocator, isMeasureSort } from "../sort.js";
+import { isTotal } from "../totals.js";
 
 describe("dimension type guard", () => {
     describe("isDimension", () => {

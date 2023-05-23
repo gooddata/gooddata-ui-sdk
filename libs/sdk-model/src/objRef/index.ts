@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 import stringify from "json-stable-stringify";
 
 /**

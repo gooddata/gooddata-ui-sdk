@@ -1,4 +1,4 @@
-// Fail test on console error (react proptypes validation etc.)
+// (C) 2019 GoodData Corporation
 const consoleError = console.error;
 console.error = (err, ...args) => {
     consoleError(err, ...args);

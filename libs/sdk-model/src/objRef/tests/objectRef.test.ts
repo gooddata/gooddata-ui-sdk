@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { objRefToString, ObjRef, ObjRefInScope, areObjRefsEqual } from "../index";
+import { objRefToString, ObjRef, ObjRefInScope, areObjRefsEqual } from "../index.js";
 
 describe("objRefToString", () => {
     const Scenarios: Array<[string, ObjRef, string | undefined]> = [

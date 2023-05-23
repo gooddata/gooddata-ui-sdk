@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { idRef, uriRef, localIdRef } from "../factory";
+import { idRef, uriRef, localIdRef } from "../factory.js";
 
 describe("idRef", () => {
     it("creates a simple id ref", () => {

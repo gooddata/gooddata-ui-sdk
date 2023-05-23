@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import invariant from "ts-invariant";
-import { ObjRef } from "../../../objRef";
-import { IMetadataObject, isMetadataObject } from "../types";
+import { invariant } from "ts-invariant";
+import { ObjRef } from "../../../objRef/index.js";
+import { IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
  * Attribute display form type

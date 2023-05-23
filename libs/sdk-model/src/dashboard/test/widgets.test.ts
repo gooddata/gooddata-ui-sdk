@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isWidget, isWidgetDefinition } from "../widget";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isWidget, isWidgetDefinition } from "../widget.js";
 import { widget, widgetDefinition } from "./widgets.fixtures";
 
 describe("widget type guards", () => {

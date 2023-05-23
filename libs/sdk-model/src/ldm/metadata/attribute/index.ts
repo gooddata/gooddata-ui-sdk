@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import { IMetadataObject, isMetadataObject } from "../types";
-import { IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm";
-import { ObjRef } from "../../../objRef";
+import { IMetadataObject, isMetadataObject } from "../types.js";
+import { IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm/index.js";
+import { ObjRef } from "../../../objRef/index.js";
 
 /**
  * Attribute metadata object

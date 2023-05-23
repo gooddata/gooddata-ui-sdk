@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 
-import { Account, Won } from "../../../../__mocks__/model";
-import { IDimension, MeasureGroupIdentifier } from "../dimension";
-import { dimensionFingerprint } from "../fingerprint";
-import { newTotal } from "../totals";
+import { Account, Won } from "../../../../__mocks__/model.js";
+import { IDimension, MeasureGroupIdentifier } from "../dimension.js";
+import { dimensionFingerprint } from "../fingerprint.js";
+import { newTotal } from "../totals.js";
 
 describe("dimensionFingerprint", () => {
     const DimensionWithUndefinedTotals: IDimension = {

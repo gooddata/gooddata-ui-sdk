@@ -1,14 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
-import { factoryNotationFor } from "../index";
-import { IAttribute } from "../../attribute";
-import { newAttribute } from "../../attribute/factory";
+import { factoryNotationFor } from "../index.js";
+import { IAttribute } from "../../attribute/index.js";
+import { newAttribute } from "../../attribute/factory.js";
 import {
     IAttributeSortItem,
     IMeasureSortItem,
     newAttributeAreaSort,
     newAttributeSort,
     newMeasureSort,
-} from "../../base/sort";
+} from "../../base/sort.js";
 import {
     IAbsoluteDateFilter,
     IMeasureValueFilter,
@@ -16,7 +16,7 @@ import {
     IPositiveAttributeFilter,
     IRelativeDateFilter,
     IRankingFilter,
-} from "../../filter";
+} from "../../filter/index.js";
 import {
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,
@@ -24,16 +24,16 @@ import {
     newRelativeDateFilter,
     newMeasureValueFilter,
     newRankingFilter,
-} from "../../filter/factory";
-import { IMeasure } from "../../measure";
+} from "../../filter/factory.js";
+import { IMeasure } from "../../measure/index.js";
 import {
     newArithmeticMeasure,
     newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-} from "../../measure/factory";
-import { idRef, localIdRef, uriRef } from "../../../objRef/factory";
-import { ITotal, newTotal } from "../../base/totals";
+} from "../../measure/factory.js";
+import { idRef, localIdRef, uriRef } from "../../../objRef/factory.js";
+import { ITotal, newTotal } from "../../base/totals.js";
 
 // object with all the factory functions to be DI'd into the testing function
 const factories = {

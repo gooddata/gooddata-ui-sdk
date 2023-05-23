@@ -7,9 +7,9 @@ import {
     IAttribute,
     attributeAlias,
     attributeDisplayFormRef,
-} from "../index";
-import { Account, Activity, ActivityType } from "../../../../__mocks__/model";
-import { ObjRef } from "../../../objRef";
+} from "../index.js";
+import { Account, Activity, ActivityType } from "../../../../__mocks__/model.js";
+import { ObjRef } from "../../../objRef/index.js";
 
 const UriDefinedAttribute: IAttribute = {
     attribute: {

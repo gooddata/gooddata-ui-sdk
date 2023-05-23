@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { Account, ClosedDate, Won } from "../../../../__mocks__/model";
+import { Account, ClosedDate, Won } from "../../../../__mocks__/model.js";
 import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -8,7 +8,7 @@ import {
     newMeasureValueFilter,
     newRelativeDateFilter,
     newRankingFilter,
-} from "../factory";
+} from "../factory.js";
 import {
     filterIsEmpty,
     IAttributeElements,
@@ -20,9 +20,9 @@ import {
     absoluteDateFilterValues,
     relativeDateFilterValues,
     filterMeasureRef,
-} from "../index";
-import { ObjRef, ObjRefInScope } from "../../../objRef";
-import { localIdRef } from "../../..";
+} from "../index.js";
+import { ObjRef, ObjRefInScope } from "../../../objRef/index.js";
+import { localIdRef } from "../../../index.js";
 
 const AbsoluteDateFilter = newAbsoluteDateFilter(ClosedDate.MmDdYyyy.attribute.displayForm, "2018", "2019");
 

@@ -1,18 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
-import { isAttribute } from "../attribute";
+import { isAttribute } from "../attribute/index.js";
 import {
     IDimension,
     isDimension,
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
-} from "../base/dimension";
-import { ISortItem } from "../base/sort";
-import { IAttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
-import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
-import { INullableFilter } from "../filter";
-import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight";
-import { isMeasure } from "../measure";
+} from "../base/dimension.js";
+import { ISortItem } from "../base/sort.js";
+import { IAttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets/index.js";
+import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray.js";
+import { INullableFilter } from "../filter/index.js";
+import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight/index.js";
+import { isMeasure } from "../measure/index.js";
 import {
     defSetDimensions,
     defSetPostProcessing,
@@ -23,10 +23,10 @@ import {
     IExecutionDefinition,
     IExecutionConfig,
     IPostProcessing,
-} from "./index";
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
-import { defValidate } from "./validation";
+} from "./index.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+import { defValidate } from "./validation.js";
 
 /**
  * Creates new, empty execution definition for the provided workspace.

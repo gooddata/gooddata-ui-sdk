@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { IAttributeMetadataObject } from "../../metadata/attribute";
-import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm";
-import { IGroupableCatalogItemBase } from "../group";
+import isEmpty from "lodash/isEmpty.js";
+import { IAttributeMetadataObject } from "../../metadata/attribute/index.js";
+import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm/index.js";
+import { IGroupableCatalogItemBase } from "../group/index.js";
 
 /**
  * Type representing catalog attribute

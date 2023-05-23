@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { ObjRef, isObjRef } from "../objRef";
-import { IDashboardObjectIdentity } from "./common";
-import { IFilterContext, IFilterContextDefinition, isFilterContextDefinition } from "./filterContext";
+import isEmpty from "lodash/isEmpty.js";
+import { ObjRef, isObjRef } from "../objRef/index.js";
+import { IDashboardObjectIdentity } from "./common.js";
+import { IFilterContext, IFilterContextDefinition, isFilterContextDefinition } from "./filterContext.js";
 
 /**
  * Common widget alert properties

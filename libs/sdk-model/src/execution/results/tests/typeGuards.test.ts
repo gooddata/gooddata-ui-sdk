@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
     IDimensionItemDescriptor,
     isAttributeDescriptor,
@@ -11,7 +11,7 @@ import {
     isTotalDescriptor,
     isResultTotalHeader,
     IResultHeader,
-} from "../index";
+} from "../index.js";
 
 describe("result type guards", () => {
     describe("isAttributeDescriptor", () => {

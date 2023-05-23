@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
-import isString from "lodash/isString";
-import { IdentifierRef, isIdentifierRef } from "../objRef";
-import { idRef } from "../objRef/factory";
+import isString from "lodash/isString.js";
+import { IdentifierRef, isIdentifierRef } from "../objRef/index.js";
+import { idRef } from "../objRef/factory.js";
 
 /**
  * @internal

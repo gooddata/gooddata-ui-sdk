@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { isBucket } from "../index";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { isBucket } from "../index.js";
 
 describe("bucket type guard", () => {
     describe("isBucket", () => {

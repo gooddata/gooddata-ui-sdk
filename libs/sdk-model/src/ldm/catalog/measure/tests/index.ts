@@ -4,9 +4,9 @@ import {
     catalogMeasure,
     catalogFact,
     catalogDateDataset,
-} from "../../../../../__mocks__/catalog";
-import { InvalidInputTestCases } from "../../../../../__mocks__/typeGuards";
-import { isCatalogMeasure } from "../index";
+} from "../../../../../__mocks__/catalog.js";
+import { InvalidInputTestCases } from "../../../../../__mocks__/typeGuards.js";
+import { isCatalogMeasure } from "../index.js";
 
 describe("isCatalogMeasure", () => {
     const Scenarios: Array<[boolean, string, any]> = [

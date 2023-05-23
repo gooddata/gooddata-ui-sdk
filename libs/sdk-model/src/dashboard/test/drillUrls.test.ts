@@ -4,7 +4,7 @@ import {
     getAttributeIdentifiersPlaceholdersFromUrl,
     joinDrillUrlParts,
     splitDrillUrlParts,
-} from "../drillUrl";
+} from "../drillUrl.js";
 
 describe("drill url placeholders", () => {
     it("should extracted placeholders", () => {

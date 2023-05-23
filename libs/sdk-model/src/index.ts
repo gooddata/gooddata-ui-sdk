@@ -10,9 +10,9 @@
  *
  * @packageDocumentation
  */
-export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities";
-export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata";
-export { ComparatorDirection, IComparator } from "./base/comparators";
+export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities.js";
+export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
+export { ComparatorDirection, IComparator } from "./base/comparators.js";
 
 export {
     IAttribute,
@@ -28,7 +28,7 @@ export {
     attributeAlias,
     attributeShowAllValues,
     attributeDisplayFormRef,
-} from "./execution/attribute";
+} from "./execution/attribute/index.js";
 
 export {
     newAttribute,
@@ -36,7 +36,7 @@ export {
     AttributeBuilder,
     AttributeModifications,
     AttributeBuilderInput,
-} from "./execution/attribute/factory";
+} from "./execution/attribute/factory.js";
 
 export {
     ObjectType,
@@ -55,7 +55,7 @@ export {
     isObjRef,
     serializeObjRef,
     deserializeObjRef,
-} from "./objRef";
+} from "./objRef/index.js";
 
 export {
     IDimension,
@@ -68,11 +68,11 @@ export {
     dimensionSetTotals,
     dimensionsFindItem,
     ItemInDimension,
-} from "./execution/base/dimension";
+} from "./execution/base/dimension.js";
 
-export { idRef, uriRef, localIdRef } from "./objRef/factory";
+export { idRef, uriRef, localIdRef } from "./objRef/factory.js";
 
-export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution/base/totals";
+export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution/base/totals.js";
 
 export {
     SortDirection,
@@ -106,7 +106,7 @@ export {
     attributeLocatorElement,
     attributeLocatorIdentifier,
     measureLocatorIdentifier,
-} from "./execution/base/sort";
+} from "./execution/base/sort.js";
 
 export {
     IAttributeElementsByRef,
@@ -166,7 +166,7 @@ export {
     measureValueFilterCondition,
     measureValueFilterMeasure,
     measureValueFilterOperator,
-} from "./execution/filter";
+} from "./execution/filter/index.js";
 
 export {
     newAbsoluteDateFilter,
@@ -176,9 +176,9 @@ export {
     newAllTimeFilter,
     newMeasureValueFilter,
     newRankingFilter,
-} from "./execution/filter/factory";
+} from "./execution/filter/factory.js";
 
-export { mergeFilters } from "./execution/filter/filterMerge";
+export { mergeFilters } from "./execution/filter/filterMerge.js";
 
 export {
     IMeasureTitle,
@@ -229,7 +229,7 @@ export {
     measurePopAttribute,
     measurePreviousPeriodDateDataSets,
     MeasureOrLocalId,
-} from "./execution/measure";
+} from "./execution/measure/index.js";
 
 export {
     IPreviousPeriodDateDataSetSimple,
@@ -255,7 +255,7 @@ export {
     ArithmeticMeasureBuilderInput,
     PoPMeasureBuilderInput,
     PreviousPeriodMeasureBuilderInput,
-} from "./execution/measure/factory";
+} from "./execution/measure/factory.js";
 
 export {
     IAttributeOrMeasure,
@@ -284,7 +284,7 @@ export {
     BucketItemReducer,
     bucketModifyItems,
     bucketItemReduce,
-} from "./execution/buckets";
+} from "./execution/buckets/index.js";
 
 export {
     bucketsFind,
@@ -298,9 +298,9 @@ export {
     bucketsTotals,
     bucketsModifyItem,
     bucketsReduceItem,
-} from "./execution/buckets/bucketArray";
+} from "./execution/buckets/bucketArray.js";
 
-export { bucketItemLocalId } from "./execution/buckets/bucketItem";
+export { bucketItemLocalId } from "./execution/buckets/bucketItem.js";
 
 export {
     IExecutionDefinition,
@@ -314,7 +314,7 @@ export {
     defSetExecConfig,
     IPostProcessing,
     defSetPostProcessing,
-} from "./execution/executionDefinition";
+} from "./execution/executionDefinition/index.js";
 
 export {
     newDefForItems,
@@ -327,7 +327,7 @@ export {
     defWithExecConfig,
     defaultDimensionsGenerator,
     emptyDef,
-} from "./execution/executionDefinition/factory";
+} from "./execution/executionDefinition/factory.js";
 
 export {
     GuidType,
@@ -345,7 +345,7 @@ export {
     colorPaletteToColors,
     IColorPaletteMetadataObject,
     IColorPaletteDefinition,
-} from "./colors";
+} from "./colors/index.js";
 
 export {
     IInsight,
@@ -391,7 +391,7 @@ export {
     visClassUrl,
     visClassId,
     visClassUri,
-} from "./insight";
+} from "./insight/index.js";
 
 export {
     insightCreatedComparator,
@@ -399,13 +399,13 @@ export {
     insightTitleComparator,
     insightUpdatedComparator,
     insightUpdatedByComparator,
-} from "./insight/comparators";
+} from "./insight/comparators.js";
 
-export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
+export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory.js";
 
-export { insightSanitize, sanitizeBucketTotals } from "./insight/sanitization";
+export { insightSanitize, sanitizeBucketTotals } from "./insight/sanitization.js";
 
-export { factoryNotationFor } from "./execution/objectFactoryNotation";
+export { factoryNotationFor } from "./execution/objectFactoryNotation/index.js";
 
 export {
     DateFilterOptionAbsoluteFormType,
@@ -431,9 +431,9 @@ export {
     isDateFilterGranularity,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-} from "./dateFilterConfig";
+} from "./dateFilterConfig/index.js";
 
-export { IDashboardObjectIdentity } from "./dashboard/common";
+export { IDashboardObjectIdentity } from "./dashboard/common.js";
 
 export {
     DateFilterAbsoluteType,
@@ -468,7 +468,7 @@ export {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
-} from "./dashboard/filterContext";
+} from "./dashboard/filterContext.js";
 
 export {
     IWidgetAlert,
@@ -476,7 +476,7 @@ export {
     IWidgetAlertDefinition,
     isWidgetAlert,
     isWidgetAlertDefinition,
-} from "./dashboard/alert";
+} from "./dashboard/alert.js";
 
 export {
     DrillDefinition,
@@ -505,7 +505,7 @@ export {
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
-} from "./dashboard/drill";
+} from "./dashboard/drill.js";
 
 export {
     BuiltInWidgetTypes,
@@ -513,7 +513,7 @@ export {
     IDrillableWidget,
     IFilterableWidget,
     IWidgetDescription,
-} from "./dashboard/baseWidget";
+} from "./dashboard/baseWidget.js";
 
 export {
     IKpi,
@@ -527,7 +527,7 @@ export {
     isKpiWithComparison,
     isKpiWithoutComparison,
     isKpi,
-} from "./dashboard/kpi";
+} from "./dashboard/kpi.js";
 
 export {
     AnalyticalWidgetType,
@@ -545,7 +545,7 @@ export {
     IInsightWidgetConfiguration,
     IInsightWidgetDescriptionConfiguration,
     InsightWidgetDescriptionSourceType,
-} from "./dashboard/analyticalWidgets";
+} from "./dashboard/analyticalWidgets.js";
 
 export {
     CatalogItemType,
@@ -564,7 +564,7 @@ export {
     IGroupableCatalogItemBase,
     GroupableCatalogItem,
     catalogItemMetadataObject,
-} from "./ldm/catalog";
+} from "./ldm/catalog/index.js";
 
 export {
     IAttributeDisplayFormMetadataObject,
@@ -595,7 +595,7 @@ export {
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
-} from "./ldm/metadata";
+} from "./ldm/metadata/index.js";
 
 export {
     DataColumnType,
@@ -607,9 +607,9 @@ export {
     IDatasetUser,
     IDataset,
     IDatasetBody,
-} from "./ldm/datasets";
+} from "./ldm/datasets/index.js";
 
-export { IAttributeElement } from "./ldm/attributeElement";
+export { IAttributeElement } from "./ldm/attributeElement.js";
 
 export {
     IWidget,
@@ -625,7 +625,7 @@ export {
     isKpiWidget,
     isInsightWidgetDefinition,
     isInsightWidget,
-} from "./dashboard/widget";
+} from "./dashboard/widget.js";
 
 export {
     IDashboardAttachment,
@@ -637,9 +637,9 @@ export {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
     IScheduledMailBase,
-} from "./dashboard/scheduledMail";
+} from "./dashboard/scheduledMail.js";
 
-export { IUser, IWorkspaceUser, userFullName } from "./user";
+export { IUser, IWorkspaceUser, userFullName } from "./user/index.js";
 
 export {
     IDashboardLayout,
@@ -654,7 +654,7 @@ export {
     isDashboardLayoutSection,
     isDashboardLayoutItem,
     isDashboardWidget,
-} from "./dashboard/layout";
+} from "./dashboard/layout.js";
 
 export {
     IDashboard,
@@ -675,11 +675,11 @@ export {
     ShareStatus,
     IDashboardPermissions,
     IExistingDashboard,
-} from "./dashboard/dashboard";
+} from "./dashboard/dashboard.js";
 
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings";
+export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings/index.js";
 
-export { IWorkspaceUserGroup } from "./userGroup";
+export { IWorkspaceUserGroup } from "./userGroup/index.js";
 
 export {
     ThemeFontUri,
@@ -716,9 +716,9 @@ export {
     IThemeModal,
     IThemeModalTitle,
     IThemeTooltip,
-} from "./theme";
+} from "./theme/index.js";
 
-export { IWorkspacePermissions, WorkspacePermission } from "./permissions";
+export { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";
 
 export {
     DataValue,
@@ -751,7 +751,7 @@ export {
     resultHeaderName,
     attributeDescriptorLocalId,
     attributeDescriptorName,
-} from "./execution/results";
+} from "./execution/results/index.js";
 
 export {
     AccessGranteeDetail,
@@ -782,7 +782,7 @@ export {
     isGranularUserGroupAccessGrantee,
     isGranularUserAccess,
     isGranularUserGroupAccess,
-} from "./accessControl";
+} from "./accessControl/index.js";
 
-export { IOrganizationDescriptor } from "./organization";
-export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements";
+export { IOrganizationDescriptor } from "./organization/index.js";
+export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";

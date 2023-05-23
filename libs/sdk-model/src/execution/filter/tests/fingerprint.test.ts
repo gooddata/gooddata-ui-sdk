@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 
-import { Account, Won } from "../../../../__mocks__/model";
-import { newMeasureValueFilter, newNegativeAttributeFilter } from "../factory";
-import { filterFingerprint, isFilterRelevantForFingerprinting } from "../fingerprint";
+import { Account, Won } from "../../../../__mocks__/model.js";
+import { newMeasureValueFilter, newNegativeAttributeFilter } from "../factory.js";
+import { filterFingerprint, isFilterRelevantForFingerprinting } from "../fingerprint.js";
 
 describe("isFilterRelevantForFingerprinting", () => {
     it("should return false for noop measure value filter", () => {

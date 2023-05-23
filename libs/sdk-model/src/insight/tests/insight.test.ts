@@ -14,12 +14,17 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newTotal,
-} from "../..";
-import { newInsight } from "../../../__mocks__/insights";
-import { Account, Activity, ActivityType, Velocity, Won } from "../../../__mocks__/model";
-import { AttributePredicate, IAttribute, isAttribute } from "../../execution/attribute";
-import { BucketItemModifications, BucketItemReducer, IBucket, newBucket } from "../../execution/buckets";
-import { IMeasure, isMeasure, MeasurePredicate } from "../../execution/measure";
+} from "../../index.js";
+import { newInsight } from "../../../__mocks__/insights.js";
+import { Account, Activity, ActivityType, Velocity, Won } from "../../../__mocks__/model.js";
+import { AttributePredicate, IAttribute, isAttribute } from "../../execution/attribute/index.js";
+import {
+    BucketItemModifications,
+    BucketItemReducer,
+    IBucket,
+    newBucket,
+} from "../../execution/buckets/index.js";
+import { IMeasure, isMeasure, MeasurePredicate } from "../../execution/measure/index.js";
 import {
     IInsight,
     insightAttributes,
@@ -46,7 +51,7 @@ import {
     insightUpdated,
     insightUri,
     VisualizationProperties,
-} from "../index";
+} from "../index.js";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
 const AttributeBucket = newBucket("bucket2", Activity.Subject);

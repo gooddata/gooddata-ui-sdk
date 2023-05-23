@@ -1,11 +1,11 @@
 // (C) 2019-2023 GoodData Corporation
-import { idRef } from "../../../../objRef/factory";
+import { idRef } from "../../../../objRef/factory.js";
 import {
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
     attributeDisplayFormMetadataObjectAttributeRef,
     IAttributeDisplayFormMetadataObject,
-} from "../index";
+} from "../index.js";
 
 describe("attribute display form", () => {
     const _attributeDisplayFormTitle = "Account";

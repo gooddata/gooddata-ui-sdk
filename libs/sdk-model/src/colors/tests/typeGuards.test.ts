@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
-import { isColorFromPalette, isRgbColor } from "../index";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { isColorFromPalette, isRgbColor } from "../index.js";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 
 describe("color type guards", () => {
     describe("isColorFromPalette", () => {

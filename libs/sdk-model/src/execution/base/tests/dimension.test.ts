@@ -8,9 +8,9 @@ import {
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
-} from "../dimension";
-import { ITotal } from "../totals";
-import { Account, Activity } from "../../../../__mocks__/model";
+} from "../dimension.js";
+import { ITotal } from "../totals.js";
+import { Account, Activity } from "../../../../__mocks__/model.js";
 
 const Total1: ITotal = {
     type: "avg",

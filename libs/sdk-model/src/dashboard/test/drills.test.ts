@@ -1,13 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import {
     isDrillToLegacyDashboard,
     isDrillToDashboard,
     isDrillToInsight,
     isDrillFromMeasure,
     isDrillFromAttribute,
-} from "../drill";
+} from "../drill.js";
 import {
     drillToLegacyDashboard,
     drillToDashboard,

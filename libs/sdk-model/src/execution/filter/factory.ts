@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
-import isNil from "lodash/isNil";
+import { invariant } from "ts-invariant";
+import isNil from "lodash/isNil.js";
 import {
     ComparisonConditionOperator,
     IAbsoluteDateFilter,
@@ -12,12 +12,12 @@ import {
     RangeConditionOperator,
     IRankingFilter,
     RankingFilterOperator,
-} from "./index";
-import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute";
-import { Identifier, isObjRef, LocalIdRef, ObjRef, ObjRefInScope } from "../../objRef";
-import { IMeasure, isMeasure, measureLocalId } from "../measure";
-import { idRef, localIdRef } from "../../objRef/factory";
-import { DateAttributeGranularity } from "../../base/dateGranularities";
+} from "./index.js";
+import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute/index.js";
+import { Identifier, isObjRef, LocalIdRef, ObjRef, ObjRefInScope } from "../../objRef/index.js";
+import { IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
+import { idRef, localIdRef } from "../../objRef/factory.js";
+import { DateAttributeGranularity } from "../../base/dateGranularities.js";
 
 /**
  * Creates a new positive attribute filter.
