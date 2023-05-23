@@ -1,5 +1,8 @@
 // (C) 2021 GoodData Corporation
 
+/**
+ * @internal
+ */
 export type GuardType<T> = T extends (o: unknown) => o is infer U ? U : never;
 
 /**

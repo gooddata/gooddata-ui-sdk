@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { combineGuards } from "../typesUtils";
+import { combineGuards } from "../typesUtils.js";
 
 type Bird = { fly: () => "fly" };
 type Insect = { annoy: () => "annoy" };

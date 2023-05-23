@@ -9,11 +9,11 @@
  * @packageDocumentation
  */
 
-import * as stringUtils from "./stringUtils";
-import * as testUtils from "./testUtils";
-import * as translationUtils from "./translationUtils";
-import * as arrayUtils from "./arrayUtils";
-import * as objectUtils from "./objectUtils";
-import * as typesUtils from "./typesUtils";
+import * as stringUtils from "./stringUtils.js";
+import * as testUtils from "./testUtils.js";
+import * as translationUtils from "./translationUtils.js";
+import * as arrayUtils from "./arrayUtils.js";
+import * as objectUtils from "./objectUtils.js";
+import * as typesUtils from "./typesUtils.js";
 
 export { stringUtils, testUtils, translationUtils, arrayUtils, objectUtils, typesUtils };

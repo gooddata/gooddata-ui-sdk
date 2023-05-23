@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import { delay } from "../testUtils";
+import { delay } from "../testUtils.js";
+import { jest } from "@jest/globals";
 
 jest.useFakeTimers();
 
