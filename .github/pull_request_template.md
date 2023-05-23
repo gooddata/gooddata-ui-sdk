@@ -21,11 +21,19 @@ Supported PR commands:
 | `extended test - cypress - isolated <testName>`         | Run isolated tests running against recorded Bear backend.  |
 | `extended test - cypress - record <testName>`           | Create a new recording for isolated Bear tests.            |
 | `extended test - cypress - integrated <testName>`       | Run integrated tests against live backend                  |
+| **Compatibility matrix test commands - TIGER Backend**  |                                                            |
+| `extended test - matrix-test <AIO_version>`             | Run integrated tests against AIO versions.                 |
 
 `<testName>` in cypress commands is used to filter specfiles. Example, to run record with BEAR backend
 
 -   Against `dashboard.spec.ts` and `drilling.spec.ts`, execute command `extended test - cypress - record dashboard,drilling`
 -   Against all specfiles, execute command `extended test - cypress - record` or `extended test - cypress - record *`
+
+`<AIO_version>` in commands is used to start test with multiple AIO instances - each instance in triggered by one jenkins build
+
+-   To run with `master` and `stable`, execute command `extended test - matrix-test master,stable` or `extended test - matrix-test latest`
+-   To run with specific version,ex: `2.3.0` and `2.3.1`, execute command `extended test - matrix-test 2.3.0,2.3.1`
+-   In case `<AIO_version>` is empty, read versions from file `compTigerVersions.txt` of this repo
 
 ---
 
