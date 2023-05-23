@@ -708,6 +708,7 @@ class DummyOrganization implements IOrganization {
             setLocale: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
+            setWeekStart: () => Promise.resolve(),
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
@@ -749,6 +750,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setDateFormat(_dateFormat: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setWeekStart(_weekStart: string): Promise<void> {
         return Promise.resolve();
     }
 }

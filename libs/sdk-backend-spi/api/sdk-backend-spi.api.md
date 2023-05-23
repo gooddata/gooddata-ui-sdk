@@ -1061,6 +1061,7 @@ export interface IOrganizationSettingsService {
     setLocale(locale: string): Promise<void>;
     setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;
+    setWeekStart(weekStart: string): Promise<void>;
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 }
 

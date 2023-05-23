@@ -89,6 +89,8 @@ export const DefaultUiSettings: ISettings = {
  */
 export const DefaultLocale: string = "en-US";
 
+export const DefaultWeekStart: string = "Sunday";
+
 /**
  * Number separators.
  */
