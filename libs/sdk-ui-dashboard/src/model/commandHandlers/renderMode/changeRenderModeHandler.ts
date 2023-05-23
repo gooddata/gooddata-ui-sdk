@@ -13,6 +13,7 @@ import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
 import { isInsightWidget } from "@gooddata/sdk-model";
 import { loadInaccessibleDashboards } from "../dashboard/initializeDashboardHandler/loadInaccessibleDashboards";
+import { uiActions } from "../../store/ui";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -32,10 +33,23 @@ export function* changeRenderModeHandler(
             ctx,
             resetDashboardCommand(correlationId),
         );
-        yield put(batchActions([data.batch, renderModeActions.setRenderMode(renderMode)]));
+        yield put(
+            batchActions([
+                data.batch,
+                uiActions.resetInvalidDrillWidgetRefs(),
+                uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
+                renderModeActions.setRenderMode(renderMode),
+            ]),
+        );
         yield put(data.reset);
     } else {
-        yield put(batchActions([renderModeActions.setRenderMode(renderMode)]));
+        yield put(
+            batchActions([
+                uiActions.resetInvalidDrillWidgetRefs(),
+                uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
+                renderModeActions.setRenderMode(renderMode),
+            ]),
+        );
     }
 
     if (renderMode === "edit") {
