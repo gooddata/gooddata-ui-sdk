@@ -26,6 +26,10 @@ export class OrganizationSettingsService
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }
 
+    public async setWeekStart(weekStart: string): Promise<void> {
+        return this.setSetting("WEEK_START", { value: weekStart });
+    }
+
     public async setTheme(activeThemeId: string) {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }

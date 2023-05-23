@@ -46,6 +46,15 @@ export interface IOrganizationSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
 
     /**
+     * Sets first day of week for organization.
+     *
+     * @param weekStart - "Sunday | "Monday"
+     *
+     * @returns promise
+     */
+    setWeekStart(weekStart: string): Promise<void>;
+
+    /**
      * Sets theme for organization.
      *
      * @param themeId - ID of the theme to apply to workspaces in organization.

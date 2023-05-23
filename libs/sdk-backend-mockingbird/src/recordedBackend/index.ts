@@ -342,6 +342,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setLocale: () => Promise.resolve(),
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
+                setWeekStart: () => Promise.resolve(),
                 getSettings: () => Promise.resolve({}),
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
