@@ -33,7 +33,7 @@ function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): 
     // always be same number of descriptors and headers.
     invariant(attributeHeaders[attributeIdx]);
 
-    return attributeHeaders[attributeIdx].attributeHeaderItem.uri === element;
+    return attributeHeaders[attributeIdx]?.attributeHeaderItem?.uri === element;
 }
 
 function measureLocatorMatch(col: SeriesCol, locator: IMeasureLocatorItem): boolean {

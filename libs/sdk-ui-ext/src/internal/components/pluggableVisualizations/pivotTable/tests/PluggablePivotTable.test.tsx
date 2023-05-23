@@ -499,6 +499,21 @@ describe("PluggablePivotTable", () => {
             });
         });
 
+        it("should not remove native total if ranking filter is present", () => {
+            const pivotTable = createComponent();
+            const validColTotals = referencePointMocks.tableWithRowColTotalAndRankingFilter.buckets[2].totals;
+
+            return pivotTable
+                .getExtendedReferencePoint(
+                    referencePointMocks.tableWithRowColTotalAndRankingFilter,
+                    referencePointMocks.tableWithRowColTotalAndRankingFilter,
+                )
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.buckets[1].totals).toBeUndefined();
+                    expect(extendedReferencePoint.buckets[2].totals).toEqual(validColTotals);
+                });
+        });
+
         it("should return a new reference point without updating grand totals and subtotals", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {

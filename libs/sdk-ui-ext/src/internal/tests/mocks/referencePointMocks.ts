@@ -3785,6 +3785,49 @@ export const twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint: IReferen
     },
 };
 
+export const tableWithRowColTotalAndRankingFilter: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "attribute",
+            items: attributeItems.slice(0, 1),
+            totals: [
+                {
+                    measureIdentifier: "m1",
+                    attributeIdentifier: "a1",
+                    type: "nat",
+                },
+            ],
+        },
+        {
+            localIdentifier: "columns",
+            items: attributeItems.slice(1),
+            totals: [
+                {
+                    measureIdentifier: "m1",
+                    attributeIdentifier: "a2",
+                    type: "nat",
+                },
+            ],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [
+            {
+                localIdentifier: "ranking1",
+                filters: [rankingFilter],
+            },
+        ],
+    },
+    properties: {
+        sortItems: [],
+    },
+};
+
 export const tableWithNativeTotal: IReferencePoint = {
     buckets: [
         {

@@ -79,11 +79,12 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
     const columnAttributes = columns ? bucketAttributes(columns) : [];
 
     const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
-    const totals = row ? bucketTotals(row) : [];
+    const rowTotals = row ? bucketTotals(row) : [];
+    const colTotals = columns ? bucketTotals(columns) : [];
 
     return newTwoDimensional(
-        [...rowAttributes, ...totals],
-        [...columnAttributes, ...measuresItemIdentifiers],
+        [...rowAttributes, ...rowTotals],
+        [...columnAttributes, ...colTotals, ...measuresItemIdentifiers],
     );
 }
 

@@ -48,6 +48,7 @@ export async function sleep(delay: number): Promise<void> {
 
 /**
  * Get only valid totals from an execution definition given a list of sort items
+ * Use provided totals, if not given, use totals from ATTRIBUTE bucket
  *
  * @param definition - an execution definition to sanitize
  * @param sortItems - a specification of the sort, if not provided definition.sortBy will be used
@@ -65,16 +66,15 @@ export function sanitizeDefTotals(
         : [];
 }
 
-export function sanitizeDefRowTotals(
-    definition: IExecutionDefinition,
-    sortItems?: ISortItem[],
-    totals?: ITotal[],
-): ITotal[] {
-    const { buckets, sortBy } = definition;
+/**
+ * Get totals from an execution definition for COLUMNS bucket
+ *
+ * @param definition - an execution definition from which totals should be extracted
+ */
+export function getTotalsForColumnsBucket(definition: IExecutionDefinition): ITotal[] {
+    const { buckets } = definition;
     const attributeBucket = bucketsFind(buckets, BucketNames.COLUMNS);
-    return attributeBucket
-        ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy, totals ?? bucketTotals(attributeBucket))
-        : [];
+    return attributeBucket ? bucketTotals(attributeBucket) : [];
 }
 
 export const tableHasRowAttributes = (rowAttributes: IAttributeDescriptor[]): boolean =>

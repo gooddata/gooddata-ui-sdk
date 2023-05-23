@@ -17,6 +17,8 @@ import {
     DEFAULT_AUTOSIZE_PADDING,
     DEFAULT_ROW_HEIGHT,
     MEASURE_COLUMN,
+    COLUMN_TOTAL,
+    COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
 } from "./base/constants";
 import {
@@ -120,6 +122,9 @@ export function createGridOptions(
             [ROW_ATTRIBUTE_COLUMN]: rowAttributeTemplate(table, props),
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
+            // This is temporary, totals/subtotals will receive their corresponding templates
+            [COLUMN_TOTAL]: columnAttributeTemplate(table, props),
+            [COLUMN_SUBTOTAL]: columnAttributeTemplate(table, props),
         },
 
         // Custom renderers

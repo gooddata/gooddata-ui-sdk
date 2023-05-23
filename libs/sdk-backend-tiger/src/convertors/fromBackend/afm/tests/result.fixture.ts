@@ -129,3 +129,134 @@ export const mockDimensionsWithDateFormat: IDimensionDescriptor[] = [
         ],
     },
 ];
+
+export const mockDimensionsWithTotals: IDimensionDescriptor[] = [
+    {
+        headers: [
+            {
+                measureGroupHeader: {
+                    items: [
+                        {
+                            measureHeaderItem: {
+                                localIdentifier: "m1",
+                                name: "Sum of duration",
+                                format: "#,##0.00",
+                            },
+                        },
+                        {
+                            measureHeaderItem: {
+                                localIdentifier: "m2",
+                                name: "Sum of amount",
+                                format: "#,##0.00",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    identifier: "event_date.quarter.label",
+                    localIdentifier: "fd48e8fd32b54b1baba3e3ccdd719f26",
+                    name: "event_date - Quarter/Year",
+                    uri: "foo",
+                    ref: idRef("event_date.quarter.label"),
+                    formOf: {
+                        identifier: "event_date.quarter",
+                        uri: "bar",
+                        name: "event_date - Quarter/Year",
+                        ref: idRef("event_date.quarter"),
+                    },
+                    granularity: "QUARTER",
+                    format: {
+                        locale: "cs-CZ",
+                        pattern: "'Q'Q y",
+                    },
+                },
+            },
+        ],
+    },
+];
+
+export const mockResultWithTotals: ExecutionResult = {
+    data: [["1", "2", "3", "4", "5"]],
+    dimensionHeaders: [
+        {
+            headerGroups: [
+                {
+                    headers: [
+                        {
+                            attributeHeader: {
+                                labelValue: "First",
+                                primaryLabelValue: "FirstLabel",
+                            },
+                        },
+                        {
+                            attributeHeader: {
+                                labelValue: "Second",
+                                primaryLabelValue: "SecondLabel",
+                            },
+                        },
+                        {
+                            totalHeader: {
+                                function: "sum",
+                            },
+                        },
+                        {
+                            totalHeader: {
+                                function: "sum",
+                            },
+                        },
+                        {
+                            totalHeader: {
+                                function: "max",
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            headerGroups: [
+                {
+                    headers: [
+                        {
+                            measureHeader: {
+                                measureIndex: 0,
+                            },
+                        },
+                        {
+                            measureHeader: {
+                                measureIndex: 1,
+                            },
+                        },
+                        {
+                            measureHeader: {
+                                measureIndex: 0,
+                            },
+                        },
+                        {
+                            measureHeader: {
+                                measureIndex: 1,
+                            },
+                        },
+                        {
+                            measureHeader: {
+                                measureIndex: 1,
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+    paging: {
+        count: [1, 2],
+        offset: [0, 0],
+        total: [1, 2],
+    },
+    grandTotals: [],
+};

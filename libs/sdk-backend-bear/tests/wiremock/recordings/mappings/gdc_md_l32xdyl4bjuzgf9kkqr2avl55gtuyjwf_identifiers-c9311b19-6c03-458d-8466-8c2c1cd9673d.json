@@ -1,0 +1,40 @@
+{
+    "id": "c9311b19-6c03-458d-8466-8c2c1cd9673d",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_identifiers",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/identifiers",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"identifierToUri\":[\"label.product.id.name\"]}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"identifiers\":[{\"identifier\":\"label.product.id.name\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055\"}]}",
+        "headers": {
+            "date": "Tue, 23 May 2023 11:24:33 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "7",
+            "X-GDC-REQUEST": "tGKF3ivY2pl40sYe",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "c9311b19-6c03-458d-8466-8c2c1cd9673d",
+    "persistent": true,
+    "insertionIndex": 24
+}

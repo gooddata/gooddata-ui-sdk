@@ -87,6 +87,7 @@ export function getTransformDimensionHeaders(
 
     return (dimensionHeaders: DimensionHeader[]) =>
         dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
+            const totalIndices: { [key: number]: TotalExecutionResultHeader } = {};
             return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
                 const dateFormatProps = getDateFormatProps(
                     dimensions[dimensionIndex].headers[headerGroupIndex],
@@ -97,10 +98,16 @@ export function getTransformDimensionHeaders(
                     }
 
                     if (isResultMeasureHeader(header)) {
+                        if (totalIndices[headerGroupIndex]) {
+                            const index = header?.measureHeader?.measureIndex;
+                            return totalHeaderItem(totalIndices[headerGroupIndex], index);
+                        }
+
                         return measureHeaderItem(header, measureDescriptors);
                     }
 
                     if (isResultTotalHeader(header)) {
+                        totalIndices[headerGroupIndex] = header;
                         return totalHeaderItem(header);
                     }
 
@@ -155,11 +162,13 @@ function measureHeaderItem(
     };
 }
 
-function totalHeaderItem(header: TotalExecutionResultHeader): IResultTotalHeader {
+function totalHeaderItem(header: TotalExecutionResultHeader, measureIndex?: number): IResultTotalHeader {
+    const optionalMeasureIndex = measureIndex !== undefined ? { measureIndex } : {};
     return {
         totalHeaderItem: {
             type: header.totalHeader.function,
             name: header.totalHeader.function.toLowerCase(),
+            ...optionalMeasureIndex,
         },
     };
 }

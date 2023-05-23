@@ -1,0 +1,40 @@
+{
+    "id": "0d29151c-44bc-44c0-a94d-eeeed087e289",
+    "name": "gdc_app_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_executeafm_debug",
+    "request": {
+        "url": "/gdc/app/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/executeAfm/debug",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"attributes\":[{\"localIdentifier\":\"a1\",\"displayForm\":{\"identifier\":\"label.account.id\"}}],\"measures\":[{\"localIdentifier\":\"m_aangOxLSeztu\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"aangOxLSeztu\"}}}}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"reportDefinitionWithInlinedMetrics\":{\"content\":{\"format\":\"grid\",\"filters\":[],\"grid\":{\"columns\":[\"metricGroup\"],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271\",\"alias\":\"Amount\",\"format\":\"$#,##0.00\"}],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}},\"meta\":{\"category\":\"reportDefinitionWithInlinedMetrics\",\"title\":\"Untitled\"}}}",
+        "headers": {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=utf-8",
+            "Date": "Tue, 23 May 2023 11:24:32 GMT",
+            "X-GDC-REQUEST-TIME": "15",
+            "X-GDC-REQUEST": "tubI4DKlJk1ekShN",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "0d29151c-44bc-44c0-a94d-eeeed087e289",
+    "persistent": true,
+    "insertionIndex": 22
+}

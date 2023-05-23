@@ -143,7 +143,9 @@ export function getRowTotals(
     const colGrandTotals = totals[0];
     const colGrandTotalDefs = dv.definition.dimensions[0].totals;
 
-    invariant(colGrandTotalDefs);
+    if (!colGrandTotalDefs) {
+        return null;
+    }
 
     const grandTotalColDescriptor = tableDescriptor.getGrandTotalCol();
     const grandTotalAttrDescriptor = grandTotalColDescriptor.attributeDescriptor;

@@ -191,7 +191,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
             : [];
 
-        const totals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
+        const rowTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
+        const colTotals = getTotalsFromBucket(buckets, BucketNames.COLUMNS);
 
         newReferencePoint.buckets = removeDuplicateBucketItems([
             {
@@ -204,11 +205,15 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 // This is needed because at the beginning totals property is
                 // missing from buckets. If we would pass empty array or
                 // totals: undefined, reference points would differ.
-                ...(totals.length > 0 ? { totals } : null),
+                ...(rowTotals.length > 0 ? { totals: rowTotals } : null),
             },
             {
                 localIdentifier: BucketNames.COLUMNS,
                 items: columnAttributes,
+                // This is needed because at the beginning totals property is
+                // missing from buckets. If we would pass empty array or
+                // totals: undefined, reference points would differ.
+                ...(colTotals.length > 0 ? { totals: colTotals } : null),
             },
         ]);
 

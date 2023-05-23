@@ -1964,6 +1964,8 @@ export interface IResultTotalHeader {
 // @public
 export interface IResultTotalHeaderItem {
     // (undocumented)
+    measureIndex?: number;
+    // (undocumented)
     name: string;
     // (undocumented)
     type: string;
