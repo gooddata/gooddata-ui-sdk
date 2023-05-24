@@ -20,6 +20,7 @@ import {
     TableColDefs,
     TableCols,
     LeafDataCol,
+    SliceMeasureCol,
 } from "./tableDescriptorTypes";
 import { createColDefsFromTableDescriptor } from "./colDefFactory";
 
@@ -73,10 +74,9 @@ function colDescriptorAndHeaders(col: LeafDataCol): {
  * scoping information for the data series backing the column. The scoping information is what code
  * needs to create/populate the groups.
  *
- * The scoping can be done on multiple 'levels' from from root towards the leaves. So
+ * The scoping can be done on multiple 'levels' from root towards the leaves. So
  * for each attribute code checks whether a group already exists on that level, if not it creates one and
  * remembers that group as parentGroup for the next iteration.
- *
  */
 function groupColumns(
     bottomColumns: SeriesCol[] | ScopeCol[],
@@ -246,21 +246,67 @@ function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOper
     return groupColumns(leafColumns, scopingAttributes);
 }
 
-function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
-    return dv
-        .data()
-        .slices()
-        .descriptors.filter(isAttributeDescriptor)
-        .map((attributeDescriptor, idx) => {
-            return {
-                type: "sliceCol",
-                id: `r_${idx}`,
-                index: idx,
-                attributeDescriptor,
-                fullIndexPathToHere: [idx],
-                effectiveTotals: attributeDescriptor.attributeHeader.totalItems ?? [],
-            };
+function createColumnDescriptorsForMeasureRows(dv: DataViewFacade): GroupingOperationResult {
+    const descriptors = dv.meta().attributeDescriptorsForDim(1);
+    const headers = dv.meta().attributeHeadersForDim(1);
+    const numberOfColumns = headers[0]?.length ?? 0;
+    const numberOfAttributes = descriptors.length;
+
+    if (numberOfAttributes === 0) {
+        return {
+            groupingAttributes: [],
+            leafColumns: [],
+            rootColumns: [],
+            allColumns: [],
+        };
+    }
+
+    // for each attribute descriptor, there must be one array in the headers.
+    invariant(descriptors.length === headers.length);
+
+    const bottom: ScopeCol[] = [];
+    for (let colIdx = 0; colIdx < numberOfColumns; colIdx++) {
+        bottom.push({
+            type: "scopeCol",
+            id: `cg_${colIdx}`,
+            children: [],
+            fullIndexPathToHere: [colIdx],
+            header: headers[numberOfAttributes - 1][colIdx],
+            headersToHere: headers.slice(0, numberOfAttributes - 1).map((attrHeaders) => attrHeaders[colIdx]),
+            attributeDescriptor: descriptors[numberOfAttributes - 1],
+            descriptorsToHere: descriptors.slice(0, numberOfAttributes - 1),
         });
+    }
+
+    // do the usual grouping logic with one tweak: do not process the last grouping level because code above
+    // just created that.
+    return groupColumns(bottom, descriptors, numberOfAttributes - 1);
+}
+
+function createRowDescriptor(index: number, attributeDescriptor: IAttributeDescriptor): SliceCol {
+    return {
+        type: "sliceCol",
+        id: `r_${index}`,
+        index: index,
+        attributeDescriptor,
+        fullIndexPathToHere: [index],
+        effectiveTotals: attributeDescriptor.attributeHeader.totalItems ?? [],
+    };
+}
+
+function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
+    if (getMeasureGroupDimensionIndex(dv) === 0) {
+        return dv
+            .meta()
+            .attributeDescriptorsForDim(0)
+            .map((attributeDescriptor, idx) => createRowDescriptor(idx, attributeDescriptor));
+    } else {
+        return dv
+            .data()
+            .slices()
+            .descriptors.filter(isAttributeDescriptor)
+            .map((attributeDescriptor, idx) => createRowDescriptor(idx, attributeDescriptor));
+    }
 }
 
 function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
@@ -279,20 +325,45 @@ function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
         return createColumnDescriptorsWhenNoMeasures(dv);
     }
 
+    if (getMeasureGroupDimensionIndex(dv) === 0) {
+        return createColumnDescriptorsForMeasureRows(dv);
+    }
+
     return createColumnDescriptorsFromDataSeries(dv);
+}
+
+function getMeasureGroupDimensionIndex(dv: DataViewFacade) {
+    return dv.definition.dimensions.findIndex((dimension) => dimension.itemIdentifiers.includes("measureGroup"));
+}
+
+function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): SliceMeasureCol[] {
+    if (getMeasureGroupDimensionIndex(dv) !== 0) {
+        return [];
+    }
+    const idx = rows.length;
+    // always just one measure column if measures are in row dimension
+    return [{
+        type: "sliceMeasureCol",
+        id: `r_${idx}`,
+        index: idx,
+        fullIndexPathToHere: [idx],
+    }];
 }
 
 function createTableHeaders(dv: DataViewFacade): TableCols {
     const rows: SliceCol[] = createRowDescriptors(dv);
     const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
+    const measureColumns = createMeasureColumnDescriptors(dv, rows);
 
     const idToDescriptor: Record<string, AnyCol> = {};
 
     rows.forEach((header) => (idToDescriptor[header.id] = header));
+    measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
     allColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
     return {
         sliceCols: rows,
+        sliceMeasureCols: measureColumns,
         rootDataCols: rootColumns,
         leafDataCols: leafColumns,
         idToDescriptor,

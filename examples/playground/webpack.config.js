@@ -15,7 +15,7 @@ const playgroundDefinitions = {
     secure: ["https://secure.gooddata.com", "k26dtejorcqlqf11crn6imbeevp2q4kg", "bear"],
     stg: ["https://staging.intgdc.com", "na1q8a0q4efb7cajbgre9mmm776dr1yv", "bear"],
     stg2: ["https://staging2.intgdc.com", "ws7pxsamkx8o0t1s7kfvkj5o41uwcmqg", "bear"],
-    stg3: ["https://staging3.intgdc.com", "mbuumy476p78ybcceiru61hcyr8i8lo8", "bear"],
+    stg3: ["https://staging3.intgdc.com", "ev8aavapbex39vvlnbfebi7wkc8faqgm", "bear"],
     developer: ["https://developer.na.gooddata.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     public: ["https://live-examples-proxy.herokuapp.com", "xms7ga4tf3g3nzucd8380o2bev8oeknp", "bear"],
     reference: ["https://secure.gooddata.com", "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf", "bear"],

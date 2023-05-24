@@ -1,0 +1,33 @@
+body {
+    font-family: sans-serif;
+    padding: 1rem;
+}
+
+.control-panel {
+    padding-bottom: 4rem;
+}
+
+label {
+    display: inline-flex;
+    padding-right: 1rem;
+}
+
+td, th {
+    padding: .2rem;
+}
+
+.header {
+    font-weight: bold;
+    text-align: left;
+    background: #f5eff1;
+}
+
+.buttons {
+    width: 700px;
+    padding-top: 2rem;
+    text-align: center;
+}
+
+button {
+    margin: .4rem;
+}

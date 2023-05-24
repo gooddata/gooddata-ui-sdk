@@ -9,9 +9,15 @@ import {
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
-import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
+import {
+    DataValue,
+    IResultHeader,
+    isResultAttributeHeader,
+    isResultTotalHeader,
+    isResultMeasureHeader
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { isSeriesCol, SliceCol } from "../structure/tableDescriptorTypes";
+import { isSeriesCol, SliceCol, SliceMeasureCol } from "../structure/tableDescriptorTypes";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
 import { getSubtotalStyles } from "./dataSourceUtils";
@@ -38,7 +44,7 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
 function getCell(
     rowHeaderData: IResultHeader[][],
     rowIndex: number,
-    rowHeader: SliceCol,
+    rowHeader: SliceCol | SliceMeasureCol,
     rowHeaderIndex: number,
     intl: IntlShape,
 ): {
@@ -71,6 +77,14 @@ function getCell(
                 getSubtotalLabelCellIndex(rowHeaderData, rowIndex) === rowHeaderIndex
                     ? intl.formatMessage(messages[totalName])
                     : null,
+        };
+    } else if (isResultMeasureHeader(rowHeaderDataItem)) {
+        return {
+            ...cell,
+            value: valueWithEmptyHandling(
+                rowHeaderDataItem.measureHeaderItem.name, // TODO should somehow use getMappingHeaderFormattedName and extend the type that is its parameter?
+                emptyHeaderTitleFromIntl(intl),
+            ),
         };
     } else {
         invariant(false, "row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem");
@@ -108,6 +122,28 @@ export function getRow(
         row[field] = value;
         row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
     });
+
+    tableDescriptor.headers.sliceMeasureCols.forEach((rowHeader) => {
+        const { field, value, rowHeaderDataItem } = getCell(
+            rowHeaderData,
+            rowIndex,
+            rowHeader,
+            rowHeader.index,
+            intl,
+        );
+        
+        row[field] = value;
+        row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
+    });
+
+    // TODO this must be refactored: there will always be just one slice measure column, yet above we are using forEach on array and here we counting just with one
+    if (tableDescriptor.headers.sliceMeasureCols.length > 0) {
+        const rowHeaderIndex = tableDescriptor.headers.sliceMeasureCols[0].index; // TODO yep, this is wrong
+        const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
+        if (isResultMeasureHeader(rowHeaderDataItem)) {
+            row.measureDescriptor = tableDescriptor.getMeasures()[rowHeaderDataItem.measureHeaderItem.order];
+        }
+    }
 
     if (!tableDescriptor.hasDataLeafCols()) {
         // table has no leaf columns - it is a row-only table listing a bunch of

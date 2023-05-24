@@ -125,6 +125,7 @@ export interface IPivotTableConfig {
      * Customize maximum height of the table.
      */
     maxHeight?: number;
+    measureGroupDimension?: "columns" | "rows";
 }
 
 /**

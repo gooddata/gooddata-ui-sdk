@@ -10,6 +10,7 @@ import { invariant } from "ts-invariant";
 import { isSeriesCol } from "./tableDescriptorTypes";
 import { cellClassFactory } from "../cell/cellClass";
 import { createCellRenderer } from "../cell/cellRenderer";
+import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import ColumnTotalHeader from "./headers/ColumnTotalHeader";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
@@ -35,10 +36,69 @@ export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePi
     };
 }
 
+// TODO remove sonar warning, update template implementation
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function rowMeasureTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const cellRenderer = createCellRenderer();
+
+    return {
+        cellClass: cellClassFactory(table, props, "gd-row-attribute-column"), // TODO unique style
+        headerClass: headerClassFactory(table, props, "gd-row-attribute-column-header"), // TODO unique style
+        colSpan: (params) => {
+            if (
+                // params.data is undefined when rows are in loading state
+                params.data?.colSpan &&
+                AVAILABLE_TOTALS.find((item: string) => item === params.data[params.data.colSpan.headerKey])
+            ) {
+                return params.data.colSpan.count;
+            }
+            return 1;
+        },
+        valueFormatter: (params) => {
+            return params.value === undefined ? null : params.value;
+        },
+        cellRenderer,
+    };
+}
+
+// TODO revert these changes and create a new column type that will have all these changes
 export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const separators = props.config?.separators;
+    const cellRenderer = createCellRenderer();
+
     return {
         cellClass: cellClassFactory(table, props, "gd-column-attribute-column"),
         headerClass: headerClassFactory(table, props, "gd-column-attribute-column-header"),
+        valueFormatter: (params: ValueFormatterParams) => {
+            if (params.data?.measureDescriptor) {
+                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+                return params.value !== undefined
+                    ? getMeasureCellFormattedValue(
+                        params.value,
+                        measureDescriptor.measureHeaderItem.format,
+                        separators,
+                    )
+                    : (null as any);
+            }
+            return params.value === undefined ? null : params.value;
+        },
+        cellStyle: (params) => {
+            if (params.data?.measureDescriptor) {
+                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+                return params.value !== undefined
+                    ? getMeasureCellStyle(
+                        params.value,
+                        measureDescriptor.measureHeaderItem.format,
+                        separators,
+                        true,
+                    )
+                    : null;
+            }
+            return null;
+        },
+        cellRenderer,
     };
 }
 

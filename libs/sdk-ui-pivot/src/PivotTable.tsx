@@ -46,14 +46,14 @@ import { AVAILABLE_TOTALS } from "./impl/base/constants";
  * @returns new prepared execution
  */
 function prepareExecution(props: IPivotTableProps): IPreparedExecution {
-    const { backend, workspace, filters, sortBy = [], execConfig = {} } = props;
+    const { backend, workspace, filters, sortBy = [], execConfig = {}, config = {} } = props;
 
     return backend!
         .withTelemetry("PivotTable", props)
         .workspace(workspace!)
         .execution()
         .forBuckets(getBuckets(props), filters as INullableFilter[])
-        .withDimensions(pivotDimensions)
+        .withDimensions((def: IExecutionDefinition) => pivotDimensions(def, config))
         .withSorting(...(sortBy as ISortItem[]))
         .withExecConfig(execConfig);
 }
@@ -86,7 +86,7 @@ function getBuckets(props: IPivotTableBucketProps): IBucket[] {
     ];
 }
 
-function pivotDimensions(def: IExecutionDefinition): IDimension[] {
+function pivotDimensions(def: IExecutionDefinition, config: IPivotTableConfig): IDimension[] {
     const { buckets } = def;
     const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
     const columns = bucketsFind(buckets, BucketNames.COLUMNS);
@@ -99,9 +99,13 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
     const rowTotals = row ? bucketTotals(row) : [];
     const colTotals = columns ? bucketTotals(columns) : [];
 
+    const measureGroupDimension = config.measureGroupDimension ?? "columns";
+    const rowMeasureItemIdentifiers = measureGroupDimension === "rows" ? measuresItemIdentifiers : [];
+    const columnMeasureItemIdentifiers = measureGroupDimension === "columns" ? measuresItemIdentifiers : [];
+
     return newTwoDimensional(
-        [...rowAttributes, ...rowTotals],
-        [...columnAttributes, ...colTotals, ...measuresItemIdentifiers],
+        [...rowAttributes, ...rowMeasureItemIdentifiers, ...rowTotals],
+        [...columnAttributes, ...colTotals, ...columnMeasureItemIdentifiers],
     );
 }
 

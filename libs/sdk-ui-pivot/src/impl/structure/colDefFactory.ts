@@ -7,6 +7,7 @@ import {
     COLUMN_GROUPING_DELIMITER,
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
+    ROW_MEASURE_COLUMN,
 } from "../base/constants";
 import {
     agColId,
@@ -16,6 +17,7 @@ import {
     TableColDefs,
     TableCols,
     ScopeCol,
+    SliceMeasureCol,
 } from "./tableDescriptorTypes";
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
@@ -51,7 +53,7 @@ function getSortProp(
         : {};
 }
 
-function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
+function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol[], state: TransformState) {
     for (const row of rows) {
         const sortProp = getSortProp(state.initialSorts, (s) => attributeSortMatcher(row, s));
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
@@ -65,6 +67,26 @@ function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
             headerTooltip: headerName,
             ...cellRendererProp,
             ...sortProp,
+        };
+
+        state.rowColDefs.push(colDef);
+        state.allColDefs.push(colDef);
+
+        if (!state.cellRendererPlaced) {
+            state.cellRendererPlaced = colDef;
+        }
+    }
+
+    for (const col of measureCols) {
+        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+
+        const colDef: ColDef = {
+            type: ROW_MEASURE_COLUMN,
+            colId: col.id,
+            field: col.id,
+            headerName: " ",
+            headerTooltip: undefined,
+            ...cellRendererProp,
         };
 
         state.rowColDefs.push(colDef);
@@ -90,6 +112,7 @@ function createColumnGroupColDef(
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
+            field: col.id, // this will allow scopeCol to display measure values in the column if measures are in rows
             headerName,
             headerTooltip: headerName,
         };
@@ -226,7 +249,7 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
-    createAndAddSliceColDefs(table.sliceCols, state);
+    createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
     createAndAddDataColDefs(table, state, intl);
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};

@@ -13,7 +13,7 @@ export const ColumnGroupingDescriptorId = "root";
  * @remarks see {@link ScopeCol}
  * @remarks see {@link RootCol}
  */
-export type TableColType = "sliceCol" | "seriesCol" | "scopeCol" | "rootCol";
+export type TableColType = "sliceCol" | "sliceMeasureCol" | "seriesCol" | "scopeCol" | "rootCol";
 
 /**
  * Base interface for all col types.
@@ -71,6 +71,25 @@ export interface SliceCol extends TableCol {
 export function isSliceCol(obj: unknown): obj is SliceCol {
     return (obj as SliceCol)?.type === "sliceCol";
 }
+
+export interface SliceMeasureCol extends TableCol {
+    readonly type: "sliceMeasureCol";
+
+    /**
+     * Column index among all slice columns
+     */
+    index: number;
+
+    /**
+     * Path of indexes to follow from root, through children in order to get to this node.
+     */
+    readonly fullIndexPathToHere: number[];
+}
+
+export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {
+    return (obj as SliceMeasureCol)?.type === "sliceMeasureCol";
+}
+
 
 /**
  * Represents most granular column under which computed measure data for a single data series is shown.
@@ -225,7 +244,7 @@ export type DataCol = RootCol | LeafDataCol;
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
  */
-export type AnyCol = SliceCol | DataCol | ScopeCol;
+export type AnyCol = SliceCol | SliceMeasureCol | DataCol | ScopeCol;
 
 /**
  * Descriptors of all table columns. The table columns are divided into two groups:
@@ -244,7 +263,7 @@ export type AnyCol = SliceCol | DataCol | ScopeCol;
  *    cols created from the second scoping attribute. This goes on until the last layer of scoping cols whose
  *    children will be the actual SeriesCols.
  *
- *    Note 1: if the table does contain only scoping attributes but no measures, then the last layer of scoping
+ *    Note 1: if the table does contain only scoping attributes but  no measures, then the last layer of scoping
  *    cols will have no children.
  *
  *    Note 2: if the data series are not scoped, then no grouping is needed and the root columns and leaf columns will
@@ -256,6 +275,8 @@ export type TableCols = {
      * All table row headers - these are derived from slicing attributes
      */
     readonly sliceCols: SliceCol[];
+
+    readonly sliceMeasureCols: SliceMeasureCol[];
 
     /**
      * Root table cols.
