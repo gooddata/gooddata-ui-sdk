@@ -15,6 +15,9 @@ import PivotTableRowGroupingExampleSRCJS from "./PivotTableRowGroupingExample?ra
 import { PivotTableSubtotalsExample } from "./PivotTableSubtotalsExample";
 import PivotTableSubtotalsExampleSRC from "./PivotTableSubtotalsExample?raw";
 import PivotTableSubtotalsExampleSRCJS from "./PivotTableSubtotalsExample?rawJS";
+import { PivotTableSubtotalsRowsColumnsExample } from "./PivotTableSubtotalsRowsColumnsExample";
+import PivotTableSubtotalsRowsColumnsExampleSRC from "./PivotTableSubtotalsRowsColumnsExample?raw";
+import PivotTableSubtotalsRowsColumnsExampleSRCJS from "./PivotTableSubtotalsRowsColumnsExample?rawJS";
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
 import PivotTableDrillExampleSRC from "./PivotTableDrillExample?raw";
 import PivotTableDrillExampleSRCJS from "./PivotTableDrillExample?rawJS";
@@ -68,6 +71,15 @@ export const PivotTable: React.FC = () => (
             for={PivotTableSubtotalsExample}
             source={PivotTableSubtotalsExampleSRC}
             sourceJS={PivotTableSubtotalsExampleSRCJS}
+        />
+        <hr className="separator" />
+        <h2 id="measures-row-attributes-and-column-attributes">
+            Example of combination of rows/columns subtotals
+        </h2>
+        <ExampleWithSource
+            for={PivotTableSubtotalsRowsColumnsExample}
+            source={PivotTableSubtotalsRowsColumnsExampleSRC}
+            sourceJS={PivotTableSubtotalsRowsColumnsExampleSRCJS}
         />
         <hr className="separator" />
         <h2 id="measures-row-attributes-and-column-attributes">Example of sort with aggregation</h2>

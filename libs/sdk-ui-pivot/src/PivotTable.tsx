@@ -59,13 +59,30 @@ function prepareExecution(props: IPivotTableProps): IPreparedExecution {
 }
 
 function getBuckets(props: IPivotTableBucketProps): IBucket[] {
-    const { measures = [], rows = [], columns = [], totals = [] } = props;
+    const {
+        measures = [],
+        rows = [],
+        columns = [],
+        totals = [],
+    } = props as {
+        measures: IAttributeOrMeasure[];
+        rows: IAttribute[];
+        columns: IAttribute[];
+        totals: ITotal[];
+    };
+
+    const rowTotals = totals.filter((total) =>
+        rows.find((attr) => attr.attribute.localIdentifier === total.attributeIdentifier),
+    );
+    const colTotals = totals.filter((total) =>
+        columns.find((attr) => attr.attribute.localIdentifier === total.attributeIdentifier),
+    );
 
     return [
-        newBucket(BucketNames.MEASURES, ...(measures as IAttributeOrMeasure[])),
+        newBucket(BucketNames.MEASURES, ...measures),
         // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
-        newBucket(BucketNames.ATTRIBUTE, ...(rows as IAttribute[]), ...(totals as ITotal[])),
-        newBucket(BucketNames.COLUMNS, ...(columns as IAttribute[])),
+        newBucket(BucketNames.ATTRIBUTE, ...rows, ...rowTotals),
+        newBucket(BucketNames.COLUMNS, ...columns, ...colTotals),
     ];
 }
 
