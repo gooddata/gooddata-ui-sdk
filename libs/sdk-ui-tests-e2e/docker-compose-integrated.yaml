@@ -32,3 +32,4 @@ services:
             - SDK_BACKEND
             - CYPRESS_TEST_TAGS
             - NO_COLOR
+            - EXECUTION_ENV=$EXECUTION_ENV

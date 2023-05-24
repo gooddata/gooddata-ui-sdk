@@ -15,6 +15,7 @@
  * - CYPRESS_TEST_TAGS comma separated list of tags without spaces (optional, defaults to "")
  * - FILTER (optional) filter tests by filename
  * - VISUAL_MODE true | false (optional, defaults to true)
+ * - EXECUTION_ENV (optional, defaults to chrome) browser to run tests
  *
  * Note that you need to make sure that the tests you choose by the tags can
  * run against the SDK_BACKEND you provide and also ensure that file specified with FILTER
@@ -35,6 +36,7 @@ async function main() {
             TIGER_DATASOURCES_PASSWORD,
             TIGER_API_TOKEN_NAME_PREFIX,
             CYPRESS_HOST,
+            EXECUTION_ENV,
         } = process.env;
 
         if (!TEST_WORKSPACE_ID) {
@@ -102,6 +104,12 @@ async function main() {
         const isVisualMode = VISUAL_MODE === "true";
         const visualModeFilter = FILTER && isVisualMode ? `,specPattern=cypress/**/${FILTER}` : "";
 
+        let config = `baseUrl=${HOST},defaultCommandTimeout=40000${visualModeFilter}`;
+        if (EXECUTION_ENV === "firefox") {
+            config += `,video=false`;
+        }
+        process.stdout.write(`Running on browser ${EXECUTION_ENV}\n`);
+
         const cypressProcess = runCypress({
             visual: isVisualMode,
             appHost: `${HOST}`,
@@ -112,9 +120,9 @@ async function main() {
             tigerPermissionDatasourceName: TIGER_DATASOURCES_NAME,
             tigerPermissionDatasourcePassword: TIGER_DATASOURCES_PASSWORD,
             tigerApiTokenNamePrefix: TIGER_API_TOKEN_NAME_PREFIX,
-            browser: "chrome",
+            browser: EXECUTION_ENV ? EXECUTION_ENV : "chrome",
             sdkBackend: SDK_BACKEND,
-            config: `baseUrl=${HOST},defaultCommandTimeout=40000${visualModeFilter}`,
+            config: config,
             ...specFilesFilter,
             customCypressConfig: {
                 CYPRESS_INTEGRATION_FOLDER: "cypress/integration",
