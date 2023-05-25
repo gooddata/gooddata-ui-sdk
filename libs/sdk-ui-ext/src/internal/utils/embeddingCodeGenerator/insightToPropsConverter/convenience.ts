@@ -14,7 +14,7 @@ import {
     insightFilters,
     insightProperties,
     insightTotals,
-    insightVisualizationUrl,
+    insightVisualizationType,
     ISortItem,
     isRelativeDateFilter,
     ITotal,
@@ -151,7 +151,7 @@ export function sortsInsightConversion<TProps extends object, TPropKey extends k
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, ISortItem[]> {
     return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, (insight, ctx) => {
-        const type = insightVisualizationUrl(insight).split(":")[1];
+        const type = insightVisualizationType(insight);
         return createSorts(type, insight, insightProperties(insight)?.controls ?? {}, ctx.settings ?? {});
     });
 }

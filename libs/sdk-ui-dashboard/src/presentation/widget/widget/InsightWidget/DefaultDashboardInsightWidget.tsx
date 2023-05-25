@@ -2,7 +2,7 @@
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IInsight, insightVisualizationUrl, widgetTitle } from "@gooddata/sdk-model";
+import { IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import {
@@ -39,7 +39,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight: IInsight }
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
-    const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
+    const visType = insightVisualizationType(insight) as VisType;
     const { ref: widgetRef } = widget;
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({

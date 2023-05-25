@@ -1768,6 +1768,9 @@ export const insightUpdatedComparator: (direction: ComparatorDirection) => IComp
 // @public
 export function insightUri(insight: IInsight): string;
 
+// @alpha (undocumented)
+export function insightVisualizationType(insight: IInsightDefinition): string;
+
 // @alpha
 export function insightVisualizationUrl(insight: IInsightDefinition): string;
 

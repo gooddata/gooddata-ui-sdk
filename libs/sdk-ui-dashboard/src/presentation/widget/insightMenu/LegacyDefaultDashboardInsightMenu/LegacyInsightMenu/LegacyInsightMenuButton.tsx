@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { insightVisualizationUrl, objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { insightVisualizationType, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -33,7 +33,7 @@ export const LegacyInsightMenuButton: React.FC<IDashboardInsightMenuButtonProps>
     const areExportsEnabled = settings.enableKPIDashboardExport;
     const hasExportReportPermissions = canExportTabular;
 
-    const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
+    const visType = insightVisualizationType(insight) as VisType;
     const isExportableVisType = isExportableVisualization(visType);
 
     const canExportWidget = areExportsEnabled && hasExportReportPermissions && isExportableVisType;

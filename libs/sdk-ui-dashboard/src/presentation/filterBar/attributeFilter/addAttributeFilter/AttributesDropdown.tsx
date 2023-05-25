@@ -1,27 +1,15 @@
 // (C) 2007-2023 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
-import { ShortenedText, Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
-import { ICatalogAttribute } from "@gooddata/sdk-model";
+import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 import debounce from "lodash/debounce";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton";
-import { useDashboardSelector, selectCatalogAttributes } from "../../../../model";
+import { useDashboardSelector, selectCatalogAttributes, selectInsights } from "../../../../model";
 import { IDashboardAttributeFilterPlaceholderProps } from "../types";
-import { AttributeListItemTooltip } from "./attributeListItemTooltip/AttributeListItemTooltip";
-
-interface IAttributeListItemProps {
-    item?: ICatalogAttribute;
-    isMobile?: boolean;
-    onClick?: () => void;
-}
-
-const tooltipAlignPoints = [
-    { align: "cr cl", offset: { x: 10, y: 0 } },
-    { align: "cl cr", offset: { x: -10, y: 0 } },
-];
+import AttributeListItem from "./AttributeListItem";
+import { isLocationIconEnabled } from "./addAttributeFilterUtils";
 
 const dropdownAlignPoints = [
     {
@@ -67,35 +55,6 @@ const dropdownAlignPoints = [
     },
 ];
 
-function AttributeListItem({ item, isMobile, onClick }: IAttributeListItemProps) {
-    if (!item) {
-        return null;
-    }
-
-    const metricItemClassNames = cx(
-        `s-${stringUtils.simplifyText(item.attribute.title)} gd-attribute-list-item`,
-        {
-            "gd-list-item": true,
-            "gd-list-item-shortened": true,
-        },
-    );
-
-    const title = isMobile ? (
-        item.attribute.title
-    ) : (
-        <>
-            <AttributeListItemTooltip item={item} />
-            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{item.attribute.title}</ShortenedText>
-        </>
-    );
-
-    return (
-        <div key={item.attribute.id} className={metricItemClassNames} onClick={onClick}>
-            {title}
-        </div>
-    );
-}
-
 /**
  * @internal
  */
@@ -129,6 +88,9 @@ export function AttributesDropdown({
     }, []);
 
     const attributes = useDashboardSelector(selectCatalogAttributes);
+    const insights = useDashboardSelector(selectInsights);
+
+    const shouldDisplayLocationIcon = useMemo(() => isLocationIconEnabled(insights), [insights]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
@@ -188,6 +150,7 @@ export function AttributesDropdown({
                             return (
                                 <AttributeListItem
                                     item={item}
+                                    isLocationIconEnabled={shouldDisplayLocationIcon}
                                     onClick={() => {
                                         onSelect(item.defaultDisplayForm.ref);
                                         closeDropdown();

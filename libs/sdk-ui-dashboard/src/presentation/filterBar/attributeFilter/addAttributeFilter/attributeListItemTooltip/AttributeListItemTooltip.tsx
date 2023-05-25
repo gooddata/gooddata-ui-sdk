@@ -31,29 +31,31 @@ export const AttributeListItemTooltip: React.FC<IAttributeListItemTooltipProps> 
     const { attributeDataSet, attributesDataSetLoading } = useAttributeDataSet(item.attribute.ref, isHover);
 
     return (
-        <BubbleHoverTrigger
-            showDelay={0}
-            hideDelay={0}
-            eventsOnBubble={true}
-            className="gd-attribute-item-tooltip-icon"
-        >
-            <span
-                onMouseEnter={() => setIsHover(true)}
-                className="gd-icon-circle-question gd-list-item-tooltip-icon s-attribute-dropdown-list-item-tooltip"
-            />
-            <Bubble
-                className="gd-attribute-dropdown-list-item-details s-attribute-filter-details-bubble"
-                alignPoints={bubbleAlignPoints}
-                arrowStyle={{ display: "none" }}
+        <div>
+            <BubbleHoverTrigger
+                showDelay={0}
+                hideDelay={0}
+                eventsOnBubble={true}
+                className="gd-attribute-item-tooltip-icon"
             >
-                <AttributeListItemTooltipContent
-                    item={item}
-                    attributesDataSetLoading={attributesDataSetLoading}
-                    attributesElementsLoading={attributesElementsLoading}
-                    attributeDataSet={attributeDataSet}
-                    attributeElements={attributeElements}
+                <span
+                    onMouseEnter={() => setIsHover(true)}
+                    className="gd-icon-circle-question gd-list-item-tooltip-icon s-attribute-dropdown-list-item-tooltip"
                 />
-            </Bubble>
-        </BubbleHoverTrigger>
+                <Bubble
+                    className="gd-attribute-dropdown-list-item-details s-attribute-filter-details-bubble"
+                    alignPoints={bubbleAlignPoints}
+                    arrowStyle={{ display: "none" }}
+                >
+                    <AttributeListItemTooltipContent
+                        item={item}
+                        attributesDataSetLoading={attributesDataSetLoading}
+                        attributesElementsLoading={attributesElementsLoading}
+                        attributeDataSet={attributeDataSet}
+                        attributeElements={attributeElements}
+                    />
+                </Bubble>
+            </BubbleHoverTrigger>
+        </div>
     );
 };

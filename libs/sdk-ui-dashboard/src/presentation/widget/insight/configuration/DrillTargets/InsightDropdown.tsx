@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
-import { ObjRef, IInsight, isInsight, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { ObjRef, IInsight, isInsight, insightVisualizationType } from "@gooddata/sdk-model";
 import { IntlShape, useIntl } from "react-intl";
 import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types";
 import { InsightList } from "../../../../insightList";
@@ -93,11 +93,11 @@ function useDrillToInsightData(insightConfig: IDrillConfigItem): {
             const insight = insights.get(insightConfig.insightRef);
 
             if (isInsight(insight)) {
-                const insightUrl = insightVisualizationUrl(insight);
+                const insightType = insightVisualizationType(insight);
                 return {
                     insight,
                     insightRef: insightConfig.insightRef,
-                    insightType: insightUrl?.split(":")[1],
+                    insightType: insightType,
                 };
             }
         }

@@ -391,8 +391,8 @@ $attribute-filter-drag-handle-left: 10px;
 
 .gd-attribute-list-item {
     display: flex;
-    align-items: stretch;
-    flex-direction: row-reverse;
+    align-items: center;
+    flex-direction: row;
 
     &:hover {
         .gd-attribute-item-tooltip-icon {
@@ -406,5 +406,19 @@ $attribute-filter-drag-handle-left: 10px;
         flex: 0 0 auto;
         margin-left: 7px;
         font-weight: normal;
+    }
+}
+
+.dropdown-body .attributes-list {
+    .gd-attribute-list-item {
+        &.gd-list-item.type-geo_attribute::before {
+            content: "\E624";
+            height: 14px;
+            padding-left: 4px;
+            padding-top: 1px;
+            line-height: normal;
+            vertical-align: middle;
+            color: kit-variables.$gd-color-warning-text;
+        }
     }
 }
