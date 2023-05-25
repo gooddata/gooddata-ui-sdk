@@ -7,7 +7,9 @@ import {
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
+    isTotalDescriptor,
     IResultAttributeHeaderItem,
+    ITotalDescriptorItem,
 } from "@gooddata/sdk-model";
 
 /**
@@ -76,9 +78,20 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
 export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined {
     if (isResultAttributeHeader(header)) {
         return getAttributeHeaderItemName(header.attributeHeaderItem);
+    } else if (isTotalDescriptor(header)) {
+        return getTotalHeaderItemName(header.totalHeaderItem);
     } else {
         return getMappingHeaderName(header);
     }
+}
+
+/**
+ * Get formatted name of provided total header item.
+ *
+ * @internal
+ */
+export function getTotalHeaderItemName(totalHeaderItem: ITotalDescriptorItem | undefined) {
+    return totalHeaderItem?.name;
 }
 
 /**

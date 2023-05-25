@@ -366,12 +366,14 @@ export interface IResultMeasureHeader {
 
 /**
  * Total header specifies name and type of total to which the calculated values in particular data view slice belong.
+ * Also can contain measure index which can be used to lookup the measure which belongs to this total.
  *
  * @public
  */
 export interface IResultTotalHeaderItem {
     name: string;
     type: string;
+    measureIndex?: number;
 }
 
 /**

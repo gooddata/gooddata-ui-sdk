@@ -16,7 +16,7 @@ import {
     ISortItem,
     ITotal,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, DataViewFacade, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes";
 
@@ -122,6 +122,7 @@ export class AgGridDatasource implements IDatasource {
         params: IGetRowsParams,
         desiredSorts: ISortItem[],
         desiredTotals: ITotal[],
+        desiredRowTotals: ITotal[],
     ): void => {
         const { sortModel } = params;
         const result = this.currentResult;
@@ -143,7 +144,7 @@ export class AgGridDatasource implements IDatasource {
             .withSorting(...(desiredSorts ?? []))
             .withDimensions(
                 dimensionSetTotals(definition.dimensions[0], desiredTotals),
-                definition.dimensions[1],
+                dimensionSetTotals(definition.dimensions[1], desiredRowTotals),
             );
 
         this.config.onExecutionTransformed(transformedExecution);
@@ -172,7 +173,8 @@ export class AgGridDatasource implements IDatasource {
                         // Table descriptors contain information about effective totals (e.g. totals set for the
                         // table right now). After redrive of execution to change sorts/totals, code must make
                         // sure that the new settings are reflected in the table descriptor.
-                        this.config.tableDescriptor.updateEffectiveTotals(dv);
+                        const emptyValue = emptyHeaderTitleFromIntl(this.intl);
+                        this.config.tableDescriptor = TableDescriptor.for(dv, emptyValue);
 
                         this.processData(dv, params);
                     })
@@ -220,8 +222,15 @@ export class AgGridDatasource implements IDatasource {
         const currentTotals = defTotals(definition, 0);
         const desiredTotals = this.config.getColumnTotals();
 
-        if (!isEqual(this.currentSorts, desiredSorts) || !isEqual(currentTotals, desiredTotals)) {
-            this.transformResult(params, desiredSorts, desiredTotals);
+        const currentRowTotals = defTotals(definition, 1);
+        const desiredRowTotals = this.config.getRowTotals();
+
+        if (
+            !isEqual(this.currentSorts, desiredSorts) ||
+            !isEqual(currentTotals, desiredTotals) ||
+            !isEqual(currentRowTotals, desiredRowTotals)
+        ) {
+            this.transformResult(params, desiredSorts, desiredTotals, desiredRowTotals);
         } else if (!startRow && result.definition === this.initialDv.definition) {
             /*
              * > Loading first page of data

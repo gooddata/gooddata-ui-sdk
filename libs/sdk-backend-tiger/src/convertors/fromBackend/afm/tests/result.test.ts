@@ -1,7 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import { transformExecutionResult } from "../result";
 import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter";
-import { mockResult, mockDimensions, mockDimensionsWithDateFormat } from "./result.fixture";
+import {
+    mockResult,
+    mockDimensions,
+    mockDimensionsWithDateFormat,
+    mockResultWithTotals,
+    mockDimensionsWithTotals,
+} from "./result.fixture";
 import { getTransformDimensionHeaders } from "../DimensionHeaderConverter";
 
 describe("transformExecutionResult", () => {
@@ -17,6 +23,15 @@ describe("transformExecutionResult", () => {
             defaultDateFormatter,
         );
         const actual = transformExecutionResult(mockResult, transformDimensionHeaders);
+        expect(actual).toMatchSnapshot();
+    });
+
+    it("should correctly link total items with measure items with order property", () => {
+        const transformDimensionHeaders = getTransformDimensionHeaders(
+            mockDimensionsWithTotals,
+            defaultDateFormatter,
+        );
+        const actual = transformExecutionResult(mockResultWithTotals, transformDimensionHeaders);
         expect(actual).toMatchSnapshot();
     });
 });

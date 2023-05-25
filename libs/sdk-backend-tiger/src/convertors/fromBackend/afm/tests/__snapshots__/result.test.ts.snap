@@ -1,5 +1,101 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`transformExecutionResult should correctly link total items with measure items with order property 1`] = `
+Object {
+  "count": Array [
+    1,
+    2,
+  ],
+  "data": Array [
+    Array [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+    ],
+  ],
+  "headerItems": Array [
+    Array [
+      Array [
+        Object {
+          "attributeHeaderItem": Object {
+            "name": "First",
+            "uri": "FirstLabel",
+          },
+        },
+        Object {
+          "attributeHeaderItem": Object {
+            "name": "Second",
+            "uri": "SecondLabel",
+          },
+        },
+        Object {
+          "totalHeaderItem": Object {
+            "name": "sum",
+            "type": "sum",
+          },
+        },
+        Object {
+          "totalHeaderItem": Object {
+            "name": "sum",
+            "type": "sum",
+          },
+        },
+        Object {
+          "totalHeaderItem": Object {
+            "name": "max",
+            "type": "max",
+          },
+        },
+      ],
+    ],
+    Array [
+      Array [
+        Object {
+          "measureHeaderItem": Object {
+            "name": "Sum of duration",
+            "order": 0,
+          },
+        },
+        Object {
+          "measureHeaderItem": Object {
+            "name": "Sum of amount",
+            "order": 1,
+          },
+        },
+        Object {
+          "measureHeaderItem": Object {
+            "name": "Sum of duration",
+            "order": 0,
+          },
+        },
+        Object {
+          "measureHeaderItem": Object {
+            "name": "Sum of amount",
+            "order": 1,
+          },
+        },
+        Object {
+          "measureHeaderItem": Object {
+            "name": "Sum of amount",
+            "order": 1,
+          },
+        },
+      ],
+    ],
+  ],
+  "offset": Array [
+    0,
+    0,
+  ],
+  "total": Array [
+    1,
+    2,
+  ],
+}
+`;
+
 exports[`transformExecutionResult should format date dimensions values 1`] = `
 Object {
   "count": Array [

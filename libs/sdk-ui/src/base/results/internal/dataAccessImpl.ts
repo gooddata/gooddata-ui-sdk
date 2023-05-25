@@ -414,9 +414,15 @@ export class DataAccessImpl {
         } = seriesDigest;
 
         const measureHeader = measureHeaders[seriesIdx];
+        let measureIndex = measureHeader?.measureHeaderItem?.order || 0;
+        if (isResultTotalHeader(measureHeader)) {
+            // total headers are mixed with measure headers, linking to measure index
+            measureIndex = measureHeader?.totalHeaderItem?.measureIndex || 0;
+        }
+
         const attributeHeaders = allAttributeHeaders.map((headers) => headers[seriesIdx]);
-        const measureDescriptor = fromMeasures[measureHeader.measureHeaderItem.order];
-        const measureDefinition = fromMeasuresDef[measureHeader.measureHeaderItem.order];
+        const measureDescriptor = fromMeasures[measureIndex];
+        const measureDefinition = fromMeasuresDef[measureIndex];
         const { headerTranslator } = this.config;
 
         return {

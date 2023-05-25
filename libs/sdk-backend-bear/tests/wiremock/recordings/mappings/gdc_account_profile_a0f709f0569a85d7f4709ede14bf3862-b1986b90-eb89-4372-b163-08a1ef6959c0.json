@@ -1,0 +1,33 @@
+{
+    "id": "b1986b90-eb89-4372-b163-08a1ef6959c0",
+    "name": "gdc_account_profile_a0f709f0569a85d7f4709ede14bf3862",
+    "request": {
+        "url": "/gdc/account/profile/a0f709f0569a85d7f4709ede14bf3862",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2022-07-21 12:54:43\",\"timezone\":null,\"position\":\"\",\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2011-07-11 13:10:33\",\"country\":\"cz\",\"companyName\":\"GoodData\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/a0f709f0569a85d7f4709ede14bf3862\",\"projects\":\"/gdc/account/profile/a0f709f0569a85d7f4709ede14bf3862/projects\",\"domain\":\"/gdc/domains/gooddata\",\"auditEvents\":\"/gdc/account/profile/a0f709f0569a85d7f4709ede14bf3862/auditEvents\"}}}",
+        "headers": {
+            "content-type": "application/json;charset=utf-8",
+            "date": "Tue, 23 May 2023 11:24:15 GMT",
+            "X-GDC-REQUEST-TIME": "7",
+            "X-GDC-REQUEST": "8O5PUjlng2Thrknk",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "b1986b90-eb89-4372-b163-08a1ef6959c0",
+    "persistent": true,
+    "insertionIndex": 4
+}

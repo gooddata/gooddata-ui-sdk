@@ -29,7 +29,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { getUpdatedColumnOrRowTotals } from "./impl/structure/headers/aggregationsMenuHelper";
-import { getScrollbarWidth, sanitizeDefTotals, sanitizeDefRowTotals } from "./impl/utils";
+import { getScrollbarWidth, sanitizeDefTotals, getTotalsForColumnsBucket } from "./impl/utils";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
@@ -209,7 +209,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.state = {
             readyToRender: false,
             columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
-            rowTotals: cloneDeep(sanitizeDefRowTotals(execution.definition)),
+            rowTotals: getTotalsForColumnsBucket(execution.definition),
             desiredHeight: config!.maxHeight,
             resized: false,
         };
@@ -272,7 +272,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             {
                 readyToRender: false,
                 columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
-                rowTotals: cloneDeep(sanitizeDefRowTotals(execution.definition)),
+                rowTotals: getTotalsForColumnsBucket(execution.definition),
                 error: undefined,
                 desiredHeight: this.props.config!.maxHeight,
                 resized: false,
@@ -655,7 +655,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns()!);
 
         // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
-        const totals = sanitizeDefTotals(this.getExecutionDefinition(), sortItems);
+        // This applies only to totals in ATTRIBUTE bucket, column totals are not affected by sorting
+        const executionDefinition = this.getExecutionDefinition();
+        const totals = sanitizeDefTotals(executionDefinition, sortItems);
 
         // eslint-disable-next-line no-console
         console.debug("onSortChanged", sortItems);
@@ -663,7 +665,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.pushDataGuard({
             properties: {
                 sortItems,
+            },
+        });
+
+        this.pushDataGuard({
+            properties: {
                 totals,
+                bucketType: BucketNames.ATTRIBUTE,
             },
         });
 
@@ -747,11 +755,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                 this.internal.table?.refreshData();
             });
         } else {
-            const newRowTotals = sanitizeDefRowTotals(
-                this.getExecutionDefinition(),
-                sortItems,
-                getUpdatedColumnOrRowTotals(this.getRowTotals(), menuAggregationClickConfig),
-            );
+            const newRowTotals = getUpdatedColumnOrRowTotals(this.getRowTotals(), menuAggregationClickConfig);
 
             this.setState({ rowTotals: newRowTotals }, () => {
                 this.internal.table?.refreshData();

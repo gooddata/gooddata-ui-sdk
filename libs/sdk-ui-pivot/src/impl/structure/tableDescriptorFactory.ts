@@ -1,6 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IAttributeDescriptor, IResultAttributeHeader, isAttributeDescriptor } from "@gooddata/sdk-model";
+import {
+    IAttributeDescriptor,
+    IResultAttributeHeader,
+    isAttributeDescriptor,
+    isResultTotalHeader,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import range from "lodash/range";
 import {
@@ -109,8 +114,12 @@ function groupColumns(
             // see if a group for attribute element on the current level already exists (it will happen
             // when there are multiple measures in the table). if it exists, remember it as parentGroup
             // for the next iteration. if this is first
+            const resultHeader = attributeHeaders[level];
+            const currentId = isResultTotalHeader(resultHeader)
+                ? resultHeader?.totalHeaderItem?.type
+                : resultHeader?.attributeHeaderItem?.uri;
 
-            pathToGroup += attributeHeaders[level].attributeHeaderItem.uri;
+            pathToGroup += currentId;
 
             const groupLevel = columnGroupLevels[level];
             let currentGroup: ScopeCol | undefined = groupLevel.pkToGroup[pathToGroup];

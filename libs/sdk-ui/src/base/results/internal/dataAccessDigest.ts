@@ -220,7 +220,7 @@ function createMeasureIndexes(
     measureHeaders: IResultMeasureHeader[],
 ) {
     const measureAndIndex: Array<[string, number]> =
-        measureHeaders?.map((m, idx) => {
+        measureHeaders?.filter(isResultMeasureHeader).map((m, idx) => {
             const measure = measureDescriptors[m.measureHeaderItem.order].measureHeaderItem.localIdentifier;
 
             return [measure, idx];
@@ -253,6 +253,7 @@ function createDataSeriesDigest(
     const measureHeaders =
         headerItems.find((headers): headers is IResultMeasureHeader[] => isResultMeasureHeader(headers[0])) ??
         [];
+
     const allAttributeHeaders =
         headerItems.filter((headers): headers is IResultAttributeHeader[] =>
             isResultAttributeHeader(headers[0]),

@@ -2,14 +2,15 @@
 import compact from "lodash/compact";
 import {
     bucketAttributes,
+    bucketTotals,
     bucketIsEmpty,
     BucketPredicate,
     IAttribute,
     IDimension,
     IInsightDefinition,
+    ITotal,
     insightAttributes,
     insightBucket,
-    insightTotals,
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
@@ -21,6 +22,11 @@ function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | Buc
     return matchingBucket ? bucketAttributes(matchingBucket) : [];
 }
 
+function safeBucketTotals(insight: IInsightDefinition, idOrFun: string | BucketPredicate): ITotal[] {
+    const matchingBucket = insightBucket(insight, idOrFun);
+    return matchingBucket ? bucketTotals(matchingBucket) : [];
+}
+
 export function getPivotTableDimensions(insight: IInsightDefinition): IDimension[] {
     const measures = insightBucket(insight, BucketNames.MEASURES);
     const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
@@ -28,9 +34,12 @@ export function getPivotTableDimensions(insight: IInsightDefinition): IDimension
     const rowAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
     const columnAttributes = safeBucketAttributes(insight, BucketNames.COLUMNS);
 
+    const rowTotals = safeBucketTotals(insight, BucketNames.ATTRIBUTE);
+    const colTotals = safeBucketTotals(insight, BucketNames.COLUMNS);
+
     return newTwoDimensional(
-        [...rowAttributes, ...insightTotals(insight)],
-        [...columnAttributes, ...measuresItemIdentifiers],
+        [...rowAttributes, ...rowTotals],
+        [...columnAttributes, ...colTotals, ...measuresItemIdentifiers],
     );
 }
 

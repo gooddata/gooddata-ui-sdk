@@ -19,6 +19,11 @@ import {
     IDimensionDescriptor,
     IResultHeader,
     IResultWarning,
+    bucketsMeasures,
+    bucketsFind,
+    isAttribute,
+    isResultMeasureHeader,
+    isTotalDescriptor,
 } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
@@ -156,6 +161,58 @@ function sanitizeSize(size: number[]): number[] {
 
 type DataViewFactory = (promisedRes: Promise<GdcExecution.IExecutionResult | null>) => Promise<IDataView>;
 
+function preprocessTotalHeaderItems(
+    headerItems: IResultHeader[][][],
+    definition: IExecutionDefinition,
+): IResultHeader[][][] {
+    const columnTotals = definition?.dimensions[1]?.totals;
+    if (!columnTotals?.length) {
+        // noop when no column totals are present
+        return headerItems;
+    }
+
+    const buckets = definition.buckets;
+    const measures = bucketsMeasures(buckets);
+    // get only attributes which can be part of inline totals (all except first one)
+    const columns = bucketsFind(buckets, "columns")?.items?.slice(1) || [];
+    const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
+
+    const lookups = columnTotals
+        .filter((total) => {
+            return columnIdentifiers.includes(total.attributeIdentifier);
+        })
+        .map((total) => {
+            return measures.findIndex((m) => m.measure?.localIdentifier === total.measureIdentifier);
+        });
+
+    return headerItems.map((topHeaderItems) => {
+        return topHeaderItems.map((items) => {
+            // process only header items with measures
+            let count = 0;
+            if (items.find(isResultMeasureHeader)) {
+                return items.map((item) => {
+                    if (isTotalDescriptor(item)) {
+                        const result = {
+                            ...item,
+                            totalHeaderItem: {
+                                ...item?.totalHeaderItem,
+                                measureIndex: lookups[count % lookups.length],
+                            },
+                        };
+
+                        count++;
+                        return result;
+                    }
+
+                    return item;
+                });
+            }
+
+            return items;
+        });
+    });
+}
+
 class BearDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
     public readonly definition: IExecutionDefinition;
@@ -181,6 +238,7 @@ class BearDataView implements IDataView {
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
 
+        this.headerItems = preprocessTotalHeaderItems(this.headerItems, this.definition);
         this.headerItems = transformResultHeaders(
             this.headerItems,
             createResultHeaderTransformer(findDateAttributeUris(result.dimensions)),

@@ -1,0 +1,133 @@
+{
+    "validElements": {
+        "elementsMeta": {
+            "filter": "",
+            "attributeDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            "order": "asc",
+            "attribute": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+        },
+        "items": [
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2870",
+                    "title": ".decimal"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-800 Postcards",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-800 We Answer",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874"
+                }
+            },
+            {
+                "element": {
+                    "title": "14 West",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873"
+                }
+            },
+            {
+                "element": {
+                    "title": "1st in Video - Music World",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+                    "title": "2 Wheel Bikes"
+                }
+            },
+            {
+                "element": {
+                    "title": "352 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433"
+                }
+            },
+            {
+                "element": {
+                    "title": "3balls.com",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+                    "title": "3dCart Shopping Cart Software"
+                }
+            },
+            {
+                "element": {
+                    "title": "49er Communications",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436"
+                }
+            },
+            {
+                "element": {
+                    "title": "614 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438"
+                }
+            },
+            {
+                "element": {
+                    "title": "7-Eleven",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440"
+                }
+            },
+            {
+                "element": {
+                    "title": "720 Strategies",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439"
+                }
+            },
+            {
+                "element": {
+                    "title": "A White Orchid Wedding",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=11"
+                }
+            },
+            {
+                "element": {
+                    "title": "A&C Plastics",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1444"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1445",
+                    "title": "A+ Mortgage Services"
+                }
+            },
+            {
+                "element": {
+                    "title": "A1 Pool Parts",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513",
+                    "title": "A10 Clinical Solutions"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
+                    "title": "Aaron's Sales and Lease"
+                }
+            },
+            {
+                "element": {
+                    "title": "Aaron's Sales and Lease Ownership",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446"
+                }
+            }
+        ],
+        "paging": { "total": "2952", "count": 20, "offset": "0" }
+    }
+}
