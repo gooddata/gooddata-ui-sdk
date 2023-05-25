@@ -3,9 +3,9 @@ import React, { useMemo } from "react";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { ObjRef, IInsight, isInsight, insightVisualizationType } from "@gooddata/sdk-model";
 import { IntlShape, useIntl } from "react-intl";
-import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types";
-import { InsightList } from "../../../../insightList";
-import { selectInsightsMap, useDashboardSelector } from "../../../../../model";
+import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types.js";
+import { InsightList } from "../../../../insightList/index.js";
+import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
 
 export interface IInsightDropdownProps {
     insightConfig: IDrillConfigItem;

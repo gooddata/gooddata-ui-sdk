@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`convert drill definition should convert drill to dashboard with drill from attribute 1`] = `
-Object {
-  "origin": Object {
-    "attribute": Object {
+exports[`convert drill > definition > should convert drill to dashboard with drill from attribute 1`] = `
+{
+  "origin": {
+    "attribute": {
       "localIdentifier": "attributeLocalIdentifier",
     },
     "type": "drillFromAttribute",
   },
-  "target": Object {
+  "target": {
     "identifier": "dashboardId",
   },
   "transition": "in-place",
@@ -16,15 +16,15 @@ Object {
 }
 `;
 
-exports[`convert drill definition should convert drill to dashboard with drill from measure 1`] = `
-Object {
-  "origin": Object {
-    "measure": Object {
+exports[`convert drill > definition > should convert drill to dashboard with drill from measure 1`] = `
+{
+  "origin": {
+    "measure": {
       "localIdentifier": "measureLocalIdentifier",
     },
     "type": "drillFromMeasure",
   },
-  "target": Object {
+  "target": {
     "identifier": "dashboardId",
   },
   "transition": "in-place",
@@ -32,18 +32,18 @@ Object {
 }
 `;
 
-exports[`convert drill origin should convert drill from attribute 1`] = `
-Object {
-  "attribute": Object {
+exports[`convert drill > origin > should convert drill from attribute 1`] = `
+{
+  "attribute": {
     "localIdentifier": "attributeLocalIdentifier",
   },
   "type": "drillFromAttribute",
 }
 `;
 
-exports[`convert drill origin should convert drill from measure 1`] = `
-Object {
-  "measure": Object {
+exports[`convert drill > origin > should convert drill from measure 1`] = `
+{
+  "measure": {
     "localIdentifier": "measureLocalIdentifier",
   },
   "type": "drillFromMeasure",

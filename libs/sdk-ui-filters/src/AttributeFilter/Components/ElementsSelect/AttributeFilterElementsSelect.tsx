@@ -4,12 +4,12 @@ import { useIntl } from "react-intl";
 import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
 
-import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
-import { getElementTitle, getElementKey } from "../../utils";
-import { IAttributeFilterElementsSelectProps } from "./types";
+import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
+import { getElementTitle, getElementKey } from "../../utils.js";
+import { IAttributeFilterElementsSelectProps } from "./types.js";
 import { usePrevious } from "@gooddata/sdk-ui";
-import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
-import { MAX_SELECTION_SIZE } from "../../hooks/constants";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
+import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;

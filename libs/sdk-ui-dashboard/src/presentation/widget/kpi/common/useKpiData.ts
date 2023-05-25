@@ -13,13 +13,13 @@ import {
     ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError, UnexpectedSdkError, UseCancelablePromiseState } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
-import { IDashboardFilter } from "../../../../types";
-import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../../model";
-import { useWidgetFilters } from "../../common";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
+import { IDashboardFilter } from "../../../../types.js";
+import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../../model/index.js";
+import { useWidgetFilters } from "../../common/index.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;

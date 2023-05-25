@@ -23,12 +23,12 @@ import {
     isRelativeDateFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { BearAuthenticatedCallGuard } from "../../../../types/auth";
-import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
+import { BearAuthenticatedCallGuard } from "../../../../types/auth.js";
+import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api.js";
 import { GdcExecuteAFM, GdcMetadata } from "@gooddata/api-model-bear";
-import { LimitingAfmFactory } from "./limitingAfmFactory";
+import { LimitingAfmFactory } from "./limitingAfmFactory.js";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceElements implements IElementsQueryFactory {

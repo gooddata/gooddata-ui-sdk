@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import { setHost, postEvent, setConfig, addListener, removeListener } from "../messagingUtils";
-import { IGdcMessageEvent } from "../../iframe/common";
+import { setHost, postEvent, setConfig, addListener, removeListener } from "../messagingUtils.js";
+import { IGdcMessageEvent } from "../../iframe/common.js";
+import { vi, describe, it, expect, beforeEach } from "vitest";
 
 describe("Post events", () => {
     const event = {
@@ -16,7 +17,7 @@ describe("Post events", () => {
     };
 
     it("should call postEvent on host", () => {
-        const host = { postMessage: jest.fn() };
+        const host = { postMessage: vi.fn() };
 
         setHost(host);
 
@@ -34,8 +35,8 @@ describe("Post events", () => {
         beforeEach(() => {
             listener = (e: IGdcMessageEvent<string, string, any>) => e.data.gdc.event.data;
             target = {
-                addEventListener: jest.fn(),
-                removeEventListener: jest.fn(),
+                addEventListener: vi.fn(),
+                removeEventListener: vi.fn(),
             };
         });
 

@@ -13,7 +13,8 @@ import {
     newMeasureSort,
     IPostProcessing,
 } from "@gooddata/sdk-model";
-import { convertDimensions } from "../DimensionsConverter";
+import { convertDimensions } from "../DimensionsConverter.js";
+import { describe, expect, it } from "vitest";
 
 const SingleDimAttributes = defWithDimensions(emptyDef("test"), newDimension(["localId1", "localId2"]));
 const SingleDimAttributesAndMeasure = defWithDimensions(

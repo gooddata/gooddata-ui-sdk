@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
-import { ISeriesItemConfig } from "../../typings/unsafe";
+import { ISeriesItemConfig } from "../../typings/unsafe.js";
 import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { parseValue, unwrap } from "../_util/common";
-import last from "lodash/last";
+import { parseValue, unwrap } from "../_util/common.js";
+import last from "lodash/last.js";
 
 function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
     return bucketEmptyFlags.filter((bucketEmptyFlag) => bucketEmptyFlag).length;

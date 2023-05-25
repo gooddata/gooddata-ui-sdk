@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardContext } from "../../../types/commonTypes";
+import { DashboardContext } from "../../../types/commonTypes.js";
 import { ObjRef } from "@gooddata/sdk-model";
 
 export function loadAvailableDisplayFormRefs(

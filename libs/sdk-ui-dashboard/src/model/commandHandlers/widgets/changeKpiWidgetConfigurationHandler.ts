@@ -1,14 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeKpiWidgetConfiguration } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeKpiWidgetConfiguration } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardKpiWidgetConfigurationChanged } from "../../events";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { DashboardKpiWidgetConfigurationChanged } from "../../events/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { put, select } from "redux-saga/effects";
-import { validateExistingKpiWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../store/layout";
-import { kpiWidgetConfigurationChanged } from "../../events/kpi";
+import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { kpiWidgetConfigurationChanged } from "../../events/kpi.js";
 
 export function* changeKpiWidgetConfigurationHandler(
     ctx: DashboardContext,

@@ -1,6 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
-import memoizeOne from "memoize-one";
+import memoize from "memoize-one";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const memoizeOne = defaultImport(memoize);
 
 const getNewKey = (key: string, stringToRemove: string) => key.replace(stringToRemove, "");
 

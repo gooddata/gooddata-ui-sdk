@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { ObjRef } from "../objRef";
+import { ObjRef } from "../objRef/index.js";
 
 /**
  * Object unique identity

@@ -2,12 +2,12 @@
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
-import sortBy from "lodash/sortBy";
+import sortBy from "lodash/sortBy.js";
 
-import { DashboardListItem } from "./DashboardListItem";
-import { DashboardListButton } from "./DashboardListButton";
-import { dashboardMatch } from "../drill/utils/dashboardPredicate";
-import { IDashboardListProps } from "./types";
+import { DashboardListItem } from "./DashboardListItem.js";
+import { DashboardListButton } from "./DashboardListButton.js";
+import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
+import { IDashboardListProps } from "./types.js";
 
 const alignPoints = [
     {

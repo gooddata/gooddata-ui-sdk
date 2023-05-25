@@ -6,9 +6,9 @@ import {
     IAnalyticalBackend,
     IAuthenticationProvider,
 } from "@gooddata/sdk-backend-spi";
-import tigerFactory, { TigerAuthProviderBase, TigerTokenAuthProvider } from "../../src";
+import tigerFactory, { TigerAuthProviderBase, TigerTokenAuthProvider } from "../../src/index.js";
 import { config } from "dotenv";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 let GlobalBackend: IAnalyticalBackend | undefined;
 
@@ -40,8 +40,8 @@ function createBackend(): IAnalyticalBackend {
     if (process.env.HOST) {
         hostname = process.env.HOST;
     }
-    let port = process.env.HOST ? "" : ":8442";
-    let backend = tigerFactory({ hostname: `${hostname}${port}` });
+    const port = process.env.HOST ? "" : ":8442";
+    const backend = tigerFactory({ hostname: `${hostname}${port}` });
     let authProvider;
 
     if (process.env.GD_TIGER_REC) {
@@ -82,8 +82,7 @@ function getRecordingsWorkspaceId() {
 
 export function sanitizeKeyWithNewValue(result: object, key: string, newValue: string) {
     const fixtureContent = JSON.stringify(result);
-    const newResult = JSON.parse(fixtureContent, (k, v) => (k === key ? newValue : v));
-    return newResult;
+    return JSON.parse(fixtureContent, (k, v) => (k === key ? newValue : v));
 }
 
 function sanitizeWorkspaceId(result: object) {

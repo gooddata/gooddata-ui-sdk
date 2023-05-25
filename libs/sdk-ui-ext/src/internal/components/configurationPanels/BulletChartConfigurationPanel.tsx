@@ -4,20 +4,20 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection";
-import NameSubsection from "../configurationControls/axis/NameSubsection";
-import ConfigSection from "../configurationControls/ConfigSection";
-import CheckboxControl from "../configurationControls/CheckboxControl";
-import MinMaxControl from "../configurationControls//MinMaxControl";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import MinMaxControl from "../configurationControls/MinMaxControl.js";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
-import { messages } from "../../../locales";
+} from "../../constants/bubble.js";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import { messages } from "../../../locales.js";
 
 export default class BulletChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

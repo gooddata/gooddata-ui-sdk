@@ -2,9 +2,9 @@
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types";
-import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter";
-import { TigerSettingsService, mapTypeToKey } from "../settings";
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
+import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
+import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
 
 export class OrganizationSettingsService
     extends TigerSettingsService<ISettings>

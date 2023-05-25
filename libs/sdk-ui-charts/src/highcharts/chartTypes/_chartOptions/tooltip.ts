@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import { colors2Object, INumberObject, ISeparators, numberFormat } from "@gooddata/numberjs";
-import { customEscape, percentFormatter } from "../_util/common";
-import isNil from "lodash/isNil";
-import { IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe";
+import { customEscape, percentFormatter } from "../_util/common.js";
+import isNil from "lodash/isNil.js";
+import { IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 
 export function formatValueForTooltip(
     val: string | number,

@@ -10,7 +10,7 @@ import {
     modifyAttribute,
     idRef,
 } from "@gooddata/sdk-model";
-import * as ReferenceMd from "./full";
+import * as ReferenceMd from "./full.js";
 
 /*
  * This file contains our custom extensions on top of the reference LDM. Things such as arithmetic

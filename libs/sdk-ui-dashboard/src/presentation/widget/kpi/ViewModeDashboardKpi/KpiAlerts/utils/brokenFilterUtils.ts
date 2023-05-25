@@ -13,14 +13,14 @@ import {
 } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 
-import { translateDateFilter } from "./translationUtils";
-import { IBrokenAlertAttributeFilter, IBrokenAlertDateFilter, IBrokenAlertFilter } from "../types";
+import { translateDateFilter } from "./translationUtils.js";
+import { IBrokenAlertAttributeFilter, IBrokenAlertDateFilter, IBrokenAlertFilter } from "../types.js";
 
 import {
     IBrokenAlertFilterBasicInfo,
     isBrokenAlertAttributeFilterInfo,
     isBrokenAlertDateFilterInfo,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
 interface IAttributeFilterMeta {
     validElements: IAttributeElement[];

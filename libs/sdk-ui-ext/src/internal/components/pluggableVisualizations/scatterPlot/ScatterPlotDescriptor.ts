@@ -5,9 +5,9 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import {
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableScatterPlot } from "./PluggableScatterPlot";
-import { BigChartDescriptor } from "../BigChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -17,8 +17,8 @@ import {
     singleAttributeBucketConversion,
     singleMeasureBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

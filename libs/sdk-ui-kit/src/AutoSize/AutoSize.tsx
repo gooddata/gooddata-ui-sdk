@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, createRef } from "react";
-import throttle from "lodash/throttle";
-import { elementRegion } from "../utils/domUtilities";
+import throttle from "lodash/throttle.js";
+import { elementRegion } from "../utils/domUtilities.js";
 
 /**
  * @internal

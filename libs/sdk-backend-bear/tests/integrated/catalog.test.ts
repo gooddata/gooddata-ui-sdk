@@ -1,8 +1,9 @@
 // (C) 2020 GoodData Corporation
 
-import { testBackend, testWorkspace } from "./backend";
+import { testBackend, testWorkspace } from "./backend.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
+import { describe, expect, it, beforeAll } from "vitest";
 
 const backend = testBackend();
 

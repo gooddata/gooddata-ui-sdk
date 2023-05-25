@@ -2,7 +2,7 @@
 
 import { IDashboardPermissions } from "@gooddata/sdk-model";
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { DashboardPermissionsState } from "./dashboardPermissionsState";
+import { DashboardPermissionsState } from "./dashboardPermissionsState.js";
 
 type PermissionsReducers<A extends Action> = CaseReducer<DashboardPermissionsState, A>;
 

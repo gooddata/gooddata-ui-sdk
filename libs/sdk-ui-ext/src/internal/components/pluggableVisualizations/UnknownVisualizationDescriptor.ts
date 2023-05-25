@@ -4,10 +4,10 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../interfaces/VisualizationDescriptor";
-import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor";
-import { IDrillDownContext } from "../../interfaces/Visualization";
-import { PluggableUnknownChart } from "./PluggableUnknownChart";
+} from "../../interfaces/VisualizationDescriptor.js";
+import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
+import { IDrillDownContext } from "../../interfaces/Visualization.js";
+import { PluggableUnknownChart } from "./PluggableUnknownChart.js";
 
 export class UnknownVisualizationDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     private uri: string;

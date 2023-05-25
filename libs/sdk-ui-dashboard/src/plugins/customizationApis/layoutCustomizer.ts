@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
-import { FluidLayoutCustomizationFn, IDashboardLayoutCustomizer } from "../customizer";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
-import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer";
+import { FluidLayoutCustomizationFn, IDashboardLayoutCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
 import { IDashboardLayout } from "@gooddata/sdk-model";
-import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model";
-import { CustomizerMutationsContext } from "./types";
+import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model/index.js";
+import { CustomizerMutationsContext } from "./types.js";
 
 export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     private sealed = false;

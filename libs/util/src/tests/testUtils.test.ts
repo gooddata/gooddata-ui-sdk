@@ -1,18 +1,17 @@
 // (C) 2007-2020 GoodData Corporation
-import { delay } from "../testUtils";
+import { vi, describe, it } from "vitest";
+import { delay } from "../testUtils.js";
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe("testUtils", () => {
     describe("delay", () => {
-        it("should call doneFn after timeout", (doneFn) => {
+        it("should call doneFn after timeout", async () => {
             const pendingDelay = delay(2);
 
-            jest.runAllTimers();
+            vi.runAllTimers();
 
-            pendingDelay.then(() => {
-                doneFn();
-            });
+            await pendingDelay;
         });
     });
 });

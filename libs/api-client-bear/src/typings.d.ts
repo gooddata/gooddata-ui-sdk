@@ -17,3 +17,10 @@ declare module "js-object-pretty-print" {
 declare module "fetch-cookie" {
     export default function fetchCookie(f: typeof fetch): typeof fetch;
 }
+
+//there is problem in default import of fetch-mock package
+
+declare module "fetch-mock/esm/client.js" {
+    const fetchMock: any;
+    export default fetchMock;
+}

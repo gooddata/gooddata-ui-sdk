@@ -1,31 +1,31 @@
 // (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
-import { InitializeDashboard } from "../../../commands/dashboard";
-import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
-import { loadingActions } from "../../../store/loading";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
+import { InitializeDashboard } from "../../../commands/dashboard.js";
+import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
+import { loadingActions } from "../../../store/loading/index.js";
+import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
-import { resolveDashboardConfig } from "./resolveDashboardConfig";
-import { configActions } from "../../../store/config";
-import { entitlementsActions } from "../../../store/entitlements";
-import { PromiseFnReturnType } from "../../../types/sagas";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
-import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs";
-import { resolvePermissions } from "./resolvePermissions";
-import { permissionsActions } from "../../../store/permissions";
-import { loadCatalog } from "./loadCatalog";
-import { loadDashboardAlerts } from "./loadDashboardAlerts";
-import { catalogActions } from "../../../store/catalog";
-import { alertsActions } from "../../../store/alerts";
+import { resolveDashboardConfig } from "./resolveDashboardConfig.js";
+import { configActions } from "../../../store/config/index.js";
+import { entitlementsActions } from "../../../store/entitlements/index.js";
+import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
+import { resolvePermissions } from "./resolvePermissions.js";
+import { permissionsActions } from "../../../store/permissions/index.js";
+import { loadCatalog } from "./loadCatalog.js";
+import { loadDashboardAlerts } from "./loadDashboardAlerts.js";
+import { catalogActions } from "../../../store/catalog/index.js";
+import { alertsActions } from "../../../store/alerts/index.js";
 import { BatchAction, batchActions } from "redux-batched-actions";
-import { loadUser } from "./loadUser";
-import { userActions } from "../../../store/user";
-import { uiActions } from "../../../store/ui";
-import { renderModeActions } from "../../../store/renderMode";
-import { loadDashboardList } from "./loadDashboardList";
-import { listedDashboardsActions } from "../../../store/listedDashboards";
-import { backendCapabilitiesActions } from "../../../store/backendCapabilities";
+import { loadUser } from "./loadUser.js";
+import { userActions } from "../../../store/user/index.js";
+import { uiActions } from "../../../store/ui/index.js";
+import { renderModeActions } from "../../../store/renderMode/index.js";
+import { loadDashboardList } from "./loadDashboardList.js";
+import { listedDashboardsActions } from "../../../store/listedDashboards/index.js";
+import { backendCapabilitiesActions } from "../../../store/backendCapabilities/index.js";
 import {
     areObjRefsEqual,
     IDashboard,
@@ -38,18 +38,18 @@ import {
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
-} from "../common/stateInitializers";
-import { executionResultsActions } from "../../../store/executionResults";
-import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap";
-import { getPrivateContext } from "../../../store/_infra/contexts";
-import { accessibleDashboardsActions } from "../../../store/accessibleDashboards";
-import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList";
-import { loadLegacyDashboards } from "./loadLegacyDashboards";
-import { legacyDashboardsActions } from "../../../store/legacyDashboards";
-import uniqBy from "lodash/uniqBy";
-import { loadDashboardPermissions } from "./loadDashboardPermissions";
-import { dashboardPermissionsActions } from "../../../store/dashboardPermissions";
-import { resolveEntitlements } from "./resolveEntitlements";
+} from "../common/stateInitializers.js";
+import { executionResultsActions } from "../../../store/executionResults/index.js";
+import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap.js";
+import { getPrivateContext } from "../../../store/_infra/contexts.js";
+import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
+import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList.js";
+import { loadLegacyDashboards } from "./loadLegacyDashboards.js";
+import { legacyDashboardsActions } from "../../../store/legacyDashboards/index.js";
+import uniqBy from "lodash/uniqBy.js";
+import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
+import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
+import { resolveEntitlements } from "./resolveEntitlements.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,

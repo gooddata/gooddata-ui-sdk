@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useContext } from "react";
-import invariant from "ts-invariant";
-import { IGeoConfig } from "../GeoChart";
+import { invariant } from "ts-invariant";
+import { IGeoConfig } from "../GeoChart.js";
 
 /**
  * @alpha

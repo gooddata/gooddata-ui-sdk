@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
+import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
 
 /**

@@ -20,7 +20,7 @@ import {
     IWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { IDashboardFilter } from "../../../../types";
+import { IDashboardFilter } from "../../../../types.js";
 
 /**
  * Converts a {@link IDashboardFilter} to a {@link FilterContextItem}.

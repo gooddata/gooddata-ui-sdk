@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { alertsActions } from "../../../store/alerts";
-import { filterContextActions } from "../../../store/filterContext";
-import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext";
-import { layoutActions } from "../../../store/layout";
-import { insightsActions } from "../../../store/insights";
-import { metaActions } from "../../../store/meta";
-import { uiActions } from "../../../store/ui";
+import { alertsActions } from "../../../store/alerts/index.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { layoutActions } from "../../../store/layout/index.js";
+import { insightsActions } from "../../../store/insights/index.js";
+import { metaActions } from "../../../store/meta/index.js";
+import { uiActions } from "../../../store/ui/index.js";
 import {
     areObjRefsEqual,
     IInsight,
@@ -23,19 +23,19 @@ import {
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
-} from "../../../../_staging/dashboard/dashboardFilterContext";
-import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
+} from "../../../../_staging/dashboard/dashboardFilterContext.js";
+import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { SagaIterator } from "redux-saga";
-import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
+import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 import { call } from "redux-saga/effects";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
-import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
-import { getPrivateContext } from "../../../store/_infra/contexts";
-import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs";
-import { PromiseFnReturnType } from "../../../types/sagas";
-import update from "lodash/fp/update";
-import isEmpty from "lodash/isEmpty";
+import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { getPrivateContext } from "../../../store/_infra/contexts.js";
+import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
+import { PromiseFnReturnType } from "../../../types/sagas.js";
+import update from "lodash/fp/update.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",

@@ -2,10 +2,10 @@
 import React from "react";
 import cx from "classnames";
 
-import { useDashboardDrag } from "./useDashboardDrag";
-import { useWidgetDragEndHandler } from "./draggableWidget";
-import { selectIsInEditMode, useDashboardSelector } from "../../model";
-import { IWrapCreatePanelItemWithDragInnerProps, IWrapCreatePanelItemWithDragProps } from "./types";
+import { useDashboardDrag } from "./useDashboardDrag.js";
+import { useWidgetDragEndHandler } from "./draggableWidget/index.js";
+import { selectIsInEditMode, useDashboardSelector } from "../../model/index.js";
+import { IWrapCreatePanelItemWithDragInnerProps, IWrapCreatePanelItemWithDragProps } from "./types.js";
 
 /**
  * @internal

@@ -1,18 +1,24 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
-import Measure from "react-measure";
+import DefaultMeasure from "react-measure";
 
-import { LoadingMask } from "../../LoadingMask";
-import { IRenderListItemProps } from "../List";
-import { AsyncList } from "../AsyncList";
-import { useInvertableSelect } from "./useInvertableSelect";
-import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar";
-import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox";
-import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar";
-import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch";
+import { LoadingMask } from "../../LoadingMask/index.js";
+import { IRenderListItemProps } from "../List.js";
+import { AsyncList } from "../AsyncList.js";
+import { useInvertableSelect } from "./useInvertableSelect.js";
+import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
+import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
+import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
+import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { InvertableSelectItem } from "./InvertableSelectItem";
+import { InvertableSelectItem } from "./InvertableSelectItem.js";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(DefaultMeasure);
 
 /**
  * Properties of List item component implementation

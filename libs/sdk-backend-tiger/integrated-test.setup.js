@@ -1,5 +1,7 @@
 // (C) 2021 GoodData Corporation
 
+import https from "https";
+
 /*
  * integrated tests run against wiremock which uses self-signed certificates. tell node.js not to bomb and
  * instead just issue warnings.
@@ -29,7 +31,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
  * This is transparent to the node-fetch that is used by the api-client.
  */
 
-const https = require("https");
 const originalRequest = https.request;
 
 function stripDomain(cookies, domain) {

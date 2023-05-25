@@ -10,15 +10,15 @@ import {
     PlaceholderResolvedValue,
     PlaceholdersResolvedValues,
     isPlaceholder,
-} from "./base";
-import { usePlaceholdersContext, PlaceholdersState } from "./context";
-import invariant from "ts-invariant";
+} from "./base.js";
+import { usePlaceholdersContext, PlaceholdersState } from "./context.js";
+import { invariant } from "ts-invariant";
 import {
     setPlaceholder,
     resolvePlaceholderValue,
     resolveComposedPlaceholderValue,
     resolveValueWithPlaceholders,
-} from "./resolve";
+} from "./resolve.js";
 
 /**
  * React hook to obtain/set placeholder value.

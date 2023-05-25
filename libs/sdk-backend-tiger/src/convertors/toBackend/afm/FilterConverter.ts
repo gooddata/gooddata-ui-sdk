@@ -32,8 +32,8 @@ import {
     isRankingFilter,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
-import { toLabelQualifier, toAfmIdentifier, toDateDataSetQualifier } from "../ObjRefConverter";
+import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions.js";
+import { toLabelQualifier, toAfmIdentifier, toDateDataSetQualifier } from "../ObjRefConverter.js";
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.

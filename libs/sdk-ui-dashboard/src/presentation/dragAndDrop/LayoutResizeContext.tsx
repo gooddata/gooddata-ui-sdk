@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React, { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
-import noop from "lodash/noop";
-import { ReachedResizingLimit } from "./DragLayerPreview/types";
-import { emptyDOMRect } from "../layout/constants";
+import noop from "lodash/noop.js";
+import { ReachedResizingLimit } from "./DragLayerPreview/types.js";
+import { emptyDOMRect } from "../layout/constants.js";
 import { XYCoord } from "react-dnd";
 
 type ResizeDirection = "height" | "width" | "none";

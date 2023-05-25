@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import { IMappingHeader } from "./MappingHeader";
-import { DataViewFacade } from "../results/facade";
+import { IMappingHeader } from "./MappingHeader.js";
+import { DataViewFacade } from "../results/facade.js";
 
 /**
  * Additional data that describes the context in which the {@link IHeaderPredicate} match is being tested.

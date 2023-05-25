@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { DefaultCancelEditDialog } from "./DefaultCancelEditDialog";
-import { ICancelEditDialogProps } from "./types";
+import { DefaultCancelEditDialog } from "./DefaultCancelEditDialog.js";
+import { ICancelEditDialogProps } from "./types.js";
 
 /**
  * @internal

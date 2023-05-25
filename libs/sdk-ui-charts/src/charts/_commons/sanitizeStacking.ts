@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     IAttributeOrMeasure,
     bucketItems,
@@ -11,7 +11,7 @@ import {
     measureDoesComputeRatio,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../interfaces";
+import { IChartConfig } from "../../interfaces/index.js";
 
 function isItemsArray(obj: any): obj is IAttributeOrMeasure[] {
     return !isEmpty(obj) && (isMeasure(obj[0]) || isAttribute(obj));

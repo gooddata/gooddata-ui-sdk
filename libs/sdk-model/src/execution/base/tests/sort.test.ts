@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-
+import { describe, expect, it } from "vitest";
 import {
     ISortItem,
     newAttributeAreaSort,
@@ -7,8 +7,8 @@ import {
     newAttributeSort,
     newMeasureSort,
     sortEntityIds,
-} from "../sort";
-import { Account, Won } from "../../../../__mocks__/model";
+} from "../sort.js";
+import { Account, Won } from "../../../../__mocks__/model.js";
 import { InvariantError } from "ts-invariant";
 
 const AttributeSort = newAttributeSort(Account.Default, "asc");

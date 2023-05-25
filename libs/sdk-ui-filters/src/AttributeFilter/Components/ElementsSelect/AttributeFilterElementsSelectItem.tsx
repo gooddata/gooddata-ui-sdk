@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
-import camelCase from "lodash/camelCase";
+import camelCase from "lodash/camelCase.js";
 import { FormattedMessage, useIntl } from "react-intl";
-import { getElementTitle } from "../../utils";
-import { IAttributeFilterElementsSelectItemProps } from "./types";
+import { getElementTitle } from "../../utils.js";
+import { IAttributeFilterElementsSelectItemProps } from "./types.js";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];

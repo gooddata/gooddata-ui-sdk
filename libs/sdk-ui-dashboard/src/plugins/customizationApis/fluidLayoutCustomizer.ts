@@ -5,13 +5,13 @@ import {
     IDashboardLayoutItem,
     objRefToString,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import { IFluidLayoutCustomizer } from "../customizer";
-import { ExtendedDashboardWidget, ICustomWidget } from "../../model";
-import { DashboardLayoutBuilder } from "../../_staging/dashboard/fluidLayout";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
-import { CustomizerMutationsContext } from "./types";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { IFluidLayoutCustomizer } from "../customizer.js";
+import { ExtendedDashboardWidget, ICustomWidget } from "../../model/index.js";
+import { DashboardLayoutBuilder } from "../../_staging/dashboard/fluidLayout/index.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 
 type AddItemOp = {
     sectionIdx: number;

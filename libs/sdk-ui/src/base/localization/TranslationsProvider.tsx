@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
-import { messages } from "../../locales";
-import { emptyHeaderTitleFromIntl } from "./intlUtils";
+import { messages } from "../../locales.js";
+import { emptyHeaderTitleFromIntl } from "./intlUtils.js";
 
 /**
  * @internal

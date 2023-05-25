@@ -2,12 +2,12 @@
 import React from "react";
 import classNames from "classnames";
 
-import { useDashboardSelector, selectIsInEditMode, selectSettings } from "../../model";
-import { useDashboardDrag } from "./useDashboardDrag";
-import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler";
-import { getSizeInfo } from "../../_staging/layout/sizing";
+import { useDashboardSelector, selectIsInEditMode, selectSettings } from "../../model/index.js";
+import { useDashboardDrag } from "./useDashboardDrag.js";
+import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
+import { getSizeInfo } from "../../_staging/layout/sizing.js";
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
-import { IWrapInsightListItemWithDragProps } from "./types";
+import { IWrapInsightListItemWithDragProps } from "./types.js";
 
 /**
  * @internal

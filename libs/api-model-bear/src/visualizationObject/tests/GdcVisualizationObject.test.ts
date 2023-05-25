@@ -1,6 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import { GdcVisualizationObject } from "../GdcVisualizationObject";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { describe, it, expect } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import {
+    isAbsoluteDateFilter,
+    isArithmeticMeasureDefinition,
+    isAttribute,
+    isAttributeFilter,
+    isDateFilter,
+    isMeasure,
+    isMeasureDefinition,
+    isMeasureValueFilter,
+    isNegativeAttributeFilter,
+    isPopMeasureDefinition,
+    isPositiveAttributeFilter,
+    isPreviousPeriodMeasureDefinition,
+    isRelativeDateFilter,
+} from "../GdcVisualizationObject.js";
 import {
     attribute,
     simpleMeasure,
@@ -13,7 +28,7 @@ import {
     positiveAttributeFilter,
     negativeAttributeFilter,
     measureValueFilter,
-} from "./GdcVisualizationObject.fixtures";
+} from "./GdcVisualizationObject.fixtures.js";
 
 describe("GdcVisualizationObject", () => {
     describe("isMeasure", () => {
@@ -24,7 +39,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isMeasure(input)).toBe(expectedResult);
+            expect(isMeasure(input)).toBe(expectedResult);
         });
     });
 
@@ -36,7 +51,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isAttribute(input)).toBe(expectedResult);
+            expect(isAttribute(input)).toBe(expectedResult);
         });
     });
 
@@ -50,7 +65,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isMeasureDefinition(input)).toBe(expectedResult);
+            expect(isMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -64,7 +79,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isArithmeticMeasureDefinition(input)).toBe(expectedResult);
+            expect(isArithmeticMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -78,7 +93,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isPopMeasureDefinition(input)).toBe(expectedResult);
+            expect(isPopMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -92,7 +107,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isPreviousPeriodMeasureDefinition(input)).toBe(expectedResult);
+            expect(isPreviousPeriodMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -107,7 +122,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isAttributeFilter(input)).toBe(expectedResult);
+            expect(isAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -122,7 +137,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isDateFilter(input)).toBe(expectedResult);
+            expect(isDateFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -137,7 +152,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isPositiveAttributeFilter(input)).toBe(expectedResult);
+            expect(isPositiveAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -152,7 +167,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isNegativeAttributeFilter(input)).toBe(expectedResult);
+            expect(isNegativeAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -167,7 +182,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isAbsoluteDateFilter(input)).toBe(expectedResult);
+            expect(isAbsoluteDateFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -182,7 +197,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isRelativeDateFilter(input)).toBe(expectedResult);
+            expect(isRelativeDateFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -197,7 +212,7 @@ describe("GdcVisualizationObject", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcVisualizationObject.isMeasureValueFilter(input)).toBe(expectedResult);
+            expect(isMeasureValueFilter(input)).toBe(expectedResult);
         });
     });
 });

@@ -2,13 +2,13 @@
 
 import { isDrillToLegacyDashboard } from "@gooddata/sdk-model";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import isEqual from "lodash/isEqual";
-import compact from "lodash/compact";
-import uniqWith from "lodash/uniqWith";
-import { getDrillOriginLocalIdentifier, isDrillConfigured } from "../../../_staging/drills/drillingUtils";
-import { DashboardDrillDefinition } from "../../../types";
+import isEqual from "lodash/isEqual.js";
+import compact from "lodash/compact.js";
+import uniqWith from "lodash/uniqWith.js";
+import { getDrillOriginLocalIdentifier, isDrillConfigured } from "../../../_staging/drills/drillingUtils.js";
+import { DashboardDrillDefinition } from "../../../types.js";
 
-import { isDrillToUrl } from "../types";
+import { isDrillToUrl } from "../types.js";
 
 /**
  * @internal

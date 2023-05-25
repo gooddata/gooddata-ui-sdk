@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { Separator } from "../Separator/Separator";
+import { Separator } from "../Separator/Separator.js";
 
 interface ISelectSeparatorProps {
     className?: string;

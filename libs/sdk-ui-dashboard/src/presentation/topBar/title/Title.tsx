@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { ITitleProps } from "./types";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { ITitleProps } from "./types.js";
 
 /**
  * @internal

@@ -15,7 +15,10 @@
         "outDir": "dist",
         "sourceMap": false,
         "baseUrl": "..",
-        "types": ["cypress-real-events", "node", "@cypress/grep"]
+        "types": ["cypress-real-events", "node", "@cypress/grep"],
+        "paths": {
+            "gooddata/util": ["util/src"]
+        }
     },
     "compileOnSave": false,
     "exclude": ["**/node_modules", "dist", "esm"]

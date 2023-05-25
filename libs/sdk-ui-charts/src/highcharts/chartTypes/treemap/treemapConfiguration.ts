@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 
 const TREEMAP_TEMPLATE = {
     chart: {

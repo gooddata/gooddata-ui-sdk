@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createPushpinDataSource should return color palette and size scale 1`] = `
-Object {
-  "geometry": Object {
-    "coordinates": Array [
+exports[`createPushpinDataSource > should return color palette and size scale 1`] = `
+{
+  "geometry": {
+    "coordinates": [
       -66.7458,
       18.0722,
     ],
     "type": "Point",
   },
-  "properties": Object {
-    "color": Object {
+  "properties": {
+    "color": {
       "background": "rgba(176,229,245,0.7)",
       "border": "rgba(20,178,226,0.7)",
       "format": "#,##0.00",
@@ -18,17 +18,17 @@ Object {
       "value": 698,
     },
     "locationIndex": 0,
-    "locationName": Object {
+    "locationName": {
       "title": "",
       "value": undefined,
     },
     "pushpinSize": 8.031516307043942,
-    "segment": Object {
+    "segment": {
       "title": "",
       "uri": undefined,
       "value": undefined,
     },
-    "size": Object {
+    "size": {
       "format": "#,##0.00",
       "title": "Population",
       "value": 3868,
@@ -38,19 +38,19 @@ Object {
 }
 `;
 
-exports[`createPushpinDataSource should return location without measure 1`] = `
-Object {
-  "features": Array [
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+exports[`createPushpinDataSource > should return location without measure 1`] = `
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
           -66.7458,
           18.0722,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -58,17 +58,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 0,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -76,16 +76,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -66.6077,
           18.0727,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -93,17 +93,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 1,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -111,16 +111,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -65.8976,
           18.0729,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -128,17 +128,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 2,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -146,16 +146,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -157.7211,
           21.2975,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -163,17 +163,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 3,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -181,16 +181,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -157.846,
           21.3294,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -198,17 +198,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 4,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -216,16 +216,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -157.9566,
           21.4031,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -233,17 +233,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 5,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -251,16 +251,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -80.2102,
           25.7839,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -268,17 +268,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 6,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -286,16 +286,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -98.418,
           26.2181,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -303,17 +303,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 7,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -321,16 +321,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -97.695,
           26.2585,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -338,17 +338,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 8,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,
@@ -356,16 +356,16 @@ Object {
       },
       "type": "Feature",
     },
-    Object {
-      "geometry": Object {
-        "coordinates": Array [
+    {
+      "geometry": {
+        "coordinates": [
           -98.6425,
           26.3024,
         ],
         "type": "Point",
       },
-      "properties": Object {
-        "color": Object {
+      "properties": {
+        "color": {
           "background": "rgba(20,178,226,0.7)",
           "border": "rgb(233,237,241)",
           "format": "",
@@ -373,17 +373,17 @@ Object {
           "value": undefined,
         },
         "locationIndex": 9,
-        "locationName": Object {
+        "locationName": {
           "title": "",
           "value": undefined,
         },
         "pushpinSize": 8,
-        "segment": Object {
+        "segment": {
           "title": "",
           "uri": undefined,
           "value": undefined,
         },
-        "size": Object {
+        "size": {
           "format": "",
           "title": "",
           "value": undefined,

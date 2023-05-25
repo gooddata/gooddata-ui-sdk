@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataAccessMethods for data with scoped series and slices should correctly extract data for series 1`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 1`] = `
+{
+  "rawData": [
     "5099309.54",
     "6614222.47",
     "8269682.68",
@@ -15,9 +15,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices should correctly extract data for series 2`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 2`] = `
+{
+  "rawData": [
     "2115472",
     "2307461.24",
     "2749765.23",
@@ -30,9 +30,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices should correctly extract data for series 3`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 3`] = `
+{
+  "rawData": [
     "22123590.1",
     "16332673",
     "30326512.18",
@@ -45,9 +45,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices should correctly extract data for series 4`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices > should correctly extract data for series 4`] = `
+{
+  "rawData": [
     "7122497.87",
     "6550145.82",
     "6497774.39",
@@ -60,9 +60,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 1`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 1`] = `
+{
+  "rawData": [
     "2174478.26",
     "405767.14",
     "2580245.4",
@@ -99,9 +99,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 2`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 2`] = `
+{
+  "rawData": [
     "883793.08",
     "194123.92",
     null,
@@ -138,9 +138,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 3`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 3`] = `
+{
+  "rawData": [
     "5917286.73",
     "3156945.21",
     "9074231.94",
@@ -177,9 +177,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 4`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 4`] = `
+{
+  "rawData": [
     "2370306.08",
     "1270431.27",
     null,
@@ -216,9 +216,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 5`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 5`] = `
+{
+  "rawData": [
     "1989393.54",
     "529670.6",
     "2519064.14",
@@ -255,9 +255,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 6`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 6`] = `
+{
+  "rawData": [
     "817756.22",
     "219798.78",
     null,
@@ -294,9 +294,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 7`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 7`] = `
+{
+  "rawData": [
     "5501537.16",
     "7547821",
     "13049358.16",
@@ -333,9 +333,9 @@ Object {
 }
 `;
 
-exports[`DataAccessMethods for data with scoped series and slices with totals should correctly extract data for series 8`] = `
-Object {
-  "rawData": Array [
+exports[`DataAccessMethods > for data with scoped series and slices with totals > should correctly extract data for series 8`] = `
+{
+  "rawData": [
     "2039952.64",
     "1441807.88",
     null,

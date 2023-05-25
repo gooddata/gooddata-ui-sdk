@@ -8,11 +8,11 @@ import {
     SortDirection,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
-import { ILoadElementsOptions } from "../../../types";
-import { selectState } from "../common/selectors";
-import { FilterSelector } from "../common/types";
+import { ILoadElementsOptions } from "../../../types/index.js";
+import { selectState } from "../common/selectors.js";
+import { FilterSelector } from "../common/types.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 /**

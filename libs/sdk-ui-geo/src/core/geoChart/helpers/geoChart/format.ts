@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import { colors2Object, INumberObject, numberFormat } from "@gooddata/numberjs";
 import { ISeparators } from "@gooddata/sdk-ui";
-import escape from "lodash/escape";
-import unescape from "lodash/unescape";
+import escape from "lodash/escape.js";
+import unescape from "lodash/unescape.js";
 
 const customEscape = (str: string) => str && escape(unescape(str));
 

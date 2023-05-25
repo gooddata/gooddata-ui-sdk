@@ -1,8 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { DialogList } from "../DialogList";
-import { IDialogListProps } from "../typings";
+import { DialogList } from "../DialogList.js";
+import { IDialogListProps } from "../typings.js";
+import { describe, it, expect } from "vitest";
 
 describe("DialogList", () => {
     const createComponent = (props: IDialogListProps) => {

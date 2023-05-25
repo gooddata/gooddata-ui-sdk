@@ -1,9 +1,9 @@
 // (C) 2021-2023 GoodData Corporation
 import { useCallback } from "react";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { mapAccessGranteeDetailToGrantee } from "../../shareDialogMappers";
+import { mapAccessGranteeDetailToGrantee } from "../../shareDialogMappers.js";
 import { ObjRef, AccessGranteeDetail, IUser } from "@gooddata/sdk-model";
-import { GranteeItem } from "../types";
+import { GranteeItem } from "../types.js";
 
 /**
  * @internal

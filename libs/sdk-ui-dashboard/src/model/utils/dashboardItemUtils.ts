@@ -4,7 +4,7 @@ import {
     ExtendedDashboardItem,
     InternalDashboardItemDefinition,
     isCustomWidgetDefinition,
-} from "../types/layoutTypes";
+} from "../types/layoutTypes.js";
 import {
     idRef,
     ObjRef,

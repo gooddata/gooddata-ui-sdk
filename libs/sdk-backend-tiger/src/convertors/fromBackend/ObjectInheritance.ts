@@ -4,8 +4,8 @@ import {
     JsonApiAnalyticalDashboardOutMeta,
     JsonApiAnalyticalDashboardOutMetaOrigin,
 } from "@gooddata/api-client-tiger";
-import last from "lodash/last";
-import first from "lodash/first";
+import last from "lodash/last.js";
+import first from "lodash/first.js";
 
 type JsonApiMetadataLikeObject<T> = T & {
     id: string;

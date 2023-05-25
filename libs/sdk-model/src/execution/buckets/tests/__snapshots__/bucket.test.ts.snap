@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`newBucket should create bucket with mix of attributes and measures 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+exports[`newBucket > should create bucket with mix of attributes and measures 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -15,21 +15,21 @@ Object {
         "localIdentifier": "m_afSEwRwdbMeQ",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -37,9 +37,9 @@ Object {
         "localIdentifier": "m_fact.stagehistory.velocity_sum",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id",
           "type": "displayForm",
         },
@@ -51,21 +51,21 @@ Object {
 }
 `;
 
-exports[`newBucket should create bucket with multiple attributes 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newBucket > should create bucket with multiple attributes 1`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -77,14 +77,14 @@ Object {
 }
 `;
 
-exports[`newBucket should create bucket with multiple measures 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+exports[`newBucket > should create bucket with multiple measures 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -92,12 +92,12 @@ Object {
         "localIdentifier": "m_afSEwRwdbMeQ",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -110,12 +110,12 @@ Object {
 }
 `;
 
-exports[`newBucket should create bucket with single attribute 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newBucket > should create bucket with single attribute 1`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id",
           "type": "displayForm",
         },
@@ -127,14 +127,14 @@ Object {
 }
 `;
 
-exports[`newBucket should create bucket with single measure 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+exports[`newBucket > should create bucket with single measure 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -147,14 +147,14 @@ Object {
 }
 `;
 
-exports[`newBucket should create bucket with totals 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+exports[`newBucket > should create bucket with totals 1`] = `
+{
+  "items": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -162,9 +162,9 @@ Object {
         "localIdentifier": "m_afSEwRwdbMeQ",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -173,8 +173,8 @@ Object {
     },
   ],
   "localIdentifier": "totalsBucket",
-  "totals": Array [
-    Object {
+  "totals": [
+    {
       "attributeIdentifier": "a_label.account.id.name",
       "measureIdentifier": "m_afSEwRwdbMeQ",
       "type": "sum",
@@ -183,12 +183,12 @@ Object {
 }
 `;
 
-exports[`newBucket should create bucket with totals when items not in bucket 1`] = `
-Object {
-  "items": Array [],
+exports[`newBucket > should create bucket with totals when items not in bucket 1`] = `
+{
+  "items": [],
   "localIdentifier": "totalsBucket",
-  "totals": Array [
-    Object {
+  "totals": [
+    {
       "attributeIdentifier": "a_label.account.id.name",
       "measureIdentifier": "m_afSEwRwdbMeQ",
       "type": "sum",
@@ -197,17 +197,17 @@ Object {
 }
 `;
 
-exports[`newBucket should create empty bucket 1`] = `
-Object {
-  "items": Array [],
+exports[`newBucket > should create empty bucket 1`] = `
+{
+  "items": [],
   "localIdentifier": "emptyBucket",
 }
 `;
 
-exports[`newBucket should throw error if attribute has more than one display forms 1`] = `"Contents of a bucket must be either attribute, measure or total. It looks like you used an attribute from generated metadata containing more than one display form. Use one of the following display forms instead: Subject: label.activity.id.subject, Default: label.activity.id."`;
+exports[`newBucket > should throw error if attribute has more than one display forms 1`] = `"Contents of a bucket must be either attribute, measure or total. It looks like you used an attribute from generated metadata containing more than one display form. Use one of the following display forms instead: Subject: label.activity.id.subject, Default: label.activity.id."`;
 
-exports[`newBucket should throw error if content invalid object containing valid aggregations 1`] = `"Contents of a bucket must be either attribute, measure or total. It looks like you used an object fact.stagehistory.duration from generated metadata. You need to use one of the following aggregation functions instead: Sum, Count, Avg, Min, Max, Median, Runsum."`;
+exports[`newBucket > should throw error if content invalid object containing valid aggregations 1`] = `"Contents of a bucket must be either attribute, measure or total. It looks like you used an object fact.stagehistory.duration from generated metadata. You need to use one of the following aggregation functions instead: Sum, Count, Avg, Min, Max, Median, Runsum."`;
 
-exports[`newBucket should throw if content not an object 1`] = `"Contents of a bucket must be either attribute, measure or total. Got unsupported content of type string: string."`;
+exports[`newBucket > should throw if content not an object 1`] = `"Contents of a bucket must be either attribute, measure or total. Got unsupported content of type string: string."`;
 
-exports[`newBucket should throw if unknown object 1`] = `"Contents of a bucket must be either attribute, measure or total. Got unknown content object: {}."`;
+exports[`newBucket > should throw if unknown object 1`] = `"Contents of a bucket must be either attribute, measure or total. Got unknown content object: {}."`;

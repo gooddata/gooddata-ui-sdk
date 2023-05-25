@@ -1,27 +1,27 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { AddLayoutSection } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout, selectStash } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { AddLayoutSection } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes";
-import isEmpty from "lodash/isEmpty";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout";
-import { validateSectionPlacement } from "./validation/layoutValidation";
-import { ItemResolutionResult, validateAndResolveStashedItems } from "./validation/stashValidation";
-import { resolveIndexOfNewItem } from "../../utils/arrayOps";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors";
+import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import isEmpty from "lodash/isEmpty.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout.js";
+import { validateSectionPlacement } from "./validation/layoutValidation.js";
+import { ItemResolutionResult, validateAndResolveStashedItems } from "./validation/stashValidation.js";
+import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../store/insights";
+import { insightsActions } from "../../store/insights/index.js";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
-} from "./validation/itemValidation";
-import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
-import { sanitizeHeader } from "./utils";
+} from "./validation/itemValidation.js";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+import { sanitizeHeader } from "./utils.js";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;

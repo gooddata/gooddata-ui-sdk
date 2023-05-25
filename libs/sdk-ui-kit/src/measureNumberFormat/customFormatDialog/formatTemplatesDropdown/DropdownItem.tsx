@@ -4,10 +4,10 @@ import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import PreviewRows from "../shared/PreviewRows";
-import { IFormatTemplate } from "../../typings";
-import { Bubble } from "../../../Bubble";
-import { Typography } from "../../../Typography";
+import PreviewRows from "../shared/PreviewRows.js";
+import { IFormatTemplate } from "../../typings.js";
+import { Bubble } from "../../../Bubble/index.js";
+import { Typography } from "../../../Typography/index.js";
 
 interface ITemplateDropdownItemProps {
     template: IFormatTemplate;

@@ -10,9 +10,11 @@ import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateFilterOption as DateFilterOption_2 } from './interfaces/index.js';
 import { DateString } from '@gooddata/sdk-model';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
+import { GranularityIntlKey as GranularityIntlKey_2 } from './constants/i18n.js';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAlignPoint } from '@gooddata/sdk-ui-kit';
@@ -23,8 +25,11 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
+import { IDateAndMessageTranslator as IDateAndMessageTranslator_2 } from './utils/Translations/Translators.js';
 import { IDateFilter } from '@gooddata/sdk-model';
+import { IDateFilterOptionsByType as IDateFilterOptionsByType_2 } from './interfaces/index.js';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IExtendedDateFilterErrors as IExtendedDateFilterErrors_2 } from './interfaces/index.js';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
@@ -205,25 +210,25 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
 
 // @beta (undocumented)
 export const DateFilterHelpers: {
-    validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
-    getDateFilterTitle: (filter: DateFilterOption, locale: ILocale, dateFormat?: string) => string;
-    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string) => string;
-    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, dateFormat?: string) => string;
+    validateFilterOption: (filterOption: DateFilterOption_2) => IExtendedDateFilterErrors_2;
+    getDateFilterTitle: (filter: DateFilterOption_2, locale: ILocale, dateFormat?: string) => string;
+    getDateFilterTitleUsingTranslator: (filter: DateFilterOption_2, translator: IDateAndMessageTranslator_2, dateFormat?: string) => string;
+    getDateFilterRepresentation: (filter: DateFilterOption_2, locale: ILocale, dateFormat?: string) => string;
     granularityIntlCodes: {
-        "GDC.time.year": GranularityIntlKey;
-        "GDC.time.week_us": GranularityIntlKey;
-        "GDC.time.quarter": GranularityIntlKey;
-        "GDC.time.month": GranularityIntlKey;
-        "GDC.time.date": GranularityIntlKey;
-        "GDC.time.hour": GranularityIntlKey;
-        "GDC.time.minute": GranularityIntlKey;
+        "GDC.time.year": GranularityIntlKey_2;
+        "GDC.time.week_us": GranularityIntlKey_2;
+        "GDC.time.quarter": GranularityIntlKey_2;
+        "GDC.time.month": GranularityIntlKey_2;
+        "GDC.time.date": GranularityIntlKey_2;
+        "GDC.time.hour": GranularityIntlKey_2;
+        "GDC.time.minute": GranularityIntlKey_2;
     };
-    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => DateFilterOption;
-    defaultDateFilterOptions: IDateFilterOptionsByType;
-    canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
-    mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
+    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2, excludeCurrentPeriod: boolean) => DateFilterOption_2;
+    defaultDateFilterOptions: IDateFilterOptionsByType_2;
+    canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption_2) => boolean;
+    mapOptionToAfm: (value: DateFilterOption_2, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
     formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator_2) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 

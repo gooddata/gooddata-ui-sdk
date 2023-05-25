@@ -1,25 +1,25 @@
 // (C) 2007-2022 GoodData Corporation
 import SparkMD5 from "spark-md5";
-import invariant from "ts-invariant";
-import cloneDeep from "lodash/cloneDeep";
-import compact from "lodash/compact";
-import filter from "lodash/filter";
-import first from "lodash/first";
-import find from "lodash/find";
-import map from "lodash/map";
-import merge from "lodash/merge";
-import every from "lodash/every";
-import isEmpty from "lodash/isEmpty";
-import negate from "lodash/negate";
-import partial from "lodash/partial";
-import flatten from "lodash/flatten";
-import set from "lodash/set";
+import { invariant } from "ts-invariant";
+import cloneDeep from "lodash/cloneDeep.js";
+import compact from "lodash/compact.js";
+import filter from "lodash/filter.js";
+import first from "lodash/first.js";
+import find from "lodash/find.js";
+import map from "lodash/map.js";
+import merge from "lodash/merge.js";
+import every from "lodash/every.js";
+import isEmpty from "lodash/isEmpty.js";
+import negate from "lodash/negate.js";
+import partial from "lodash/partial.js";
+import flatten from "lodash/flatten.js";
+import set from "lodash/set.js";
 import { getAttributesDisplayForms, GdcVisualizationObject, GdcCatalog } from "@gooddata/api-model-bear";
 
-import { Rules } from "../utils/rules";
-import { sortDefinitions } from "../utils/definitions";
-import { getMissingUrisInAttributesMap } from "../utils/attributesMapLoader";
-import { XhrModule } from "../xhr";
+import { Rules } from "../utils/rules.js";
+import { sortDefinitions } from "../utils/definitions.js";
+import { getMissingUrisInAttributesMap } from "../utils/attributesMapLoader.js";
+import { XhrModule } from "../xhr.js";
 import isAttribute = GdcVisualizationObject.isAttribute;
 import isMeasure = GdcVisualizationObject.isMeasure;
 

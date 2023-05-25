@@ -27,7 +27,7 @@ The tests contained in this package can be divided into three distinct groups:
     Transitively, these tests are first step in verifying that particular usage of public API always
     leads to predictable result for the end user.
 
-    These tests are implemented using jest & react testing library and are intended to run fairly fast.
+    These tests are implemented using vitest & react testing library and are intended to run fairly fast.
 
 -   Visual regression tests
 
@@ -47,7 +47,7 @@ abstraction of the _test scenarios_. Test scenarios for a particular visualizati
 different valid instances of props applicable for that visualization.
 
 The test scenarios for one type of visualization are defined once and are then used as inputs for
-parameterized Jest snapshot tests and creation of stories to be captured as screenshots using backstop.
+parameterized vitest snapshot tests and creation of stories to be captured as screenshots using backstop.
 
 Because the scenarios exercise various combinations of visualization input props according to prop type
 defined for that visualization, they are a natural indicator of breaking API changes. See following
@@ -348,7 +348,7 @@ This project has several use cases where React component test scenarios have to 
 
 In both of these cases code that is normally interpreted in browsers needs to run on server/workstation.
 
-To simplify and speed up initial development, the project mis-uses jest to run code that requires simulation of
+To simplify and speed up initial development, the project mis-uses vitest to run code that requires simulation of
 browser environment in node. A proper solution (perhaps using browser-env) is definitely possible but comes with
 its own price-tag while leading to the same results as current solution.
 
@@ -368,7 +368,7 @@ First, here are the safe types of changes in this area:
 -   Modifying existing test scenarios because they do not compile is not allowed - it indicates
     breakage of public API
 
--   Modifying existing jest snapshots for particular scenario must be scrutinized;
+-   Modifying existing vitest snapshots for particular scenario must be scrutinized;
     -   IF the scenario is also tested using visual regression AND the screenshot for the
         scenario is unchanged, then the update in snapshot is LIKELY OK; evaluate impact
     -   IF the scenario is also tested using visual regression AND the screenshot for

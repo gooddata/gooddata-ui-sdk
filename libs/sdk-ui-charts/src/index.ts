@@ -9,8 +9,8 @@
  *
  * @packageDocumentation
  */
-export * from "./interfaces";
-export * from "./charts";
+export * from "./interfaces/index.js";
+export * from "./charts/index.js";
 export {
     ColorUtils,
     TOP,
@@ -36,7 +36,7 @@ export {
     isSankeyOrDependencyWheel,
     isWaterfall,
     updateConfigWithSettings,
-} from "./highcharts";
+} from "./highcharts/index.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
 export { getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";

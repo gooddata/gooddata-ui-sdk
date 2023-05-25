@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { GdcMetadata } from "@gooddata/api-model-bear";
-import { MetadataModule } from "../metadata";
+import { MetadataModule } from "../metadata.js";
 
 function getAttributeUris(displayForms: GdcMetadata.IWrappedAttributeDisplayForm[]) {
     return displayForms.map((displayForm) => displayForm.attributeDisplayForm.content.formOf);

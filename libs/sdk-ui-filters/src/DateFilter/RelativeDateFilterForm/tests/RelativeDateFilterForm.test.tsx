@@ -1,13 +1,14 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm";
-import * as granularityTabsModule from "../GranularityTabs";
-import * as rangePickerModule from "../../RelativeRangePicker/RelativeRangePicker";
+import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm.js";
+import * as granularityTabsModule from "../GranularityTabs.js";
+import * as rangePickerModule from "../../RelativeRangePicker/RelativeRangePicker.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",
@@ -41,25 +42,25 @@ const createForm = (props?: Partial<IRelativeDateFilterFormProps>) => {
 /**
  * These mocks enable us to test props as parameters of the called components
  */
-// jest.mock("../GranularityTabs", () => ({
-//     GranularityTabs: jest.fn(() => null),
+// vi.mock("../GranularityTabs", () => ({
+//     GranularityTabs: vi.fn(() => null),
 // }));
-// jest.mock("../../RelativeRangePicker/RelativeRangePicker", () => ({
-//     RelativeRangePicker: jest.fn(() => null),
+// vi.mock("../../RelativeRangePicker/RelativeRangePicker", () => ({
+//     RelativeRangePicker: vi.fn(() => null),
 // }));
 
 describe("RelativeDateFilterForm", () => {
     beforeEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it("should render granularity tabs and relative range picker and pass them props", () => {
-        const granularityTabsMock = jest
+        const granularityTabsMock = vi
             .spyOn(granularityTabsModule, "GranularityTabs")
-            .mockImplementation(() => null);
-        const rangePickerMock = jest
+            .mockImplementation((): null => null);
+        const rangePickerMock = vi
             .spyOn(rangePickerModule, "RelativeRangePicker")
-            .mockImplementation(() => null);
+            .mockImplementation((): null => null);
         createForm();
 
         expect(granularityTabsMock).toHaveBeenCalledWith(
@@ -84,7 +85,7 @@ describe("RelativeDateFilterForm", () => {
     });
 
     it("should fire onSelectedFilterOptionChange when granularity or inputs change", () => {
-        const onSelectedFilterOptionChange = jest.fn();
+        const onSelectedFilterOptionChange = vi.fn();
         createForm({ onSelectedFilterOptionChange });
 
         fireEvent.click(screen.getByText("Years"));

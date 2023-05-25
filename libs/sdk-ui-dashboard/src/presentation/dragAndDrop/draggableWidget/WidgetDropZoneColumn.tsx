@@ -3,14 +3,18 @@ import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React, { useMemo } from "react";
 import { Col } from "react-grid-system";
-import { selectDraggingWidgetTarget, useDashboardDispatch, useDashboardSelector } from "../../../model";
-import { WidgetDropZone } from "./WidgetDropZone";
-import { useDashboardDrop } from "../useDashboardDrop";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
-import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler";
-import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing";
+import {
+    selectDraggingWidgetTarget,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import { WidgetDropZone } from "./WidgetDropZone.js";
+import { useDashboardDrop } from "../useDashboardDrop.js";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing.js";
 import {
     BaseDraggableLayoutItem,
     isInsightDraggableItem,
@@ -18,7 +22,7 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
-} from "../types";
+} from "../types.js";
 
 export type WidgetDropZoneColumnProps = {
     screen: ScreenSize;

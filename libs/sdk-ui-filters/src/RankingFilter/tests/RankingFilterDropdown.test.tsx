@@ -1,18 +1,19 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import { newRankingFilter } from "@gooddata/sdk-model";
-import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown";
+import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
+import { describe, it, expect, vi } from "vitest";
 
 import {
     IRankingFilterDropdownProps,
     RankingFilterDropdown,
     prepareRankingFilterState,
-} from "../RankingFilterDropdown";
+} from "../RankingFilterDropdown.js";
 
-import * as Mock from "./mocks";
+import * as Mock from "./mocks.js";
 
 const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
     const defaultProps: IRankingFilterDropdownProps = {
@@ -118,7 +119,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onApply with attributes when Apply button clicked", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply });
             component.openOperatorDropdown().setOperator("BOTTOM");
             component.setValue("100");
@@ -137,7 +138,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onApply without attributes when Apply button clicked", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply });
             component.openOperatorDropdown().setOperator("BOTTOM");
             component.setValue("100");
@@ -155,7 +156,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onCancel when Cancel button clicked", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             renderComponent({ onCancel });
             component.clickCancel();
 
@@ -165,7 +166,7 @@ describe("RankingFilterDropdown", () => {
 
     describe("AttributeDropdown", () => {
         it("should call onDropDownItemMouseOver on item mouseOver", () => {
-            const onDropDownItemMouseOver = jest.fn();
+            const onDropDownItemMouseOver = vi.fn();
             renderComponent({ onDropDownItemMouseOver });
             fireEvent.mouseOver(component.openAttributeDropdown().getAttributeItem("Attribute 1"));
 
@@ -174,7 +175,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onDropDownItemMouseOut on item mouseOut", () => {
-            const onDropDownItemMouseOut = jest.fn();
+            const onDropDownItemMouseOut = vi.fn();
             renderComponent({ onDropDownItemMouseOut });
 
             fireEvent.mouseOut(component.openAttributeDropdown().getAttributeItem("Attribute 1"));
@@ -183,7 +184,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onDropDownItemMouseOut on dropdown close", () => {
-            const onDropDownItemMouseOut = jest.fn();
+            const onDropDownItemMouseOut = vi.fn();
             renderComponent({ onDropDownItemMouseOut });
             component.openAttributeDropdown().setAttributeItem("Attribute 2");
 
@@ -217,7 +218,7 @@ describe("RankingFilterDropdown", () => {
 
     describe("MeasureDropdown", () => {
         it("should call onDropDownItemMouseOver on item mouseOver", () => {
-            const onDropDownItemMouseOver = jest.fn();
+            const onDropDownItemMouseOver = vi.fn();
             renderComponent({ onDropDownItemMouseOver });
 
             fireEvent.mouseOver(component.openMeasureDropdown().getMeasureItem("Measure 1"));
@@ -227,7 +228,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onDropDownItemMouseOut on item mouseOut", () => {
-            const onDropDownItemMouseOut = jest.fn();
+            const onDropDownItemMouseOut = vi.fn();
             renderComponent({ onDropDownItemMouseOut });
 
             fireEvent.mouseOut(component.openMeasureDropdown().getMeasureItem("Measure 1"));
@@ -236,7 +237,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should call onDropDownItemMouseOut on dropdown close", () => {
-            const onDropDownItemMouseOut = jest.fn();
+            const onDropDownItemMouseOut = vi.fn();
             renderComponent({ onDropDownItemMouseOut });
 
             component.openMeasureDropdown().setMeasureItem("Measure 2");
@@ -301,7 +302,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should set custom value via input blur handler", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply });
             component.setValueByBlur("42");
             component.clickApply();
@@ -324,7 +325,7 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should set custom value via input change handler", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply });
 
             expect(component.isApplyButtonDisabled()).toBe(true);

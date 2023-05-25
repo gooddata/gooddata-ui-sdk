@@ -4,14 +4,14 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
-import OperatorDropdown from "./OperatorDropdown";
-import RangeInput from "./RangeInput";
-import ComparisonInput from "./ComparisonInput";
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
+import OperatorDropdown from "./OperatorDropdown.js";
+import RangeInput from "./RangeInput.js";
+import ComparisonInput from "./ComparisonInput.js";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
 import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
-import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox";
-import { WarningMessage } from "./typings";
-import { WarningMessageComponent } from "./WarningMessage";
+import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox.js";
+import { WarningMessage } from "./typings.js";
+import { WarningMessageComponent } from "./WarningMessage.js";
 
 interface IDropdownBodyOwnProps {
     operator: MeasureValueFilterOperator;

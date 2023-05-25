@@ -10,7 +10,7 @@ import {
     CatalogItem,
     IMetadataObject,
 } from "@gooddata/sdk-model";
-import { IPagedResource } from "../../common/paging";
+import { IPagedResource } from "../../common/paging.js";
 
 /**
  * Additional options for the {@link IWorkspaceInsightsService.getVisualizationClasses} function.

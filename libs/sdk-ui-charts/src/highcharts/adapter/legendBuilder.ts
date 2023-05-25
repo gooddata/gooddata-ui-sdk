@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
-import pick from "lodash/pick";
-import set from "lodash/set";
+import pick from "lodash/pick.js";
+import set from "lodash/set.js";
 import {
     isAreaChart,
     isBubbleChart,
@@ -13,16 +13,16 @@ import {
     isScatterPlot,
     isTreemap,
     isWaterfall,
-} from "../chartTypes/_util/common";
+} from "../chartTypes/_util/common.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     isStackedChart,
     getComboChartSeries,
     createDualAxesSeriesMapper,
     createWaterfallLegendItems,
-} from "./legendHelpers";
-import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
-import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe";
+} from "./legendHelpers.js";
+import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
+import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe.js";
 import {
     LegendOptionsItemType,
     ILegendOptions,

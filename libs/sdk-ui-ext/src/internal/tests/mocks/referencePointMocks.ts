@@ -9,7 +9,7 @@ import {
     IFiltersBucketItem,
     DATE_DATASET_ATTRIBUTE,
     IRankingFilter,
-} from "../../interfaces/Visualization";
+} from "../../interfaces/Visualization.js";
 import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 import { ObjRef, uriRef, idRef, ISortItem } from "@gooddata/sdk-model";

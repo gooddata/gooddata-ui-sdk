@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import qs from "qs";
-import { XhrModule, ApiResponse } from "./xhr";
-import { ProjectModule } from "./project";
+import { XhrModule, ApiResponse } from "./xhr.js";
+import { ProjectModule } from "./project.js";
 import { GdcUser, GdcOrganization } from "@gooddata/api-model-bear";
-import { parseSettingItemValue } from "./util";
-import { IFeatureFlags } from "./interfaces";
+import { parseSettingItemValue } from "./util.js";
+import { IFeatureFlags } from "./interfaces.js";
 
 export interface IUserConfigsSettingItem {
     settingItem: {

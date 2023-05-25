@@ -5,8 +5,8 @@ import {
     JsonApiVisualizationObjectOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { idRef, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { isInheritedObject } from "./ObjectInheritance";
-import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter";
+import { isInheritedObject } from "./ObjectInheritance.js";
+import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter.js";
 
 export const insightFromInsightDefinition = (
     insight: IInsightDefinition,

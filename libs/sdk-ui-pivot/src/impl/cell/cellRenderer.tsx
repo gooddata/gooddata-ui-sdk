@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
-import { isSomeTotal } from "../data/dataSourceUtils";
-import { VALUE_CLASS } from "../base/constants";
-import { IGridTotalsRow } from "../data/resultTypes";
-import { agColId } from "../structure/tableDescriptorTypes";
+import { isSomeTotal } from "../data/dataSourceUtils.js";
+import { VALUE_CLASS } from "../base/constants.js";
+import { IGridTotalsRow } from "../data/resultTypes.js";
+import { agColId } from "../structure/tableDescriptorTypes.js";
 
 function hasTotalForCurrentColumn(params: ICellRendererParams): boolean {
     const row = params.data as IGridTotalsRow;

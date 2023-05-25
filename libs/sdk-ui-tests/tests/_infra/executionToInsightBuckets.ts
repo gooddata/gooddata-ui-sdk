@@ -38,5 +38,5 @@ export function geoExecutionToInsightBuckets(execution: IExecutionDefinition | u
         return [];
     }
 
-    return execution.buckets.filter(bucket => bucket.localIdentifier !== BucketNames.TOOLTIP_TEXT);
+    return execution.buckets.filter((bucket) => bucket.localIdentifier !== BucketNames.TOOLTIP_TEXT);
 }

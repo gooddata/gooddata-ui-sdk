@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDashboardQuery } from "../../queries";
-import { queryEnvelopeWithPromise } from "./queryProcessing";
+import { IDashboardQuery } from "../../queries/index.js";
+import { queryEnvelopeWithPromise } from "./queryProcessing.js";
 import { call, put } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 

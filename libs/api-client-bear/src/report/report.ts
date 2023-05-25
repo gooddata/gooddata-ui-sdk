@@ -1,11 +1,11 @@
 // (C) 2007-2023 GoodData Corporation
 import { GdcExecuteAFM, GdcExport } from "@gooddata/api-model-bear";
-import compact from "lodash/compact";
-import isEmpty from "lodash/isEmpty";
-import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors";
-import { ApiResponse, ApiResponseError, XhrModule } from "../xhr";
-import { handleHeadPolling, IPollingOptions } from "../util";
-import { isExportFinished, getFormatContentType } from "../utils/export";
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors.js";
+import { ApiResponse, ApiResponseError, XhrModule } from "../xhr.js";
+import { handleHeadPolling, IPollingOptions } from "../util.js";
+import { isExportFinished, getFormatContentType } from "../utils/export.js";
 
 interface IExtendedExportConfig extends GdcExport.IBaseExportConfig {
     showFilters?: boolean;

@@ -2,18 +2,18 @@
 import { ScreenSize } from "@gooddata/sdk-model";
 import React from "react";
 import { Row } from "react-grid-system";
-import { RenderMode } from "../../../types";
+import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutItem } from "./DashboardLayoutItem";
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import {
     IDashboardLayoutGridRowRenderer,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemRenderer,
     IDashboardLayoutWidgetRenderer,
-} from "./interfaces";
+} from "./interfaces.js";
 
 /**
  * @alpha

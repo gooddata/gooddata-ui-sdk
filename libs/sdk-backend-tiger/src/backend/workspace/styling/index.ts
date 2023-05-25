@@ -8,11 +8,11 @@ import {
     IThemeMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { getSettingsForCurrentUser } from "../settings";
-import { DefaultColorPalette } from "./mocks/colorPalette";
-import { DefaultTheme } from "./mocks/theme";
-import { unwrapColorPaletteContent } from "../../../convertors/fromBackend/ColorPaletteConverter";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { getSettingsForCurrentUser } from "../settings/index.js";
+import { DefaultColorPalette } from "./mocks/colorPalette.js";
+import { DefaultTheme } from "./mocks/theme.js";
+import { unwrapColorPaletteContent } from "../../../convertors/fromBackend/ColorPaletteConverter.js";
 
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}

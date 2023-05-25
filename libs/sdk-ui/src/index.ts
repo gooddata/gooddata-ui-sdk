@@ -15,9 +15,9 @@
 
 // new exports
 
-export * from "./base";
-export * from "./execution";
-export * from "./kpi";
+export * from "./base/index.js";
+export * from "./execution/index.js";
+export * from "./kpi/index.js";
 
 /**
  * Common interface uses to specify number separators for the different SDK components.

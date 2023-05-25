@@ -1,11 +1,16 @@
 // (C) 2019-2021 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
+import { vi, describe, afterEach, beforeEach, expect, it, Mock } from "vitest";
+import fetchMock from "fetch-mock/esm/client.js";
 import { GdcFilterContext, GdcExport } from "@gooddata/api-model-bear";
-import { DashboardModule } from "../dashboard";
-import { XhrModule } from "../../xhr";
-import { ACCEPTED_REQUEST_STATUS, BAD_REQUEST_STATUS, SUCCESS_REQUEST_STATUS } from "../../constants/errors";
-import { mockPollingRequest, mockPollingRequestWithStatus } from "../../tests/utils/polling";
+import { DashboardModule } from "../dashboard.js";
+import { XhrModule } from "../../xhr.js";
+import {
+    ACCEPTED_REQUEST_STATUS,
+    BAD_REQUEST_STATUS,
+    SUCCESS_REQUEST_STATUS,
+} from "../../constants/errors.js";
+import { mockPollingRequest, mockPollingRequestWithStatus } from "../../tests/utils/polling.js";
 
 const dashboardExportModuleMock = () => new DashboardModule(new XhrModule(fetch, {}));
 
@@ -51,10 +56,15 @@ describe("exportDashboard", () => {
             fetchMock.post(endpoint, {
                 uri: createdPdf,
             });
+
+            global.URL.createObjectURL = vi.fn();
+            global.URL.revokeObjectURL = vi.fn();
         });
 
         afterEach(() => {
             fetchMock.restore();
+            (global.URL.createObjectURL as Mock).mockReset();
+            (global.URL.revokeObjectURL as Mock).mockReset();
         });
 
         it("should send POST request with payload", async () => {

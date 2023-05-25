@@ -23,13 +23,13 @@ import {
     isPositiveAttributeFilter,
     filterIsEmpty,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import { AxiosRequestConfig } from "axios";
-import { TigerExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { downloadFile } from "../../../utils/downloadFile";
+import { TigerExecutionResult } from "./executionResult.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { downloadFile } from "../../../utils/downloadFile.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;

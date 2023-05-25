@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import { ITheme, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
+import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
     isBubbleChart,
     isBulletChart,
@@ -14,16 +14,16 @@ import {
     isWaterfall,
     parseValue,
     unwrap,
-} from "../_util/common";
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
+} from "../_util/common.js";
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { getHeatmapSeries } from "../heatmap/heatmapChartSeries";
-import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries";
-import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries";
-import { getTreemapStackedSeries } from "../treemap/treemapChartSeries";
-import { getBulletChartSeries } from "../bulletChart/bulletChartSeries";
-import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
-import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries";
+import { getHeatmapSeries } from "../heatmap/heatmapChartSeries.js";
+import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries.js";
+import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries.js";
+import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
+import { getBulletChartSeries } from "../bulletChart/bulletChartSeries.js";
+import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions.js";
+import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries.js";
 
 export function getSeriesItemData(
     seriesItem: string[],

@@ -2,9 +2,9 @@
 import cx from "classnames";
 import React, { useCallback, useState } from "react";
 
-import { IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer";
-import { DashboardEditLayoutSectionBorder } from "./DashboardEditLayoutSectionBorder";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes";
+import { IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { DashboardEditLayoutSectionBorder } from "./DashboardEditLayoutSectionBorder.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export type IDashboardEditLayoutSectionRendererOwnProps =
     IDashboardLayoutSectionRenderProps<IDashboardEditLayoutContent>;

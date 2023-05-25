@@ -9,19 +9,19 @@ import {
     WorkspaceProvider,
 } from "@gooddata/sdk-ui";
 
-import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
-import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types";
-import { IShareDialogProps } from "./types";
+import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase.js";
+import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types.js";
+import { IShareDialogProps } from "./types.js";
 import {
     mapGranteesToGranularAccessGrantees,
     mapGranteesToShareStatus,
     mapOwnerToGrantee,
     mapUserToInactiveOwner,
     mapSharedObjectToAffectedSharedObject,
-} from "./shareDialogMappers";
-import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
-import { ComponentInteractionProvider } from "./ShareDialogBase/ComponentInteractionContext";
-import noop from "lodash/noop";
+} from "./shareDialogMappers.js";
+import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext.js";
+import { ComponentInteractionProvider } from "./ShareDialogBase/ComponentInteractionContext.js";
+import noop from "lodash/noop.js";
 
 /**
  * @internal

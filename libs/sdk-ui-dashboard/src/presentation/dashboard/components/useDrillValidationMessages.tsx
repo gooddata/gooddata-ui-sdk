@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import { IMessage } from "@gooddata/sdk-ui-kit";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 import {
     selectInvalidDrillWidgetRefs,
     selectInvalidUrlDrillParameterWidgetWarnings,
@@ -11,7 +11,7 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
+} from "../../../model/index.js";
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";
 
 const commonReplacements = {

@@ -1,13 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import { FunnelChart, IFunnelChartProps, IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src";
-import { legendCustomizer } from "../_infra/legendVariants";
-import { ConfigVariants } from "../_infra/dataLabelVariants";
-import { FunnelChartWithMeasureAndViewBy, FunnelChartWithTwoMeasures } from "./base";
-import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { ConfigVariants } from "../_infra/dataLabelVariants.js";
+import { FunnelChartWithMeasureAndViewBy, FunnelChartWithTwoMeasures } from "./base.js";
+import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
 
 const legendScenarios = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

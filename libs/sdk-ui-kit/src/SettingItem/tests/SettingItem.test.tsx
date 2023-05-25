@@ -1,13 +1,20 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { SettingItem } from "../SettingItem";
-import { ISettingItem } from "../typings";
+import { SettingItem } from "../SettingItem.js";
+import { ISettingItem } from "../typings.js";
 
 const Wrapped = withIntl(SettingItem);
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("ReactSettingItem", () => {
     it("should render setting item", () => {
@@ -31,7 +38,7 @@ describe("ReactSettingItem", () => {
             value: "Setting Item value",
             actionType: "Switcher",
             actionValue: true,
-            onAction: jest.fn(),
+            onAction: vi.fn(),
         };
         const { container } = render(<Wrapped {...props} />);
 
@@ -40,7 +47,7 @@ describe("ReactSettingItem", () => {
     });
 
     it("should call click action on setting item", async () => {
-        const clickSpy = jest.fn();
+        const clickSpy = vi.fn();
         const props: ISettingItem = {
             title: "Setting Item title",
             value: "",

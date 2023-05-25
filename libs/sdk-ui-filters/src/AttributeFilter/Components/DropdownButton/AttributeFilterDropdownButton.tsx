@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { AttributeFilterButtonToolip } from "./AttributeFilterButtonTooltip";
+import { AttributeFilterButtonToolip } from "./AttributeFilterButtonTooltip.js";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },

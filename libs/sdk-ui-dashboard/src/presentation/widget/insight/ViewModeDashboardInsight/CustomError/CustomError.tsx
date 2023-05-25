@@ -8,11 +8,11 @@ import {
     isProtectedReport,
 } from "@gooddata/sdk-ui";
 
-import { ExecuteProtectedError } from "./ExecuteProtectedError";
-import { DataTooLargeError } from "./DataTooLargeError";
-import { NoDataError } from "./NoDataError";
-import { OtherError } from "./OtherError";
-import { shouldRenderFullContent } from "./sizingUtils";
+import { ExecuteProtectedError } from "./ExecuteProtectedError.js";
+import { DataTooLargeError } from "./DataTooLargeError.js";
+import { NoDataError } from "./NoDataError.js";
+import { OtherError } from "./OtherError.js";
+import { shouldRenderFullContent } from "./sizingUtils.js";
 
 interface ICustomErrorProps {
     error: GoodDataSdkError;

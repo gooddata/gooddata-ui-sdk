@@ -15,14 +15,14 @@ import {
     uriRef,
     IUser,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact";
-import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
-import omit from "lodash/omit";
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
+import omit from "lodash/omit.js";
 import { GdcMetadata, GdcVisualizationObject } from "@gooddata/api-model-bear";
-import { convertReferencesToUris } from "./ReferenceConverter";
-import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
-import { fromBearRef, fromScopedBearRef } from "./ObjRefConverter";
+import { convertReferencesToUris } from "./ReferenceConverter.js";
+import { deserializeProperties, serializeProperties } from "./PropertiesConverter.js";
+import { fromBearRef, fromScopedBearRef } from "./ObjRefConverter.js";
 
 // we use more lenient uri "detection" here because the one in bear-client makes some legacy data fail
 // as the objId is not always just a number

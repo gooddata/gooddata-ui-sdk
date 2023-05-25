@@ -2,10 +2,10 @@
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
-import { LoadedPlugin, ModuleFederationIntegration } from "../types";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
-import { determineDashboardEngine } from "./determineDashboardEngine";
+import { LoadedPlugin, ModuleFederationIntegration } from "../types.js";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
+import { determineDashboardEngine } from "./determineDashboardEngine.js";
 import { DynamicScriptLoadSdkError } from "@gooddata/sdk-ui";
 
 /**

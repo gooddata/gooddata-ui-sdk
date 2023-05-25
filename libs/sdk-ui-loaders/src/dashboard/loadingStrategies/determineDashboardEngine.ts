@@ -1,8 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-// import semver from 'semver';
 import { IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
-import semverCompareBuild from "semver/functions/compare-build";
-import semverSatisfies from "semver/functions/satisfies";
+import { compareBuild as semverCompareBuild, satisfies as semverSatisfies } from "semver";
 
 /**
  * Determine dashboard engine to use with the plugins.

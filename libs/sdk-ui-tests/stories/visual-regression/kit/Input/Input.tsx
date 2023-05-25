@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { Input } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";

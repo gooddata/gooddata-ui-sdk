@@ -1,7 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
-import { createDateValueFormatter } from "../dateValueFormatter";
-import { defaultDateFormatter, FormattingLocale } from "../defaultDateFormatter";
+import { createDateValueFormatter } from "../dateValueFormatter.js";
+import { defaultDateFormatter, FormattingLocale } from "../defaultDateFormatter.js";
+import { describe, expect, it } from "vitest";
 
 describe("createDateValueFormatter", () => {
     const defaultDateValueFormatter = createDateValueFormatter(defaultDateFormatter);

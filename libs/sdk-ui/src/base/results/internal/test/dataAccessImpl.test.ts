@@ -2,9 +2,10 @@
 
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
-import { newDataAccessMethods } from "../dataAccessMethods";
+import { newDataAccessMethods } from "../dataAccessMethods.js";
 import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
-import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig";
+import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig.js";
+import { describe, it, expect } from "vitest";
 
 describe("DataAccessMethods", () => {
     it("should handle empty data view", () => {

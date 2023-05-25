@@ -1,8 +1,8 @@
 // (C) 2020-2023 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttribute } from "@gooddata/sdk-model";
-
-import { convertAttribute } from "../AttributeConverter";
+import { describe, expect, it } from "vitest";
+import { convertAttribute } from "../AttributeConverter.js";
 
 describe("attribute converter", () => {
     const displayFormRef = ReferenceMd.Account.Name.attribute.displayForm;

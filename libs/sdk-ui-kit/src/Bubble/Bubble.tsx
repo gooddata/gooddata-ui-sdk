@@ -1,16 +1,16 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import keys from "lodash/keys";
-import cloneDeep from "lodash/cloneDeep";
-import isEqual from "lodash/isEqual";
+import keys from "lodash/keys.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEqual from "lodash/isEqual.js";
 import isReactEqual from "react-fast-compare";
-import result from "lodash/result";
-import noop from "lodash/noop";
+import result from "lodash/result.js";
+import noop from "lodash/noop.js";
 import cx from "classnames";
 
-import { IAlignPoint } from "../typings/positioning";
-import { ArrowDirections, ArrowOffsets } from "./typings";
-import { Overlay } from "../Overlay";
+import { IAlignPoint } from "../typings/positioning.js";
+import { ArrowDirections, ArrowOffsets } from "./typings.js";
+import { Overlay } from "../Overlay/index.js";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",

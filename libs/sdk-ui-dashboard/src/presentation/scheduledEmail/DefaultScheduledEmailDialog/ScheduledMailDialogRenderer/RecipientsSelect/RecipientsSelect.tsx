@@ -4,12 +4,12 @@ import React, { useMemo, useState } from "react";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IUser } from "@gooddata/sdk-model";
-import sortBy from "lodash/sortBy";
+import sortBy from "lodash/sortBy.js";
 
-import { useWorkspaceUsers } from "../../useWorkspaceUsers";
-import { IScheduleEmailExistingRecipient, IScheduleEmailRecipient } from "../../interfaces";
+import { useWorkspaceUsers } from "../../useWorkspaceUsers.js";
+import { IScheduleEmailExistingRecipient, IScheduleEmailRecipient } from "../../interfaces.js";
 
-import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer";
+import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 
 interface IRecipientsSelectProps {
     /**

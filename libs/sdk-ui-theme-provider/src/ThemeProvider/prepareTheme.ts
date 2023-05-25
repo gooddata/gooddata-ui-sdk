@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-model";
 import { getContrast, shade } from "polished";
-import { getComplementaryPalette } from "../complementaryPalette";
+import { getComplementaryPalette } from "../complementaryPalette.js";
 
 /**
  * Minimum contrast ratio n:1 recommended by W3C

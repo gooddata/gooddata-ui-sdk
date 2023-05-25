@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { appendFilters } from "../filterMerging";
+import { appendFilters } from "../filterMerging.js";
 import {
     isIdentifierRef,
     newPositiveAttributeFilter,
@@ -10,6 +10,7 @@ import {
     uriRef,
     newRankingFilter,
 } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
 
 describe("appendFilters", () => {
     const uriResolver: Parameters<typeof appendFilters>[2] = (refs) =>

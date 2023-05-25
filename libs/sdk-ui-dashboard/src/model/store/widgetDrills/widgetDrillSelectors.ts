@@ -1,6 +1,6 @@
 // (C) 2020-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isLocalIdRef,
@@ -24,16 +24,16 @@ import {
     IAvailableDrillTargets,
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
-import { createMemoizedSelector } from "../_infra/selectors";
-import { DashboardDrillDefinition } from "../../../types";
-import { selectWidgetDrills } from "../layout/layoutSelectors";
-import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { DashboardDrillDefinition } from "../../../types.js";
+import { selectWidgetDrills } from "../layout/layoutSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithDrillDown,
-} from "../catalog/catalogSelectors";
-import { selectDrillableItems } from "../drill/drillSelectors";
+} from "../catalog/catalogSelectors.js";
+import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
     selectDisableDefaultDrills,
     selectEnableClickableAttributeURL,
@@ -43,11 +43,11 @@ import {
     selectEnableKPIDashboardImplicitDrillDown,
     selectHideKpiDrillInEmbedded,
     selectIsEmbedded,
-} from "../config/configSelectors";
-import flatMap from "lodash/flatMap";
-import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors";
-import { selectInsightsMap } from "../insights/insightsSelectors";
-import { DashboardSelector } from "../types";
+} from "../config/configSelectors.js";
+import flatMap from "lodash/flatMap.js";
+import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectInsightsMap } from "../insights/insightsSelectors.js";
+import { DashboardSelector } from "../types.js";
 
 /**
  * @internal

@@ -1,16 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeLayoutSectionHeader } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeLayoutSectionHeader } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { put, select } from "redux-saga/effects";
-import { validateSectionExists } from "./validation/layoutValidation";
+import { validateSectionExists } from "./validation/layoutValidation.js";
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
-import merge from "lodash/merge";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout";
-import { sanitizeHeader } from "./utils";
+import merge from "lodash/merge.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout.js";
+import { sanitizeHeader } from "./utils.js";
 
 export function* changeLayoutSectionHeaderHandler(
     ctx: DashboardContext,

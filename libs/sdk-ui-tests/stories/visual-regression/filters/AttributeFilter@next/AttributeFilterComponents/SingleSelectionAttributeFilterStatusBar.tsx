@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { FilterStories } from "../../../../_infra/storyGroups";
-import { storiesOf } from "../../../../_infra/storyRepository";
+import { FilterStories } from "../../../../_infra/storyGroups.js";
+import { storiesOf } from "../../../../_infra/storyRepository.js";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 

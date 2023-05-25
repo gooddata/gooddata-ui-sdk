@@ -1,4 +1,5 @@
 // (C) 2022 GoodData Corporation
+import { beforeEach, describe, it, expect } from "vitest";
 import {
     IInsightWidgetDefinition,
     newAbsoluteDateFilter,
@@ -6,13 +7,13 @@ import {
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardFilters,
     ComplexDashboardWidgets,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
-import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     applyAttributeFilter,
     applyDateFilter,
@@ -36,17 +37,18 @@ import {
     changeInsightWidgetVisProperties,
     removeDrillsForInsightWidget,
     addAttributeFilter,
-} from "../../../commands";
-import { selectIsDashboardDirty } from "../metaSelectors";
-import { ExtendedDashboardItem } from "../../../types/layoutTypes";
+} from "../../../commands/index.js";
+import { selectIsDashboardDirty } from "../metaSelectors.js";
+import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 
 describe("selectIsDashboardDirty", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, ComplexDashboardIdentifier),
-    );
+        }, ComplexDashboardIdentifier);
+    });
 
     it("should return false for dashboard just opened", () => {
         expect(Tester.select(selectIsDashboardDirty)).toBe(false);

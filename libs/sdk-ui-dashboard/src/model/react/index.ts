@@ -4,10 +4,10 @@ export {
     useDashboardDispatch,
     useDashboardSelector,
     ReactDashboardContext,
-} from "./DashboardStoreProvider";
-export { IDashboardEventsContext, useDashboardEventsContext } from "./DashboardEventsContext";
-export { useDashboardCommandProcessing, CommandProcessingStatus } from "./useDashboardCommandProcessing";
-export { useDashboardEventDispatch } from "./useDashboardEventDispatch";
+} from "./DashboardStoreProvider.js";
+export { IDashboardEventsContext, useDashboardEventsContext } from "./DashboardEventsContext.js";
+export { useDashboardCommandProcessing, CommandProcessingStatus } from "./useDashboardCommandProcessing.js";
+export { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
 export {
     useDashboardQueryProcessing,
     QueryProcessingStatus,
@@ -18,11 +18,11 @@ export {
     QueryProcessingState,
     QueryProcessingSuccessState,
     UseDashboardQueryProcessingResult,
-} from "./useDashboardQueryProcessing";
-export { useDashboardUserInteraction } from "./useDashboardUserInteraction";
-export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboardAsyncRender";
-export { IDashboardStoreProviderProps } from "./types";
-export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
-export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler";
-export { useDashboardScheduledEmails } from "./useDashboardScheduledEmails";
-export { useWidgetSelection, IUseWidgetSelectionResult } from "./useWidgetSelection";
+} from "./useDashboardQueryProcessing.js";
+export { useDashboardUserInteraction } from "./useDashboardUserInteraction.js";
+export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboardAsyncRender.js";
+export { IDashboardStoreProviderProps } from "./types.js";
+export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
+export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler.js";
+export { useDashboardScheduledEmails } from "./useDashboardScheduledEmails.js";
+export { useWidgetSelection, IUseWidgetSelectionResult } from "./useWidgetSelection.js";

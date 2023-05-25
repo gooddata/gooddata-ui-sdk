@@ -1,15 +1,22 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { BucketNames, DefaultLocale, VisualizationTypes, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ExamplesMd } from "@gooddata/live-examples-workspace";
 import { IInsightDefinition, modifyMeasure, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
+import { defaultImport } from "default-import";
 
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
-import GeoPushpinConfigurationPanel from "../GeoPushpinConfigurationPanel";
+import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+import GeoPushpinConfigurationPanel from "../GeoPushpinConfigurationPanel.js";
 
-import { IColorConfiguration } from "../../../interfaces/Colors";
+import { IColorConfiguration } from "../../../interfaces/Colors.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 const Location = ExamplesMd.City.Location;
 const Size = ExamplesMd.Population.Sum;

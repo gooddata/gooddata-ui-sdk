@@ -23,7 +23,7 @@ import {
     selectCanManageAnalyticalDashboard,
     selectSupportsHierarchicalWorkspacesCapability,
     DashboardSelector,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
 /**
  * Decide whether the user has the right to edit dashboard.

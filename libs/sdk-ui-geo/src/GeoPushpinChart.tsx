@@ -1,8 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import compact from "lodash/compact";
-import omit from "lodash/omit";
-import { CoreGeoChart } from "./core/CoreGeoChart";
+import compact from "lodash/compact.js";
+import omit from "lodash/omit.js";
+import { CoreGeoChart } from "./core/CoreGeoChart.js";
 
 import {
     BucketNames,
@@ -17,7 +17,7 @@ import {
     isGeoPushpinChartProps,
     IGeoPushpinChartProps,
     IGeoPushpinChartLatitudeLongitudeProps,
-} from "./GeoChart";
+} from "./GeoChart.js";
 import {
     bucketsAttributes,
     bucketsMeasures,

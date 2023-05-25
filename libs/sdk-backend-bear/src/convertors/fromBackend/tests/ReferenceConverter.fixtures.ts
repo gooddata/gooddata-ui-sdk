@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IConversionData } from "../ReferenceConverter";
+import { IConversionData } from "../ReferenceConverter.js";
 
 // ColorMapping fixtures
 

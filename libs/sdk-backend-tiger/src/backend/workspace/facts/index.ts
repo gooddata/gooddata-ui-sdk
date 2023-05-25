@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import { IDataSetMetadataObject, IMetadataObject, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { invariant } from "ts-invariant";
-import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter";
+import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}

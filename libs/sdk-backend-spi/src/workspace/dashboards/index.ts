@@ -20,7 +20,7 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
 } from "@gooddata/sdk-model";
-import { IExportBlobResult } from "../execution/export";
+import { IExportBlobResult } from "../execution/export.js";
 
 /**
  * Dashboard referenced objects

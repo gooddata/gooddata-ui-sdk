@@ -1,9 +1,9 @@
 // (C) 2007-2023 GoodData Corporation
 import { useMemo, useCallback } from "react";
-import differenceBy from "lodash/differenceBy";
-import intersectionBy from "lodash/intersectionBy";
-import keyBy from "lodash/keyBy";
-import noop from "lodash/noop";
+import differenceBy from "lodash/differenceBy.js";
+import intersectionBy from "lodash/intersectionBy.js";
+import keyBy from "lodash/keyBy.js";
+import noop from "lodash/noop.js";
 
 /**
  * @internal

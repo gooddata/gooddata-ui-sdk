@@ -1,10 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardKpiCustomizer } from "../customizer";
-import { DefaultDashboardKpi, KpiComponentProvider, OptionalKpiComponentProvider } from "../../presentation";
+import { IDashboardKpiCustomizer } from "../customizer.js";
+import {
+    DefaultDashboardKpi,
+    KpiComponentProvider,
+    OptionalKpiComponentProvider,
+} from "../../presentation/index.js";
 import { InvariantError } from "ts-invariant";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
-import { CustomizerMutationsContext } from "./types";
-import union from "lodash/union";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
+import union from "lodash/union.js";
 
 const DefaultKpiRendererProvider: KpiComponentProvider = () => {
     return DefaultDashboardKpi;

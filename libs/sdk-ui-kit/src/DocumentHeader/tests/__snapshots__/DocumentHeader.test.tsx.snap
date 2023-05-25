@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DocumentHeader should set the icons 1`] = `
-Array [
-  Object {
+exports[`DocumentHeader > should set the icons 1`] = `
+[
+  {
     "href": "APPLE_URL",
     "rel": "apple-touch-icon",
     "type": "image/png",
   },
-  Object {
+  {
     "href": "FAVICON_URL",
     "rel": "shortcut icon",
     "type": "image/x-icon",

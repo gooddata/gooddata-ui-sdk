@@ -1,4 +1,4 @@
 // (C) 2022 GoodData Corporation
-export { AttributeFilterConfiguration } from "./AttributeFilterConfiguration";
-export { ConfigurationBubble } from "./ConfigurationBubble";
-export { DateDatasetFilter } from "./DateDatasetFilter";
+export { AttributeFilterConfiguration } from "./AttributeFilterConfiguration.js";
+export { ConfigurationBubble } from "./ConfigurationBubble.js";
+export { DateDatasetFilter } from "./DateDatasetFilter.js";

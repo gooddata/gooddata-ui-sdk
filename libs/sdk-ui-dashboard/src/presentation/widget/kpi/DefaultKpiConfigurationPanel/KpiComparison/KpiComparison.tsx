@@ -7,9 +7,9 @@ import {
     IKpiWidget,
     widgetRef,
 } from "@gooddata/sdk-model";
-import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../model";
-import { KpiComparisonTypeDropdown } from "./KpiComparisonTypeDropdown";
-import { KpiComparisonDirectionDropdown } from "./KpiComparisonDirectionDropdown";
+import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../model/index.js";
+import { KpiComparisonTypeDropdown } from "./KpiComparisonTypeDropdown.js";
+import { KpiComparisonDirectionDropdown } from "./KpiComparisonDirectionDropdown.js";
 
 interface IKpiComparisonProps {
     widget: IKpiWidget;

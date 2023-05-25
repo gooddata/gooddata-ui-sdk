@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 /**
  * Lazy array initializer - this function is called to construct the actual value.

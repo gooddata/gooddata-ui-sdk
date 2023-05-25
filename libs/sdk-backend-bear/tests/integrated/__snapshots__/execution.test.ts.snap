@@ -1,4 +1,202 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`bear execution > should execute with totals in attribute bucket 1`] = `
+BearPreparedExecution {
+  "authCall": [Function],
+  "definition": {
+    "attributes": [
+      {
+        "attribute": {
+          "displayForm": {
+            "identifier": "label.owner.department",
+            "type": "displayForm",
+          },
+          "localIdentifier": "a_label.owner.department",
+        },
+      },
+    ],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "aangOxLSeztu",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "identifier": "label.owner.department",
+                "type": "displayForm",
+              },
+              "localIdentifier": "a_label.owner.department",
+            },
+          },
+        ],
+        "localIdentifier": "attribute",
+        "totals": [
+          {
+            "attributeIdentifier": "a_label.owner.department",
+            "measureIdentifier": "m_aangOxLSeztu",
+            "type": "sum",
+          },
+        ],
+      },
+      {
+        "items": [],
+        "localIdentifier": "columns",
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+      {
+        "itemIdentifiers": [
+          "a_label.owner.department",
+        ],
+      },
+    ],
+    "filters": [],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf",
+  },
+  "executionFactory": BearExecution {
+    "authCall": [Function],
+    "workspace": "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf",
+  },
+}
+`;
+
+exports[`bear execution > should execute with totals in columns bucket 1`] = `
+BearPreparedExecution {
+  "authCall": [Function],
+  "definition": {
+    "attributes": [
+      {
+        "attribute": {
+          "displayForm": {
+            "identifier": "label.owner.department",
+            "type": "displayForm",
+          },
+          "localIdentifier": "a_label.owner.department",
+        },
+      },
+    ],
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
+                    "identifier": "aangOxLSeztu",
+                    "type": "measure",
+                  },
+                },
+              },
+              "localIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+      },
+      {
+        "items": [],
+        "localIdentifier": "attribute",
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "identifier": "label.owner.department",
+                "type": "displayForm",
+              },
+              "localIdentifier": "a_label.owner.department",
+            },
+          },
+        ],
+        "localIdentifier": "columns",
+        "totals": [
+          {
+            "attributeIdentifier": "a_label.owner.department",
+            "measureIdentifier": "m_aangOxLSeztu",
+            "type": "sum",
+          },
+        ],
+      },
+    ],
+    "dimensions": [
+      {
+        "itemIdentifiers": [
+          "measureGroup",
+        ],
+      },
+      {
+        "itemIdentifiers": [
+          "a_label.owner.department",
+        ],
+      },
+    ],
+    "filters": [],
+    "measures": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "postProcessing": {},
+    "sortBy": [],
+    "workspace": "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf",
+  },
+  "executionFactory": BearExecution {
+    "authCall": [Function],
+    "workspace": "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf",
+  },
+}
+`;
 
 exports[`bear execution should execute with totals in attribute bucket 1`] = `
 BearPreparedExecution {

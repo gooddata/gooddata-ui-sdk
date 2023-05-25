@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
 import React from "react";
-import { DefaultEditButton } from "./DefaultEditButton";
-import { IEditButtonProps } from "./types";
+import { DefaultEditButton } from "./DefaultEditButton.js";
+import { IEditButtonProps } from "./types.js";
 
 /**
  * @internal

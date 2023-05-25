@@ -2,7 +2,7 @@
 import React from "react";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 
-import { getLocalizedDateFormat } from "../utils/FormattingUtils";
+import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
 
 interface IDateRangePickerErrorProps {
     dateFormat?: string;

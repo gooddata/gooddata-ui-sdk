@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import omitBy from "lodash/omitBy";
-import isUndefined from "lodash/isUndefined";
-import { GdcFilterContext } from "./GdcFilterContext";
+import omitBy from "lodash/omitBy.js";
+import isUndefined from "lodash/isUndefined.js";
+import * as GdcFilterContext from "./GdcFilterContext.js";
 import isDateFilter = GdcFilterContext.isDateFilter;
 import isAttributeFilter = GdcFilterContext.isAttributeFilter;
 

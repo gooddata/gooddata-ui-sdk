@@ -1,8 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
-import { IChartConfig } from "../../../interfaces";
-import { HighchartsOptions, SeriesPieOptions } from "../../lib";
-import { alignChart } from "../_chartCreators/helpers";
-import { getPieResponsiveConfig } from "../_chartCreators/responsive";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { HighchartsOptions, SeriesPieOptions } from "../../lib/index.js";
+import { alignChart } from "../_chartCreators/helpers.js";
+import { getPieResponsiveConfig } from "../_chartCreators/responsive.js";
 
 export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
     const pieConfiguration = {

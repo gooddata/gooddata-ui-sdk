@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDashboardCommand, RemoveDrillsSelector } from "../../../commands/";
-import { DashboardContext } from "../../../types/commonTypes";
-import { invalidArgumentsProvided } from "../../../events/general";
+import { IDashboardCommand, RemoveDrillsSelector } from "../../../commands/index.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
 import { objRefToString, InsightDrillDefinition } from "@gooddata/sdk-model";
-import { validateDrillDefinitionByLocalIdentifier } from "./insightDrillDefinitionUtils";
-import { isAllDrillSelector } from "../../../commands/insight";
+import { validateDrillDefinitionByLocalIdentifier } from "./insightDrillDefinitionUtils.js";
+import { isAllDrillSelector } from "../../../commands/insight.js";
 
 export function validateRemoveDrillsByOrigins(
     drillSelector: RemoveDrillsSelector,

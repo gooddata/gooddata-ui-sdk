@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import { IExecutionDefinition, ITotal, TotalType } from "@gooddata/sdk-model";
-import { ColumnWidthItem } from "../columnWidths";
+import { ColumnWidthItem } from "../columnWidths.js";
 import { ISeparators } from "@gooddata/numberjs";
-import { ColumnResizedCallback, DefaultColumnWidth, IMenu } from "../publicTypes";
+import { ColumnResizedCallback, DefaultColumnWidth, IMenu } from "../publicTypes.js";
 import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
-import { IScrollPosition } from "./stickyRowHandler";
+import { IScrollPosition } from "./stickyRowHandler.js";
 import {
     AgGridEvent,
     BodyScrollEvent,

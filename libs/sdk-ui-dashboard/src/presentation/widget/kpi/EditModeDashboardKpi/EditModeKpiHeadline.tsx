@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 
-import { DashboardItemHeadlineContainer } from "../../../presentationComponents";
-import { EditableHeadline } from "../../common/EditableHeadline";
+import { DashboardItemHeadlineContainer } from "../../../presentationComponents/index.js";
+import { EditableHeadline } from "../../common/EditableHeadline.js";
 
 interface IEditableKpiHeadlineProps {
     title: string;

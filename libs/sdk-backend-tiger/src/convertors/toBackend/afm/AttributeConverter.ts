@@ -3,7 +3,7 @@
 import { IAttribute } from "@gooddata/sdk-model";
 import { AttributeItem } from "@gooddata/api-client-tiger";
 
-import { toLabelQualifier } from "../ObjRefConverter";
+import { toLabelQualifier } from "../ObjRefConverter.js";
 
 export function convertAttribute(attribute: IAttribute, idx: number): AttributeItem {
     const { displayForm, alias, showAllValues } = attribute.attribute;

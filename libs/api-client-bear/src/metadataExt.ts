@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
-import { MetadataModule } from "./metadata";
-import { XhrModule } from "./xhr";
-import { UserModule } from "./user";
-import cloneDeepWith from "lodash/cloneDeepWith";
-import compact from "lodash/compact";
-import omit from "lodash/omit";
+import { MetadataModule } from "./metadata.js";
+import { XhrModule } from "./xhr.js";
+import { UserModule } from "./user.js";
+import cloneDeepWith from "lodash/cloneDeepWith.js";
+import compact from "lodash/compact.js";
+import omit from "lodash/omit.js";
 import {
     GdcKpi,
     GdcDashboard,

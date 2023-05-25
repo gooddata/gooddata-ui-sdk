@@ -4,8 +4,8 @@ import { ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 import {
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -15,9 +15,9 @@ import {
     singleAttributeBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
-import { SankeyChartDescriptor } from "../sankeyChart/SankeyChartDescriptor";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { SankeyChartDescriptor } from "../sankeyChart/SankeyChartDescriptor.js";
 
 export class DependencyWheelChartDescriptor
     extends SankeyChartDescriptor

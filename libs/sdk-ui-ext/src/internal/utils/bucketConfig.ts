@@ -1,14 +1,14 @@
 // (C) 2019-2021 GoodData Corporation
-import forEach from "lodash/forEach";
-import set from "lodash/set";
-import isEmpty from "lodash/isEmpty";
-import includes from "lodash/includes";
-import isEqual from "lodash/isEqual";
-import cloneDeep from "lodash/cloneDeep";
+import forEach from "lodash/forEach.js";
+import set from "lodash/set.js";
+import isEmpty from "lodash/isEmpty.js";
+import includes from "lodash/includes.js";
+import isEqual from "lodash/isEqual.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { METRIC, SHOW_IN_PERCENT } from "../constants/bucket";
-import { IBucketItem, IBucketUiConfig, IExtendedReferencePoint } from "../interfaces/Visualization";
+import { METRIC, SHOW_IN_PERCENT } from "../constants/bucket.js";
+import { IBucketItem, IBucketUiConfig, IExtendedReferencePoint } from "../interfaces/Visualization.js";
 import {
     filterOutDerivedMeasures,
     filterOutArithmeticMeasuresFromDerived,
@@ -17,8 +17,8 @@ import {
     filterOutIncompatibleArithmeticMeasures,
     isComparisonAvailable,
     removeAllDerivedMeasures,
-} from "./bucketHelper";
-import { isShowInPercentAllowed, isComparisonOverTimeAllowed } from "./bucketRules";
+} from "./bucketHelper.js";
+import { isShowInPercentAllowed, isComparisonOverTimeAllowed } from "./bucketRules.js";
 
 function getTypeOfDerivedToKeep(
     supportedTypes: OverTimeComparisonType[],

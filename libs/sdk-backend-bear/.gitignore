@@ -4,3 +4,6 @@ tests/wiremock/recordings/mappings/*login*
 tests/wiremock/recordings/mappings/*token*
 tests/wiremock/recordings/__files/*login*
 tests/wiremock/recordings/__files/*token*
+
+# ignore the auxiliary file created during build to extract package version
+src/__version.ts

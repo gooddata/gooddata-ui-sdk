@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
-import { recordedDataFacade } from "../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
-import { TableDescriptor } from "../../structure/tableDescriptor";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IGridRow } from "../../data/resultTypes";
-import invariant from "ts-invariant";
+import { IGridRow } from "../../data/resultTypes.js";
+import { invariant } from "ts-invariant";
 import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { fromPairs } from "lodash";
 

@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
-import { ActionOptions } from "../_base/types";
-import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
-import { getUnlinkCmdActionConfig, UnlinkCmdActionConfig } from "./actionConfig";
+import { ActionOptions } from "../_base/types.js";
+import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
+import { getUnlinkCmdActionConfig, UnlinkCmdActionConfig } from "./actionConfig.js";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, idRef, IDashboardDefinition } from "@gooddata/sdk-model";
 import ora from "ora";
-import { genericErrorReporter } from "../_base/utils";
+import { genericErrorReporter } from "../_base/utils.js";
 
 function printUnlinkConfigSummary(config: UnlinkCmdActionConfig) {
     const {

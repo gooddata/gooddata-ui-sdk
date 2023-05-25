@@ -6,7 +6,7 @@
 import React, { PureComponent, RefObject, ReactNode, CSSProperties } from "react";
 import { ColorFormats } from "tinycolor2";
 
-import { calculateHueChange } from "../utils";
+import { calculateHueChange } from "../utils.js";
 
 export interface IHueColorPickerProps {
     initColor: ColorFormats.HSL;

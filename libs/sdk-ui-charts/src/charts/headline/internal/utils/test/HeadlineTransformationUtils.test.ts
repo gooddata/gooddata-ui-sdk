@@ -4,7 +4,7 @@ import {
     buildDrillEventData,
     getHeadlineData,
     IHeadlineDrillItemContext,
-} from "../HeadlineTransformationUtils";
+} from "../HeadlineTransformationUtils.js";
 import { createIntlMock, HeaderPredicates } from "@gooddata/sdk-ui";
 import {
     headlineWithOneMeasure,
@@ -18,8 +18,9 @@ import {
     headlineWithTwoMeasuresSecondEmpty,
     headlineWithTwoMeasuresSecondZero,
     headlineWithTwoMeasuresWithIdentifier,
-} from "../../../../../../__mocks__/fixtures";
-import { IHeadlineData } from "../../../Headlines";
+} from "../../../../../../__mocks__/fixtures.js";
+import { IHeadlineData } from "../../../Headlines.js";
+import { describe, it, expect } from "vitest";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {

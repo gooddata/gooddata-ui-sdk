@@ -3,21 +3,21 @@ import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
 
-import bindAll from "lodash/bindAll";
-import pick from "lodash/pick";
-import isEqual from "lodash/isEqual";
+import bindAll from "lodash/bindAll.js";
+import pick from "lodash/pick.js";
+import isEqual from "lodash/isEqual.js";
 import isReactEqual from "react-fast-compare";
-import findIndex from "lodash/findIndex";
-import debounce from "lodash/debounce";
-import noop from "lodash/noop";
+import findIndex from "lodash/findIndex.js";
+import debounce from "lodash/debounce.js";
+import noop from "lodash/noop.js";
 import { v4 as uuid } from "uuid";
 
-import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay";
-import { elementRegion, isFixedPosition } from "../utils/domUtilities";
-import { ENUM_KEY_CODE } from "../typings/utilities";
-import { IOverlayProps, IOverlayState } from "./typings";
-import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
-import { OverlayContext } from "./OverlayContext";
+import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
+import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import { IOverlayProps, IOverlayState } from "./typings.js";
+import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay.js";
+import { OverlayContext } from "./OverlayContext.js";
 
 const events = [
     { name: "click", handler: "closeOnOutsideClick", target: document },

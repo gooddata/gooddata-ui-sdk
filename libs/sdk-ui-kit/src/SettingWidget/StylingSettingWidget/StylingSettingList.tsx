@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { StylingSettingListItem } from "./StylingSettingListItem";
+import { StylingSettingListItem } from "./StylingSettingListItem.js";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty";
-import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
+import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty.js";
+import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
 
 interface IStylingSettingListProps<T> {
     items: IStylingPickerItem<T>[];

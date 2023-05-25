@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import compact from "lodash/compact";
-import { CatalogRecording } from "../recordings/catalog";
+import compact from "lodash/compact.js";
+import { CatalogRecording } from "../recordings/catalog.js";
 
 // const CatalogIndexConstName = "Catalog";
 

@@ -7,7 +7,7 @@ import {
     useCancelablePromise,
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
-} from "../base";
+} from "../base/index.js";
 
 /**
  * Indicates current state of useDataExport hook

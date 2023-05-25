@@ -1,11 +1,10 @@
 // (C) 2021 GoodData Corporation
+import { IDrillFromAttribute, IDrillFromMeasure } from "../GdcVisualizationWidget.js";
 
-import { GdcVisualizationWidget } from "../GdcVisualizationWidget";
-
-export const drillFromMeasure: GdcVisualizationWidget.IDrillFromMeasure = {
+export const drillFromMeasure: IDrillFromMeasure = {
     drillFromMeasure: { localIdentifier: "measureLocalIdentifier" },
 };
 
-export const drillFromAttribute: GdcVisualizationWidget.IDrillFromAttribute = {
+export const drillFromAttribute: IDrillFromAttribute = {
     drillFromAttribute: { localIdentifier: "attributeLocalIdentifier" },
 };

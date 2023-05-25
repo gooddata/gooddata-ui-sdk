@@ -10,9 +10,9 @@
  * @packageDocumentation
  */
 
-export { IDashboardLoader, DashboardLoadResult } from "./dashboard/loader";
-export { DashboardLoader } from "./dashboard/dashboardLoader";
-export { DashboardStub, IDashboardStubProps } from "./dashboard/DashboardStub";
+export { IDashboardLoader, DashboardLoadResult } from "./dashboard/loader.js";
+export { DashboardLoader } from "./dashboard/dashboardLoader.js";
+export { DashboardStub, IDashboardStubProps } from "./dashboard/DashboardStub.js";
 export {
     IDashboardLoadOptions,
     IDashboardBasePropsForLoader,
@@ -20,6 +20,6 @@ export {
     AdaptiveLoadOptions,
     IEmbeddedPlugin,
     DashboardLoadingMode,
-} from "./dashboard/types";
-export { useDashboardLoader, DashboardLoadStatus } from "./dashboard/useDashboardLoader";
-export { useDashboardLoaderWithPluginManipulation } from "./dashboard/useDashboardLoaderWithPluginManipulation";
+} from "./dashboard/types.js";
+export { useDashboardLoader, DashboardLoadStatus } from "./dashboard/useDashboardLoader.js";
+export { useDashboardLoaderWithPluginManipulation } from "./dashboard/useDashboardLoaderWithPluginManipulation.js";

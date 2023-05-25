@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { convertError } from "@gooddata/sdk-ui";
 import { filterObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
-import { AttributeFilterHandlerStoreContext } from "../store/types";
+import { AttributeFilterHandlerStoreContext } from "../store/types.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 /**

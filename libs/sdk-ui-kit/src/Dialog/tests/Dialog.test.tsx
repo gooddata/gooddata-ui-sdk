@@ -1,8 +1,9 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Dialog } from "../Dialog";
-import { IDialogBaseProps } from "../typings";
+import { Dialog } from "../Dialog.js";
+import { IDialogBaseProps } from "../typings.js";
+import { describe, it, expect, vi } from "vitest";
 
 function renderDialog(options: Partial<IDialogBaseProps>) {
     return render(<Dialog {...options}>DialogTest content</Dialog>);
@@ -20,7 +21,7 @@ describe("Dialog", () => {
 
     describe("should call optional callbacks", () => {
         it("onClick", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             renderDialog({ onClick });
 
             fireEvent.click(screen.getByText("DialogTest content"));
@@ -29,7 +30,7 @@ describe("Dialog", () => {
         });
 
         it("onMouseUp", () => {
-            const onMouseUp = jest.fn();
+            const onMouseUp = vi.fn();
             renderDialog({ onMouseUp });
 
             fireEvent.mouseUp(screen.getByText("DialogTest content"));
@@ -38,7 +39,7 @@ describe("Dialog", () => {
         });
 
         it("onMouseOver", () => {
-            const onMouseOver = jest.fn();
+            const onMouseOver = vi.fn();
             renderDialog({ onMouseOver });
 
             fireEvent.mouseOver(screen.getByText("DialogTest content"));

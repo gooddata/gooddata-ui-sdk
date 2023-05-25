@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { useDashboardComponentsContext } from "../dashboardContexts";
-import { IShareDialogProps } from "./types";
+import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+import { IShareDialogProps } from "./types.js";
 
 /**
  * @internal

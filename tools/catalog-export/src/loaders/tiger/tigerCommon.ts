@@ -8,8 +8,8 @@ import {
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetToOneLinkage,
 } from "@gooddata/api-client-tiger";
-import keyBy from "lodash/keyBy";
-import { Attribute, DisplayForm } from "../../base/types";
+import keyBy from "lodash/keyBy.js";
+import { Attribute, DisplayForm } from "../../base/types.js";
 
 export type LabelMap = { [id: string]: JsonApiLabelOut };
 export type DatasetMap = { [id: string]: JsonApiDatasetOut };

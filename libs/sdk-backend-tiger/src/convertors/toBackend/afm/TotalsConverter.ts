@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import {
     bucketsFind,
     bucketItemLocalId,
@@ -14,9 +14,9 @@ import {
     TotalType,
     IMeasure,
 } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
-import { dimensionLocalIdentifier } from "./DimensionsConverter";
+import { dimensionLocalIdentifier } from "./DimensionsConverter.js";
 
 const ATTRIBUTE = "attribute";
 const COLUMNS = "columns";

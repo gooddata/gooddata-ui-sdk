@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 import React, { useState } from "react";
 
 import "../styles/goodstrap.scss";

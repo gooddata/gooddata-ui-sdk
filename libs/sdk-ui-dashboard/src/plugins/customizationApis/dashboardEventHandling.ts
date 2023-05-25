@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardStateChangeCallback, IDashboardEventHandling } from "../customizer";
+import { DashboardStateChangeCallback, IDashboardEventHandling } from "../customizer.js";
 import {
     DashboardEventEvalFn,
     DashboardEventHandler,
@@ -8,9 +8,9 @@ import {
     DashboardEvents,
     DashboardEventType,
     ICustomDashboardEvent,
-} from "../../model";
-import { IDashboardEventing } from "../../presentation";
-import findIndex from "lodash/findIndex";
+} from "../../model/index.js";
+import { IDashboardEventing } from "../../presentation/index.js";
+import findIndex from "lodash/findIndex.js";
 
 /**
  * Factory for predicates that compare event handlers. The comparison is somewhat more aggressive to prevent

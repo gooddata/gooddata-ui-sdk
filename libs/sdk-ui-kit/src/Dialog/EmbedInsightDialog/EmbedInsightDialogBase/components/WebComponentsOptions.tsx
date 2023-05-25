@@ -3,12 +3,12 @@ import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ILocale } from "@gooddata/sdk-ui";
 
-import { IWebComponentsOptions, UnitsType } from "../types";
-import { dialogChangeMessageLabels } from "../../../../locales";
+import { IWebComponentsOptions, UnitsType } from "../types.js";
+import { dialogChangeMessageLabels } from "../../../../locales.js";
 
-import { HeightSetting } from "./HeightSetting";
-import { ToggleSwitch } from "./ToggleSwitch";
-import { LocaleSetting } from "./LocaleSetting";
+import { HeightSetting } from "./HeightSetting.js";
+import { ToggleSwitch } from "./ToggleSwitch.js";
+import { LocaleSetting } from "./LocaleSetting.js";
 
 /**
  * @internal

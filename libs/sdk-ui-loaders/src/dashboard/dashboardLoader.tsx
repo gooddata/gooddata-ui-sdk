@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { DashboardLoadResult, IDashboardLoader } from "./loader";
+import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
 import {
     DashboardContext,
     IDashboardEngine,
@@ -15,13 +15,13 @@ import {
     resolveLCMWorkspaceIdentifiers,
 } from "@gooddata/sdk-ui";
 import { idRef, isDashboard, ObjRef } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
 import React from "react";
 import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
-} from "./loadingStrategies/staticComponentLoaders";
+} from "./loadingStrategies/staticComponentLoaders.js";
 import {
     AdaptiveLoadOptions,
     BeforePluginsLoadedCallback,
@@ -32,14 +32,14 @@ import {
     LoadedPlugin,
     ModuleFederationIntegration,
     IEmbeddedPlugin,
-} from "./types";
+} from "./types.js";
 import {
     adaptiveDashboardBeforeLoadFactory,
     adaptiveDashboardEngineLoaderFactory,
     adaptiveDashboardPluginLoaderFactory,
-} from "./loadingStrategies/adaptiveComponentLoaders";
-import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
-import { isPluginCompatibleWithDashboardEngine } from "./loadingStrategies/determineDashboardEngine";
+} from "./loadingStrategies/adaptiveComponentLoaders.js";
+import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation.js";
+import { isPluginCompatibleWithDashboardEngine } from "./loadingStrategies/determineDashboardEngine.js";
 
 /**
  * @public

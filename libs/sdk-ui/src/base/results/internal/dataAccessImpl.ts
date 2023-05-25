@@ -8,14 +8,20 @@ import {
     isResultTotalHeader,
     resultHeaderName,
 } from "@gooddata/sdk-model";
-import { DataPoint, DataSeriesDescriptor, DataSliceDescriptor, IDataSeries, IDataSlice } from "../dataAccess";
-import { createDataAccessDigest, DataAccessDigest } from "./dataAccessDigest";
-import { LazyInitArray } from "./lazyInitArray";
-import invariant, { InvariantError } from "ts-invariant";
-import { getTotalInfo, measureFormat, measureName } from "./utils";
-import { DataAccessConfig } from "../dataAccessConfig";
-import partial from "lodash/partial";
-import isArray from "lodash/isArray";
+import {
+    DataPoint,
+    DataSeriesDescriptor,
+    DataSliceDescriptor,
+    IDataSeries,
+    IDataSlice,
+} from "../dataAccess.js";
+import { createDataAccessDigest, DataAccessDigest } from "./dataAccessDigest.js";
+import { LazyInitArray } from "./lazyInitArray.js";
+import { invariant, InvariantError } from "ts-invariant";
+import { getTotalInfo, measureFormat, measureName } from "./utils.js";
+import { DataAccessConfig } from "../dataAccessConfig.js";
+import partial from "lodash/partial.js";
+import isArray from "lodash/isArray.js";
 
 type DataWithCoordinates = { rawValue: DataValue; coordinates: number[] };
 

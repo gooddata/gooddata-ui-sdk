@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 
-import { AbstractExecutionFactory } from "../toolkit/execution";
+import { AbstractExecutionFactory } from "../toolkit/execution.js";
 import {
     defFingerprint,
     IExecutionDefinition,
@@ -27,13 +27,13 @@ import {
     ExplainType,
     IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import {
     CustomBackendConfig,
     CustomBackendState,
     DataProviderContext,
     ResultProviderContext,
-} from "./config";
+} from "./config.js";
 
 /**
  * @internal

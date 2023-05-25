@@ -3,12 +3,12 @@ import React, { useState, useCallback, useMemo } from "react";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 
-import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody";
-import { ChartSortingDropdown } from "./ChartSortingDropdown";
-import { IBucketItemDescriptors, IAvailableSortsGroup } from "./types";
-import { Button } from "../Button";
+import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody.js";
+import { ChartSortingDropdown } from "./ChartSortingDropdown.js";
+import { IBucketItemDescriptors, IAvailableSortsGroup } from "./types.js";
+import { Button } from "../Button/index.js";
 
 /**
  * @internal

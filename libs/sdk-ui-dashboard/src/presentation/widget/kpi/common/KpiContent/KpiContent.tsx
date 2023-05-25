@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import Measure from "react-measure";
+import DefaultMeasure from "react-measure";
 import { GoodDataSdkError, isGoodDataSdkError, ErrorCodes, ISeparators } from "@gooddata/sdk-ui";
 import {
     IFilter,
@@ -12,12 +12,18 @@ import {
     isKpiWithComparison,
 } from "@gooddata/sdk-model";
 
-import KpiValue from "./KpiValue";
-import KpiPop from "./KpiPop";
-import { IKpiResult } from "../types";
-import { isDateFilterIrrelevant } from "../filterUtils";
-import { getKpiPopLabel } from "./utils/translations";
+import KpiValue from "./KpiValue.js";
+import KpiPop from "./KpiPop.js";
+import { IKpiResult } from "../types.js";
+import { isDateFilterIrrelevant } from "../filterUtils.js";
+import { getKpiPopLabel } from "./utils/translations.js";
 import cx from "classnames";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(DefaultMeasure);
 
 export interface IKpiContentProps {
     // KPI

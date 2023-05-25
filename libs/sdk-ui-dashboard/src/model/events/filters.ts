@@ -4,9 +4,9 @@ import {
     IDashboardDateFilter,
     IFilterContextDefinition,
 } from "@gooddata/sdk-model";
-import { IDashboardEvent } from "./base";
-import { DashboardContext } from "../types/commonTypes";
-import { eventGuard } from "./util";
+import { IDashboardEvent } from "./base.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DashboardDateFilterSelectionChanged} event.

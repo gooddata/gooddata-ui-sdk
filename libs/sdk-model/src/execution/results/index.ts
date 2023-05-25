@@ -1,6 +1,6 @@
-// (C) 2019-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { ObjRef } from "../../objRef";
+// (C) 2019-2022 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import { ObjRef } from "../../objRef/index.js";
 
 /**
  * Single calculated data value.

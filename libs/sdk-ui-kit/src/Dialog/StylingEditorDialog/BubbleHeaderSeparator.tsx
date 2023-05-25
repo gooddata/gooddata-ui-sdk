@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble";
-import { Typography } from "../../Typography";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
+import { Typography } from "../../Typography/index.js";
 import React from "react";
 
 /**

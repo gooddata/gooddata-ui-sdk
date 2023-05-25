@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { PositionedMenuContent } from "./PositionedMenuContent";
-import { IMenuPositionConfig } from "../MenuSharedTypes";
-import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal";
+import { PositionedMenuContent } from "./PositionedMenuContent.js";
+import { IMenuPositionConfig } from "../MenuSharedTypes.js";
+import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";
 
 export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;

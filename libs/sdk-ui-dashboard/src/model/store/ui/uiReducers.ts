@@ -10,11 +10,11 @@ import {
     widgetRef,
     widgetUri,
 } from "@gooddata/sdk-model";
-import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
-import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
-import { IDashboardWidgetOverlay } from "../../types/commonTypes";
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
+import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
+import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 

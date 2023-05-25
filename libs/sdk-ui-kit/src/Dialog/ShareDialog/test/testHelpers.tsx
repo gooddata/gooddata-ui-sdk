@@ -10,7 +10,7 @@ import {
     RecordedBackendConfig,
 } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { CurrentUserPermissions, IShareDialogLabels, IShareDialogProps, ISharedObject } from "../types";
+import { CurrentUserPermissions, IShareDialogLabels, IShareDialogProps, ISharedObject } from "../types.js";
 import {
     uriRef,
     IWorkspaceUser,
@@ -18,9 +18,9 @@ import {
     AccessGranteeDetail,
     IAvailableAccessGrantee,
 } from "@gooddata/sdk-model";
-import { ShareDialog } from "../ShareDialog";
-import { defaultUser } from "../ShareDialogBase/test/GranteeMock";
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi/src";
+import { ShareDialog } from "../ShareDialog.js";
+import { defaultUser } from "../ShareDialogBase/test/GranteeMock.js";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
 export const labels: IShareDialogLabels = {
     accessTypeLabel: "lockControl label",

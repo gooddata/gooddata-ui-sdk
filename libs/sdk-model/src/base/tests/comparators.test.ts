@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
-import identity from "lodash/identity";
-import { dateStringComparatorFactory, stringComparatorFactory } from "../comparators";
+import { describe, expect, it } from "vitest";
+import identity from "lodash/identity.js";
+import { dateStringComparatorFactory, stringComparatorFactory } from "../comparators.js";
 
 describe("stringComparatorFactory", () => {
     it.each`

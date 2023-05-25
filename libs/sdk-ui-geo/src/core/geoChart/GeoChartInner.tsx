@@ -1,17 +1,17 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import throttle from "lodash/throttle";
-import noop from "lodash/noop";
-import invariant from "ts-invariant";
-import Measure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import throttle from "lodash/throttle.js";
+import noop from "lodash/noop.js";
+import { invariant } from "ts-invariant";
+import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import { v4 } from "uuid";
 
 import { WrappedComponentProps } from "react-intl";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart";
-import GeoChartRenderer, { IGeoChartRendererProps } from "./GeoChartRenderer";
-import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer";
-import { getAvailableLegends } from "./helpers/geoChart/data";
+import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
+import GeoChartRenderer, { IGeoChartRendererProps } from "./GeoChartRenderer.js";
+import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
+import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import {
     IntlWrapper,
     IntlTranslationsProvider,
@@ -33,11 +33,17 @@ import {
     shouldShowFluid,
     SupportedLegendPositions,
 } from "@gooddata/sdk-ui-vis-commons";
-import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common";
-import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive";
+import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common.js";
+import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive.js";
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
+import { defaultImport } from "default-import";
 
 export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(ReactMeasure);
 
 function renderChart(props: IGeoChartRendererProps): React.ReactElement {
     return <GeoChartRenderer {...props} />;

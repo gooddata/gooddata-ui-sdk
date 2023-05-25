@@ -3,11 +3,11 @@ import React from "react";
 import { withEntireDataView } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { WrappedComponentProps } from "react-intl";
-import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC";
-import { GeoChartOptionsWrapper } from "./geoChart/GeoChartOptionsWrapper";
-import { ICoreGeoChartProps } from "./geoChart/GeoChartInner";
-import { withMapboxToken } from "./MapboxTokenProvider";
-import compose from "lodash/flowRight";
+import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC.js";
+import { GeoChartOptionsWrapper } from "./geoChart/GeoChartOptionsWrapper.js";
+import { ICoreGeoChartProps } from "./geoChart/GeoChartInner.js";
+import { withMapboxToken } from "./MapboxTokenProvider.js";
+import compose from "lodash/flowRight.js";
 
 const WrappedCoreGeoChart = compose(
     withTheme,

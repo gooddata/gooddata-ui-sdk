@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 
-import { convertMeasure } from "../MeasureConverter";
-import { invalidMeasureDefinition } from "./InvalidInputs.fixture";
+import { convertMeasure } from "../MeasureConverter.js";
+import { invalidMeasureDefinition } from "./InvalidInputs.fixture.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     newArithmeticMeasure,
@@ -10,6 +10,7 @@ import {
     newMeasure,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
 
 describe("measure converter", () => {
     const Scenarios: Array<[string, any]> = [

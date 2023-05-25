@@ -1,11 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
-import { DefaultLocale } from "./Locale";
-import { pickCorrectWording } from "./TranslationsCustomizationProvider/utils";
+import { DefaultLocale } from "./Locale.js";
+import { pickCorrectWording } from "./TranslationsCustomizationProvider/utils.js";
 
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { messagesMap } from "./messagesMap";
+import { messagesMap } from "./messagesMap.js";
 
 /**
  * @internal

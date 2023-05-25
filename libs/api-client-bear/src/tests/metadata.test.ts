@@ -1,15 +1,15 @@
 // (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
+import { vi, describe, afterEach, expect, it } from "vitest";
 import { GdcMetadata } from "@gooddata/api-model-bear";
-import fetchMock from "fetch-mock";
-
-import range from "lodash/range";
-import find from "lodash/find";
-import { mockPollingRequest } from "./utils/polling";
-import { MetadataModule } from "../metadata";
-import { XhrModule } from "../xhr";
-import * as fixtures from "./metadata.fixtures";
-import { SortDirection } from "../interfaces";
+import fetchMock from "fetch-mock/esm/client.js";
+import range from "lodash/range.js";
+import find from "lodash/find.js";
+import { mockPollingRequest } from "./utils/polling.js";
+import { MetadataModule } from "../metadata.js";
+import { XhrModule } from "../xhr.js";
+import * as fixtures from "./metadata.fixtures.js";
+import { SortDirection } from "../interfaces.js";
 
 const createMd = () => new MetadataModule(new XhrModule(fetch, {}));
 
@@ -26,8 +26,8 @@ describe("metadata", () => {
                     400,
                 );
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getObjectsByQuery("myFakeProjectId", { category: "analyticalDashboard", limit: 5 })
@@ -110,8 +110,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/query/visualizationobjects", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getVisualizations("myFakeProjectId")
@@ -141,8 +141,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/query/attributes", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getAttributes("myFakeProjectId")
@@ -320,8 +320,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/query/dimensions", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getDimensions("myFakeProjectId")
@@ -351,8 +351,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/query/facts", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getFacts("myFakeProjectId")
@@ -382,8 +382,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/query/metrics", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getMetrics("myFakeProjectId")
@@ -413,8 +413,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/availablemetrics", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getAvailableMetrics("myFakeProjectId")
@@ -444,8 +444,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/drillcrosspaths", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getAvailableAttributes("myFakeProjectId")
@@ -475,8 +475,8 @@ describe("metadata", () => {
             it("should reject with 400 from backend", () => {
                 fetchMock.mock("/gdc/md/myFakeProjectId/availablefacts", 400);
 
-                const okCallback = jest.fn();
-                const errorCallback = jest.fn();
+                const okCallback = vi.fn();
+                const errorCallback = vi.fn();
 
                 return createMd()
                     .getAvailableFacts("myFakeProjectId")

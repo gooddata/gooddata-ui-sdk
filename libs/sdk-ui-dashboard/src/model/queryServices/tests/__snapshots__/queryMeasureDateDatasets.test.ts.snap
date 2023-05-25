@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 1`] = `
-Array [
+exports[`query measure date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 1`] = `
+[
   "Date (Activity)",
   "Date (Timeline)",
 ]
 `;
 
-exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 2`] = `
-Object {
+exports[`query measure date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 2`] = `
+{
   "Date (Activity)": "Activity",
   "Date (Timeline)": "Timeline",
 }
 `;
 
-exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance desc 1`] = `
-Array [
+exports[`query measure date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 1`] = `
+[
   "Date (Timeline)",
   "Date (Activity)",
 ]
 `;
 
-exports[`query measure date datasets for datasets obtained from catalog should order date datasets by relevance desc 2`] = `
-Object {
+exports[`query measure date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 2`] = `
+{
   "Date (Activity)": "Activity",
   "Date (Timeline)": "Timeline",
 }

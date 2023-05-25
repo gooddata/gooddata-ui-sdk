@@ -1,10 +1,13 @@
 // (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock, { MockOptions } from "fetch-mock";
-import isPlainObject from "lodash/isPlainObject";
+import { vi, describe, afterEach, expect, it, beforeEach, Mock } from "vitest";
+import { MockOptions } from "fetch-mock";
+import fetchMock from "fetch-mock/esm/client.js";
+import isPlainObject from "lodash/isPlainObject.js";
+import pkgJson from "../../package.json";
 
-import { handlePolling, originPackageHeaders, XhrModule, thisPackage } from "../xhr";
-import { ConfigModule } from "../config";
+import { handlePolling, originPackageHeaders, XhrModule, thisPackage } from "../xhr.js";
+import { ConfigModule } from "../config.js";
 
 function isHashMap(obj: any): obj is { [t: string]: string } {
     return isPlainObject(obj);
@@ -25,9 +28,6 @@ const parsedDummyBody = { test: "ok" };
 
 describe("thisPackage", () => {
     it("should equal to current package name and version", () => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const pkgJson = require("../../package.json");
-
         expect(thisPackage).toEqual({ name: pkgJson.name, version: pkgJson.version });
     });
 });
@@ -52,8 +52,15 @@ describe("createModule", () => {
 });
 
 describe("fetch", () => {
+    beforeEach(() => {
+        global.URL.createObjectURL = vi.fn();
+        global.URL.revokeObjectURL = vi.fn();
+    });
+
     afterEach(() => {
         fetchMock.restore();
+        (global.URL.createObjectURL as Mock).mockReset();
+        (global.URL.revokeObjectURL as Mock).mockReset();
     });
 
     describe("xhr.ajax request", () => {
@@ -156,8 +163,8 @@ describe("fetch", () => {
         });
 
         it("should not log deprecation warning when REST API call was performed against latest REST API", () => {
-            const consoleWarnSpy = jest.spyOn(global.console, "warn");
-            consoleWarnSpy.mockImplementation(jest.fn());
+            const consoleWarnSpy = vi.spyOn(global.console, "warn");
+            consoleWarnSpy.mockImplementation(vi.fn() as any);
 
             fetchMock.get("/some/url", { status: 200, headers: { "X-GDC-DEPRECATED": "deprecated" } });
 
@@ -238,7 +245,7 @@ describe("fetch", () => {
         });
 
         it("should call beforeSend in each request including unauthorized", () => {
-            const beforeSendStub = jest.fn();
+            const beforeSendStub = vi.fn();
             const url = "/some/url";
 
             fetchMock.get(url, (url: string) => {
@@ -261,16 +268,16 @@ describe("fetch", () => {
 
     describe("xhr.ajax polling", () => {
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
             fetchMock.restore();
         });
 
         it("should allow for custom setting", () => {
-            jest.useFakeTimers();
-            const handleRequest = jest.fn(() => Promise.resolve());
+            vi.useFakeTimers();
+            const handleRequest = vi.fn(() => Promise.resolve());
             const promise = handlePolling("/some/url", { pollDelay: () => 1000 }, handleRequest);
 
-            jest.advanceTimersByTime(1000); // ms
+            vi.advanceTimersByTime(1000); // ms
             expect(handleRequest).toHaveBeenCalledTimes(1);
 
             return promise;
@@ -486,7 +493,7 @@ describe("fetch", () => {
 
             fetchMock.get(url, 200);
 
-            const beforeSendStub = jest.fn();
+            const beforeSendStub = vi.fn();
             const xhr = createXhr();
 
             xhr.ajaxSetup({ beforeSend: beforeSendStub });

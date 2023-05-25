@@ -1,7 +1,7 @@
 // (C) 2020-2023 GoodData Corporation
 import { IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
-import { DefaultFeatureFlags } from "./uiFeatures";
+import { DefaultFeatureFlags } from "./uiFeatures.js";
 
 /**
  * Tiger does not yet have endpoints for settings. All the UI-specific

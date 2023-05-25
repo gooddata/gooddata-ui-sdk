@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { Message } from "../../../../Messages";
+import { Message } from "../../../../Messages/index.js";
 
 export interface IPrepareEnvMessageProps {
     integrationDocLink: string;

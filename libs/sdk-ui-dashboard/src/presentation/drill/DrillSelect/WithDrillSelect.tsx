@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { DrillSelectDropdown } from "./DrillSelectDropdown";
+import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
 import {
     OnWidgetDrill,
     OnDrillDownSuccess,
@@ -10,8 +10,8 @@ import {
     OnDrillToCustomUrlSuccess,
     OnDrillToDashboardSuccess,
     OnDrillToInsightSuccess,
-} from "../types";
-import { DrillSelectContext } from "./types";
+} from "../types.js";
+import { DrillSelectContext } from "./types.js";
 import {
     IInsight,
     ObjRef,
@@ -20,7 +20,7 @@ import {
     isDrillToDashboard,
     isDrillToInsight,
 } from "@gooddata/sdk-model";
-import { IntlWrapper } from "../../localization";
+import { IntlWrapper } from "../../localization/index.js";
 import {
     DashboardCommandFailed,
     selectLocale,
@@ -28,15 +28,15 @@ import {
     selectDisableDefaultDrills,
     DashboardDrillCommand,
     selectWidgetDrills,
-} from "../../../model";
+} from "../../../model/index.js";
 import {
     DashboardDrillContext,
     DashboardDrillDefinition,
     IDashboardDrillEvent,
     isDrillDownDefinition,
-} from "../../../types";
-import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils";
-import { useDrills } from "../hooks/useDrills";
+} from "../../../types.js";
+import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
+import { useDrills } from "../hooks/useDrills.js";
 
 /**
  * @internal

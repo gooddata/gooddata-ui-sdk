@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ScatterPlot with Y axis min/max configuration should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with Y axis min/max configuration > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -13,14 +13,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -32,13 +32,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -50,11 +50,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -65,25 +65,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -92,11 +92,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -106,20 +106,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with Y axis min/max configuration should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "xaxis": Object {
+exports[`ScatterPlot > with Y axis min/max configuration > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "xaxis": {
       "max": "15000000",
       "min": "5000000",
     },
-    "yaxis": Object {
+    "yaxis": {
       "max": "0.55",
       "min": "0.5",
     },
@@ -130,12 +130,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with assign color to measures should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with assign color to measures > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -143,14 +143,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -162,13 +162,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -180,11 +180,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -195,25 +195,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -222,11 +222,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -236,20 +236,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with assign color to measures should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorMapping": Array [
-      Object {
-        "color": Object {
+exports[`ScatterPlot > with assign color to measures > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorMapping": [
+      {
+        "color": {
           "type": "rgb",
-          "value": Object {
+          "value": {
             "b": 0,
             "g": 0,
             "r": 0,
@@ -258,41 +258,41 @@ Object {
         "predicate": [Function],
       },
     ],
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
+    "colorPalette": [
+      {
+        "fill": {
           "b": 73,
           "g": 49,
           "r": 195,
         },
         "guid": "01",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 86,
           "g": 194,
           "r": 168,
         },
         "guid": "02",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 177,
           "g": 217,
           "r": 243,
         },
         "guid": "03",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 121,
           "g": 153,
           "r": 194,
         },
         "guid": "04",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 34,
           "g": 37,
           "r": 162,
@@ -307,12 +307,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - high should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with axis name configuration - high > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -320,14 +320,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -339,13 +339,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -357,11 +357,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -372,25 +372,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -399,11 +399,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -413,35 +413,35 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - high should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "secondary_xaxis": Object {
-      "name": Object {
+exports[`ScatterPlot > with axis name configuration - high > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
         "position": "high",
         "visible": true,
       },
     },
-    "secondary_yaxis": Object {
-      "name": Object {
+    "secondary_yaxis": {
+      "name": {
         "position": "high",
         "visible": true,
       },
     },
-    "xaxis": Object {
-      "name": Object {
+    "xaxis": {
+      "name": {
         "position": "high",
         "visible": true,
       },
     },
-    "yaxis": Object {
-      "name": Object {
+    "yaxis": {
+      "name": {
         "position": "high",
         "visible": true,
       },
@@ -453,12 +453,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - invisible should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with axis name configuration - invisible > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -466,14 +466,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -485,13 +485,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -503,11 +503,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -518,25 +518,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -545,11 +545,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -559,35 +559,35 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - invisible should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "secondary_xaxis": Object {
-      "name": Object {
+exports[`ScatterPlot > with axis name configuration - invisible > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
         "position": "middle",
         "visible": false,
       },
     },
-    "secondary_yaxis": Object {
-      "name": Object {
+    "secondary_yaxis": {
+      "name": {
         "position": "middle",
         "visible": false,
       },
     },
-    "xaxis": Object {
-      "name": Object {
+    "xaxis": {
+      "name": {
         "position": "middle",
         "visible": false,
       },
     },
-    "yaxis": Object {
-      "name": Object {
+    "yaxis": {
+      "name": {
         "position": "middle",
         "visible": false,
       },
@@ -599,12 +599,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - low should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with axis name configuration - low > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -612,14 +612,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -631,13 +631,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -649,11 +649,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -664,25 +664,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -691,11 +691,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -705,35 +705,35 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - low should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "secondary_xaxis": Object {
-      "name": Object {
+exports[`ScatterPlot > with axis name configuration - low > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
         "position": "low",
         "visible": true,
       },
     },
-    "secondary_yaxis": Object {
-      "name": Object {
+    "secondary_yaxis": {
+      "name": {
         "position": "low",
         "visible": true,
       },
     },
-    "xaxis": Object {
-      "name": Object {
+    "xaxis": {
+      "name": {
         "position": "low",
         "visible": true,
       },
     },
-    "yaxis": Object {
-      "name": Object {
+    "yaxis": {
+      "name": {
         "position": "low",
         "visible": true,
       },
@@ -745,12 +745,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - middle should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with axis name configuration - middle > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -758,14 +758,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -777,13 +777,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -795,11 +795,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -810,25 +810,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -837,11 +837,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -851,35 +851,35 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with axis name configuration - middle should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "secondary_xaxis": Object {
-      "name": Object {
+exports[`ScatterPlot > with axis name configuration - middle > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "secondary_xaxis": {
+      "name": {
         "position": "middle",
         "visible": true,
       },
     },
-    "secondary_yaxis": Object {
-      "name": Object {
+    "secondary_yaxis": {
+      "name": {
         "position": "middle",
         "visible": true,
       },
     },
-    "xaxis": Object {
-      "name": Object {
+    "xaxis": {
+      "name": {
         "position": "middle",
         "visible": true,
       },
     },
-    "yaxis": Object {
-      "name": Object {
+    "yaxis": {
+      "name": {
         "position": "middle",
         "visible": true,
       },
@@ -891,12 +891,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with coloring - custom colors should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with coloring - custom colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -904,14 +904,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -923,13 +923,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -941,11 +941,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -956,25 +956,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -983,11 +983,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -997,16 +997,16 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with coloring - custom colors should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colors": Array [
+exports[`ScatterPlot > with coloring - custom colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colors": [
       "rgb(33, 41, 195)",
       "rgb(18, 194, 25)",
       "rgb(243, 56, 47)",
@@ -1020,12 +1020,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with coloring - custom palette preferred over colors should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with coloring - custom palette > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1033,14 +1033,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -1052,13 +1052,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -1070,11 +1070,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -1085,25 +1085,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1112,11 +1112,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -1126,50 +1126,50 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with coloring - custom palette preferred over colors should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
+exports[`ScatterPlot > with coloring - custom palette > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
           "b": 73,
           "g": 49,
           "r": 195,
         },
         "guid": "01",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 86,
           "g": 194,
           "r": 168,
         },
         "guid": "02",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 177,
           "g": 217,
           "r": 243,
         },
         "guid": "03",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 121,
           "g": 153,
           "r": 194,
         },
         "guid": "04",
       },
-      Object {
-        "fill": Object {
+      {
+        "fill": {
           "b": 34,
           "g": 37,
           "r": 162,
@@ -1177,7 +1177,171 @@ Object {
         "guid": "05",
       },
     ],
-    "colors": Array [
+  },
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ScatterPlot > with coloring - custom palette preferred over colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "abZgFKGPaGYM",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_abZgFKGPaGYM",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.product.id.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abZgFKGPaGYM",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abZgFKGPaGYM",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with coloring - custom palette preferred over colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "colors": [
       "rgb(33, 41, 195)",
       "rgb(18, 194, 25)",
       "rgb(243, 56, 47)",
@@ -1191,12 +1355,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with coloring - custom palette should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with coloring - default > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1204,14 +1368,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -1223,13 +1387,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -1241,11 +1405,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -1256,25 +1420,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1283,11 +1447,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -1297,70 +1461,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with coloring - custom palette should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
-          "b": 73,
-          "g": 49,
-          "r": 195,
-        },
-        "guid": "01",
-      },
-      Object {
-        "fill": Object {
-          "b": 86,
-          "g": 194,
-          "r": 168,
-        },
-        "guid": "02",
-      },
-      Object {
-        "fill": Object {
-          "b": 177,
-          "g": 217,
-          "r": 243,
-        },
-        "guid": "03",
-      },
-      Object {
-        "fill": Object {
-          "b": 121,
-          "g": 153,
-          "r": 194,
-        },
-        "guid": "04",
-      },
-      Object {
-        "fill": Object {
-          "b": 34,
-          "g": 37,
-          "r": 162,
-        },
-        "guid": "05",
-      },
-    ],
-  },
+exports[`ScatterPlot > with coloring - default > should create expected props for core chart 1`] = `
+{
+  "config": {},
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`ScatterPlot with coloring - default should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with data labels - auto visibility > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1368,14 +1489,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -1387,13 +1508,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -1405,11 +1526,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -1420,25 +1541,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1447,11 +1568,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -1461,137 +1582,16 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with coloring - default should create expected props for core chart 1`] = `
-Object {
-  "config": Object {},
-  "exportTitle": "ScatterPlot",
-  "theme": undefined,
-  "themeIsLoading": undefined,
-}
-`;
-
-exports[`ScatterPlot with data labels - auto visibility should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "abZgFKGPaGYM",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_abZgFKGPaGYM",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "attribute",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "abZgFKGPaGYM",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_abZgFKGPaGYM",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ScatterPlot with data labels - auto visibility should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
+exports[`ScatterPlot > with data labels - auto visibility > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
       "visible": "auto",
     },
   },
@@ -1601,12 +1601,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with data labels - default should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with data labels - default > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1614,14 +1614,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -1633,13 +1633,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -1651,11 +1651,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -1666,25 +1666,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1693,11 +1693,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -1707,27 +1707,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with data labels - default should create expected props for core chart 1`] = `
-Object {
-  "config": Object {},
+exports[`ScatterPlot > with data labels - default > should create expected props for core chart 1`] = `
+{
+  "config": {},
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`ScatterPlot with data labels - forced hidden should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with data labels - forced hidden > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1735,14 +1735,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -1754,13 +1754,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -1772,11 +1772,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -1787,25 +1787,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1814,11 +1814,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -1828,16 +1828,16 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with data labels - forced hidden should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
+exports[`ScatterPlot > with data labels - forced hidden > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
       "visible": false,
     },
   },
@@ -1847,12 +1847,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with data labels - forced visible and german separators should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with data labels - forced visible > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1860,14 +1860,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -1879,13 +1879,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -1897,11 +1897,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -1912,25 +1912,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1939,11 +1939,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -1953,19 +1953,144 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with data labels - forced visible and german separators should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
+exports[`ScatterPlot > with data labels - forced visible > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
       "visible": true,
     },
-    "separators": Object {
+  },
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ScatterPlot > with data labels - forced visible and german separators > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "abZgFKGPaGYM",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_abZgFKGPaGYM",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_label.product.id.name",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "abZgFKGPaGYM",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_abZgFKGPaGYM",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with data labels - forced visible and german separators > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "dataLabels": {
+      "visible": true,
+    },
+    "separators": {
       "decimal": ",",
       "thousand": ".",
     },
@@ -1976,12 +2101,12 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with data labels - forced visible should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with x and y axis measures and attribute > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1989,14 +2114,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -2008,13 +2133,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -2026,11 +2151,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -2041,25 +2166,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -2068,11 +2193,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -2082,31 +2207,26 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with data labels - forced visible should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-  },
+exports[`ScatterPlot > with x and y axis measures and attribute > should create expected props for core chart 1`] = `
+{
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`ScatterPlot with x and y axis measures and attribute should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with x and y axis measures and attribute with attr sorting > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -2114,14 +2234,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -2133,13 +2253,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -2151,11 +2271,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -2166,25 +2286,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -2193,11 +2313,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -2207,130 +2327,10 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ScatterPlot with x and y axis measures and attribute should create expected props for core chart 1`] = `
-Object {
-  "exportTitle": "ScatterPlot",
-  "theme": undefined,
-  "themeIsLoading": undefined,
-}
-`;
-
-exports[`ScatterPlot with x and y axis measures and attribute with attr sorting should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "abZgFKGPaGYM",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_abZgFKGPaGYM",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "attribute",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "abZgFKGPaGYM",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_abZgFKGPaGYM",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [
-    Object {
-      "attributeSortItem": Object {
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a_label.product.id.name",
         "direction": "desc",
       },
@@ -2340,20 +2340,20 @@ Object {
 }
 `;
 
-exports[`ScatterPlot with x and y axis measures and attribute with attr sorting should create expected props for core chart 1`] = `
-Object {
+exports[`ScatterPlot > with x and y axis measures and attribute with attr sorting > should create expected props for core chart 1`] = `
+{
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`ScatterPlot with x and y axis measures and attribute with nulls in data should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with x and y axis measures and attribute with nulls in data > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "closed.aag81lMifn6q",
           "type": "displayForm",
         },
@@ -2361,14 +2361,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -2380,13 +2380,13 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abZgFKGPaGYM",
                   "type": "measure",
                 },
@@ -2398,11 +2398,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "closed.aag81lMifn6q",
               "type": "displayForm",
             },
@@ -2413,25 +2413,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_closed.aag81lMifn6q",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -2440,11 +2440,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abZgFKGPaGYM",
               "type": "measure",
             },
@@ -2454,41 +2454,31 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with x and y axis measures and attribute with nulls in data should create expected props for core chart 1`] = `
-Object {
+exports[`ScatterPlot > with x and y axis measures and attribute with nulls in data > should create expected props for core chart 1`] = `
+{
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`ScatterPlot with x axis measure and attribute should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`ScatterPlot > with x axis measure > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -2500,15 +2490,96 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with x axis measure > should create expected props for core chart 1`] = `
+{
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ScatterPlot > with x axis measure and attribute > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -2519,25 +2590,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -2547,97 +2618,26 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with x axis measure and attribute should create expected props for core chart 1`] = `
-Object {
+exports[`ScatterPlot > with x axis measure and attribute > should create expected props for core chart 1`] = `
+{
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`ScatterPlot with x axis measure should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "attribute",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ScatterPlot with x axis measure should create expected props for core chart 1`] = `
-Object {
-  "exportTitle": "ScatterPlot",
-  "theme": undefined,
-  "themeIsLoading": undefined,
-}
-`;
-
-exports[`ScatterPlot with y axis measure and attribute should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`ScatterPlot > with y axis measure and attribute > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -2645,18 +2645,18 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -2668,11 +2668,11 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.product.id.name",
               "type": "displayForm",
             },
@@ -2683,25 +2683,25 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -2711,14 +2711,14 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`ScatterPlot with y axis measure and attribute should create expected props for core chart 1`] = `
-Object {
+exports[`ScatterPlot > with y axis measure and attribute > should create expected props for core chart 1`] = `
+{
   "exportTitle": "ScatterPlot",
   "theme": undefined,
   "themeIsLoading": undefined,

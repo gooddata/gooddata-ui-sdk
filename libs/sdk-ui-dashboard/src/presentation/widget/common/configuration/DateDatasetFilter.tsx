@@ -2,12 +2,12 @@
 import React, { useCallback, useState } from "react";
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
 
-import { DateFilterCheckbox } from "./DateFilterCheckbox";
-import { useDashboardSelector, selectAllCatalogDateDatasetsMap } from "../../../../model";
-import { DateDatasetPicker } from "./DateDatasetPicker";
-import { getUnrelatedDateDataset } from "./utils";
-import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling";
-import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden";
+import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
+import { useDashboardSelector, selectAllCatalogDateDatasetsMap } from "../../../../model/index.js";
+import { DateDatasetPicker } from "./DateDatasetPicker.js";
+import { getUnrelatedDateDataset } from "./utils.js";
+import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
+import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden.js";
 
 interface IDateDatasetFilterProps {
     widget: IWidget;

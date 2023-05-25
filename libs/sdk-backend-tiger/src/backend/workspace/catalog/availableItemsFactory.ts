@@ -22,16 +22,16 @@ import {
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
 import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
-import intersectionWith from "lodash/intersectionWith";
-import uniq from "lodash/uniq";
+import intersectionWith from "lodash/intersectionWith.js";
+import uniq from "lodash/uniq.js";
 
-import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter";
-import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter";
-import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter";
+import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
+import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
+import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { InvariantError } from "ts-invariant";
-import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter";
+import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: AfmValidObjectsQueryTypesEnum.ATTRIBUTES,

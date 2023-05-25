@@ -5,7 +5,6 @@ _build_styles() {
 }
 
 _clean() {
-    rm -rf dist
     rm -rf esm
     rm -rf styles/css
 }
@@ -16,7 +15,7 @@ _common-build() {
 
 build() {
     _common-build
-    concurrently "npm run build-cjs" "npm run build-esm"
+    npm run build-esm
 }
 
 build-dev() {

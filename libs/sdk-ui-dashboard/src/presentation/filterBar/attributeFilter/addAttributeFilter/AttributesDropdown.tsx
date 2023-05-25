@@ -3,18 +3,18 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
-import debounce from "lodash/debounce";
+import debounce from "lodash/debounce.js";
 
-import { AddAttributeFilterButton } from "./AddAttributeFilterButton";
+import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import {
     useDashboardSelector,
     selectCatalogAttributes,
     selectAllInsightWidgets,
     selectInsightsMap,
-} from "../../../../model";
-import { IDashboardAttributeFilterPlaceholderProps } from "../types";
-import AttributeListItem from "./AttributeListItem";
-import { isLocationIconEnabled } from "./addAttributeFilterUtils";
+} from "../../../../model/index.js";
+import { IDashboardAttributeFilterPlaceholderProps } from "../types.js";
+import AttributeListItem from "./AttributeListItem.js";
+import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 
 const dropdownAlignPoints = [
     {

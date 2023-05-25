@@ -1,8 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import { initializeDashboard } from "../../../commands";
-import { DashboardTester } from "../../../tests/DashboardTester";
-import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures";
-import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render";
+import { initializeDashboard } from "../../../commands/index.js";
+import { DashboardTester } from "../../../tests/DashboardTester.js";
+import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render.js";
+import { describe, it, expect, beforeEach } from "vitest";
 
 describe("renderingWorker", () => {
     let Tester: DashboardTester;
@@ -21,7 +22,7 @@ describe("renderingWorker", () => {
                         maxTimeout,
                         correlationIdGenerator: () => "correlation",
                     },
-                })),
+                })) as any,
         );
 
         it("should emit render resolved, when async rendering is still running, but the maximum timeout reached", async () => {
@@ -48,7 +49,7 @@ describe("renderingWorker", () => {
                         maxTimeout,
                         correlationIdGenerator: () => "correlation",
                     },
-                })),
+                })) as any,
         );
 
         it("should emit render resolved, when no async rendering is requested during the asyncRenderRequestedTimeout", async () => {

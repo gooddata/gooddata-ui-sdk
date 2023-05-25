@@ -1,5 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
-import { shallowEqualObjects } from "../objectUtils";
+import { expect, describe, it } from "vitest";
+import { shallowEqualObjects } from "../objectUtils.js";
 // "Original" here: https://github.com/moroshko/shallow-equal/blob/master/src/objects.test.js
 
 const obj1 = { game: "chess", year: "1979" };

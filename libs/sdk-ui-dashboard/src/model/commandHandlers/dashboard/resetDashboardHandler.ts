@@ -1,23 +1,23 @@
 // (C) 2021-2023 GoodData Corporation
-import { DashboardContext } from "../../types/commonTypes";
-import { ResetDashboard } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ResetDashboard } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardWasReset } from "../../events";
-import { selectPersistedDashboard } from "../../store/meta/metaSelectors";
+import { DashboardWasReset } from "../../events/index.js";
+import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { dashboardWasReset } from "../../events/dashboard";
-import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
+import { dashboardWasReset } from "../../events/dashboard.js";
+import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors";
+import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
-} from "./common/stateInitializers";
+} from "./common/stateInitializers.js";
 import { batchActions } from "redux-batched-actions";
-import uniqWith from "lodash/uniqWith";
+import uniqWith from "lodash/uniqWith.js";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
-import { resolveInsights } from "../../utils/insightResolver";
-import { insightReferences } from "./common/insightReferences";
+import { resolveInsights } from "../../utils/insightResolver.js";
+import { insightReferences } from "./common/insightReferences.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,

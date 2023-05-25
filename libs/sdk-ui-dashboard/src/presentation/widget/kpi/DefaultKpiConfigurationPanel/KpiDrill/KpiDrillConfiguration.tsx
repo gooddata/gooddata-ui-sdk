@@ -2,8 +2,8 @@
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
-import flatMap from "lodash/flatMap";
-import sortBy from "lodash/sortBy";
+import flatMap from "lodash/flatMap.js";
+import sortBy from "lodash/sortBy.js";
 import {
     Button,
     Dropdown,
@@ -21,8 +21,8 @@ import {
     setDrillForKpiWidget,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model";
-import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
+} from "../../../../../model/index.js";
+import { CONFIG_PANEL_INNER_WIDTH } from "../constants.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 const CONFIG_PANEL_DRILL_WIDTH = CONFIG_PANEL_INNER_WIDTH - 23;

@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { getTransformDimensionHeaders } from "../DimensionHeaderConverter";
+import { getTransformDimensionHeaders } from "../DimensionHeaderConverter.js";
 import {
     mockDefinition1,
     mockDimensions1,
@@ -10,11 +10,12 @@ import {
     mockDefinition3,
     mockDimensions3,
     mockResult3,
-} from "./GrandTotalsConverter.fixture";
-import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter";
-import { transformGrandTotalData } from "../GrandTotalsConverter";
+} from "./GrandTotalsConverter.fixture.js";
+import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter.js";
+import { transformGrandTotalData } from "../GrandTotalsConverter.js";
 import { ExecutionResult } from "@gooddata/api-client-tiger";
 import { IDimensionDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
 
 describe("transformGrandTotalData", () => {
     const Scenarios: Array<[string, IExecutionDefinition, ExecutionResult, IDimensionDescriptor[]]> = [

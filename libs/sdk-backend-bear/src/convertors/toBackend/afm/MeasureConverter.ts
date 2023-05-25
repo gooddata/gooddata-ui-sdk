@@ -13,10 +13,10 @@ import {
     MeasureAggregation,
 } from "@gooddata/sdk-model";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
-import { convertMeasureFilter } from "./FilterConverter";
-import { toBearRef } from "../ObjRefConverter";
-import compact from "lodash/compact";
-import { DEFAULT_INTEGER_FORMAT, DEFAULT_PERCENTAGE_FORMAT } from "./constants";
+import { convertMeasureFilter } from "./FilterConverter.js";
+import { toBearRef } from "../ObjRefConverter.js";
+import compact from "lodash/compact.js";
+import { DEFAULT_INTEGER_FORMAT, DEFAULT_PERCENTAGE_FORMAT } from "./constants.js";
 
 export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
     const {

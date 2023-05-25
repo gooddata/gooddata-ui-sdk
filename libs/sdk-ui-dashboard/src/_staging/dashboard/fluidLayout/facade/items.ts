@@ -1,14 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
 import { IDashboardLayoutItem, ScreenSize } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap";
-import { DashboardLayoutItemFacade } from "./item";
+import flatMap from "lodash/flatMap.js";
+import { DashboardLayoutItemFacade } from "./item.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutSectionFacade,
-} from "./interfaces";
-import invariant from "ts-invariant";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config";
+} from "./interfaces.js";
+import { invariant } from "ts-invariant";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config.js";
 
 /**
  * @alpha

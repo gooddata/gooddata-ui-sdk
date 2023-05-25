@@ -1,8 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
 
-import isNull from "lodash/isNull";
+import isNull from "lodash/isNull.js";
 
-import { HYPHEN } from "./format";
+import { HYPHEN } from "./format.js";
 
 type Trend = "neutral" | "up" | "down";
 type Meaning = "neutral" | "positive" | "negative";

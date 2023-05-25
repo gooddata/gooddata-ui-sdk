@@ -3,11 +3,11 @@
 set -e
 
 PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
-DIST_DIR="${PACKAGE_DIR}/dist"
+DIST_DIR="${PACKAGE_DIR}/esm"
 BABEL_BIN="${PACKAGE_DIR}/node_modules/.bin/babel"
 PRETTIER_BIN="${PACKAGE_DIR}/node_modules/.bin/prettier"
 TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
-PREPARE_PACKAGE_JSON="${TSNODE_BIN} ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
+PREPARE_PACKAGE_JSON="${TSNODE_BIN} --esm ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
 
 REACT_APP_TEMPLATE_DIR="${PACKAGE_DIR}/../react-app-template"
 JS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/js"
@@ -25,7 +25,7 @@ mkdir "${DIST_DIR}"
 mkdir "${BUILD_DIR}"
 
 # first build main Application Development Toolkit assets
-npm run build-cjs
+npm run build-esm
 
 #######################################################################
 # Build react-app-template for Typescript
@@ -36,7 +36,7 @@ npm run build-cjs
 mkdir -p "${TS_BUILD_DIR}/src"
 cp -R "${REACT_APP_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
 cp "${REACT_APP_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
-cp "${REACT_APP_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/webpack.config.cjs" "${TS_BUILD_DIR}"
 cp "${REACT_APP_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
 cp "${REACT_APP_TEMPLATE_DIR}/README.template.md" "${TS_BUILD_DIR}/README.md"
 

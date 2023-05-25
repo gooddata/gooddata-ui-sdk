@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import { guidFor } from "../guid";
+import { guidFor } from "../guid.js";
+import { describe, it, expect, beforeEach } from "vitest";
 
 describe("ReactGuid", () => {
     let guidValue: number = window._gd_uuid; // eslint-disable-line no-underscore-dangle

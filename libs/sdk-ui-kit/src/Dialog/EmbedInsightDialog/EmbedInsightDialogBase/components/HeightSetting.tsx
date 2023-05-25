@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { SingleSelectListItem } from "../../../../List";
-import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown";
-import { NumericInput } from "./NumericInput";
-import { DEFAULT_UNIT, UNITS, UnitsType } from "../types";
-import { getDefaultHeightForEmbedCodeByUnit } from "../../utils";
+import { SingleSelectListItem } from "../../../../List/index.js";
+import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";
+import { NumericInput } from "./NumericInput.js";
+import { DEFAULT_UNIT, UNITS, UnitsType } from "../types.js";
+import { getDefaultHeightForEmbedCodeByUnit } from "../../utils.js";
 
 /**
  * @internal

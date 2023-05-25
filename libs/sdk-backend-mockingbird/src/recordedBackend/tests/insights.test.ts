@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-
+import { beforeEach, describe, expect, it } from "vitest";
 import {
     idRef,
     IInsight,
@@ -10,8 +10,8 @@ import {
     isUriRef,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
-import { RecordedInsights } from "../insights";
-import { recordedBackend } from "../index";
+import { RecordedInsights } from "../insights.js";
+import { recordedBackend } from "../index.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 /**
@@ -81,23 +81,12 @@ describe("recorded insights", () => {
     });
 
     it("expects insight id be part of the recording index", async () => {
-        try {
-            await TestInsights.getInsight(idRef("insight4"));
-            fail("expected exception");
-        } catch (e) {
-            // expected
-        }
+        await expect(TestInsights.getInsight(idRef("insight4"))).rejects.toThrowError();
     });
 
     it("should delete insight", async () => {
         await TestInsights.deleteInsight(idRef("123"));
-
-        try {
-            await TestInsights.getInsight(idRef("123"));
-            fail("expected exception");
-        } catch (e) {
-            // expected
-        }
+        await expect(TestInsights.getInsight(idRef("123"))).rejects.toThrowError();
     });
 
     it("should update insight", async () => {

@@ -5,7 +5,7 @@ export {
     ChartSortingOwnProps,
     ChartSortingProps,
     ChartSortingWithIntl,
-} from "./ChartSorting";
+} from "./ChartSorting.js";
 
 export {
     IAvailableSortsGroup,
@@ -14,4 +14,4 @@ export {
     ISortTypeItem,
     IBucketItemDescriptor,
     IBucketItemDescriptors,
-} from "./types";
+} from "./types.js";

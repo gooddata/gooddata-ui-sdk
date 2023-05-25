@@ -3,9 +3,10 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { dummyDataView, recordedDataViews, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import flatMap from "lodash/flatMap";
-import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest";
-import values from "lodash/values";
+import flatMap from "lodash/flatMap.js";
+import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest.js";
+import values from "lodash/values.js";
+import { describe, it, expect } from "vitest";
 
 function digestSnapshot(digest: DataAccessDigest) {
     return {

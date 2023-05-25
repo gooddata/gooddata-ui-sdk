@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { describe, expect, it } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import {
     filterContext,
     filterContextDefinition,
@@ -9,7 +9,7 @@ import {
     dashboardAttributeFilterReference,
     dashboardDateFilter,
     dashboardDateFilterReference,
-} from "./filterContext.fixtures";
+} from "./filterContext.fixtures.js";
 import {
     dashboardFilterReferenceObjRef,
     IDashboardFilterReference,
@@ -20,8 +20,8 @@ import {
     isFilterContext,
     isFilterContextDefinition,
     isTempFilterContext,
-} from "../filterContext";
-import { ObjRef } from "../../objRef";
+} from "../filterContext.js";
+import { ObjRef } from "../../objRef/index.js";
 
 describe("filter context type guards", () => {
     describe("isDashboardAttributeFilter", () => {

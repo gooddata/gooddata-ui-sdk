@@ -1,13 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock/esm/client.js";
+import { vi, describe, beforeEach, expect, it, afterEach } from "vitest";
 
-import cloneDeep from "lodash/cloneDeep";
-import * as fixtures from "./catalogue.fixtures";
-import { CatalogueModule, unwrapItemDescriptionObject } from "../catalogue";
-import { XhrModule } from "../xhr";
-import { ExecutionModule } from "../execution";
-import { MetadataModule } from "../metadata";
+import cloneDeep from "lodash/cloneDeep.js";
+import * as fixtures from "./catalogue.fixtures.js";
+import { CatalogueModule, unwrapItemDescriptionObject } from "../catalogue.js";
+import { XhrModule } from "../xhr.js";
+import { ExecutionModule } from "../execution.js";
+import { MetadataModule } from "../metadata.js";
 
 function createCatalogue() {
     const xhr = new XhrModule(fetch, {});
@@ -334,7 +335,7 @@ describe("Catalogue", () => {
 
         it("should get itemDescriptionObjects and unwrap them to strings", async () => {
             const catalogueModule = mockedCatalogueModule();
-            catalogueModule.loadItemDescriptionObjects = jest
+            catalogueModule.loadItemDescriptionObjects = vi
                 .fn()
                 .mockReturnValue(Promise.resolve(loadItemDescriptionObjectsMockResult));
 
@@ -357,7 +358,7 @@ describe("Catalogue", () => {
         describe("loadItemDescriptionObjects", () => {
             it("should get columns and definitions and convert them to itemDescriptionObjects", async () => {
                 const catalogueModule = mockedCatalogueModule({
-                    mdToExecutionDefinitionsAndColumns: jest
+                    mdToExecutionDefinitionsAndColumns: vi
                         .fn()
                         .mockReturnValue(Promise.resolve(mdToExecutionDefinitionAndColumnsMock)),
                 });

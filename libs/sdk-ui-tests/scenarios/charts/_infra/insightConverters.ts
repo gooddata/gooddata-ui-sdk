@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { InsightConverter } from "../../../src";
+import { InsightConverter } from "../../../src/index.js";
 import {
     IColorMappingItem,
     IInsight,
@@ -13,8 +13,8 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { IColorMapping } from "@gooddata/sdk-ui-charts";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 function createColorMappingItems(
     defaultInsight: IInsight,

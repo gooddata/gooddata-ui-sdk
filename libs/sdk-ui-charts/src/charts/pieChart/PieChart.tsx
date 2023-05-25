@@ -9,11 +9,11 @@ import {
     AttributeOrPlaceholder,
     AttributesMeasuresOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { roundChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CorePieChart } from "./CorePieChart";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { roundChartDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CorePieChart } from "./CorePieChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

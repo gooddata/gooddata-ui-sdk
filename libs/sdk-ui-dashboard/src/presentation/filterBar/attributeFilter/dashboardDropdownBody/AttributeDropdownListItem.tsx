@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";

@@ -16,26 +16,26 @@ export {
     IDashboardLayoutGridRowRenderProps,
     IDashboardLayoutGridRowRenderer,
     IDashboardLayoutRenderProps,
-} from "./interfaces";
+} from "./interfaces.js";
 
-export { DashboardLayout } from "./DashboardLayout";
-export { DashboardLayoutItem, IDashboardLayoutItemProps } from "./DashboardLayoutItem";
-export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
-export { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
-export { DashboardLayoutSection, IDashboardLayoutSectionProps } from "./DashboardLayoutSection";
-export { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
-export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
-export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
-export { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer";
-export { getGeoPushpinWidgetStyle, isGeoPushpin } from "./utils/legacy";
+export { DashboardLayout } from "./DashboardLayout.js";
+export { DashboardLayoutItem, IDashboardLayoutItemProps } from "./DashboardLayoutItem.js";
+export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
+export { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
+export { DashboardLayoutSection, IDashboardLayoutSectionProps } from "./DashboardLayoutSection.js";
+export { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
+export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
+export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
+export { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";
+export { getGeoPushpinWidgetStyle, isGeoPushpin } from "./utils/legacy.js";
 export {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,
     getDashboardLayoutWidgetDefaultGridWidth,
     validateDashboardLayoutWidgetSize,
-} from "./utils/sizing";
-export { DashboardLayoutBuilder } from "../../../_staging/dashboard/fluidLayout/builder/layout";
-export { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";
+} from "./utils/sizing.js";
+export { DashboardLayoutBuilder } from "../../../_staging/dashboard/fluidLayout/builder/layout.js";
+export { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout.js";
 export {
     DashboardLayoutItemModifications,
     DashboardLayoutItemsSelector,
@@ -45,11 +45,11 @@ export {
     IDashboardLayoutBuilder,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
-} from "../../../_staging/dashboard/fluidLayout/builder/interfaces";
+} from "../../../_staging/dashboard/fluidLayout/builder/interfaces.js";
 export {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";

@@ -1,11 +1,18 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import noop from "lodash/noop";
+import defaultUserEvent from "@testing-library/user-event";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
-import TotalSection, { ITotalSectionProps } from "../TotalSection";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import TotalSection, { ITotalSectionProps } from "../TotalSection.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("TotalSection", () => {
     const defaultProps: ITotalSectionProps = {
@@ -79,7 +86,7 @@ describe("TotalSection", () => {
     });
 
     it("should call pushData when the toggle value changes", async () => {
-        const pushData = jest.fn();
+        const pushData = vi.fn();
         createComponent({
             properties: {},
             pushData,

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { ResizerProps } from "./types";
+import { ResizerProps } from "./types.js";
 
 export const HeightResizer: React.FC<ResizerProps> = (props) => {
     const { status } = props;

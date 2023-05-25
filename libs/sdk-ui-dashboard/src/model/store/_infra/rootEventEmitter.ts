@@ -2,9 +2,9 @@
 import { SagaIterator } from "redux-saga";
 import { actionChannel, select, take } from "redux-saga/effects";
 
-import { DashboardEventHandler } from "../../eventHandlers/eventHandler";
-import { DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events";
-import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
+import { DashboardEventHandler } from "../../eventHandlers/eventHandler.js";
+import { DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events/index.js";
+import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
 
 export interface EventEmitter {
     registerHandler: (handler: DashboardEventHandler) => void;

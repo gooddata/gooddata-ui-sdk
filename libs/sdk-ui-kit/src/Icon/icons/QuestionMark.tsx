@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { IIconProps } from "../typings";
-import { GD_COLOR_HIGHLIGHT } from "../../utils/constants";
+import { IIconProps } from "../typings.js";
+import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
 
 /**
  * @internal

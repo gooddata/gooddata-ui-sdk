@@ -5,12 +5,12 @@ import cx from "classnames";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
 import { IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
 
-import { IMenu } from "../../../publicTypes";
-import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants";
-import { TableDescriptor } from "../tableDescriptor";
-import { IMenuAggregationClickConfig } from "../../privateTypes";
+import { IMenu } from "../../../publicTypes.js";
+import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants.js";
+import { TableDescriptor } from "../tableDescriptor.js";
+import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 
-import AggregationsMenu from "./AggregationsMenu";
+import AggregationsMenu from "./AggregationsMenu.js";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";

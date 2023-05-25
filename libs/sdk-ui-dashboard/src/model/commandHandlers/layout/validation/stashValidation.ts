@@ -5,8 +5,8 @@ import {
     InternalDashboardItemDefinition,
     isStashedDashboardItemsId,
     StashedDashboardItemsId,
-} from "../../../types/layoutTypes";
-import { LayoutStash } from "../../../store/layout/layoutState";
+} from "../../../types/layoutTypes.js";
+import { LayoutStash } from "../../../store/layout/layoutState.js";
 
 export interface ItemResolutionResult {
     /**

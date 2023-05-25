@@ -4,10 +4,10 @@ import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble";
-import { ShortenedText } from "../../ShortenedText";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
+import { ShortenedText } from "../../ShortenedText/index.js";
 
-import { IDialogListItemComponentProps } from "./typings";
+import { IDialogListItemComponentProps } from "./typings.js";
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 10, y: 0 } },

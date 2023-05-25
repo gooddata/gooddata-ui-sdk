@@ -2,10 +2,16 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { Button } from "@gooddata/sdk-ui-kit";
-import Measure from "react-measure";
+import DefaultMeasure from "react-measure";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IDashboardWidgetOverlay } from "../../../model";
+import { IDashboardWidgetOverlay } from "../../../model/index.js";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(DefaultMeasure);
 
 type DashboardItemOverlayProps = {
     render?: boolean;

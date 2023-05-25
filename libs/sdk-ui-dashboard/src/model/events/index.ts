@@ -10,7 +10,7 @@ import {
     DashboardExportToPdfResolved,
     DashboardExportToPdfRequested,
     DashboardSharingChanged,
-} from "./dashboard";
+} from "./dashboard.js";
 import {
     DashboardCommandFailed,
     DashboardCommandRejected,
@@ -19,7 +19,7 @@ import {
     DashboardQueryFailed,
     DashboardQueryRejected,
     DashboardQueryStarted,
-} from "./general";
+} from "./general.js";
 import {
     DashboardAttributeFilterAdded,
     DashboardAttributeFilterMoved,
@@ -30,7 +30,7 @@ import {
     DashboardAttributeTitleChanged,
     DashboardAttributeSelectionModeChanged,
     DashboardFilterContextChanged,
-} from "./filters";
+} from "./filters.js";
 import {
     DashboardLayoutChanged,
     DashboardLayoutSectionAdded,
@@ -41,7 +41,7 @@ import {
     DashboardLayoutSectionItemsAdded,
     DashboardLayoutSectionMoved,
     DashboardLayoutSectionRemoved,
-} from "./layout";
+} from "./layout.js";
 import {
     DashboardKpiWidgetChanged,
     DashboardKpiWidgetComparisonChanged,
@@ -52,7 +52,7 @@ import {
     DashboardKpiWidgetMeasureChanged,
     DashboardKpiWidgetDrillRemoved,
     DashboardKpiWidgetDrillSet,
-} from "./kpi";
+} from "./kpi.js";
 import {
     DashboardInsightWidgetChanged,
     DashboardInsightWidgetDrillsModified,
@@ -66,22 +66,22 @@ import {
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
     DashboardInsightWidgetRefreshed,
-} from "./insight";
+} from "./insight.js";
 import {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionSucceeded,
     DashboardWidgetExecutionFailed,
-} from "./widget";
-import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts";
-import { DashboardScheduledEmailCreated, DashboardScheduledEmailSaved } from "./scheduledEmail";
-import { DashboardUserInteractionTriggered } from "./userInteraction";
+} from "./widget.js";
+import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts.js";
+import { DashboardScheduledEmailCreated, DashboardScheduledEmailSaved } from "./scheduledEmail.js";
+import { DashboardUserInteractionTriggered } from "./userInteraction.js";
 import { Action } from "@reduxjs/toolkit";
 import {
     DashboardRenderRequested,
     DashboardAsyncRenderRequested,
     DashboardAsyncRenderResolved,
     DashboardRenderResolved,
-} from "./render";
+} from "./render.js";
 import {
     DashboardDrillRequested,
     DashboardDrillResolved,
@@ -98,9 +98,9 @@ import {
     DashboardDrillToLegacyDashboardRequested,
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillableItemsChanged,
-} from "./drill";
-import { DashboardRenderModeChanged } from "./renderMode";
-import { CreateInsightRequested } from "./lab";
+} from "./drill.js";
+import { DashboardRenderModeChanged } from "./renderMode.js";
+import { CreateInsightRequested } from "./lab.js";
 
 export {
     IDashboardEvent,
@@ -110,7 +110,7 @@ export {
     isCustomDashboardEvent,
     isDashboardEventOrCustomDashboardEvent,
     DashboardEventBody,
-} from "./base";
+} from "./base.js";
 
 export {
     DateFilterValidationFailed,
@@ -145,7 +145,7 @@ export {
     isDashboardExportToPdfRequested,
     isDashboardExportToPdfResolved,
     isDashboardSharingChanged,
-} from "./dashboard";
+} from "./dashboard.js";
 
 export {
     DashboardCommandStarted,
@@ -168,7 +168,7 @@ export {
     isDashboardQueryCompleted,
     isDashboardQueryRejected,
     isDashboardQueryStarted,
-} from "./general";
+} from "./general.js";
 
 export {
     DashboardDateFilterSelectionChanged,
@@ -198,7 +198,7 @@ export {
     isDashboardAttributeFilterTitleChanged,
     isDashboardDateFilterSelectionChanged,
     isDashboardFilterContextChanged,
-} from "./filters";
+} from "./filters.js";
 
 export {
     DashboardLayoutSectionAdded,
@@ -228,7 +228,7 @@ export {
     isDashboardLayoutSectionItemsAdded,
     isDashboardLayoutSectionMoved,
     isDashboardLayoutSectionRemoved,
-} from "./layout";
+} from "./layout.js";
 
 export {
     DashboardKpiWidgetHeaderChanged,
@@ -258,7 +258,7 @@ export {
     isDashboardKpiWidgetMeasureChanged,
     isDashboardKpiWidgetDrillRemoved,
     isDashboardKpiWidgetDrillSet,
-} from "./kpi";
+} from "./kpi.js";
 
 export {
     DashboardInsightWidgetHeaderChanged,
@@ -297,7 +297,7 @@ export {
     isDashboardInsightWidgetExportRequested,
     isDashboardInsightWidgetExportResolved,
     isDashboardInsightWidgetRefreshed,
-} from "./insight";
+} from "./insight.js";
 
 export {
     DashboardWidgetExecutionStarted,
@@ -309,7 +309,7 @@ export {
     isDashboardWidgetExecutionStarted,
     isDashboardWidgetExecutionSucceeded,
     isDashboardWidgetExecutionFailed,
-} from "./widget";
+} from "./widget.js";
 
 export {
     DashboardAlertCreated,
@@ -321,7 +321,7 @@ export {
     isDashboardAlertCreated,
     isDashboardAlertsRemoved,
     isDashboardAlertUpdated,
-} from "./alerts";
+} from "./alerts.js";
 
 export {
     DashboardScheduledEmailCreated,
@@ -329,7 +329,7 @@ export {
     isDashboardScheduledEmailCreated,
     DashboardScheduledEmailSaved,
     isDashboardScheduledEmailSaved,
-} from "./scheduledEmail";
+} from "./scheduledEmail.js";
 
 export {
     DashboardDrillRequested,
@@ -377,16 +377,16 @@ export {
     isDashboardDrillToLegacyDashboardRequested,
     isDashboardDrillToLegacyDashboardResolved,
     isDashboardDrillableItemsChanged,
-} from "./drill";
+} from "./drill.js";
 
 export {
     DrillTargetsAdded,
     DrillTargetsAddedPayload,
     drillTargetsAdded,
     isDrillTargetsAdded,
-} from "./drillTargets";
+} from "./drillTargets.js";
 
-export * from "./userInteraction";
+export * from "./userInteraction.js";
 
 export {
     DashboardRenderRequested,
@@ -399,15 +399,15 @@ export {
     isDashboardAsyncRenderResolved,
     isDashboardRenderRequested,
     isDashboardRenderResolved,
-} from "./render";
+} from "./render.js";
 
 export {
     DashboardRenderModeChanged,
     DashboardRenderModeChangedPayload,
     isDashboardRenderModeChanged,
-} from "./renderMode";
+} from "./renderMode.js";
 
-export { createInsightRequested, CreateInsightRequested } from "./lab";
+export { createInsightRequested, CreateInsightRequested } from "./lab.js";
 
 /**
  * Union type that contains all available built-in dashboard events.

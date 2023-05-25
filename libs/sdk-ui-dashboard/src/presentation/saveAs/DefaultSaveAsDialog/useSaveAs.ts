@@ -12,7 +12,7 @@ import {
     selectLocale,
     useDashboardCommandProcessing,
     useDashboardSelector,
-} from "../../../model";
+} from "../../../model/index.js";
 import { ILocale } from "@gooddata/sdk-ui";
 
 interface UseSaveAsResult {

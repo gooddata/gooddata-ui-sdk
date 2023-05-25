@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor";
+import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
 
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
 export const DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT = 12;

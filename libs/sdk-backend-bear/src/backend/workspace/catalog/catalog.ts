@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogFactoryOptions,
@@ -17,9 +17,9 @@ import {
     isCatalogMeasure,
     isCatalogDateDataset,
 } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { IUriMappings } from "../../../types/catalog";
-import { BearWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { IUriMappings } from "../../../types/catalog.js";
+import { BearWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory.js";
 
 export class BearWorkspaceCatalog implements IWorkspaceCatalog {
     constructor(

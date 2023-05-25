@@ -2,7 +2,7 @@
 import React from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
-import { IShareStatusProps } from "./types";
+import { IShareStatusProps } from "./types.js";
 
 /**
  * @alpha

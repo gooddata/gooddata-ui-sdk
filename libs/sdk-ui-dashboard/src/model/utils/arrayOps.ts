@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { RelativeIndex } from "../types/layoutTypes";
+import { RelativeIndex } from "../types/layoutTypes.js";
 import { Draft } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 

@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
-import isArray from "lodash/isArray";
-import uniq from "lodash/uniq";
+import isArray from "lodash/isArray.js";
+import uniq from "lodash/uniq.js";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 /**

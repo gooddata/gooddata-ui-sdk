@@ -20,8 +20,8 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
-import { CustomExecutionFactory } from "./execution";
-import { CustomBackendConfig, CustomBackendState } from "./config";
+import { CustomExecutionFactory } from "./execution.js";
+import { CustomBackendConfig, CustomBackendState } from "./config.js";
 
 /**
  * @internal

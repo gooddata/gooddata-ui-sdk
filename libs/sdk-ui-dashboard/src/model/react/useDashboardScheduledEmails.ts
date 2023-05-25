@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IScheduledMail, IWorkspaceUser, ObjRef } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
     selectCanCreateScheduledMail,
     selectDashboardRef,
@@ -16,9 +16,9 @@ import {
     selectIsScheduleEmailManagementDialogOpen,
     selectMenuButtonItemsVisibility,
     uiActions,
-} from "../store";
+} from "../store/index.js";
 
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 /**
  * Hook that handles schedule emailing dialogs.

@@ -3,7 +3,7 @@
 import { JsonApiMetricOutDocument, JsonApiMetricOutWithLinks } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { idRef, IMeasureMetadataObject } from "@gooddata/sdk-model";
-import { isInheritedObject } from "./ObjectInheritance";
+import { isInheritedObject } from "./ObjectInheritance.js";
 
 /**
  * Type guard checking whether object is an instance of JsonApiMetricOutDocument.

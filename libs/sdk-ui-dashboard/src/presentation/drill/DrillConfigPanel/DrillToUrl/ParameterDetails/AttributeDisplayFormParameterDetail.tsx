@@ -1,9 +1,9 @@
 // (C) 2020-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
-import LRUCache from "lru-cache";
+import { LRUCache } from "lru-cache";
 import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { ParameterDetail } from "./ParameterDetail";
+import { ParameterDetail } from "./ParameterDetail.js";
 import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 

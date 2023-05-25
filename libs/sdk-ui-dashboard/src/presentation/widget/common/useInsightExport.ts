@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 import { useCallback, useState } from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
@@ -16,9 +16,9 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
-} from "../../../model";
-import { useExportHandler } from "./useExportHandler";
-import { useExportDialogContext } from "../../dashboardContexts";
+} from "../../../model/index.js";
+import { useExportHandler } from "./useExportHandler.js";
+import { useExportDialogContext } from "../../dashboardContexts/index.js";
 
 export const useInsightExport = (config: {
     title: string;

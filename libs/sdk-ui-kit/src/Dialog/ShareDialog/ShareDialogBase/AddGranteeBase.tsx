@@ -1,11 +1,11 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { Button } from "../../../Button";
-import { ConfirmDialogBase } from "../../ConfirmDialogBase";
-import { AddGranteeContent } from "./AddGranteeContent";
-import { ContentDivider } from "./ContentDivider";
-import { IAddGranteeBaseProps } from "./types";
+import { Button } from "../../../Button/index.js";
+import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+import { AddGranteeContent } from "./AddGranteeContent.js";
+import { ContentDivider } from "./ContentDivider.js";
+import { IAddGranteeBaseProps } from "./types.js";
 
 interface IBackButtonProps {
     onClick: () => void;

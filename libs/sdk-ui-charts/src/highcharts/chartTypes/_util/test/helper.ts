@@ -1,20 +1,20 @@
 // (C) 2007-2022 GoodData Corporation
 import { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
-import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
-import { getChartOptions } from "../../_chartOptions/chartOptionsBuilder";
+import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper.js";
+import { getChartOptions } from "../../_chartOptions/chartOptionsBuilder.js";
 
 import {
     VIEW_BY_DIMENSION_INDEX,
     STACK_BY_DIMENSION_INDEX,
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
-} from "../../../constants/dimensions";
+} from "../../../constants/dimensions.js";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IChartOptions } from "../../../typings/unsafe";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { IChartOptions } from "../../../typings/unsafe.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 
 const defaultDv = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,

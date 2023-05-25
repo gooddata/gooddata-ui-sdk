@@ -2,10 +2,10 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
-import { InputWithNumberFormat } from "../../../Form";
+import { InputWithNumberFormat } from "../../../Form/index.js";
 
-import { ExtendedPreview } from "./ExtendedPreview";
-import { FormattedPreview } from "../shared/FormattedPreview";
+import { ExtendedPreview } from "./ExtendedPreview.js";
+import { FormattedPreview } from "../shared/FormattedPreview.js";
 
 const DEFAULT_PREVIEW_VALUE = -1234.5678;
 

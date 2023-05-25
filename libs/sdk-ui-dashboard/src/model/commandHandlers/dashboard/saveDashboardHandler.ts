@@ -1,16 +1,16 @@
 // (C) 2021-2023 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
-import { DashboardContext } from "../../types/commonTypes";
-import { changeRenderMode, SaveDashboard } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { changeRenderMode, SaveDashboard } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { selectBasicLayout } from "../../store/layout/layoutSelectors";
+import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
-} from "../../store/filterContext/filterContextSelectors";
-import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
+} from "../../store/filterContext/filterContextSelectors.js";
+import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import {
     IDashboardObjectIdentity,
     IDashboard,
@@ -18,26 +18,26 @@ import {
     IAccessControlAware,
 } from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
-import { PromiseFnReturnType } from "../../types/sagas";
-import { DashboardSaved, dashboardSaved } from "../../events/dashboard";
-import { metaActions } from "../../store/meta";
-import { filterContextActions } from "../../store/filterContext";
-import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
+import { metaActions } from "../../store/meta/index.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
+import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { invariant } from "ts-invariant";
 import {
     dashboardLayoutRemoveIdentity,
     dashboardLayoutWidgetIdentityMap,
-} from "../../../_staging/dashboard/dashboardLayout";
-import { isTemporaryIdentity } from "../../utils/dashboardItemUtils";
-import { layoutActions } from "../../store/layout";
-import { savingActions } from "../../store/saving";
-import { selectSettings } from "../../store/config/configSelectors";
-import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
-import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler";
-import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors";
-import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils";
-import { listedDashboardsActions } from "../../store/listedDashboards";
-import { accessibleDashboardsActions } from "../../store/accessibleDashboards";
+} from "../../../_staging/dashboard/dashboardLayout.js";
+import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { savingActions } from "../../store/saving/index.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
+import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
+import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
+import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;

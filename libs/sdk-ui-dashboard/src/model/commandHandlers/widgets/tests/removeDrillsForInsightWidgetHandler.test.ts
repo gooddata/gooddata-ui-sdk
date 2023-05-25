@@ -1,17 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
-
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation, BeforeTestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation, BeforeTestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     addDrillTargets,
     modifyDrillsForInsightWidget,
     RemoveDrillsForInsightWidget,
     removeDrillsForInsightWidget,
-} from "../../../commands";
+} from "../../../commands/index.js";
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
-import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
-import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight";
-import { DashboardCommandFailed } from "../../../events";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
+import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight.js";
+import { DashboardCommandFailed } from "../../../events/index.js";
 import {
     DrillToDashboardFromProductAttributeDefinition,
     DrillToToInsightFromWonMeasureDefinition,
@@ -20,15 +20,16 @@ import {
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
     SimpleSortedTableWidgetRef,
-} from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const fromMeasureLocalIdRef = localIdRef(SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier);
     const drills = [DrillToToInsightFromWonMeasureDefinition, DrillToDashboardFromProductAttributeDefinition];
 
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory(async (tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory(async (tester) => {
             Tester = tester;
             await Tester.dispatchAndWaitFor(
                 addDrillTargets(
@@ -42,8 +43,8 @@ describe("removeDrillsForInsightWidgetHandler", () => {
                 modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, BeforeTestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
             );
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     describe("remove", () => {
         it("should emit the appropriate events for remove drill for Insight Widget command", async () => {

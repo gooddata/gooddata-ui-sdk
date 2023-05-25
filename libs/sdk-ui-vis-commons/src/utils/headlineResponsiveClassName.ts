@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { SMALL_COMPARE_SECTION_THRESHOLD } from "./calculateCustomHeight";
+import { SMALL_COMPARE_SECTION_THRESHOLD } from "./calculateCustomHeight.js";
 const RESPONSIVE_SMALL = "gd-small";
 const RESPONSIVE_MEDIUM = "gd-medium";
 const RESPONSIVE_LARGE = "gd-large";

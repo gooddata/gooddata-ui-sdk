@@ -1,16 +1,17 @@
 // (C) 2020-2023 GoodData Corporation
 
-import { getMVS } from "../../_util/test/helper";
+import { getMVS } from "../../_util/test/helper.js";
 import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import { ColorFactory } from "../../_chartOptions/colorFactory";
-import { TreemapColorStrategy } from "../treemapColoring";
+import { ColorFactory } from "../../_chartOptions/colorFactory.js";
+import { TreemapColorStrategy } from "../treemapColoring.js";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
-import { IColorMapping } from "../../../../interfaces";
-import { getColorsFromStrategy } from "../../_chartColoring/test/helper";
-import { TwoColorPalette } from "../../_chartColoring/test/color.fixture";
+import { IColorMapping } from "../../../../interfaces/index.js";
+import { getColorsFromStrategy } from "../../_chartColoring/test/helper.js";
+import { TwoColorPalette } from "../../_chartColoring/test/color.fixture.js";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { describe, it, expect } from "vitest";
 
 describe("TreemapColorStrategy", () => {
     it("should return TreemapColorStrategy strategy with two colors from default color palette", () => {

@@ -1,14 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
-import { DashboardLayoutBuilder } from "../layout";
-import { DashboardLayoutSectionBuilder } from "../section";
-import { DashboardLayoutItemBuilder } from "../item";
+import { DashboardLayoutBuilder } from "../layout.js";
+import { DashboardLayoutSectionBuilder } from "../section.js";
+import { DashboardLayoutItemBuilder } from "../item.js";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import { IDashboardLayoutSize } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutBuilder,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
-} from "../interfaces";
+} from "../interfaces.js";
 
 export const defaultItemXlSize: IDashboardLayoutSize = { gridWidth: 12, heightAsRatio: 50 };
 

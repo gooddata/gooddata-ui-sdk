@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types";
+import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types.js";
 
 /**
  * @public

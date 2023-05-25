@@ -2,12 +2,12 @@
 import { SagaIterator } from "redux-saga";
 import { all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
-import { actions } from "../store/slice";
-import { selectHiddenElements } from "../filter/filterSelectors";
-import { initAttributeSaga } from "./initAttributeSaga";
-import { initSelectionSaga } from "./initSelectionSaga";
-import { initAttributeElementsPageSaga } from "./initElementsPageSaga";
-import { initTotalCountSaga } from "./initTotalCount";
+import { actions } from "../store/slice.js";
+import { selectHiddenElements } from "../filter/filterSelectors.js";
+import { initAttributeSaga } from "./initAttributeSaga.js";
+import { initSelectionSaga } from "./initSelectionSaga.js";
+import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
+import { initTotalCountSaga } from "./initTotalCount.js";
 
 /**
  * @internal

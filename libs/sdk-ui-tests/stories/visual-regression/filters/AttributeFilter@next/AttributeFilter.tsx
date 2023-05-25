@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import { storiesOf } from "../../../_infra/storyRepository";
-import { FilterStories } from "../../../_infra/storyGroups";
-import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
-import { wrapWithTheme } from "../../themeWrapper";
-import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
-import { ElementUris } from "./fixtures";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { FilterStories } from "../../../_infra/storyGroups.js";
+import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
+import { ElementUris } from "./fixtures.js";
 
 import { action } from "@storybook/addon-actions";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";

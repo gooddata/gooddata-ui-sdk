@@ -4,11 +4,11 @@ import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
-} from "../../componentDefinition";
+} from "../../componentDefinition/index.js";
 import {
     IWrapCreatePanelItemWithDragComponent,
     IWrapInsightListItemWithDragComponent,
-} from "../../dragAndDrop/types";
+} from "../../dragAndDrop/types.js";
 
 /**
  * @alpha

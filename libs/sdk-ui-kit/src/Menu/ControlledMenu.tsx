@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 
-import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "./MenuSharedTypes";
-import { MenuOpener } from "./menuOpener/MenuOpener";
+import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "./MenuSharedTypes.js";
+import { MenuOpener } from "./menuOpener/MenuOpener.js";
 
 export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     opened: boolean;

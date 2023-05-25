@@ -12,8 +12,8 @@ import {
     dashboardFilterReferenceObjRef,
     IWidget,
 } from "@gooddata/sdk-model";
-import last from "lodash/last";
-import zip from "lodash/zip";
+import last from "lodash/last.js";
+import zip from "lodash/zip.js";
 
 type NormalizeIds = (refs: ObjRef[]) => Promise<string[]>;
 

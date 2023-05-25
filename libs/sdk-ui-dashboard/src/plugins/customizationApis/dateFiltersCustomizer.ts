@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDateFiltersCustomizer } from "../customizer";
+import { IDateFiltersCustomizer } from "../customizer.js";
 import {
     DateFilterComponentProvider,
     DefaultDashboardDateFilter,
     OptionalDateFilterComponentProvider,
-} from "../../presentation";
+} from "../../presentation/index.js";
 import { InvariantError } from "ts-invariant";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 const DefaultDateFilterRendererProvider: DateFilterComponentProvider = () => {
     return DefaultDashboardDateFilter;

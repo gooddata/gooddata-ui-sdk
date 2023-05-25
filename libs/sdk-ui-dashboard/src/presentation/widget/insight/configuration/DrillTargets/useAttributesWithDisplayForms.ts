@@ -1,14 +1,14 @@
 // (C) 2020-2023 GoodData Corporation
 import { areObjRefsEqual, AttributeDisplayFormType, IAttributeDescriptor } from "@gooddata/sdk-model";
-import uniqWith from "lodash/uniqWith";
-import invariant from "ts-invariant";
+import uniqWith from "lodash/uniqWith.js";
+import { invariant } from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectSelectedWidgetRef,
     useDashboardSelector,
-} from "../../../../../model";
-import { IAttributeWithDisplayForm } from "../../../../drill/DrillConfigPanel/DrillToUrl/types";
+} from "../../../../../model/index.js";
+import { IAttributeWithDisplayForm } from "../../../../drill/DrillConfigPanel/DrillToUrl/types.js";
 
 export interface IUseAttributesWithDisplayFormsResult {
     linkDisplayForms: IAttributeWithDisplayForm[];

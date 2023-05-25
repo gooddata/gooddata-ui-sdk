@@ -1,12 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
 import * as path from "path";
 import * as fs from "fs/promises";
-import identity from "lodash/identity";
-import pick from "lodash/pick";
-import pickBy from "lodash/pickBy";
+import identity from "lodash/identity.js";
+import pick from "lodash/pick.js";
+import pickBy from "lodash/pickBy.js";
 import { OptionValues } from "commander";
-import { CatalogExportConfig } from "./types";
-import { API_TOKEN_VAR_NAME } from "./constants";
+import { CatalogExportConfig } from "./types.js";
+import { API_TOKEN_VAR_NAME } from "./constants.js";
 
 export function mergeConfigs(...configs: Partial<CatalogExportConfig>[]): CatalogExportConfig {
     return Object.assign(

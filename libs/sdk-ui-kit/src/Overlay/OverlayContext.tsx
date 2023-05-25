@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
-import { OverlayController } from "./OverlayController";
+import { OverlayController } from "./OverlayController.js";
 
 /**
  * @internal

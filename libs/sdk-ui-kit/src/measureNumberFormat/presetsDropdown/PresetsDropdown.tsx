@@ -3,11 +3,11 @@ import React from "react";
 import { WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { IFormatPreset } from "../typings";
-import { PresetsDropdownItem } from "./PresetsDropdownItem";
-import { IPositioning, SnapPoint } from "../../typings/positioning";
-import { positioningToAlignPoints } from "../../utils/positioning";
-import { Overlay } from "../../Overlay";
+import { IFormatPreset } from "../typings.js";
+import { PresetsDropdownItem } from "./PresetsDropdownItem.js";
+import { IPositioning, SnapPoint } from "../../typings/positioning.js";
+import { positioningToAlignPoints } from "../../utils/positioning.js";
+import { Overlay } from "../../Overlay/index.js";
 
 interface IMeasureNumberFormatDropdownOwnProps {
     presets: ReadonlyArray<IFormatPreset>;

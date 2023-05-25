@@ -21,9 +21,9 @@ import {
     objRefToString,
     IMeasureDefinition,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact";
-import intersectionBy from "lodash/intersectionBy";
-import { AttributeElementsFiltering, AttributeElementsFilteringPredicate } from "./types";
+import compact from "lodash/compact.js";
+import intersectionBy from "lodash/intersectionBy.js";
+import { AttributeElementsFiltering, AttributeElementsFilteringPredicate } from "./types.js";
 
 const limiterFilteringPredicateAbstractFactory =
     <TLimitingItem>(refGetter: (item: TLimitingItem) => ObjRef | undefined, name: string) =>

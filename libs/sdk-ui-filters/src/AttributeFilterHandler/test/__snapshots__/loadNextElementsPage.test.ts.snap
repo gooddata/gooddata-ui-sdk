@@ -1,88 +1,88 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AttributeFilterHandler getNextElementsPageError() should return error 1`] = `[Error: Elements error]`;
+exports[`AttributeFilterHandler > getNextElementsPageError() should return error 1`] = `[Error: Elements error]`;
 
-exports[`AttributeFilterHandler getNextElementsPageStatus() should return proper status for failed load: after the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for failed load > after the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getNextElementsPageStatus() should return proper status for failed load: before the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for failed load > before the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getNextElementsPageStatus() should return proper status for failed load: during the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for failed load > during the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getNextElementsPageStatus() should return proper status for successful load: after the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for successful load > after the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getNextElementsPageStatus() should return proper status for successful load: before the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for successful load > before the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getNextElementsPageStatus() should return proper status for successful load: during the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getNextElementsPageStatus() should return proper status for successful load > during the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if it's called and there is still running loadInitialElementsPage() 1`] = `"Cannot call loadNextElementsPage() before loadInitialElementsPage() completes."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if it's called and there is still running loadInitialElementsPage() 1`] = `"Cannot call loadNextElementsPage() before loadInitialElementsPage() completes."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if it's called before the initialization 1`] = `"Cannot call loadNextElementsPage() before successful initialization."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if it's called before the initialization 1`] = `"Cannot call loadNextElementsPage() before successful initialization."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if limit() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if limit() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if order() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if order() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if search() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if search() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if setLimitingAttributeFilters() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingAttributeFilters() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if setLimitingDateFilters() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingDateFilters() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should throw error if setLimitingMeasures() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
+exports[`AttributeFilterHandler > loadNextElementsPage() should throw error if setLimitingMeasures() was set before the load 1`] = `"Cannot call loadNextElementsPage() when load element options were changed. When options are changed, you should call loadInitialElementsPage() first."`;
 
-exports[`AttributeFilterHandler loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback > with parameters 1`] = `
+[
+  {
     "correlation": "start",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadNextElementsPage() that failed should trigger onLoadNextElementsPageError() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadNextElementsPage() that failed should trigger onLoadNextElementsPageError() callback > with parameters 1`] = `
+[
+  {
     "correlation": "error",
     "error": [Error: Elements error],
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadNextElementsPage() that was canceled by another loadNextElementsPage() call should trigger onLoadNextElementsPageCancel() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadNextElementsPage() that was canceled by another loadNextElementsPage() call should trigger onLoadNextElementsPageCancel() callback > with parameters 1`] = `
+[
+  {
     "correlation": "cancel",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadNextElementsPage() that was canceled by cancelLoadNextElementsLoad() call should trigger onLoadNextElementsPageCancel() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadNextElementsPage() that was canceled by cancelLoadNextElementsLoad() call should trigger onLoadNextElementsPageCancel() callback > with parameters 1`] = `
+[
+  {
     "correlation": "cancel",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadNextElementsPage() that was successful should trigger onLoadNextElementsPageSuccess() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadNextElementsPage() that was successful should trigger onLoadNextElementsPageSuccess() callback > with parameters 1`] = `
+[
+  {
     "correlation": "success",
-    "elements": Array [
-      Object {
+    "elements": [
+      {
         "title": "Explorer",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
       },
-      Object {
+      {
         "title": "Grammar Plus",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
       },
     ],
-    "options": Object {
+    "options": {
       "excludePrimaryLabel": false,
       "limit": 2,
-      "limitingAttributeFilters": Array [],
-      "limitingDateFilters": Array [],
-      "limitingMeasures": Array [],
+      "limitingAttributeFilters": [],
+      "limitingDateFilters": [],
+      "limitingMeasures": [],
       "offset": 2,
       "order": undefined,
       "search": "",

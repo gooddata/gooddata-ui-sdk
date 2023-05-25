@@ -1,5 +1,10 @@
 // (C) 2019-2019 GoodData Corporation
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 // THIS FILE WAS AUTO-GENERATED ON 2019-11-05T10:50:00.366Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./execution/area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
     response: require("./execution/area_chart_with_3_metrics_and_view_by_attribute/response.json"),

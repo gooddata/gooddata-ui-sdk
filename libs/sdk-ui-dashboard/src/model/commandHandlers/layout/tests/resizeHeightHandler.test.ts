@@ -1,20 +1,23 @@
 // (C) 2021-2022 GoodData Corporation
-import { resizeHeight, ResizeHeight } from "../../../commands/layout";
-import { DashboardCommandFailed } from "../../../events";
-import { selectLayout } from "../../../store/layout/layoutSelectors";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
+import { beforeEach, describe, it, expect } from "vitest";
+import { resizeHeight, ResizeHeight } from "../../../commands/layout.js";
+import { DashboardCommandFailed } from "../../../events/index.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { DashboardLayoutSectionItemsHeightResized } from "../../../events/layout";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { DashboardLayoutSectionItemsHeightResized } from "../../../events/layout.js";
 
 describe("resize section items height handler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
+
     describe("with invalid indexes", () => {
         it("should fail if bad section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());

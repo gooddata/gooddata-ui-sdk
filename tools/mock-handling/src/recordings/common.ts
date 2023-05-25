@@ -1,8 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
-import pick from "lodash/pick";
-import isEmpty from "lodash/isEmpty";
+import pick from "lodash/pick.js";
+import isEmpty from "lodash/isEmpty.js";
 import stringify from "json-stable-stringify";
 
 /**

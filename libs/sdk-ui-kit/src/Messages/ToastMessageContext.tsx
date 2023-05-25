@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { createContext, useCallback, useState } from "react";
-import { IMessage, IMessageDefinition } from "./typings";
+import { IMessage, IMessageDefinition } from "./typings.js";
 
 /**
  * @internal

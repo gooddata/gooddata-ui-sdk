@@ -2,12 +2,12 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
-import compact from "lodash/compact";
-import first from "lodash/first";
-import noop from "lodash/noop";
-import { IntlWrapper } from "../../localization";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants";
-import { messages } from "../../../locales";
+import compact from "lodash/compact.js";
+import first from "lodash/first.js";
+import noop from "lodash/noop.js";
+import { IntlWrapper } from "../../localization/index.js";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
+import { messages } from "../../../locales.js";
 
 interface ISaveAsNewDashboardDialogState {
     dashboardTitle: string;

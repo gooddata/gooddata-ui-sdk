@@ -4,6 +4,6 @@ export {
     DefaultSaveAsNewButton,
     useSaveAsNewButtonProps,
     selectIsSaveAsNewButtonVisible,
-} from "./DefaultSaveAsNewButton";
-export { SaveAsNewButton } from "./SaveAsNewButton";
-export * from "./types";
+} from "./DefaultSaveAsNewButton.js";
+export { SaveAsNewButton } from "./SaveAsNewButton.js";
+export * from "./types.js";

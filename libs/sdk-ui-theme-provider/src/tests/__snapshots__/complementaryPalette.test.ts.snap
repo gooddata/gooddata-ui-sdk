@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette 1`] = `
-Object {
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette 1`] = `
+{
   "c0": "#001122",
   "c1": "#01191f",
   "c2": "#02221d",
@@ -15,8 +15,8 @@ Object {
 }
 `;
 
-exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette 2`] = `
-Object {
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette 2`] = `
+{
   "c0": "#001122",
   "c1": "#32321b",
   "c2": "#645415",
@@ -30,8 +30,8 @@ Object {
 }
 `;
 
-exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette 3`] = `
-Object {
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette 3`] = `
+{
   "c0": "#001122",
   "c1": "#01191f",
   "c2": "#02221d",
@@ -45,8 +45,8 @@ Object {
 }
 `;
 
-exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette even the input not in order 1`] = `
-Object {
+exports[`complementaryPalette > getComplementaryPalette > should generate missing colors in complementary palette even the input not in order 1`] = `
+{
   "c0": "#001122",
   "c1": "#32321b",
   "c2": "#645415",

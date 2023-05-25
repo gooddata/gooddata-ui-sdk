@@ -1,9 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { waitFor, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { Button } from "../Button";
-import { IButtonProps } from "../typings";
+import { waitFor, render, screen, fireEvent } from "@testing-library/react";
+import { Button } from "../Button.js";
+import { IButtonProps } from "../typings.js";
+import { describe, it, expect, vi } from "vitest";
 
 function renderButton(options: Partial<IButtonProps>) {
     return render(<Button {...options} />);
@@ -12,28 +12,28 @@ function renderButton(options: Partial<IButtonProps>) {
 describe("ReactButton", () => {
     describe("click on button", () => {
         it("should call onClick callback on click", async () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             renderButton({
                 type: "primary",
                 disabled: false,
                 onClick,
             });
 
-            await userEvent.click(screen.getByRole("button"));
+            fireEvent.click(screen.getByRole("button"));
             await waitFor(() => {
                 expect(onClick).toHaveBeenCalledTimes(1);
             });
         });
 
         it("should not call onClick callback on click when disabled", async () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             renderButton({
                 type: "primary",
                 disabled: true,
                 onClick,
             });
 
-            await userEvent.click(screen.getByRole("button"));
+            fireEvent.click(screen.getByRole("button"));
             await waitFor(() => {
                 expect(onClick).not.toHaveBeenCalled();
             });

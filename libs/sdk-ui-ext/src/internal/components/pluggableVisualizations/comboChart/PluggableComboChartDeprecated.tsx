@@ -2,15 +2,15 @@
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 
-import { BUCKETS, METRIC } from "../../../constants/bucket";
-import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
+import { BUCKETS, METRIC } from "../../../constants/bucket.js";
+import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig.js";
 import {
     IBucketItem,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
-} from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
     applyUiConfig,
@@ -21,15 +21,15 @@ import {
     getFirstMasterWithDerived,
     hasBucket,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
-import { removeSort } from "../../../utils/sort";
+} from "../../../utils/bucketHelper.js";
+import { removeSort } from "../../../utils/sort.js";
 
-import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import without from "lodash/without";
+import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated.js";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import without from "lodash/without.js";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

@@ -8,14 +8,14 @@ import {
     IAttributeMetadataObject,
     ObjRef,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
     selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
     useDashboardSelector,
-} from "../../../model";
+} from "../../../model/index.js";
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);

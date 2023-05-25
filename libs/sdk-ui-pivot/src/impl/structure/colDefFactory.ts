@@ -1,13 +1,15 @@
 // (C) 2007-2023 GoodData Corporation
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
-import findIndex from "lodash/findIndex";
+import findIndex from "lodash/findIndex.js";
 import { IntlShape } from "react-intl";
 import {
+    COLUMN_SUBTOTAL,
+    COLUMN_TOTAL,
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
-} from "../base/constants";
+} from "../base/constants.js";
 import {
     agColId,
     DataCol,
@@ -16,14 +18,13 @@ import {
     TableColDefs,
     TableCols,
     ScopeCol,
-} from "./tableDescriptorTypes";
+} from "./tableDescriptorTypes.js";
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
-import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
+import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader";
-import { messages } from "../../locales";
-import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "./../base/constants";
+import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
+import { messages } from "../../locales.js";
 
 type TransformState = {
     initialSorts: ISortItem[];

@@ -1,10 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 
-import { AttachmentNoWidgets, IAttachmentProps } from "../AttachmentNoWidgets";
+import { AttachmentNoWidgets, IAttachmentProps } from "../AttachmentNoWidgets.js";
 
-import { IntlWrapper } from "../../../../../localization/IntlWrapper";
+import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 
 describe("AttachmentNoWidgets", () => {
     const FILE_NAME = "ABC.pdf";

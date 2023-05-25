@@ -3,10 +3,10 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { Dropdown, DropdownButton, DropdownList, SingleSelectListItem, Icon } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ScheduleDropdown } from "./ScheduleDropdown";
+import { ScheduleDropdown } from "./ScheduleDropdown.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IWidgetExportConfiguration, WidgetExportFileFormat } from "../../interfaces";
-import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";
+import { IWidgetExportConfiguration, WidgetExportFileFormat } from "../../interfaces.js";
+import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants.js";
 
 const ICON_SIZE_BUTTON = 18;
 const DROPDOWN_WIDTH = 70;

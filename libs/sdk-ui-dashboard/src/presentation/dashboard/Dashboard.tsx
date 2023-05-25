@@ -6,8 +6,8 @@ import {
     useClientWorkspaceIdentifiers,
     useClientWorkspaceInitialized,
 } from "@gooddata/sdk-ui";
-import { IDashboardProps } from "./types";
-import { DashboardRenderer } from "./components/DashboardRenderer";
+import { IDashboardProps } from "./types.js";
+import { DashboardRenderer } from "./components/DashboardRenderer.js";
 
 /**
  * @internal

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IRelativeDateFilterPreset } from "@gooddata/sdk-model";
-import { IUiRelativeDateFilterForm } from "../../interfaces";
-import { normalizeSelectedFilterOption } from "../FilterOptionNormalization";
+import { IUiRelativeDateFilterForm } from "../../interfaces/index.js";
+import { normalizeSelectedFilterOption } from "../FilterOptionNormalization.js";
 
 describe("normalizeSelectedFilterOption", () => {
     const sampleFloatingRangeFormOption: IUiRelativeDateFilterForm = {

@@ -1,14 +1,15 @@
 // (C) 2022 GoodData Corporation
-import { HiddenFilterBar } from "../../../presentation";
-import { DefaultFilterBarCustomizer } from "../filterBarCustomizer";
-import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger";
+import { HiddenFilterBar } from "../../../presentation/index.js";
+import { DefaultFilterBarCustomizer } from "../filterBarCustomizer.js";
+import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 describe("filter bar customizer", () => {
     let Customizer: DefaultFilterBarCustomizer;
-    let mockWarn: ReturnType<typeof jest.fn>;
+    let mockWarn: ReturnType<typeof vi.fn>;
 
     beforeEach(() => {
-        mockWarn = jest.fn();
+        mockWarn = vi.fn();
         Customizer = new DefaultFilterBarCustomizer(
             new TestingDashboardCustomizationLogger({ warn: mockWarn }),
         );

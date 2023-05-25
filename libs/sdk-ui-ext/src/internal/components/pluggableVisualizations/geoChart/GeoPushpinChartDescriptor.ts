@@ -8,11 +8,11 @@ import {
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
-import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart";
-import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
+import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -23,9 +23,9 @@ import {
     singleAttributeBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator";
-import { chartAdditionalFactories } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator.js";
+import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

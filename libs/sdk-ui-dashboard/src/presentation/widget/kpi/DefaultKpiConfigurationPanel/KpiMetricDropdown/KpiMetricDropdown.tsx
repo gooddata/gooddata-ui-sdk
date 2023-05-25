@@ -3,9 +3,9 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IKpiWidget, IMeasureMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { safeSerializeObjRef } from "../../../../../_staging/metadata/safeSerializeObjRef";
+import { safeSerializeObjRef } from "../../../../../_staging/metadata/safeSerializeObjRef.js";
 
-import { MetricDropdown } from "./MetricDropdown";
+import { MetricDropdown } from "./MetricDropdown.js";
 
 interface IKpiMetricDropdownProps {
     widget?: IKpiWidget;

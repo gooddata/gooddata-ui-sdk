@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import {
     IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
@@ -13,18 +13,18 @@ import {
 import {
     CatalogDateAttributeWithDataset,
     newCatalogDateAttributeWithDatasetMap,
-} from "../../../_staging/catalog/dateAttributeWithDatasetMap";
+} from "../../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import {
     ObjRefMap,
     newCatalogAttributeMap,
     newCatalogDateDatasetMap,
     newCatalogMeasureMap,
-} from "../../../_staging/metadata/objRefMap";
-import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
-import { DashboardSelector, DashboardState } from "../types";
-import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap";
-import isEmpty from "lodash/isEmpty";
-import negate from "lodash/negate";
+} from "../../../_staging/metadata/objRefMap.js";
+import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
+import isEmpty from "lodash/isEmpty.js";
+import negate from "lodash/negate.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

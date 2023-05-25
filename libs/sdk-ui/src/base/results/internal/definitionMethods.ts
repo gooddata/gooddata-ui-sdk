@@ -9,7 +9,7 @@ import {
     measureMasterIdentifier,
     bucketMeasures,
 } from "@gooddata/sdk-model";
-import findIndex from "lodash/findIndex";
+import findIndex from "lodash/findIndex.js";
 
 /**
  * Methods to work with execution definition.

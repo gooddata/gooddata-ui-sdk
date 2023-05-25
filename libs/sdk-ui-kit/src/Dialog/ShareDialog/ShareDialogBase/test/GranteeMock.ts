@@ -18,7 +18,7 @@ import {
     IGranteeUser,
     IGranularGranteeGroup,
     IGranularGranteeUser,
-} from "../types";
+} from "../types.js";
 
 export const user: IGranteeUser = {
     type: "user",

@@ -1,19 +1,19 @@
 // (C) 2021 GoodData Corporation
 import { all, call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { invalidArgumentsProvided } from "../../../events/general";
-import { attributeFilterSelectionChanged } from "../../../events/filters";
-import { ChangeAttributeFilterSelection } from "../../../commands/filters";
-import { filterContextActions } from "../../../store/filterContext";
-import { DashboardContext } from "../../../types/commonTypes";
-import { dispatchFilterContextChanged } from "../common";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { attributeFilterSelectionChanged } from "../../../events/filters.js";
+import { ChangeAttributeFilterSelection } from "../../../commands/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged } from "../common.js";
 import {
     selectAttributeFilterDescendants,
     selectFilterContextAttributeFilterByLocalId,
-} from "../../../store/filterContext/filterContextSelectors";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
+} from "../../../store/filterContext/filterContextSelectors.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,

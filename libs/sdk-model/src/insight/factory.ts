@@ -1,9 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
-import identity from "lodash/identity";
-import { IInsightDefinition, VisualizationProperties } from "./index";
-import { IBucket } from "../execution/buckets";
-import { IFilter } from "../execution/filter";
-import { ISortItem } from "../execution/base/sort";
+import identity from "lodash/identity.js";
+import { IInsightDefinition, VisualizationProperties } from "./index.js";
+import { IBucket } from "../execution/buckets/index.js";
+import { IFilter } from "../execution/filter/index.js";
+import { ISortItem } from "../execution/base/sort.js";
 
 /*
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on

@@ -6,8 +6,8 @@ import {
     ILoadingProps,
     LoadingComponent as DefaultLoadingComponent,
 } from "@gooddata/sdk-ui";
-import { useDashboardLoader } from "./useDashboardLoader";
-import { IDashboardLoadOptions } from "./types";
+import { useDashboardLoader } from "./useDashboardLoader.js";
+import { IDashboardLoadOptions } from "./types.js";
 
 /**
  * @public

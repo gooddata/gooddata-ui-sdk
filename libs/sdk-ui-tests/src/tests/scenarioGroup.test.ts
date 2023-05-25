@@ -1,7 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { ScenarioGroup, CustomizedScenario } from "../scenarioGroup";
-import { ScenarioTag, UnboundVisProps, ScenarioTestInput, ScenarioTestMembers } from "../scenario";
+import { ScenarioGroup, CustomizedScenario } from "../scenarioGroup.js";
+import { ScenarioTag, UnboundVisProps, ScenarioTestInput, ScenarioTestMembers } from "../scenario.js";
+import { describe, it, expect, beforeEach } from "vitest";
 
 class TestComponent extends React.Component<any> {}
 

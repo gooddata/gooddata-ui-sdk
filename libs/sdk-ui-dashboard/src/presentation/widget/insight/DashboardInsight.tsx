@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { IDashboardInsightProps } from "./types";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { IDashboardInsightProps } from "./types.js";
 
 /**
  * @internal

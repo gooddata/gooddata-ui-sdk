@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`add section items handler for dashboard with existing sections should emit events correctly 1`] = `
-Array [
-  Object {
+exports[`add section items handler > for dashboard with existing sections > should emit events correctly 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
   },

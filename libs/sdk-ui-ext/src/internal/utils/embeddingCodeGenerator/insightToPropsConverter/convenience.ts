@@ -21,13 +21,13 @@ import {
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import { DefaultLocale } from "@gooddata/sdk-ui";
-import isNil from "lodash/isNil";
+import isNil from "lodash/isNil.js";
 
-import { removeUseless } from "../../removeUseless";
-import { createSorts } from "../../sort";
+import { removeUseless } from "../../removeUseless.js";
+import { createSorts } from "../../sort.js";
 
-import { PropMeta } from "../types";
-import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor";
+import { PropMeta } from "../types.js";
+import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor.js";
 
 function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {
     return {

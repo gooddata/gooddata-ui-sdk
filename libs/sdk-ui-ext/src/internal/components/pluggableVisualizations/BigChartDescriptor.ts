@@ -5,10 +5,10 @@ import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import {
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
-} from "../../interfaces/VisualizationDescriptor";
-import { IFluidLayoutDescriptor } from "../../interfaces/LayoutDescriptor";
-import { MIDDLE_VISUALIZATION_HEIGHT, DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT } from "./constants";
-import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor";
+} from "../../interfaces/VisualizationDescriptor.js";
+import { IFluidLayoutDescriptor } from "../../interfaces/LayoutDescriptor.js";
+import { MIDDLE_VISUALIZATION_HEIGHT, DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT } from "./constants.js";
+import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
 
 export abstract class BigChartDescriptor extends BaseChartDescriptor {
     public abstract getFactory(): PluggableVisualizationFactory;

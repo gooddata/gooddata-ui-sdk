@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`delete dashboard handler for an existing dashboard should emit correct events 1`] = `
-Array [
-  Object {
+exports[`delete dashboard handler > for an existing dashboard > should emit correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.DELETE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.DELETED",
   },

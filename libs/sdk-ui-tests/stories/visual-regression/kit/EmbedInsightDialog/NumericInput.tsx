@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React, { useState } from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { action } from "@storybook/addon-actions";
 import { NumericInput } from "@gooddata/sdk-ui-kit";
 

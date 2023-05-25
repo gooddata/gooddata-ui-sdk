@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { MeasureValueFilterOperator } from "../types";
-import { messages } from "../../locales";
+import { MeasureValueFilterOperator } from "../types.js";
+import { messages } from "../../locales.js";
 
 export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator): string => {
     return messages[operator].id;

@@ -1,15 +1,15 @@
 // (C) 2021-2022 GoodData Corporation
-import { ActionOptions } from "../_base/types";
-import { convertToPluginIdentifier } from "../_base/utils";
+import { ActionOptions } from "../_base/types.js";
+import { convertToPluginIdentifier } from "../_base/utils.js";
 import {
     asyncValidOrDie,
     createPluginUrlValidator,
     createWorkspaceValidator,
-} from "../_base/inputHandling/validators";
-import { createBackend } from "../_base/backend";
+} from "../_base/inputHandling/validators.js";
+import { createBackend } from "../_base/backend.js";
 import ora from "ora";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
+import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 
 export type AddCmdActionConfig = WorkspaceTargetConfig & {
     pluginUrl: string;

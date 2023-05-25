@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { formatItemValue, formatPercentageValue } from "../HeadlineDataItemUtils";
+import { formatItemValue, formatPercentageValue } from "../HeadlineDataItemUtils.js";
+import { describe, it, expect } from "vitest";
 
 function buildHeaderDataItem(value: string, format?: string) {
     return {

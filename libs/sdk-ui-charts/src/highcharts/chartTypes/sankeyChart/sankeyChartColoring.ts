@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import uniqBy from "lodash/uniqBy";
+import uniqBy from "lodash/uniqBy.js";
 import {
     ColorStrategy,
     getColorFromMapping,
@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
 export class SankeyChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

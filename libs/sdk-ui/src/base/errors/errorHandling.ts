@@ -19,8 +19,8 @@ import {
     ProtectedReportSdkError,
     UnauthorizedSdkError,
     UnexpectedSdkError,
-} from "./GoodDataSdkError";
-import { isCancelError } from "../react/CancelablePromise";
+} from "./GoodDataSdkError.js";
+import { isCancelError } from "../react/CancelablePromise.js";
 
 /**
  * Mapping between error code and human readable description of the error.

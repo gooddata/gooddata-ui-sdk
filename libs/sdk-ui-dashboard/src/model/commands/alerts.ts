@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { ObjRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link CreateAlert} command.

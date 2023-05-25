@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { CorePivotTableAgImpl } from "./CorePivotTable";
+import { CorePivotTableAgImpl } from "./CorePivotTable.js";
 import {
     bucketAttributes,
     bucketIsEmpty,
@@ -24,8 +24,8 @@ import {
     IPivotTableBucketProps,
     IPivotTableConfig,
     IPivotTableProps,
-} from "./publicTypes";
-import omit from "lodash/omit";
+} from "./publicTypes.js";
+import omit from "lodash/omit.js";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
@@ -36,8 +36,8 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
-import { AVAILABLE_TOTALS } from "./impl/base/constants";
+import { invariant } from "ts-invariant";
+import { AVAILABLE_TOTALS } from "./impl/base/constants.js";
 
 /**
  * Prepares new execution matching pivot table props.

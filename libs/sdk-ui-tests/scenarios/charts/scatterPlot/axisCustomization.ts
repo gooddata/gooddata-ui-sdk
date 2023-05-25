@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { axisNameCustomization } from "../_infra/axisNameCustomization";
-import { ScatterPlotWithMeasuresAndAttribute } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const axisConfig = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(...ScenarioGroupNames.Axes)

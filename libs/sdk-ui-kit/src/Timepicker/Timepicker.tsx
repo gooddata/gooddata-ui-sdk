@@ -4,14 +4,14 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
-import { OverlayPositionType } from "../typings/overlay";
-import { Dropdown, DropdownButton, DropdownList } from "../Dropdown";
+import { OverlayPositionType } from "../typings/overlay.js";
+import { Dropdown, DropdownButton, DropdownList } from "../Dropdown/index.js";
 
-import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities";
-import { SelectedTime } from "./typings";
-import { SingleSelectListItem } from "../List";
+import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities.js";
+import { SelectedTime } from "./typings.js";
+import { SingleSelectListItem } from "../List/index.js";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;

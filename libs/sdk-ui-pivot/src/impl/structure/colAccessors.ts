@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { AnyCol, isSeriesCol } from "./tableDescriptorTypes";
+import { AnyCol, isSeriesCol } from "./tableDescriptorTypes.js";
 
 /**
  * Returns localId of measure whose values the provided column contains. For convenience, any type of column

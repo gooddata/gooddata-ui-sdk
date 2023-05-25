@@ -6,8 +6,8 @@ import {
     IMeasureBucketItemsLimit,
     limitNumberOfMeasuresInBuckets,
     transformMeasureBuckets,
-} from "../../../utils/bucketHelper";
-import { IBucketOfFun } from "../../../interfaces/Visualization";
+} from "../../../utils/bucketHelper.js";
+import { IBucketOfFun } from "../../../interfaces/Visualization.js";
 
 const measureBucketItemsLimit: IMeasureBucketItemsLimit[] = [
     {

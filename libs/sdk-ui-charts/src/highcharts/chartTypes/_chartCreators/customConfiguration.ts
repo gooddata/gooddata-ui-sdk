@@ -1,28 +1,28 @@
 // (C) 2007-2023 GoodData Corporation
-import noop from "lodash/noop";
-import isString from "lodash/isString";
-import merge from "lodash/merge";
-import map from "lodash/map";
-import partial from "lodash/partial";
-import isEmpty from "lodash/isEmpty";
-import compact from "lodash/compact";
-import every from "lodash/every";
-import isNil from "lodash/isNil";
-import pickBy from "lodash/pickBy";
+import noop from "lodash/noop.js";
+import isString from "lodash/isString.js";
+import merge from "lodash/merge.js";
+import map from "lodash/map.js";
+import partial from "lodash/partial.js";
+import isEmpty from "lodash/isEmpty.js";
+import compact from "lodash/compact.js";
+import every from "lodash/every.js";
+import isNil from "lodash/isNil.js";
+import pickBy from "lodash/pickBy.js";
 import numberJS from "@gooddata/numberjs";
 import cx from "classnames";
 
-import { styleVariables } from "./styles/variables";
+import { styleVariables } from "./styles/variables.js";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IAxisConfig, IChartConfig } from "../../../interfaces";
+import { IAxisConfig, IChartConfig } from "../../../interfaces/index.js";
 import {
     formatAsPercent,
     getLabelStyle,
     getLabelsVisibilityConfig,
     getTotalsVisibilityConfig,
     getTotalsVisibility,
-} from "./dataLabelsHelpers";
-import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
+} from "./dataLabelsHelpers.js";
+import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 import {
     isAreaChart,
@@ -38,38 +38,38 @@ import {
     isScatterPlot,
     isSupportingJoinedAttributeAxisName,
     percentFormatter,
-} from "../_util/common";
+} from "../_util/common.js";
 import {
     shouldEndOnTick,
     shouldFollowPointer,
     shouldStartOnTick,
     shouldXAxisStartOnTickOnBubbleScatter,
     shouldYAxisStartOnTickOnBubbleScatter,
-} from "./helpers";
+} from "./helpers.js";
 
-import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
-import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
-import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions";
-import { getAxisNameConfiguration } from "./getAxisNameConfiguration";
-import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart";
+import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration.js";
+import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
+import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
+import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart.js";
 import {
     supportedDualAxesChartTypes,
     supportedTooltipFollowPointerChartTypes,
-} from "../_chartOptions/chartCapabilities";
+} from "../_chartOptions/chartCapabilities.js";
 import {
     IUnsafeTooltipPositionerPointObject,
     IAxis,
     IChartOptions,
     IChartOptionsData,
     ISeriesItem,
-} from "../../typings/unsafe";
-import { AXIS_LINE_COLOR } from "../_util/color";
+} from "../../typings/unsafe.js";
+import { AXIS_LINE_COLOR } from "../_util/color.js";
 import { IntlShape } from "react-intl";
-import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
+import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
 import { AxisLabelsFormatterCallbackFunction } from "highcharts";
 import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
-import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration";
-import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration";
+import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
+import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
 
 const { stripColors, numberFormat }: any = numberJS;
 

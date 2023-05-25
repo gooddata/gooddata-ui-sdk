@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "child attribute" configured 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "measureHeaderItem": Object {
+exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "child attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
         "format": "$#,##0.00",
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -30,24 +30,24 @@ Array [
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "East Coast",
         "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -55,12 +55,12 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
@@ -69,29 +69,29 @@ Array [
 ]
 `;
 
-exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "measure" configured 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "measureHeaderItem": Object {
+exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
         "format": "$#,##0.00",
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -99,24 +99,24 @@ Array [
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "East Coast",
         "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -124,12 +124,12 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
@@ -138,29 +138,29 @@ Array [
 ]
 `;
 
-exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "parent and child attributes" configured 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "measureHeaderItem": Object {
+exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "parent and child attributes" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
         "format": "$#,##0.00",
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -168,24 +168,24 @@ Array [
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "East Coast",
         "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -193,12 +193,12 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
@@ -207,29 +207,29 @@ Array [
 ]
 `;
 
-exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "parent attribute and measure" configured 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "measureHeaderItem": Object {
+exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "parent attribute and measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
         "format": "$#,##0.00",
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -237,24 +237,24 @@ Array [
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "East Coast",
         "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -262,12 +262,12 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
@@ -276,29 +276,29 @@ Array [
 ]
 `;
 
-exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "parent attribute" configured 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "measureHeaderItem": Object {
+exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "parent attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
         "format": "$#,##0.00",
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -306,24 +306,24 @@ Array [
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "East Coast",
         "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -331,12 +331,12 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },

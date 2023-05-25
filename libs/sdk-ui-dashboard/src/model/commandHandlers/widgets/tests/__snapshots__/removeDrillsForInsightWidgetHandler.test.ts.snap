@@ -1,31 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`removeDrillsForInsightWidgetHandler remove should emit the appropriate events for remove drill for Insight Widget command 1`] = `
-Array [
-  Object {
+exports[`removeDrillsForInsightWidgetHandler > remove > should emit the appropriate events for remove drill for Insight Widget command 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
   },
 ]
 `;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of kpi widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget."`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of kpi widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1386\\"} exists but is not an insight widget."`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of kpi widget 2`] = `"USER_ERROR"`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of kpi widget 2`] = `"USER_ERROR"`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin is not specified by localIdRef 1`] = `"Invalid measure or attribute origin: not-valid-ref. Error: Invalid ObjRef invariant expecting LocalIdRef"`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills where origin is not specified by localIdRef 1`] = `"Invalid measure or attribute origin: not-valid-ref. Error: Invalid ObjRef invariant expecting LocalIdRef"`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin is not specified by localIdRef 2`] = `"USER_ERROR"`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills where origin is not specified by localIdRef 2`] = `"USER_ERROR"`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin missing in widget drills 1`] = `"Invalid measure or attribute origin: missing. Error: Cannot find drill definition specified by local identifier"`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills where origin missing in widget drills 1`] = `"Invalid measure or attribute origin: missing. Error: Cannot find drill definition specified by local identifier"`;
 
-exports[`removeDrillsForInsightWidgetHandler validate should fail if trying to remove drills where origin missing in widget drills 2`] = `"USER_ERROR"`;
+exports[`removeDrillsForInsightWidgetHandler > validate > should fail if trying to remove drills where origin missing in widget drills 2`] = `"USER_ERROR"`;

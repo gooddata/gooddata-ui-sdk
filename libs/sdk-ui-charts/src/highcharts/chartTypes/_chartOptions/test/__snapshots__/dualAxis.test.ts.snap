@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`setMeasuresToSecondaryAxis should  add measures to secondary axis when dualAxis=true 1`] = `
-Object {
+exports[`setMeasuresToSecondaryAxis > should  add measures to secondary axis when dualAxis=true 1`] = `
+{
   "dualAxis": true,
-  "secondary_yaxis": Object {
-    "measures": Array [
+  "secondary_yaxis": {
+    "measures": [
       "m_acugFHNJgsBy",
     ],
     "rotation": "90",
@@ -13,11 +13,11 @@ Object {
 }
 `;
 
-exports[`setMeasuresToSecondaryAxis should  add measures to secondary axis when dualAxis=undefined 1`] = `
-Object {
+exports[`setMeasuresToSecondaryAxis > should  add measures to secondary axis when dualAxis=undefined 1`] = `
+{
   "dualAxis": undefined,
-  "secondary_yaxis": Object {
-    "measures": Array [
+  "secondary_yaxis": {
+    "measures": [
       "m_acugFHNJgsBy",
     ],
     "rotation": "90",

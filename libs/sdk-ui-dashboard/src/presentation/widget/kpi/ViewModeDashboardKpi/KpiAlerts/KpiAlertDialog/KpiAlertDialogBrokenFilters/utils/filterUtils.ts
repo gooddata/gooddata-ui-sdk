@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { IBrokenAlertFilter, isBrokenAlertAttributeFilter } from "../../../types";
+import { IBrokenAlertFilter, isBrokenAlertAttributeFilter } from "../../../types.js";
 
 interface ILabelFilterData {
     title: string;

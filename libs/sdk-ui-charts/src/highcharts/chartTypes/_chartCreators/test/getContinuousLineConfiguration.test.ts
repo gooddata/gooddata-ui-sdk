@@ -1,7 +1,8 @@
 // (C) 2023 GoodData Corporation
 
-import { IChartOptions } from "../../../typings/unsafe";
-import { getContinuousLineConfiguration } from "../getContinuousLineConfiguration";
+import { IChartOptions } from "../../../typings/unsafe.js";
+import { getContinuousLineConfiguration } from "../getContinuousLineConfiguration.js";
+import { describe, it, expect } from "vitest";
 
 describe("getContinuousLineConfiguration: ", () => {
     const chartOptions: Partial<IChartOptions> = { stacking: "normal", type: "area" };

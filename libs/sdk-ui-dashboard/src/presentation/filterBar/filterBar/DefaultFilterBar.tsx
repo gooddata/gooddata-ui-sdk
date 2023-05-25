@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import classNames from "classnames";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     areObjRefsEqual,
     IDashboardAttributeFilter,
@@ -24,25 +24,25 @@ import {
     selectIsInEditMode,
     selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreAttributeFilters,
-} from "../../../model";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
+} from "../../../model/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterDropZone,
     AttributeFilterDropZoneHint,
     DraggableAttributeFilter,
-} from "../../dragAndDrop";
-import { HiddenDashboardDateFilter } from "../dateFilter";
-import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
-import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
+} from "../../dragAndDrop/index.js";
+import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
+import { IDashboardDateFilterConfig, IFilterBarProps } from "../types.js";
+import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
 import {
     isFilterBarAttributeFilterPlaceholder,
     useFiltersWithAddedPlaceholder,
-} from "./useFiltersWithAddedPlaceholder";
-import { HiddenFilterBar } from "./HiddenFilterBar";
+} from "./useFiltersWithAddedPlaceholder.js";
+import { HiddenFilterBar } from "./HiddenFilterBar.js";
 import {
     convertDashboardAttributeFilterElementsUrisToValues,
     convertDashboardAttributeFilterElementsValuesToUris,
-} from "../../../_staging/dashboard/legacyFilterConvertors";
+} from "../../../_staging/dashboard/legacyFilterConvertors.js";
 
 /**
  * @alpha

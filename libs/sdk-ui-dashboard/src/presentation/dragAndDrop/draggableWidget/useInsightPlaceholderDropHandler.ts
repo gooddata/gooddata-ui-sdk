@@ -9,9 +9,9 @@ import {
     selectSettings,
     useDashboardCommandProcessing,
     addSectionItem,
-} from "../../../model";
-import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../widgets";
-import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing";
+} from "../../../model/index.js";
+import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../widgets/index.js";
+import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing.js";
 
 export function useInsightPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

@@ -4,9 +4,9 @@ import {
     getColumnAttributes,
     getRowAttributes,
     PluggablePivotTable,
-} from "../PluggablePivotTable";
-import * as testMocks from "../../../../tests/mocks/testMocks";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+} from "../PluggablePivotTable.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -16,14 +16,14 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
-} from "../../../../interfaces/Visualization";
+} from "../../../../interfaces/Visualization.js";
 import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import { ColumnWidthItem, CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight, ISortItem, ISettings } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import noop from "lodash/noop";
-import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,
@@ -33,8 +33,8 @@ import {
     transformedWeakMeasureColumnWidth,
     validAttributeColumnWidthItem,
     validMeasureColumnWidthItem,
-} from "./widthItemsMock";
-import { getMockReferencePoint } from "./mockReferencePoint";
+} from "./widthItemsMock.js";
+import { getMockReferencePoint } from "./mockReferencePoint.js";
 import {
     invalidAttributeSort,
     invalidMeasureSortInvalidAttribute,
@@ -43,14 +43,15 @@ import {
     invalidMeasureSortTooManyLocators,
     validAttributeSort,
     validMeasureSort,
-} from "./sortMocks";
-import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock";
-import { createDrillEvent, getLastRenderEl } from "../../tests/testHelpers";
+} from "./sortMocks.js";
+import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
+import { createDrillEvent, getLastRenderEl } from "../../tests/testHelpers.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 describe("PluggablePivotTable", () => {
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
     const backend = dummyBackend();
     const executionFactory = backend.workspace("PROJECTID").execution();
 

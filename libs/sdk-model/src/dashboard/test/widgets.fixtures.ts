@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { uriRef } from "../../objRef/factory";
-import { IWidgetDefinition, IWidget } from "../widget";
+import { uriRef } from "../../objRef/factory.js";
+import { IWidgetDefinition, IWidget } from "../widget.js";
 
 export const widgetDefinition: IWidgetDefinition = {
     insight: uriRef("/insight"),

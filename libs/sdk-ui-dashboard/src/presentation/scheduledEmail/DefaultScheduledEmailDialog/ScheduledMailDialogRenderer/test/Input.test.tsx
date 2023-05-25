@@ -1,10 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
+import { describe, it, expect } from "vitest";
 
-import { Input, IInputProps } from "../Input";
-import { IntlWrapper } from "../../../../localization/IntlWrapper";
+import { Input, IInputProps } from "../Input.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 
 describe("Input", () => {
     function renderComponent(customProps: Partial<IInputProps> = {}) {

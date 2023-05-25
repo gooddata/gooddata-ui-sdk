@@ -6,11 +6,12 @@ import {
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
-} from "./table.fixture";
-import { TableDescriptor } from "../tableDescriptor";
-import { ScopeCol, SeriesCol } from "../tableDescriptorTypes";
-import { newWidthForAttributeColumn } from "../../../columnWidths";
+} from "./table.fixture.js";
+import { TableDescriptor } from "../tableDescriptor.js";
+import { ScopeCol, SeriesCol } from "../tableDescriptorTypes.js";
+import { newWidthForAttributeColumn } from "../../../columnWidths.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect } from "vitest";
 
 describe("TableDescriptor", () => {
     describe("isFirstCol", () => {

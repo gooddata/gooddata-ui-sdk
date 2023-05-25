@@ -1,20 +1,26 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import Measure, { Rect } from "react-measure";
+import ReactMeasure, { Rect } from "react-measure";
 import cx from "classnames";
+import { defaultImport } from "default-import";
 
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
-import { FluidLegend } from "./FluidLegend";
-import { StaticLegend, IStaticLegendProps } from "./StaticLegend";
-import { HeatmapLegend } from "./HeatmapLegend";
+import { FluidLegend } from "./FluidLegend.js";
+import { StaticLegend, IStaticLegendProps } from "./StaticLegend.js";
+import { HeatmapLegend } from "./HeatmapLegend.js";
 import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
-import { IColorLegendSize, IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
-import { PopUpLegend } from "./PopUpLegend/PopUpLegend";
-import { TOP, BOTTOM } from "./PositionTypes";
-import { ButtonsOrientationType } from "./Paging";
+import { IColorLegendSize, IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
+import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
+import { TOP, BOTTOM } from "./PositionTypes.js";
+import { ButtonsOrientationType } from "./Paging.js";
 
 const HEATMAP_LEGEND_WIDTH_BREAKPOINT = 460;
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(ReactMeasure);
 
 /**
  * @internal

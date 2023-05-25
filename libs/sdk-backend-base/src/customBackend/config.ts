@@ -6,8 +6,8 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { IDimensionDescriptor } from "@gooddata/sdk-model";
-import { AuthenticatedCallGuard } from "../toolkit/auth";
-import { TelemetryData } from "../toolkit/backend";
+import { AuthenticatedCallGuard } from "../toolkit/auth.js";
+import { TelemetryData } from "../toolkit/backend.js";
 
 /**
  * @beta

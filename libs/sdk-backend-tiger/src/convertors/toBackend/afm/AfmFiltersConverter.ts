@@ -15,9 +15,9 @@ import {
     ObjRefInScope,
     filterMeasureRef,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact";
-import { convertMeasure } from "./MeasureConverter";
-import { convertFilter, newFilterWithApplyOnResult } from "./FilterConverter";
+import compact from "lodash/compact.js";
+import { convertMeasure } from "./MeasureConverter.js";
+import { convertFilter, newFilterWithApplyOnResult } from "./FilterConverter.js";
 
 type ComputeRatioMeasureNumerators = Map<Identifier, IMeasure<IMeasureDefinition>>;
 

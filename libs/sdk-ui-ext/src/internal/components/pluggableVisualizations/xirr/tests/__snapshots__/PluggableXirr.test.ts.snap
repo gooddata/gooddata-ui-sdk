@@ -1,26 +1,26 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableXirr getExtendedReferencePoint should correctly process empty reference point 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [],
+exports[`PluggableXirr > getExtendedReferencePoint > should correctly process empty reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "attribute",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "attribute": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
           "date",
         ],
         "allowsReordering": false,
@@ -29,13 +29,13 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Date attribute",
       },
-      "filters": Object {
-        "accepts": Array [
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -43,12 +43,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
         ],
@@ -63,28 +63,28 @@ Object {
         "title": "Measure",
       },
     },
-    "customError": Object {
+    "customError": {
       "heading": "Incomplete configuration",
       "text": "Make sure you have selected one measure and one date attribute",
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": false,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableXirr getExtendedReferencePoint should return proper extended reference point 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableXirr > getExtendedReferencePoint > should return proper extended reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -95,12 +95,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.datedataset",
-          "dateDatasetRef": Object {
+          "dateDatasetRef": {
             "identifier": "ds1",
           },
           "localIdentifier": "a1",
@@ -111,15 +111,15 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "attribute": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "attribute": {
+        "accepts": [
           "date",
         ],
         "allowsReordering": false,
@@ -128,13 +128,13 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Date attribute",
       },
-      "filters": Object {
-        "accepts": Array [
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -142,12 +142,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
         ],
@@ -163,14 +163,14 @@ Object {
       },
     },
     "customError": undefined,
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": false,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;

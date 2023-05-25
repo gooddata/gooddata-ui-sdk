@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
-import { IOrganizationSettingsService } from "./settings";
-import { ISecuritySettingsService } from "./securitySettings";
-import { IOrganizationStylingService } from "./styling";
+import { IOrganizationSettingsService } from "./settings/index.js";
+import { ISecuritySettingsService } from "./securitySettings/index.js";
+import { IOrganizationStylingService } from "./styling/index.js";
 
 /**
  * Represents an organization that services analytical workspaces.

@@ -2,10 +2,10 @@
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import { createUniqueVariableName } from "../base/variableNaming";
-import flatMap from "lodash/flatMap";
-import groupBy from "lodash/groupBy";
-import { ExecutionRecording } from "../recordings/execution";
+import { createUniqueVariableName } from "../base/variableNaming.js";
+import flatMap from "lodash/flatMap.js";
+import groupBy from "lodash/groupBy.js";
+import { ExecutionRecording } from "../recordings/execution.js";
 
 const ScenariosConstName = "Scenarios";
 

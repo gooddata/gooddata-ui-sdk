@@ -1,15 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import {
     ColumnChartWithArithmeticMeasuresAndViewBy,
     ColumnChartWithSingleMeasureAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
-} from "./base";
+} from "./base.js";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.Stacking)

@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardContext } from "../types/commonTypes.js";
 import { IInsight, isInsight, isObjRef, ObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import { selectInsightsMap } from "../store/insights/insightsSelectors";
-import { newInsightMap, ObjRefMap } from "../../_staging/metadata/objRefMap";
-import { PromiseFnReturnType } from "../types/sagas";
+import { selectInsightsMap } from "../store/insights/insightsSelectors.js";
+import { newInsightMap, ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { PromiseFnReturnType } from "../types/sagas.js";
 
 async function loadInsightsFromBackend(
     ctx: DashboardContext,

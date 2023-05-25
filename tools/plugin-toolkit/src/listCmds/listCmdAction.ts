@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import { ActionOptions } from "../_base/types";
-import { logInfo, logSuccess } from "../_base/terminal/loggers";
-import { genericErrorReporter } from "../_base/utils";
-import { getListCmdActionConfig, ListCmdActionConfig } from "./actionConfig";
-import { ListObjectsFn } from "./types";
+import { ActionOptions } from "../_base/types.js";
+import { logInfo, logSuccess } from "../_base/terminal/loggers.js";
+import { genericErrorReporter } from "../_base/utils.js";
+import { getListCmdActionConfig, ListCmdActionConfig } from "./actionConfig.js";
+import { ListObjectsFn } from "./types.js";
 import columnify from "columnify";
 
 function printListConfigSummary(config: ListCmdActionConfig) {

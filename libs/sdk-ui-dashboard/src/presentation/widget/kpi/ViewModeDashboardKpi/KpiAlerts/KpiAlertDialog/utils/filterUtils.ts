@@ -18,9 +18,9 @@ import {
     isDashboardDateFilter,
     IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
-import last from "lodash/last";
-import sortBy from "lodash/sortBy";
+import isEqual from "lodash/isEqual.js";
+import last from "lodash/last.js";
+import sortBy from "lodash/sortBy.js";
 
 export function isKpiAlertDateFilterSameAsDashboard(
     alert: IWidgetAlertDefinition,

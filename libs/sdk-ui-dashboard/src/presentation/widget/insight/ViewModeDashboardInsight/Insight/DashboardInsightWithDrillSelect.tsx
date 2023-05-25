@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 
-import { WithDrillSelect } from "../../../../drill";
-import { IDashboardInsightProps } from "../../types";
+import { WithDrillSelect } from "../../../../drill/index.js";
+import { IDashboardInsightProps } from "../../types.js";
 
-import { DashboardInsight } from "./DashboardInsight";
+import { DashboardInsight } from "./DashboardInsight.js";
 
 /**
  * @internal

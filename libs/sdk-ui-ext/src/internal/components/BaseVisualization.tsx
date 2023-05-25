@@ -32,14 +32,14 @@ import {
     IDrillDownContext,
     IVisProps,
     IExtendedReferencePoint,
-} from "../interfaces/Visualization";
-import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor";
-import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog";
-import isEmpty from "lodash/isEmpty";
-import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
-import omit from "lodash/omit";
-import { ISortConfig } from "../interfaces/SortConfig";
+} from "../interfaces/Visualization.js";
+import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
+import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
+import omit from "lodash/omit.js";
+import { ISortConfig } from "../interfaces/SortConfig.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;

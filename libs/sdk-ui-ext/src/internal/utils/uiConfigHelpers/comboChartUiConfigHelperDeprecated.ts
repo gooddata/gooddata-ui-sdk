@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, ChartType } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization";
-import { BUCKETS } from "../../constants/bucket";
-import { setBucketTitles } from "../bucketHelper";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import { BUCKETS } from "../../constants/bucket.js";
+import { setBucketTitles } from "../bucketHelper.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -15,7 +15,7 @@ const comboSecondaryMeasuresIcon = "local:combo/bucket-title-secondary-measures.
 const columnMeasureIcon = "local:combo/bucket-title-measures-column.svg";
 const columnLineIcon = "local:combo/bucket-title-view-column-line.svg";
 
-import { UICONFIG } from "../../constants/uiConfig";
+import { UICONFIG } from "../../constants/uiConfig.js";
 
 export function setComboChartUiConfigDeprecated(
     referencePoint: IExtendedReferencePoint,

@@ -12,7 +12,7 @@ import {
     ISettings,
 } from "@gooddata/sdk-model";
 
-import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/dist/internal";
+import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/internal";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
@@ -21,24 +21,24 @@ import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 import { action } from "@storybook/addon-actions";
 import React from "react";
 import "./insightStories.css";
-import { IScenario, MapboxToken, ScenarioGroup } from "../../../src";
-import AllTestScenarioGroups from "../../../scenarios";
+import { IScenario, MapboxToken, ScenarioGroup } from "../../../src/index.js";
+import AllTestScenarioGroups from "../../../scenarios/index.js";
 import {
     andResolver,
     createElementCountResolver,
     ScreenshotReadyWrapper,
-} from "../../_infra/ScreenshotReadyWrapper";
-import { ShortPostInteractionTimeout } from "../../_infra/backstopWrapper";
-import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper";
-import { StorybookBackend } from "../../_infra/backend";
+} from "../../_infra/ScreenshotReadyWrapper.js";
+import { ShortPostInteractionTimeout } from "../../_infra/backstopWrapper.js";
+import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
+import { StorybookBackend } from "../../_infra/backend.js";
 import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
-import { storyGroupFor } from "./storyGroupFactory";
-import groupBy from "lodash/groupBy";
-import keyBy from "lodash/keyBy";
-import sortBy from "lodash/sortBy";
-import values from "lodash/values";
-import { PlugVizStories } from "../../_infra/storyGroups";
-import { wrapWithTheme, getTheme } from "../themeWrapper";
+import { storyGroupFor } from "./storyGroupFactory.js";
+import groupBy from "lodash/groupBy.js";
+import keyBy from "lodash/keyBy.js";
+import sortBy from "lodash/sortBy.js";
+import values from "lodash/values.js";
+import { PlugVizStories } from "../../_infra/storyGroups.js";
+import { wrapWithTheme, getTheme } from "../themeWrapper.js";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.

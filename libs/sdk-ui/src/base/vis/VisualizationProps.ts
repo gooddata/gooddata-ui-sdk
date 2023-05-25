@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents";
+import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
 import React from "react";
-import { IErrorProps } from "../react/ErrorComponent";
-import { ILoadingProps } from "../react/LoadingComponent";
-import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events";
+import { IErrorProps } from "../react/ErrorComponent.js";
+import { ILoadingProps } from "../react/LoadingComponent.js";
+import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**

@@ -5,7 +5,7 @@ import {
     queryAttributeByDisplayForm,
     QueryAttributeByDisplayForm,
     useDashboardQueryProcessing,
-} from "../../model";
+} from "../../model/index.js";
 
 /**
  * @internal

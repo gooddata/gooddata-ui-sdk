@@ -17,12 +17,12 @@ import {
     useDashboardDispatch,
     changeInsightWidgetVisConfiguration,
     changeInsightWidgetDescription,
-} from "../../../../model";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants";
+} from "../../../../model/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 
-import InsightFilters from "./InsightFilters";
-import { InsightTitleConfig } from "./InsightTitleConfig";
-import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig";
+import InsightFilters from "./InsightFilters.js";
+import { InsightTitleConfig } from "./InsightTitleConfig.js";
+import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

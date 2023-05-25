@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterDropdownButton } from "./DropdownButton/AttributeFilterDropdownButton";
+import { AttributeFilterDropdownButton } from "./DropdownButton/AttributeFilterDropdownButton.js";
 
 /**
  * Component that displays a loading indicator.

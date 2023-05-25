@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { v4 as uuid } from "uuid";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeElement,
@@ -38,9 +38,9 @@ import {
     OnLoadCustomElementsSuccessCallbackPayload,
     OnLoadCustomElementsErrorCallbackPayload,
     OnLoadCustomElementsCancelCallbackPayload,
-} from "../types";
-import { AttributeFilterReduxBridge } from "./bridge";
-import { AttributeFilterHandlerConfig } from "./types";
+} from "../types/index.js";
+import { AttributeFilterReduxBridge } from "./bridge.js";
+import { AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

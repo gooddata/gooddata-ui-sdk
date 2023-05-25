@@ -3,9 +3,9 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import DrillMeasureSelectorList from "./DrillMeasureSelectorList";
-import DrillAttributeSelectorList from "./DrillAttributeSelectorList";
-import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types";
+import DrillMeasureSelectorList from "./DrillMeasureSelectorList.js";
+import DrillAttributeSelectorList from "./DrillAttributeSelectorList.js";
+import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorBodyProps {
     supportedItems: IAvailableDrillTargets;

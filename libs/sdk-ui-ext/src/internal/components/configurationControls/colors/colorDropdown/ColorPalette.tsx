@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import ColorPaletteItem from "./ColorPaletteItem";
+import ColorPaletteItem from "./ColorPaletteItem.js";
 import { IColor, IColorPaletteItem, IColorPalette } from "@gooddata/sdk-model";
 
 const MAX_SMALL_PALETTE_SIZE = 20;

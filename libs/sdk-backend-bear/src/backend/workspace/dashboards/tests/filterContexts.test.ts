@@ -10,8 +10,9 @@ import {
     IDashboardDateFilter,
     IFilterContext,
 } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
 
-import { sanitizeFilterContext } from "../filterContexts";
+import { sanitizeFilterContext } from "../filterContexts.js";
 
 describe("sanitizeFilterContext", () => {
     function getFilterContext(filters: FilterContextItem[]): IFilterContext {

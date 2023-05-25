@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardQuery } from "./base";
+import { IDashboardQuery } from "./base.js";
 import {
     IInsight,
     InsightDisplayFormUsage,

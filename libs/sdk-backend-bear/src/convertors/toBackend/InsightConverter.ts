@@ -23,12 +23,12 @@ import {
     insightTags,
     insightSummary,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import omitBy from "lodash/omitBy";
-import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
-import { serializeProperties } from "../fromBackend/PropertiesConverter";
-import { convertExtendedFilter } from "./FilterConverter";
-import { convertMeasure } from "./MeasureConverter";
+import isEmpty from "lodash/isEmpty.js";
+import omitBy from "lodash/omitBy.js";
+import { convertUrisToReferences } from "../fromBackend/ReferenceConverter.js";
+import { serializeProperties } from "../fromBackend/PropertiesConverter.js";
+import { convertExtendedFilter } from "./FilterConverter.js";
+import { convertMeasure } from "./MeasureConverter.js";
 
 const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttribute => {
     const alias = attributeAlias(attribute);

@@ -3,7 +3,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { LoadingMask } from "../../LoadingMask";
+import { LoadingMask } from "../../LoadingMask/index.js";
 
 export const DialogListLoading: React.VFC<{ className?: string }> = ({ className }) => {
     return (

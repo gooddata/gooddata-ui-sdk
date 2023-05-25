@@ -6,18 +6,18 @@ import {
     getBucketItemIdentifiers,
     getDefaultTreemapSortFromBuckets,
     validateCurrentSort,
-} from "../sort";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
-import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
-import { SORT_DIR_DESC } from "../../constants/sort";
+} from "../sort.js";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
+import { SORT_DIR_DESC } from "../../constants/sort.js";
 import {
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndTwoViewBy,
     insightWithSingleMeasureAndViewBy,
     insightWithSingleMeasureAndViewByAndStack,
     insightWithTwoMeasuresAndTwoViewBy,
-} from "../../tests/mocks/testMocks";
+} from "../../tests/mocks/testMocks.js";
 import {
     IAttributeSortItem,
     IMeasureSortItem,
@@ -29,7 +29,8 @@ import {
     newMeasure,
     newMeasureSort,
 } from "@gooddata/sdk-model";
-import { newAvailableSortsGroup } from "../../interfaces/SortConfig";
+import { newAvailableSortsGroup } from "../../interfaces/SortConfig.js";
+import { describe, it, expect } from "vitest";
 
 const attributeSort: IAttributeSortItem = {
     attributeSortItem: {

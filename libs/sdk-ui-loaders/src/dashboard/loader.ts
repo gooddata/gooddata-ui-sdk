@@ -11,7 +11,7 @@ import {
     DashboardContext,
 } from "@gooddata/sdk-ui-dashboard";
 import { ObjRef } from "@gooddata/sdk-model";
-import { IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
+import { IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
 
 /**
  * A result of successful load of a dashboard consists of a React component and constructed props that

@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import once from "lodash/once";
+import once from "lodash/once.js";
 import {
     bucketsFind,
     bucketTotals,

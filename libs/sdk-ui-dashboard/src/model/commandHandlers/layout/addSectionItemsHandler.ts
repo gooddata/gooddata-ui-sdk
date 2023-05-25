@@ -1,25 +1,25 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { AddSectionItems } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout, selectStash } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { AddSectionItems } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation";
-import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes";
-import { validateAndResolveStashedItems } from "./validation/stashValidation";
-import isEmpty from "lodash/isEmpty";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout";
-import { resolveIndexOfNewItem } from "../../utils/arrayOps";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors";
+import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
+import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
+import isEmpty from "lodash/isEmpty.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
+import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../store/insights";
+import { insightsActions } from "../../store/insights/index.js";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
-} from "./validation/itemValidation";
-import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
+} from "./validation/itemValidation.js";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;

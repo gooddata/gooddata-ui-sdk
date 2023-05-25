@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IDashboardCommand } from "./base";
-import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
+import { IDashboardCommand } from "./base.js";
+import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes.js";
 import { IDashboardLayoutSectionHeader, ObjRef } from "@gooddata/sdk-model";
 
 /**

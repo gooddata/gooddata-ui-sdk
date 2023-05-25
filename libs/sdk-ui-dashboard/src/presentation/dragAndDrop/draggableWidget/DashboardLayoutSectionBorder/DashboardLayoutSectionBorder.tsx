@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 
-import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorderLine";
-import { DashboardLayoutSectionBorderStatus } from "./types";
+import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorderLine.js";
+import { DashboardLayoutSectionBorderStatus } from "./types.js";
 
 interface IDashboardLayoutSectionBorderProps {
     status: DashboardLayoutSectionBorderStatus;

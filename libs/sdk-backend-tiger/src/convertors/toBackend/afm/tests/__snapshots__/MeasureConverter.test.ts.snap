@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`measure converter should return converted alias 1`] = `
-Object {
+exports[`measure converter > should return converted alias 1`] = `
+{
   "alias": "alias",
-  "definition": Object {
-    "measure": Object {
-      "item": Object {
-        "identifier": Object {
+  "definition": {
+    "measure": {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -17,15 +17,15 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted arithmetic measure definition from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "arithmeticMeasure": Object {
-      "measureIdentifiers": Array [
-        Object {
+exports[`measure converter > should return converted arithmetic measure definition from model to AFM 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
+        {
           "localIdentifier": "foo",
         },
-        Object {
+        {
           "localIdentifier": "bar",
         },
       ],
@@ -36,14 +36,14 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted pop measure definition from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "overPeriodMeasure": Object {
-      "dateAttributes": Array [
-        Object {
-          "attribute": Object {
-            "identifier": Object {
+exports[`measure converter > should return converted pop measure definition from model to AFM 1`] = `
+{
+  "definition": {
+    "overPeriodMeasure": {
+      "dateAttributes": [
+        {
+          "attribute": {
+            "identifier": {
               "id": "attr",
               "type": "attribute",
             },
@@ -51,7 +51,7 @@ Object {
           "periodsAgo": 1,
         },
       ],
-      "measureIdentifier": Object {
+      "measureIdentifier": {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
@@ -60,14 +60,14 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted previous period measure from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "previousPeriodMeasure": Object {
-      "dateDatasets": Array [
-        Object {
-          "dataset": Object {
-            "identifier": Object {
+exports[`measure converter > should return converted previous period measure from model to AFM 1`] = `
+{
+  "definition": {
+    "previousPeriodMeasure": {
+      "dateDatasets": [
+        {
+          "dataset": {
+            "identifier": {
               "id": "bar",
               "type": "dataset",
             },
@@ -75,7 +75,7 @@ Object {
           "periodsAgo": 3,
         },
       ],
-      "measureIdentifier": Object {
+      "measureIdentifier": {
         "localIdentifier": "foo",
       },
     },
@@ -84,12 +84,12 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted simple measure from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "item": Object {
-        "identifier": Object {
+exports[`measure converter > should return converted simple measure from model to AFM 1`] = `
+{
+  "definition": {
+    "measure": {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -100,13 +100,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: avg 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: avg 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "AVG",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -117,15 +117,15 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: change 1`] = `
-Object {
-  "definition": Object {
-    "arithmeticMeasure": Object {
-      "measureIdentifiers": Array [
-        Object {
+exports[`measure converter > should return format of measure: change 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
+        {
           "localIdentifier": "foo",
         },
-        Object {
+        {
           "localIdentifier": "bar",
         },
       ],
@@ -137,13 +137,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: count 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: count 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "COUNT",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -155,13 +155,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: max 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: max 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "MAX",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -172,13 +172,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: median 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: median 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "MEDIAN",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -189,13 +189,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: min 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: min 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "MIN",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -206,13 +206,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: ratio 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: ratio 1`] = `
+{
+  "definition": {
+    "measure": {
       "computeRatio": true,
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -224,13 +224,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: runsum 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: runsum 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "RUNSUM",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -241,13 +241,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: sum 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: sum 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "SUM",
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -258,15 +258,15 @@ Object {
 }
 `;
 
-exports[`measure converter should return measure with two filters 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "filters": Array [
-        Object {
-          "absoluteDateFilter": Object {
-            "dataset": Object {
-              "identifier": Object {
+exports[`measure converter > should return measure with two filters 1`] = `
+{
+  "definition": {
+    "measure": {
+      "filters": [
+        {
+          "absoluteDateFilter": {
+            "dataset": {
+              "identifier": {
                 "id": "closed.dataset.dt",
                 "type": "dataset",
               },
@@ -275,10 +275,10 @@ Object {
             "to": "2019-08-12",
           },
         },
-        Object {
-          "relativeDateFilter": Object {
-            "dataset": Object {
-              "identifier": Object {
+        {
+          "relativeDateFilter": {
+            "dataset": {
+              "identifier": {
                 "id": "closed.dataset.dt",
                 "type": "dataset",
               },
@@ -289,8 +289,8 @@ Object {
           },
         },
       ],
-      "item": Object {
-        "identifier": Object {
+      "item": {
+        "identifier": {
           "id": "foo",
           "type": "fact",
         },
@@ -301,6 +301,6 @@ Object {
 }
 `;
 
-exports[`measure converter should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
+exports[`measure converter > should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
 
-exports[`measure converter should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;
+exports[`measure converter > should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;

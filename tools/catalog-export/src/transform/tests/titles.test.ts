@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-
-import { createUniqueName, createUniqueVariableName } from "../titles";
+import { describe, it, expect } from "vitest";
+import { createUniqueName, createUniqueVariableName } from "../titles.js";
 
 describe("createUniqueVariableName", () => {
     describe("title transformation", () => {

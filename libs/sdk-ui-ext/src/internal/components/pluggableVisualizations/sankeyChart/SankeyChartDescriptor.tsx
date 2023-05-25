@@ -5,8 +5,8 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableSankeyChart } from "./PluggableSankeyChart";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableSankeyChart } from "./PluggableSankeyChart.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -16,9 +16,9 @@ import {
     singleAttributeBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
-import { BigChartDescriptor } from "../BigChartDescriptor";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 
 export class SankeyChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

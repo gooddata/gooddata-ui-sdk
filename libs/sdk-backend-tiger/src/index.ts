@@ -12,7 +12,7 @@
  * @packageDocumentation
  */
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { TigerBackend } from "./backend";
+import { TigerBackend } from "./backend/index.js";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 
 /**
@@ -64,7 +64,7 @@ export {
     TigerAuthProviderBase,
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
-} from "./auth";
+} from "./auth.js";
 
 export {
     TigerSpecificFunctions,
@@ -100,6 +100,6 @@ export {
     ICSPDirective,
     ICustomApplicationSetting,
     ScanSqlResult,
-} from "./backend/tigerSpecificFunctions";
+} from "./backend/tigerSpecificFunctions.js";
 
-export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance";
+export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";

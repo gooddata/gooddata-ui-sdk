@@ -10,14 +10,14 @@
  * @packageDocumentation
  */
 
-export { AttributeColorStrategy } from "./coloring/attribute";
+export { AttributeColorStrategy } from "./coloring/attribute.js";
 export {
     ColorStrategy,
     getAttributeColorAssignment,
     IColorStrategy,
     ICreateColorAssignmentReturnValue,
     isValidMappedColor,
-} from "./coloring/base";
+} from "./coloring/base.js";
 export {
     getColorByGuid,
     getColorFromMapping,
@@ -33,27 +33,27 @@ export {
     getValidColorPalette,
     ColorUtils,
     parseRGBString,
-} from "./coloring/color";
+} from "./coloring/color.js";
 
-export { IColorMapping } from "./coloring/types";
+export { IColorMapping } from "./coloring/types.js";
 
-export { Legend, ILegendProps } from "./legend/Legend";
+export { Legend, ILegendProps } from "./legend/Legend.js";
 
-export { StaticLegend, IStaticLegendProps } from "./legend/StaticLegend";
+export { StaticLegend, IStaticLegendProps } from "./legend/StaticLegend.js";
 
-export { PopUpLegend, IPopUpLegendProps } from "./legend/PopUpLegend/PopUpLegend";
+export { PopUpLegend, IPopUpLegendProps } from "./legend/PopUpLegend/PopUpLegend.js";
 
-export { FluidLegend, IFluidLegendProps } from "./legend/FluidLegend";
+export { FluidLegend, IFluidLegendProps } from "./legend/FluidLegend.js";
 
-export { HeatmapLegend, IHeatmapLegendProps } from "./legend/HeatmapLegend";
+export { HeatmapLegend, IHeatmapLegendProps } from "./legend/HeatmapLegend.js";
 
-export { ColorLegend, IColorLegendProps } from "./legend/ColorLegend";
+export { ColorLegend, IColorLegendProps } from "./legend/ColorLegend.js";
 
-export { IPagingProps, ButtonsOrientationType, Paging } from "./legend/Paging";
+export { IPagingProps, ButtonsOrientationType, Paging } from "./legend/Paging.js";
 
-export { IHeadlinePaginationProps, HeadlinePagination } from "./compactSize/HeadlinePagination";
+export { IHeadlinePaginationProps, HeadlinePagination } from "./compactSize/HeadlinePagination.js";
 
-export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./legend/helpers";
+export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./legend/helpers.js";
 
 export {
     DEFAULT_LEGEND_CONFIG,
@@ -70,12 +70,12 @@ export {
     LegendOptionsItemType,
     ItemBorderRadiusPredicate,
     IColorLegendSize,
-} from "./legend/types";
+} from "./legend/types.js";
 
-export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";
-export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling";
+export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems.js";
+export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling.js";
 
-export { shouldRenderPagination, calculateHeadlineHeightFontSize } from "./utils/calculateCustomHeight";
-export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassName";
+export { shouldRenderPagination, calculateHeadlineHeightFontSize } from "./utils/calculateCustomHeight.js";
+export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassName.js";
 
-export { getLegendDetails, ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers";
+export { getLegendDetails, ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers.js";

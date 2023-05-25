@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
-import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
-import { newPlaceholder } from "../factory";
-import { IPlaceholder } from "../base";
-import { usePlaceholders } from "../hooks";
+import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context.js";
+import { newPlaceholder } from "../factory.js";
+import { IPlaceholder } from "../base.js";
+import { usePlaceholders } from "../hooks.js";
 
 const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
@@ -85,7 +85,7 @@ describe("usePlaceholders", () => {
             onSetPlaceholders: () => [measure, measure2],
         });
 
-        await userEvent.click(screen.getByText("Placeholder"));
+        fireEvent.click(screen.getByText("Placeholder"));
         await waitFor(() => {
             expect(screen.queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
             expect(screen.queryByText(measure2.measure.localIdentifier)).toBeInTheDocument();

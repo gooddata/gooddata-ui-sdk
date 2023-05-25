@@ -4,12 +4,12 @@ import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
-} from "../drillDownUtil";
-import cloneDeep from "lodash/cloneDeep";
-import flatMap from "lodash/flatMap";
-import isNil from "lodash/isNil";
-import isEmpty from "lodash/isEmpty";
-import isEqual from "lodash/isEqual";
+} from "../drillDownUtil.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import flatMap from "lodash/flatMap.js";
+import isNil from "lodash/isNil.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     bucketAttribute,
@@ -26,6 +26,7 @@ import {
     newAttributeSort,
     ISettings,
 } from "@gooddata/sdk-model";
+import { defaultImport } from "default-import";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
@@ -37,10 +38,10 @@ import {
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import React from "react";
-import ReactMeasure from "react-measure";
+import Measure from "react-measure";
 
-import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
-import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties";
+import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
+import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
 import {
     IBucketFilter,
     IBucketItem,
@@ -53,8 +54,8 @@ import {
     IVisProps,
     IVisualizationProperties,
     RenderFunction,
-} from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
     getAllItemsByType,
@@ -62,31 +63,36 @@ import {
     getTotalsFromBucket,
     removeDuplicateBucketItems,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
-import { generateDimensions } from "../../../utils/dimensions";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+} from "../../../utils/bucketHelper.js";
+import { generateDimensions } from "../../../utils/dimensions.js";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getColumnWidthsFromProperties,
     getReferencePointWithSupportedProperties,
-} from "../../../utils/propertiesHelper";
+} from "../../../utils/propertiesHelper.js";
 
 import {
     getPivotTableDefaultUiConfig,
     setPivotTableUiConfig,
-} from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+} from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     adaptMdObjectWidthItemsToPivotTable,
     adaptReferencePointWidthItemsToPivotTable,
-} from "./widthItemsHelpers";
+} from "./widthItemsHelpers.js";
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
     sanitizePivotTableSorts,
-} from "./sortItemsHelpers";
-import { removeInvalidTotals } from "./totalsHelpers";
+} from "./sortItemsHelpers.js";
+import { removeInvalidTotals } from "./totalsHelpers.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const ReactMeasure = defaultImport(Measure);
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(

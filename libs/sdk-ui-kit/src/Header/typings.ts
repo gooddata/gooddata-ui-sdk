@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ITheme } from "@gooddata/sdk-model";
-import { HelpMenuDropdownAlignPoints } from "../typings/positioning";
+import { HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
 
 /**
  * @internal

@@ -2,14 +2,14 @@
 import React, { useCallback } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
-import { ICancelEditDialogProps } from "./types";
+import { ICancelEditDialogProps } from "./types.js";
 import {
     cancelEditRenderMode,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
     selectIsCancelEditModeDialogOpen,
-} from "../../model";
+} from "../../model/index.js";
 
 /**
  * @internal

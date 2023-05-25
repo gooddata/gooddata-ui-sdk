@@ -11,10 +11,11 @@ import {
     shouldXAxisStartOnTickOnBubbleScatter,
     shouldYAxisStartOnTickOnBubbleScatter,
     alignChart,
-} from "../helpers";
+} from "../helpers.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ChartAlignTypes, IChartConfig } from "../../../../interfaces";
-import { BOTTOM, TOP } from "../../../constants/alignments";
+import { ChartAlignTypes, IChartConfig } from "../../../../interfaces/index.js";
+import { BOTTOM, TOP } from "../../../constants/alignments.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("helpers", () => {
     describe("getChartProperties", () => {
@@ -824,7 +825,7 @@ describe("helpers", () => {
 
     describe("getChartAlignmentConfiguration", () => {
         function getCommonChartOptionsMock(width: number, height: number) {
-            const getBoundingClientRect = jest.fn().mockReturnValue({ width, height });
+            const getBoundingClientRect = vi.fn().mockReturnValue({ width, height });
             return {
                 options: {
                     chart: {
@@ -834,7 +835,7 @@ describe("helpers", () => {
                 container: {
                     getBoundingClientRect,
                 },
-                update: jest.fn(),
+                update: vi.fn(),
             };
         }
 

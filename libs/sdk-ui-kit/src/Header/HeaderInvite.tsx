@@ -2,9 +2,9 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Icon } from "../Icon";
+import { Icon } from "../Icon/index.js";
 
-import { IHeaderInviteProps } from "./typings";
+import { IHeaderInviteProps } from "./typings.js";
 
 // do not use empty string returned when white-labeling is not enabled, otherwise default color is not applied
 const sanitizeColor = (color: string) => (color === "" ? undefined : color);

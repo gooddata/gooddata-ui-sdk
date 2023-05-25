@@ -17,7 +17,7 @@ import {
     AsyncOperationStatus,
     CallbackPayloadWithCorrelation,
     AttributeElementKey,
-} from "./common";
+} from "./common.js";
 
 /**
  * Result of the attribute elements load along with the options that were applied for it.

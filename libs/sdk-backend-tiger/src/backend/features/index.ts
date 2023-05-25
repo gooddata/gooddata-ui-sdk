@@ -6,11 +6,11 @@ import {
     FeatureContext,
     JsonApiWorkspaceInAttributes,
 } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../types";
-import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures.js";
 
-import { getFeatureHubFeatures } from "./hub";
-import { getStaticFeatures } from "./static";
+import { getFeatureHubFeatures } from "./hub.js";
+import { getStaticFeatures } from "./static.js";
 
 export class TigerFeaturesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}

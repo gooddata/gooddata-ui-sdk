@@ -12,13 +12,13 @@ import {
     JsonApiLabelOutAttributesValueTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
-import values from "lodash/values";
+import values from "lodash/values.js";
 import {
     convertAttribute,
     convertDateAttribute,
     convertDateDataset,
-} from "../../../convertors/fromBackend/CatalogConverter";
-import { addRsqlFilterToParams } from "./rsqlFilter";
+} from "../../../convertors/fromBackend/CatalogConverter.js";
+import { addRsqlFilterToParams } from "./rsqlFilter.js";
 
 function lookupRelatedObject(
     included: (JsonApiLabelOutWithLinks | JsonApiDatasetOutWithLinks)[] | undefined,

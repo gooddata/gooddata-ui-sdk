@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { IIconProps } from "../typings";
+import { IIconProps } from "../typings.js";
 
 /**
  * @internal

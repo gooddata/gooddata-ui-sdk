@@ -14,7 +14,7 @@ import {
     IDashboardLayoutItem,
     ScreenSize,
 } from "@gooddata/sdk-model";
-import { BearDashboardDependency } from "./types";
+import { BearDashboardDependency } from "./types.js";
 
 // Default layout column size for the kpi widget, when generating implicit layout
 const KPI_SIZE = 2;

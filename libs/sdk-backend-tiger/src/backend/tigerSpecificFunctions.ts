@@ -41,11 +41,11 @@ import {
     IdentifierDuplications,
     JsonApiCustomApplicationSettingOut,
 } from "@gooddata/api-client-tiger";
-import { convertApiError } from "../utils/errorHandling";
-import uniq from "lodash/uniq";
-import toLower from "lodash/toLower";
+import { convertApiError } from "../utils/errorHandling.js";
+import uniq from "lodash/uniq.js";
+import toLower from "lodash/toLower.js";
 import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig } from "axios";
 import { IUser } from "@gooddata/sdk-model";

@@ -2,9 +2,10 @@
 import React from "react";
 import { ContentRect } from "react-measure";
 import { render, screen } from "@testing-library/react";
-import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend";
+import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend.js";
 import { PositionType } from "@gooddata/sdk-ui-vis-commons";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect } from "vitest";
 
 const segmentData = [
     {

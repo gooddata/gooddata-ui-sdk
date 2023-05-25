@@ -1,20 +1,20 @@
 // (C) 2021-2023 GoodData Corporation
-import { ActionOptions, TargetAppLanguage } from "../_base/types";
-import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
+import { ActionOptions, TargetAppLanguage } from "../_base/types.js";
+import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import * as path from "path";
 import fse from "fs-extra";
 import tar from "tar";
 import url from "url";
-import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template";
+import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template.js";
 import {
     convertToPluginDirectory,
     genericErrorReporter,
     readJsonSync,
     writeAsJsonSync,
-} from "../_base/utils";
-import { processTigerFiles } from "./processTigerFiles";
-import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig";
-import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles";
+} from "../_base/utils.js";
+import { processTigerFiles } from "./processTigerFiles.js";
+import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig.js";
+import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { sync as spawnSync } from "cross-spawn";
 
 //
@@ -33,6 +33,15 @@ function unpackProject(target: string, language: TargetAppLanguage) {
 
 const TigerBackendPackage = "@gooddata/sdk-backend-tiger";
 const BearBackendPackage = "@gooddata/sdk-backend-bear";
+const unnecessaryDevPkg = [
+    "eslint-plugin-header",
+    "eslint-plugin-import",
+    "eslint-plugin-jest",
+    "eslint-plugin-no-only-tests",
+    "eslint-plugin-regexp",
+    "eslint-plugin-sonarjs",
+    "eslint-plugin-tsdoc",
+];
 
 /**
  * The original package.json can be tweaked now. The plugin name will be used for package name and
@@ -52,6 +61,10 @@ function modifyPackageJson(target: string, config: InitCmdActionConfig) {
     packageJson.name = name;
     delete peerDependencies[unnecessaryBackendPkg];
     delete devDependencies[unnecessaryBackendPkg];
+
+    unnecessaryDevPkg.forEach((key) => {
+        delete devDependencies[key];
+    });
 
     if (overrides && packageManager === "yarn") {
         delete packageJson.overrides;
@@ -87,7 +100,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
     const isTiger = backend === "tiger";
     const { protocol } = url.parse(hostname);
     const replacements: FileReplacementSpec = {
-        "webpack.config.js": [
+        "webpack.config.cjs": [
             {
                 regex: /"\/gdc"/g,
                 value: '"/api"',
@@ -127,7 +140,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             },
         ],
         scripts: {
-            "refresh-md.js": [
+            "refresh-md.cjs": [
                 {
                     regex: /const backend = "bear"/g,
                     value: 'const backend = "tiger"',
@@ -150,16 +163,16 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             harness: {
                 [`PluginLoader.${language}x`]: [
                     {
-                        regex: /"\.\.\/plugin"/g,
-                        value: `"../${pluginIdentifier}"`,
+                        regex: /"\.\.\/plugin\/index\.js"/g,
+                        value: `"../${pluginIdentifier}/index.js"`,
                     },
                 ],
             },
             [pluginIdentifier]: {
                 [`Plugin.${language}x`]: [
                     {
-                        regex: /"\.\.\/plugin_entry"/g,
-                        value: `"../${pluginIdentifier}_entry"`,
+                        regex: /"\.\.\/plugin_entry\/index\.js"/g,
+                        value: `"../${pluginIdentifier}_entry/index.js"`,
                     },
                 ],
             },

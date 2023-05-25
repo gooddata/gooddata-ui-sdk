@@ -7,9 +7,9 @@ import {
 } from "@gooddata/sdk-ui";
 import { areObjRefsEqual, IDrillToAttributeUrl } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { getElementTitle } from "./getElementTitle";
-import { DashboardContext } from "../../types/commonTypes";
-import { PromiseFnReturnType } from "../../types/sagas";
+import { getElementTitle } from "./getElementTitle.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 
 function getDrillToAttributeUrlIntersectionAttributeItemHeader(
     drillConfig: IDrillToAttributeUrl,

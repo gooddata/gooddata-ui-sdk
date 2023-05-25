@@ -96,9 +96,9 @@ import {
     IRelativeDateFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
-import isEmpty from "lodash/isEmpty";
-import { AbstractExecutionFactory } from "../toolkit/execution";
+import isEqual from "lodash/isEqual.js";
+import isEmpty from "lodash/isEmpty.js";
+import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
 /**
  * @internal

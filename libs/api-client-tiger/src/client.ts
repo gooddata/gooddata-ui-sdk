@@ -1,21 +1,21 @@
 // (C) 2019-2023 GoodData Corporation
-import { tigerExecutionClientFactory } from "./execution";
-import { tigerExecutionResultClientFactory } from "./executionResult";
+import { tigerExecutionClientFactory } from "./execution.js";
+import { tigerExecutionResultClientFactory } from "./executionResult.js";
 import {
     LabelElementsConfiguration,
     LabelElementsConfigurationParameters,
     LabelElementsBaseApi,
     LabelElementsRequestArgs,
     tigerLabelElementsClientFactory,
-} from "./labelElements";
+} from "./labelElements.js";
 
-import { tigerValidObjectsClientFactory } from "./validObjects";
-import { setAxiosAuthorizationToken } from "./axios";
+import { tigerValidObjectsClientFactory } from "./validObjects.js";
+import { setAxiosAuthorizationToken } from "./axios.js";
 import { AxiosInstance } from "axios";
-import { tigerLayoutClientFactory } from "./layout";
-import { tigerAfmExplainClientFactory } from "./explain";
-import { tigerActionsClientFactory } from "./actions";
-import { tigerAuthActionsClientFactory } from "./authActions";
+import { tigerLayoutClientFactory } from "./layout.js";
+import { tigerAfmExplainClientFactory } from "./explain.js";
+import { tigerActionsClientFactory } from "./actions.js";
+import { tigerAuthActionsClientFactory } from "./authActions.js";
 
 import {
     MetadataConfiguration,
@@ -23,7 +23,7 @@ import {
     MetadataBaseApi,
     MetadataRequestArgs,
     tigerEntitiesObjectsClientFactory,
-} from "./entitiesObjects";
+} from "./entitiesObjects.js";
 import {
     tigerProfileClientFactory,
     IUserProfile,
@@ -31,14 +31,14 @@ import {
     ILiveFeatures,
     IStaticFeatures,
     FeatureContext,
-} from "./profile";
+} from "./profile.js";
 import {
     tigerExportClientFactory,
     ExportActionsApiInterface,
     ActionsApiCreateTabularExportRequest,
     TabularExportRequest,
     ActionsApiGetTabularExportRequest,
-} from "./export";
+} from "./export.js";
 import {
     ScanModelConfiguration,
     ScanModelConfigurationParameters,
@@ -46,7 +46,7 @@ import {
     ScanModelRequestArgs,
     ScanModelActionsApiInterface,
     tigerScanModelClientFactory,
-} from "./scanModel";
+} from "./scanModel.js";
 
 export {
     tigerExecutionClientFactory,

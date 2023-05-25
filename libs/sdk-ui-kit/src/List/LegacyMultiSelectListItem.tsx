@@ -2,7 +2,7 @@
 import React, { PureComponent } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
 import { stringUtils } from "@gooddata/util";
 

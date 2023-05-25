@@ -1,5 +1,3 @@
-// (C) 2022-2023 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -13,16 +11,16 @@
  * Do not edit the class manually.
  */
 
-import { Configuration } from "./configuration";
+import { Configuration } from "./configuration.js";
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "axios";
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common.js';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
 /**
  * Entity representing user in authentication system.

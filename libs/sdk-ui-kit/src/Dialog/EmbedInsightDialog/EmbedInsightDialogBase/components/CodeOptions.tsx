@@ -2,10 +2,10 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IReactOptions, UnitsType } from "../types";
+import { IReactOptions, UnitsType } from "../types.js";
 
-import { HeightSetting } from "./HeightSetting";
-import { ToggleSwitch } from "./ToggleSwitch";
+import { HeightSetting } from "./HeightSetting.js";
+import { ToggleSwitch } from "./ToggleSwitch.js";
 
 /**
  * @internal

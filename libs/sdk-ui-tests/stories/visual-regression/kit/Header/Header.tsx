@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     AppHeader,
@@ -10,13 +10,13 @@ import {
     WorkspacePickerHomeFooter,
     HeaderBadge,
 } from "@gooddata/sdk-ui-kit";
-import { wrapWithTheme } from "../../themeWrapper";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import { IntlProvider } from "react-intl";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import times from "lodash/times";
-import { gd, custom } from "./logos";
+import times from "lodash/times.js";
+import { gd, custom } from "./logos.js";
 
 const info = {
     headerMenuSections: [

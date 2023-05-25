@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import { validatePluginUrlIsSane } from "@gooddata/sdk-backend-base";
 import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
-import { BearAuthenticatedCallGuard } from "../../types/auth";
-import isEmpty from "lodash/isEmpty";
+import { BearAuthenticatedCallGuard } from "../../types/auth.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export interface IValidationResponse {
     validationResponse: {

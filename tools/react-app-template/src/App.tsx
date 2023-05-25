@@ -3,8 +3,8 @@ import React from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { backend } from "./backend";
-import * as Md from "./catalog";
+import { backend } from "./backend.js";
+import * as Md from "./catalog.js";
 import img from "./assets/gooddata-logo.svg";
 
 // Workspace ID is injected by WebPack based on the value in package.json

@@ -1,17 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { AddDrillTargets } from "../../commands/drillTargets";
-import { DrillTargetsAdded, drillTargetsAdded } from "../../events/drillTargets";
-import { drillTargetsActions } from "../../store/drillTargets";
-import { DashboardContext } from "../../types/commonTypes";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
-import { validateExistingInsightWidget } from "../widgets/validation/widgetValidations";
-import { selectEnableKPIDashboardDrillFromAttribute } from "../../store/config/configSelectors";
-import { availableDrillTargetsValidation } from "./validation/availableDrillTargetsValidation";
-import { validateDrills } from "../common/validateDrills";
-import { selectIsInEditMode } from "../../store/renderMode/renderModeSelectors";
-import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
+import { AddDrillTargets } from "../../commands/drillTargets.js";
+import { DrillTargetsAdded, drillTargetsAdded } from "../../events/drillTargets.js";
+import { drillTargetsActions } from "../../store/drillTargets/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { validateExistingInsightWidget } from "../widgets/validation/widgetValidations.js";
+import { selectEnableKPIDashboardDrillFromAttribute } from "../../store/config/configSelectors.js";
+import { availableDrillTargetsValidation } from "./validation/availableDrillTargetsValidation.js";
+import { validateDrills } from "../common/validateDrills.js";
+import { selectIsInEditMode } from "../../store/renderMode/renderModeSelectors.js";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
 
 export function* addDrillTargetsHandler(
     ctx: DashboardContext,

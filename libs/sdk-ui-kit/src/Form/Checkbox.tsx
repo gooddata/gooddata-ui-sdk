@@ -2,8 +2,8 @@
 import React from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop";
-import { LabelSize } from "./typings";
+import noop from "lodash/noop.js";
+import { LabelSize } from "./typings.js";
 
 /**
  * @internal

@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import stringify from "json-stable-stringify";
-import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
+import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
 import {
     IClientWorkspaceIdentifiers,
     useBackendStrict,
@@ -11,11 +11,11 @@ import {
 } from "@gooddata/sdk-ui";
 import { DashboardConfig, IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
 import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
-import isArray from "lodash/isArray";
-import compact from "lodash/compact";
-import { DashboardLoader } from "./dashboardLoader";
-import { DashboardLoadResult, IDashboardLoader } from "./loader";
-import invariant from "ts-invariant";
+import isArray from "lodash/isArray.js";
+import compact from "lodash/compact.js";
+import { DashboardLoader } from "./dashboardLoader.js";
+import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
+import { invariant } from "ts-invariant";
 
 /**
  * Returned by the `useDashboardLoader` to communicate the status of dashboard loading.

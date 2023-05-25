@@ -1,9 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
 
-import { IDateRange } from "../DateRangePicker/DateRangePicker";
-import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from "../utils/DateConversions";
-import { IUiAbsoluteDateFilterForm } from "../interfaces";
-import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform";
+import { IDateRange } from "../DateRangePicker/DateRangePicker.js";
+import {
+    convertDateToPlatformDateString,
+    convertPlatformDateStringToDate,
+} from "../utils/DateConversions.js";
+import { IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
+import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
 
 export const dateRangeToDateFilterValue = (
     range: IDateRange,

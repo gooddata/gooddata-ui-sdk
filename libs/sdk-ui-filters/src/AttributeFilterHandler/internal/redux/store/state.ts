@@ -3,7 +3,7 @@ import { CaseReducer, AnyAction } from "@reduxjs/toolkit";
 import { IAttributeElement, ObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { ILoadElementsOptions, AsyncOperationStatus } from "../../../types";
+import { ILoadElementsOptions, AsyncOperationStatus } from "../../../types/index.js";
 
 /**
  * @internal

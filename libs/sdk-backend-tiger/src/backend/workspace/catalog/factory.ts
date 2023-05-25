@@ -17,16 +17,16 @@ import {
     isCatalogMeasure,
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
-import { TigerWorkspaceCatalog } from "./catalog";
-import { loadAttributesAndDateDatasets } from "./datasetLoader";
-import flatten from "lodash/flatten";
-import flatMap from "lodash/flatMap";
-import uniqBy from "lodash/uniqBy";
-import sortBy from "lodash/sortBy";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
+import { TigerWorkspaceCatalog } from "./catalog.js";
+import { loadAttributesAndDateDatasets } from "./datasetLoader.js";
+import flatten from "lodash/flatten.js";
+import flatMap from "lodash/flatMap.js";
+import uniqBy from "lodash/uniqBy.js";
+import sortBy from "lodash/sortBy.js";
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
-import { addRsqlFilterToParams, tagsToRsqlFilter } from "./rsqlFilter";
+import { addRsqlFilterToParams, tagsToRsqlFilter } from "./rsqlFilter.js";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(

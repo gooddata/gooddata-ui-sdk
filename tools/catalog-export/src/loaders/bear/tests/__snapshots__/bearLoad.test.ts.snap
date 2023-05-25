@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`bearLoad should load analytical dashboards 1`] = `
-Array [
-  Object {
+exports[`bearLoad > should load analytical dashboards 1`] = `
+[
+  {
     "identifier": "afMA17GSbk31",
     "tags": "",
     "title": "KPIs",
   },
-  Object {
+  {
     "identifier": "abBJlnxrfEWH",
     "tags": "",
     "title": "Store management KPIs",
   },
-  Object {
+  {
     "identifier": "aahlrtUEgKkq",
     "tags": "",
     "title": "Untitled",
@@ -20,18 +20,18 @@ Array [
 ]
 `;
 
-exports[`bearLoad should load date data sets 1`] = `
-Array [
-  Object {
-    "dateDataSet": Object {
-      "content": Object {
-        "attributes": Array [
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+exports[`bearLoad > should load date data sets 1`] = `
+[
+  {
+    "dateDataSet": {
+      "content": {
+        "attributes": [
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aag81lMifn6q",
                       "tags": "",
                       "title": "Year (Timeline)",
@@ -39,19 +39,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.year",
                 "tags": "date year",
                 "title": "Year (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aam81lMifn6q",
                       "tags": "",
                       "title": "default (Timeline)",
@@ -59,54 +59,54 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.quarter.in.year",
                 "tags": "date quarter year",
                 "title": "Quarter (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aaA81lMifn6q",
                       "tags": "",
                       "title": "Week #/Year (W1/2010) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aaw81lMifn6q",
                       "tags": "",
                       "title": "Week Starting (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aau81lMifn6q",
                       "tags": "",
                       "title": "From - To (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aay81lMifn6q",
                       "tags": "",
                       "title": "Week #/Year (Cont.) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aaC81lMifn6q",
                       "tags": "",
                       "title": "Wk/Qtr/Year (Cont.) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aas81lMifn6q",
                       "tags": "",
                       "title": "Wk/Qtr/Year (Timeline)",
@@ -114,19 +114,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.week",
                 "tags": "date week",
                 "title": "Week (Sun-Sat)/Year (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aaI81lMifn6q",
                       "tags": "",
                       "title": "Number US (Timeline)",
@@ -134,19 +134,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.week.in.year",
                 "tags": "date week year",
                 "title": "Week (Sun-Sat) (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aaO81lMifn6q",
                       "tags": "",
                       "title": "Number US (Timeline)",
@@ -154,33 +154,33 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.week.in.quarter",
                 "tags": "date quarter week",
                 "title": "Week (Sun-Sat) of Qtr (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aa281lMifn6q",
                       "tags": "",
                       "title": "Week #/Year (W1/2010) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aaY81lMifn6q",
                       "tags": "",
                       "title": "Week Starting (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.aaW81lMifn6q",
                       "tags": "",
                       "title": "From - To (Timeline)",
@@ -188,19 +188,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.euweek",
                 "tags": "date eu week",
                 "title": "Week (Mon-Sun)/Year (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aba81lMifn6q",
                       "tags": "",
                       "title": "Number EU (Timeline)",
@@ -208,19 +208,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.euweek.in.year",
                 "tags": "date eu week year",
                 "title": "Week (Mon-Sun) (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.abg81lMifn6q",
                       "tags": "",
                       "title": "Number EU (Timeline)",
@@ -228,40 +228,40 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.euweek.in.quarter",
                 "tags": "date eu quarter week",
                 "title": "Week (Mon-Sun) of Qtr (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.abm81lMifn6q",
                       "tags": "",
                       "title": "Short (Jan) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abs81lMifn6q",
                       "tags": "",
                       "title": "Long (January) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abq81lMifn6q",
                       "tags": "",
                       "title": "Number (M1) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abo81lMifn6q",
                       "tags": "",
                       "title": "M/Q (M1/Q1) (Timeline)",
@@ -269,19 +269,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.month.in.year",
                 "tags": "date month year",
                 "title": "Month (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aby81lMifn6q",
                       "tags": "",
                       "title": "Number (Timeline)",
@@ -289,19 +289,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.month.in.quarter",
                 "tags": "date month quarter",
                 "title": "Month of Quarter (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.abE81lMifn6q",
                       "tags": "",
                       "title": "default (Timeline)",
@@ -309,33 +309,33 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.day.in.year",
                 "tags": "date day year",
                 "title": "Day of Year (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.abK81lMifn6q",
                       "tags": "",
                       "title": "Short (Sun) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abO81lMifn6q",
                       "tags": "",
                       "title": "Long (Sunday) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abM81lMifn6q",
                       "tags": "",
                       "title": "Number (1=Sunday) (Timeline)",
@@ -343,33 +343,33 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.day.in.week",
                 "tags": "date day week",
                 "title": "Day of Week (Sun-Sat) (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.abU81lMifn6q",
                       "tags": "",
                       "title": "Short (Mon) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abY81lMifn6q",
                       "tags": "",
                       "title": "Long (Monday) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.abW81lMifn6q",
                       "tags": "",
                       "title": "Number (1=Monday) (Timeline)",
@@ -377,19 +377,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.day.in.euweek",
                 "tags": "date day eu week",
                 "title": "Day of Week (Mon-Sun) (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.ab481lMifn6q",
                       "tags": "",
                       "title": "default (Timeline)",
@@ -397,19 +397,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.day.in.quarter",
                 "tags": "date day quarter",
                 "title": "Day of Quarter (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aca81lMifn6q",
                       "tags": "",
                       "title": "default (Timeline)",
@@ -417,19 +417,19 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.day.in.month",
                 "tags": "date day month",
                 "title": "Day of Month (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.aci81lMifn6q",
                       "tags": "",
                       "title": "US Short (Timeline)",
@@ -437,33 +437,33 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.quarter",
                 "tags": "date quarter",
                 "title": "Quarter/Year (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.act81lMifn6q",
                       "tags": "",
                       "title": "Short (Jan 2010) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.acx81lMifn6q",
                       "tags": "",
                       "title": "Long (January 2010) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.acv81lMifn6q",
                       "tags": "",
                       "title": "Number (1/2010) (Timeline)",
@@ -471,54 +471,54 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.month",
                 "tags": "date month",
                 "title": "Month/Year (Timeline)",
               },
             },
           },
-          Object {
-            "attribute": Object {
-              "content": Object {
-                "displayForms": Array [
-                  Object {
-                    "meta": Object {
+          {
+            "attribute": {
+              "content": {
+                "displayForms": [
+                  {
+                    "meta": {
                       "identifier": "timeline.date.mmddyyyy",
                       "tags": "",
                       "title": "mm/dd/yyyy (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.date.yyyymmdd",
                       "tags": "",
                       "title": "yyyy-mm-dd (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.date.mdyy",
                       "tags": "",
                       "title": "m/d/yy (no leading zeroes) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.date.long",
                       "tags": "",
                       "title": "Long (Mon, Jan 1, 2010) (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.date.ddmmyyyy",
                       "tags": "",
                       "title": "dd/mm/yyyy (Timeline)",
                     },
                   },
-                  Object {
-                    "meta": Object {
+                  {
+                    "meta": {
                       "identifier": "timeline.date.eddmmyyyy",
                       "tags": "",
                       "title": "dd-mm-yyyy (Timeline)",
@@ -526,7 +526,7 @@ Array [
                   },
                 ],
               },
-              "meta": Object {
+              "meta": {
                 "identifier": "timeline.date",
                 "tags": "date",
                 "title": "Date (Timeline)",
@@ -535,7 +535,7 @@ Array [
           },
         ],
       },
-      "meta": Object {
+      "meta": {
         "identifier": "timeline.dataset.dt",
         "tags": "",
         "title": "Date (Timeline)",
@@ -545,23 +545,23 @@ Array [
 ]
 `;
 
-exports[`bearLoad should load ldm 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "content": Object {
+exports[`bearLoad > should load ldm 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "content": {
           "dimension": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5202",
-          "displayForms": Array [
-            Object {
-              "content": Object {
+          "displayForms": [
+            {
+              "content": {
                 "expression": "[/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5029]",
                 "formOf": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5208",
               },
-              "links": Object {
+              "links": {
                 "elements": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5209/elements",
               },
-              "meta": Object {
+              "meta": {
                 "author": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
                 "category": "attributeDisplayForm",
                 "contributor": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
@@ -577,21 +577,21 @@ Object {
               },
             },
           ],
-          "fk": Array [
-            Object {
+          "fk": [
+            {
               "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5014",
               "multivalue": false,
               "type": "col",
             },
           ],
-          "pk": Array [
-            Object {
+          "pk": [
+            {
               "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5027",
               "type": "col",
             },
           ],
         },
-        "meta": Object {
+        "meta": {
           "author": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
           "category": "attribute",
           "contributor": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
@@ -607,21 +607,21 @@ Object {
         },
       },
     },
-    Object {
-      "attribute": Object {
-        "content": Object {
+    {
+      "attribute": {
+        "content": {
           "dimension": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/161",
-          "displayForms": Array [
-            Object {
-              "content": Object {
+          "displayForms": [
+            {
+              "content": {
                 "default": 1,
                 "expression": "[/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/153]",
                 "formOf": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/686",
               },
-              "links": Object {
+              "links": {
                 "elements": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/688/elements",
               },
-              "meta": Object {
+              "meta": {
                 "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
                 "category": "attributeDisplayForm",
                 "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
@@ -636,16 +636,16 @@ Object {
                 "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/688",
               },
             },
-            Object {
-              "content": Object {
+            {
+              "content": {
                 "expression": "[/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/155]",
                 "formOf": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/686",
                 "type": "GDC.link",
               },
-              "links": Object {
+              "links": {
                 "elements": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/687/elements",
               },
-              "meta": Object {
+              "meta": {
                 "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
                 "category": "attributeDisplayForm",
                 "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
@@ -661,22 +661,22 @@ Object {
               },
             },
           ],
-          "fk": Array [
-            Object {
+          "fk": [
+            {
               "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/9",
               "multivalue": false,
               "type": "col",
             },
           ],
           "linkAttributeDF": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/687",
-          "pk": Array [
-            Object {
+          "pk": [
+            {
               "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/151",
               "type": "col",
             },
           ],
         },
-        "meta": Object {
+        "meta": {
           "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
           "category": "attribute",
           "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
@@ -693,21 +693,21 @@ Object {
       },
     },
   ],
-  "facts": Array [
-    Object {
-      "fact": Object {
-        "content": Object {
-          "expr": Array [
-            Object {
+  "facts": [
+    {
+      "fact": {
+        "content": {
+          "expr": [
+            {
               "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/24",
               "type": "col",
             },
           ],
-          "folders": Array [
+          "folders": [
             "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/164",
           ],
         },
-        "meta": Object {
+        "meta": {
           "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
           "category": "fact",
           "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
@@ -723,20 +723,20 @@ Object {
         },
       },
     },
-    Object {
-      "fact": Object {
-        "content": Object {
-          "expr": Array [
-            Object {
+    {
+      "fact": {
+        "content": {
+          "expr": [
+            {
               "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/82",
               "type": "col",
             },
           ],
-          "folders": Array [
+          "folders": [
             "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/163",
           ],
         },
-        "meta": Object {
+        "meta": {
           "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
           "category": "fact",
           "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
@@ -753,20 +753,20 @@ Object {
       },
     },
   ],
-  "metrics": Array [
-    Object {
-      "metric": Object {
-        "content": Object {
+  "metrics": [
+    {
+      "metric": {
+        "content": {
           "expression": "SELECT COUNT([/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289])  BY [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289], ALL OTHER WHERE [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289] BETWEEN [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789]-3 AND [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789]",
           "format": "#,##0.00",
-          "tree": Object {
-            "content": Array [
-              Object {
-                "content": Array [
-                  Object {
-                    "content": Array [
-                      Object {
-                        "position": Object {
+          "tree": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "content": [
+                      {
+                        "position": {
                           "column": 27,
                           "line": 1,
                         },
@@ -774,7 +774,7 @@ Object {
                         "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
                       },
                     ],
-                    "position": Object {
+                    "position": {
                       "column": 21,
                       "line": 1,
                     },
@@ -782,61 +782,61 @@ Object {
                     "value": "COUNT",
                   },
                 ],
-                "position": Object {
+                "position": {
                   "column": 21,
                   "line": 1,
                 },
                 "type": "expression",
               },
-              Object {
-                "content": Array [
-                  Object {
-                    "position": Object {
+              {
+                "content": [
+                  {
+                    "position": {
                       "column": 84,
                       "line": 1,
                     },
                     "type": "attribute object",
                     "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
                   },
-                  Object {
-                    "content": Array [],
-                    "position": Object {
+                  {
+                    "content": [],
+                    "position": {
                       "column": 137,
                       "line": 1,
                     },
                     "type": "all other",
                   },
                 ],
-                "position": Object {
+                "position": {
                   "column": 81,
                   "line": 1,
                 },
                 "type": "by",
               },
-              Object {
-                "content": Array [
-                  Object {
-                    "content": Array [
-                      Object {
-                        "position": Object {
+              {
+                "content": [
+                  {
+                    "content": [
+                      {
+                        "position": {
                           "column": 153,
                           "line": 1,
                         },
                         "type": "attribute object",
                         "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
                       },
-                      Object {
-                        "content": Array [
-                          Object {
-                            "position": Object {
+                      {
+                        "content": [
+                          {
+                            "position": {
                               "column": 213,
                               "line": 1,
                             },
                             "type": "metric object",
                             "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789",
                           },
-                          Object {
-                            "position": Object {
+                          {
+                            "position": {
                               "column": 265,
                               "line": 1,
                             },
@@ -844,14 +844,14 @@ Object {
                             "value": "3",
                           },
                         ],
-                        "position": Object {
+                        "position": {
                           "column": 264,
                           "line": 1,
                         },
                         "type": "-",
                       },
-                      Object {
-                        "position": Object {
+                      {
+                        "position": {
                           "column": 271,
                           "line": 1,
                         },
@@ -859,31 +859,31 @@ Object {
                         "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789",
                       },
                     ],
-                    "position": Object {
+                    "position": {
                       "column": 205,
                       "line": 1,
                     },
                     "type": "between",
                   },
                 ],
-                "position": Object {
+                "position": {
                   "column": 147,
                   "line": 1,
                 },
                 "type": "where",
               },
             ],
-            "position": Object {
+            "position": {
               "column": 14,
               "line": 1,
             },
             "type": "metric",
           },
         },
-        "links": Object {
+        "links": {
           "explain2": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/867/explain2",
         },
-        "meta": Object {
+        "meta": {
           "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
           "category": "metric",
           "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
@@ -899,22 +899,22 @@ Object {
         },
       },
     },
-    Object {
-      "metric": Object {
-        "content": Object {
+    {
+      "metric": {
+        "content": {
           "expression": "SELECT COUNT([/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289])  BY [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289], ALL OTHER WHERE [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289] = [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789]",
-          "folders": Array [
+          "folders": [
             "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/788",
           ],
           "format": "#,##0.00",
-          "tree": Object {
-            "content": Array [
-              Object {
-                "content": Array [
-                  Object {
-                    "content": Array [
-                      Object {
-                        "position": Object {
+          "tree": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "content": [
+                      {
+                        "position": {
                           "column": 27,
                           "line": 1,
                         },
@@ -922,7 +922,7 @@ Object {
                         "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
                       },
                     ],
-                    "position": Object {
+                    "position": {
                       "column": 21,
                       "line": 1,
                     },
@@ -930,51 +930,51 @@ Object {
                     "value": "COUNT",
                   },
                 ],
-                "position": Object {
+                "position": {
                   "column": 21,
                   "line": 1,
                 },
                 "type": "expression",
               },
-              Object {
-                "content": Array [
-                  Object {
-                    "position": Object {
+              {
+                "content": [
+                  {
+                    "position": {
                       "column": 84,
                       "line": 1,
                     },
                     "type": "attribute object",
                     "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
                   },
-                  Object {
-                    "content": Array [],
-                    "position": Object {
+                  {
+                    "content": [],
+                    "position": {
                       "column": 137,
                       "line": 1,
                     },
                     "type": "all other",
                   },
                 ],
-                "position": Object {
+                "position": {
                   "column": 81,
                   "line": 1,
                 },
                 "type": "by",
               },
-              Object {
-                "content": Array [
-                  Object {
-                    "content": Array [
-                      Object {
-                        "position": Object {
+              {
+                "content": [
+                  {
+                    "content": [
+                      {
+                        "position": {
                           "column": 153,
                           "line": 1,
                         },
                         "type": "attribute object",
                         "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
                       },
-                      Object {
-                        "position": Object {
+                      {
+                        "position": {
                           "column": 207,
                           "line": 1,
                         },
@@ -982,31 +982,31 @@ Object {
                         "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789",
                       },
                     ],
-                    "position": Object {
+                    "position": {
                       "column": 205,
                       "line": 1,
                     },
                     "type": "=",
                   },
                 ],
-                "position": Object {
+                "position": {
                   "column": 147,
                   "line": 1,
                 },
                 "type": "where",
               },
             ],
-            "position": Object {
+            "position": {
               "column": 14,
               "line": 1,
             },
             "type": "metric",
           },
         },
-        "links": Object {
+        "links": {
           "explain2": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/880/explain2",
         },
-        "meta": Object {
+        "meta": {
           "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
           "category": "metric",
           "contributor": "/gdc/account/profile/ea6a1e8992361e1401d9accc9789cb5a",
@@ -1026,19 +1026,19 @@ Object {
 }
 `;
 
-exports[`bearLoad should load visualizations 1`] = `
-Array [
-  Object {
+exports[`bearLoad > should load visualizations 1`] = `
+[
+  {
     "identifier": "abhJpedgcfU2",
     "tags": "",
     "title": "Labor Costs vs Scheduled Costs",
   },
-  Object {
+  {
     "identifier": "acPWDTL2bJeX",
     "tags": "",
     "title": "Total Sales by City",
   },
-  Object {
+  {
     "identifier": "aaBN5UG3dXu4",
     "tags": "",
     "title": "$ Total Sales by Location",

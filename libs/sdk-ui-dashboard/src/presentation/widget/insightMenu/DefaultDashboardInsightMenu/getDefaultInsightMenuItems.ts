@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
-import { IInsightMenuItem } from "../types";
+import { IInsightMenuItem } from "../types.js";
 
 /**
  * @internal

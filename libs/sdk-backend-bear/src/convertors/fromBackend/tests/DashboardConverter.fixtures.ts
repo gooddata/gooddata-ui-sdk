@@ -9,7 +9,7 @@ import {
     GdcVisualizationObject,
     GdcVisualizationClass,
 } from "@gooddata/api-model-bear";
-import { BearDashboardDependency } from "../DashboardConverter";
+import { BearDashboardDependency } from "../DashboardConverter/index.js";
 
 const createObjectMeta = (id: string): GdcMetadata.IObjectMeta => ({
     identifier: id,

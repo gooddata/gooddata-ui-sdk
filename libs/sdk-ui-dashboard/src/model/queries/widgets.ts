@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
-import { IDashboardQuery } from "./base";
+import { IDashboardQuery } from "./base.js";
 
 /**
  * Given a reference to a widget, this query will obtain the filters that should be used when executing it.

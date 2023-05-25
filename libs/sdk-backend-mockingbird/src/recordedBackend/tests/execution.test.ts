@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
-
+import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewAll, dataViewWindow, recordedDataView } from "../execution";
+import { DataViewAll, dataViewWindow, recordedDataView } from "../execution.js";
 import { isIdentifierRef, isUriRef, ObjRef, isAttributeDescriptor } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { recordedBackend } from "../index";
+import { recordedBackend } from "../index.js";
 
 describe("recordedDataView", () => {
     it("should load data view with all data", () => {

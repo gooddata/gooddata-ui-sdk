@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
-import { VisualizationProperties } from "../insight";
-import { ObjRef } from "../objRef";
-import { IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget } from "./baseWidget";
-import { IDashboardObjectIdentity } from "./common";
-import { KpiDrillDefinition, InsightDrillDefinition } from "./drill";
-import { IKpi } from "./kpi";
+import { VisualizationProperties } from "../insight/index.js";
+import { ObjRef } from "../objRef/index.js";
+import { IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget } from "./baseWidget.js";
+import { IDashboardObjectIdentity } from "./common.js";
+import { KpiDrillDefinition, InsightDrillDefinition } from "./drill.js";
+import { IKpi } from "./kpi.js";
 
 /**
  * Reserved type names used for dashboard's built-in analytical widgets.

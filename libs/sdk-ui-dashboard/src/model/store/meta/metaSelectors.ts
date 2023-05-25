@@ -19,20 +19,20 @@ import {
     ShareStatus,
     IDashboardWidget,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { DashboardSelector, DashboardState } from "../types";
-import isUndefined from "lodash/isUndefined";
-import { selectBasicLayout } from "../layout/layoutSelectors";
+import { invariant } from "ts-invariant";
+import { DashboardSelector, DashboardState } from "../types.js";
+import isUndefined from "lodash/isUndefined.js";
+import { selectBasicLayout } from "../layout/layoutSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
     selectFilterContextDefinition,
     selectFilterContextIdentity,
-} from "../filterContext/filterContextSelectors";
+} from "../filterContext/filterContextSelectors.js";
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
-import isEqual from "lodash/isEqual";
-import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors";
-import { DashboardDescriptor } from "./metaState";
+import isEqual from "lodash/isEqual.js";
+import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
+import { DashboardDescriptor } from "./metaState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

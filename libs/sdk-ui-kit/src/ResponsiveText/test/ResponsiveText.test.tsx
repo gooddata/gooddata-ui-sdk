@@ -1,15 +1,16 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 
-import { ResponsiveText, IResponsiveTextProps } from "../ResponsiveText";
+import { ResponsiveText, IResponsiveTextProps } from "../ResponsiveText.js";
 
 describe("ResponsiveText", () => {
     function createWindowMock() {
         return {
-            addEventListener: jest.fn(),
-            removeEventListener: jest.fn(),
-            getComputedStyle: jest.fn(
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+            getComputedStyle: vi.fn(
                 (): any =>
                     ({
                         fontSize: "20px",

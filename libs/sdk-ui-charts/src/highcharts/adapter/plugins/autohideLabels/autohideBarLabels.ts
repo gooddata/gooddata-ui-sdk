@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import sortBy from "lodash/sortBy";
+import sortBy from "lodash/sortBy.js";
 
 import {
     isStacked,
@@ -9,7 +9,7 @@ import {
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
     IAxisRangeForAxes,
-} from "../../../chartTypes/_chartCreators/helpers";
+} from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
     hideDataLabels,
@@ -21,8 +21,8 @@ import {
     getShapeVisiblePart,
     areLabelsStacked,
     setStackVisibilityByOpacity,
-} from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
-import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels";
+} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
+import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
 
 const toggleStackedChartLabels = (visiblePoints: any[], axisRangeForAxes: IAxisRangeForAxes) => {
     const intersectionFound = visiblePoints.filter(hasDataLabel).some((point) => {

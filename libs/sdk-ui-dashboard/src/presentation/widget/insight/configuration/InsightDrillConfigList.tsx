@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import InsightDrillConfigItem from "./InsightDrillConfigItem";
-import { IDrillConfigItem } from "../../../drill/types";
-import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems";
+import InsightDrillConfigItem from "./InsightDrillConfigItem.js";
+import { IDrillConfigItem } from "../../../drill/types.js";
+import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems.js";
 import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 

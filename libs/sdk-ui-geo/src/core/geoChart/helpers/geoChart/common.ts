@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { BucketNames, DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
-import { IGeoData, IGeoPointsConfig } from "../../../../GeoChart";
+import { IGeoData, IGeoPointsConfig } from "../../../../GeoChart.js";
 import { bucketIsEmpty, bucketsFind, IBucket, DataValue, IResultHeader } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
-import { getResponsiveInfo } from "./responsive";
+import isEqual from "lodash/isEqual.js";
+import { getResponsiveInfo } from "./responsive.js";
 
 export function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData): IResultHeader[][] {
     const { color, size } = geoData;

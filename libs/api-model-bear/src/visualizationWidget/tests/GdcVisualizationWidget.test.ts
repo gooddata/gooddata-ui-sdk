@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
-
-import { GdcVisualizationWidget } from "../GdcVisualizationWidget";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { drillFromAttribute, drillFromMeasure } from "./GdcVisualizationWidget.fixtures";
+import { describe, it, expect } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isDrillFromAttribute, isDrillFromMeasure } from "../GdcVisualizationWidget.js";
+import { drillFromAttribute, drillFromMeasure } from "./GdcVisualizationWidget.fixtures.js";
 
 describe("GdcVisualizationWidget", () => {
     describe("DrillFromType", () => {
@@ -14,7 +14,7 @@ describe("GdcVisualizationWidget", () => {
             ];
 
             it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-                expect(GdcVisualizationWidget.isDrillFromMeasure(input)).toBe(expectedResult);
+                expect(isDrillFromMeasure(input)).toBe(expectedResult);
             });
         });
 
@@ -26,7 +26,7 @@ describe("GdcVisualizationWidget", () => {
             ];
 
             it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-                expect(GdcVisualizationWidget.isDrillFromAttribute(input)).toBe(expectedResult);
+                expect(isDrillFromAttribute(input)).toBe(expectedResult);
             });
         });
     });

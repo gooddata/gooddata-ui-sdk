@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
-import { updateContent, createTranslator } from "../metadataExt";
-import * as fixtures from "./metadataExt.fixtures";
+import { describe, expect, it } from "vitest";
+import { updateContent, createTranslator } from "../metadataExt.js";
+import * as fixtures from "./metadataExt.fixtures.js";
 
 const analyticalDashboard1 = fixtures.analyticalDashboard1;
 const analyticalDashboard2 = fixtures.analyticalDashboard2;

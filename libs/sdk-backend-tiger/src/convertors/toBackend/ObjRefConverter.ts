@@ -10,12 +10,12 @@ import {
 } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isIdentifierRef, isLocalIdRef, isUriRef, ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
-import { TigerAfmType, TigerObjectType } from "../../types";
+import { TigerAfmType, TigerObjectType } from "../../types/index.js";
 import {
     isTigerCompatibleType,
     objectTypeToTigerIdType,
     TigerCompatibleObjectType,
-} from "../../types/refTypeMapping";
+} from "../../types/refTypeMapping.js";
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly
 export function toTigerType(

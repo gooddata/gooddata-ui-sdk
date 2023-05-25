@@ -7,7 +7,7 @@ import {
     TranslationsCustomizationProvider,
 } from "@gooddata/sdk-ui";
 
-import { translations } from "./translations";
+import { translations } from "./translations.js";
 
 const formats: CustomFormats = {
     time: {

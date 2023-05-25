@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { DashboardContext, PrivateDashboardContext } from "../../types/commonTypes";
+import { DashboardContext, PrivateDashboardContext } from "../../types/commonTypes.js";
 import { getContext } from "redux-saga/effects";
 
 /**

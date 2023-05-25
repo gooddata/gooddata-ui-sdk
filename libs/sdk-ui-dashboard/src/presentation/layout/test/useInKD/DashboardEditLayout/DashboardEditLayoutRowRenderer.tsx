@@ -6,8 +6,8 @@ import { ScreenSize } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../DefaultDashboardLayoutRenderer";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes";
+} from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export interface IDashboardEditLayoutRowRendererOwnProps {
     layoutItems: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>[];

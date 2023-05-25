@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import React, { createContext, useContext, useDebugValue, useState } from "react";
-import noop from "lodash/noop";
-import { IPlaceholder } from "./base";
+import noop from "lodash/noop.js";
+import { IPlaceholder } from "./base.js";
 
 /**
  * @internal

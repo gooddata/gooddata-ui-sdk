@@ -1,16 +1,23 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 
 import {
     HubspotConversionTouchPointDialogBase,
     IHubspotFormField,
-} from "../HubspotConversionTouchPointDialogBase";
-import { IHubspotConversionTouchPointDialogBaseProps } from "../index";
+} from "../HubspotConversionTouchPointDialogBase.js";
+import { IHubspotConversionTouchPointDialogBaseProps } from "../index.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 interface IFormReadyProps {
     onFormReady: ($form: IHubspotFormField[]) => void;
@@ -18,14 +25,14 @@ interface IFormReadyProps {
 
 let formReadyCalled = false;
 
-jest.mock("@aaronhayes/react-use-hubspot-form", () => ({
-    useHubspotForm: jest.fn().mockImplementation((arg: IFormReadyProps) => {
+vi.mock("@aaronhayes/react-use-hubspot-form", () => ({
+    useHubspotForm: vi.fn().mockImplementation((arg: IFormReadyProps) => {
         if (!formReadyCalled) {
             arg.onFormReady([
                 {
                     name: "email",
                     value: "",
-                    click: jest.fn(),
+                    click: vi.fn(),
                 },
             ]);
             formReadyCalled = true;
@@ -43,8 +50,8 @@ describe("HubspotConversionTouchPointDialogBase", () => {
         return render(
             <IntlWrapper locale="en-US">
                 <HubspotConversionTouchPointDialogBase
-                    onClose={jest.fn()}
-                    onFormSubmitted={jest.fn()}
+                    onClose={vi.fn()}
+                    onFormSubmitted={vi.fn()}
                     values={{ email: "test@gooddata.com", clientId: "23984723" }}
                     dialogTitle="How can we help!"
                     hubspotPortalId="98798"
@@ -82,7 +89,7 @@ describe("HubspotConversionTouchPointDialogBase", () => {
     });
 
     it("Should call the onClose function when clicking on the cancel button", async () => {
-        const spyCancel = jest.fn();
+        const spyCancel = vi.fn();
         renderComponent({
             showCancelButton: true,
             onClose: spyCancel,

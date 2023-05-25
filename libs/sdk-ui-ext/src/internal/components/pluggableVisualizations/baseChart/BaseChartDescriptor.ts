@@ -6,16 +6,16 @@ import {
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     MAX_VISUALIZATION_HEIGHT,
     MIN_VISUALIZATION_HEIGHT,
     MIDDLE_VISUALIZATION_HEIGHT,
-} from "../constants";
-import { IDrillDownContext } from "../../../interfaces/Visualization";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+} from "../constants.js";
+import { IDrillDownContext } from "../../../interfaces/Visualization.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 
 export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     public abstract getFactory(): PluggableVisualizationFactory;

@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 
-import { ILegacyDashboard } from "../../../types";
+import { ILegacyDashboard } from "../../../types.js";
 
 /**
  * @public

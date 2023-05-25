@@ -1,18 +1,17 @@
 // (C) 2007-2021 GoodData Corporation
 import { CellClassParams } from "@ag-grid-community/all-modules";
-import { TableFacade } from "../tableFacade";
-import { ICorePivotTableProps } from "../../publicTypes";
-import { IGridRow } from "../data/resultTypes";
-import isEmpty from "lodash/isEmpty";
+import { TableFacade } from "../tableFacade.js";
+import { ICorePivotTableProps } from "../../publicTypes.js";
+import { IGridRow } from "../data/resultTypes.js";
+import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes";
+import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
-import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN } from "../base/constants";
-import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
-import last from "lodash/last";
-import { getCellClassNames } from "./cellUtils";
-import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./../base/constants";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL, ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN } from "../base/constants.js";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
+import last from "lodash/last.js";
+import { getCellClassNames } from "./cellUtils.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 

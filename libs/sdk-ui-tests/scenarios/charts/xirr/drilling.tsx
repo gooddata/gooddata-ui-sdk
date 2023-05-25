@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { IXirrProps, Xirr } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { SampleXirrMeasurePredicate } from "../../_infra/predicates";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { SampleXirrMeasurePredicate } from "../../_infra/predicates.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IXirrProps>("Xirr", Xirr)
     .withGroupNames(ScenarioGroupNames.Drilling)

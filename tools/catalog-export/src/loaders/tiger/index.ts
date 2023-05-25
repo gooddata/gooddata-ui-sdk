@@ -5,15 +5,15 @@ import {
     CatalogExportError,
     getConfiguredWorkspaceId,
     WorkspaceMetadata,
-} from "../../base/types";
+} from "../../base/types.js";
 import ora from "ora";
-import { logError, logInfo } from "../../cli/loggers";
-import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts";
+import { logError, logInfo } from "../../cli/loggers.js";
+import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts.js";
 import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
-import { tigerLoad } from "./tigerLoad";
-import { createTigerClient } from "./tigerClient";
+import { tigerLoad } from "./tigerLoad.js";
+import { createTigerClient } from "./tigerClient.js";
 import open from "open";
-import { API_TOKEN_VAR_NAME } from "../../base/constants";
+import { API_TOKEN_VAR_NAME } from "../../base/constants.js";
 
 /**
  * Tests if the provided tiger client can access the backend.

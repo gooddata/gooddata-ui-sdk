@@ -4,7 +4,7 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import PreviewRows from "../shared/PreviewRows";
+import PreviewRows from "../shared/PreviewRows.js";
 
 interface IExtendedPreviewState {
     expanded: boolean;

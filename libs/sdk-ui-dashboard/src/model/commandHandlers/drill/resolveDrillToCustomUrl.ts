@@ -1,6 +1,6 @@
 // (C) 2020-2023 GoodData Corporation
 import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
-import isNil from "lodash/isNil";
+import isNil from "lodash/isNil.js";
 import {
     IDrillEvent,
     IDrillEventIntersectionElement,
@@ -16,19 +16,19 @@ import {
     IAttributeDisplayFormMetadataObject,
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../types/commonTypes";
-import { PromiseFnReturnType } from "../../types/sagas";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 import { SagaIterator } from "redux-saga";
-import { selectDashboardId } from "../../store/meta/metaSelectors";
-import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors";
-import { getElementTitle } from "./getElementTitle";
-import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils";
-import { DrillToCustomUrl } from "../../commands/drill";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
-import groupBy from "lodash/groupBy";
-import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes";
+import { selectDashboardId } from "../../store/meta/metaSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { getElementTitle } from "./getElementTitle.js";
+import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils.js";
+import { DrillToCustomUrl } from "../../commands/drill.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import groupBy from "lodash/groupBy.js";
+import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 
 interface IDrillToUrlPlaceholderReplacement {
     toBeReplaced: string;
@@ -283,7 +283,7 @@ export function* resolveDrillToCustomUrl(
         throw invalidArgumentsProvided(
             ctx,
             cmd,
-            `Drill to custom URL unable to resolve missing paramter ${missingReplacement.toBeReplaced}`,
+            `Drill to custom URL unable to resolve missing parameter ${missingReplacement.toBeReplaced}`,
         );
     }
 

@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableBubbleChart should return reference point with secondary metric, tertiary metric and one category 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableBubbleChart > should return reference point with secondary metric, tertiary metric and one category 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -16,9 +16,9 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -29,9 +29,9 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -42,12 +42,12 @@ Object {
       ],
       "localIdentifier": "tertiary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -57,20 +57,20 @@ Object {
       "localIdentifier": "view",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -84,11 +84,11 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -96,12 +96,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -118,8 +118,8 @@ Object {
         "subtitle": "X-axis",
         "title": "Measure",
       },
-      "secondary_measures": Object {
-        "accepts": Array [
+      "secondary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -136,8 +136,8 @@ Object {
         "subtitle": "Y-axis",
         "title": "Measure",
       },
-      "tertiary_measures": Object {
-        "accepts": Array [
+      "tertiary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -154,8 +154,8 @@ Object {
         "subtitle": "Size",
         "title": "Measure",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -166,30 +166,30 @@ Object {
         "icon": "local:bubble/bucket-title-view-by.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableBubbleChart should return reference point with three measures and no attribute 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableBubbleChart > should return reference point with three measures and no attribute 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -200,9 +200,9 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -213,9 +213,9 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -226,20 +226,20 @@ Object {
       ],
       "localIdentifier": "tertiary_measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "view",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -247,12 +247,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -269,8 +269,8 @@ Object {
         "subtitle": "X-axis",
         "title": "Measure",
       },
-      "secondary_measures": Object {
-        "accepts": Array [
+      "secondary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -287,8 +287,8 @@ Object {
         "subtitle": "Y-axis",
         "title": "Measure",
       },
-      "tertiary_measures": Object {
-        "accepts": Array [
+      "tertiary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -305,8 +305,8 @@ Object {
         "subtitle": "Size",
         "title": "Measure",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -317,30 +317,30 @@ Object {
         "icon": "local:bubble/bucket-title-view-by.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableBubbleChart should return reference point with three measures and one category and only valid filters 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableBubbleChart > should return reference point with three measures and one category and only valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -351,9 +351,9 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -364,9 +364,9 @@ Object {
       ],
       "localIdentifier": "secondary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -377,12 +377,12 @@ Object {
       ],
       "localIdentifier": "tertiary_measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -392,20 +392,20 @@ Object {
       "localIdentifier": "view",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -419,11 +419,11 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -431,12 +431,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -453,8 +453,8 @@ Object {
         "subtitle": "X-axis",
         "title": "Measure",
       },
-      "secondary_measures": Object {
-        "accepts": Array [
+      "secondary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -471,8 +471,8 @@ Object {
         "subtitle": "Y-axis",
         "title": "Measure",
       },
-      "tertiary_measures": Object {
-        "accepts": Array [
+      "tertiary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -489,8 +489,8 @@ Object {
         "subtitle": "Size",
         "title": "Measure",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -501,20 +501,20 @@ Object {
         "icon": "local:bubble/bucket-title-view-by.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;

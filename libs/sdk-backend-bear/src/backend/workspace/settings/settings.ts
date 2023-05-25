@@ -7,9 +7,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 import { IFeatureFlags } from "@gooddata/api-client-bear";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../../utils/api";
-import { ANONYMOUS_USER_SETTINGS } from "../../constants";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../../utils/api.js";
+import { ANONYMOUS_USER_SETTINGS } from "../../constants.js";
 
 // settings which are ignored from user level as they can be set up only for project and above levels
 // no explicit type as every string is valid key from IUserWorkspaceSettings

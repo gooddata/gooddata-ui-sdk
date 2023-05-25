@@ -1,47 +1,47 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`changeAttributeSelectionModeHandler should emit the appropriate events for changed attribute filter selection mode 1`] = `
-Array [
-  Object {
+exports[`changeAttributeSelectionModeHandler > should emit the appropriate events for changed attribute filter selection mode 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`changeAttributeSelectionModeHandler should emit the appropriate events when trying to update selection mode of a non-existent attribute filter 1`] = `
-Array [
-  Object {
+exports[`changeAttributeSelectionModeHandler > should emit the appropriate events when trying to update selection mode of a non-existent attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
 `;
 
-exports[`changeAttributeSelectionModeHandler should set the attribute selection mode in state on changed attribute filter 1`] = `
-Object {
-  "attributeFilter": Object {
-    "attributeElements": Object {
-      "uris": Array [],
+exports[`changeAttributeSelectionModeHandler > should set the attribute selection mode in state on changed attribute filter 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
     },
-    "displayForm": Object {
+    "displayForm": {
       "uri": "/gdc/md/referenceworkspace/obj/1089",
     },
-    "filterElementsBy": Array [],
+    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
     "selectionMode": "single",

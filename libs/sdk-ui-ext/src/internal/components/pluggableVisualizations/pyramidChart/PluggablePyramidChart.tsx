@@ -1,11 +1,15 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../../interfaces/Visualization";
+import {
+    IVisConstruct,
+    IReferencePoint,
+    IExtendedReferencePoint,
+} from "../../../interfaces/Visualization.js";
 
-import { PluggablePieChart } from "../pieChart/PluggablePieChart";
-import PyramidChartConfigurationPanel from "../../configurationPanels/PyramidChartConfigurationPanel";
+import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
+import PyramidChartConfigurationPanel from "../../configurationPanels/PyramidChartConfigurationPanel.js";
 
-import { setPyramidChartUiConfig } from "../../../utils/uiConfigHelpers/pyramidChartUiConfigHelper";
+import { setPyramidChartUiConfig } from "../../../utils/uiConfigHelpers/pyramidChartUiConfigHelper.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 

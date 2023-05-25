@@ -3,10 +3,10 @@ import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 
-import { HeaderWorkspacePickerButton } from "./HeaderWorkspacePickerButton";
-import { HeaderWorkspacePickerItem } from "./HeaderWorkspacePickerItem";
-import { Dropdown, DropdownList } from "../Dropdown";
-import { NoData } from "../NoData";
+import { HeaderWorkspacePickerButton } from "./HeaderWorkspacePickerButton.js";
+import { HeaderWorkspacePickerItem } from "./HeaderWorkspacePickerItem.js";
+import { Dropdown, DropdownList } from "../Dropdown/index.js";
+import { NoData } from "../NoData/index.js";
 
 /**
  * @internal

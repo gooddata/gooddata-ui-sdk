@@ -1,9 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
 import { DataValue } from "@gooddata/sdk-model";
-import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
-import isEmpty from "lodash/isEmpty";
-import escape from "lodash/escape";
-import unescape from "lodash/unescape";
+import NumberJs from "@gooddata/numberjs";
+import isEmpty from "lodash/isEmpty.js";
+import escape from "lodash/escape.js";
+import unescape from "lodash/unescape.js";
 
 const customEscape = (str: string) => str && escape(unescape(str));
 
@@ -28,12 +28,12 @@ export type HeaderTranslator = (value: string | null) => string;
  * @param separators - number separators to use. if not specified then `numberjs` defaults will be used
  * @public
  */
-export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter {
+export function createNumberJsFormatter(separators?: NumberJs.ISeparators): ValueFormatter {
     return (value: DataValue, format: string) => {
         const valueToFormat = value === null && !isEmpty(format) ? "" : parseFloat(value as string);
 
-        const formattedValue = numberFormat(valueToFormat, format, undefined, separators);
-        const formattedObject: INumberObject = colors2Object(formattedValue);
+        const formattedValue = NumberJs.numberFormat(valueToFormat, format, undefined, separators);
+        const formattedObject: NumberJs.INumberObject = NumberJs.colors2Object(formattedValue);
 
         return customEscape(formattedObject.label);
     };

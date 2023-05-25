@@ -1,8 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { IAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "@gooddata/sdk-ui-filters";
+import { describe, it, expect } from "vitest";
 
-import { sanitizeDateFilterOption } from "../sanitization";
+import { sanitizeDateFilterOption } from "../sanitization.js";
 
 describe("sanitizeDateFilterOption", () => {
     type TestCaseCollection<T> = Array<[string, T, T]>;

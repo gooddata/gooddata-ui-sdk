@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { BlackColor, CustomColorPalette } from "../../_infra/colors";
-import { AmountMeasurePredicate } from "../../_infra/predicates";
-import { coloringCustomizer } from "../_infra/coloringVariants";
-import { LineChartTwoMeasuresWithTrendyBy } from "./base";
-import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { scenariosFor } from "../../../src/index.js";
+import { BlackColor, CustomColorPalette } from "../../_infra/colors.js";
+import { AmountMeasurePredicate } from "../../_infra/predicates.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
+import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const colorsAndPalette = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

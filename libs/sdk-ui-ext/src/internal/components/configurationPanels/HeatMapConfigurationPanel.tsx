@@ -3,22 +3,22 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import NameSubsection from "../configurationControls/axis/NameSubsection";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import ConfigSection from "../configurationControls/ConfigSection";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection";
-import { AxisType } from "../../interfaces/AxisType";
-import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/bucketHelper";
+} from "../../constants/bubble.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import { AxisType } from "../../interfaces/AxisType.js";
+import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/bucketHelper.js";
 import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
-import { messages } from "../../../locales";
+import { messages } from "../../../locales.js";
 
 export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

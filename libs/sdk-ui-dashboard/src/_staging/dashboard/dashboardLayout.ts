@@ -14,12 +14,12 @@ import {
     isDashboardLayout,
     ISettings,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact";
-import keyBy from "lodash/keyBy";
-import invariant, { InvariantError } from "ts-invariant";
-import { validateDashboardLayoutWidgetSize } from "../../presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing";
-import { ObjRefMap } from "../metadata/objRefMap";
-import { MeasurableWidgetContent } from "../../_staging/layout/sizing";
+import compact from "lodash/compact.js";
+import keyBy from "lodash/keyBy.js";
+import { invariant, InvariantError } from "ts-invariant";
+import { validateDashboardLayoutWidgetSize } from "../../presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.js";
+import { ObjRefMap } from "../metadata/objRefMap.js";
+import { MeasurableWidgetContent } from "../layout/sizing.js";
 
 function extractContentFromWidget(
     widget: IDashboardWidget,

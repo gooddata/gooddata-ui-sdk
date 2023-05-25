@@ -2,8 +2,8 @@
 
 import { useContext } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
-import { ToastMessageContext } from "./ToastMessageContext";
-import { IMessageDefinition, MessageType } from "./typings";
+import { ToastMessageContext } from "./ToastMessageContext.js";
+import { IMessageDefinition, MessageType } from "./typings.js";
 
 /**
  * @internal

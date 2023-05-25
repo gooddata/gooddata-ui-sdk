@@ -3,13 +3,13 @@ import { IInsightDefinition } from "@gooddata/sdk-model";
 import { DefaultLocale, ILocale, resolveLocale } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { chartConfigFromInsight } from "../../components/pluggableVisualizations/chartCodeGenUtils";
+import { chartConfigFromInsight } from "../../components/pluggableVisualizations/chartCodeGenUtils.js";
 import {
     geoConfigForInsightViewComponent,
     isGeoChart,
-} from "../../components/pluggableVisualizations/geoChart/geoConfigCodeGenerator";
-import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
-import { PropWithMeta } from "../embeddingCodeGenerator";
+} from "../../components/pluggableVisualizations/geoChart/geoConfigCodeGenerator.js";
+import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
+import { PropWithMeta } from "../embeddingCodeGenerator/index.js";
 
 /**
  * @internal

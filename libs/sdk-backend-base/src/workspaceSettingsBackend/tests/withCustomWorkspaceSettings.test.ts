@@ -1,7 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
-import identity from "lodash/identity";
-import { dummyBackend } from "../../dummyBackend";
-import { withCustomWorkspaceSettings } from "../index";
+import { describe, it, expect } from "vitest";
+import identity from "lodash/identity.js";
+import { dummyBackend } from "../../dummyBackend/index.js";
+import { withCustomWorkspaceSettings } from "../index.js";
 
 describe("withCustomWorkspaceSettings backend", () => {
     it("does no change if wrappers are not provided", async () => {

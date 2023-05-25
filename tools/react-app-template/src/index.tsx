@@ -2,7 +2,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import { App } from "./App";
+import { App } from "./App.js";
 
 // Include GoodData styles, needed for correct visualizations rendering
 // You may exclude some file if you're not planning to use all visualizations

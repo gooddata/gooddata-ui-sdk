@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
-import chunk from "lodash/chunk";
-import flatMap from "lodash/flatMap";
+import chunk from "lodash/chunk.js";
+import flatMap from "lodash/flatMap.js";
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -9,14 +9,15 @@ import {
     getLayoutWithoutGridHeights,
     validateDashboardLayoutWidgetSize,
     getDashboardLayoutWidgetDefaultGridWidth,
-} from "../sizing";
+} from "../sizing.js";
 import { VisType } from "@gooddata/sdk-ui";
 import {
     DashboardLayoutBuilder,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-} from "../../../../../_staging/dashboard/fluidLayout";
+} from "../../../../../_staging/dashboard/fluidLayout/index.js";
 import { idRef, newInsightDefinition, IDashboardLayoutSize, ScreenSize } from "@gooddata/sdk-model";
-import { ALL_SCREENS } from "../../../../constants";
+import { ALL_SCREENS } from "../../../../constants/index.js";
+import { describe, it, expect } from "vitest";
 
 export const allVisTypes: VisType[] = [
     "area",

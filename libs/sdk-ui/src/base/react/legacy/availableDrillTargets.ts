@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
-import uniqBy from "lodash/fp/uniqBy";
-import flatten from "lodash/flatten";
+import uniqBy from "lodash/fp/uniqBy.js";
+import flatten from "lodash/flatten.js";
 import { IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
 import {
     IAvailableDrillTargetAttribute,
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
-} from "../../vis/Events";
-import { DataViewFacade } from "../../results/facade";
+} from "../../vis/Events.js";
+import { DataViewFacade } from "../../results/facade.js";
 
 /**
  * @internal

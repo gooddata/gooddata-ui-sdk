@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 import { resolveLocale } from "@gooddata/sdk-ui";
 import {
@@ -8,9 +8,9 @@ import {
     EVENT_HANDLER,
     GET_VISUALIZATION,
     LOAD_COMPONENT,
-} from "./CustomElementAdapter";
+} from "./CustomElementAdapter.js";
 
-import { CustomElementContext } from "../context";
+import { CustomElementContext } from "../context.js";
 import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
 type IDashboard = typeof OriginalDashboard;
 
@@ -20,7 +20,7 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
     }
 
     async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-dashboard/esm/presentation/dashboard/Dashboard")).Dashboard;
+        return (await import("@gooddata/sdk-ui-dashboard")).Dashboard;
     }
 
     [GET_VISUALIZATION](Component: IDashboard, { backend, workspaceId, mapboxToken }: CustomElementContext) {

@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 
-import { IDashboardInsightMenuButtonProps } from "../types";
-import { DashboardInsightMenuButton } from "./DashboardInsightMenuButton";
+import { IDashboardInsightMenuButtonProps } from "../types.js";
+import { DashboardInsightMenuButton } from "./DashboardInsightMenuButton.js";
 
 /**
  * @internal

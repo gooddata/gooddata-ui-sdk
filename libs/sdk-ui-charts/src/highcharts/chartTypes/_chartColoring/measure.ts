@@ -17,9 +17,9 @@ import {
     IMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IColorMapping } from "../../../interfaces";
+import { IColorMapping } from "../../../interfaces/index.js";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" };
 

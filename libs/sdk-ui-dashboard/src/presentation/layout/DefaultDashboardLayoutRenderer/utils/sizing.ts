@@ -13,17 +13,17 @@ import {
     ScreenSize,
 } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
-import clamp from "lodash/clamp";
-import flatten from "lodash/flatten";
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
-import round from "lodash/round";
-import invariant from "ts-invariant";
+import clamp from "lodash/clamp.js";
+import flatten from "lodash/flatten.js";
+import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
+import round from "lodash/round.js";
+import { invariant } from "ts-invariant";
 
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout";
-import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout/index.js";
+import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout.js";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout.js";
 import {
     getDashboardLayoutItemHeightForGrid,
     MeasurableWidgetContent,
@@ -31,12 +31,12 @@ import {
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
-} from "../../../../_staging/layout/sizing";
+} from "../../../../_staging/layout/sizing.js";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
-} from "../../../constants";
+} from "../../../constants/index.js";
 
 /**
  * Unify dashboard layout items height for all screens.

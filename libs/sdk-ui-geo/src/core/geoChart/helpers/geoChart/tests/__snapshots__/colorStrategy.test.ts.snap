@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getColorStrategy should return GeoChartColorStrategy 1`] = `
-Array [
-  Object {
-    "color": Object {
+exports[`getColorStrategy > should return GeoChartColorStrategy 1`] = `
+[
+  {
+    "color": {
       "type": "guid",
       "value": "1",
     },
-    "headerItem": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+    "headerItem": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.uscities.city",
           "name": "City",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
           },
           "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
@@ -20,7 +20,7 @@ Array [
         "identifier": "label.uscities.city.location",
         "localIdentifier": "a_label.uscities.city.location",
         "name": "location",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
         },
         "type": "GDC.geo.pin",
@@ -31,19 +31,19 @@ Array [
 ]
 `;
 
-exports[`getColorStrategy should return GeoChartColorStrategy 2`] = `
-Array [
-  Object {
-    "color": Object {
+exports[`getColorStrategy > should return GeoChartColorStrategy 2`] = `
+[
+  {
+    "color": {
       "type": "guid",
       "value": "1",
     },
-    "headerItem": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+    "headerItem": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.uscities.city",
           "name": "City",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
           },
           "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
@@ -51,7 +51,7 @@ Array [
         "identifier": "label.uscities.city.location",
         "localIdentifier": "a_label.uscities.city.location",
         "name": "location",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
         },
         "type": "GDC.geo.pin",

@@ -5,9 +5,9 @@ import {
     IMappingHeader,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { IGridRow } from "../data/resultTypes";
-import { createDrillHeaders } from "./colDrillHeadersFactory";
-import { AnyCol } from "../structure/tableDescriptorTypes";
+import { IGridRow } from "../data/resultTypes.js";
+import { createDrillHeaders } from "./colDrillHeadersFactory.js";
+import { AnyCol } from "../structure/tableDescriptorTypes.js";
 
 export function isCellDrillable(
     colDescriptor: AnyCol,

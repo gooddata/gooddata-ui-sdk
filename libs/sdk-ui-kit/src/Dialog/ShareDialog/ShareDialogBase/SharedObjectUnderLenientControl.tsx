@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 
 import React from "react";
-import { useComponentLabelsContext } from "./ComponentLabelsContext";
+import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
 
-import { SharedObjectCheckboxControl } from "./SharedObjectCheckboxControl";
-import { ISharedObjectUnderLenientControlProps } from "./types";
+import { SharedObjectCheckboxControl } from "./SharedObjectCheckboxControl.js";
+import { ISharedObjectUnderLenientControlProps } from "./types.js";
 
 /**
  * @internal

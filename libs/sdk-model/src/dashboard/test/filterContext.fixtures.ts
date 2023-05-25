@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { uriRef } from "../../objRef/factory";
+import { uriRef } from "../../objRef/factory.js";
 import {
     IDashboardAttributeFilter,
     IDashboardAttributeFilterReference,
@@ -8,7 +8,7 @@ import {
     IFilterContext,
     IFilterContextDefinition,
     ITempFilterContext,
-} from "../filterContext";
+} from "../filterContext.js";
 
 export const dashboardAttributeFilter: IDashboardAttributeFilter = {
     attributeFilter: {

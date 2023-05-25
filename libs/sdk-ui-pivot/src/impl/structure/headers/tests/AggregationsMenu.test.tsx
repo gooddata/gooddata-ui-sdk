@@ -2,9 +2,9 @@
 import { act, render } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
-import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
-import AggregationsSubMenu from "../AggregationsSubMenu";
-import { AVAILABLE_TOTALS } from "../../../base/constants";
+import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu.js";
+import AggregationsSubMenu from "../AggregationsSubMenu.js";
+import { AVAILABLE_TOTALS } from "../../../base/constants.js";
 import {
     defWithFilters,
     emptyDef,
@@ -17,15 +17,16 @@ import {
 } from "@gooddata/sdk-model";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { TableDescriptor } from "../../tableDescriptor";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { TableDescriptor } from "../../tableDescriptor.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../AggregationsSubMenu", () => ({
+vi.mock("../AggregationsSubMenu", () => ({
     __esModule: true,
-    default: jest.fn(() => null),
+    default: vi.fn(() => null),
 }));
 
 const intlMock = createIntlMock({
@@ -44,8 +45,8 @@ describe("AggregationsMenu", () => {
     const getColumnTotals = () => [] as ITotal[];
     const getRowTotals = () => [] as ITotal[];
     const getTableDescriptor = () => tableDescriptor;
-    const onMenuOpenedChange = jest.fn();
-    const onAggregationSelect = jest.fn();
+    const onMenuOpenedChange = vi.fn();
+    const onAggregationSelect = vi.fn();
 
     function renderComponent(customProps: Partial<IAggregationsMenuProps> = {}) {
         return render(
@@ -70,7 +71,7 @@ describe("AggregationsMenu", () => {
     const tableHeaderSelector = ".s-table-header-menu";
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render opened main menu", () => {
@@ -190,7 +191,7 @@ describe("AggregationsMenu", () => {
     });
 
     it("should close on scroll", () => {
-        const onMenuOpenedChange = jest.fn();
+        const onMenuOpenedChange = vi.fn();
         renderComponent({ onMenuOpenedChange });
         act(() => {
             window.dispatchEvent(new Event("scroll"));

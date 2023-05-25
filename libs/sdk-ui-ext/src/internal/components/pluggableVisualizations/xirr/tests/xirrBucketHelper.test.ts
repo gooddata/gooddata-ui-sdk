@@ -1,8 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
-import { getXirrBuckets } from "../xirrBucketHelper";
-import { IReferencePoint, IBucketOfFun } from "../../../../interfaces/Visualization";
+import { getXirrBuckets } from "../xirrBucketHelper.js";
+import { IReferencePoint, IBucketOfFun } from "../../../../interfaces/Visualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { describe, it, expect } from "vitest";
 
 describe("xirrBucketHelper", () => {
     const validMeasureBucket: IBucketOfFun = {

@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
-import { mergeWorkspaceAndUserSettings } from "../settings";
+import { mergeWorkspaceAndUserSettings } from "../settings.js";
+import { describe, expect, it } from "vitest";
 
 describe("mergeWorkspaceAndUserSettings", () => {
     it("should prioritize user setting over project one", () => {

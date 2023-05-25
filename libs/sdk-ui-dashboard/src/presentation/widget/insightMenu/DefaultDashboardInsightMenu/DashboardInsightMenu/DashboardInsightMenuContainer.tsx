@@ -3,8 +3,8 @@ import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 
-import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle";
-import { RenderMode } from "../../../../../types";
+import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
+import { RenderMode } from "../../../../../types.js";
 
 interface IDashboardInsightMenuContainerProps {
     children: React.ReactNode;

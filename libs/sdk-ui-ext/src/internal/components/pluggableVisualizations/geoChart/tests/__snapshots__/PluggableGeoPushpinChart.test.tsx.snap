@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableGeoPushpinChart getExecution should generate virtual buckets for latitude and longitude from location 1`] = `
-Object {
-  "items": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`PluggableGeoPushpinChart > getExecution > should generate virtual buckets for latitude and longitude from location 1`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "latitude_df_identifier",
           "type": "displayForm",
         },
@@ -17,12 +17,12 @@ Object {
 }
 `;
 
-exports[`PluggableGeoPushpinChart getExecution should generate virtual buckets for latitude and longitude from location 2`] = `
-Object {
-  "items": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`PluggableGeoPushpinChart > getExecution > should generate virtual buckets for latitude and longitude from location 2`] = `
+{
+  "items": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "longitude_df_identifier",
           "type": "displayForm",
         },
@@ -34,12 +34,12 @@ Object {
 }
 `;
 
-exports[`PluggableGeoPushpinChart getExtendedReferencePoint should generate latitude/longitude and tooltipText to properties 1`] = `
-Object {
-  "controls": Object {
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should generate latitude/longitude and tooltipText to properties 1`] = `
+{
+  "controls": {
     "latitude": "/geo/attribute/displayform/uri/3",
     "longitude": "/geo/attribute/displayform/uri/4",
-    "points": Object {
+    "points": {
       "groupNearbyPoints": false,
     },
     "tooltipText": "/geo/attribute/displayform/uri/2",
@@ -47,13 +47,13 @@ Object {
 }
 `;
 
-exports[`PluggableGeoPushpinChart getExtendedReferencePoint should not generate latitude/longitude and tooltipText to properties when location item missing 1`] = `Object {}`;
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should not generate latitude/longitude and tooltipText to properties when location item missing 1`] = `{}`;
 
-exports[`PluggableGeoPushpinChart getExtendedReferencePoint should return a new reference point with geoPushpin UI config 1`] = `
-Object {
-  "buckets": Object {
-    "color": Object {
-      "accepts": Array [
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a new reference point with geoPushpin UI config 1`] = `
+{
+  "buckets": {
+    "color": {
+      "accepts": [
         "metric",
         "fact",
         "attribute",
@@ -70,8 +70,8 @@ Object {
       "subtitle": "Color",
       "title": "Measure",
     },
-    "filters": Object {
-      "accepts": Array [
+    "filters": {
+      "accepts": [
         "attribute",
         "date",
       ],
@@ -79,12 +79,12 @@ Object {
       "enabled": true,
       "isShowInPercentEnabled": false,
       "itemsLimit": 20,
-      "itemsLimitByType": Object {
+      "itemsLimitByType": {
         "date": 1,
       },
     },
-    "location": Object {
-      "accepts": Array [
+    "location": {
+      "accepts": [
         "attribute",
         "geo_attribute",
       ],
@@ -95,13 +95,13 @@ Object {
       "icon": "local:geoPushpin/bucket-title-location-icon.svg",
       "isShowInPercentEnabled": false,
       "itemsLimit": 1,
-      "itemsLimitByType": Object {
+      "itemsLimitByType": {
         "date": 1,
       },
       "title": "Location",
     },
-    "segment": Object {
-      "accepts": Array [
+    "segment": {
+      "accepts": [
         "attribute",
       ],
       "allowsReordering": false,
@@ -111,13 +111,13 @@ Object {
       "icon": "local:geoPushpin/bucket-title-segment-icon.svg",
       "isShowInPercentEnabled": false,
       "itemsLimit": 1,
-      "itemsLimitByType": Object {
+      "itemsLimitByType": {
         "date": 1,
       },
       "title": "Segment by",
     },
-    "size": Object {
-      "accepts": Array [
+    "size": {
+      "accepts": [
         "metric",
         "fact",
         "attribute",
@@ -135,19 +135,19 @@ Object {
       "title": "Measure",
     },
   },
-  "exportConfig": Object {
+  "exportConfig": {
     "supported": true,
   },
-  "noMetricAccepted": Object {
+  "noMetricAccepted": {
     "supported": true,
   },
-  "openAsReport": Object {
+  "openAsReport": {
     "supported": false,
   },
-  "recommendations": Object {},
-  "supportedLocationIcon": Object {
+  "recommendations": {},
+  "supportedLocationIcon": {
     "supported": true,
   },
-  "supportedOverTimeComparisonTypes": Array [],
+  "supportedOverTimeComparisonTypes": [],
 }
 `;

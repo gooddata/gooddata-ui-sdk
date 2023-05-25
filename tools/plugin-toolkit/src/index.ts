@@ -2,18 +2,18 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { Command, OptionValues, program } from "commander";
-import * as pkg from "../package.json";
-import { addPluginCmdAction } from "./addPluginCmd";
-import { initCmdAction } from "./initCmd";
-import { linkPluginCmdAction } from "./linkPluginCmd";
-import { unlinkPluginCmdAction } from "./unlinkPluginCmd";
-import { listCmdAction } from "./listCmds/listCmdAction";
-import { listDashboards } from "./listCmds/listDashboards";
-import { listDashboardPlugins } from "./listCmds/listDashboardPlugins";
-import { inspectCmdAction } from "./inspectCmds/inspectCmdAction";
-import { inspectDashboard } from "./inspectCmds/inspectDashboard";
-import { updatePluginParamCmdAction } from "./updatePluginParamsCmd";
-import { removePluginParamCmdAction } from "./removeParamsCmd";
+import pkg from "../package.json" assert { type: "json" };
+import { addPluginCmdAction } from "./addPluginCmd/index.js";
+import { initCmdAction } from "./initCmd/index.js";
+import { linkPluginCmdAction } from "./linkPluginCmd/index.js";
+import { unlinkPluginCmdAction } from "./unlinkPluginCmd/index.js";
+import { listCmdAction } from "./listCmds/listCmdAction.js";
+import { listDashboards } from "./listCmds/listDashboards.js";
+import { listDashboardPlugins } from "./listCmds/listDashboardPlugins.js";
+import { inspectCmdAction } from "./inspectCmds/inspectCmdAction.js";
+import { inspectDashboard } from "./inspectCmds/inspectDashboard.js";
+import { updatePluginParamCmdAction } from "./updatePluginParamsCmd/index.js";
+import { removePluginParamCmdAction } from "./removeParamsCmd/index.js";
 
 program
     .version(pkg.version)

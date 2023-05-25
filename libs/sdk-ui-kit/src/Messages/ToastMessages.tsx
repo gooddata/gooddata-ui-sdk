@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useContext } from "react";
-import { ToastMessageContext } from "./ToastMessageContext";
-import { Messages } from "./Messages";
+import { ToastMessageContext } from "./ToastMessageContext.js";
+import { Messages } from "./Messages.js";
 
 /**
  * @internal

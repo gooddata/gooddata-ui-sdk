@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 // (C) 2020-2022 GoodData Corporation
-require("dotenv").config();
-const { program } = require("commander");
-const axios = require("axios").default;
-const fs = require("fs").promises;
-const path = require("path");
-const mkdirp = require("mkdirp");
-const util = require("util");
-const exec = util.promisify(require("child_process").exec);
+import dotenv from "dotenv";
+import { program } from "commander";
+import axios from "axios";
+import fs from "fs/promises";
+import path from "path";
+import mkdirp from "mkdirp";
+import util from "util";
+import { exec } from "child_process";
+const execPromise = util.promisify(exec);
+
+dotenv.config();
 
 const DEFAULT_OUTPUT_DIR = "src/generated/";
 const DEFAULT_OUTPUT_FILE = "openapi-spec.json";
@@ -22,14 +25,34 @@ program
 
 const specs = [
     { path: "/api/v1/schemas/metadata", name: "metadata-json-api" },
-    { path: "/api/v1/schemas/afm", name: "afm-rest-api" },
+    {
+        path: "/api/v1/schemas/afm",
+        name: "afm-rest-api",
+        // Remove schemaOverrides once null values are in the OpenApi spec
+        // https://gooddata.atlassian.net/browse/NAS-4848
+        schemaOverrides: (schema) => {
+            schema.components.schemas.Element.properties.primaryTitle.nullable = true;
+            schema.components.schemas.Element.properties.title.nullable = true;
+            return schema;
+        },
+        // Remove when openapi-generator correctly generates null values in arrays
+        apiOverrides: (api) => {
+            // Replace AttributeFilterElements values
+            return api.replace("'values': Array<string>", "'values': Array<string | null>");
+        }
+    },
     { path: "/api/v1/schemas/scan", name: "scan-json-api" },
     { path: "/api/v1/schemas/auth", name: "auth-json-api" },
     { path: "/api/v1/schemas/export", name: "export-json-api" },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {
-    const { data } = await axios.get(specMeta.path);
+    let { data } = await axios.get(specMeta.path);
+
+    if (specMeta.schemaOverrides) {
+        data = specMeta.schemaOverrides(data);
+    }
+
     const resultPath = path.resolve(outputDir, specMeta.name, outputFile);
 
     await mkdirp(path.dirname(resultPath));
@@ -57,9 +80,17 @@ const generate = async (specMeta, outputDir, outputFile) => {
      * force use of a single request parameter for everything instead of using separate parameters (that would make the functions hard to use, they have many params).
      * useSingleRequestParameter=true
      */
-    await exec(
+    await execPromise(
         `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true`,
     );
+
+    if (specMeta.apiOverrides) {
+        const apiPath = `${outputPath}/api.ts`;
+        const buffer = await fs.readFile(apiPath);
+        let apiFileContent = buffer.toString();
+        const updatedApiFileContent = specMeta.apiOverrides(apiFileContent);
+        await fs.writeFile(apiPath, updatedApiFileContent);
+    }
 };
 
 const downloadAndGenerate = async (specMeta, outputDir, outputFile) => {

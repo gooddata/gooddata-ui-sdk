@@ -15,7 +15,7 @@ import {
     IKpiWidgetDescriptionConfiguration,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { InsightDescription } from "../../insight/configuration/InsightDescriptionConfig/InsightDescription";
+import { InsightDescription } from "../../insight/configuration/InsightDescriptionConfig/InsightDescription.js";
 
 interface IKpiDescriptionConfigProps {
     kpi: IKpiWidgetDefinition;

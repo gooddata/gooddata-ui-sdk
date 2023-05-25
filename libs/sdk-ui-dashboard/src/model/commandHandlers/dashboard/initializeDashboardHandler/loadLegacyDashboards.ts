@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { uriRef } from "@gooddata/sdk-model";
-import { ILegacyDashboard, ILegacyDashboardTab } from "../../../../types";
-import { DashboardContext } from "../../../types/commonTypes";
+import { ILegacyDashboard, ILegacyDashboardTab } from "../../../../types.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 export async function loadLegacyDashboards(ctx: DashboardContext): Promise<ILegacyDashboard[]> {
     const dashboardResponse = await getProjectDashboards(ctx.backend, ctx.workspace);

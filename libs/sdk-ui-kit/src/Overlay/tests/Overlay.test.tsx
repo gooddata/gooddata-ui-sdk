@@ -3,7 +3,8 @@ import React, { Component, forwardRef, createRef } from "react";
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 
-import { Overlay } from "../Overlay";
+import { Overlay } from "../Overlay.js";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 /**
  * @internal
@@ -56,8 +57,8 @@ const ComposedOverlay = forwardRef(function ComposedOverlay(props: any, ref) {
 
 function createEvent(options = {}) {
     return {
-        stopPropagation: jest.fn(),
-        preventDefault: jest.fn(),
+        stopPropagation: vi.fn(),
+        preventDefault: vi.fn(),
         ...options,
     };
 }
@@ -127,7 +128,7 @@ describe("Overlay", () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                     },
                 };
 
@@ -150,7 +151,7 @@ describe("Overlay", () => {
                     overlay: {
                         closeOnOutsideClick: true,
                         ignoreClicksOn: [clickedElement],
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                     },
                 };
 
@@ -174,7 +175,7 @@ describe("Overlay", () => {
                     overlay: {
                         closeOnOutsideClick: true,
                         ignoreClicksOnByClass: [".ignored-element"],
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                     },
                 };
 
@@ -194,11 +195,11 @@ describe("Overlay", () => {
 
             it("should call shouldCloseOnClick when clicked element is not ignored element", () => {
                 const clickedElement = renderClickedElement();
-                const shouldCloseOnClick = jest.fn(() => false);
+                const shouldCloseOnClick = vi.fn(() => false);
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                         shouldCloseOnClick,
                     },
                 };
@@ -223,7 +224,7 @@ describe("Overlay", () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                     },
                 };
 
@@ -242,7 +243,7 @@ describe("Overlay", () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                     },
                 };
 
@@ -265,7 +266,7 @@ describe("Overlay", () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
-                        onClose: jest.fn(),
+                        onClose: vi.fn(),
                     },
                 };
 
@@ -285,7 +286,7 @@ describe("Overlay", () => {
             it("should call onClose when ESC key pressed", () => {
                 const props = {
                     closeOnEscape: true,
-                    onClose: jest.fn(),
+                    onClose: vi.fn(),
                 };
 
                 renderOverlayComponent(props);
@@ -304,7 +305,7 @@ describe("Overlay", () => {
 
         describe("call handler on align", () => {
             it("should call onAlign method on align", () => {
-                const onAlignHandler = jest.fn();
+                const onAlignHandler = vi.fn();
 
                 const overlay: any = renderOverlaySetup(div, {
                     overlay: {

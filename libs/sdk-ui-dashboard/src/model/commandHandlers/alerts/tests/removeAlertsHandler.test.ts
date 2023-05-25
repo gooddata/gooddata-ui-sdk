@@ -1,27 +1,29 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { idRef, uriRef } from "@gooddata/sdk-model";
-import { RemoveAlerts, removeAlerts } from "../../../commands/alerts";
+import { RemoveAlerts, removeAlerts } from "../../../commands/alerts.js";
 import {
     BrokenFilterAlertsDashboardIdentifier,
     AlertForRemovedFiltersKpi,
     TestCorrelation,
-} from "../../../tests/fixtures/BrokenFilterAlerts.fixtures";
-import { DashboardAlertsRemoved } from "../../../events/alerts";
-import { selectAlertByRef } from "../../../store/alerts/alertsSelectors";
-import { DashboardCommandFailed } from "../../../events";
+} from "../../../tests/fixtures/BrokenFilterAlerts.fixtures.js";
+import { DashboardAlertsRemoved } from "../../../events/alerts.js";
+import { selectAlertByRef } from "../../../store/alerts/alertsSelectors.js";
+import { DashboardCommandFailed } from "../../../events/index.js";
+import { beforeEach, describe, it, expect } from "vitest";
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const alertRef = AlertForRemovedFiltersKpi.ref!;
     const alertsRefsArray = [alertRef];
 
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory(async (tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, BrokenFilterAlertsDashboardIdentifier),
-    );
+        }, BrokenFilterAlertsDashboardIdentifier);
+    });
 
     describe("remove", () => {
         it("should emit the appropriate events for remove alerts and propagate correlationId", async () => {

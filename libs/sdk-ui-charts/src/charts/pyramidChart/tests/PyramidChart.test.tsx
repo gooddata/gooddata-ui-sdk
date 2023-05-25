@@ -1,22 +1,23 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { PyramidChart } from "../PyramidChart";
+import { PyramidChart } from "../PyramidChart.js";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { CorePyramidChart } from "../CorePyramidChart";
+import { CorePyramidChart } from "../CorePyramidChart.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CorePyramidChart", () => ({
-    CorePyramidChart: jest.fn(() => null),
+vi.mock("../CorePyramidChart", () => ({
+    CorePyramidChart: vi.fn(() => null),
 }));
 
 describe("PyramidChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render with custom SDK", () => {

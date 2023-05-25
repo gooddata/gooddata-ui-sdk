@@ -9,10 +9,10 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 
-import { SecuritySettingsService } from "./securitySettings";
-import { TigerAuthenticatedCallGuard } from "../../types";
-import { OrganizationStylingService } from "./styling";
-import { OrganizationSettingsService } from "./settings";
+import { SecuritySettingsService } from "./securitySettings.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { OrganizationStylingService } from "./styling.js";
+import { OrganizationSettingsService } from "./settings.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(

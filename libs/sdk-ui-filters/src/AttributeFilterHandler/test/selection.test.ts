@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { newTestAttributeFilterHandler } from "./fixtures";
+import { newTestAttributeFilterHandler } from "./fixtures.js";
+import { describe, it, expect, vi } from "vitest";
 
 const changedSelection = {
     isInverted: true,
@@ -22,7 +23,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
     });
 
     it("changeSelection() should trigger onSelectionChanged() callback", async () => {
-        const onSelectionChanged = jest.fn();
+        const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.onSelectionChanged(onSelectionChanged);
@@ -41,7 +42,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
     });
 
     it("revertSelection() should trigger onSelectionChanged() callback", async () => {
-        const onSelectionChanged = jest.fn();
+        const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.changeSelection(changedSelection);
@@ -65,7 +66,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
     });
 
     it("invertSelection() should trigger onSelectionChanged() callback", async () => {
-        const onSelectionChanged = jest.fn();
+        const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.onSelectionChanged(onSelectionChanged);
@@ -88,7 +89,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
     });
 
     it("commitSelection() should trigger onSelectionCommitted() callback", async () => {
-        const onSelectionCommitted = jest.fn();
+        const onSelectionCommitted = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.onSelectionCommitted(onSelectionCommitted);
@@ -109,7 +110,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
     });
 
     it("clearSelection() should trigger onSelectionChanged() callback", async () => {
-        const onSelectionChanged = jest.fn();
+        const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.onSelectionChanged(onSelectionChanged);

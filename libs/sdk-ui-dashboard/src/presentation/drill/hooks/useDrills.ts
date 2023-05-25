@@ -15,14 +15,14 @@ import {
     OnDrillToCustomUrlSuccess,
     OnDrillToLegacyDashboard,
     OnDrillToLegacyDashboardSuccess,
-} from "../types";
-import { useDrill } from "../hooks/useDrill";
-import { useDrillDown } from "../hooks/useDrillDown";
-import { useDrillToInsight } from "../hooks/useDrillToInsight";
-import { useDrillToDashboard } from "../hooks/useDrillToDashboard";
-import { useDrillToAttributeUrl } from "../hooks/useDrillToAttributeUrl";
-import { useDrillToCustomUrl } from "../hooks/useDrillToCustomUrl";
-import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard";
+} from "../types.js";
+import { useDrill } from "./useDrill.js";
+import { useDrillDown } from "./useDrillDown.js";
+import { useDrillToInsight } from "./useDrillToInsight.js";
+import { useDrillToDashboard } from "./useDrillToDashboard.js";
+import { useDrillToAttributeUrl } from "./useDrillToAttributeUrl.js";
+import { useDrillToCustomUrl } from "./useDrillToCustomUrl.js";
+import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard.js";
 
 /**
  * @internal

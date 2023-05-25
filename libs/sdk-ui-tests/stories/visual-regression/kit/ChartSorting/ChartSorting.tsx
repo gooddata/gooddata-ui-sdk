@@ -1,15 +1,15 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { ChartSortingDialog, IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
 import { measureLocalId, attributeLocalId } from "@gooddata/sdk-model";
 import { ExperimentalMd } from "@gooddata/experimental-workspace";
 
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
-import { BackstopConfig } from "../../../_infra/backstopScenario";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 
 import {
     singleAttributeSortConfig,
@@ -18,7 +18,7 @@ import {
     multipleAttributesMultipleMetricsSortConfig,
     singleGenericDateAndMetricSortConfig,
     singleChronologicalDateSortConfig,
-} from "./ChartSortingMock";
+} from "./ChartSortingMock.js";
 
 import "./styles.scss";
 

@@ -5,10 +5,10 @@ import {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
     IDateFilterOptionsByType,
-} from "../interfaces";
+} from "../interfaces/index.js";
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
-import { convertPlatformDateStringToDate } from "../utils/DateConversions";
-import { messages } from "../../locales";
+import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
+import { messages } from "../../locales.js";
 
 const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     const errors: { [key in keyof IDateFilterOptionsByType]?: object } = {};

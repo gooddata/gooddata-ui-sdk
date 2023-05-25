@@ -2,7 +2,7 @@
 
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link AddDrillTargets} command.

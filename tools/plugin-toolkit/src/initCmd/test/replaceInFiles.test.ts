@@ -1,11 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import path from "path";
-import { replaceInFiles } from "../replaceInFiles";
+import { replaceInFiles } from "../replaceInFiles.js";
+import { describe, expect, it, vi } from "vitest";
 
 describe("replaceInFiles", () => {
     it("should replace values according to the spec", async () => {
         const readFileMock = async () => "foo bar baz buz";
-        const writeFileMock = jest.fn();
+        const writeFileMock = vi.fn();
 
         const spec = {
             directory: {

@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
-import { parseValue } from "../_util/common";
+import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+import { parseValue } from "../_util/common.js";
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,

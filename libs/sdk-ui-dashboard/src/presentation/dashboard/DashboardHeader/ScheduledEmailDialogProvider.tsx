@@ -2,9 +2,9 @@
 
 import React from "react";
 
-import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail";
+import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
 
-import { useDashboardScheduledEmails } from "../../../model";
+import { useDashboardScheduledEmails } from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
     const {

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import sumBy from "lodash/sumBy";
+import sumBy from "lodash/sumBy.js";
 
 /**
  * Ready resolver function is called to determine whether the screenshot div has

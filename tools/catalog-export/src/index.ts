@@ -5,28 +5,28 @@ import chalk from "chalk";
 import * as path from "path";
 import fs from "fs";
 import * as dotenv from "dotenv";
-import * as pkg from "../package.json";
-import { logBox, logError, logSuccess, printHeader } from "./cli/loggers";
-import { clearTerminal } from "./cli/clear";
-import { requestFilePath } from "./cli/prompts";
+import pkg from "../package.json" assert { type: "json" };
+import { logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
+import { clearTerminal } from "./cli/clear.js";
+import { requestFilePath } from "./cli/prompts.js";
 import {
     getConfigFromConfigFile,
     getConfigFromEnv,
     getConfigFromOptions,
     getConfigFromPackage,
     mergeConfigs,
-} from "./base/config";
+} from "./base/config.js";
 import {
     DEFAULT_CONFIG,
     DEFAULT_CONFIG_FILE_NAME,
     DEFAULT_HOSTNAME,
     DEFAULT_OUTPUT_FILE_NAME,
-} from "./base/constants";
-import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
-import { exportMetadataToTypescript } from "./exports/metaToTypescript";
-import { exportMetadataToJavascript } from "./exports/metaToJavascript";
-import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
-import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger";
+} from "./base/constants.js";
+import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types.js";
+import { exportMetadataToTypescript } from "./exports/metaToTypescript.js";
+import { exportMetadataToJavascript } from "./exports/metaToJavascript.js";
+import { loadWorkspaceMetadataFromBear } from "./loaders/bear/index.js";
+import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger/index.js";
 
 dotenv.config();
 

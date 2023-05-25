@@ -7,14 +7,14 @@ import {
     IGeoMeasureItem,
     IGeoSegmentItem,
     IGeoAttributeItem,
-} from "../../../../GeoChart";
+} from "../../../../GeoChart.js";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     dataValueAsFloat,
     getFormatFromExecutionResponse,
     getGeoAttributeHeaderItems,
     getMinMax,
-} from "./common";
+} from "./common.js";
 import {
     attributeDisplayFormRef,
     attributeLocalId,
@@ -32,7 +32,7 @@ import {
     resultHeaderName,
 } from "@gooddata/sdk-model";
 import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
-import findIndex from "lodash/findIndex";
+import findIndex from "lodash/findIndex.js";
 
 interface IBucketItemInfo {
     uri?: Identifier;

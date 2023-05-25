@@ -10,10 +10,11 @@ import {
     createValueOrUpdateCallbackTestCases,
     createEmptyDashboardLayoutItemBuilder,
     defaultItemXlSize,
-} from "./utils";
-import { DashboardLayoutBuilder } from "../layout";
-import { DashboardLayoutSectionBuilder } from "../section";
-import { DashboardLayoutItemBuilder } from "../item";
+} from "./utils.js";
+import { DashboardLayoutBuilder } from "../layout.js";
+import { DashboardLayoutSectionBuilder } from "../section.js";
+import { DashboardLayoutItemBuilder } from "../item.js";
+import { describe, it, expect } from "vitest";
 
 describe("DashboardLayoutItemBuilder", () => {
     describe("constructors", () => {

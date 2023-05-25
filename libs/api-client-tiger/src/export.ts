@@ -6,7 +6,7 @@ import {
     ActionsApiCreateTabularExportRequest,
     ActionsApiGetTabularExportRequest,
     TabularExportRequest,
-} from "./generated/export-json-api";
+} from "./generated/export-json-api/index.js";
 
 export const tigerExportClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
     new ActionsApi(undefined, "", axios);

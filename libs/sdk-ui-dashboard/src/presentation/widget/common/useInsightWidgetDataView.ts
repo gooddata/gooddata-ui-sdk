@@ -11,8 +11,8 @@ import {
 import { useMemo } from "react";
 import { insightSetFilters, IInsightWidget } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
-import { selectInsightByRef, useDashboardSelector } from "../../../model";
-import { useWidgetFilters } from "./useWidgetFilters";
+import { selectInsightByRef, useDashboardSelector } from "../../../model/index.js";
+import { useWidgetFilters } from "./useWidgetFilters.js";
 
 /**
  * Configuration for the `useInsightWidgetDataView` hook.

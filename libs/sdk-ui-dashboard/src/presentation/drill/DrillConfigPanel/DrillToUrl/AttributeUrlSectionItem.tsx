@@ -1,7 +1,7 @@
 // (C) 2020-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
-import { IAttributeWithDisplayForm } from "./types";
+import { IAttributeWithDisplayForm } from "./types.js";
 
 export interface IAttributeUrlSectionItemProps {
     item: IAttributeWithDisplayForm;

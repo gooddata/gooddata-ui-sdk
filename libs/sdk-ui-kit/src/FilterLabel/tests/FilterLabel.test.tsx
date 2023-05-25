@@ -2,9 +2,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect } from "vitest";
 
-import { FilterLabel } from "../FilterLabel";
-import { IFilterLabelProps } from "../typings";
+import { FilterLabel } from "../FilterLabel.js";
+import { IFilterLabelProps } from "../typings.js";
 
 const customMessages = {
     "gs.filterLabel.none": "None",

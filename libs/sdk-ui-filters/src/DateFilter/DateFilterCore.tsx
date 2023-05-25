@@ -1,19 +1,25 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import flow from "lodash/flow";
-import noop from "lodash/noop";
+import flow from "lodash/flow.js";
+import noop from "lodash/noop.js";
+import DefaultMediaQuery from "react-responsive";
+import { defaultImport } from "default-import";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
-import MediaQuery from "react-responsive";
-import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces";
+import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { MediaQueries } from "../constants";
-import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
-import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
-import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion";
-import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform";
-import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils";
-import format from "date-fns/format";
+import { MediaQueries } from "../constants/index.js";
+import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
+import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
+import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
+import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
+import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
+import format from "date-fns/format/index.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/49189#issuecomment-1137802865
+const MediaQuery = defaultImport(DefaultMediaQuery);
 
 export interface IDateFilterCoreProps {
     dateFormat: string;

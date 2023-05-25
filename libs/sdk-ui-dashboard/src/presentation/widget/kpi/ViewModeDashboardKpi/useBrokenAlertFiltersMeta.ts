@@ -19,9 +19,9 @@ import {
     IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { IAttributeFilterMetaCollection } from "./KpiAlerts";
+import { IAttributeFilterMetaCollection } from "./KpiAlerts/index.js";
 
-import { IBrokenAlertFilterBasicInfo, isBrokenAlertAttributeFilterInfo } from "../../../../model";
+import { IBrokenAlertFilterBasicInfo, isBrokenAlertAttributeFilterInfo } from "../../../../model/index.js";
 
 export interface IBrokenAlertFiltersMeta {
     attributeFiltersMeta: IAttributeFilterMetaCollection;

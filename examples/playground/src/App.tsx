@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { createBackend } from "./createBackend";
+import { createBackend } from "./createBackend.js";
 
 function hasCredentialsSetup(): boolean {
     if (BACKEND_TYPE === "tiger") {

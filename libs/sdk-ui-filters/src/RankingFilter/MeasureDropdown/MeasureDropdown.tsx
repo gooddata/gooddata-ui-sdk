@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { IMeasureDropdownItem } from "../types";
-import { MeasureDropdownBody } from "./MeasureDropdownBody";
+import { IMeasureDropdownItem } from "../types.js";
+import { MeasureDropdownBody } from "./MeasureDropdownBody.js";
 
 interface IMeasureDropdownProps {
     items: IMeasureDropdownItem[];

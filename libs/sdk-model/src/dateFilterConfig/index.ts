@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { Identifier, ObjRef } from "../objRef";
+import isEmpty from "lodash/isEmpty.js";
+import { Identifier, ObjRef } from "../objRef/index.js";
 
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'

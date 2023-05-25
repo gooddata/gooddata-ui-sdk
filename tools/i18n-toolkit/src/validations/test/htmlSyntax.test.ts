@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
 import { getHtmlSyntaxCheck } from "../htmlSyntax";
+import { describe, it, expect } from "vitest";
 
 type Scenario = [string, string, string | null];
 
@@ -15,7 +16,7 @@ describe("validate html message tests", () => {
         ],
     ];
 
-    it.each(scenarios)("validate %s", async (_, msg, err) => {
+    it.each(scenarios)("validate %s", async (_: any, msg: any, err: any) => {
         if (err) {
             await expect(getHtmlSyntaxCheck([msg])).rejects.toThrowError(err);
         } else {

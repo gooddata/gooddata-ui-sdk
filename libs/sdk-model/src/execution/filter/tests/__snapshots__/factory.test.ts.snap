@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`filter factory newAbsoluteDateFilter should generate correct filter 1`] = `
-Object {
-  "absoluteDateFilter": Object {
-    "dataSet": Object {
+exports[`filter factory > newAbsoluteDateFilter > should generate correct filter 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataSet": {
       "identifier": "foo",
     },
     "from": "2018-01-01",
@@ -12,148 +12,148 @@ Object {
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate comparison filter for measure identifier 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "comparison": Object {
+exports[`filter factory > newMeasureValueFilter > should generate comparison filter for measure identifier 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
         "operator": "EQUAL_TO",
         "value": 11,
       },
     },
-    "measure": Object {
+    "measure": {
       "identifier": "identifier",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate comparison filter for measure local identifier 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "comparison": Object {
+exports[`filter factory > newMeasureValueFilter > should generate comparison filter for measure local identifier 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
         "operator": "EQUAL_TO",
         "value": 11,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "measureObjLocalId",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate comparison filter for measure object 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "comparison": Object {
+exports[`filter factory > newMeasureValueFilter > should generate comparison filter for measure object 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
         "operator": "EQUAL_TO",
         "value": 11,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate comparison filter for measure object with treatNullValuesAs 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "comparison": Object {
+exports[`filter factory > newMeasureValueFilter > should generate comparison filter for measure object with treatNullValuesAs 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
         "operator": "EQUAL_TO",
         "treatNullValuesAs": 42,
         "value": 11,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate range filter for measure object 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "range": Object {
+exports[`filter factory > newMeasureValueFilter > should generate range filter for measure object 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
         "from": 0,
         "operator": "BETWEEN",
         "to": 100,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate range filter for measure object with treatNullValuesAs 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "range": Object {
+exports[`filter factory > newMeasureValueFilter > should generate range filter for measure object with treatNullValuesAs 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
         "from": 0,
         "operator": "BETWEEN",
         "to": 100,
         "treatNullValuesAs": 42,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate ranger filter for measure identifier 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "range": Object {
+exports[`filter factory > newMeasureValueFilter > should generate ranger filter for measure identifier 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
         "from": 0,
         "operator": "BETWEEN",
         "to": 100,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "measureObjLocalId",
     },
   },
 }
 `;
 
-exports[`filter factory newMeasureValueFilter should generate ranger filter for measure local identifier 1`] = `
-Object {
-  "measureValueFilter": Object {
-    "condition": Object {
-      "range": Object {
+exports[`filter factory > newMeasureValueFilter > should generate ranger filter for measure local identifier 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
         "from": 0,
         "operator": "BETWEEN",
         "to": 100,
       },
     },
-    "measure": Object {
+    "measure": {
       "localIdentifier": "measureObjLocalId",
     },
   },
 }
 `;
 
-exports[`filter factory newNegativeAttributeFilter should generate correct filter 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newNegativeAttributeFilter > should generate correct filter 1`] = `
+{
+  "negativeAttributeFilter": {
+    "displayForm": {
       "identifier": "foo",
     },
-    "notIn": Object {
-      "uris": Array [
+    "notIn": {
+      "uris": [
         "bar",
         "baz",
       ],
@@ -162,15 +162,15 @@ Object {
 }
 `;
 
-exports[`filter factory newNegativeAttributeFilter should generate correct filter when input is IAttribute instance 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newNegativeAttributeFilter > should generate correct filter when input is IAttribute instance 1`] = `
+{
+  "negativeAttributeFilter": {
+    "displayForm": {
       "identifier": "label.account.id.name",
       "type": "displayForm",
     },
-    "notIn": Object {
-      "values": Array [
+    "notIn": {
+      "values": [
         "bar",
         "baz",
       ],
@@ -179,14 +179,14 @@ Object {
 }
 `;
 
-exports[`filter factory newNegativeAttributeFilter should generate correct textual filter 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newNegativeAttributeFilter > should generate correct textual filter 1`] = `
+{
+  "negativeAttributeFilter": {
+    "displayForm": {
       "identifier": "foo",
     },
-    "notIn": Object {
-      "values": Array [
+    "notIn": {
+      "values": [
         "bar",
         "baz",
       ],
@@ -195,14 +195,14 @@ Object {
 }
 `;
 
-exports[`filter factory newNegativeAttributeFilter should generate correct textual filter when input is array of values 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newNegativeAttributeFilter > should generate correct textual filter when input is array of values 1`] = `
+{
+  "negativeAttributeFilter": {
+    "displayForm": {
       "identifier": "foo",
     },
-    "notIn": Object {
-      "values": Array [
+    "notIn": {
+      "values": [
         "bar",
         "baz",
       ],
@@ -211,15 +211,15 @@ Object {
 }
 `;
 
-exports[`filter factory newPositiveAttributeFilter should generate correct filter attribute object is on input 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newPositiveAttributeFilter > should generate correct filter attribute object is on input 1`] = `
+{
+  "positiveAttributeFilter": {
+    "displayForm": {
       "identifier": "label.account.id.name",
       "type": "displayForm",
     },
-    "in": Object {
-      "values": Array [
+    "in": {
+      "values": [
         "bar",
         "baz",
       ],
@@ -228,14 +228,14 @@ Object {
 }
 `;
 
-exports[`filter factory newPositiveAttributeFilter should generate correct uri filter 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newPositiveAttributeFilter > should generate correct uri filter 1`] = `
+{
+  "positiveAttributeFilter": {
+    "displayForm": {
       "identifier": "foo",
     },
-    "in": Object {
-      "uris": Array [
+    "in": {
+      "uris": [
         "bar",
         "baz",
       ],
@@ -244,14 +244,14 @@ Object {
 }
 `;
 
-exports[`filter factory newPositiveAttributeFilter should generate correct value filter 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newPositiveAttributeFilter > should generate correct value filter 1`] = `
+{
+  "positiveAttributeFilter": {
+    "displayForm": {
       "identifier": "foo",
     },
-    "in": Object {
-      "values": Array [
+    "in": {
+      "values": [
         "bar",
         "baz",
       ],
@@ -260,14 +260,14 @@ Object {
 }
 `;
 
-exports[`filter factory newPositiveAttributeFilter should generate correct value filter when input is array of values 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "displayForm": Object {
+exports[`filter factory > newPositiveAttributeFilter > should generate correct value filter when input is array of values 1`] = `
+{
+  "positiveAttributeFilter": {
+    "displayForm": {
       "identifier": "foo",
     },
-    "in": Object {
-      "values": Array [
+    "in": {
+      "values": [
         "bar",
         "baz",
       ],
@@ -276,10 +276,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate bottom filter for measure object 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measure": Object {
+exports[`filter factory > newRankingFilter > should generate bottom filter for measure object 1`] = `
+{
+  "rankingFilter": {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "BOTTOM",
@@ -288,18 +288,18 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute identifiers 1`] = `
-Object {
-  "rankingFilter": Object {
-    "attributes": Array [
-      Object {
+exports[`filter factory > newRankingFilter > should generate bottom filter for measure object and attribute identifiers 1`] = `
+{
+  "rankingFilter": {
+    "attributes": [
+      {
         "identifier": "label.owner.department",
       },
-      Object {
+      {
         "identifier": "label.account.id",
       },
     ],
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "BOTTOM",
@@ -308,18 +308,18 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute local identifiers 1`] = `
-Object {
-  "rankingFilter": Object {
-    "attributes": Array [
-      Object {
+exports[`filter factory > newRankingFilter > should generate bottom filter for measure object and attribute local identifiers 1`] = `
+{
+  "rankingFilter": {
+    "attributes": [
+      {
         "localIdentifier": "a_label.owner.department",
       },
-      Object {
+      {
         "localIdentifier": "a_label.account.id",
       },
     ],
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "BOTTOM",
@@ -328,18 +328,18 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute local identifiers refs 1`] = `
-Object {
-  "rankingFilter": Object {
-    "attributes": Array [
-      Object {
+exports[`filter factory > newRankingFilter > should generate bottom filter for measure object and attribute local identifiers refs 1`] = `
+{
+  "rankingFilter": {
+    "attributes": [
+      {
         "localIdentifier": "a_label.owner.department",
       },
-      Object {
+      {
         "localIdentifier": "a_label.account.id",
       },
     ],
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "BOTTOM",
@@ -348,18 +348,18 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute objects 1`] = `
-Object {
-  "rankingFilter": Object {
-    "attributes": Array [
-      Object {
+exports[`filter factory > newRankingFilter > should generate bottom filter for measure object and attribute objects 1`] = `
+{
+  "rankingFilter": {
+    "attributes": [
+      {
         "localIdentifier": "a_label.owner.department",
       },
-      Object {
+      {
         "localIdentifier": "a_label.account.id.name",
       },
     ],
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "BOTTOM",
@@ -368,10 +368,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate top filter for measure identifier 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measure": Object {
+exports[`filter factory > newRankingFilter > should generate top filter for measure identifier 1`] = `
+{
+  "rankingFilter": {
+    "measure": {
       "identifier": "identifier",
     },
     "operator": "BOTTOM",
@@ -380,10 +380,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate top filter for measure local identifier 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measure": Object {
+exports[`filter factory > newRankingFilter > should generate top filter for measure local identifier 1`] = `
+{
+  "rankingFilter": {
+    "measure": {
       "localIdentifier": "measureObjLocalId",
     },
     "operator": "TOP",
@@ -392,10 +392,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate top filter for measure local identifier ref 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measure": Object {
+exports[`filter factory > newRankingFilter > should generate top filter for measure local identifier ref 1`] = `
+{
+  "rankingFilter": {
+    "measure": {
       "localIdentifier": "measureObjLocalId",
     },
     "operator": "TOP",
@@ -404,10 +404,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate top filter for measure object 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measure": Object {
+exports[`filter factory > newRankingFilter > should generate top filter for measure object 1`] = `
+{
+  "rankingFilter": {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "TOP",
@@ -416,10 +416,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should remove empty array of attributes as it's invalid state 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measure": Object {
+exports[`filter factory > newRankingFilter > should remove empty array of attributes as it's invalid state 1`] = `
+{
+  "rankingFilter": {
+    "measure": {
       "localIdentifier": "m_afSEwRwdbMeQ",
     },
     "operator": "BOTTOM",
@@ -428,10 +428,10 @@ Object {
 }
 `;
 
-exports[`filter factory newRelativeDateFilter should generate correct filter 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataSet": Object {
+exports[`filter factory > newRelativeDateFilter > should generate correct filter 1`] = `
+{
+  "relativeDateFilter": {
+    "dataSet": {
       "identifier": "foo",
     },
     "from": 1,

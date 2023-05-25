@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
-import { IChartConfig } from "../../../../interfaces";
-import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../Headlines";
-import isEmpty from "lodash/isEmpty";
-import isNaN from "lodash/isNaN";
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../Headlines.js";
+import isEmpty from "lodash/isEmpty.js";
+import isNaN from "lodash/isNaN.js";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";

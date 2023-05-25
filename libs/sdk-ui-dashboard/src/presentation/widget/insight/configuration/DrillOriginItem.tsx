@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { selectEnableRenamingMeasureToMetric, useDashboardSelector } from "../../../../model";
+import { selectEnableRenamingMeasureToMetric, useDashboardSelector } from "../../../../model/index.js";
 
 export interface IDrillOriginItemProps {
     title: string;

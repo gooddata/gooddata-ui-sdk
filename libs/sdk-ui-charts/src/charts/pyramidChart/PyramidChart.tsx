@@ -9,11 +9,11 @@ import {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { roundChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CorePyramidChart } from "./CorePyramidChart";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { roundChartDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CorePyramidChart } from "./CorePyramidChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

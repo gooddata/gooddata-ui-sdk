@@ -6,7 +6,7 @@ import {
     convertFilterContext,
     convertScheduledMail,
     convertWidget,
-} from "../DashboardConverter";
+} from "../DashboardConverter.js";
 import {
     emptyDashboard,
     dashboardWithFilterContext,
@@ -22,7 +22,8 @@ import {
     dashboardWithLayoutAndCustomGridHeight,
     drillToDashboardWithDrillFromMeasure,
     drillToDashboardWithDrillFromAttribute,
-} from "./DashboardConverter.fixtures";
+} from "./DashboardConverter.fixtures.js";
+import { describe, expect, it } from "vitest";
 
 describe("dashboard converter", () => {
     describe("convert dashboard", () => {

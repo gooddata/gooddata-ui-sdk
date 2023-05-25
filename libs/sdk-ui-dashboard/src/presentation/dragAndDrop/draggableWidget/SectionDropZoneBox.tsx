@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { DashboardLayoutSectionBorder } from "./DashboardLayoutSectionBorder";
+import { DashboardLayoutSectionBorder } from "./DashboardLayoutSectionBorder/index.js";
 
 export interface ISectionDropZoneBoxProps {
     isOver: boolean;

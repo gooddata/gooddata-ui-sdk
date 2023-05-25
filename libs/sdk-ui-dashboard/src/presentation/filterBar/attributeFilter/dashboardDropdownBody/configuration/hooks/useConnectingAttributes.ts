@@ -8,7 +8,7 @@ import {
     useDashboardQueryProcessing,
     selectSupportsElementsQueryParentFiltering,
     useDashboardSelector,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 interface IUseConnectingAttributesResult {

@@ -16,7 +16,7 @@ import {
     IAttributeMetadataObject,
     IMetadataObject,
 } from "@gooddata/sdk-model";
-import values from "lodash/values";
+import values from "lodash/values.js";
 
 /**
  * Configuration for the ObjRefMap.

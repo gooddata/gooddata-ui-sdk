@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isLocalIdRef,
@@ -26,12 +26,12 @@ import {
     IDrillEvent,
     IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
-import first from "lodash/first";
-import last from "lodash/last";
-import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types";
-import isEqual from "lodash/isEqual";
+import first from "lodash/first.js";
+import last from "lodash/last.js";
+import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types.js";
+import isEqual from "lodash/isEqual.js";
 
-export { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-model/dist/dashboard/drillUrl";
+export { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-model/internal";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;

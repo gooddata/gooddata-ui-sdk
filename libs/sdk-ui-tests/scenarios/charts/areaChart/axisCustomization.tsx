@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { AreaChartWithTwoMeasuresAndViewBy } from "./base";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
 import { IAreaChartProps, AreaChart } from "@gooddata/sdk-ui-charts";
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)

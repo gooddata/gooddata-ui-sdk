@@ -1,28 +1,30 @@
 // (C) 2021-2023 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands";
-import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { DashboardCopySaved, DashboardSaved } from "../../../events";
-import { selectBasicLayout } from "../../../store/layout/layoutSelectors";
-import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils";
-import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
+import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { DashboardCopySaved, DashboardSaved } from "../../../events/index.js";
+import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
+import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
+import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
 import {
     selectDashboardDescriptor,
     selectDashboardTitle,
     selectPersistedDashboard,
-} from "../../../store/meta/metaSelectors";
+} from "../../../store/meta/metaSelectors.js";
 import {
     LockedDashboardIdentifier,
     TestCorrelation as TestCorrelationLocked,
-} from "../../../tests/fixtures/LockedDashboard.fixtures";
+} from "../../../tests/fixtures/LockedDashboard.fixtures.js";
 
 describe("save as dashboard handler", () => {
     describe("for a new dashboard", () => {
         let Tester: DashboardTester;
         // each test starts with a new dashboard
-        beforeEach(
-            preloadedTesterFactory(
+
+        beforeEach(async () => {
+            await preloadedTesterFactory(
                 (tester) => {
                     Tester = tester;
                 },
@@ -32,8 +34,8 @@ describe("save as dashboard handler", () => {
                         useRefType: "id",
                     },
                 },
-            ),
-        );
+            );
+        });
 
         const TestDashboardTitle = "My Dashboard Copy";
 
@@ -124,12 +126,12 @@ describe("save as dashboard handler", () => {
 
     describe("for an existing dashboard", () => {
         let Tester: DashboardTester;
-        // each test starts with a new dashboard
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, LockedDashboardIdentifier),
-        );
+            }, LockedDashboardIdentifier);
+        });
 
         const TestDashboardTitle = "My Dashboard Copy";
 

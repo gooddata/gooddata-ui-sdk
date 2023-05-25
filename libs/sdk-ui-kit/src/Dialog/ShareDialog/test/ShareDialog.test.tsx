@@ -1,13 +1,13 @@
 // (C) 2019-2023 GoodData Corporation
 
-import { ISharedObject, ISharingApplyPayload } from "../types";
+import { ISharedObject, ISharingApplyPayload } from "../types.js";
 import { IUser, ShareStatus } from "@gooddata/sdk-model";
 import {
     availableUserAccessGrantee,
     granularUserAccess,
     userAccessGrantee,
     workspaceUser,
-} from "../ShareDialogBase/test/GranteeMock";
+} from "../ShareDialogBase/test/GranteeMock.js";
 import {
     createComponent,
     getShareDialog,
@@ -30,7 +30,8 @@ import {
     clickBack,
     clickGranularPermissionsDropdownButton,
     clickGranularPermissionsDropdownItem,
-} from "./testHelpers";
+} from "./testHelpers.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("ShareDialog", () => {
     describe("Share with users and groups page", () => {
@@ -79,7 +80,7 @@ describe("ShareDialog", () => {
         });
 
         it("should remove grantee from list and submit callback for empty grantees list and with object set as public", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [
@@ -105,7 +106,7 @@ describe("ShareDialog", () => {
         });
 
         it("should remove grantee from list and submit callback when group all present and with object set as public", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [
@@ -132,7 +133,7 @@ describe("ShareDialog", () => {
         });
 
         it("should remove group all from list and submit callback is private", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [],
@@ -152,7 +153,7 @@ describe("ShareDialog", () => {
         });
 
         it("should uncheck under lenient control checkbox and submit callback where isUnderStrictControl is true", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [],
@@ -170,7 +171,7 @@ describe("ShareDialog", () => {
         });
 
         it("should check under lenient control checkbox and submit callback where isUnderStrictControl is false", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [],
@@ -190,7 +191,7 @@ describe("ShareDialog", () => {
         });
 
         it("should check shared object lock checkbox and submit callback where isLocked is true", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [],
@@ -208,7 +209,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call cancel callback when cancel is clicked", async () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             await createComponent({ onCancel: onCancel }, [], [], []);
 
             shareDialogCancel();
@@ -323,7 +324,7 @@ describe("ShareDialog", () => {
 
     describe("interactions", () => {
         it("should call interaction with SHARE_DIALOG_OPENED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction });
 
             expect(onInteraction).toHaveBeenCalledWith(
@@ -338,7 +339,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_CLOSED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction });
 
             shareDialogCancel();
@@ -356,7 +357,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_SAVED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction }, [], [], [userAccessGrantee]);
 
             clickDeleteGranteeIcon(availableUserAccessGrantee.name);
@@ -375,7 +376,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction }, [], [], []);
 
             clickAddGrantees();
@@ -395,7 +396,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_GRANTEE_ADDED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction }, [], [], [], [availableUserAccessGrantee], {
                 supportsGranularAccessControl: true,
             });
@@ -418,7 +419,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
                 supportsGranularAccessControl: true,
             });
@@ -442,7 +443,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_PERMISSIONS_CHANGED type", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent(
                 {
                     onInteraction,
@@ -484,7 +485,7 @@ describe("ShareDialog", () => {
         });
 
         it("should call interaction with SHARE_DIALOG_GRANTEE_REMOVED type and user grantee", async () => {
-            const onInteraction = jest.fn();
+            const onInteraction = vi.fn();
             await createComponent({ onInteraction }, [], [], [granularUserAccess], [], {
                 supportsGranularAccessControl: true,
             });

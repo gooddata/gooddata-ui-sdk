@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import { useCallback } from "react";
-import { DashboardCommands } from "../commands";
+import { DashboardCommands } from "../commands/index.js";
 
-import { useDashboardDispatch } from "./DashboardStoreProvider";
+import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 
 /**
  * Hook that takes command creator and returns function that will result into dispatching this command.

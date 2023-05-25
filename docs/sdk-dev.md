@@ -257,7 +257,7 @@ Here are couple of ground rules for this package:
 
     Dev hints:
 
-    -   Use Jest snapshots to save typing expected result where applicable
+    -   Use Vitest snapshots to save typing expected result where applicable
 
 2.  Component tests for non-React code that works with data obtained from backend. Use standardized model and real
     data captured from backend and stored in reference workspace.

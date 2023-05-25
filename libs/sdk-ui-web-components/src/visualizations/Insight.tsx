@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 import {
     GoodDataSdkError,
@@ -15,9 +15,9 @@ import {
     LOAD_COMPONENT,
     EVENT_HANDLER,
     GET_VISUALIZATION,
-} from "./CustomElementAdapter";
+} from "./CustomElementAdapter.js";
 
-import { CustomElementContext } from "../context";
+import { CustomElementContext } from "../context.js";
 import type { InsightView } from "@gooddata/sdk-ui-ext";
 type IInsightView = typeof InsightView;
 
@@ -27,7 +27,7 @@ export class Insight extends CustomElementAdapter<IInsightView> {
     }
 
     async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-ext/esm/insightView/InsightView")).InsightView;
+        return (await import("@gooddata/sdk-ui-ext")).InsightView;
     }
 
     [GET_VISUALIZATION](

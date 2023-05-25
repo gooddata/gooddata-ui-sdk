@@ -17,7 +17,7 @@ export {
     IContinuousLineConfig,
     ITooltipConfig,
     ITotalConfig,
-} from "./chartConfig";
+} from "./chartConfig.js";
 
 export {
     IBucketChartProps,
@@ -27,9 +27,9 @@ export {
     OnLegendReady,
     ILegendData,
     ILegendItem,
-} from "./chartProps";
+} from "./chartProps.js";
 
-export { ViewByAttributesLimit } from "./limits";
+export { ViewByAttributesLimit } from "./limits.js";
 
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 export { IColorMapping };

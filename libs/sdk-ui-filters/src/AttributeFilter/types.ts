@@ -9,21 +9,21 @@ import {
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { AttributeFiltersOrPlaceholders, ILocale, IPlaceholder, GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { IAttributeFilterElementsActionsProps } from "./Components/ElementsSelect/AttributeFilterElementsActions";
-import { IAttributeFilterErrorProps } from "./Components/AttributeFilterError";
-import { IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading";
-import { IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton";
-import { IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types";
-import { IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions";
-import { IAttributeFilterElementsSearchBarProps } from "./Components/ElementsSelect/AttributeFilterElementsSearchBar";
+import { IAttributeFilterElementsActionsProps } from "./Components/ElementsSelect/AttributeFilterElementsActions.js";
+import { IAttributeFilterErrorProps } from "./Components/AttributeFilterError.js";
+import { IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading.js";
+import { IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
+import { IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types.js";
+import { IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
+import { IAttributeFilterElementsSearchBarProps } from "./Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
 import {
     IAttributeFilterElementsSelectItemProps,
     IAttributeFilterElementsSelectProps,
-} from "./Components/ElementsSelect/types";
-import { IAttributeFilterElementsSelectLoadingProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading";
-import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectError";
-import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult";
-import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar";
+} from "./Components/ElementsSelect/types.js";
+import { IAttributeFilterElementsSelectLoadingProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
+import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
+import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
+import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 
 /**
  * @public

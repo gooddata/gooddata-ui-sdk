@@ -20,11 +20,11 @@ import {
 } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory";
-import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
-import { IMeasureTitleProps } from "./MeasureTitle";
-import { ILocale } from "../localization/Locale";
+import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory.js";
+import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory.js";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
+import { IMeasureTitleProps } from "./MeasureTitle.js";
+import { ILocale } from "../localization/Locale.js";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 

@@ -1,7 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
-import range from "lodash/range";
+import { describe, expect, it, beforeEach } from "vitest";
+import fetchMock from "fetch-mock/esm/client.js";
+import range from "lodash/range.js";
 import { GdcExecuteAFM, GdcExecution } from "@gooddata/api-model-bear";
 import {
     ExecuteAfmModule,
@@ -9,8 +10,8 @@ import {
     getNextOffset,
     mergePage,
     replaceLimitAndOffsetInUri,
-} from "../execute-afm";
-import { XhrModule } from "../../xhr";
+} from "../execute-afm.js";
+import { XhrModule } from "../../xhr.js";
 
 const DEFAULT_TEST_LIMIT = 1000;
 
@@ -810,7 +811,7 @@ describe("executeAfm", () => {
 
         fetchMock.mock(
             "glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=1&limit=*&offset=*",
-            (url) => {
+            (url: string) => {
                 const offset = url.replace(/.*offset=/, "");
                 return { status: 200, body: JSON.stringify(pagesByOffset[offset]) };
             },

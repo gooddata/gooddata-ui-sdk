@@ -4,7 +4,7 @@ import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization";
+import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
 import { ErrorComponent, ErrorCodes, newErrorMapping, IntlWrapper } from "@gooddata/sdk-ui";
 import {
     IExtendedReferencePoint,
@@ -12,7 +12,7 @@ import {
     IReferencePoint,
     IVisProps,
     RenderFunction,
-} from "../../interfaces/Visualization";
+} from "../../interfaces/Visualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps;
 export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLocalizedUnknownVisualizationClass> {

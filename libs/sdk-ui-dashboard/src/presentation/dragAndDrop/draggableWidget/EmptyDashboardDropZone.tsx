@@ -5,20 +5,20 @@ import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { Col } from "react-grid-system";
 
-import { useDashboardDrop } from "../useDashboardDrop";
+import { useDashboardDrop } from "../useDashboardDrop.js";
 import {
     BaseDraggableLayoutItem,
     DraggableItemType,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
-} from "../types";
-import { useDashboardDispatch, useDashboardSelector, selectWidgetPlaceholder } from "../../../model";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler";
-import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler";
-import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler";
-import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing";
+} from "../types.js";
+import { useDashboardDispatch, useDashboardSelector, selectWidgetPlaceholder } from "../../../model/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
+import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
+import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
+import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",

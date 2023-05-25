@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -9,18 +9,18 @@ import {
     IBucketOfFun,
     IUiConfig,
     IBucketItem,
-} from "../../interfaces/Visualization";
+} from "../../interfaces/Visualization.js";
 
-import { UICONFIG } from "../../constants/uiConfig";
-import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
+import { UICONFIG } from "../../constants/uiConfig.js";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 
-import { getMasterMeasuresCount, hasNoStacksWithDate } from "../bucketRules";
+import { getMasterMeasuresCount, hasNoStacksWithDate } from "../bucketRules.js";
 
-import { getItemsCount, getStackItems, getViewItems, setBucketTitles } from "../bucketHelper";
+import { getItemsCount, getStackItems, getViewItems, setBucketTitles } from "../bucketHelper.js";
 
-import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
-import { getTranslation } from "../translations";
-import { messages } from "../../../locales";
+import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
+import { getTranslation } from "../translations.js";
+import { messages } from "../../../locales.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
 import React from "react";
-import { ICancelButtonProps } from "./types";
-import { DefaultCancelButton } from "./DefaultCancelButton";
+import { ICancelButtonProps } from "./types.js";
+import { DefaultCancelButton } from "./DefaultCancelButton.js";
 
 /**
  * @internal

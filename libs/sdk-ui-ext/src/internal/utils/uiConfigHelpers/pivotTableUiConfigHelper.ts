@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
-import set from "lodash/set";
+import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
+import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
 
 import {
     UICONFIG,
@@ -13,10 +13,10 @@ import {
     defaultFilters,
     defaultRootUiConfigProperties,
     disabledOpenAsReportConfig,
-} from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+} from "../../constants/uiConfig.js";
+import { BUCKETS } from "../../constants/bucket.js";
 
-import { setBucketTitles } from "./../bucketHelper";
+import { setBucketTitles } from "../bucketHelper.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

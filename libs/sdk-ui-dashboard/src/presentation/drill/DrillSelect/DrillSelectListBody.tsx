@@ -1,9 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 
-import { DrillSelectList } from "./DrillSelectList";
-import { DashboardDrillDefinition } from "../../../types";
-import { DrillSelectItem } from "./types";
+import { DrillSelectList } from "./DrillSelectList.js";
+import { DashboardDrillDefinition } from "../../../types.js";
+import { DrillSelectItem } from "./types.js";
 
 interface DrillSelectListBodyProps {
     items: DrillSelectItem[];

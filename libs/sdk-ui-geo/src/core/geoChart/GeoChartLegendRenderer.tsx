@@ -1,13 +1,14 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import Measure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import cx from "classnames";
+import { defaultImport } from "default-import";
 
-import { generateLegendColorData } from "./geoChartColor";
-import PushpinCategoryLegend, { HEIGHT_OF_SIZE_LEGEND } from "./legends/PushpinCategoryLegend";
-import PushpinSizeLegend from "./legends/PushpinSizeLegend";
-import { IAvailableLegends, IGeoData } from "../../GeoChart";
-import { getAvailableLegends } from "./helpers/geoChart/data";
+import { generateLegendColorData } from "./geoChartColor.js";
+import PushpinCategoryLegend, { HEIGHT_OF_SIZE_LEGEND } from "./legends/PushpinCategoryLegend.js";
+import PushpinSizeLegend from "./legends/PushpinSizeLegend.js";
+import { IAvailableLegends, IGeoData } from "../../GeoChart.js";
+import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import { IPushpinCategoryLegendItem, PositionType, Paging, ColorLegend } from "@gooddata/sdk-ui-vis-commons";
 import {
     getPushpinColorLegendSize,
@@ -16,9 +17,14 @@ import {
     getPushpinSizeLegendTitle,
     shouldRenderCircleLegendInsidePopUp,
     shouldRenderMiddleCircle,
-} from "./helpers/geoChart/responsive";
+} from "./helpers/geoChart/responsive.js";
 
 const HEIGHT_OF_COLOR_LEGEND = 210;
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(ReactMeasure);
 
 /**
  * @internal

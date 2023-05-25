@@ -9,17 +9,17 @@ import {
 } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
-import flatMap from "lodash/flatMap";
-import { IDashboardCommand } from "../../commands";
-import { insightWidgetDrillsRemoved } from "../../events/insight";
-import { layoutActions } from "../../store/layout";
-import { DashboardContext } from "../../types/commonTypes";
-import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils";
+import flatMap from "lodash/flatMap.js";
+import { IDashboardCommand } from "../../commands/index.js";
+import { insightWidgetDrillsRemoved } from "../../events/insight.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils.js";
 import {
     getValidationData,
     validateDrillDefinition,
-} from "../widgets/validation/insightDrillDefinitionValidation";
-import { uiActions } from "../../store/ui";
+} from "../widgets/validation/insightDrillDefinitionValidation.js";
+import { uiActions } from "../../store/ui/index.js";
 
 interface IInvalidDrillInfo {
     invalidDrills: DrillDefinition[];

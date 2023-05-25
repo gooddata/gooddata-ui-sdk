@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { CustomCreatePanelItemComponent } from "../componentDefinition";
-import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "./types";
+import { CustomCreatePanelItemComponent } from "../componentDefinition/index.js";
+import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "./types.js";
 
 /**
  * @internal

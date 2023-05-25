@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`dashboard converter convert dashboard should convert dashboard with export temp filter context 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with export temp filter context 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
-  "filterContext": Object {
+  "filterContext": {
     "created": "2020-05-05 00:00:00",
-    "filters": Array [],
-    "ref": Object {
+    "filters": [],
+    "ref": {
       "uri": "/tempFilterContext",
     },
     "uri": "/tempFilterContext",
@@ -18,11 +18,11 @@ Object {
   "isLocked": false,
   "layout": undefined,
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithFilterContext",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -31,14 +31,14 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with extended date filters config 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with extended date filters config 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
-  "dateFilterConfig": Object {
+  "dateFilterConfig": {
     "addPresets": undefined,
     "filterName": "Filter",
-    "hideGranularities": Array [
+    "hideGranularities": [
       "GDC.time.month",
     ],
     "hideOptions": undefined,
@@ -50,11 +50,11 @@ Object {
   "isLocked": false,
   "layout": undefined,
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithExtendedDateFilterConfig",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -63,49 +63,49 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with filter context 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with filter context 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
-  "filterContext": Object {
+  "filterContext": {
     "description": "",
-    "filters": Array [
-      Object {
-        "attributeFilter": Object {
-          "attributeElements": Object {
-            "uris": Array [
+    "filters": [
+      {
+        "attributeFilter": {
+          "attributeElements": {
+            "uris": [
               "/test",
               "/test2",
             ],
           },
-          "displayForm": Object {
+          "displayForm": {
             "uri": "/displayForm",
           },
-          "filterElementsBy": Array [],
+          "filterElementsBy": [],
           "localIdentifier": "parent",
           "negativeSelection": false,
           "title": undefined,
         },
       },
-      Object {
-        "attributeFilter": Object {
-          "attributeElements": Object {
-            "uris": Array [
+      {
+        "attributeFilter": {
+          "attributeElements": {
+            "uris": [
               "/test3",
               "/test4",
             ],
           },
-          "displayForm": Object {
+          "displayForm": {
             "uri": "/displayForm34",
           },
-          "filterElementsBy": Array [
-            Object {
+          "filterElementsBy": [
+            {
               "filterLocalIdentifier": "parent",
-              "over": Object {
-                "attributes": Array [
-                  Object {
+              "over": {
+                "attributes": [
+                  {
                     "uri": "attribute/uri",
                   },
                 ],
@@ -117,9 +117,9 @@ Object {
           "title": undefined,
         },
       },
-      Object {
-        "dateFilter": Object {
-          "attribute": Object {
+      {
+        "dateFilter": {
+          "attribute": {
             "uri": "testAttr",
           },
           "from": -10,
@@ -130,7 +130,7 @@ Object {
       },
     ],
     "identifier": "filterContext",
-    "ref": Object {
+    "ref": {
       "uri": "/gdc/md/obj/filterContext",
     },
     "title": "filterContext",
@@ -140,11 +140,11 @@ Object {
   "isLocked": false,
   "layout": undefined,
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithFilterContext",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -153,8 +153,8 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with layout 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with layout 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
@@ -162,29 +162,29 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "layout": Object {
-    "sections": Array [
-      Object {
-        "items": Array [
-          Object {
-            "size": Object {
-              "xl": Object {
+  "layout": {
+    "sections": [
+      {
+        "items": [
+          {
+            "size": {
+              "xl": {
                 "gridWidth": 12,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "localIdentifier": "m1",
                     },
                     "type": "drillFromMeasure",
                   },
-                  "target": Object {
+                  "target": {
                     "identifier": "dashboardId",
                   },
                   "transition": "in-place",
@@ -192,19 +192,19 @@ Object {
                 },
               ],
               "identifier": "visualizationWidgetHeadline",
-              "ignoreDashboardFilters": Array [
-                Object {
-                  "displayForm": Object {
+              "ignoreDashboardFilters": [
+                {
+                  "displayForm": {
                     "uri": "/gdc/md/displayForm",
                   },
                   "type": "attributeFilterReference",
                 },
               ],
-              "insight": Object {
+              "insight": {
                 "uri": "/gdc/md/obj/visualizationHeadline",
               },
-              "properties": Object {},
-              "ref": Object {
+              "properties": {},
+              "ref": {
                 "uri": "/gdc/md/obj/visualizationWidgetHeadline",
               },
               "title": "visualizationWidgetHeadline",
@@ -212,25 +212,25 @@ Object {
               "uri": "/gdc/md/obj/visualizationWidgetHeadline",
             },
           },
-          Object {
-            "size": Object {
-              "xl": Object {
+          {
+            "size": {
+              "xl": {
                 "gridWidth": 6,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "localIdentifier": "m1",
                     },
                     "type": "drillFromMeasure",
                   },
-                  "target": Object {
+                  "target": {
                     "uri": "/targetVisualization",
                   },
                   "transition": "pop-up",
@@ -238,12 +238,12 @@ Object {
                 },
               ],
               "identifier": "visualizationWidgetBarChart",
-              "ignoreDashboardFilters": Array [],
-              "insight": Object {
+              "ignoreDashboardFilters": [],
+              "insight": {
                 "uri": "/gdc/md/obj/visualizationBarChart",
               },
-              "properties": Object {},
-              "ref": Object {
+              "properties": {},
+              "ref": {
                 "uri": "/gdc/md/obj/visualizationWidgetBarChart",
               },
               "title": "visualizationWidgetBarChart",
@@ -251,26 +251,26 @@ Object {
               "uri": "/gdc/md/obj/visualizationWidgetBarChart",
             },
           },
-          Object {
-            "size": Object {
-              "xl": Object {
+          {
+            "size": {
+              "xl": {
                 "gridWidth": 2,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "uri": "/measure",
                     },
                     "type": "drillFromMeasure",
                   },
                   "tab": "testTab",
-                  "target": Object {
+                  "target": {
                     "uri": "test",
                   },
                   "transition": "in-place",
@@ -278,15 +278,15 @@ Object {
                 },
               ],
               "identifier": "kpiWidget",
-              "ignoreDashboardFilters": Array [],
-              "kpi": Object {
+              "ignoreDashboardFilters": [],
+              "kpi": {
                 "comparisonDirection": "growIsGood",
                 "comparisonType": "previousPeriod",
-                "metric": Object {
+                "metric": {
                   "uri": "/measure",
                 },
               },
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/obj/kpiWidget",
               },
               "title": "kpiWidget",
@@ -301,11 +301,11 @@ Object {
     "type": "IDashboardLayout",
   },
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithFilterContext",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -314,8 +314,8 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with layout with custom gridHeight 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with layout with custom gridHeight 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
@@ -323,30 +323,30 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "layout": Object {
-    "sections": Array [
-      Object {
-        "items": Array [
-          Object {
-            "size": Object {
-              "xl": Object {
+  "layout": {
+    "sections": [
+      {
+        "items": [
+          {
+            "size": {
+              "xl": {
                 "gridHeight": 12,
                 "gridWidth": 12,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "localIdentifier": "m1",
                     },
                     "type": "drillFromMeasure",
                   },
-                  "target": Object {
+                  "target": {
                     "identifier": "dashboardId",
                   },
                   "transition": "in-place",
@@ -354,19 +354,19 @@ Object {
                 },
               ],
               "identifier": "visualizationWidgetHeadline",
-              "ignoreDashboardFilters": Array [
-                Object {
-                  "displayForm": Object {
+              "ignoreDashboardFilters": [
+                {
+                  "displayForm": {
                     "uri": "/gdc/md/displayForm",
                   },
                   "type": "attributeFilterReference",
                 },
               ],
-              "insight": Object {
+              "insight": {
                 "uri": "/gdc/md/obj/visualizationHeadline",
               },
-              "properties": Object {},
-              "ref": Object {
+              "properties": {},
+              "ref": {
                 "uri": "/gdc/md/obj/visualizationWidgetHeadline",
               },
               "title": "visualizationWidgetHeadline",
@@ -374,26 +374,26 @@ Object {
               "uri": "/gdc/md/obj/visualizationWidgetHeadline",
             },
           },
-          Object {
-            "size": Object {
-              "xl": Object {
+          {
+            "size": {
+              "xl": {
                 "gridHeight": 6,
                 "gridWidth": 6,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "localIdentifier": "m1",
                     },
                     "type": "drillFromMeasure",
                   },
-                  "target": Object {
+                  "target": {
                     "uri": "/targetVisualization",
                   },
                   "transition": "pop-up",
@@ -401,12 +401,12 @@ Object {
                 },
               ],
               "identifier": "visualizationWidgetBarChart",
-              "ignoreDashboardFilters": Array [],
-              "insight": Object {
+              "ignoreDashboardFilters": [],
+              "insight": {
                 "uri": "/gdc/md/obj/visualizationBarChart",
               },
-              "properties": Object {},
-              "ref": Object {
+              "properties": {},
+              "ref": {
                 "uri": "/gdc/md/obj/visualizationWidgetBarChart",
               },
               "title": "visualizationWidgetBarChart",
@@ -414,27 +414,27 @@ Object {
               "uri": "/gdc/md/obj/visualizationWidgetBarChart",
             },
           },
-          Object {
-            "size": Object {
-              "xl": Object {
+          {
+            "size": {
+              "xl": {
                 "gridHeight": 6,
                 "gridWidth": 2,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "uri": "/measure",
                     },
                     "type": "drillFromMeasure",
                   },
                   "tab": "testTab",
-                  "target": Object {
+                  "target": {
                     "uri": "test",
                   },
                   "transition": "in-place",
@@ -442,15 +442,15 @@ Object {
                 },
               ],
               "identifier": "kpiWidget",
-              "ignoreDashboardFilters": Array [],
-              "kpi": Object {
+              "ignoreDashboardFilters": [],
+              "kpi": {
                 "comparisonDirection": "growIsGood",
                 "comparisonType": "previousPeriod",
-                "metric": Object {
+                "metric": {
                   "uri": "/measure",
                 },
               },
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/obj/kpiWidget",
               },
               "title": "kpiWidget",
@@ -465,11 +465,11 @@ Object {
     "type": "IDashboardLayout",
   },
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithFilterContext",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -478,8 +478,8 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard without layout, and create implicit layout 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard without layout, and create implicit layout 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
@@ -487,29 +487,29 @@ Object {
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
-  "layout": Object {
-    "sections": Array [
-      Object {
-        "items": Array [
-          Object {
-            "size": Object {
-              "xl": Object {
+  "layout": {
+    "sections": [
+      {
+        "items": [
+          {
+            "size": {
+              "xl": {
                 "gridWidth": 12,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "localIdentifier": "m1",
                     },
                     "type": "drillFromMeasure",
                   },
-                  "target": Object {
+                  "target": {
                     "uri": "/targetVisualization",
                   },
                   "transition": "pop-up",
@@ -517,12 +517,12 @@ Object {
                 },
               ],
               "identifier": "visualizationWidgetBarChart",
-              "ignoreDashboardFilters": Array [],
-              "insight": Object {
+              "ignoreDashboardFilters": [],
+              "insight": {
                 "uri": "/gdc/md/obj/visualizationBarChart",
               },
-              "properties": Object {},
-              "ref": Object {
+              "properties": {},
+              "ref": {
                 "uri": "/gdc/md/obj/visualizationWidgetBarChart",
               },
               "title": "visualizationWidgetBarChart",
@@ -530,26 +530,26 @@ Object {
               "uri": "/gdc/md/obj/visualizationWidgetBarChart",
             },
           },
-          Object {
-            "size": Object {
-              "xl": Object {
+          {
+            "size": {
+              "xl": {
                 "gridWidth": 2,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "uri": "/measure",
                     },
                     "type": "drillFromMeasure",
                   },
                   "tab": "testTab",
-                  "target": Object {
+                  "target": {
                     "uri": "test",
                   },
                   "transition": "in-place",
@@ -557,15 +557,15 @@ Object {
                 },
               ],
               "identifier": "kpiWidget",
-              "ignoreDashboardFilters": Array [],
-              "kpi": Object {
+              "ignoreDashboardFilters": [],
+              "kpi": {
                 "comparisonDirection": "growIsGood",
                 "comparisonType": "previousPeriod",
-                "metric": Object {
+                "metric": {
                   "uri": "/measure",
                 },
               },
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/obj/kpiWidget",
               },
               "title": "kpiWidget",
@@ -573,25 +573,25 @@ Object {
               "uri": "/gdc/md/obj/kpiWidget",
             },
           },
-          Object {
-            "size": Object {
-              "xl": Object {
+          {
+            "size": {
+              "xl": {
                 "gridWidth": 2,
               },
             },
             "type": "IDashboardLayoutItem",
-            "widget": Object {
+            "widget": {
               "dateDataSet": undefined,
               "description": "",
-              "drills": Array [
-                Object {
-                  "origin": Object {
-                    "measure": Object {
+              "drills": [
+                {
+                  "origin": {
+                    "measure": {
                       "localIdentifier": "m1",
                     },
                     "type": "drillFromMeasure",
                   },
-                  "target": Object {
+                  "target": {
                     "identifier": "dashboardId",
                   },
                   "transition": "in-place",
@@ -599,19 +599,19 @@ Object {
                 },
               ],
               "identifier": "visualizationWidgetHeadline",
-              "ignoreDashboardFilters": Array [
-                Object {
-                  "displayForm": Object {
+              "ignoreDashboardFilters": [
+                {
+                  "displayForm": {
                     "uri": "/gdc/md/displayForm",
                   },
                   "type": "attributeFilterReference",
                 },
               ],
-              "insight": Object {
+              "insight": {
                 "uri": "/gdc/md/obj/visualizationHeadline",
               },
-              "properties": Object {},
-              "ref": Object {
+              "properties": {},
+              "ref": {
                 "uri": "/gdc/md/obj/visualizationWidgetHeadline",
               },
               "title": "visualizationWidgetHeadline",
@@ -626,11 +626,11 @@ Object {
     "type": "IDashboardLayout",
   },
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithFilterContext",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -639,8 +639,8 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert empty dashboard 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should convert empty dashboard 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
@@ -650,11 +650,11 @@ Object {
   "isLocked": false,
   "layout": undefined,
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/emptyDashboard",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "emptyDashboard",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",
@@ -663,17 +663,17 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should override dashboard filter context with export filter context 1`] = `
-Object {
+exports[`dashboard converter > convert dashboard > should override dashboard filter context with export filter context 1`] = `
+{
   "created": "2020-05-05 00:00:00",
   "createdBy": undefined,
   "dateFilterConfig": undefined,
   "description": "",
-  "filterContext": Object {
+  "filterContext": {
     "description": "",
-    "filters": Array [],
+    "filters": [],
     "identifier": "exportFilterContext",
-    "ref": Object {
+    "ref": {
       "uri": "/gdc/md/obj/exportFilterContext",
     },
     "title": "exportFilterContext",
@@ -683,11 +683,11 @@ Object {
   "isLocked": false,
   "layout": undefined,
   "plugins": undefined,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
   "shareStatus": "public",
-  "tags": Array [],
+  "tags": [],
   "title": "dashboardWithFilterContext",
   "type": "IDashboard",
   "updated": "2020-05-05 10:10:10",

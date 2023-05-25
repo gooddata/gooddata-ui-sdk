@@ -1,12 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { IScheduleEmailRepeatTime, IScheduleEmailRepeatFrequency, IScheduleEmailRepeat } from "../interfaces";
-import { REPEAT_TYPES, REPEAT_FREQUENCIES, FREQUENCY_TYPE, REPEAT_EXECUTE_ON } from "../constants";
+import {
+    IScheduleEmailRepeatTime,
+    IScheduleEmailRepeatFrequency,
+    IScheduleEmailRepeat,
+} from "../interfaces.js";
+import { REPEAT_TYPES, REPEAT_FREQUENCIES, FREQUENCY_TYPE, REPEAT_EXECUTE_ON } from "../constants.js";
 
-import { getDayName, getWeek, getDate } from "./datetime";
-import { messages } from "../../../../locales";
+import { getDayName, getWeek, getDate } from "./datetime.js";
+import { messages } from "../../../../locales.js";
 
 const AM = "AM";
 const PM = "PM";

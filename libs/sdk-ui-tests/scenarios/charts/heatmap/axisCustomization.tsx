@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { HeatmapWithMeasureRowsAndColumns } from "./base";
-import { axisNameCustomization } from "../_infra/axisNameCustomization";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { IHeatmapProps, Heatmap } from "@gooddata/sdk-ui-charts";
 
 export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)

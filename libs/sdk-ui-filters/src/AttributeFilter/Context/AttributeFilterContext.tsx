@@ -1,8 +1,8 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useContext } from "react";
-import { IAttributeFilterCoreProps } from "../types";
-import { useAttributeFilterController } from "../hooks/useAttributeFilterController";
-import { AttributeFilterController } from "../hooks/types";
+import { IAttributeFilterCoreProps } from "../types.js";
+import { useAttributeFilterController } from "../hooks/useAttributeFilterController.js";
+import { AttributeFilterController } from "../hooks/types.js";
 
 /**
  * The return type of {@link useAttributeFilterContext}.

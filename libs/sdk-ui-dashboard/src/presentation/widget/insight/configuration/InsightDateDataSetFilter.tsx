@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { useEffect, useMemo } from "react";
-import { DateDatasetFilter } from "../../common";
+import { DateDatasetFilter } from "../../common/index.js";
 import {
     IInsightWidget,
     IMeasure,
@@ -10,7 +10,7 @@ import {
     measureFilters,
     widgetRef,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
@@ -19,9 +19,9 @@ import {
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     useDashboardQueryProcessing,
     useDashboardSelector,
-} from "../../../../model";
-import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter";
-import isEmpty from "lodash/isEmpty";
+} from "../../../../model/index.js";
+import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;

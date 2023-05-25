@@ -1,14 +1,14 @@
 // (C) 2019-2021 GoodData Corporation
 import { attributeDescriptorLocalId, IAttributeDescriptor, ITotal, TotalType } from "@gooddata/sdk-model";
 
-import { AVAILABLE_TOTALS } from "../../base/constants";
-import findIndex from "lodash/findIndex";
-import intersection from "lodash/intersection";
-import isEqual from "lodash/isEqual";
-import sortBy from "lodash/sortBy";
-import uniq from "lodash/uniq";
-import { IColumnTotal } from "./aggregationsMenuTypes";
-import { IMenuAggregationClickConfig } from "../../privateTypes";
+import { AVAILABLE_TOTALS } from "../../base/constants.js";
+import findIndex from "lodash/findIndex.js";
+import intersection from "lodash/intersection.js";
+import isEqual from "lodash/isEqual.js";
+import sortBy from "lodash/sortBy.js";
+import uniq from "lodash/uniq.js";
+import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
     return totals.filter(

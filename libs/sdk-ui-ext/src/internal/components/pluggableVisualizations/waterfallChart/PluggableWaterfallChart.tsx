@@ -1,21 +1,21 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import isEqual from "lodash/isEqual";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
 
-import WaterfallChartConfigurationPanel from "../../configurationPanels/WaterfallChartConfigurationPanel";
-import { BUCKETS } from "../../../constants/bucket";
-import { WATERFALL_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import WaterfallChartConfigurationPanel from "../../configurationPanels/WaterfallChartConfigurationPanel.js";
+import { BUCKETS } from "../../../constants/bucket.js";
+import { WATERFALL_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     DEFAULT_WATERFALL_UICONFIG,
     WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS,
     UICONFIG,
     WATERFALL_UICONFIG_WITH_ONE_METRIC,
-} from "../../../constants/uiConfig";
+} from "../../../constants/uiConfig.js";
 import {
     IExtendedReferencePoint,
     IReferencePoint,
@@ -23,8 +23,8 @@ import {
     IUiConfig,
     IBucketItem,
     IVisualizationProperties,
-} from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAttributeItems,
     getBucketItems,
@@ -34,18 +34,18 @@ import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
-} from "../../../utils/propertiesHelper";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort";
+} from "../../../utils/propertiesHelper.js";
+import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
 import {
     getWaterfallTotalColumnName,
     setWaterfallChartUiConfig,
-} from "../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+} from "../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
 /**
  * PluggableWaterfallChart

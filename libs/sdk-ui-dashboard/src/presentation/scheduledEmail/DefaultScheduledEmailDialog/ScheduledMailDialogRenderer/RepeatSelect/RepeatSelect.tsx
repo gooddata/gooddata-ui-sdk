@@ -2,12 +2,12 @@
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../constants";
+import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../constants.js";
 
-import { RepeatExecuteOnSelect } from "./RepeatExecuteOnSelect";
-import { RepeatFrequencySelect } from "./RepeatFrequencySelect";
-import { RepeatPeriodSelect } from "./RepeatPeriodSelect";
-import { RepeatTypeSelect } from "./RepeatTypeSelect";
+import { RepeatExecuteOnSelect } from "./RepeatExecuteOnSelect.js";
+import { RepeatFrequencySelect } from "./RepeatFrequencySelect.js";
+import { RepeatPeriodSelect } from "./RepeatPeriodSelect.js";
+import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
 
 export interface IRepeatSelectData {
     repeatExecuteOn: string;

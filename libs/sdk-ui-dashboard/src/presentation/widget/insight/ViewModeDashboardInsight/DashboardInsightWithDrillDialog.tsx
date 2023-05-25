@@ -1,18 +1,18 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import last from "lodash/last";
-import { selectLocale, useDashboardSelector } from "../../../../model";
+import last from "lodash/last.js";
+import { selectLocale, useDashboardSelector } from "../../../../model/index.js";
 import {
     DrillStep,
     getDrillDownAttributeTitle,
     OnDrillDownSuccess,
     OnDrillToInsightSuccess,
-} from "../../../drill";
-import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types";
-import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils";
-import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect";
-import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog";
-import { IDashboardInsightProps } from "../types";
+} from "../../../drill/index.js";
+import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
+import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils.js";
+import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
+import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
+import { IDashboardInsightProps } from "../types.js";
 
 /**
  * @internal

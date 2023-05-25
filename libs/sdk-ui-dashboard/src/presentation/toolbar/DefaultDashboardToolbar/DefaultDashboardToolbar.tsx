@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { CustomToolbarComponent } from "../types";
+import { CustomToolbarComponent } from "../types.js";
 
 /**
  * @internal

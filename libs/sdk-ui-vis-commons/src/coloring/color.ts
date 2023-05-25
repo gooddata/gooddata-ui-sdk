@@ -15,9 +15,9 @@ import {
     IHeaderPredicate,
     IMappingHeader,
 } from "@gooddata/sdk-ui";
-import { IColorMapping } from "./types";
-import isEqual from "lodash/isEqual";
-import isEmpty from "lodash/isEmpty";
+import { IColorMapping } from "./types.js";
+import isEqual from "lodash/isEqual.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @internal

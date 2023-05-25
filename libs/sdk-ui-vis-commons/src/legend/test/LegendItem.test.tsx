@@ -1,7 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import LegendItem from "../LegendItem";
+import LegendItem from "../LegendItem.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("LegendItem", () => {
     const item = {
@@ -18,7 +19,7 @@ describe("LegendItem", () => {
         const props = {
             item,
             chartType: "bar",
-            onItemClick: jest.fn(),
+            onItemClick: vi.fn(),
         };
         createComponent(props);
         const legendItem = screen.getByText("Foo");
@@ -30,7 +31,7 @@ describe("LegendItem", () => {
 
     it.each([
         ["enable", true, "50%"],
-        ["enable", false, "0"],
+        ["enable", false, "0px"],
     ])(
         "should %s border radius for %s chart with itemType=%s",
         (_des: string, enableBorderRadius: boolean, expected: string) => {
@@ -42,10 +43,10 @@ describe("LegendItem", () => {
             };
             createComponent(props);
 
-            expect(screen.getByLabelText("Legend item")).toHaveStyle(`
-                background-color: red
-                border-radius: ${expected}
-            `);
+            expect(screen.getByLabelText("Legend item").firstChild).toHaveStyle({
+                backgroundColor: "red",
+                borderRadius: expected,
+            });
         },
     );
 });

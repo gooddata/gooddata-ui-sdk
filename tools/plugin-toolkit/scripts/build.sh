@@ -3,11 +3,11 @@
 set -e
 
 PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
-DIST_DIR="${PACKAGE_DIR}/dist"
+DIST_DIR="${PACKAGE_DIR}/esm"
 BABEL_BIN="${PACKAGE_DIR}/node_modules/.bin/babel"
 PRETTIER_BIN="${PACKAGE_DIR}/node_modules/.bin/prettier"
 TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
-PREPARE_PACKAGE_JSON="${TSNODE_BIN} ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
+PREPARE_PACKAGE_JSON="${TSNODE_BIN} --esm ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
 
 DASHBOARD_PLUGIN_TEMPLATE_DIR="${PACKAGE_DIR}/../dashboard-plugin-template"
 JS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/*"
@@ -27,7 +27,7 @@ mkdir "${DIST_DIR}"
 mkdir "${BUILD_DIR}"
 
 # first build main Plugin Development Toolkit assets
-npm run build-cjs
+npm run build-esm
 
 #######################################################################
 # Build dashboard-plugin-template for Typescript
@@ -40,7 +40,7 @@ cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
 mkdir -p "${TS_BUILD_DIR}/scripts"
 cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/scripts" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
+cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.cjs" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}/.env"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.secrets.template" "${TS_BUILD_DIR}/.env.secrets"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
@@ -87,4 +87,4 @@ $PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
   --trailing-comma all
 
 # build tar with JavaScript bootstrap files
-tar -czf ./dist/dashboard-plugin-template.js.tgz -C "${JS_BUILD_DIR}" .
+tar -czf ./esm/dashboard-plugin-template.js.tgz -C "${JS_BUILD_DIR}" .

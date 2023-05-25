@@ -1,8 +1,8 @@
 // (C) 2022-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
-import isNil from "lodash/isNil";
-import isNumber from "lodash/isNumber";
-import round from "lodash/round";
+import isNil from "lodash/isNil.js";
+import isNumber from "lodash/isNumber.js";
+import round from "lodash/round.js";
 import {
     IMeasure,
     IPoPMeasureDefinition,
@@ -12,7 +12,7 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { createNumberJsFormatter, DataViewFacade, IDataSeries } from "@gooddata/sdk-ui";
-import { IKpiAlertResult, IKpiResult } from "./types";
+import { IKpiAlertResult, IKpiResult } from "./types.js";
 
 function getSeriesResult(series: IDataSeries | undefined): number | null {
     if (!series) {

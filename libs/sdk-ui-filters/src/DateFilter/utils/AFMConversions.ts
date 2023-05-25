@@ -6,14 +6,14 @@ import {
     IDateFilter,
     isAllTimeDateFilterOption,
 } from "@gooddata/sdk-model";
-import { applyExcludeCurrentPeriod } from "./PeriodExclusion";
+import { applyExcludeCurrentPeriod } from "./PeriodExclusion.js";
 import {
     AbsoluteDateFilterOption,
     RelativeDateFilterOption,
     isAbsoluteDateFilterOption,
     DateFilterOption,
     isRelativeDateFilterOption,
-} from "../interfaces";
+} from "../interfaces/index.js";
 
 export const mapAbsoluteFilterToAfm = (
     value: AbsoluteDateFilterOption,

@@ -1,14 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes";
-import { DrillToInsight } from "../../commands/drill";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { DrillToInsight } from "../../commands/drill.js";
 import {
     DashboardDrillToInsightResolved,
     drillToInsightRequested,
     drillToInsightResolved,
-} from "../../events/drill";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors";
+} from "../../events/drill.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
 export function* drillToInsightHandler(

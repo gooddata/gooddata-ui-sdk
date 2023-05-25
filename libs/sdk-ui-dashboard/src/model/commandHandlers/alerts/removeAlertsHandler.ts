@@ -2,12 +2,12 @@
 import { SagaIterator } from "redux-saga";
 import { call, select, put } from "redux-saga/effects";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../types/commonTypes";
-import { RemoveAlerts } from "../../commands/alerts";
-import { alertsRemoved, DashboardAlertsRemoved } from "../../events/alerts";
-import { alertsActions } from "../../store/alerts";
-import { selectAlertsMap } from "../../store/alerts/alertsSelectors";
-import { validateExistingAlerts } from "./validation/alertsValidation";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { RemoveAlerts } from "../../commands/alerts.js";
+import { alertsRemoved, DashboardAlertsRemoved } from "../../events/alerts.js";
+import { alertsActions } from "../../store/alerts/index.js";
+import { selectAlertsMap } from "../../store/alerts/alertsSelectors.js";
+import { validateExistingAlerts } from "./validation/alertsValidation.js";
 
 function removeAlerts(ctx: DashboardContext, alertRefs: ObjRef[]): Promise<void> {
     const { backend, workspace } = ctx;

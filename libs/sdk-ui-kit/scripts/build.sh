@@ -5,28 +5,23 @@ _build_styles() {
 }
 
 _clean() {
-    rm -rf dist
     rm -rf esm
     rm -rf styles/css
 }
 
 _common-build() {
-    mkdir -p dist
-    # first copy everything in the assets (in case there are non-SVG files)
-    cp -rf src/assets dist/
-    # then use svgo to optimize all the SVGs there
-    svgo -rqf src/assets dist/assets
-
     mkdir -p esm
-    # copy optimized assets from dist, no need to run the optimization again
-    cp -rf dist/assets esm
+    # first copy everything in the assets (in case there are non-SVG files)
+    cp -rf src/assets esm/
+    # then use svgo to optimize all the SVGs there
+    svgo -rqf src/assets esm/assets
 
     _build_styles
 }
 
 build() {
     _common-build
-    concurrently "npm run build-cjs" "npm run build-esm"
+    npm run build-esm
 }
 
 build-dev() {

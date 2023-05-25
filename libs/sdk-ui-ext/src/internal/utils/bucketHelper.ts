@@ -1,16 +1,16 @@
 // (C) 2019-2023 GoodData Corporation
-import set from "lodash/set";
-import uniq from "lodash/uniq";
-import uniqBy from "lodash/uniqBy";
-import negate from "lodash/negate";
-import includes from "lodash/includes";
-import every from "lodash/every";
-import forEach from "lodash/forEach";
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import flatMap from "lodash/flatMap";
-import compact from "lodash/compact";
-import without from "lodash/without";
+import set from "lodash/set.js";
+import uniq from "lodash/uniq.js";
+import uniqBy from "lodash/uniqBy.js";
+import negate from "lodash/negate.js";
+import includes from "lodash/includes.js";
+import every from "lodash/every.js";
+import forEach from "lodash/forEach.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import flatMap from "lodash/flatMap.js";
+import compact from "lodash/compact.js";
+import without from "lodash/without.js";
 import { IntlShape } from "react-intl";
 import {
     BucketNames,
@@ -47,10 +47,10 @@ import {
     IMeasureValueFilter,
     IUiConfig,
     IRankingFilter,
-} from "../interfaces/Visualization";
-import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
-import { getTranslation } from "./translations";
-import { titles, subtitles } from "../../locales";
+} from "../interfaces/Visualization.js";
+import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
+import { getTranslation } from "./translations.js";
+import { titles, subtitles } from "../../locales.js";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
     return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;

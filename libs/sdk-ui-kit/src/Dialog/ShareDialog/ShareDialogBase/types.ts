@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import { AccessGranularPermission, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
-import { CurrentUserPermissions, IShareDialogLabels } from "../types";
+import { CurrentUserPermissions, IShareDialogLabels } from "../types.js";
 
 // Grantee types
 

@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
-import set from "lodash/set";
-import noop from "lodash/noop";
+import set from "lodash/set.js";
+import noop from "lodash/noop.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import {
     escapeCategories,
@@ -13,16 +13,17 @@ import {
     TOOLTIP_VIEWPORT_MARGIN_TOP,
     TOOLTIP_PADDING,
     getFormatterProperty,
-} from "../customConfiguration";
+} from "../customConfiguration.js";
 import { VisualizationTypes, IDrillConfig, createIntlMock } from "@gooddata/sdk-ui";
-import { IDataLabelsConfig } from "../../../../interfaces";
-import { immutableSet } from "../../_util/common";
+import { IDataLabelsConfig } from "../../../../interfaces/index.js";
+import { immutableSet } from "../../_util/common.js";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
-} from "../../_chartOptions/chartCapabilities";
-import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe";
+} from "../../_chartOptions/chartCapabilities.js";
+import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe.js";
 import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
+import { describe, it, expect, vi } from "vitest";
 
 function getData(dataValues: Partial<ISeriesDataItem>[]) {
     return {
@@ -885,7 +886,7 @@ describe("getCustomizedConfiguration", () => {
                     plotLeft: 0,
                     plotTop: 0,
                     container: {
-                        getBoundingClientRect: jest.fn().mockReturnValue({
+                        getBoundingClientRect: vi.fn().mockReturnValue({
                             top: 10,
                             left: 20,
                         }),
@@ -936,7 +937,7 @@ describe("getCustomizedConfiguration", () => {
                     plotLeft: 0,
                     plotTop: 0,
                     container: {
-                        getBoundingClientRect: jest.fn().mockReturnValue({
+                        getBoundingClientRect: vi.fn().mockReturnValue({
                             top: 0,
                             left: 0,
                         }),

@@ -20,7 +20,7 @@ import {
 import stringify from "json-stable-stringify";
 import cx from "classnames";
 
-import { useDashboardComponentsContext } from "../../../../dashboardContexts";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
     selectColorPalette,
     selectDrillableItems,
@@ -33,16 +33,16 @@ import {
     useDashboardSelector,
     useWidgetExecutionsHandler,
     selectIsInEditMode,
-} from "../../../../../model";
-import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
-import { IDashboardInsightProps } from "../../types";
-import { useWidgetFilters } from "../../../common";
-import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
-import { CustomError } from "../CustomError/CustomError";
-import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants";
-import { IntlWrapper } from "../../../../localization";
-import { InsightBody } from "../../InsightBody";
-import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData";
+} from "../../../../../model/index.js";
+import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+import { IDashboardInsightProps } from "../../types.js";
+import { useWidgetFilters } from "../../../common/index.js";
+import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
+import { CustomError } from "../CustomError/CustomError.js";
+import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants/index.js";
+import { IntlWrapper } from "../../../../localization/index.js";
+import { InsightBody } from "../../InsightBody.js";
+import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],

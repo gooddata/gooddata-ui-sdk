@@ -9,33 +9,32 @@
         "directory": "tools/catalog-export"
     },
     "license": "MIT",
-    "main": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "type": "module",
+    "exports": "./esm/index.js",
+    "types": "./esm/index.d.ts",
     "bin": {
-        "gdc-catalog-export": "dist/index.js"
+        "gdc-catalog-export": "./esm/index.js"
     },
     "files": [
-        "dist/**/*.js",
-        "dist/**/*.json",
-        "dist/**/*.d.ts",
-        "dist/**/*.map"
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map"
     ],
-    "config": {
-        "eslint": "-c .eslintrc.js --ext ts src/"
-    },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "tsc -p tsconfig.build.json",
-        "test": "jest --watch",
-        "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'}",
-        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
-        "eslint": "eslint $npm_package_config_eslint",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
+        "test": "vitest watch",
+        "test-once": "vitest run",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
@@ -48,7 +47,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
-        "dotenv": "^10.0.0",
+        "dotenv": "16.0.3",
         "inquirer": "^8.2.3",
         "lodash": "^4.17.19",
         "open": "^7.4.0",
@@ -62,26 +61,25 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
         "@types/inquirer": "^8.2.6",
-        "@types/jest": "^29.5.1",
         "@types/lodash": "^4.14.158",
         "@types/node": "^16.18.23",
         "@types/prettier": "~1.18.2",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
-        "dependency-cruiser": "^10.1.1",
+        "dependency-cruiser": "^13.0.3",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-import-esm": "^1.2.1",
         "eslint-plugin-jest": "^27.1.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
-        "jest": "^29.5.0",
-        "jest-junit": "^3.0.0",
-        "ts-jest": "^29.1.0",
+        "happy-dom": "^9.20.3",
         "ts-node": "^10.4.0",
-        "typescript": "5.0.2"
+        "typescript": "5.0.2",
+        "vitest": "0.31.4"
     }
 }

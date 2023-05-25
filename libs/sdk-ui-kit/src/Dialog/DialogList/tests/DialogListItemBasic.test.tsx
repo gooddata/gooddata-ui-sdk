@@ -1,9 +1,16 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { DialogListItemBasic } from "../DialogListItemBasic";
-import { IDialogListItemComponentProps } from "../typings";
+import defaultUserEvent from "@testing-library/user-event";
+import { DialogListItemBasic } from "../DialogListItemBasic.js";
+import { IDialogListItemComponentProps } from "../typings.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("DialogListItemBasic", () => {
     const createComponent = (props?: IDialogListItemComponentProps) => {
@@ -11,7 +18,7 @@ describe("DialogListItemBasic", () => {
     };
 
     it("should call onClick when clicked on item", async () => {
-        const onClickMock = jest.fn();
+        const onClickMock = vi.fn();
         createComponent({
             item: { id: "id", title: "title", isClickable: true },
             onClick: onClickMock,
@@ -24,7 +31,7 @@ describe("DialogListItemBasic", () => {
     });
 
     it("should not call onClick when clicked on disabled item", async () => {
-        const onClickMock = jest.fn();
+        const onClickMock = vi.fn();
         createComponent({
             item: { id: "id", title: "title", isDisabled: true },
             onClick: onClickMock,
@@ -37,7 +44,7 @@ describe("DialogListItemBasic", () => {
     });
 
     it("should not call onClick when clicked on item that is not clickable", async () => {
-        const onClickMock = jest.fn();
+        const onClickMock = vi.fn();
         createComponent({
             item: { id: "id", title: "title", isClickable: false },
             onClick: onClickMock,
@@ -50,7 +57,7 @@ describe("DialogListItemBasic", () => {
     });
 
     it("should call onDelete when clicked on delete icon", async () => {
-        const onDeleteMock = jest.fn();
+        const onDeleteMock = vi.fn();
         createComponent({ item: { id: "id", title: "title" }, onDelete: onDeleteMock });
 
         await userEvent.click(screen.getByRole("icon-delete"));

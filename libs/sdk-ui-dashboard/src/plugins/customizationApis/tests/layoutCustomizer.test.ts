@@ -1,10 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardCustomizationLogger } from "../customizationLogging";
-import { DefaultLayoutCustomizer } from "../layoutCustomizer";
-import { ExtendedDashboardWidget } from "../../../model";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+import { DefaultLayoutCustomizer } from "../layoutCustomizer.js";
+import { ExtendedDashboardWidget } from "../../../model/index.js";
 import { idRef, IDashboard } from "@gooddata/sdk-model";
-import { createCustomizerMutationsContext } from "../types";
+import { createCustomizerMutationsContext } from "../types.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
     type: "IDashboard",
@@ -33,7 +34,7 @@ describe("layout customizer", () => {
     });
 
     it("should allow fluid layout customization and deal with transform returning undefined", () => {
-        const customizationFn = jest.fn();
+        const customizationFn = vi.fn();
         Customizer.customizeFluidLayout(customizationFn);
         const transformFn = Customizer.getExistingDashboardTransformFn();
 
@@ -42,8 +43,8 @@ describe("layout customizer", () => {
     });
 
     it("should allow multiple fluid layout customizations and deal with transforms returning undefined", () => {
-        const customizationFn1 = jest.fn();
-        const customizationFn2 = jest.fn();
+        const customizationFn1 = vi.fn();
+        const customizationFn2 = vi.fn();
         Customizer.customizeFluidLayout(customizationFn1);
         Customizer.customizeFluidLayout(customizationFn2);
         const transformFn = Customizer.getExistingDashboardTransformFn();
@@ -64,7 +65,7 @@ describe("layout customizer", () => {
 
     it("should return undefined if dashboard has no layout", () => {
         const DashboardWithNoLayout = { ...EmptyDashboard, layout: undefined };
-        const customizationFn = jest.fn();
+        const customizationFn = vi.fn();
         Customizer.customizeFluidLayout(customizationFn);
         const transformFn = Customizer.getExistingDashboardTransformFn();
 

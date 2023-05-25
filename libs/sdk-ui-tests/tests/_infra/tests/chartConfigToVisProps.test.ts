@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
-import { chartConfigToVisProperties } from "../chartConfigToVisProps";
+import { chartConfigToVisProperties } from "../chartConfigToVisProps.js";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { describe, it, expect } from "vitest";
 
 describe("chartConfigToControls", () => {
     const Scenarios: Array<[string, IChartConfig]> = [

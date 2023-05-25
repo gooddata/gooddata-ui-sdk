@@ -1,25 +1,27 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { deleteDashboard } from "../../../commands";
-import { DashboardCommandFailed, DashboardDeleted } from "../../../events";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectLayout } from "../../../store/layout/layoutSelectors";
-import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors";
-import { selectEffectiveDateFilterConfig } from "../../../store/dateFilterConfig/dateFilterConfigSelectors";
-import { selectDateFilterConfig } from "../../../store/config/configSelectors";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
-import { selectInsights } from "../../../store/insights/insightsSelectors";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { deleteDashboard } from "../../../commands/index.js";
+import { DashboardCommandFailed, DashboardDeleted } from "../../../events/index.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import { selectEffectiveDateFilterConfig } from "../../../store/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfig } from "../../../store/config/configSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectInsights } from "../../../store/insights/insightsSelectors.js";
 
 describe("delete dashboard handler", () => {
     describe("for unsaved dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }),
-        );
+            });
+        });
 
         it("should fail", async () => {
             const event: DashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
@@ -34,11 +36,12 @@ describe("delete dashboard handler", () => {
 
     describe("for an existing dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should revert to empty dashboard after delete", async () => {
             const event: DashboardDeleted = await Tester.dispatchAndWaitFor(

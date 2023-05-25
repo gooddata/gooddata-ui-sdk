@@ -10,11 +10,11 @@ import {
     OverlayControllerProvider,
     OverlayController,
 } from "@gooddata/sdk-ui-kit";
-import { ParametersPanel } from "./CustomUrlEditorParameters";
-import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types";
-import { IAttributeWithDisplayForm } from "./types";
-import { selectIsWhiteLabeled, useDashboardSelector } from "../../../../model";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants";
+import { ParametersPanel } from "./CustomUrlEditorParameters.js";
+import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types.js";
+import { IAttributeWithDisplayForm } from "./types.js";
+import { selectIsWhiteLabeled, useDashboardSelector } from "../../../../model/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 export interface IUrlInputProps {
     currentUrlValue: string;
     onChange: (value: string) => void;

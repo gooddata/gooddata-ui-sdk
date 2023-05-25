@@ -3,7 +3,7 @@ import React from "react";
 import { stringUtils } from "@gooddata/util";
 import { ObjRefInScope } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { IMeasureDropdownItem } from "../types";
+import { IMeasureDropdownItem } from "../types.js";
 
 interface IMeasureDropdownItemProps {
     item: IMeasureDropdownItem;

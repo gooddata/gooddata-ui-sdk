@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`save as dashboard handler for a new dashboard should emit correct events 1`] = `
-Array [
-  Object {
+exports[`save as dashboard handler > for a new dashboard > should emit correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.SAVEAS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COPY_SAVED",
   },

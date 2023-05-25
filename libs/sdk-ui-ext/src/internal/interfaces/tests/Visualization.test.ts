@@ -1,17 +1,18 @@
 // (C) 2019-2020 GoodData Corporation
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
     dateFilter,
     attributeFilter,
     measureValueFilter,
     rankingFilter,
-} from "../../tests/mocks/referencePointMocks";
+} from "../../tests/mocks/referencePointMocks.js";
 import {
     isAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
     isRankingFilter,
-} from "../../utils/bucketHelper";
+} from "../../utils/bucketHelper.js";
+import { describe, it, expect } from "vitest";
 
 describe("Visualization typeguards", () => {
     describe("isDateFilter", () => {

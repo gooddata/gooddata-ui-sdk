@@ -3,13 +3,13 @@
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import compact from "lodash/compact";
-import { QueryConnectingAttributes } from "../queries/connectingAttributes";
-import { selectAttributeFilterDisplayFormsMap } from "../store";
-import { createCachedQueryService } from "../store/_infra/queryService";
-import { DashboardContext } from "../types/commonTypes";
-import { invalidQueryArguments } from "../events/general";
-import { IConnectingAttribute } from "../types/attributeFilterTypes";
+import compact from "lodash/compact.js";
+import { QueryConnectingAttributes } from "../queries/connectingAttributes.js";
+import { selectAttributeFilterDisplayFormsMap } from "../store/index.js";
+import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { invalidQueryArguments } from "../events/general.js";
+import { IConnectingAttribute } from "../types/attributeFilterTypes.js";
 
 export const QueryConnectingAttributesService = createCachedQueryService(
     "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES",

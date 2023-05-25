@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import { IInsightDefinition, insightModifyItems } from "@gooddata/sdk-model";
-import { fillMissingFormat } from "./fillMissingFormat";
+import { fillMissingFormat } from "./fillMissingFormat.js";
 
 /**
  * The function fills the format of the measures that does not have it set.

@@ -4,8 +4,8 @@ import React, { useMemo } from "react";
 import { areObjRefsEqual, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton";
-import { AttributeDisplayFormSelectItem } from "./AttributeDisplayFormSelectItem";
+import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
+import { AttributeDisplayFormSelectItem } from "./AttributeDisplayFormSelectItem.js";
 
 const ITEM_HEIGHT = 23;
 const ALIGN_POINTS: IAlignPoint[] = [

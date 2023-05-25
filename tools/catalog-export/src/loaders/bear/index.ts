@@ -5,15 +5,15 @@ import {
     CatalogExportError,
     getConfiguredWorkspaceId,
     WorkspaceMetadata,
-} from "../../base/types";
-import { DEFAULT_HOSTNAME } from "../../base/constants";
-import * as pkg from "../../../package.json";
+} from "../../base/types.js";
+import { DEFAULT_HOSTNAME } from "../../base/constants.js";
+import pkg from "../../../package.json" assert { type: "json" };
 import ora from "ora";
-import { log, logError } from "../../cli/loggers";
-import { promptPassword, promptWorkspaceId, promptUsername } from "../../cli/prompts";
-import { clearLine } from "../../cli/clear";
+import { log, logError } from "../../cli/loggers.js";
+import { promptPassword, promptWorkspaceId, promptUsername } from "../../cli/prompts.js";
+import { clearLine } from "../../cli/clear.js";
 import gooddata, { SDK } from "@gooddata/api-client-bear";
-import { bearLoad } from "./bearLoad";
+import { bearLoad } from "./bearLoad.js";
 
 async function selectBearWorkspace(client: SDK): Promise<string> {
     const metadataResponse = await client.xhr.get("/gdc/md");

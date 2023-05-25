@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import fse from "fs-extra";
 import fg from "fast-glob";
-import { safeJoin } from "../_base/utils";
+import { safeJoin } from "../_base/utils.js";
 
 /**
  * If isTigerBackend is true, replaces the original file by the tiger version,

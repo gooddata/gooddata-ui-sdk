@@ -3,7 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
-import { Input } from "../../Form";
+import { Input } from "../../Form/index.js";
 
 /**
  * @internal

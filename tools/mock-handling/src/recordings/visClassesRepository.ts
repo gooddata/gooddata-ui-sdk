@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import * as path from "path";
-import { findFiles } from "../base/utils";
-import { logWarn } from "../cli/loggers";
-import { IRecording, isNonNullRecording } from "./common";
-import { VisClassesRecording, VisClassesDefinition } from "./visClasses";
+import { findFiles } from "../base/utils.js";
+import { logWarn } from "../cli/loggers.js";
+import { IRecording, isNonNullRecording } from "./common.js";
+import { VisClassesRecording, VisClassesDefinition } from "./visClasses.js";
 
 function createRecording(directory: string): IRecording | null {
     try {

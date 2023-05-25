@@ -10,10 +10,10 @@ import {
     Button,
     IOnOpenedChangeParams,
 } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./NestedMenu.scss";
 

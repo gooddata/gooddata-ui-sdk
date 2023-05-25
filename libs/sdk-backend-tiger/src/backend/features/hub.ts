@@ -2,8 +2,8 @@
 import { ILiveFeatures, FeatureContext } from "@gooddata/api-client-tiger";
 import axios, { AxiosResponse } from "axios";
 
-import { ITigerFeatureFlags } from "../uiFeatures";
-import { FeatureDef, FeaturesMap, mapFeatures } from "./feature";
+import { ITigerFeatureFlags } from "../uiFeatures.js";
+import { FeatureDef, FeaturesMap, mapFeatures } from "./feature.js";
 
 type HubServiceState = Record<
     string,

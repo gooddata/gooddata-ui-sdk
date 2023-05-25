@@ -1,15 +1,15 @@
 // (C) 2007-2023 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
-import { RenderMode } from "../../../types";
+import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow";
-import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
-import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
+import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
+import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 import {
     IDashboardLayoutGridRowRenderer,
     IDashboardLayoutItemKeyGetter,
@@ -18,10 +18,10 @@ import {
     IDashboardLayoutSectionKeyGetter,
     IDashboardLayoutSectionRenderer,
     IDashboardLayoutWidgetRenderer,
-} from "./interfaces";
-import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController";
-import last from "lodash/last";
-import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit";
+} from "./interfaces.js";
+import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
+import last from "lodash/last.js";
+import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
 
 /**
  * @alpha

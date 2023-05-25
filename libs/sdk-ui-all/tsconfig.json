@@ -2,17 +2,17 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "lib": ["es6", "dom", "ES2017.Intl", "ES2018.Intl", "ES2020.Intl", "ESNext.Intl"],
         "sourceMap": true,
         "importHelpers": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "moduleResolution": "node",
         "resolveJsonModule": true,
         "baseUrl": "..",
         "paths": {
@@ -25,5 +25,5 @@
             "@gooddata/sdk-ui-ext": ["sdk-ui-ext/src"]
         }
     },
-    "exclude": ["**/node_modules", "dist", "esm"]
+    "exclude": ["**/node_modules", "esm"]
 }

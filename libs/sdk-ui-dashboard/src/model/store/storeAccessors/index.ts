@@ -1,4 +1,4 @@
 // (C) 2022 GoodData Corporation
-export { DashboardStoreAccessor } from "./DashboardStoreAccessor";
-export { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorRepository";
-export { SingleDashboardStoreAccessor } from "./SingleDashboardStoreAccessor";
+export { DashboardStoreAccessor } from "./DashboardStoreAccessor.js";
+export { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorRepository.js";
+export { SingleDashboardStoreAccessor } from "./SingleDashboardStoreAccessor.js";

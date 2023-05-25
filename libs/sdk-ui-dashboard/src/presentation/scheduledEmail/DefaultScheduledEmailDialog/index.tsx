@@ -1,11 +1,11 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
-import { useScheduledEmail } from "./useScheduledEmail";
+import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer/ScheduledMailDialogRenderer.js";
+import { useScheduledEmail } from "./useScheduledEmail.js";
 
-import { IScheduledEmailDialogProps } from "../types";
+import { IScheduledEmailDialogProps } from "../types.js";
 
 /**
  * @alpha

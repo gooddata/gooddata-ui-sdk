@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
 
-export * from "./AddAttributeFilterButton";
-export * from "./AddAttributeFilterPlaceholder";
-export * from "./AttributesDropdown";
+export * from "./AddAttributeFilterButton.js";
+export * from "./AddAttributeFilterPlaceholder.js";
+export * from "./AttributesDropdown.js";

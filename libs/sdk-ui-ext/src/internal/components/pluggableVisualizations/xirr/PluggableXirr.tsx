@@ -21,26 +21,29 @@ import {
     IVisProps,
     IVisualizationOptions,
     RenderFunction,
-} from "../../../interfaces/Visualization";
+} from "../../../interfaces/Visualization.js";
 import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 
-import { hasGlobalDateFilter } from "../../../utils/bucketRules";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
-} from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
-import { getDefaultXirrUiConfig, getXirrUiConfig } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper";
+} from "../../../utils/propertiesHelper.js";
+import { removeSort } from "../../../utils/sort.js";
+import {
+    getDefaultXirrUiConfig,
+    getXirrUiConfig,
+} from "../../../utils/uiConfigHelpers/xirrUiConfigHelper.js";
 
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import { getXirrBuckets } from "./xirrBucketHelper";
-import cloneDeep from "lodash/cloneDeep";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import { getXirrBuckets } from "./xirrBucketHelper.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 /**
  * PluggableXirr

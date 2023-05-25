@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
 import { useCallback, useEffect } from "react";
-import isEqual from "lodash/isEqual";
-import debounce from "lodash/debounce";
+import isEqual from "lodash/isEqual.js";
+import debounce from "lodash/debounce.js";
 import {
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
@@ -13,17 +13,17 @@ import {
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
-import { IAttributeFilterCoreProps, OnApplyCallbackType } from "../types";
-import { useResolveFilterInput } from "./useResolveFilterInput";
-import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput";
-import { useAttributeFilterHandler } from "./useAttributeFilterHandler";
-import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData";
-import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } from "./constants";
+import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
+import { IAttributeFilterCoreProps, OnApplyCallbackType } from "../types.js";
+import { useResolveFilterInput } from "./useResolveFilterInput.js";
+import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
+import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
+import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
+import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } from "./constants.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { AttributeFilterController } from "./types";
-import { isValidSingleSelectionFilter } from "../utils";
-import isEmpty from "lodash/isEmpty";
+import { AttributeFilterController } from "./types.js";
+import { isValidSingleSelectionFilter } from "../utils.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Properties of {@link useAttributeFilterController}

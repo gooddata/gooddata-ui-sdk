@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import merge from "lodash/merge";
-import { IDimension } from "./dimension";
+import merge from "lodash/merge.js";
+import { IDimension } from "./dimension.js";
 
 type DimensionPropsToDefault = Pick<IDimension, "totals">;
 

@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IColorMapping } from "../../../interfaces";
+import { IColorMapping } from "../../../interfaces/index.js";
 import {
     isBubbleChart,
     isBulletChart,
@@ -11,16 +11,16 @@ import {
     isScatterPlot,
     isTreemap,
     isWaterfall,
-} from "../_util/common";
-import BulletChartColorStrategy from "../bulletChart/bulletChartColoring";
-import { MeasureColorStrategy } from "../_chartColoring/measure";
+} from "../_util/common.js";
+import BulletChartColorStrategy from "../bulletChart/bulletChartColoring.js";
+import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 import { AttributeColorStrategy, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { HeatmapColorStrategy } from "../heatmap/heatmapColoring";
-import { TreemapColorStrategy } from "../treemap/treemapColoring";
-import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring";
-import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring";
-import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring";
-import { WaterfallChartColorStrategy } from "../waterfallChart/waterfallChartColoring";
+import { HeatmapColorStrategy } from "../heatmap/heatmapColoring.js";
+import { TreemapColorStrategy } from "../treemap/treemapColoring.js";
+import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring.js";
+import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring.js";
+import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring.js";
+import { WaterfallChartColorStrategy } from "../waterfallChart/waterfallChartColoring.js";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,

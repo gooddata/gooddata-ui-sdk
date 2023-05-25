@@ -5,12 +5,12 @@ import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
 
-import { IColumnTotal } from "./aggregationsMenuTypes";
-import { IMenuAggregationClickConfig } from "../../privateTypes";
-import { tableHasColumnAttributes, tableHasRowAttributes } from "../../utils";
-import { AggregationsSubMenuItems } from "./AggregationsSubMenuItems";
-import { RowsHeaderIcon } from "./subMenuIcons/RowsIcon";
-import { ColumnsHeaderIcon } from "./subMenuIcons/ColumnsIcon";
+import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import { IMenuAggregationClickConfig } from "../../privateTypes.js";
+import { tableHasColumnAttributes, tableHasRowAttributes } from "../../utils.js";
+import { AggregationsSubMenuItems } from "./AggregationsSubMenuItems.js";
+import { RowsHeaderIcon } from "./subMenuIcons/RowsIcon.js";
+import { ColumnsHeaderIcon } from "./subMenuIcons/ColumnsIcon.js";
 
 const MENU_HEADER_OFFSET = -36;
 

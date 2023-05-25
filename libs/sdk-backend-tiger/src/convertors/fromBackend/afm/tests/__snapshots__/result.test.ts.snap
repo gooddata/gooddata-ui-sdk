@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transformExecutionResult should correctly link total items with measure items with order property 1`] = `
-Object {
-  "count": Array [
+exports[`transformExecutionResult > should correctly link total items with measure items with order property 1`] = `
+{
+  "count": [
     1,
     2,
   ],
-  "data": Array [
-    Array [
+  "data": [
+    [
       "1",
       "2",
       "3",
@@ -15,69 +15,69 @@ Object {
       "5",
     ],
   ],
-  "headerItems": Array [
-    Array [
-      Array [
-        Object {
-          "attributeHeaderItem": Object {
+  "headerItems": [
+    [
+      [
+        {
+          "attributeHeaderItem": {
             "name": "First",
             "uri": "FirstLabel",
           },
         },
-        Object {
-          "attributeHeaderItem": Object {
+        {
+          "attributeHeaderItem": {
             "name": "Second",
             "uri": "SecondLabel",
           },
         },
-        Object {
-          "totalHeaderItem": Object {
+        {
+          "totalHeaderItem": {
             "name": "sum",
             "type": "sum",
           },
         },
-        Object {
-          "totalHeaderItem": Object {
+        {
+          "totalHeaderItem": {
             "name": "sum",
             "type": "sum",
           },
         },
-        Object {
-          "totalHeaderItem": Object {
+        {
+          "totalHeaderItem": {
             "name": "max",
             "type": "max",
           },
         },
       ],
     ],
-    Array [
-      Array [
-        Object {
-          "measureHeaderItem": Object {
+    [
+      [
+        {
+          "measureHeaderItem": {
             "name": "Sum of duration",
             "order": 0,
           },
         },
-        Object {
-          "measureHeaderItem": Object {
+        {
+          "measureHeaderItem": {
             "name": "Sum of amount",
             "order": 1,
           },
         },
-        Object {
-          "measureHeaderItem": Object {
+        {
+          "measureHeaderItem": {
             "name": "Sum of duration",
             "order": 0,
           },
         },
-        Object {
-          "measureHeaderItem": Object {
+        {
+          "measureHeaderItem": {
             "name": "Sum of amount",
             "order": 1,
           },
         },
-        Object {
-          "measureHeaderItem": Object {
+        {
+          "measureHeaderItem": {
             "name": "Sum of amount",
             "order": 1,
           },
@@ -85,50 +85,50 @@ Object {
       ],
     ],
   ],
-  "offset": Array [
+  "offset": [
     0,
     0,
   ],
-  "total": Array [
+  "total": [
     1,
     2,
   ],
 }
 `;
 
-exports[`transformExecutionResult should format date dimensions values 1`] = `
-Object {
-  "count": Array [
+exports[`transformExecutionResult > should format date dimensions values 1`] = `
+{
+  "count": [
     1,
     2,
   ],
-  "data": Array [
-    Array [
+  "data": [
+    [
       "20.0",
       "40.2",
     ],
   ],
-  "headerItems": Array [
-    Array [
-      Array [
-        Object {
-          "measureHeaderItem": Object {
+  "headerItems": [
+    [
+      [
+        {
+          "measureHeaderItem": {
             "name": "Sum of duration",
             "order": 0,
           },
         },
       ],
     ],
-    Array [
-      Array [
-        Object {
-          "attributeHeaderItem": Object {
+    [
+      [
+        {
+          "attributeHeaderItem": {
             "name": "1906-4",
             "uri": "1906-4",
           },
         },
-        Object {
-          "attributeHeaderItem": Object {
+        {
+          "attributeHeaderItem": {
             "name": "1910-1",
             "uri": "1910-1",
           },
@@ -136,51 +136,51 @@ Object {
       ],
     ],
   ],
-  "offset": Array [
+  "offset": [
     0,
     0,
   ],
-  "total": Array [
+  "total": [
     1,
     2,
   ],
 }
 `;
 
-exports[`transformExecutionResult should format date dimensions values with date format information 1`] = `
-Object {
-  "count": Array [
+exports[`transformExecutionResult > should format date dimensions values with date format information 1`] = `
+{
+  "count": [
     1,
     2,
   ],
-  "data": Array [
-    Array [
+  "data": [
+    [
       "20.0",
       "40.2",
     ],
   ],
-  "headerItems": Array [
-    Array [
-      Array [
-        Object {
-          "measureHeaderItem": Object {
+  "headerItems": [
+    [
+      [
+        {
+          "measureHeaderItem": {
             "name": "Sum of duration",
             "order": 0,
           },
         },
       ],
     ],
-    Array [
-      Array [
-        Object {
-          "attributeHeaderItem": Object {
+    [
+      [
+        {
+          "attributeHeaderItem": {
             "formattedName": "Q4 1906",
             "name": "1906-4",
             "uri": "1906-4",
           },
         },
-        Object {
-          "attributeHeaderItem": Object {
+        {
+          "attributeHeaderItem": {
             "formattedName": "Q1 1910",
             "name": "1910-1",
             "uri": "1910-1",
@@ -189,11 +189,11 @@ Object {
       ],
     ],
   ],
-  "offset": Array [
+  "offset": [
     0,
     0,
   ],
-  "total": Array [
+  "total": [
     1,
     2,
   ],

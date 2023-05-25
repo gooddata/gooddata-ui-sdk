@@ -4,9 +4,9 @@ import {
     IScheduleEmailExternalRecipient,
     IScheduleEmailRecipient,
     isScheduleEmailExistingRecipient,
-} from "../interfaces";
-import isEmpty from "lodash/isEmpty";
-import flatMap from "lodash/flatMap";
+} from "../interfaces.js";
+import isEmpty from "lodash/isEmpty.js";
+import flatMap from "lodash/flatMap.js";
 
 export const getScheduledEmailRecipientUniqueIdentifier = (recipient: IScheduleEmailRecipient): string =>
     isScheduleEmailExistingRecipient(recipient) ? recipient.user.login : recipient.email;

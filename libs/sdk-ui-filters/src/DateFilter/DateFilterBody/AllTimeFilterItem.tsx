@@ -2,9 +2,9 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { ListItem } from "../ListItem/ListItem";
+import { ListItem } from "../ListItem/ListItem.js";
 import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
-import { DateFilterOption } from "../interfaces";
+import { DateFilterOption } from "../interfaces/index.js";
 
 export const AllTimeFilterItem: React.FC<{
     filterOption: IAllTimeDateFilterOption;

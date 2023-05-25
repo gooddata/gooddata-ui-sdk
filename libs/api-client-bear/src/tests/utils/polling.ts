@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock/esm/client.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function mockPollingRequest(uri: string, pendingResponse: any, finalResponse: any): void {

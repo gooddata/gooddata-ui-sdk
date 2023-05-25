@@ -3,8 +3,8 @@ export {
     AttributeFilterHandlerStore,
     AttributeFilterHandlerEventListener,
     AttributeFilterHandlerStoreContext,
-} from "./store/types";
-export { createAttributeFilterHandlerStore } from "./store/createStore";
-export { AttributeFilterState } from "./store/state";
-export { actions } from "./store/slice";
-export * from "./store/selectors";
+} from "./store/types.js";
+export { createAttributeFilterHandlerStore } from "./store/createStore.js";
+export { AttributeFilterState } from "./store/state.js";
+export { actions } from "./store/slice.js";
+export * from "./store/selectors.js";

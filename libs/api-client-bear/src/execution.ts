@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-import { ExperimentalExecutionsModule } from "./execution/experimental-executions";
-import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
-import { ExecuteAfmModule } from "./execution/execute-afm";
-import { XhrModule } from "./xhr";
-import { MetadataModule } from "./metadata";
+import { ExperimentalExecutionsModule } from "./execution/experimental-executions.js";
+import { AttributesMapLoaderModule } from "./utils/attributesMapLoader.js";
+import { ExecuteAfmModule } from "./execution/execute-afm.js";
+import { XhrModule } from "./xhr.js";
+import { MetadataModule } from "./metadata.js";
 import { GdcVisualizationObject, GdcCatalog } from "@gooddata/api-model-bear";
 
 /**

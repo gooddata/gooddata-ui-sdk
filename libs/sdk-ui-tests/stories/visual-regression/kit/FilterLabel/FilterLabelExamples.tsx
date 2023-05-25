@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { UiKit } from "../../../_infra/storyGroups";
+import { UiKit } from "../../../_infra/storyGroups.js";
 
 const FilterLabelExamples: React.FC = () => {
     return (

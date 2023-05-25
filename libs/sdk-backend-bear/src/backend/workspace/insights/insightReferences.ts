@@ -1,24 +1,24 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IInsight, insightUri, CatalogItem, IMetadataObject } from "@gooddata/sdk-model";
 import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
-import { getObjectIdFromUri } from "../../../utils/api";
-import union from "lodash/union";
-import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";
-import flow from "lodash/flow";
-import isEmpty from "lodash/isEmpty";
-import values from "lodash/values";
-import keyBy from "lodash/keyBy";
-import flatMap from "lodash/fp/flatMap";
-import uniqBy from "lodash/fp/uniqBy";
+import { getObjectIdFromUri } from "../../../utils/api.js";
+import union from "lodash/union.js";
+import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter.js";
+import flow from "lodash/flow.js";
+import isEmpty from "lodash/isEmpty.js";
+import values from "lodash/values.js";
+import keyBy from "lodash/keyBy.js";
+import flatMap from "lodash/fp/flatMap.js";
+import uniqBy from "lodash/fp/uniqBy.js";
 
 import {
     convertMetric,
     convertWrappedFact,
     convertWrappedAttribute,
-} from "../../../convertors/fromBackend/CatalogConverter";
+} from "../../../convertors/fromBackend/CatalogConverter.js";
 
 const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.ObjectCategory => {
     switch (type) {

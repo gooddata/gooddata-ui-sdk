@@ -2,8 +2,8 @@
 import React from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown";
-import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext";
+import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown.js";
+import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext.js";
 
 /**
  * It is AttributeDisplayFormSelect

@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import ConfigSubsection from "../../configurationControls/ConfigSubsection";
-import { AxisType } from "../../../interfaces/AxisType";
-import LabelRotationControl from "./LabelRotationControl";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import { messages } from "../../../../locales";
+import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
+import { AxisType } from "../../../interfaces/AxisType.js";
+import LabelRotationControl from "./LabelRotationControl.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { messages } from "../../../../locales.js";
 
-import { LabelFormatControl } from "./LabelFormatControl";
+import { LabelFormatControl } from "./LabelFormatControl.js";
 
 export interface ILabelSubsection {
     disabled: boolean;

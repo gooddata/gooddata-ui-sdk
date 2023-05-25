@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import fse from "fs-extra";
 import path from "path";
-import flatMap from "lodash/flatMap";
-import entries from "lodash/entries";
+import flatMap from "lodash/flatMap.js";
+import entries from "lodash/entries.js";
 
 type ReadFileFn = typeof fse.readFile;
 type WriteFileFn = typeof fse.writeFile;

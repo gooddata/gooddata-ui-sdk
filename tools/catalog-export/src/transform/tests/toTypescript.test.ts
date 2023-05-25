@@ -1,8 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
-import { bearLoad } from "../../loaders/bear/bearLoad";
-import { transformToTypescript } from "../toTypescript";
-
-jest.mock("@gooddata/api-client-bear");
+import { describe, it, expect } from "vitest";
+import { bearLoad } from "../../loaders/bear/bearLoad.js";
+import { transformToTypescript } from "../toTypescript.js";
 
 describe("transformToTypescript", () => {
     const projectMeta = bearLoad("test");

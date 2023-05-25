@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 import { idRef } from "@gooddata/sdk-model";
 
-import { getSizeInfo } from "../../../_staging/layout/sizing";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 import {
     selectSettings,
     useDashboardDispatch,
@@ -10,8 +10,8 @@ import {
     useDashboardCommandProcessing,
     uiActions,
     addLayoutSection,
-} from "../../../model";
-import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../widgets";
+} from "../../../model/index.js";
+import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../widgets/index.js";
 
 export function useNewSectionKpiPlaceholderDropHandler(sectionIndex: number) {
     const dispatch = useDashboardDispatch();

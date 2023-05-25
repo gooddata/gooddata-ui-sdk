@@ -1,9 +1,10 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
 
-import { ArrowButton } from "../ArrowButton";
+import { ArrowButton } from "../ArrowButton.js";
 
 describe("ArrowButton", () => {
     describe("when not disabled", () => {
@@ -14,7 +15,7 @@ describe("ArrowButton", () => {
         });
 
         it("should call the onClick handler when clicked", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             render(<ArrowButton onClick={onClick} arrowDirection="increment" />);
 
             fireEvent.click(screen.getByRole("button", { hidden: true }));
@@ -31,7 +32,7 @@ describe("ArrowButton", () => {
         });
 
         it("should not call the onClick handler when clicked", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             render(<ArrowButton onClick={onClick} arrowDirection="increment" disabled={true} />);
 
             fireEvent.click(screen.getByRole("button", { hidden: true }));

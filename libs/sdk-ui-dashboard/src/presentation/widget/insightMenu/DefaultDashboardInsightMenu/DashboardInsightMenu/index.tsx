@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { Separator } from "@gooddata/sdk-ui-kit";
 
-import { IDashboardInsightMenuProps, IInsightMenuSubmenu, IInsightMenuItem } from "../../types";
-import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer";
-import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton";
-import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer";
-import { selectRenderMode, useDashboardSelector } from "../../../../../model";
-import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble";
-import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble";
-import { RenderMode } from "../../../../../types";
+import { IDashboardInsightMenuProps, IInsightMenuSubmenu, IInsightMenuItem } from "../../types.js";
+import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
+import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
+import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
+import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
+import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
+import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
+import { RenderMode } from "../../../../../types.js";
 
 const DashboardInsightMenuBody: React.FC<
     IDashboardInsightMenuProps & {

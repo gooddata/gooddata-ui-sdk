@@ -1,15 +1,15 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { RemoveLayoutSection } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { RemoveLayoutSection } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { put, select } from "redux-saga/effects";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout";
-import isEmpty from "lodash/isEmpty";
-import { validateSectionExists } from "./validation/layoutValidation";
-import { resolveRelativeIndex } from "../../utils/arrayOps";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
+import isEmpty from "lodash/isEmpty.js";
+import { validateSectionExists } from "./validation/layoutValidation.js";
+import { resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,

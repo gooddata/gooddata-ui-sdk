@@ -1,11 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList";
-import { IRenderListItemProps } from "../../List";
+import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList.js";
+import { IRenderListItemProps } from "../../List/index.js";
 import { withIntl } from "@gooddata/sdk-ui";
-import { customMessages } from "./customDictionary";
-import { componentMock } from "./testUtils";
+import { customMessages } from "./customDictionary.js";
+import { componentMock } from "./testUtils.js";
+import { describe, it, expect } from "vitest";
 
 type IDropdownListMockProps = IDropdownListProps<string>;
 

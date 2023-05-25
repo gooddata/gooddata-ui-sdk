@@ -6,11 +6,11 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types";
-import { TigerFeaturesService, pickContext } from "../../features";
-import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
-import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter";
-import { TigerSettingsService, mapTypeToKey } from "../../settings";
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
+import { TigerFeaturesService, pickContext } from "../../features/index.js";
+import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
+import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
+import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>

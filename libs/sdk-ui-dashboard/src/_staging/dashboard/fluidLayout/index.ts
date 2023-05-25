@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-export { DashboardLayoutBuilder } from "./builder/layout";
+export { DashboardLayoutBuilder } from "./builder/layout.js";
 export {
     DashboardLayoutItemModifications,
     DashboardLayoutItemsSelector,
@@ -10,19 +10,19 @@ export {
     IDashboardLayoutBuilder,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
-} from "./builder/interfaces";
-export { DashboardLayoutItemBuilder } from "./builder/item";
-export { DashboardLayoutSectionBuilder } from "./builder/section";
+} from "./builder/interfaces.js";
+export { DashboardLayoutItemBuilder } from "./builder/item.js";
+export { DashboardLayoutSectionBuilder } from "./builder/section.js";
 export {
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
-} from "./facade/interfaces";
-export { DashboardLayoutFacade } from "./facade/layout";
-export { DashboardLayoutSectionFacade } from "./facade/section";
-export { DashboardLayoutItemsFacade } from "./facade/items";
-export { DashboardLayoutItemFacade } from "./facade/item";
+} from "./facade/interfaces.js";
+export { DashboardLayoutFacade } from "./facade/layout.js";
+export { DashboardLayoutSectionFacade } from "./facade/section.js";
+export { DashboardLayoutItemsFacade } from "./facade/items.js";
+export { DashboardLayoutItemFacade } from "./facade/item.js";
 
-export { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "./config";
+export { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "./config.js";

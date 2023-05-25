@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
-
+import { describe, it, expect } from "vitest";
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 
-import { dummyBackend } from "../index";
+import { dummyBackend } from "../index.js";
 import { idRef } from "@gooddata/sdk-model";
 
 describe("dummyBackend", () => {

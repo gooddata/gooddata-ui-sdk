@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardContext } from "../types/commonTypes.js";
 import { idRef, IInsightDefinition, ICatalogDateDataset } from "@gooddata/sdk-model";
-import { selectObjectAvailabilityConfig } from "../store/config/configSelectors";
+import { selectObjectAvailabilityConfig } from "../store/config/configSelectors.js";
 import { call, select } from "redux-saga/effects";
-import { PromiseFnReturnType } from "../types/sagas";
+import { PromiseFnReturnType } from "../types/sagas.js";
 import { SagaIterator } from "redux-saga";
 
 /**

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for normal data point when only metrics with the expected format 1`] = `
+exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for normal data point when only metrics with the expected format 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Grants</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
@@ -12,7 +12,7 @@ exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for no
                     </div>"
 `;
 
-exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for normal data point with the expected format 1`] = `
+exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for normal data point with the expected format 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Stage Name</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
@@ -33,7 +33,7 @@ exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for no
                     </div>"
 `;
 
-exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for total data point when only metrics with the expected format 1`] = `
+exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for total data point when only metrics with the expected format 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Total</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
@@ -45,7 +45,7 @@ exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for to
                     </div>"
 `;
 
-exports[`chartTooltips getTooltipWaterfallChart should render the tooltip for total data point with the expected format 1`] = `
+exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for total data point with the expected format 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Total</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">

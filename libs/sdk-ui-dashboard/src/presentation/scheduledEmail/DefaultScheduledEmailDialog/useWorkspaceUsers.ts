@@ -10,7 +10,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector, selectCanListUsersInWorkspace } from "../../../model";
+import { useDashboardSelector, selectCanListUsersInWorkspace } from "../../../model/index.js";
 
 interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
     /**

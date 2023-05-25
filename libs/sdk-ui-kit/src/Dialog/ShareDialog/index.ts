@@ -10,9 +10,9 @@ export type {
     ShareDialogInteractionType,
     IShareDialogInteractionData,
     ShareDialogInteractionGranteeData,
-} from "./types";
+} from "./types.js";
 
-export { ShareDialog } from "./ShareDialog";
+export { ShareDialog } from "./ShareDialog.js";
 
 // export of internal base dialogs
 export type {
@@ -34,23 +34,23 @@ export type {
     DialogModeType,
     IAffectedSharedObject,
     IComponentLabelsProviderProps,
-} from "./ShareDialogBase/types";
+} from "./ShareDialogBase/types.js";
 
 export {
     isGranteeUser,
     isGranteeGroup,
     isGranularGranteeUser,
     isGranularGranteeGroup,
-} from "./ShareDialogBase/types";
+} from "./ShareDialogBase/types.js";
 
-export { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
+export { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase.js";
 
-export { ShareGranteeBase } from "./ShareDialogBase/ShareGranteeBase";
+export { ShareGranteeBase } from "./ShareDialogBase/ShareGranteeBase.js";
 
-export { AddGranteeBase } from "./ShareDialogBase/AddGranteeBase";
+export { AddGranteeBase } from "./ShareDialogBase/AddGranteeBase.js";
 
-export { GranteeItemComponent } from "./ShareDialogBase/GranteeItem";
+export { GranteeItemComponent } from "./ShareDialogBase/GranteeItem.js";
 
-export { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
+export { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext.js";
 
-export { getGranteeItemTestId } from "./ShareDialogBase/utils";
+export { getGranteeItemTestId } from "./ShareDialogBase/utils.js";

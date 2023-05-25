@@ -1,15 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
+import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
-} from "./interfaces";
+} from "./interfaces.js";
 import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
-import { DashboardLayoutItemFacade } from "./item";
-import { DashboardLayoutItemsFacade } from "./items";
+import { DashboardLayoutItemFacade } from "./item.js";
+import { DashboardLayoutItemsFacade } from "./items.js";
 
 /**
  * @alpha

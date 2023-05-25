@@ -3,11 +3,11 @@ import React, { useRef, useEffect } from "react";
 import cx from "classnames";
 import CodeMirror from "codemirror";
 // eslint-disable-next-line import/no-unassigned-import
-import "codemirror/addon/mode/simple";
+import "codemirror/addon/mode/simple.js";
 // eslint-disable-next-line import/no-unassigned-import
-import "codemirror/addon/edit/matchbrackets";
+import "codemirror/addon/edit/matchbrackets.js";
 // eslint-disable-next-line import/no-unassigned-import
-import "codemirror/addon/display/placeholder";
+import "codemirror/addon/display/placeholder.js";
 
 const CODE_MIRROR_EOL = "\n";
 

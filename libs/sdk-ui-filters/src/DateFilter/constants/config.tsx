@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import moment from "moment";
 
-import { platformDateFormat } from "../constants/Platform";
-import { IDateFilterOptionsByType } from "../interfaces";
+import { platformDateFormat } from "./Platform.js";
+import { IDateFilterOptionsByType } from "../interfaces/index.js";
 
 /**
  * The default set of date filter options.

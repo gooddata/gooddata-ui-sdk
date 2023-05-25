@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
-import { Button } from "../Button";
-import { IDialogBaseProps } from "./typings";
-import { ENUM_KEY_CODE } from "../typings/utilities";
-import noop from "lodash/noop";
+import { Button } from "../Button/index.js";
+import { IDialogBaseProps } from "./typings.js";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import noop from "lodash/noop.js";
 
 const checkKeyHandler = (event: React.KeyboardEvent, keyCode: number, handler: () => void): void => {
     if (event.keyCode === keyCode && handler) {

@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types";
-import { AttributeDropdownBody } from "./AttributeDropdownBody";
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
+import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 import { IntlShape, WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 
 const getItemTitle = (selectedItem: IAttributeDropdownItem, intl: IntlShape): string =>

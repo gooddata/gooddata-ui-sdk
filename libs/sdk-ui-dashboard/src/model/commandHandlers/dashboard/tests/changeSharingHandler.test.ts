@@ -1,20 +1,21 @@
 // (C) 2021-2023 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { changeSharing, ChangeSharing } from "../../../commands";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { DashboardCommandFailed, DashboardSharingChanged } from "../../../events";
-import { selectDashboardPermissions, selectDashboardShareStatus } from "../../../store";
-import { dashboardPermissionsActions } from "../../../store/dashboardPermissions";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { changeSharing, ChangeSharing } from "../../../commands/index.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { DashboardCommandFailed, DashboardSharingChanged } from "../../../events/index.js";
+import { selectDashboardPermissions, selectDashboardShareStatus } from "../../../store/index.js";
+import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
+import { beforeEach, describe, it, expect } from "vitest";
 
 describe("change dashboard sharing handler", () => {
     describe("for a existing dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should save new dashboard share status and updated permission", async () => {
             Tester.dispatch(
@@ -80,11 +81,11 @@ describe("change dashboard sharing handler", () => {
 
     describe("for a new dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, undefined),
-        );
+            }, undefined);
+        });
 
         it("should fail", async () => {
             const event: DashboardCommandFailed<ChangeSharing> = await Tester.dispatchAndWaitFor(

@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import partition from "lodash/partition";
+import partition from "lodash/partition.js";
 import { FormattedMessage } from "react-intl";
-import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
-import { DrillSelectListItem } from "./DrillSelectListItem";
-import { DrillSelectItem } from "./types";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
+import { DrillSelectListItem } from "./DrillSelectListItem.js";
+import { DrillSelectItem } from "./types.js";
 
 export interface DrillSelectListProps {
     items: DrillSelectItem[];

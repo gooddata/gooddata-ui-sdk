@@ -10,10 +10,10 @@ import {
     SupportedInsightReferenceTypes,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { InsightRecording, RecordedRefType, RecordingIndex } from "./types";
-import { identifierToRecording } from "./utils";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
+import { InsightRecording, RecordedRefType, RecordingIndex } from "./types.js";
+import { identifierToRecording } from "./utils.js";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import {
     IInsight,
     IInsightDefinition,
@@ -33,7 +33,7 @@ import {
     idRef,
     insightTags,
 } from "@gooddata/sdk-model";
-import values from "lodash/values";
+import values from "lodash/values.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 let adHocInsightCounter = 1;

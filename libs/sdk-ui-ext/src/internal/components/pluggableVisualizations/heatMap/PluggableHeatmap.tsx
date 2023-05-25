@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import includes from "lodash/includes";
-import set from "lodash/set";
-import tail from "lodash/tail";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import includes from "lodash/includes.js";
+import set from "lodash/set.js";
+import tail from "lodash/tail.js";
 import {
     BucketNames,
     IDrillEvent,
@@ -13,14 +13,14 @@ import {
 } from "@gooddata/sdk-ui";
 import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 
-import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel";
+import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel.js";
 
-import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
-import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
+import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig.js";
 
 import {
     IDrillDownContext,
@@ -29,10 +29,10 @@ import {
     IVisConstruct,
     IDrillDownDefinition,
     IBucketItem,
-} from "../../../interfaces/Visualization";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+} from "../../../interfaces/Visualization.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAllAttributeItemsWithPreference,
     getMeasureItems,
@@ -42,12 +42,12 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
     getBucketItems,
-} from "../../../utils/bucketHelper";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
-import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper";
+} from "../../../utils/bucketHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper.js";
 
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
 
 /**
  * PluggableHeatmap

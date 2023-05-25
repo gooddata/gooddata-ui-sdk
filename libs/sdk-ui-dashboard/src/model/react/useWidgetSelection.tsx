@@ -1,13 +1,13 @@
 // (C) 2022 GoodData Corporation
 import { MouseEvent, useCallback } from "react";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
     selectConfigurationPanelOpened,
     selectIsInEditMode,
     selectSelectedWidgetRef,
     uiActions,
-} from "../store";
+} from "../store/index.js";
 
 /**
  * @internal

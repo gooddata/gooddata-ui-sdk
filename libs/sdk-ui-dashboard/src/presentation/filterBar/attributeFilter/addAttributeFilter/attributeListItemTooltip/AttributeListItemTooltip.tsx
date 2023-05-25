@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { ICatalogAttribute } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet";
-import { useAttributeElements } from "../../dashboardDropdownBody/configuration/hooks/useAttributeElements";
-import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent";
+import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
+import { useAttributeElements } from "../../dashboardDropdownBody/configuration/hooks/useAttributeElements.js";
+import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent.js";
 
 const ATTR_ELEMENTS_LIMIT: number = 5;
 

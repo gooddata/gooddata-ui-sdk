@@ -2,8 +2,8 @@
 
 import { VisType } from "@gooddata/sdk-ui";
 import { IInsight, IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
-import { ExtendedDashboardWidget } from "../../../../model";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
+import { ExtendedDashboardWidget } from "../../../../model/index.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 
 const SUPPORTED_LOCATION_ICON_CHART_TYPES: VisType[] = ["pushpin"];
 

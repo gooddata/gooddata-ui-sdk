@@ -7,13 +7,13 @@ import {
     SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IBucketChartProps } from "../../interfaces";
-import { withChart } from "../_base/withChart";
-import { CoreWaterfallChart } from "../waterfallChart/CoreWaterfallChart";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { withChart } from "../_base/withChart.js";
+import { CoreWaterfallChart } from "../waterfallChart/CoreWaterfallChart.js";
 import React from "react";
-import { IChartDefinition } from "../_commons/chartDefinition";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
-import { roundChartDimensions } from "../_commons/dimensions";
+import { roundChartDimensions } from "../_commons/dimensions.js";
 
 //
 // Internals

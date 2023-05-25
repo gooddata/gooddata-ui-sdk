@@ -3,7 +3,7 @@
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Message } from "../../../Messages";
+import { Message } from "../../../Messages/index.js";
 
 interface IAdminInformationMessageProps {
     isVisible: boolean;

@@ -9,7 +9,7 @@ import {
 import { IColor, IColorDescriptor, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 
-import { DEFAULT_WATERFALL_COLORS } from "../_util/color";
+import { DEFAULT_WATERFALL_COLORS } from "../_util/color.js";
 
 const DEFAULT_COLOR_PALETTE_ITEMS: IColorDescriptor[] = DEFAULT_WATERFALL_COLORS.map((id) => ({
     colorHeaderItem: { id, name: id },

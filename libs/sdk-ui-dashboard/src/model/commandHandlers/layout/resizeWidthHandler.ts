@@ -3,17 +3,20 @@
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
-import { ResizeWidth } from "../../commands/layout";
-import { invalidArgumentsProvided } from "../../events/general";
+import { ResizeWidth } from "../../commands/layout.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 
-import { getMinWidth } from "../../../_staging/layout/sizing";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors";
-import { layoutActions } from "../../store/layout";
-import { selectLayout } from "../../store/layout/layoutSelectors";
-import { DashboardContext } from "../../types/commonTypes";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
-import { DashboardLayoutSectionItemWidthResized, layoutSectionItemWidthResized } from "../../events/layout";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/fluidLayout/config";
+import { getMinWidth } from "../../../_staging/layout/sizing.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import {
+    DashboardLayoutSectionItemWidthResized,
+    layoutSectionItemWidthResized,
+} from "../../events/layout.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/fluidLayout/config.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,

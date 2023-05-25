@@ -10,16 +10,16 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IColorMapping } from "../../../interfaces";
+import { IColorMapping } from "../../../interfaces/index.js";
 import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
-import range from "lodash/range";
-import isEqual from "lodash/isEqual";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+import range from "lodash/range.js";
+import isEqual from "lodash/isEqual.js";
 import {
     DEFAULT_HEATMAP_BLUE_BASE_COLOR,
     DEFAULT_HEATMAP_BLUE_COLOR,
     HEATMAP_BLUE_COLOR_PALETTE,
-} from "../_util/color";
+} from "../_util/color.js";
 import { darken, mix, saturate } from "polished";
 
 type HighChartColorPalette = string[];

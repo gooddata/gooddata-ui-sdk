@@ -1,13 +1,13 @@
 // (C) 2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
-import { MultiSelectAttributeFilterHandler, SingleSelectAttributeFilterHandler } from "./internal";
+import { MultiSelectAttributeFilterHandler, SingleSelectAttributeFilterHandler } from "./internal/index.js";
 
 import {
     IAttributeFilterHandler,
     IMultiSelectAttributeFilterHandler,
     ISingleSelectAttributeFilterHandler,
-} from "./types";
+} from "./types/index.js";
 
 /**
  * Common options for initialization of the {@link IAttributeFilterHandler}.

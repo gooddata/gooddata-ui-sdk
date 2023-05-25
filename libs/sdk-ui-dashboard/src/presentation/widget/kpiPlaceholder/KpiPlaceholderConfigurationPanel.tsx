@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { ObjRef } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 import {
     replaceSectionItem,
@@ -12,11 +12,11 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
-import { getSizeInfo } from "../../../_staging/layout/sizing";
+} from "../../../model/index.js";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 
-import { KpiConfigurationPanelCore } from "../kpi/DefaultKpiConfigurationPanel/KpiConfigurationPanelCore";
-import { KpiPlaceholderWidget } from "../../../widgets";
+import { KpiConfigurationPanelCore } from "../kpi/DefaultKpiConfigurationPanel/KpiConfigurationPanelCore.js";
+import { KpiPlaceholderWidget } from "../../../widgets/index.js";
 
 interface IKpiPlaceholderConfigurationPanelProps {
     widget: KpiPlaceholderWidget;

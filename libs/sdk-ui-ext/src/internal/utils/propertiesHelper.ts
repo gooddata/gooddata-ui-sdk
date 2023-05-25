@@ -1,32 +1,32 @@
 // (C) 2019-2023 GoodData Corporation
 // eslint-disable-next-line no-restricted-imports -- unfortunately, the get syntax is used heavily here for the supported properties
-import get from "lodash/get";
-import flow from "lodash/flow";
-import has from "lodash/has";
-import set from "lodash/set";
-import keys from "lodash/keys";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import isNil from "lodash/isNil";
+import get from "lodash/get.js";
+import flow from "lodash/flow.js";
+import has from "lodash/has.js";
+import set from "lodash/set.js";
+import keys from "lodash/keys.js";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import isNil from "lodash/isNil.js";
 import {
     IExtendedReferencePoint,
     IVisualizationProperties,
     IBucketItem,
     IVisProps,
-} from "../interfaces/Visualization";
+} from "../interfaces/Visualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { AXIS } from "../constants/axis";
+import { AXIS } from "../constants/axis.js";
 import {
     getItemsCount,
     getItemsLocalIdentifiers,
     getMeasureItems,
     getAllMeasuresShowOnSecondaryAxis,
     getStackItems,
-} from "./bucketHelper";
-import { PROPERTY_CONTROLS } from "../constants/properties";
-import { UICONFIG_AXIS } from "../constants/uiConfig";
-import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/AxisType";
-import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
+} from "./bucketHelper.js";
+import { PROPERTY_CONTROLS } from "../constants/properties.js";
+import { UICONFIG_AXIS } from "../constants/uiConfig.js";
+import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/AxisType.js";
+import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets, ISettings } from "@gooddata/sdk-model";
 

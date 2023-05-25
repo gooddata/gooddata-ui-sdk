@@ -1,45 +1,45 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`converts execution definition to AFM Execution should remove empty negative attribute filters and not cause RAIL-2083 1`] = `
-Array [
-  Object {
-    "positiveAttributeFilter": Object {
-      "in": Object {
-        "values": Array [],
+exports[`converts execution definition to AFM Execution > should remove empty negative attribute filters and not cause RAIL-2083 1`] = `
+[
+  {
+    "positiveAttributeFilter": {
+      "in": {
+        "values": [],
       },
-      "label": Object {
-        "identifier": Object {
+      "label": {
+        "identifier": {
           "id": "label.product.id.name",
           "type": "label",
         },
       },
     },
   },
-  Object {
-    "positiveAttributeFilter": Object {
-      "in": Object {
-        "values": Array [
+  {
+    "positiveAttributeFilter": {
+      "in": {
+        "values": [
           "value 1",
         ],
       },
-      "label": Object {
-        "identifier": Object {
+      "label": {
+        "identifier": {
           "id": "label.product.id.name",
           "type": "label",
         },
       },
     },
   },
-  Object {
-    "negativeAttributeFilter": Object {
-      "label": Object {
-        "identifier": Object {
+  {
+    "negativeAttributeFilter": {
+      "label": {
+        "identifier": {
           "id": "label.product.id.name",
           "type": "label",
         },
       },
-      "notIn": Object {
-        "values": Array [
+      "notIn": {
+        "values": [
           "value 2",
         ],
       },
@@ -48,22 +48,22 @@ Array [
 ]
 `;
 
-exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has filters 1`] = `
-Object {
-  "execution": Object {
-    "attributes": Array [
-      Object {
-        "label": Object {
-          "identifier": Object {
+exports[`converts execution definition to AFM Execution > should return AFM Execution with definition that has filters 1`] = `
+{
+  "execution": {
+    "attributes": [
+      {
+        "label": {
+          "identifier": {
             "id": "label.account.id.name",
             "type": "label",
           },
         },
         "localIdentifier": "a_label.account.id.name",
       },
-      Object {
-        "label": Object {
-          "identifier": Object {
+      {
+        "label": {
+          "identifier": {
             "id": "label.activity.id.subject",
             "type": "label",
           },
@@ -71,17 +71,17 @@ Object {
         "localIdentifier": "a_label.activity.id.subject",
       },
     ],
-    "auxMeasures": Array [],
-    "filters": Array [
-      Object {
-        "positiveAttributeFilter": Object {
-          "in": Object {
-            "values": Array [
+    "auxMeasures": [],
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "in": {
+            "values": [
               "myAccount",
             ],
           },
-          "label": Object {
-            "identifier": Object {
+          "label": {
+            "identifier": {
               "id": "label.account.id.name",
               "type": "label",
             },
@@ -89,12 +89,12 @@ Object {
         },
       },
     ],
-    "measures": Array [
-      Object {
-        "definition": Object {
-          "measure": Object {
-            "item": Object {
-              "identifier": Object {
+    "measures": [
+      {
+        "definition": {
+          "measure": {
+            "item": {
+              "identifier": {
                 "id": "acugFHNJgsBy",
                 "type": "metric",
               },
@@ -105,47 +105,47 @@ Object {
       },
     ],
   },
-  "resultSpec": Object {
-    "dimensions": Array [],
-    "totals": Array [],
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
   },
-  "settings": Object {},
+  "settings": {},
 }
 `;
 
-exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has no filter 1`] = `
-Object {
-  "execution": Object {
-    "attributes": Array [],
-    "auxMeasures": Array [],
-    "filters": Array [],
-    "measures": Array [],
+exports[`converts execution definition to AFM Execution > should return AFM Execution with definition that has no filter 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
   },
-  "resultSpec": Object {
-    "dimensions": Array [],
-    "totals": Array [],
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
   },
-  "settings": Object {},
+  "settings": {},
 }
 `;
 
-exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
-Object {
-  "execution": Object {
-    "attributes": Array [
-      Object {
+exports[`converts execution definition to AFM Execution > should return AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
+{
+  "execution": {
+    "attributes": [
+      {
         "alias": "alias",
-        "label": Object {
-          "identifier": Object {
+        "label": {
+          "identifier": {
             "id": "attribute1",
             "type": "label",
           },
         },
         "localIdentifier": "a_724874d1_attribute1",
       },
-      Object {
-        "label": Object {
-          "identifier": Object {
+      {
+        "label": {
+          "identifier": {
             "id": "attribute2",
             "type": "label",
           },
@@ -153,69 +153,69 @@ Object {
         "localIdentifier": "a_attribute2",
       },
     ],
-    "auxMeasures": Array [],
-    "filters": Array [],
-    "measures": Array [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
   },
-  "resultSpec": Object {
-    "dimensions": Array [],
-    "totals": Array [],
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
   },
-  "settings": Object {},
+  "settings": {},
 }
 `;
 
-exports[`converts execution definition to AFM Execution should return AFM Execution with dimensions 1`] = `
-Object {
-  "execution": Object {
-    "attributes": Array [],
-    "auxMeasures": Array [],
-    "filters": Array [],
-    "measures": Array [],
+exports[`converts execution definition to AFM Execution > should return AFM Execution with dimensions 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
   },
-  "resultSpec": Object {
-    "dimensions": Array [
-      Object {
-        "itemIdentifiers": Array [
+  "resultSpec": {
+    "dimensions": [
+      {
+        "itemIdentifiers": [
           "localId1",
         ],
         "localIdentifier": "dim_0",
       },
     ],
-    "totals": Array [],
+    "totals": [],
   },
-  "settings": Object {},
+  "settings": {},
 }
 `;
 
-exports[`converts execution definition to AFM Execution should return AFM Execution with empty definition 1`] = `
-Object {
-  "execution": Object {
-    "attributes": Array [],
-    "auxMeasures": Array [],
-    "filters": Array [],
-    "measures": Array [],
+exports[`converts execution definition to AFM Execution > should return AFM Execution with empty definition 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
   },
-  "resultSpec": Object {
-    "dimensions": Array [],
-    "totals": Array [],
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
   },
-  "settings": Object {},
+  "settings": {},
 }
 `;
 
-exports[`converts execution definition to AFM Execution should return AFM Execution with sorts 1`] = `
-Object {
-  "execution": Object {
-    "attributes": Array [],
-    "auxMeasures": Array [],
-    "filters": Array [],
-    "measures": Array [],
+exports[`converts execution definition to AFM Execution > should return AFM Execution with sorts 1`] = `
+{
+  "execution": {
+    "attributes": [],
+    "auxMeasures": [],
+    "filters": [],
+    "measures": [],
   },
-  "resultSpec": Object {
-    "dimensions": Array [],
-    "totals": Array [],
+  "resultSpec": {
+    "dimensions": [],
+    "totals": [],
   },
-  "settings": Object {},
+  "settings": {},
 }
 `;

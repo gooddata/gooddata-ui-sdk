@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SankeyChart tooltip should render tooltip for connection correctly ( show in percent ) 1`] = `
+exports[`SankeyChart tooltip > should render tooltip for connection correctly ( show in percent ) 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
@@ -30,7 +30,7 @@ exports[`SankeyChart tooltip should render tooltip for connection correctly ( sh
                     </div>"
 `;
 
-exports[`SankeyChart tooltip should render tooltip for connection correctly 1`] = `
+exports[`SankeyChart tooltip > should render tooltip for connection correctly 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
@@ -60,7 +60,7 @@ exports[`SankeyChart tooltip should render tooltip for connection correctly 1`] 
                     </div>"
 `;
 
-exports[`SankeyChart tooltip should render tooltip for node correctly ( show in percent ) 1`] = `
+exports[`SankeyChart tooltip > should render tooltip for node correctly ( show in percent ) 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\"></span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
@@ -81,7 +81,7 @@ exports[`SankeyChart tooltip should render tooltip for node correctly ( show in 
                     </div>"
 `;
 
-exports[`SankeyChart tooltip should render tooltip for node correctly 1`] = `
+exports[`SankeyChart tooltip > should render tooltip for node correctly 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
                         <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\"></span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">

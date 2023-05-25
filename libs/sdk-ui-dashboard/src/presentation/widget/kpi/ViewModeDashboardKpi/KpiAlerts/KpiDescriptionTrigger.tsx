@@ -3,14 +3,14 @@ import React from "react";
 
 import { ICatalogMeasure, ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
-import { IKpiDescriptionTriggerProps } from "./types";
+import { IKpiDescriptionTriggerProps } from "./types.js";
 import {
     useDashboardSelector,
     selectCatalogMeasures,
     useDashboardUserInteraction,
     DescriptionTooltipOpenedData,
-} from "../../../../../model";
-import { DescriptionClickTrigger } from "../../../description/DescriptionClickTrigger";
+} from "../../../../../model/index.js";
+import { DescriptionClickTrigger } from "../../../description/DescriptionClickTrigger.js";
 
 const getKpiMetricDescription = (metrics: ICatalogMeasure[], ref: ObjRef): string | undefined => {
     return metrics.find((metric) => areObjRefsEqual(metric.measure.ref, ref))?.measure.description;

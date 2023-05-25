@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDataLoaderFactory } from "./types";
-import { colorPaletteDataLoaderFactory } from "./ColorPaletteDataLoader";
-import { insightDataLoaderFactory } from "./InsightDataLoader";
-import { userWorkspaceSettingsDataLoaderFactory } from "./UserWorkspaceSettingsDataLoader";
+import { IDataLoaderFactory } from "./types.js";
+import { colorPaletteDataLoaderFactory } from "./ColorPaletteDataLoader.js";
+import { insightDataLoaderFactory } from "./InsightDataLoader.js";
+import { userWorkspaceSettingsDataLoaderFactory } from "./UserWorkspaceSettingsDataLoader.js";
 
 /**
  * Clears all the caches used by the InsightView components.

@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types";
+import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types.js";
 import { IAvailableDrillTargetAttribute, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 /**

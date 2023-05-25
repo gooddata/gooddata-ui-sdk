@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { InputValidationError, TargetBackendType } from "./types";
-import isEmpty from "lodash/isEmpty";
-import { promptApiToken, promptPassword, promptUsername } from "./terminal/prompts";
+import { InputValidationError, TargetBackendType } from "./types.js";
+import isEmpty from "lodash/isEmpty.js";
+import { promptApiToken, promptPassword, promptUsername } from "./terminal/prompts.js";
 
 export type BackendCredentials = {
     /**

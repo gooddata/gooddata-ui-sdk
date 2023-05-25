@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { IKpiWidget, widgetRef } from "@gooddata/sdk-model";
 
-import { DateDatasetFilter } from "../../common";
+import { DateDatasetFilter } from "../../common/index.js";
 import {
     enableKpiWidgetDateFilter,
     MeasureDateDatasets,
@@ -15,9 +15,9 @@ import {
     useDashboardDispatch,
     useDashboardQueryProcessing,
     useDashboardSelector,
-} from "../../../../model";
-import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
+} from "../../../../model/index.js";
+import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter.js";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 
 export const KpiWidgetDateDatasetFilter: React.FC<{
     widget: IKpiWidget;

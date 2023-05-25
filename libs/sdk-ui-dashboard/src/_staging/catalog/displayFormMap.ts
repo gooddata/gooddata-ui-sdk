@@ -6,8 +6,8 @@ import {
     ICatalogDateDataset,
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
-import { newDisplayFormMap, ObjRefMap } from "../metadata/objRefMap";
-import flatMap from "lodash/flatMap";
+import { newDisplayFormMap, ObjRefMap } from "../metadata/objRefMap.js";
+import flatMap from "lodash/flatMap.js";
 
 /**
  * Factory function that extracts all display forms from catalog entities and returns a map indexing display

@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 /* eslint-disable no-console */
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 export type ObjectSummary = {
     type: string;

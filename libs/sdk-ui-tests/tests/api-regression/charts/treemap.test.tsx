@@ -1,26 +1,34 @@
 // (C) 2007-2019 GoodData Corporation
 
-// These imports and actions need to be done first because of mocks
-const Original = jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/treemap/CoreTreemap");
-import { withPropsExtractor } from "../../_infra/withProps";
-const { extractProps, wrap } = withPropsExtractor();
-
+import { describe, it, expect, vi } from "vitest";
+import { withPropsExtractor } from "../../_infra/withProps.js";
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
-import treemapScenarios from "../../../scenarios/charts/treemap";
-import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
-import { mountChartAndCapture } from "../../_infra/render";
-import { mountInsight } from "../../_infra/renderPlugVis";
-import { cleanupCoreChartProps } from "../../_infra/utils";
-import flatMap from "lodash/flatMap";
-import { ScenarioAndDescription } from "../../../src";
+import treemapScenarios from "../../../scenarios/charts/treemap/index.js";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
+import { mountChartAndCapture } from "../../_infra/render.js";
+import { mountInsight } from "../../_infra/renderPlugVis.js";
+import { cleanupCoreChartProps } from "../../_infra/utils.js";
+import flatMap from "lodash/flatMap.js";
+import { ScenarioAndDescription } from "../../../src/index.js";
 
 const Chart = "Treemap";
 
-jest.mock("@gooddata/sdk-ui-charts/dist/charts/treemap/CoreTreemap", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/treemap/CoreTreemap"),
-    CoreTreemap: wrap(Original.CoreTreemap),
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
 }));
+
+vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreTreemap", async () => {
+    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreTreemap");
+    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
+    extractProps = originalExtractProps;
+
+    return {
+        ...Original,
+        CoreTreemap: wrap(Original.CoreTreemap),
+    };
+});
 
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<ITreemapProps>> = flatMap(treemapScenarios, (group) =>

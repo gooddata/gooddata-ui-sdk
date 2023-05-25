@@ -12,35 +12,38 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import React from "react";
-import { DashboardStoreProvider } from "../../../model";
+import { DashboardStoreProvider } from "../../../model/index.js";
 import {
     ExportDialogContextProvider,
     DashboardCustomizationsProvider,
     DashboardComponentsProvider,
     DashboardConfigProvider,
-} from "../../dashboardContexts";
-import { DefaultFilterBar } from "../../filterBar";
-import { DefaultDashboardLayout } from "../../layout";
-import { DefaultSaveAsDialog } from "../../saveAs";
-import { DefaultScheduledEmailDialog, DefaultScheduledEmailManagementDialog } from "../../scheduledEmail";
-import { DefaultShareDialog } from "../../shareDialog";
+} from "../../dashboardContexts/index.js";
+import { DefaultFilterBar } from "../../filterBar/index.js";
+import { DefaultDashboardLayout } from "../../layout/index.js";
+import { DefaultSaveAsDialog } from "../../saveAs/index.js";
+import {
+    DefaultScheduledEmailDialog,
+    DefaultScheduledEmailManagementDialog,
+} from "../../scheduledEmail/index.js";
+import { DefaultShareDialog } from "../../shareDialog/index.js";
 import {
     DefaultButtonBar,
     DefaultMenuButton,
     DefaultSaveButton,
     DefaultTopBar,
     RenderModeAwareTitle,
-} from "../../topBar";
-import { HiddenToolbar } from "../../toolbar";
-import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier";
-import { useDashboard } from "../hooks/useDashboard";
-import { IDashboardProps } from "../types";
-import { DashboardLoading } from "./DashboardLoading";
+} from "../../topBar/index.js";
+import { HiddenToolbar } from "../../toolbar/index.js";
+import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
+import { useDashboard } from "../hooks/useDashboard.js";
+import { IDashboardProps } from "../types.js";
+import { DashboardLoading } from "./DashboardLoading.js";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DefaultEmptyLayoutDropZoneBody, LayoutResizeStateProvider } from "../../dragAndDrop";
-import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
-import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants";
+import { DefaultEmptyLayoutDropZoneBody, LayoutResizeStateProvider } from "../../dragAndDrop/index.js";
+import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
+import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 /**

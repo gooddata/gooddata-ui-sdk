@@ -1,20 +1,20 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage, defineMessages } from "react-intl";
-import { DropdownSectionHeader } from "../DropdownSectionHeader";
-import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail";
-import { DashboardIdParameterDetail } from "../ParameterDetails/DashboardIdParameterDetail";
-import { WidgetIdParameterDetail } from "../ParameterDetails/WidgetIdParameterDetail";
-import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameterDetail";
-import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail";
-import { DataProductIdParameterDetail } from "../ParameterDetails/DataProductIdParameterDetail";
-import { Parameter } from "./Parameter";
-import { IIdentifierParametersSectionProps } from "../types";
+import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
+import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail.js";
+import { DashboardIdParameterDetail } from "../ParameterDetails/DashboardIdParameterDetail.js";
+import { WidgetIdParameterDetail } from "../ParameterDetails/WidgetIdParameterDetail.js";
+import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameterDetail.js";
+import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail.js";
+import { DataProductIdParameterDetail } from "../ParameterDetails/DataProductIdParameterDetail.js";
+import { Parameter } from "./Parameter.js";
+import { IIdentifierParametersSectionProps } from "../types.js";
 import {
     DRILL_TO_URL_PLACEHOLDER,
     selectEnableRenamingProjectToWorkspace,
     useDashboardSelector,
-} from "../../../../../model";
+} from "../../../../../model/index.js";
 
 interface IIdentifierParameter {
     titleIntlKey: string;

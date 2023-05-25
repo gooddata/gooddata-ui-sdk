@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { IChartOptions } from "../../typings/unsafe";
-import { styleVariables } from "../_chartCreators/styles/variables";
-import { HighchartsOptions, SeriesBubbleOptions } from "../../lib";
+import { IChartOptions } from "../../typings/unsafe.js";
+import { styleVariables } from "../_chartCreators/styles/variables.js";
+import { HighchartsOptions, SeriesBubbleOptions } from "../../lib/index.js";
 
 export function getBubbleConfiguration(
     _config: IChartOptions,

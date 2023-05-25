@@ -1,28 +1,28 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import compact from "lodash/compact";
-import sortBy from "lodash/sortBy";
+import compact from "lodash/compact.js";
+import sortBy from "lodash/sortBy.js";
 import { FormattedMessage } from "react-intl";
 
-import { DraggableInsightList } from "./DraggableInsightList";
+import { DraggableInsightList } from "./DraggableInsightList/index.js";
 import {
     selectSupportsKpiWidgetCapability,
     selectIsAnalyticalDesignerEnabled,
     useDashboardSelector,
     selectIsNewDashboard,
     selectSettings,
-} from "../../../model";
+} from "../../../model/index.js";
 import cx from "classnames";
 import {
     IWrapCreatePanelItemWithDragComponent,
     IWrapInsightListItemWithDragComponent,
-} from "../../dragAndDrop/types";
+} from "../../dragAndDrop/types.js";
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
-} from "../../componentDefinition";
+} from "../../componentDefinition/index.js";
 
 interface ICreationPanelProps {
     className?: string;

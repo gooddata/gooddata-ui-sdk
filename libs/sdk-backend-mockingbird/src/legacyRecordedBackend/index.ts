@@ -55,8 +55,8 @@ import {
     IMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import isEqual from "lodash/isEqual";
-import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual.js";
+import isEmpty from "lodash/isEmpty.js";
 import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 const defaultConfig = { hostname: "test" };

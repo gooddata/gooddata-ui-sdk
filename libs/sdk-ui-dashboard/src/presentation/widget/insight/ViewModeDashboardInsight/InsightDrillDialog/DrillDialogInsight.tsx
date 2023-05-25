@@ -21,14 +21,14 @@ import {
     selectSettings,
     selectIsExport,
     selectDrillableItems,
-} from "../../../../../model";
-import { IDashboardInsightProps } from "../../types";
-import { useWidgetFilters } from "../../../common";
-import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
-import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills";
-import { CustomError } from "../CustomError/CustomError";
-import { IntlWrapper } from "../../../../localization";
-import { InsightBody } from "../../InsightBody";
+} from "../../../../../model/index.js";
+import { IDashboardInsightProps } from "../../types.js";
+import { useWidgetFilters } from "../../../common/index.js";
+import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
+import { CustomError } from "../CustomError/CustomError.js";
+import { IntlWrapper } from "../../../../localization/index.js";
+import { InsightBody } from "../../InsightBody.js";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 

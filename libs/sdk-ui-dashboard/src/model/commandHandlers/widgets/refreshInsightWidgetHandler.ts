@@ -3,15 +3,15 @@ import { objRefToString } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { RefreshInsightWidget } from "../../commands";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors";
-import { DashboardContext } from "../../types/commonTypes";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { insightsActions } from "../../store/insights";
-import { invalidArgumentsProvided } from "../../events/general";
-import { DashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight";
-import { loadInsight } from "./common/loadInsight";
+import { RefreshInsightWidget } from "../../commands/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { insightsActions } from "../../store/insights/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { DashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
+import { loadInsight } from "./common/loadInsight.js";
 
 export function* refreshInsightWidgetHandler(
     ctx: DashboardContext,

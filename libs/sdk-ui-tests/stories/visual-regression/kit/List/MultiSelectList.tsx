@@ -10,7 +10,7 @@
 // import { AttributeFilterListItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterListItem";
 // import { EmptyListItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
 // import { wrapWithTheme } from "../../../themeWrapper";
-// import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+// import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 
 // const item: IAttributeElement = {
 //     title: "Item title",

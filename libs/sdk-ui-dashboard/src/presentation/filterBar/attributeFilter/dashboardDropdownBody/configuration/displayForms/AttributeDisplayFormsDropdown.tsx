@@ -8,8 +8,8 @@ import {
 } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton";
-import { AttributeDisplayFormDropDownItem } from "./AttributeDisplayFormDropDownItem";
+import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
+import { AttributeDisplayFormDropDownItem } from "./AttributeDisplayFormDropDownItem.js";
 
 interface IAttributeFilterDisplayFormDropdownProps {
     displayForms: IAttributeDisplayFormMetadataObject[];

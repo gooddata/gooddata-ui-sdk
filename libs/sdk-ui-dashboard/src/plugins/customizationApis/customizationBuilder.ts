@@ -19,18 +19,18 @@ import {
     IDashboardWidgetCustomizer,
     IFilterBarCustomizer,
     IFiltersCustomizer,
-} from "../customizer";
-import { IDashboardExtensionProps } from "../../presentation";
-import { DefaultInsightCustomizer } from "./insightCustomizer";
-import { DashboardCustomizationLogger } from "./customizationLogging";
-import { IDashboardPluginContract_V1 } from "../plugin";
-import { DefaultKpiCustomizer } from "./kpiCustomizer";
-import { DefaultWidgetCustomizer } from "./widgetCustomizer";
-import { DefaultLayoutCustomizer } from "./layoutCustomizer";
-import { DefaultFilterBarCustomizer } from "./filterBarCustomizer";
-import { DefaultFiltersCustomizer } from "./filtersCustomizer";
-import { createCustomizerMutationsContext } from "./types";
-import { WidgetsOverlayFn, IDashboardWidgetOverlay } from "../../model";
+} from "../customizer.js";
+import { IDashboardExtensionProps } from "../../presentation/index.js";
+import { DefaultInsightCustomizer } from "./insightCustomizer.js";
+import { DashboardCustomizationLogger } from "./customizationLogging.js";
+import { IDashboardPluginContract_V1 } from "../plugin.js";
+import { DefaultKpiCustomizer } from "./kpiCustomizer.js";
+import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
+import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
+import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
+import { DefaultFiltersCustomizer } from "./filtersCustomizer.js";
+import { createCustomizerMutationsContext } from "./types.js";
+import { WidgetsOverlayFn, IDashboardWidgetOverlay } from "../../model/index.js";
 
 /**
  * @internal

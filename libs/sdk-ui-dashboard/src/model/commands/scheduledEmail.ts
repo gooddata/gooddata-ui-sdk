@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { IFilterContextDefinition, IScheduledMailDefinition, ObjRef } from "@gooddata/sdk-model";
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link CreateScheduledEmail} command.

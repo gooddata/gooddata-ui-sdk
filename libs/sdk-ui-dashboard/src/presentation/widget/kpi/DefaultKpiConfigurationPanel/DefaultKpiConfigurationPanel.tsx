@@ -8,9 +8,9 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model";
-import { KpiConfigurationPanelCore } from "./KpiConfigurationPanelCore";
-import { CustomWidgetConfigPanelComponent } from "../../../componentDefinition";
+} from "../../../../model/index.js";
+import { KpiConfigurationPanelCore } from "./KpiConfigurationPanelCore.js";
+import { CustomWidgetConfigPanelComponent } from "../../../componentDefinition/index.js";
 
 /**
  * @internal

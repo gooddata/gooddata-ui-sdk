@@ -1,26 +1,34 @@
 // (C) 2007-2019 GoodData Corporation
 
-// These imports and actions need to be done first because of mocks
-const Original = jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/lineChart/CoreLineChart");
-import { withPropsExtractor } from "../../_infra/withProps";
-const { extractProps, wrap } = withPropsExtractor();
-
+import { describe, it, expect, vi } from "vitest";
+import { withPropsExtractor } from "../../_infra/withProps.js";
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ILineChartProps } from "@gooddata/sdk-ui-charts";
-import lineChartScenario from "../../../scenarios/charts/lineChart";
-import { ScenarioAndDescription } from "../../../src";
-import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
-import { mountChartAndCapture } from "../../_infra/render";
-import { mountInsight } from "../../_infra/renderPlugVis";
-import { cleanupCoreChartProps } from "../../_infra/utils";
-import flatMap from "lodash/flatMap";
+import lineChartScenario from "../../../scenarios/charts/lineChart/index.js";
+import { ScenarioAndDescription } from "../../../src/index.js";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
+import { mountChartAndCapture } from "../../_infra/render.js";
+import { mountInsight } from "../../_infra/renderPlugVis.js";
+import { cleanupCoreChartProps } from "../../_infra/utils.js";
+import flatMap from "lodash/flatMap.js";
 
 const Chart = "LineChart";
 
-jest.mock("@gooddata/sdk-ui-charts/dist/charts/lineChart/CoreLineChart", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/lineChart/CoreLineChart"),
-    CoreLineChart: wrap(Original.CoreLineChart),
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
 }));
+
+vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreLineChart", async () => {
+    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreLineChart");
+    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
+    extractProps = originalExtractProps;
+
+    return {
+        ...Original,
+        CoreLineChart: wrap(Original.CoreLineChart),
+    };
+});
 
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<ILineChartProps>> = flatMap(lineChartScenario, (group) =>

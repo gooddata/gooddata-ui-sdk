@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 
-import { ObjectMeta } from "../../base/types";
+import { ObjectMeta } from "../../base/types.js";
 import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 
 /**

@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { wrapWithTheme } from "../../themeWrapper";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { wrapWithTheme } from "../../themeWrapper.js";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 import { ErrorOverlay } from "@gooddata/sdk-ui-kit";
 import { withIntl } from "@gooddata/sdk-ui";
 import { injectIntl, WrappedComponentProps } from "react-intl";

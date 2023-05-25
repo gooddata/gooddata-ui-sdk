@@ -40,19 +40,19 @@ import {
     isAttribute,
     isTotalDescriptor,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     ExecutionRecording,
     RecordingIndex,
     ScenarioRecording,
     RecordedRefType,
     InsightRecording,
-} from "./types";
+} from "./types.js";
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import flatMap from "lodash/flatMap";
-import isEqual from "lodash/isEqual";
-import values from "lodash/values";
-import isEmpty from "lodash/isEmpty";
+import flatMap from "lodash/flatMap.js";
+import isEqual from "lodash/isEqual.js";
+import values from "lodash/values.js";
+import isEmpty from "lodash/isEmpty.js";
 
 //
 //

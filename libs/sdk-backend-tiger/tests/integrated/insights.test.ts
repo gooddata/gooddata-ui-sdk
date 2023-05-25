@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
-
-import { testBackend, testWorkspace, sanitizeKeyWithNewValue } from "./backend";
+import { describe, beforeAll, expect, it } from "vitest";
+import { testBackend, testWorkspace, sanitizeKeyWithNewValue } from "./backend.js";
 const backend = testBackend();
 
 beforeAll(async () => {

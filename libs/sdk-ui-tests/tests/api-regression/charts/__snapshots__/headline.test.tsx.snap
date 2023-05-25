@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Headline with drilling on single measure should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with drilling on single measure > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -23,20 +23,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -46,15 +46,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with drilling on single measure should create expected props for core chart 1`] = `
-Object {
-  "drillableItems": Array [
+exports[`Headline > with drilling on single measure > should create expected props for core chart 1`] = `
+{
+  "drillableItems": [
     [Function],
   ],
   "exportTitle": "Headline",
@@ -62,17 +62,17 @@ Object {
 }
 `;
 
-exports[`Headline with drilling on single measure with underlining disabled should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with drilling on single measure with underlining disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -85,20 +85,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -108,18 +108,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with drilling on single measure with underlining disabled should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`Headline > with drilling on single measure with underlining disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
     "disableDrillUnderline": true,
   },
-  "drillableItems": Array [
+  "drillableItems": [
     [Function],
   ],
   "exportTitle": "Headline",
@@ -127,17 +127,17 @@ Object {
 }
 `;
 
-exports[`Headline with drilling on two measures should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with drilling on two measures > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -146,11 +146,11 @@ Object {
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -163,20 +163,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -185,11 +185,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -199,15 +199,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with drilling on two measures should create expected props for core chart 1`] = `
-Object {
-  "drillableItems": Array [
+exports[`Headline > with drilling on two measures > should create expected props for core chart 1`] = `
+{
+  "drillableItems": [
     [Function],
     [Function],
   ],
@@ -216,17 +216,17 @@ Object {
 }
 `;
 
-exports[`Headline with drilling on two measures with underlining disabled should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with drilling on two measures with underlining disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -235,11 +235,11 @@ Object {
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -252,20 +252,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -274,11 +274,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -288,18 +288,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with drilling on two measures with underlining disabled should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`Headline > with drilling on two measures with underlining disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
     "disableDrillUnderline": true,
   },
-  "drillableItems": Array [
+  "drillableItems": [
     [Function],
     [Function],
   ],
@@ -308,17 +308,17 @@ Object {
 }
 `;
 
-exports[`Headline with single measure should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with single measure > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -331,20 +331,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -354,30 +354,30 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with single measure should create expected props for core chart 1`] = `
-Object {
+exports[`Headline > with single measure > should create expected props for core chart 1`] = `
+{
   "exportTitle": "Headline",
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with two measures one PoP should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with two measures > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -386,13 +386,98 @@ Object {
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
-        Object {
-          "measure": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with two measures > should create expected props for core chart 1`] = `
+{
+  "exportTitle": "Headline",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Headline > with two measures one PoP > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        {
+          "measure": {
             "alias": "Won Last Year",
-            "definition": Object {
-              "popMeasureDefinition": Object {
+            "definition": {
+              "popMeasureDefinition": {
                 "measureIdentifier": "m_acugFHNJgsBy",
-                "popAttribute": Object {
+                "popAttribute": {
                   "identifier": "closed.year",
                   "type": "attribute",
                 },
@@ -405,20 +490,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -427,13 +512,13 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Won Last Year",
-        "definition": Object {
-          "popMeasureDefinition": Object {
+        "definition": {
+          "popMeasureDefinition": {
             "measureIdentifier": "m_acugFHNJgsBy",
-            "popAttribute": Object {
+            "popAttribute": {
               "identifier": "closed.year",
               "type": "attribute",
             },
@@ -443,30 +528,30 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with two measures one PoP should create expected props for core chart 1`] = `
-Object {
+exports[`Headline > with two measures one PoP > should create expected props for core chart 1`] = `
+{
   "exportTitle": "Headline",
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with two measures should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`Headline > with two measures with german separators > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "acugFHNJgsBy",
                   "type": "measure",
                 },
@@ -475,11 +560,11 @@ Object {
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aangOxLSeztu",
                   "type": "measure",
                 },
@@ -492,20 +577,20 @@ Object {
       "localIdentifier": "measures",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -514,11 +599,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -528,101 +613,16 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Headline with two measures should create expected props for core chart 1`] = `
-Object {
-  "exportTitle": "Headline",
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline with two measures with german separators should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`Headline with two measures with german separators should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "separators": Object {
+exports[`Headline > with two measures with german separators > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "separators": {
       "decimal": ",",
       "thousand": ".",
     },

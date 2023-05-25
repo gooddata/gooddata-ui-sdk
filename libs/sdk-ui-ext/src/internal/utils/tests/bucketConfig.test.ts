@@ -1,15 +1,16 @@
 // (C) 2019-2021 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
+import { describe, it, expect } from "vitest";
 
-import { DATE, GRANULARITY } from "../../constants/bucket";
-import { DEFAULT_BASE_CHART_UICONFIG, DEFAULT_TABLE_UICONFIG } from "../../constants/uiConfig";
+import { DATE, GRANULARITY } from "../../constants/bucket.js";
+import { DEFAULT_BASE_CHART_UICONFIG, DEFAULT_TABLE_UICONFIG } from "../../constants/uiConfig.js";
 import {
     DATE_DATASET_ATTRIBUTE,
     IExtendedReferencePoint,
     IFiltersBucketItem,
-} from "../../interfaces/Visualization";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
-import { configurePercent, configureOverTimeComparison } from "../bucketConfig";
+} from "../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import { configurePercent, configureOverTimeComparison } from "../bucketConfig.js";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 describe("configure Percent and Over Time Comparison helper functions", () => {

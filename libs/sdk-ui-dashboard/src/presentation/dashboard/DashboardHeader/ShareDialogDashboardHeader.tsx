@@ -13,10 +13,10 @@ import {
     selectCanManageWorkspace,
     selectDashboardPermissions,
     useDashboardUserInteraction,
-} from "../../../model";
-import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
+} from "../../../model/index.js";
+import { ShareDialog, ISharingApplyPayload } from "../../shareDialog/index.js";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { messages } from "../../../locales";
+import { messages } from "../../../locales.js";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();

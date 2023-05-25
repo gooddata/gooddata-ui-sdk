@@ -38,6 +38,7 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
+import { ReferenceConverter as ReferenceConverter_2 } from './convertors/fromBackend/ReferenceConverter.js';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @public
@@ -56,7 +57,7 @@ export class AnonymousAuthProvider implements IAuthenticationProvider {
 export const BackendToBearConvertors: {
     convertBucket: (bucket: GdcVisualizationObject.IBucket) => IBucket;
     convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Map<string, IUser> | undefined) => IInsight;
-    convertReferencesToUris: ReferenceConverter;
+    convertReferencesToUris: ReferenceConverter_2;
     convertFilterContext: (filterContext: GdcFilterContext.IWrappedFilterContext) => IFilterContextDefinition | IFilterContext;
     convertFilterContextItem: (filterContextItem: GdcFilterContext.FilterContextItem) => FilterContextItem;
     convertFilterReference: (filterReference: GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference) => IDashboardFilterReference;
@@ -65,7 +66,7 @@ export const BackendToBearConvertors: {
     convertVisualizationWidgetDrill: (drill: GdcVisualizationWidget.IDrillDefinition) => InsightDrillDefinition;
     convertScheduledMail: (scheduledMail: GdcScheduledMail.IWrappedScheduledMail, userMap?: Map<string, IUser> | undefined) => IScheduledMailDefinition | IScheduledMail;
     convertDashboardDateFilterConfig: (dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig) => IDashboardDateFilterConfig;
-    convertUrisToReferences: ReferenceConverter;
+    convertUrisToReferences: ReferenceConverter_2;
     serializeProperties: (properties: VisualizationProperties) => string;
     deserializeProperties: (properties: string | undefined) => VisualizationProperties;
     convertLayoutSize: (size: GdcDashboardLayout.IFluidLayoutSize) => IDashboardLayoutSize;

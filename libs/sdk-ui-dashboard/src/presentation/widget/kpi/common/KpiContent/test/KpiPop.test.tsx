@@ -1,10 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 
-import KpiPop, { IKpiPopProps } from "../KpiPop";
+import KpiPop, { IKpiPopProps } from "../KpiPop.js";
 
-import { IntlWrapper } from "../../../../../localization";
+import { IntlWrapper } from "../../../../../localization/index.js";
 
 function renderKpiPop(props: IKpiPopProps) {
     return render(

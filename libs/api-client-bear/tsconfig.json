@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
         "lib": ["es2017", "dom"],
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "importHelpers": true,
         "strict": true,
         "noImplicitAny": true,
@@ -18,5 +18,5 @@
             "@gooddata/api-model-bear": ["api-model-bear/src"]
         }
     },
-    "exclude": ["**/node_modules", "dist", "esm"]
+    "exclude": ["**/node_modules", "esm"]
 }

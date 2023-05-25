@@ -7,13 +7,13 @@ import {
     ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { QueryAttributeByDisplayForm } from "../queries/attributes";
-import { createCachedQueryService } from "../store/_infra/queryService";
-import { DashboardContext } from "../types/commonTypes";
+import { QueryAttributeByDisplayForm } from "../queries/attributes.js";
+import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import { invalidQueryArguments } from "../events/general";
-import { selectCatalogAttributes } from "../store";
+import { invalidQueryArguments } from "../events/general.js";
+import { selectCatalogAttributes } from "../store/index.js";
 
 export const QueryAttributeByDisplayFormService = createCachedQueryService(
     "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE",

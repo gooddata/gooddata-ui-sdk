@@ -29,8 +29,8 @@ export {
     IGeoSegmentItem,
     IGeoMeasureItem,
     IGeoDataItem,
-} from "./GeoChart";
-export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart";
+} from "./GeoChart.js";
+export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart.js";
 
 export {
     MapboxTokenProvider,
@@ -38,15 +38,15 @@ export {
     useMapboxTokenStrict,
     withMapboxToken,
     enrichMapboxToken,
-} from "./core/MapboxTokenProvider";
-export { CoreGeoChart } from "./core/CoreGeoChart";
+} from "./core/MapboxTokenProvider.js";
+export { CoreGeoChart } from "./core/CoreGeoChart.js";
 export {
     IGeoChartInnerProps,
     ICoreGeoChartProps,
     IGeoChartInnerOptions,
     IGeoChartLegendRendererProps,
     IGeoChartRendererProps,
-} from "./core/geoChart/GeoChartInner";
+} from "./core/geoChart/GeoChartInner.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
 export { getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";

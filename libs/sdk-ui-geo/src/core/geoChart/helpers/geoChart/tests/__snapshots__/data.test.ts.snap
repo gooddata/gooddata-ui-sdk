@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`geoChartData should return geoData with all buckets 1`] = `
-Object {
-  "color": Object {
-    "data": Array [
+exports[`geoChartData > should return geoData with all buckets 1`] = `
+{
+  "color": {
+    "data": [
       4969,
       256,
       56,
@@ -20,49 +20,49 @@ Object {
     "index": 1,
     "name": "Density",
   },
-  "location": Object {
-    "data": Array [
-      Object {
+  "location": {
+    "data": [
+      {
         "lat": 25.7839,
         "lng": -80.2102,
       },
-      Object {
+      {
         "lat": 26.2181,
         "lng": -98.418,
       },
-      Object {
+      {
         "lat": 26.2585,
         "lng": -97.695,
       },
-      Object {
+      {
         "lat": 26.3024,
         "lng": -98.6425,
       },
-      Object {
+      {
         "lat": 26.5281,
         "lng": -80.0811,
       },
-      Object {
+      {
         "lat": 27.9942,
         "lng": -82.4451,
       },
-      Object {
+      {
         "lat": 28.2405,
         "lng": -82.1796,
       },
-      Object {
+      {
         "lat": 28.4772,
         "lng": -81.3369,
       },
-      Object {
+      {
         "lat": 32.8312,
         "lng": -117.1225,
       },
-      Object {
+      {
         "lat": 34.1139,
         "lng": -118.4068,
       },
-      Object {
+      {
         "lat": 37.7562,
         "lng": -122.443,
       },
@@ -70,8 +70,8 @@ Object {
     "index": 0,
     "name": "City",
   },
-  "segment": Object {
-    "data": Array [
+  "segment": {
+    "data": [
       "Florida",
       "Texas",
       "Texas",
@@ -86,7 +86,7 @@ Object {
     ],
     "index": 1,
     "name": "State Name",
-    "uris": Array [
+    "uris": [
       "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
       "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
       "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
@@ -100,8 +100,8 @@ Object {
       "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
     ],
   },
-  "size": Object {
-    "data": Array [
+  "size": {
+    "data": [
       6381966,
       2228,
       121,
@@ -118,8 +118,8 @@ Object {
     "index": 0,
     "name": "Population",
   },
-  "tooltipText": Object {
-    "data": Array [
+  "tooltipText": {
+    "data": [
       "Miami",
       "Abram",
       "Lasana",
@@ -138,627 +138,627 @@ Object {
 }
 `;
 
-exports[`geoChartData should return geoData with latitude, longitude and tooltipText 1`] = `
-Object {
-  "latitude": Object {
+exports[`geoChartData > should return geoData with latitude, longitude and tooltipText 1`] = `
+{
+  "latitude": {
     "index": 0,
     "name": "City",
   },
-  "location": Object {
-    "data": Array [
-      Object {
+  "location": {
+    "data": [
+      {
         "lat": 18.0722,
         "lng": 18.0722,
       },
-      Object {
+      {
         "lat": 18.0727,
         "lng": 18.0727,
       },
-      Object {
+      {
         "lat": 18.0729,
         "lng": 18.0729,
       },
-      Object {
+      {
         "lat": 21.2975,
         "lng": 21.2975,
       },
-      Object {
+      {
         "lat": 21.3294,
         "lng": 21.3294,
       },
-      Object {
+      {
         "lat": 21.4031,
         "lng": 21.4031,
       },
-      Object {
+      {
         "lat": 25.7839,
         "lng": 25.7839,
       },
-      Object {
+      {
         "lat": 26.2181,
         "lng": 26.2181,
       },
-      Object {
+      {
         "lat": 26.2585,
         "lng": 26.2585,
       },
-      Object {
+      {
         "lat": 26.3024,
         "lng": 26.3024,
       },
-      Object {
+      {
         "lat": 26.5281,
         "lng": 26.5281,
       },
-      Object {
+      {
         "lat": 27.9942,
         "lng": 27.9942,
       },
-      Object {
+      {
         "lat": 28.2405,
         "lng": 28.2405,
       },
-      Object {
+      {
         "lat": 28.4772,
         "lng": 28.4772,
       },
-      Object {
+      {
         "lat": 29.3443,
         "lng": 29.3443,
       },
-      Object {
+      {
         "lat": 29.8781,
         "lng": 29.8781,
       },
-      Object {
+      {
         "lat": 30.006,
         "lng": 30.006,
       },
-      Object {
+      {
         "lat": 30.2492,
         "lng": 30.2492,
       },
-      Object {
+      {
         "lat": 30.6782,
         "lng": 30.6782,
       },
-      Object {
+      {
         "lat": 30.8193,
         "lng": 30.8193,
       },
-      Object {
+      {
         "lat": 31.1545,
         "lng": 31.1545,
       },
-      Object {
+      {
         "lat": 31.8194,
         "lng": 31.8194,
       },
-      Object {
+      {
         "lat": 32.0281,
         "lng": 32.0281,
       },
-      Object {
+      {
         "lat": 32.1061,
         "lng": 32.1061,
       },
-      Object {
+      {
         "lat": 32.1545,
         "lng": 32.1545,
       },
-      Object {
+      {
         "lat": 32.6886,
         "lng": 32.6886,
       },
-      Object {
+      {
         "lat": 32.8312,
         "lng": 32.8312,
       },
-      Object {
+      {
         "lat": 33.3645,
         "lng": 33.3645,
       },
-      Object {
+      {
         "lat": 33.4017,
         "lng": 33.4017,
       },
-      Object {
+      {
         "lat": 33.5277,
         "lng": 33.5277,
       },
-      Object {
+      {
         "lat": 33.5304,
         "lng": 33.5304,
       },
-      Object {
+      {
         "lat": 33.5722,
         "lng": 33.5722,
       },
-      Object {
+      {
         "lat": 33.6514,
         "lng": 33.6514,
       },
-      Object {
+      {
         "lat": 33.6933,
         "lng": 33.6933,
       },
-      Object {
+      {
         "lat": 33.7935,
         "lng": 33.7935,
       },
-      Object {
+      {
         "lat": 33.8945,
         "lng": 33.8945,
       },
-      Object {
+      {
         "lat": 33.9687,
         "lng": 33.9687,
       },
-      Object {
+      {
         "lat": 34.1139,
         "lng": 34.1139,
       },
-      Object {
+      {
         "lat": 34.3594,
         "lng": 34.3594,
       },
-      Object {
+      {
         "lat": 34.5564,
         "lng": 34.5564,
       },
-      Object {
+      {
         "lat": 34.6152,
         "lng": 34.6152,
       },
-      Object {
+      {
         "lat": 34.6288,
         "lng": 34.6288,
       },
-      Object {
+      {
         "lat": 34.6988,
         "lng": 34.6988,
       },
-      Object {
+      {
         "lat": 34.8148,
         "lng": 34.8148,
       },
-      Object {
+      {
         "lat": 34.9944,
         "lng": 34.9944,
       },
-      Object {
+      {
         "lat": 34.9952,
         "lng": 34.9952,
       },
-      Object {
+      {
         "lat": 35.1629,
         "lng": 35.1629,
       },
-      Object {
+      {
         "lat": 35.448,
         "lng": 35.448,
       },
-      Object {
+      {
         "lat": 36.0404,
         "lng": 36.0404,
       },
-      Object {
+      {
         "lat": 36.1844,
         "lng": 36.1844,
       },
-      Object {
+      {
         "lat": 36.3713,
         "lng": 36.3713,
       },
-      Object {
+      {
         "lat": 36.5055,
         "lng": 36.5055,
       },
-      Object {
+      {
         "lat": 36.5463,
         "lng": 36.5463,
       },
-      Object {
+      {
         "lat": 36.5879,
         "lng": 36.5879,
       },
-      Object {
+      {
         "lat": 36.6844,
         "lng": 36.6844,
       },
-      Object {
+      {
         "lat": 36.7388,
         "lng": 36.7388,
       },
-      Object {
+      {
         "lat": 36.7596,
         "lng": 36.7596,
       },
-      Object {
+      {
         "lat": 36.8428,
         "lng": 36.8428,
       },
-      Object {
+      {
         "lat": 36.8432,
         "lng": 36.8432,
       },
-      Object {
+      {
         "lat": 36.9352,
         "lng": 36.9352,
       },
-      Object {
+      {
         "lat": 37.0018,
         "lng": 37.0018,
       },
-      Object {
+      {
         "lat": 37.0171,
         "lng": 37.0171,
       },
-      Object {
+      {
         "lat": 37.1674,
         "lng": 37.1674,
       },
-      Object {
+      {
         "lat": 37.2563,
         "lng": 37.2563,
       },
-      Object {
+      {
         "lat": 37.4788,
         "lng": 37.4788,
       },
-      Object {
+      {
         "lat": 37.6213,
         "lng": 37.6213,
       },
-      Object {
+      {
         "lat": 37.7562,
         "lng": 37.7562,
       },
-      Object {
+      {
         "lat": 37.805,
         "lng": 37.805,
       },
-      Object {
+      {
         "lat": 37.9748,
         "lng": 37.9748,
       },
-      Object {
+      {
         "lat": 38.0054,
         "lng": 38.0054,
       },
-      Object {
+      {
         "lat": 38.2458,
         "lng": 38.2458,
       },
-      Object {
+      {
         "lat": 38.4099,
         "lng": 38.4099,
       },
-      Object {
+      {
         "lat": 38.5352,
         "lng": 38.5352,
       },
-      Object {
+      {
         "lat": 38.6353,
         "lng": 38.6353,
       },
-      Object {
+      {
         "lat": 38.6623,
         "lng": 38.6623,
       },
-      Object {
+      {
         "lat": 38.9047,
         "lng": 38.9047,
       },
-      Object {
+      {
         "lat": 38.9372,
         "lng": 38.9372,
       },
-      Object {
+      {
         "lat": 39.0127,
         "lng": 39.0127,
       },
-      Object {
+      {
         "lat": 39.0256,
         "lng": 39.0256,
       },
-      Object {
+      {
         "lat": 39.0699,
         "lng": 39.0699,
       },
-      Object {
+      {
         "lat": 39.1284,
         "lng": 39.1284,
       },
-      Object {
+      {
         "lat": 39.181,
         "lng": 39.181,
       },
-      Object {
+      {
         "lat": 39.4151,
         "lng": 39.4151,
       },
-      Object {
+      {
         "lat": 39.5939,
         "lng": 39.5939,
       },
-      Object {
+      {
         "lat": 39.6152,
         "lng": 39.6152,
       },
-      Object {
+      {
         "lat": 39.7243,
         "lng": 39.7243,
       },
-      Object {
+      {
         "lat": 39.7255,
         "lng": 39.7255,
       },
-      Object {
+      {
         "lat": 39.7264,
         "lng": 39.7264,
       },
-      Object {
+      {
         "lat": 39.8403,
         "lng": 39.8403,
       },
-      Object {
+      {
         "lat": 39.9384,
         "lng": 39.9384,
       },
-      Object {
+      {
         "lat": 40.0048,
         "lng": 40.0048,
       },
-      Object {
+      {
         "lat": 40.3232,
         "lng": 40.3232,
       },
-      Object {
+      {
         "lat": 40.4394,
         "lng": 40.4394,
       },
-      Object {
+      {
         "lat": 40.5887,
         "lng": 40.5887,
       },
-      Object {
+      {
         "lat": 40.6207,
         "lng": 40.6207,
       },
-      Object {
+      {
         "lat": 40.6943,
         "lng": 40.6943,
       },
-      Object {
+      {
         "lat": 40.7467,
         "lng": 40.7467,
       },
-      Object {
+      {
         "lat": 41.0056,
         "lng": 41.0056,
       },
-      Object {
+      {
         "lat": 41.208,
         "lng": 41.208,
       },
-      Object {
+      {
         "lat": 41.2636,
         "lng": 41.2636,
       },
-      Object {
+      {
         "lat": 41.2739,
         "lng": 41.2739,
       },
-      Object {
+      {
         "lat": 41.4625,
         "lng": 41.4625,
       },
-      Object {
+      {
         "lat": 41.5367,
         "lng": 41.5367,
       },
-      Object {
+      {
         "lat": 41.5725,
         "lng": 41.5725,
       },
-      Object {
+      {
         "lat": 41.6698,
         "lng": 41.6698,
       },
-      Object {
+      {
         "lat": 41.6812,
         "lng": 41.6812,
       },
-      Object {
+      {
         "lat": 41.7226,
         "lng": 41.7226,
       },
-      Object {
+      {
         "lat": 41.7948,
         "lng": 41.7948,
       },
-      Object {
+      {
         "lat": 41.8083,
         "lng": 41.8083,
       },
-      Object {
+      {
         "lat": 41.8864,
         "lng": 41.8864,
       },
-      Object {
+      {
         "lat": 41.9234,
         "lng": 41.9234,
       },
-      Object {
+      {
         "lat": 41.9311,
         "lng": 41.9311,
       },
-      Object {
+      {
         "lat": 41.9592,
         "lng": 41.9592,
       },
-      Object {
+      {
         "lat": 42.001,
         "lng": 42.001,
       },
-      Object {
+      {
         "lat": 42.0014,
         "lng": 42.0014,
       },
-      Object {
+      {
         "lat": 42.0133,
         "lng": 42.0133,
       },
-      Object {
+      {
         "lat": 42.0747,
         "lng": 42.0747,
       },
-      Object {
+      {
         "lat": 42.1057,
         "lng": 42.1057,
       },
-      Object {
+      {
         "lat": 42.1638,
         "lng": 42.1638,
       },
-      Object {
+      {
         "lat": 42.4919,
         "lng": 42.4919,
       },
-      Object {
+      {
         "lat": 42.5801,
         "lng": 42.5801,
       },
-      Object {
+      {
         "lat": 42.6407,
         "lng": 42.6407,
       },
-      Object {
+      {
         "lat": 42.7491,
         "lng": 42.7491,
       },
-      Object {
+      {
         "lat": 42.8803,
         "lng": 42.8803,
       },
-      Object {
+      {
         "lat": 42.8848,
         "lng": 42.8848,
       },
-      Object {
+      {
         "lat": 43.0145,
         "lng": 43.0145,
       },
-      Object {
+      {
         "lat": 43.0883,
         "lng": 43.0883,
       },
-      Object {
+      {
         "lat": 43.1,
         "lng": 43.1,
       },
-      Object {
+      {
         "lat": 43.182,
         "lng": 43.182,
       },
-      Object {
+      {
         "lat": 43.4244,
         "lng": 43.4244,
       },
-      Object {
+      {
         "lat": 43.4865,
         "lng": 43.4865,
       },
-      Object {
+      {
         "lat": 43.5053,
         "lng": 43.5053,
       },
-      Object {
+      {
         "lat": 43.5724,
         "lng": 43.5724,
       },
-      Object {
+      {
         "lat": 43.5936,
         "lng": 43.5936,
       },
-      Object {
+      {
         "lat": 43.7348,
         "lng": 43.7348,
       },
-      Object {
+      {
         "lat": 43.857,
         "lng": 43.857,
       },
-      Object {
+      {
         "lat": 43.9106,
         "lng": 43.9106,
       },
-      Object {
+      {
         "lat": 44.2098,
         "lng": 44.2098,
       },
-      Object {
+      {
         "lat": 44.6384,
         "lng": 44.6384,
       },
-      Object {
+      {
         "lat": 44.9076,
         "lng": 44.9076,
       },
-      Object {
+      {
         "lat": 44.9083,
         "lng": 44.9083,
       },
-      Object {
+      {
         "lat": 44.9906,
         "lng": 44.9906,
       },
-      Object {
+      {
         "lat": 45.3436,
         "lng": 45.3436,
       },
-      Object {
+      {
         "lat": 45.5812,
         "lng": 45.5812,
       },
-      Object {
+      {
         "lat": 45.7099,
         "lng": 45.7099,
       },
-      Object {
+      {
         "lat": 45.7796,
         "lng": 45.7796,
       },
-      Object {
+      {
         "lat": 45.9425,
         "lng": 45.9425,
       },
-      Object {
+      {
         "lat": 46.3004,
         "lng": 46.3004,
       },
-      Object {
+      {
         "lat": 46.4866,
         "lng": 46.4866,
       },
-      Object {
+      {
         "lat": 46.812,
         "lng": 46.812,
       },
-      Object {
+      {
         "lat": 47.4982,
         "lng": 47.4982,
       },
-      Object {
+      {
         "lat": 57.2401,
         "lng": 57.2401,
       },
-      Object {
+      {
         "lat": 61.1508,
         "lng": 61.1508,
       },
-      Object {
+      {
         "lat": 61.6053,
         "lng": 61.6053,
       },
@@ -766,12 +766,12 @@ Object {
     "index": 0,
     "name": "City",
   },
-  "longitude": Object {
+  "longitude": {
     "index": 1,
     "name": "City",
   },
-  "tooltipText": Object {
-    "data": Array [
+  "tooltipText": {
+    "data": [
       "Santo Domingo",
       "La Yuca",
       "Martorell",
@@ -933,10 +933,10 @@ Object {
 }
 `;
 
-exports[`geoChartData should return geoData with location, color, size 1`] = `
-Object {
-  "color": Object {
-    "data": Array [
+exports[`geoChartData > should return geoData with location, color, size 1`] = `
+{
+  "color": {
+    "data": [
       698,
       2145,
       952,
@@ -952,45 +952,45 @@ Object {
     "index": 1,
     "name": "Density",
   },
-  "location": Object {
-    "data": Array [
-      Object {
+  "location": {
+    "data": [
+      {
         "lat": 18.0722,
         "lng": -66.7458,
       },
-      Object {
+      {
         "lat": 18.0727,
         "lng": -66.6077,
       },
-      Object {
+      {
         "lat": 18.0729,
         "lng": -65.8976,
       },
-      Object {
+      {
         "lat": 21.2975,
         "lng": -157.7211,
       },
-      Object {
+      {
         "lat": 21.3294,
         "lng": -157.846,
       },
-      Object {
+      {
         "lat": 21.4031,
         "lng": -157.9566,
       },
-      Object {
+      {
         "lat": 25.7839,
         "lng": -80.2102,
       },
-      Object {
+      {
         "lat": 26.2181,
         "lng": -98.418,
       },
-      Object {
+      {
         "lat": 26.2585,
         "lng": -97.695,
       },
-      Object {
+      {
         "lat": 26.3024,
         "lng": -98.6425,
       },
@@ -998,8 +998,8 @@ Object {
     "index": 0,
     "name": "City",
   },
-  "size": Object {
-    "data": Array [
+  "size": {
+    "data": [
       3868,
       525,
       2254,
@@ -1018,47 +1018,47 @@ Object {
 }
 `;
 
-exports[`geoChartData should return geoData with location, tooltipText, size 1`] = `
-Object {
-  "location": Object {
-    "data": Array [
-      Object {
+exports[`geoChartData > should return geoData with location, tooltipText, size 1`] = `
+{
+  "location": {
+    "data": [
+      {
         "lat": 18.0722,
         "lng": -66.7458,
       },
-      Object {
+      {
         "lat": 18.0727,
         "lng": -66.6077,
       },
-      Object {
+      {
         "lat": 18.0729,
         "lng": -65.8976,
       },
-      Object {
+      {
         "lat": 21.2975,
         "lng": -157.7211,
       },
-      Object {
+      {
         "lat": 21.3294,
         "lng": -157.846,
       },
-      Object {
+      {
         "lat": 21.4031,
         "lng": -157.9566,
       },
-      Object {
+      {
         "lat": 25.7839,
         "lng": -80.2102,
       },
-      Object {
+      {
         "lat": 26.2181,
         "lng": -98.418,
       },
-      Object {
+      {
         "lat": 26.2585,
         "lng": -97.695,
       },
-      Object {
+      {
         "lat": 26.3024,
         "lng": -98.6425,
       },
@@ -1066,8 +1066,8 @@ Object {
     "index": 0,
     "name": "City",
   },
-  "size": Object {
-    "data": Array [
+  "size": {
+    "data": [
       3868,
       525,
       2254,
@@ -1083,8 +1083,8 @@ Object {
     "index": 0,
     "name": "Population",
   },
-  "tooltipText": Object {
-    "data": Array [
+  "tooltipText": {
+    "data": [
       "Santo Domingo",
       "La Yuca",
       "Martorell",

@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { uriRef } from "@gooddata/sdk-model";
 import { action } from "@storybook/addon-actions";
 import {
@@ -12,11 +12,11 @@ import {
     ComponentLabelsProvider,
 } from "@gooddata/sdk-ui-kit";
 
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
-import { defaultUser, defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock";
-import { LabelsMock } from "./LabelsMock";
+import { defaultUser, defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
+import { LabelsMock } from "./LabelsMock.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 

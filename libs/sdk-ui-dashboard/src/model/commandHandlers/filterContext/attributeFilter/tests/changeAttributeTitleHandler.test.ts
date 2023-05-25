@@ -1,17 +1,19 @@
 // (C) 2023 GoodData Corporation
-import { setAttributeFilterTitle } from "../../../../commands";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
-import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { setAttributeFilterTitle } from "../../../../commands/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors.js";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("changeAttributeTitleHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     it("should emit the appropriate events for changed attribute filter title", async () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter

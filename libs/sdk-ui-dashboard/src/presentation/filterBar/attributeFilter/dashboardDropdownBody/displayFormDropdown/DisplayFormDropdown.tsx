@@ -4,8 +4,8 @@ import React from "react";
 import { areObjRefsEqual, ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { DisplayFormButton } from "./DisplayFormButton";
-import { DisplayDropdownItem } from "./DisplayFormItem";
+import { DisplayFormButton } from "./DisplayFormButton.js";
+import { DisplayDropdownItem } from "./DisplayFormItem.js";
 
 const ITEM_HEIGHT = 23;
 const DROPDOWN_WIDTH = 225;

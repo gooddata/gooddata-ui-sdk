@@ -1,2 +1,2 @@
 // (C) 2019-2021 GoodData Corporation
-import("./harness/index");
+import("./harness/index.js");

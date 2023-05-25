@@ -2,9 +2,9 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { granularityIntlCodes } from "../constants/i18n";
+import { granularityIntlCodes } from "../constants/i18n.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 interface IExcludeCurrentPeriodToggleLabelProps {
     disabled?: boolean;

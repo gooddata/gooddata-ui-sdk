@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
 /**
  * @internal

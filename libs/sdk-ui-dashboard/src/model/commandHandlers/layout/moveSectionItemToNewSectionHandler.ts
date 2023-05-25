@@ -2,21 +2,21 @@
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
-import { MoveSectionItemToNewSection } from "../../commands/layout";
-import { invalidArgumentsProvided } from "../../events/general";
+import { MoveSectionItemToNewSection } from "../../commands/layout.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     DashboardLayoutSectionItemMovedToNewSection,
     layoutSectionItemMovedToNewSection,
-} from "../../events/layout";
-import { layoutActions } from "../../store/layout";
-import { selectLayout } from "../../store/layout/layoutSelectors";
-import { DashboardContext } from "../../types/commonTypes";
-import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+} from "../../events/layout.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 import {
     validateItemExists,
     validateSectionExists,
     validateSectionPlacement,
-} from "./validation/layoutValidation";
+} from "./validation/layoutValidation.js";
 
 type MoveSectionItemToNewSectionContext = {
     readonly ctx: DashboardContext;

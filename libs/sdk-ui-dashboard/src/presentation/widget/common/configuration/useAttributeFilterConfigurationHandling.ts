@@ -8,8 +8,8 @@ import {
     unignoreFilterOnInsightWidget,
     unignoreFilterOnKpiWidget,
     useDashboardCommandProcessing,
-} from "../../../../model";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
+} from "../../../../model/index.js";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 
 export function useAttributeFilterConfigurationHandling(
     widget: IWidget,

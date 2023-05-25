@@ -5,6 +5,7 @@ import { recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade, IDataSeriesCollection, IDataSliceCollection } from "@gooddata/sdk-ui";
 import { isTotal, isAttributeDescriptor } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { describe, it, expect } from "vitest";
 
 describe("DataAccess", () => {
     const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(

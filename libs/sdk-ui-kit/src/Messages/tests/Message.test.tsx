@@ -1,11 +1,18 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import noop from "lodash/noop";
+import defaultUserEvent from "@testing-library/user-event";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { Message } from "../Message";
-import { IMessageProps } from "../typings";
+import { Message } from "../Message.js";
+import { IMessageProps } from "../typings.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 function renderMessage(options: Partial<IMessageProps>, children: JSX.Element = null) {
     return render(
@@ -45,7 +52,7 @@ describe("Message", () => {
     });
 
     it("should create message with custom component containing link and click on it once", async () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         renderMessage(
             {
                 type: "error",
@@ -60,7 +67,7 @@ describe("Message", () => {
     });
 
     it("should show close button and be able to click", async () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderMessage({
             type: "error",
             onClose,

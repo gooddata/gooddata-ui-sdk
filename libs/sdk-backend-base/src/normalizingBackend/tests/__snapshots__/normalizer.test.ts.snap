@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Normalizer should also normalize col & row totals in buckets 1`] = `
-Array [
-  Object {
-    "items": Array [
-      Object {
-        "measure": Object {
-          "definition": Object {
-            "measureDefinition": Object {
-              "item": Object {
+exports[`Normalizer > should also normalize col & row totals in buckets 1`] = `
+[
+  {
+    "items": [
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
                 "identifier": "acugFHNJgsBy",
                 "type": "measure",
               },
@@ -17,11 +17,11 @@ Array [
           "localIdentifier": "m_acugFHNJgsBy",
         },
       },
-      Object {
-        "measure": Object {
-          "definition": Object {
-            "measureDefinition": Object {
-              "item": Object {
+      {
+        "measure": {
+          "definition": {
+            "measureDefinition": {
+              "item": {
                 "identifier": "aangOxLSeztu",
                 "type": "measure",
               },
@@ -33,20 +33,20 @@ Array [
     ],
     "localIdentifier": "bucket",
   },
-  Object {
-    "items": Array [
-      Object {
-        "attribute": Object {
-          "displayForm": Object {
+  {
+    "items": [
+      {
+        "attribute": {
+          "displayForm": {
             "identifier": "label.owner.region",
             "type": "displayForm",
           },
           "localIdentifier": "a_label.owner.region",
         },
       },
-      Object {
-        "attribute": Object {
-          "displayForm": Object {
+      {
+        "attribute": {
+          "displayForm": {
             "identifier": "label.product.id.name",
             "type": "displayForm",
           },
@@ -55,33 +55,33 @@ Array [
       },
     ],
     "localIdentifier": "attribute",
-    "totals": Array [
-      Object {
+    "totals": [
+      {
         "attributeIdentifier": "a_label.product.id.name",
         "measureIdentifier": "m_acugFHNJgsBy",
         "type": "sum",
       },
-      Object {
+      {
         "attributeIdentifier": "a_label.product.id.name",
         "measureIdentifier": "m_acugFHNJgsBy",
         "type": "max",
       },
     ],
   },
-  Object {
-    "items": Array [
-      Object {
-        "attribute": Object {
-          "displayForm": Object {
+  {
+    "items": [
+      {
+        "attribute": {
+          "displayForm": {
             "identifier": "label.account.id.name",
             "type": "displayForm",
           },
           "localIdentifier": "a_label.account.id.name",
         },
       },
-      Object {
-        "attribute": Object {
-          "displayForm": Object {
+      {
+        "attribute": {
+          "displayForm": {
             "identifier": "label.owner.id.name",
             "type": "displayForm",
           },
@@ -90,13 +90,13 @@ Array [
       },
     ],
     "localIdentifier": "columns",
-    "totals": Array [
-      Object {
+    "totals": [
+      {
         "attributeIdentifier": "a_label.owner.id.name",
         "measureIdentifier": "m_acugFHNJgsBy",
         "type": "sum",
       },
-      Object {
+      {
         "attributeIdentifier": "a_label.owner.id.name",
         "measureIdentifier": "m_acugFHNJgsBy",
         "type": "avg",
@@ -106,27 +106,27 @@ Array [
 ]
 `;
 
-exports[`Normalizer should normalize arithmetic measures 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize arithmetic measures 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -135,11 +135,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -148,11 +148,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+    {
+      "measure": {
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_aangOxLSeztu",
               "m_acugFHNJgsBy",
             ],
@@ -162,11 +162,11 @@ Object {
         "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+    {
+      "measure": {
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
@@ -177,33 +177,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize arithmetic measures when mixed between their operands 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize arithmetic measures when mixed between their operands 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -212,11 +212,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+    {
+      "measure": {
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_aangOxLSeztu",
               "m_acugFHNJgsBy",
             ],
@@ -226,11 +226,11 @@ Object {
         "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -240,33 +240,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize arithmetic measures when mixed between their operands with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize arithmetic measures when mixed between their operands with keeping removable properties 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -275,12 +275,12 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_aangOxLSeztu",
               "m_acugFHNJgsBy",
             ],
@@ -290,11 +290,11 @@ Object {
         "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -304,33 +304,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize arithmetic measures with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize arithmetic measures with keeping removable properties 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -339,11 +339,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -352,12 +352,12 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_aangOxLSeztu",
               "m_acugFHNJgsBy",
             ],
@@ -367,12 +367,12 @@ Object {
         "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
@@ -383,33 +383,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize derived measures 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize derived measures 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -418,12 +418,12 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "popMeasureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "popMeasureDefinition": {
             "measureIdentifier": "m_acugFHNJgsBy",
-            "popAttribute": Object {
+            "popAttribute": {
               "identifier": "closed.year",
               "type": "attribute",
             },
@@ -432,13 +432,13 @@ Object {
         "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "previousPeriodMeasure": Object {
-            "dateDataSets": Array [
-              Object {
-                "dataSet": Object {
+    {
+      "measure": {
+        "definition": {
+          "previousPeriodMeasure": {
+            "dateDataSets": [
+              {
+                "dataSet": {
                   "identifier": "closed.dataset.dt",
                 },
                 "periodsAgo": 1,
@@ -451,33 +451,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize derived measures with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize derived measures with keeping removable properties 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -486,13 +486,13 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Won Last Year",
-        "definition": Object {
-          "popMeasureDefinition": Object {
+        "definition": {
+          "popMeasureDefinition": {
             "measureIdentifier": "m_acugFHNJgsBy",
-            "popAttribute": Object {
+            "popAttribute": {
               "identifier": "closed.year",
               "type": "attribute",
             },
@@ -501,13 +501,13 @@ Object {
         "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "previousPeriodMeasure": Object {
-            "dateDataSets": Array [
-              Object {
-                "dataSet": Object {
+    {
+      "measure": {
+        "definition": {
+          "previousPeriodMeasure": {
+            "dateDataSets": [
+              {
+                "dataSet": {
                   "identifier": "closed.dataset.dt",
                 },
                 "periodsAgo": 1,
@@ -520,27 +520,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize duplicate attributes and measures 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Normalizer > should normalize duplicate attributes and measures 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
@@ -548,27 +548,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "a_label.owner.region_1",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -577,11 +577,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -591,27 +591,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize duplicate attributes and measures with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Normalizer > should normalize duplicate attributes and measures with keeping removable properties 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
@@ -619,27 +619,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "a_label.owner.region_1",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -648,11 +648,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -662,47 +662,47 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize measure value filters 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize measure value filters 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+  "filters": [
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 1,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -711,11 +711,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -724,11 +724,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+    {
+      "measure": {
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_aangOxLSeztu",
               "m_acugFHNJgsBy",
             ],
@@ -738,11 +738,11 @@ Object {
         "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+    {
+      "measure": {
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
@@ -753,47 +753,47 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize measure value filters with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize measure value filters with keeping removable properties 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+  "filters": [
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 1,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -802,11 +802,11 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -815,12 +815,12 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_aangOxLSeztu",
               "m_acugFHNJgsBy",
             ],
@@ -830,12 +830,12 @@ Object {
         "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
+        "definition": {
+          "arithmeticMeasure": {
+            "measureIdentifiers": [
               "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
@@ -846,27 +846,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize ranking filters 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Normalizer > should normalize ranking filters 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -874,29 +874,29 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "a_label.product.id.name",
       ],
     },
   ],
-  "filters": Array [
-    Object {
-      "rankingFilter": Object {
-        "attributes": Array [
-          Object {
+  "filters": [
+    {
+      "rankingFilter": {
+        "attributes": [
+          {
             "localIdentifier": "a_label.owner.region",
           },
         ],
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_acugFHNJgsBy",
         },
         "operator": "TOP",
@@ -904,12 +904,12 @@ Object {
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -919,27 +919,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize ranking filters with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Normalizer > should normalize ranking filters with keeping removable properties 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -947,29 +947,29 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "a_label.product.id.name",
       ],
     },
   ],
-  "filters": Array [
-    Object {
-      "rankingFilter": Object {
-        "attributes": Array [
-          Object {
+  "filters": [
+    {
+      "rankingFilter": {
+        "attributes": [
+          {
             "localIdentifier": "a_label.owner.region",
           },
         ],
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_acugFHNJgsBy",
         },
         "operator": "TOP",
@@ -977,12 +977,12 @@ Object {
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -992,27 +992,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize simple attributes and measures 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Normalizer > should normalize simple attributes and measures 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1020,27 +1020,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "a_label.product.id.name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -1049,12 +1049,12 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "max",
-            "item": Object {
+            "item": {
               "identifier": "fact.opportunitysnapshot.amount",
               "type": "fact",
             },
@@ -1063,12 +1063,12 @@ Object {
         "localIdentifier": "m_fact.opportunitysnapshot.amount_max",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "computeRatio": true,
-            "item": Object {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1078,27 +1078,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize simple attributes and measures with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Normalizer > should normalize simple attributes and measures with keeping removable properties 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -1106,27 +1106,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "a_label.product.id.name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -1135,13 +1135,13 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Max Amount",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "max",
-            "item": Object {
+            "item": {
               "identifier": "fact.opportunitysnapshot.amount",
               "type": "fact",
             },
@@ -1150,13 +1150,13 @@ Object {
         "localIdentifier": "m_fact.opportunitysnapshot.amount_max",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Amount with Ratio",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "computeRatio": true,
-            "item": Object {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -1166,33 +1166,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize simple measures with filters 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize simple measures with filters 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -1201,26 +1201,26 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "filters": Array [
-              Object {
-                "negativeAttributeFilter": Object {
-                  "displayForm": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "filters": [
+              {
+                "negativeAttributeFilter": {
+                  "displayForm": {
                     "identifier": "label.owner.region",
                     "type": "displayForm",
                   },
-                  "notIn": Object {
-                    "values": Array [
+                  "notIn": {
+                    "values": [
                       "East Coast",
                     ],
                   },
                 },
               },
             ],
-            "item": Object {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -1230,33 +1230,33 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;
 
-exports[`Normalizer should normalize simple measures with filters with keeping removable properties 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Normalizer > should normalize simple measures with filters with keeping removable properties 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [],
+    {
+      "itemIdentifiers": [],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -1265,26 +1265,26 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "filters": Array [
-              Object {
-                "negativeAttributeFilter": Object {
-                  "displayForm": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "filters": [
+              {
+                "negativeAttributeFilter": {
+                  "displayForm": {
                     "identifier": "label.owner.region",
                     "type": "displayForm",
                   },
-                  "notIn": Object {
-                    "values": Array [
+                  "notIn": {
+                    "values": [
                       "East Coast",
                     ],
                   },
                 },
               },
             ],
-            "item": Object {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -1294,8 +1294,8 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "test",
 }
 `;

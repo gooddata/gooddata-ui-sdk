@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertPermissions } from "../../../convertors/toBackend/WorkspaceConverter";
-import { userLoginMd5FromAuthenticatedPrincipal } from "../../../utils/api";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertPermissions } from "../../../convertors/toBackend/WorkspaceConverter.js";
+import { userLoginMd5FromAuthenticatedPrincipal } from "../../../utils/api.js";
 
 const emptyPermissions = { permissions: {} };
 

@@ -45,7 +45,7 @@ import {
     isAllTimeDashboardDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
@@ -53,21 +53,21 @@ import {
     getFilterContextFromIncluded,
     convertDashboardPluginFromBackend,
     convertDashboardPluginWithLinksFromBackend,
-} from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter";
-import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
+} from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import {
     convertAnalyticalDashboard,
     convertDashboardPluginToBackend,
     convertFilterContextToBackend,
-} from "../../../convertors/toBackend/AnalyticalDashboardConverter";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
-import { resolveWidgetFilters } from "./widgetFilters";
-import includes from "lodash/includes";
-import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions";
-import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter";
-import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter";
-import { parseNameFromContentDisposition } from "../../../utils/downloadFile";
+} from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api.js";
+import { resolveWidgetFilters } from "./widgetFilters.js";
+import includes from "lodash/includes.js";
+import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions.js";
+import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
+import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
+import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;

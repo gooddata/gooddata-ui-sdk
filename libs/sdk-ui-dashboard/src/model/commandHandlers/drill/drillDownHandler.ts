@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes";
-import { DrillDown } from "../../commands/drill";
-import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { DrillDown } from "../../commands/drill.js";
+import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
 import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
 
 export function* drillDownHandler(

@@ -6,10 +6,10 @@ import {
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
-import { FilterStories } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { FilterStories } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 

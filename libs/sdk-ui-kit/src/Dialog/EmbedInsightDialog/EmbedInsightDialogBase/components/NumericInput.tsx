@@ -2,10 +2,10 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { FormattedMessage } from "react-intl";
-import { ArrowOffsets, Bubble } from "../../../../Bubble";
-import { IAlignPoint } from "../../../../typings/positioning";
+import { ArrowOffsets, Bubble } from "../../../../Bubble/index.js";
+import { IAlignPoint } from "../../../../typings/positioning.js";
 import { v4 } from "uuid";
 
 const VALID_INPUT = "^[0-9]+[.,]?[0-9]*$";

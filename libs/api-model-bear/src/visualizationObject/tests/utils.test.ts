@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { getAttributesDisplayForms } from "../utils";
-import { mdObjectWithAttributes } from "./utils.fixtures";
+import { describe, it, expect } from "vitest";
+import { getAttributesDisplayForms } from "../utils.js";
+import { mdObjectWithAttributes } from "./utils.fixtures.js";
 
 describe("visualizationObjectHelper", () => {
     describe("getAttributesDisplayForms", () => {

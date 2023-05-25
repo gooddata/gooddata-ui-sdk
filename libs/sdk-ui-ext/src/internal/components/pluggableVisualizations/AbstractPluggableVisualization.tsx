@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -15,8 +15,12 @@ import {
     EmptyAfmSdkError,
     isEmptyAfm,
     ElementSelectorFunction,
-} from "../../interfaces/Visualization";
-import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
+} from "../../interfaces/Visualization.js";
+import {
+    findDerivedBucketItem,
+    hasDerivedBucketItems,
+    isDerivedBucketItem,
+} from "../../utils/bucketHelper.js";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -31,9 +35,9 @@ import {
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
-import { createInternalIntl } from "../../utils/internalIntlProvider";
-import { getSupportedProperties } from "../../utils/propertiesHelper";
-import { ISortConfig } from "../../interfaces/SortConfig";
+import { createInternalIntl } from "../../utils/internalIntlProvider.js";
+import { getSupportedProperties } from "../../utils/propertiesHelper.js";
+import { ISortConfig } from "../../interfaces/SortConfig.js";
 
 export abstract class AbstractPluggableVisualization implements IVisualization {
     protected intl: IntlShape;

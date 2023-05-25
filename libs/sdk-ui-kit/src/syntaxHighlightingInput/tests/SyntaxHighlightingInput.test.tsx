@@ -2,20 +2,27 @@
 import React from "react";
 import cx from "classnames";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
+import { describe, it, expect, vi, afterAll, beforeAll } from "vitest";
+import { defaultImport } from "default-import";
 
-import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput";
+import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 const defaultProps: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
     value: "",
-    onChange: jest.fn(),
+    onChange: vi.fn(),
 };
 
-(window as any).document.body.createTextRange = jest.fn(() => ({
-    setStart: jest.fn(),
-    setEnd: jest.fn(),
-    getBoundingClientRect: jest.fn(),
-    getClientRects: jest.fn(() => ({ length: null })),
+(window as any).document.body.createTextRange = vi.fn(() => ({
+    setStart: vi.fn(),
+    setEnd: vi.fn(),
+    getBoundingClientRect: vi.fn(),
+    getClientRects: vi.fn(() => ({ length: null })),
 }));
 
 const renderComponent = (props?: Partial<SyntaxHighlightingInput.ISyntaxHighlightingInputProps>) => {
@@ -26,7 +33,7 @@ const multiLineValue = "01234\n01234\n01234";
 
 describe("SyntaxHighlightingInput", () => {
     beforeAll(() => {
-        jest.spyOn(SyntaxHighlightingInput, "SyntaxHighlightingInput").mockImplementation(
+        vi.spyOn(SyntaxHighlightingInput, "SyntaxHighlightingInput").mockImplementation(
             ({
                 onChange,
                 value,
@@ -53,7 +60,7 @@ describe("SyntaxHighlightingInput", () => {
     });
 
     afterAll(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render CodeMirrorInput component", () => {
@@ -75,7 +82,7 @@ describe("SyntaxHighlightingInput", () => {
     });
 
     it("should call onChangeHandler function on value change", async () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         const newValue = "new text content";
         renderComponent({ onChange });
 
@@ -87,7 +94,7 @@ describe("SyntaxHighlightingInput", () => {
 
     describe("onCursor", () => {
         it("should call onCursor function with expected parameters on cursor position change", async () => {
-            const onCursor = jest.fn();
+            const onCursor = vi.fn();
             renderComponent({ onCursor, value: multiLineValue });
 
             await userEvent.type(screen.getByRole("textbox"), multiLineValue);

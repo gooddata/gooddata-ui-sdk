@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import { parseDateValue } from "./dateValueParser";
-import { DateFormatter } from "./types";
+import { parseDateValue } from "./dateValueParser.js";
+import { DateFormatter } from "./types.js";
 
 /**
  * Creates a function that takes a string date attribute value and a targetDateFormat and returns a formatted date string in the target date format.

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
-import isNil from "lodash/isNil";
+import isNil from "lodash/isNil.js";
 
 const LOCAL_STORAGE_KEY_PREFIX = "gdc_share_dialog_admin_message_visible_";
 

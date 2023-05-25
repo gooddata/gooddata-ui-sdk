@@ -3,11 +3,11 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { CodeArea } from "@gooddata/sdk-ui-kit";
 
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
-import { code } from "./CodeMock";
+import { code } from "./CodeMock.js";
 const AreaWrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     const { children } = props;
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;

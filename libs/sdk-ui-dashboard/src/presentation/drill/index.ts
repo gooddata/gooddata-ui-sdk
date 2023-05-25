@@ -1,12 +1,15 @@
 // (C) 2021 GoodData Corporation
-export { useDrill, UseDrillProps } from "./hooks/useDrill";
-export { useDrillDown, UseDrillDownProps } from "./hooks/useDrillDown";
-export { useDrillToInsight, UseDrillToInsightProps } from "./hooks/useDrillToInsight";
-export { useDrillToDashboard, UseDrillToDashboardProps } from "./hooks/useDrillToDashboard";
-export { useDrillToAttributeUrl, UseDrillToAttributeUrlProps } from "./hooks/useDrillToAttributeUrl";
-export { useDrillToCustomUrl, UseDrillToCustomUrlProps } from "./hooks/useDrillToCustomUrl";
-export { useDrillToLegacyDashboard, UseDrillToLegacyDashboardProps } from "./hooks/useDrillToLegacyDashboard";
-export { WithDrillSelectProps, WithDrillSelect } from "./DrillSelect/WithDrillSelect";
+export { useDrill, UseDrillProps } from "./hooks/useDrill.js";
+export { useDrillDown, UseDrillDownProps } from "./hooks/useDrillDown.js";
+export { useDrillToInsight, UseDrillToInsightProps } from "./hooks/useDrillToInsight.js";
+export { useDrillToDashboard, UseDrillToDashboardProps } from "./hooks/useDrillToDashboard.js";
+export { useDrillToAttributeUrl, UseDrillToAttributeUrlProps } from "./hooks/useDrillToAttributeUrl.js";
+export { useDrillToCustomUrl, UseDrillToCustomUrlProps } from "./hooks/useDrillToCustomUrl.js";
+export {
+    useDrillToLegacyDashboard,
+    UseDrillToLegacyDashboardProps,
+} from "./hooks/useDrillToLegacyDashboard.js";
+export { WithDrillSelectProps, WithDrillSelect } from "./DrillSelect/WithDrillSelect.js";
 export {
     OnWidgetDrill,
     OnDashboardDrill,
@@ -25,5 +28,5 @@ export {
     OnDrillToInsightSuccess,
     OnDrillToLegacyDashboard,
     OnDrillToLegacyDashboardSuccess,
-} from "./types";
-export { getDrillDownAttributeTitle } from "./utils/drillDownUtils";
+} from "./types.js";
+export { getDrillDownAttributeTitle } from "./utils/drillDownUtils.js";

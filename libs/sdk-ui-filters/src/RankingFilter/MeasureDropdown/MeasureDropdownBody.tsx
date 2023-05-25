@@ -2,8 +2,8 @@
 import React from "react";
 import { objRefToString, areObjRefsEqual, ObjRefInScope } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
-import { MeasureDropdownItem } from "./MeasureDropdownItem";
-import { IMeasureDropdownItem } from "../types";
+import { MeasureDropdownItem } from "./MeasureDropdownItem.js";
+import { IMeasureDropdownItem } from "../types.js";
 
 interface IMeasureDropdownBodyProps {
     items: IMeasureDropdownItem[];

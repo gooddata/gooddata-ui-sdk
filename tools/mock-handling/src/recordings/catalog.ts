@@ -3,7 +3,7 @@
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
 import path from "path";
-import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
+import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //
 // internal constants & types

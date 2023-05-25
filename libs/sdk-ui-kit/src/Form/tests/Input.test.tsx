@@ -1,13 +1,14 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Input } from "../Input";
-import { InputPureProps } from "../InputPure";
+import { Input } from "../Input.js";
+import { InputPureProps } from "../InputPure.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("Input", () => {
     function renderInput(options: Partial<InputPureProps> = {}) {
         const props = {
-            onChange: jest.fn(),
+            onChange: vi.fn(),
             ...options,
         };
         return render(<Input {...props} />);
@@ -63,7 +64,7 @@ describe("Input", () => {
 
         it("should call onChange when value changed", () => {
             const changedText = "New text";
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({
                 placeholder: "input placeholder",
                 onChange,
@@ -113,7 +114,7 @@ describe("Input", () => {
 
         it("should not call onChange when value stays empty", () => {
             const changedText = "";
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ onChange, placeholder: "input placeholder" });
             fireEvent.change(screen.getByPlaceholderText("input placeholder"), {
                 target: {
@@ -136,7 +137,7 @@ describe("Input", () => {
 
         it("should call onChange only once when changed twice with the same value", () => {
             const changedText = "New text";
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ onChange, placeholder: "input placeholder" });
 
             const input = screen.getByPlaceholderText("input placeholder");
@@ -155,7 +156,7 @@ describe("Input", () => {
         });
 
         it("should call onEscKeyPress esc key is pressed", () => {
-            const onEscKeyPress = jest.fn();
+            const onEscKeyPress = vi.fn();
             renderInput({ onEscKeyPress, placeholder: "input placeholder", value: "test" });
             fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
                 key: "Escape",
@@ -167,7 +168,7 @@ describe("Input", () => {
         });
 
         it("should call onEnterKeyPress esc key is pressed", () => {
-            const onEnterKeyPress = jest.fn();
+            const onEnterKeyPress = vi.fn();
             renderInput({ onEnterKeyPress, placeholder: "input placeholder", value: "test" });
             fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
                 key: "Enter",

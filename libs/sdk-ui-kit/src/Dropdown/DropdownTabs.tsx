@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { ITab, Tabs } from "../Tabs";
+import { ITab, Tabs } from "../Tabs/index.js";
 
 /**
  * @internal

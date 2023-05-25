@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`attribute converter should return attribute with alias 1`] = `
-Object {
+exports[`attribute converter > should return attribute with alias 1`] = `
+{
   "alias": "alias",
-  "label": Object {
-    "identifier": Object {
+  "label": {
+    "identifier": {
       "id": "label.account.id.name",
       "type": "label",
     },
@@ -13,10 +13,22 @@ Object {
 }
 `;
 
-exports[`attribute converter should return attribute with show all values 1`] = `
-Object {
-  "label": Object {
-    "identifier": Object {
+exports[`attribute converter > should return attribute with empty localId 1`] = `
+{
+  "label": {
+    "identifier": {
+      "id": "label.account.id.name",
+      "type": "label",
+    },
+  },
+  "localIdentifier": "a_label.account.id.name",
+}
+`;
+
+exports[`attribute converter > should return attribute with show all values 1`] = `
+{
+  "label": {
+    "identifier": {
       "id": "label.account.id.name",
       "type": "label",
     },
@@ -26,10 +38,10 @@ Object {
 }
 `;
 
-exports[`attribute converter should return attribute with empty localId 1`] = `
-Object {
-  "label": Object {
-    "identifier": Object {
+exports[`attribute converter > should return simple attribute 1`] = `
+{
+  "label": {
+    "identifier": {
       "id": "label.account.id.name",
       "type": "label",
     },
@@ -38,16 +50,4 @@ Object {
 }
 `;
 
-exports[`attribute converter should return simple attribute 1`] = `
-Object {
-  "label": Object {
-    "identifier": Object {
-      "id": "label.account.id.name",
-      "type": "label",
-    },
-  },
-  "localIdentifier": "a_label.account.id.name",
-}
-`;
-
-exports[`attribute converter should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;
+exports[`attribute converter > should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;

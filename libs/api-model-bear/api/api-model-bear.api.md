@@ -5,3173 +5,4082 @@
 ```ts
 
 // @public (undocumented)
+type AbsoluteType = "absolute";
+
+// @public (undocumented)
+type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+
+// @public (undocumented)
+type ArithmeticMeasureOperator_2 = "sum" | "difference" | "multiplication" | "ratio" | "change";
+
+// @public (undocumented)
+type AttributeElements = string[] | IAttributeElementsByRef | IAttributeElementsByValue;
+
+// @public (undocumented)
+type AttributeFilter = IPositiveAttributeFilter_2 | INegativeAttributeFilter_2;
+
+// @public (undocumented)
+type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @public (undocumented)
+type AttributeFilterSelectionMode = "single" | "multi";
+
+// @public (undocumented)
 export type BooleanAsString = "1" | "0";
+
+// @public (undocumented)
+type BucketItem = IMeasure_2 | IAttribute_2;
+
+// @public (undocumented)
+type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
+
+// @public (undocumented)
+type CatalogItemType = "attribute" | "metric" | "fact";
+
+// @public (undocumented)
+type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+
+// @public (undocumented)
+type ComparisonConditionOperator_2 = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+
+// @public (undocumented)
+type CompatibilityFilter = IExpressionFilter | ExtendedFilter;
+
+// @public (undocumented)
+type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+
+// @public
+type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+
+// @public
+type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+
+// @public (undocumented)
+type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
+
+// @public (undocumented)
+type DataValue = null | string | number;
+
+// @public (undocumented)
+type DateFilter = IRelativeDateFilter_2 | IAbsoluteDateFilter_2;
+
+// @public (undocumented)
+type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+
+// @public (undocumented)
+type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
+
+// @public (undocumented)
+type DateFilterType = RelativeType | AbsoluteType;
 
 // @public (undocumented)
 export type DateString = string;
 
+// @public
+type DateString_2 = string;
+
+// @public (undocumented)
+type DrillFromType = IDrillFromMeasure | IDrillFromAttribute;
+
 // @public (undocumented)
 export type Email = string;
 
-// @alpha (undocumented)
-export namespace GdcAccessControl {
-    export interface IGetGranteesParams {
-        // (undocumented)
-        permission?: Permission;
-    }
-    export interface IGetGranteesResponse {
-        // (undocumented)
-        grantees: {
-            items: IGranteeEntry[];
-        };
-    }
-    // (undocumented)
-    export interface IGranteeEntry {
-        // (undocumented)
-        aclEntry: {
-            permission: Permission;
-            grantee: IGranteeUserInfo | IGranteeUserGroupInfo;
-        };
-    }
-    // (undocumented)
-    export interface IGranteeUserGroupInfo {
-        // (undocumented)
-        userGroup: GdcUserGroup.IUserGroupItem;
-    }
-    // (undocumented)
-    export interface IGranteeUserInfo {
-        // (undocumented)
-        user: GdcUser.IUsersItem;
-    }
-    // (undocumented)
-    export type Permission = "read";
-}
+// @public (undocumented)
+type ExportFormat = "xls" | "pdf" | "html" | "csv" | "xlsx";
 
 // @public (undocumented)
-export namespace GdcCatalog {
-    // (undocumented)
-    export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
-    // (undocumented)
-    export type CatalogItemType = "attribute" | "metric" | "fact";
-    // (undocumented)
-    export interface ICatalogAttribute extends ICatalogItemBase {
-        // (undocumented)
-        readonly links: {
-            readonly self: string;
-            readonly defaultDisplayForm: string;
-            readonly geoPinDisplayForms?: string[];
-        };
-        // (undocumented)
-        readonly type: "attribute";
-    }
-    // (undocumented)
-    export interface ICatalogFact extends ICatalogItemBase {
-        // (undocumented)
-        readonly type: "fact";
-    }
-    // (undocumented)
-    export interface ICatalogGroup {
-        // (undocumented)
-        readonly identifier: string;
-        // (undocumented)
-        readonly title: string;
-    }
-    // (undocumented)
-    export interface ICatalogItemBase {
-        // (undocumented)
-        readonly groups?: string[];
-        // (undocumented)
-        readonly identifier: string;
-        // (undocumented)
-        readonly links: {
-            self: string;
-        };
-        // (undocumented)
-        readonly production: boolean;
-        // (undocumented)
-        readonly summary: string;
-        // (undocumented)
-        readonly title: string;
-        // (undocumented)
-        readonly type: CatalogItemType;
-    }
-    // (undocumented)
-    export interface ICatalogMetric extends ICatalogItemBase {
-        // (undocumented)
-        readonly expression: string;
-        // (undocumented)
-        readonly format: string;
-        // (undocumented)
-        readonly type: "metric";
-    }
-    // (undocumented)
-    export interface IColumnsAndDefinitions {
-        // (undocumented)
-        columns: string[];
-        // (undocumented)
-        definitions: Array<{
-            metricDefinition: {
-                identifier: string;
-                uri: string;
-            };
-        }>;
-    }
-    // (undocumented)
-    export interface ILoadAvailableCatalogItemsParams {
-        // (undocumented)
-        catalogQueryRequest: {
-            bucketItems: ItemDescription[];
-            types?: CatalogItemType[];
-        };
-    }
-    // (undocumented)
-    export interface ILoadAvailableCatalogItemsResponse {
-        // (undocumented)
-        catalogAvailableItems: {
-            items: string[];
-        };
-    }
-    // (undocumented)
-    export interface ILoadCatalogGroupsParams {
-        // (undocumented)
-        readonly csvDataSets?: string[];
-        // (undocumented)
-        readonly excludeWithTags?: string[];
-        // (undocumented)
-        readonly includeWithTags?: string[];
-        // (undocumented)
-        readonly production?: 1 | 0;
-    }
-    // (undocumented)
-    export interface ILoadCatalogGroupsResponse {
-        // (undocumented)
-        catalogGroups: ICatalogGroup[];
-    }
-    // (undocumented)
-    export interface ILoadCatalogItemsParams {
-        // (undocumented)
-        readonly csvDataSets?: string[];
-        // (undocumented)
-        readonly excludeWithTags?: string[];
-        // (undocumented)
-        readonly includeWithTags?: string[];
-        // (undocumented)
-        readonly limit?: number;
-        // (undocumented)
-        readonly offset?: number;
-        // (undocumented)
-        readonly production?: 1 | 0;
-        // (undocumented)
-        readonly types?: CatalogItemType[];
-    }
-    // (undocumented)
-    export interface ILoadCatalogItemsResponse {
-        // (undocumented)
-        catalogItems: {
-            items: CatalogItem[];
-            paging: {
-                offset: number;
-                limit: number;
-            };
-        };
-    }
-    // (undocumented)
-    export interface ILoadDateDataSetsParams {
-        // (undocumented)
-        attributesMap?: Record<string, unknown>;
-        // (undocumented)
-        bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
-        // (undocumented)
-        dataSetIdentifier?: string;
-        // (undocumented)
-        excludeObjectsWithTags?: string[];
-        // (undocumented)
-        includeAvailableDateAttributes?: boolean;
-        // (undocumented)
-        includeDateGranularities?: string[];
-        // (undocumented)
-        includeObjectsWithTags?: string[];
-        // (undocumented)
-        includeUnavailableDateDataSetsCount?: boolean;
-        // (undocumented)
-        returnAllDateDataSets?: boolean;
-        // (undocumented)
-        returnAllRelatedDateDataSets?: boolean;
-    }
-    // (undocumented)
-    export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
-    // (undocumented)
-    export function isCatalogFact(obj: unknown): obj is ICatalogFact;
-    // (undocumented)
-    export function isCatalogMetric(obj: unknown): obj is ICatalogMetric;
-    // (undocumented)
-    export type ItemDescription = {
-        uri: string;
-    } | {
-        expression: string;
-    };
-        {};
-}
+type ExtendedFilter = FilterItem | IMeasureValueFilter | IRankingFilter;
 
 // @public (undocumented)
-export namespace GdcDashboard {
-    // (undocumented)
-    export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
-    // (undocumented)
-    export interface IAnalyticalDashboard {
-        // (undocumented)
-        content: IAnalyticalDashboardContent;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IAnalyticalDashboardContent {
-        // (undocumented)
-        dateFilterConfig?: IDashboardDateFilterConfig;
-        // (undocumented)
-        filterContext?: string;
-        // (undocumented)
-        layout?: GdcDashboardLayout.Layout;
-        // (undocumented)
-        plugins?: IDashboardPluginLink[];
-        // (undocumented)
-        widgets: string[];
-    }
-    // (undocumented)
-    export interface IDashboardDateFilterAddedPresets {
-        // (undocumented)
-        absolutePresets?: GdcExtendedDateFilters.IDateFilterAbsolutePreset[];
-        // (undocumented)
-        relativePresets?: GdcExtendedDateFilters.IDateFilterRelativePreset[];
-    }
-    // (undocumented)
-    export interface IDashboardDateFilterConfig {
-        // (undocumented)
-        addPresets?: IDashboardDateFilterAddedPresets;
-        // (undocumented)
-        filterName: string;
-        // (undocumented)
-        hideGranularities?: GdcExtendedDateFilters.DateFilterGranularity[];
-        // (undocumented)
-        hideOptions?: GdcExtendedDateFilters.GUID[];
-        // (undocumented)
-        mode: DashboardDateFilterConfigMode;
-    }
-    // (undocumented)
-    export interface IDashboardPluginLink {
-        // (undocumented)
-        parameters?: string;
-        // (undocumented)
-        type: string;
-    }
-    // (undocumented)
-    export interface IWrappedAnalyticalDashboard {
-        // (undocumented)
-        analyticalDashboard: IAnalyticalDashboard;
-    }
-}
+type ExtendedFilter_2 = Filter | IMeasureValueFilter_2 | IRankingFilter_2;
 
 // @public (undocumented)
-export namespace GdcDashboardLayout {
-    // (undocumented)
-    export interface IFluidLayout {
-        // (undocumented)
-        fluidLayout: {
-            rows: IFluidLayoutRow[];
-            size?: IFluidLayoutSize;
-            style?: string;
-        };
-    }
-    // (undocumented)
-    export interface IFluidLayoutColSize {
-        // (undocumented)
-        lg?: IFluidLayoutSize;
-        // (undocumented)
-        md?: IFluidLayoutSize;
-        // (undocumented)
-        sm?: IFluidLayoutSize;
-        // (undocumented)
-        xl: IFluidLayoutSize;
-        // (undocumented)
-        xs?: IFluidLayoutSize;
-    }
-    // (undocumented)
-    export interface IFluidLayoutColumn {
-        // (undocumented)
-        content?: LayoutContent;
-        // (undocumented)
-        size: IFluidLayoutColSize;
-        // (undocumented)
-        style?: string;
-    }
-    // (undocumented)
-    export interface IFluidLayoutRow {
-        // (undocumented)
-        columns: IFluidLayoutColumn[];
-        // (undocumented)
-        header?: SectionHeader;
-        // (undocumented)
-        style?: string;
-    }
-    // (undocumented)
-    export interface IFluidLayoutSize {
-        // (undocumented)
-        height?: number;
-        // (undocumented)
-        heightAsRatio?: number;
-        // (undocumented)
-        width: number;
-    }
-    // (undocumented)
-    export interface IPersistedWidget {
-        // (undocumented)
-        widget: {
-            qualifier: GdcVisualizationObject.ObjQualifier;
-        };
-    }
-    // (undocumented)
-    export interface ISectionDescription {
-        // (undocumented)
-        description: string;
-    }
-    // (undocumented)
-    export interface ISectionHeader {
-        // (undocumented)
-        description?: string;
-        // (undocumented)
-        title: string;
-    }
-    // (undocumented)
-    export function isFluidLayout(obj: unknown): obj is IFluidLayout;
-    // (undocumented)
-    export function isLayoutWidget(obj: unknown): obj is IPersistedWidget;
-    // (undocumented)
-    export type Layout = IFluidLayout;
-    // (undocumented)
-    export type LayoutContent = Widget | Layout;
-    // (undocumented)
-    export type SectionHeader = ISectionHeader | ISectionDescription;
-    // (undocumented)
-    export type Widget = IPersistedWidget;
-}
+type Filter = DateFilter | AttributeFilter;
 
 // @public (undocumented)
-export namespace GdcDashboardPlugin {
-    // (undocumented)
-    export interface IDashboardPlugin {
-        // (undocumented)
-        content: IDashboardPluginContent;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IDashboardPluginContent {
-        // (undocumented)
-        url: string;
-    }
-    // (undocumented)
-    export function isDashboardPlugin(obj: unknown): obj is IWrappedDashboardPlugin;
-    // (undocumented)
-    export interface IWrappedDashboardPlugin {
-        // (undocumented)
-        dashboardPlugin: IDashboardPlugin;
-    }
-}
+type FilterContextItem = IAttributeFilter | IDateFilter;
 
 // @public (undocumented)
-export namespace GdcDataSets {
-    // (undocumented)
-    export interface IDataSet {
-        // (undocumented)
-        content: IDataSetContent;
-        // (undocumented)
-        links?: {
-            dataUploads: Uri | null;
-            uploadConfiguration?: Uri;
-        };
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IDataSetContent {
-        // (undocumented)
-        attributes: Uri[];
-        // (undocumented)
-        customUploadIdentifier?: string;
-        // (undocumented)
-        customUploadState?: string;
-        // (undocumented)
-        customUploadTimestamp?: number;
-        // (undocumented)
-        dataLoadingColumns: Uri[];
-        // (undocumented)
-        facts: Uri[];
-        // (undocumented)
-        hasUploadConfiguration?: BooleanAsString;
-        // (undocumented)
-        identifierPrefix?: string;
-        // (undocumented)
-        mode: "SLI" | "DLI" | "";
-        // (undocumented)
-        ties: Uri[];
-        // (undocumented)
-        titleSuffix?: string;
-        // (undocumented)
-        urn?: string;
-    }
-    // (undocumented)
-    export interface IWrappedDataSet {
-        // (undocumented)
-        dataSet: IDataSet;
-    }
-}
+type FilterItem = DateFilterItem | AttributeFilterItem;
 
-// @public (undocumented)
-export namespace GdcDataSetsCsv {
-    export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
-    export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
-    export interface IDataColumn {
-        // (undocumented)
-        column: {
-            name: string;
-            type: DataColumnType;
-            skip?: boolean;
-            format?: string;
-        };
-    }
-    export interface IDataHeader {
-        // (undocumented)
-        columns: IDataColumn[];
-        // (undocumented)
-        headerRowIndex?: number;
-    }
-    export interface IDataset {
-        // (undocumented)
-        dataset: {
-            name: string;
-            dataHeader: IDataHeader;
-            datasetId: string;
-            loadedRowCount: number;
-            datasetLoadStatus: DatasetLoadStatus;
-            firstSuccessfulUpdate?: IDatasetLoadInfo;
-            lastSuccessfulUpdate?: IDatasetLoadInfo;
-            lastUpdate?: IDatasetLoadInfo;
-        };
-    }
-    export interface IDatasetLoadInfo {
-        // (undocumented)
-        created: string;
-        // (undocumented)
-        owner: IDatasetUser;
-        // (undocumented)
-        status: DatasetLoadStatus;
-    }
-    // (undocumented)
-    export interface IDatasetsResponse {
-        // (undocumented)
-        datasets: {
-            items: IDataset[];
-        };
-    }
-    export interface IDatasetUser {
-        // (undocumented)
-        fullName: string;
-        // (undocumented)
-        login: string;
-        // (undocumented)
-        profileUri: string;
+declare namespace GdcAccessControl {
+    export {
+        Permission,
+        IGranteeUserInfo,
+        IGranteeUserGroupInfo,
+        IGranteeEntry,
+        IGetGranteesParams,
+        IGetGranteesResponse
     }
 }
+export { GdcAccessControl }
 
-// @public (undocumented)
-export namespace GdcDateDataSets {
-    export interface IDateDataSet {
-        // (undocumented)
-        availableDateAttributes?: IDateDataSetAttribute[];
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-        // (undocumented)
-        relevance: number;
-    }
-    export interface IDateDataSetAttribute {
-        // (undocumented)
-        attributeMeta: GdcMetadata.IObjectMeta;
-        // (undocumented)
-        defaultDisplayFormMeta: GdcMetadata.IObjectMeta;
-        // (undocumented)
-        type: IDateDataSetAttributeGranularity;
-    }
-    // (undocumented)
-    export type IDateDataSetAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
-    export interface IDateDataSetResponse {
-        // (undocumented)
-        dateDataSetsResponse: {
-            dateDataSets: IDateDataSet[];
-            unavailableDateDataSetsCount?: number;
-        };
+declare namespace GdcCatalog {
+    export {
+        isCatalogAttribute,
+        isCatalogMetric,
+        isCatalogFact,
+        CatalogItemType,
+        ICatalogGroup,
+        ICatalogItemBase,
+        ICatalogAttribute,
+        ICatalogMetric,
+        ICatalogFact,
+        CatalogItem,
+        ItemDescription,
+        IColumnsAndDefinitions,
+        ILoadCatalogItemsParams,
+        ILoadCatalogItemsResponse,
+        ILoadCatalogGroupsParams,
+        ILoadCatalogGroupsResponse,
+        ILoadAvailableCatalogItemsParams,
+        ILoadAvailableCatalogItemsResponse,
+        ILoadDateDataSetsParams
     }
 }
+export { GdcCatalog }
 
-// @public
-export namespace GdcExecuteAFM {
-    // (undocumented)
-    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
-    // (undocumented)
-    export type AttributeElements = string[] | IAttributeElementsByRef | IAttributeElementsByValue;
-    // (undocumented)
-    export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
-    // (undocumented)
-    export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
-    // (undocumented)
-    export type CompatibilityFilter = IExpressionFilter | ExtendedFilter;
-    // (undocumented)
-    export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
-    // (undocumented)
-    export type ExtendedFilter = FilterItem | IMeasureValueFilter | IRankingFilter;
-    // (undocumented)
-    export type FilterItem = DateFilterItem | AttributeFilterItem;
-    // (undocumented)
-    export interface IAbsoluteDateFilter {
-        // (undocumented)
-        absoluteDateFilter: {
-            dataSet: ObjQualifier;
-            from: string;
-            to: string;
-        };
+declare namespace GdcDashboard {
+    export {
+        IWrappedAnalyticalDashboard,
+        IAnalyticalDashboard,
+        DashboardDateFilterConfigMode,
+        IDashboardPluginLink,
+        IDashboardDateFilterAddedPresets,
+        IDashboardDateFilterConfig,
+        IAnalyticalDashboardContent
     }
-    // (undocumented)
-    export interface IAfm {
-        // (undocumented)
-        attributes?: IAttribute[];
-        // (undocumented)
-        filters?: CompatibilityFilter[];
-        // (undocumented)
-        measures?: IMeasure[];
-        // (undocumented)
-        nativeTotals?: INativeTotalItem[];
-    }
-    // (undocumented)
-    export interface IArithmeticMeasure {
-        // (undocumented)
-        measureIdentifiers: Identifier[];
-        // (undocumented)
-        operator: ArithmeticMeasureOperator;
-    }
-    // (undocumented)
-    export interface IArithmeticMeasureDefinition {
-        // (undocumented)
-        arithmeticMeasure: IArithmeticMeasure;
-    }
-    // (undocumented)
-    export interface IAttribute {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        displayForm: ObjQualifier;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface IAttributeElementsByRef {
-        // (undocumented)
-        uris: string[];
-    }
-    // (undocumented)
-    export interface IAttributeElementsByValue {
-        // (undocumented)
-        values: string[];
-    }
-    // (undocumented)
-    export interface IAttributeLocatorItem {
-        // (undocumented)
-        attributeLocatorItem: {
-            attributeIdentifier: Identifier;
-            element: string;
-        };
-    }
-    // (undocumented)
-    export interface IAttributeSortItem {
-        // (undocumented)
-        attributeSortItem: {
-            direction: SortDirection;
-            attributeIdentifier: Identifier;
-            aggregation?: "sum";
-        };
-    }
-    // (undocumented)
-    export interface IComparisonCondition {
-        // (undocumented)
-        comparison: {
-            operator: ComparisonConditionOperator;
-            value: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export type Identifier = string;
-    // (undocumented)
-    export interface IDimension {
-        // (undocumented)
-        itemIdentifiers: Identifier[];
-        // (undocumented)
-        totals?: ITotalItem[];
-    }
-    // (undocumented)
-    export interface IExecution {
-        // (undocumented)
-        execution: {
-            afm: IAfm;
-            resultSpec?: IResultSpec;
-        };
-    }
-    // @deprecated (undocumented)
-    export interface IExpressionFilter {
-        // (undocumented)
-        expression: {
-            value: string;
-        };
-    }
-    // (undocumented)
-    export interface ILocalIdentifierQualifier {
-        // (undocumented)
-        localIdentifier: string;
-    }
-    // (undocumented)
-    export interface IMeasure {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        definition: MeasureDefinition;
-        // (undocumented)
-        format?: string;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface IMeasureLocatorItem {
-        // (undocumented)
-        measureLocatorItem: {
-            measureIdentifier: Identifier;
-        };
-    }
-    // (undocumented)
-    export interface IMeasureSortItem {
-        // (undocumented)
-        measureSortItem: {
-            direction: SortDirection;
-            locators: LocatorItem[];
-        };
-    }
-    // (undocumented)
-    export interface IMeasureValueFilter {
-        // (undocumented)
-        measureValueFilter: {
-            measure: Qualifier;
-            condition?: MeasureValueFilterCondition;
-        };
-    }
-    // (undocumented)
-    export interface INativeTotalItem {
-        // (undocumented)
-        attributeIdentifiers: Identifier[];
-        // (undocumented)
-        measureIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface INegativeAttributeFilter {
-        // (undocumented)
-        negativeAttributeFilter: {
-            displayForm: ObjQualifier;
-            notIn: AttributeElements;
-        };
-    }
-    // (undocumented)
-    export interface IObjIdentifierQualifier {
-        // (undocumented)
-        identifier: string;
-    }
-    // (undocumented)
-    export interface IObjUriQualifier {
-        // (undocumented)
-        uri: string;
-    }
-    // (undocumented)
-    export interface IPopMeasure {
-        // (undocumented)
-        measureIdentifier: Identifier;
-        // (undocumented)
-        popAttribute: ObjQualifier;
-    }
-    // (undocumented)
-    export interface IPopMeasureDefinition {
-        // (undocumented)
-        popMeasure: IPopMeasure;
-    }
-    // (undocumented)
-    export interface IPositiveAttributeFilter {
-        // (undocumented)
-        positiveAttributeFilter: {
-            displayForm: ObjQualifier;
-            in: AttributeElements;
-        };
-    }
-    // (undocumented)
-    export interface IPreviousPeriodDateDataSet {
-        // (undocumented)
-        dataSet: ObjQualifier;
-        // (undocumented)
-        periodsAgo: number;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasure {
-        // (undocumented)
-        dateDataSets: IPreviousPeriodDateDataSet[];
-        // (undocumented)
-        measureIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasureDefinition {
-        // (undocumented)
-        previousPeriodMeasure: IPreviousPeriodMeasure;
-    }
-    // (undocumented)
-    export interface IRangeCondition {
-        // (undocumented)
-        range: {
-            operator: RangeConditionOperator;
-            from: number;
-            to: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export interface IRankingFilter {
-        // (undocumented)
-        rankingFilter: {
-            measures: Qualifier[];
-            attributes?: Qualifier[];
-            operator: RankingFilterOperator;
-            value: number;
-        };
-    }
-    // (undocumented)
-    export interface IRelativeDateFilter {
-        // (undocumented)
-        relativeDateFilter: {
-            dataSet: ObjQualifier;
-            granularity: string;
-            from: number;
-            to: number;
-        };
-    }
-    // (undocumented)
-    export interface IResultSpec {
-        // (undocumented)
-        dimensions?: IDimension[];
-        // (undocumented)
-        sorts?: SortItem[];
-    }
-    // (undocumented)
-    export function isAbsoluteDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IAbsoluteDateFilter;
-    // (undocumented)
-    export function isArithmeticMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IArithmeticMeasureDefinition;
-    // (undocumented)
-    export function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[];
-    // (undocumented)
-    export function isAttributeElementsByRef(attributeElements: GdcExecuteAFM.AttributeElements): attributeElements is GdcExecuteAFM.IAttributeElementsByRef;
-    // (undocumented)
-    export function isAttributeElementsByValue(attributeElements: GdcExecuteAFM.AttributeElements): attributeElements is GdcExecuteAFM.IAttributeElementsByValue;
-    // (undocumented)
-    export function isAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.AttributeFilterItem;
-    // (undocumented)
-    export function isAttributeLocatorItem(locator: GdcExecuteAFM.LocatorItem): locator is GdcExecuteAFM.IAttributeLocatorItem;
-    // (undocumented)
-    export function isAttributeSortItem(sortItem: GdcExecuteAFM.SortItem): sortItem is GdcExecuteAFM.IAttributeSortItem;
-    // (undocumented)
-    export function isDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.DateFilterItem;
-    // (undocumented)
-    export function isExpressionFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IExpressionFilter;
-    // (undocumented)
-    export interface ISimpleMeasure {
-        // (undocumented)
-        aggregation?: SimpleMeasureAggregation;
-        // (undocumented)
-        computeRatio?: boolean;
-        // (undocumented)
-        filters?: FilterItem[];
-        // (undocumented)
-        item: ObjQualifier;
-    }
-    // (undocumented)
-    export interface ISimpleMeasureDefinition {
-        // (undocumented)
-        measure: ISimpleMeasure;
-    }
-    // (undocumented)
-    export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier;
-    // (undocumented)
-    export function isMeasureLocatorItem(locator: GdcExecuteAFM.LocatorItem): locator is GdcExecuteAFM.IMeasureLocatorItem;
-    // (undocumented)
-    export function isMeasureSortItem(sortItem: GdcExecuteAFM.SortItem): sortItem is GdcExecuteAFM.IMeasureSortItem;
-    // (undocumented)
-    export function isMeasureValueFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IMeasureValueFilter;
-    // (undocumented)
-    export function isNegativeAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.INegativeAttributeFilter;
-    // (undocumented)
-    export function isObjectUriQualifier(qualifier: GdcExecuteAFM.ObjQualifier): qualifier is GdcExecuteAFM.IObjUriQualifier;
-    // (undocumented)
-    export function isObjIdentifierQualifier(qualifier: GdcExecuteAFM.ObjQualifier): qualifier is GdcExecuteAFM.IObjIdentifierQualifier;
-    // (undocumented)
-    export function isPopMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IPopMeasureDefinition;
-    // (undocumented)
-    export function isPositiveAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IPositiveAttributeFilter;
-    // (undocumented)
-    export function isPreviousPeriodMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IPreviousPeriodMeasureDefinition;
-    // (undocumented)
-    export function isRankingFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IRankingFilter;
-    // (undocumented)
-    export function isRelativeDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IRelativeDateFilter;
-    // (undocumented)
-    export function isSimpleMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.ISimpleMeasureDefinition;
-    // (undocumented)
-    export interface ITotalItem {
-        // (undocumented)
-        attributeIdentifier: Identifier;
-        // (undocumented)
-        measureIdentifier: Identifier;
-        // (undocumented)
-        type: TotalType;
-    }
-    // (undocumented)
-    export interface IVisualizationStyle {
-        // (undocumented)
-        visualizationStyle: {
-            type: VisualizationStyleType;
-            colorPalette: {
-                measure?: {
-                    color: string;
-                    periodOverPeriod: string;
-                };
-                stack?: any;
-            };
-        };
-    }
-    // (undocumented)
-    export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
-    // (undocumented)
-    export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IPopMeasureDefinition | IPreviousPeriodMeasureDefinition;
-    // (undocumented)
-    export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
-    // (undocumented)
-    export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
-    // (undocumented)
-    export type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
-    // (undocumented)
-    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
-    // (undocumented)
-    export type RankingFilterOperator = "TOP" | "BOTTOM";
-    // (undocumented)
-    export type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
-    // (undocumented)
-    export type SortDirection = "asc" | "desc";
-    // (undocumented)
-    export type SortItem = IAttributeSortItem | IMeasureSortItem;
-    // (undocumented)
-    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    // (undocumented)
-    export type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar" | "area";
 }
+export { GdcDashboard }
 
-// @public (undocumented)
-export namespace GdcExecution {
-    // (undocumented)
-    export type DataValue = null | string | number;
-    // (undocumented)
-    export interface IAttributeHeader {
-        // (undocumented)
-        attributeHeader: {
-            uri: string;
-            identifier: string;
-            localIdentifier: string;
-            name: string;
-            totalItems?: ITotalHeaderItem[];
-            formOf: {
-                uri: string;
-                identifier: string;
-                name: string;
-            };
-        };
-    }
-    // (undocumented)
-    export interface IError extends Error {
-        // (undocumented)
-        response: Response;
-    }
-    // (undocumented)
-    export interface IExecutionResponse {
-        // (undocumented)
-        dimensions: IResultDimension[];
-        // (undocumented)
-        links: {
-            executionResult: string;
-        };
-    }
-    export interface IExecutionResponses {
-        // (undocumented)
-        executionResponse: IExecutionResponse;
-        // (undocumented)
-        executionResult: IExecutionResult | null;
-    }
-    // (undocumented)
-    export interface IExecutionResponseWrapper {
-        // (undocumented)
-        executionResponse: IExecutionResponse;
-    }
-    // (undocumented)
-    export interface IExecutionResult {
-        // (undocumented)
-        data: DataValue[][] | DataValue[];
-        // (undocumented)
-        headerItems?: IResultHeaderItem[][][];
-        // (undocumented)
-        paging: {
-            count: number[];
-            offset: number[];
-            total: number[];
-        };
-        // (undocumented)
-        totals?: DataValue[][][];
-        // (undocumented)
-        totalTotals?: DataValue[][][];
-        // (undocumented)
-        warnings?: Warning[];
-    }
-    // (undocumented)
-    export interface IExecutionResultWrapper {
-        // (undocumented)
-        executionResult: IExecutionResult;
-    }
-    // (undocumented)
-    export type IHeader = IMeasureGroupHeader | IAttributeHeader;
-    // (undocumented)
-    export interface IMeasureGroupHeader {
-        // (undocumented)
-        measureGroupHeader: {
-            items: IMeasureHeaderItem[];
-            totalItems?: ITotalHeaderItem[];
-        };
-    }
-    // (undocumented)
-    export interface IMeasureHeaderItem {
-        // (undocumented)
-        measureHeaderItem: {
-            uri?: string;
-            identifier?: string;
-            localIdentifier: string;
-            name: string;
-            format: string;
-        };
-    }
-    // (undocumented)
-    export interface IResultAttributeHeaderItem {
-        // (undocumented)
-        attributeHeaderItem: {
-            uri: string;
-            name: string;
-        };
-    }
-    // (undocumented)
-    export interface IResultDimension {
-        // (undocumented)
-        headers: IHeader[];
-    }
-    // (undocumented)
-    export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
-    // (undocumented)
-    export interface IResultMeasureHeaderItem {
-        // (undocumented)
-        measureHeaderItem: {
-            name: string;
-            order: number;
-        };
-    }
-    // (undocumented)
-    export interface IResultTotalHeaderItem {
-        // (undocumented)
-        totalHeaderItem: {
-            name: string;
-            type: string;
-        };
-    }
-    // (undocumented)
-    export function isAttributeHeader(header: IHeader): header is IAttributeHeader;
-    // (undocumented)
-    export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem;
-    // (undocumented)
-    export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
-    // (undocumented)
-    export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem;
-    // (undocumented)
-    export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem;
-    // (undocumented)
-    export interface ITotalHeaderItem {
-        // (undocumented)
-        totalHeaderItem: {
-            name: string;
-        };
-    }
-    // (undocumented)
-    export interface Warning {
-        // (undocumented)
-        message: string;
-        // (undocumented)
-        parameters?: any[];
-        // (undocumented)
-        warningCode: string;
+declare namespace GdcDashboardLayout {
+    export {
+        isFluidLayout,
+        isLayoutWidget,
+        Layout,
+        Widget,
+        LayoutContent,
+        IPersistedWidget,
+        IFluidLayout,
+        IFluidLayoutRow,
+        IFluidLayoutColumn,
+        IFluidLayoutColSize,
+        IFluidLayoutSize,
+        SectionHeader,
+        ISectionHeader,
+        ISectionDescription
     }
 }
+export { GdcDashboardLayout }
 
-// @public (undocumented)
-export namespace GdcExport {
-    // (undocumented)
-    export interface IBaseExportConfig {
-        format?: "xlsx" | "csv" | "raw";
-        mergeHeaders?: boolean;
-        title?: string;
-    }
-    export interface IExportBlobResponse {
-        fileName?: string;
-        objectUrl: string;
-        uri: string;
-    }
-    // (undocumented)
-    export interface IExportConfig extends IBaseExportConfig {
-        afm?: GdcExecuteAFM.IAfm;
-        showFilters?: boolean;
-    }
-    // (undocumented)
-    export interface IExportResponse {
-        // (undocumented)
-        uri: string;
+declare namespace GdcDashboardPlugin {
+    export {
+        isDashboardPlugin,
+        IWrappedDashboardPlugin,
+        IDashboardPlugin,
+        IDashboardPluginContent
     }
 }
+export { GdcDashboardPlugin }
 
-// @public (undocumented)
-export namespace GdcExtendedDateFilters {
-    // (undocumented)
-    export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
-    // (undocumented)
-    export type DateString = string;
-    // (undocumented)
-    export type GUID = string;
-    // (undocumented)
-    export interface IAttributeFilterReference {
-        // (undocumented)
-        attributeFilterReference: {
-            displayForm: string;
-        };
+declare namespace GdcDataSets {
+    export {
+        IDataSetContent,
+        IDataSet_2 as IDataSet,
+        IWrappedDataSet_2 as IWrappedDataSet
     }
-    // (undocumented)
-    export type IDateFilterAbsoluteForm = IDateFilterBase;
-    // (undocumented)
-    export interface IDateFilterAbsolutePreset extends IDateFilterBase {
-        // (undocumented)
-        from: DateString;
-        // (undocumented)
-        to: DateString;
-    }
-    // (undocumented)
-    export type IDateFilterAllTime = IDateFilterBase;
-    // (undocumented)
-    export interface IDateFilterBase {
-        // (undocumented)
-        localIdentifier: GUID;
-        // (undocumented)
-        name?: string;
-        // (undocumented)
-        visible: boolean;
-    }
-    // (undocumented)
-    export interface IDateFilterConfig {
-        // (undocumented)
-        content: IDateFilterConfigContent;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IDateFilterConfigContent {
-        // (undocumented)
-        absoluteForm?: IDateFilterAbsoluteForm;
-        // (undocumented)
-        absolutePresets?: IDateFilterAbsolutePreset[];
-        // (undocumented)
-        allTime?: IDateFilterAllTime;
-        // (undocumented)
-        relativeForm?: IDateFilterRelativeForm;
-        // (undocumented)
-        relativePresets?: IDateFilterRelativePreset[];
-        // (undocumented)
-        selectedOption: GUID;
-    }
-    // (undocumented)
-    export interface IDateFilterReference {
-        // (undocumented)
-        dateFilterReference: {
-            dataSet: string;
-        };
-    }
-    // (undocumented)
-    export interface IDateFilterRelativeForm extends IDateFilterBase {
-        // (undocumented)
-        granularities: DateFilterGranularity[];
-    }
-    // (undocumented)
-    export interface IDateFilterRelativePreset extends IDateFilterBase {
-        // (undocumented)
-        from: number;
-        // (undocumented)
-        granularity: DateFilterGranularity;
-        // (undocumented)
-        to: number;
-    }
-    // (undocumented)
-    export interface IWrappedDateFilterConfig {
-        // (undocumented)
-        dateFilterConfig: IDateFilterConfig;
-    }
-    const // (undocumented)
-    isDateFilterReference: (obj: unknown) => obj is IDateFilterReference;
-    // (undocumented)
-    export type RelativeGranularityOffset = number;
-    const // (undocumented)
-    isAttributeFilterReference: (obj: unknown) => obj is IAttributeFilterReference;
 }
+export { GdcDataSets }
 
-// @public (undocumented)
-export namespace GdcFilterContext {
-    // (undocumented)
-    export type AbsoluteType = "absolute";
-    // (undocumented)
-    export type AttributeFilterSelectionMode = "single" | "multi";
-    // (undocumented)
-    export type DateFilterType = RelativeType | AbsoluteType;
-    // (undocumented)
-    export type FilterContextItem = IAttributeFilter | IDateFilter;
-    // (undocumented)
-    export interface IAttributeFilter {
-        // (undocumented)
-        attributeFilter: {
-            displayForm: string;
-            negativeSelection: boolean;
-            attributeElements: string[];
-            localIdentifier?: string;
-            title?: string;
-            filterElementsBy?: Array<{
-                filterLocalIdentifier: string;
-                over: {
-                    attributes: Array<string>;
-                };
-            }>;
-            selectionMode?: AttributeFilterSelectionMode;
-        };
+declare namespace GdcDataSetsCsv {
+    export {
+        DatasetLoadStatus,
+        IDatasetUser,
+        IDatasetLoadInfo,
+        DataColumnType,
+        IDataColumn,
+        IDataHeader,
+        IDataset,
+        IDatasetsResponse
     }
-    // (undocumented)
-    export interface IDateFilter {
-        // (undocumented)
-        dateFilter: {
-            type: DateFilterType;
-            granularity: GdcExtendedDateFilters.DateFilterGranularity;
-            from?: GdcExtendedDateFilters.DateString | NumberAsString;
-            to?: GdcExtendedDateFilters.DateString | NumberAsString;
-            dataSet?: string;
-            attribute?: string;
-        };
-    }
-    // (undocumented)
-    export interface IFilterContext {
-        // (undocumented)
-        content: {
-            filters: FilterContextItem[];
-        };
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter;
-    // (undocumented)
-    export function isDateFilter(filter: FilterContextItem): filter is IDateFilter;
-    // (undocumented)
-    export function isFilterContext(obj: unknown): obj is IFilterContext;
-    // (undocumented)
-    export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
-    // (undocumented)
-    export function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext;
-    // (undocumented)
-    export function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext;
-    export interface ITempFilterContext {
-        // (undocumented)
-        created: Timestamp;
-        // (undocumented)
-        filters: FilterContextItem[];
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IWrappedFilterContext {
-        // (undocumented)
-        filterContext: IFilterContext;
-    }
-    // (undocumented)
-    export interface IWrappedTempFilterContext {
-        // (undocumented)
-        tempFilterContext: ITempFilterContext;
-    }
-    // (undocumented)
-    export type RelativeType = "relative";
 }
+export { GdcDataSetsCsv }
 
-// @public (undocumented)
-export namespace GdcKpi {
-    // (undocumented)
-    export interface IKPI {
-        // (undocumented)
-        content: IKpiContentWithoutComparison | IKpiContentWithComparison;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
+declare namespace GdcDateDataSets {
+    export {
+        IDateDataSetAttributeGranularity,
+        IDateDataSetAttribute,
+        IDateDataSet,
+        IDateDataSetResponse
     }
-    // (undocumented)
-    export type IKpiComparisonDirection = "growIsGood" | "growIsBad";
-    // (undocumented)
-    export type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
-    // (undocumented)
-    export type IKpiComparisonTypeNoComparison = "none";
-    // (undocumented)
-    export interface IKpiConfiguration {
-        // (undocumented)
-        description?: IKpiDescriptionConfiguration;
-    }
-    // (undocumented)
-    export interface IKpiContentBase {
-        // (undocumented)
-        configuration?: IKpiConfiguration;
-        // (undocumented)
-        dateDataSet?: string;
-        // (undocumented)
-        dateDimension?: string;
-        // (undocumented)
-        drillTo?: IKpiProjectDashboardLink;
-        // (undocumented)
-        ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
-        // (undocumented)
-        metric: string;
-    }
-    // (undocumented)
-    export interface IKpiContentWithComparison extends IKpiContentBase {
-        // (undocumented)
-        comparisonDirection: IKpiComparisonDirection;
-        // (undocumented)
-        comparisonType: IKpiComparisonTypeComparison;
-    }
-    // (undocumented)
-    export interface IKpiContentWithoutComparison extends IKpiContentBase {
-        // (undocumented)
-        comparisonType: IKpiComparisonTypeNoComparison;
-    }
-    // (undocumented)
-    export interface IKpiDescriptionConfiguration {
-        source: KpiDescriptionSourceType;
-        visible: boolean;
-    }
-    // (undocumented)
-    export interface IKpiProjectDashboardLink {
-        // (undocumented)
-        projectDashboard: string;
-        // (undocumented)
-        projectDashboardTab: string;
-    }
-    // (undocumented)
-    export function isKpi(obj: unknown): obj is IKPI;
-    // (undocumented)
-    export function isKpiContentWithoutComparison(obj: unknown): obj is IKpiContentWithoutComparison;
-    // (undocumented)
-    export function isWrappedKpi(obj: unknown): obj is IWrappedKPI;
-    // (undocumented)
-    export interface IWrappedKPI {
-        // (undocumented)
-        kpi: IKPI;
-    }
-    // (undocumented)
-    export type KpiDescriptionSourceType = "kpi" | "metric";
 }
+export { GdcDateDataSets }
 
-// @public (undocumented)
-export namespace GdcMetadata {
-    // (undocumented)
-    export interface IAttribute extends IMetadataObject {
-        // (undocumented)
-        content: {
-            dimension?: string;
-            displayForms: IAttributeDisplayForm[];
-            type?: string;
-            drillDownStepAttributeDF?: Uri;
-            linkAttributeDF?: Uri;
-        };
+declare namespace GdcExecuteAFM {
+    export {
+        isObjectUriQualifier,
+        isObjIdentifierQualifier,
+        isLocalIdentifierQualifier,
+        isSimpleMeasureDefinition,
+        isArithmeticMeasureDefinition,
+        isPopMeasureDefinition,
+        isPreviousPeriodMeasureDefinition,
+        isAttributeSortItem,
+        isMeasureSortItem,
+        isAttributeLocatorItem,
+        isMeasureLocatorItem,
+        isDateFilter,
+        isRelativeDateFilter,
+        isAbsoluteDateFilter,
+        isAttributeFilter,
+        isPositiveAttributeFilter,
+        isNegativeAttributeFilter,
+        isMeasureValueFilter,
+        isRankingFilter,
+        isExpressionFilter,
+        isAttributeElementsArray,
+        isAttributeElementsByRef,
+        isAttributeElementsByValue,
+        IExecution,
+        IAfm,
+        IResultSpec,
+        IAttribute,
+        IMeasure,
+        MeasureDefinition,
+        ISimpleMeasureDefinition,
+        IArithmeticMeasureDefinition,
+        IPopMeasureDefinition,
+        IPreviousPeriodMeasureDefinition,
+        SimpleMeasureAggregation,
+        ISimpleMeasure,
+        ArithmeticMeasureOperator,
+        IArithmeticMeasure,
+        IPopMeasure,
+        IPreviousPeriodMeasure,
+        IPreviousPeriodDateDataSet,
+        Identifier_2 as Identifier,
+        ObjQualifier,
+        IObjIdentifierQualifier,
+        IObjUriQualifier,
+        ExtendedFilter,
+        CompatibilityFilter,
+        FilterItem,
+        AttributeFilterItem,
+        DateFilterItem,
+        IAttributeElementsByRef,
+        IAttributeElementsByValue,
+        AttributeElements,
+        IPositiveAttributeFilter,
+        INegativeAttributeFilter,
+        IAbsoluteDateFilter,
+        IRelativeDateFilter,
+        ComparisonConditionOperator,
+        IComparisonCondition,
+        RangeConditionOperator,
+        IRangeCondition,
+        MeasureValueFilterCondition,
+        ILocalIdentifierQualifier,
+        Qualifier,
+        IMeasureValueFilter,
+        RankingFilterOperator,
+        IRankingFilter,
+        IExpressionFilter,
+        ITotalItem,
+        TotalType,
+        INativeTotalItem,
+        IDimension,
+        SortItem,
+        SortDirection,
+        IAttributeSortItem,
+        VisualizationStyleType,
+        IVisualizationStyle,
+        IMeasureSortItem,
+        LocatorItem,
+        IAttributeLocatorItem,
+        IMeasureLocatorItem
     }
-    // (undocumented)
-    export interface IAttributeDisplayForm extends IMetadataObject {
-        // (undocumented)
-        content: {
-            expression: MaqlExpression;
-            formOf: Uri;
-            ldmexpression?: string;
-            type?: string;
-            default?: number;
-        };
-        // (undocumented)
-        links: {
-            self: string;
-            elements: string;
-        };
-    }
-    // (undocumented)
-    export interface IAttributeElement {
-        // (undocumented)
-        title: string;
-        // (undocumented)
-        uri: string;
-    }
-    // (undocumented)
-    export interface IDataSet extends IMetadataObject {
-        // (undocumented)
-        attributes: Uri[];
-        // (undocumented)
-        dataLoadingColumns: Uri[];
-        // (undocumented)
-        facts: Uri[];
-        // (undocumented)
-        mode: string;
-    }
-    // (undocumented)
-    export interface IFact extends IMetadataObject {
-        // (undocumented)
-        content: any;
-    }
-    // (undocumented)
-    export interface IGetObjectsUsedByManyEntry {
-        // (undocumented)
-        entries: IObjectLink[];
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IGetObjectUsedBy {
-        // (undocumented)
-        entries: IObjectLink[];
-    }
-    // (undocumented)
-    export interface IGetObjectUsing {
-        // (undocumented)
-        entries: IObjectLink[];
-    }
-    // (undocumented)
-    export interface IGetObjectUsingManyEntry {
-        // (undocumented)
-        entries: IObjectLink[];
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IKpiAlert extends IMetadataObject {
-        // (undocumented)
-        content: {
-            kpi: Uri;
-            dashboard: Uri;
-            threshold: number;
-            isTriggered: boolean;
-            whenTriggered: "underThreshold" | "aboveThreshold";
-            filterContext?: Uri;
-        };
-    }
-    // (undocumented)
-    export interface IMaqlAstPosition {
-        // (undocumented)
-        column: number;
-        // (undocumented)
-        line: number;
-    }
-    // (undocumented)
-    export interface IMaqlTree {
-        // (undocumented)
-        content?: IMaqlTree;
-        // (undocumented)
-        position: IMaqlAstPosition;
-        // (undocumented)
-        type: string;
-        // (undocumented)
-        value?: string | Date | number;
-    }
-    // (undocumented)
-    export interface IMetadataObject {
-        // (undocumented)
-        meta: IObjectMeta;
-    }
-    // (undocumented)
-    export interface IMetric extends IMetadataObject {
-        // (undocumented)
-        content: {
-            expression: MaqlExpression;
-            tree?: IMaqlTree;
-            format?: string;
-            folders?: string[];
-        };
-    }
-    // (undocumented)
-    export interface IObjectLink {
-        // (undocumented)
-        author?: Uri;
-        // (undocumented)
-        category?: ObjectCategory;
-        // (undocumented)
-        contributor?: Uri;
-        // (undocumented)
-        created?: Timestamp;
-        // (undocumented)
-        deprecated?: BooleanAsString;
-        // (undocumented)
-        flags?: string[];
-        // (undocumented)
-        help?: Uri;
-        // (undocumented)
-        identifier?: string;
-        // (undocumented)
-        isProduction?: boolean;
-        // (undocumented)
-        link: Uri;
-        // (undocumented)
-        locked?: boolean;
-        // (undocumented)
-        projectTemplate?: string;
-        // (undocumented)
-        sharedWithSomeone?: boolean;
-        // (undocumented)
-        summary?: string;
-        // (undocumented)
-        tags?: string;
-        // (undocumented)
-        title?: string;
-        // (undocumented)
-        unlisted?: boolean;
-        // (undocumented)
-        updated?: Timestamp;
-    }
-    // (undocumented)
-    export interface IObjectMeta {
-        // (undocumented)
-        author?: string;
-        // (undocumented)
-        category?: ObjectCategory;
-        // (undocumented)
-        contributor?: string;
-        // (undocumented)
-        created?: Timestamp;
-        // (undocumented)
-        deprecated?: "0" | "1";
-        // (undocumented)
-        flags?: string[];
-        // (undocumented)
-        identifier?: string;
-        // (undocumented)
-        isProduction?: 1 | 0;
-        // (undocumented)
-        locked?: boolean;
-        // (undocumented)
-        projectTemplate?: string;
-        // (undocumented)
-        sharedWithSomeone?: 1 | 0;
-        // (undocumented)
-        summary?: string;
-        // (undocumented)
-        tags?: string;
-        // (undocumented)
-        title: string;
-        // (undocumented)
-        unlisted?: 1 | 0;
-        // (undocumented)
-        updated?: Timestamp;
-        // (undocumented)
-        uri?: string;
-    }
-    export interface IObjectXrefEntry {
-        author: string;
-        // (undocumented)
-        category: string;
-        contributor: string;
-        created: string;
-        deprecated: string;
-        identifier: string;
-        link: string;
-        locked: 0 | 1;
-        summary: string;
-        title: string;
-        unlisted: 0 | 1;
-        updated: string;
-    }
-    // (undocumented)
-    export interface IPrompt extends IMetadataObject {
-        // (undocumented)
-        content: {
-            type: "scalar";
-        } | {
-            type: "filter";
-            attribute: Uri;
-        };
-    }
-    // (undocumented)
-    export function isAttribute(obj: unknown): obj is IAttribute;
-    // (undocumented)
-    export function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm;
-    // (undocumented)
-    export function isDataSet(obj: unknown): obj is IDataSet;
-    // (undocumented)
-    export function isFact(obj: unknown): obj is IFact;
-    // (undocumented)
-    export function isKpiAlert(obj: unknown): obj is IKpiAlert;
-    // (undocumented)
-    export function isMetric(obj: unknown): obj is IMetric;
-    // (undocumented)
-    export function isPrompt(obj: unknown): obj is IPrompt;
-    // (undocumented)
-    export function isTheme(obj: unknown): obj is ITheme;
-    // (undocumented)
-    export function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute;
-    // (undocumented)
-    export function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm;
-    // (undocumented)
-    export function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet;
-    // (undocumented)
-    export function isWrappedFact(obj: unknown): obj is IWrappedFact;
-    // (undocumented)
-    export function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert;
-    // (undocumented)
-    export function isWrappedMetric(obj: unknown): obj is IWrappedMetric;
-    // (undocumented)
-    export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt;
-    // (undocumented)
-    export function isWrappedTheme(obj: unknown): obj is IWrappedTheme;
-    // (undocumented)
-    export interface ITheme extends IMetadataObject {
-        // (undocumented)
-        content: {
-            typography?: {
-                font?: ThemeFontUri;
-                fontBold?: ThemeFontUri;
-            };
-            palette?: IThemePalette;
-            button?: {
-                borderRadius?: string;
-                dropShadow?: boolean;
-                textCapitalization?: boolean;
-            };
-            tooltip?: {
-                backgroundColor?: ThemeColor;
-                color?: ThemeColor;
-            };
-            modal?: {
-                title?: {
-                    color?: ThemeColor;
-                    lineColor?: ThemeColor;
-                };
-                outsideBackgroundColor?: ThemeColor;
-                dropShadow?: boolean;
-                borderWidth?: string;
-                borderColor?: ThemeColor;
-                borderRadius?: string;
-            };
-            dashboards?: {
-                title?: {
-                    color?: ThemeColor;
-                    backgroundColor?: ThemeColor;
-                    borderColor?: ThemeColor;
-                };
-                section?: {
-                    title?: {
-                        color?: ThemeColor;
-                        lineColor?: ThemeColor;
-                    };
-                    description?: {
-                        color?: ThemeColor;
-                    };
-                };
-                filterBar?: {
-                    backgroundColor?: ThemeColor;
-                    borderColor?: ThemeColor;
-                    filterButton?: {
-                        backgroundColor?: ThemeColor;
-                    };
-                };
-                content?: {
-                    backgroundColor?: ThemeColor;
-                    widget?: {
-                        title?: {
-                            color?: ThemeColor;
-                            textAlign?: string;
-                        };
-                        backgroundColor?: ThemeColor;
-                        borderColor?: ThemeColor;
-                        borderWidth?: string;
-                        borderRadius?: string;
-                        dropShadow?: boolean;
-                    };
-                    kpiWidget?: {
-                        title?: {
-                            color?: ThemeColor;
-                            textAlign?: string;
-                        };
-                        backgroundColor?: ThemeColor;
-                        borderColor?: ThemeColor;
-                        borderWidth?: string;
-                        borderRadius?: string;
-                        dropShadow?: boolean;
-                        kpi?: {
-                            value?: {
-                                textAlign?: string;
-                                positiveColor?: ThemeColor;
-                                negativeColor?: ThemeColor;
-                            };
-                            primaryMeasureColor?: ThemeColor;
-                            secondaryInfoColor?: ThemeColor;
-                        };
-                    };
-                };
-                navigation?: {
-                    backgroundColor?: ThemeColor;
-                    borderColor?: ThemeColor;
-                    header?: {
-                        color?: ThemeColor;
-                    };
-                    item?: {
-                        color?: ThemeColor;
-                        hoverColor?: ThemeColor;
-                        selectedColor?: ThemeColor;
-                        selectedBackgroundColor?: ThemeColor;
-                    };
-                };
-                editPanel?: {
-                    backgroundColor?: ThemeColor;
-                };
-            };
-            analyticalDesigner?: {
-                title?: {
-                    color?: ThemeColor;
-                };
-            };
-        };
-    }
-    // (undocumented)
-    export interface IThemeColorFamily {
-        // (undocumented)
-        base: ThemeColor;
-        // (undocumented)
-        contrast?: ThemeColor;
-        // (undocumented)
-        dark?: ThemeColor;
-        // (undocumented)
-        light?: ThemeColor;
-    }
-    // (undocumented)
-    export interface IThemeComplementaryPalette {
-        // (undocumented)
-        c0: ThemeColor;
-        // (undocumented)
-        c1?: ThemeColor;
-        // (undocumented)
-        c2?: ThemeColor;
-        // (undocumented)
-        c3?: ThemeColor;
-        // (undocumented)
-        c4?: ThemeColor;
-        // (undocumented)
-        c5?: ThemeColor;
-        // (undocumented)
-        c6?: ThemeColor;
-        // (undocumented)
-        c7?: ThemeColor;
-        // (undocumented)
-        c8?: ThemeColor;
-        // (undocumented)
-        c9: ThemeColor;
-    }
-    // (undocumented)
-    export interface IThemePalette {
-        // (undocumented)
-        complementary?: IThemeComplementaryPalette;
-        // (undocumented)
-        error?: IThemeColorFamily;
-        // (undocumented)
-        info?: IThemeColorFamily;
-        // (undocumented)
-        primary?: IThemeColorFamily;
-        // (undocumented)
-        success?: IThemeColorFamily;
-        // (undocumented)
-        warning?: IThemeColorFamily;
-    }
-    export interface IValidElementsParams {
-        // (undocumented)
-        afm?: GdcExecuteAFM.IAfm;
-        // (undocumented)
-        complement?: boolean;
-        // (undocumented)
-        filter?: string;
-        // (undocumented)
-        includeTotalCountWithoutFilters?: boolean;
-        // (undocumented)
-        limit?: number;
-        // (undocumented)
-        offset?: number;
-        // (undocumented)
-        order?: SortDirection;
-        // (undocumented)
-        prompt?: string;
-        // (undocumented)
-        restrictiveDefinition?: string;
-        // (undocumented)
-        restrictiveDefinitionContent?: object;
-        // (undocumented)
-        uris?: string[];
-    }
-    export interface IValidElementsResponse {
-        // (undocumented)
-        validElements: {
-            items: IWrappedAttributeElement[];
-            paging: {
-                total: NumberAsString;
-                count: number;
-                offset: NumberAsString;
-            };
-            totalCountWithoutFilters?: string;
-            elementsMeta: {
-                attribute: Uri;
-                attributeDisplayForm: Uri;
-                filter: string;
-                order: SortDirection;
-            };
-        };
-    }
-    // (undocumented)
-    export interface IWrappedAttribute {
-        // (undocumented)
-        attribute: IAttribute;
-    }
-    // (undocumented)
-    export interface IWrappedAttributeDisplayForm {
-        // (undocumented)
-        attributeDisplayForm: IAttributeDisplayForm;
-    }
-    // (undocumented)
-    export interface IWrappedAttributeElement {
-        // (undocumented)
-        element: IAttributeElement;
-    }
-    // (undocumented)
-    export interface IWrappedAttributeElements {
-        // (undocumented)
-        attributeElements: {
-            elementsMeta: {
-                count: number;
-                mode: "includeuris";
-                filter: string;
-                records: NumberAsString;
-                prompt: string;
-                attribute: Uri;
-                order: "asc" | "desc";
-                attributeDisplayForm: Uri;
-                offset: NumberAsString;
-            };
-            elements: IAttributeElement[];
-            paging: {
-                next: null | string;
-                count: number;
-                total: NumberAsString;
-                offset: NumberAsString;
-            };
-        };
-    }
-    // (undocumented)
-    export interface IWrappedDataSet {
-        // (undocumented)
-        dataSet: IDataSet;
-    }
-    // (undocumented)
-    export interface IWrappedFact {
-        // (undocumented)
-        fact: IFact;
-    }
-    // (undocumented)
-    export interface IWrappedKpiAlert {
-        // (undocumented)
-        kpiAlert: IKpiAlert;
-    }
-    // (undocumented)
-    export interface IWrappedMetric {
-        // (undocumented)
-        metric: IMetric;
-    }
-    // (undocumented)
-    export interface IWrappedPrompt {
-        // (undocumented)
-        prompt: IPrompt;
-    }
-    // (undocumented)
-    export interface IWrappedTheme {
-        // (undocumented)
-        theme: ITheme;
-    }
-    // (undocumented)
-    export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme" | "colorPalette";
-    // (undocumented)
-    export type SortDirection = "asc" | "desc";
 }
+export { GdcExecuteAFM }
 
-// @public (undocumented)
-export namespace GdcMetadataObject {
-    // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet | GdcReport.IReport | GdcReport.IReportDefinition | GdcDashboardPlugin.IDashboardPlugin;
-    // (undocumented)
-    export function unwrapMetadataObject(object: WrappedObject): IObject;
-    // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition | GdcDashboardPlugin.IWrappedDashboardPlugin;
+declare namespace GdcExecution {
+    export {
+        isAttributeHeaderItem,
+        isMeasureHeaderItem,
+        isTotalHeaderItem,
+        isAttributeHeader,
+        isMeasureGroupHeader,
+        IMeasureHeaderItem,
+        ITotalHeaderItem,
+        IMeasureGroupHeader,
+        IAttributeHeader,
+        IHeader,
+        IResultAttributeHeaderItem,
+        IResultMeasureHeaderItem,
+        IResultTotalHeaderItem,
+        IResultHeaderItem,
+        IResultDimension,
+        IExecutionResponse,
+        IExecutionResponseWrapper,
+        DataValue,
+        Warning,
+        IExecutionResult,
+        IExecutionResultWrapper,
+        IError,
+        IExecutionResponses
+    }
 }
+export { GdcExecution }
 
-// @public (undocumented)
-export namespace GdcOrganization {
-    // (undocumented)
-    export interface IOrganization {
-        // (undocumented)
-        organization: {
-            id: string;
-            name: string;
-        };
+declare namespace GdcExport {
+    export {
+        IBaseExportConfig,
+        IExportConfig,
+        IExportResponse,
+        IExportBlobResponse
     }
 }
+export { GdcExport }
 
-// @public
-export namespace GdcPaging {
-    // (undocumented)
-    export interface IBearPaging {
-        // (undocumented)
-        count: number;
-        // (undocumented)
-        limit: number;
-        // (undocumented)
-        offset: number;
-    }
-    // (undocumented)
-    export interface IBearPagingWithTotalCount extends IBearPaging {
-        // (undocumented)
-        totalCount: number;
+declare namespace GdcExtendedDateFilters {
+    export {
+        GUID,
+        DateString_2 as DateString,
+        RelativeGranularityOffset,
+        DateFilterGranularity,
+        IDateFilterBase,
+        IDateFilterAllTime,
+        IDateFilterAbsoluteForm,
+        IDateFilterRelativeForm,
+        IDateFilterAbsolutePreset,
+        IDateFilterRelativePreset,
+        IDateFilterConfigContent,
+        IDateFilterConfig,
+        IWrappedDateFilterConfig,
+        IDateFilterReference,
+        isDateFilterReference,
+        IAttributeFilterReference,
+        isAttributeFilterReference
     }
 }
+export { GdcExtendedDateFilters }
 
-// @public (undocumented)
-export namespace GdcProject {
-    // (undocumented)
-    export interface IProjectId {
-        // (undocumented)
-        projectId: string;
+declare namespace GdcFilterContext {
+    export {
+        isDateFilter_3 as isDateFilter,
+        isAttributeFilter_3 as isAttributeFilter,
+        isFilterContext,
+        isWrappedFilterContext,
+        isTempFilterContext,
+        isWrappedTempFilterContext,
+        RelativeType,
+        AbsoluteType,
+        DateFilterType,
+        AttributeFilterSelectionMode,
+        IFilterContext,
+        IWrappedFilterContext,
+        ITempFilterContext,
+        IWrappedTempFilterContext,
+        IAttributeFilter,
+        IDateFilter,
+        FilterContextItem
     }
-    // (undocumented)
-    export interface IProjectLcmIdentifiers {
-        // (undocumented)
-        projectLcm: {
-            projectId?: string;
-            dataProductId?: string;
-            clientId?: string;
-            segmentId?: string;
-        };
-    }
-    // (undocumented)
-    export interface ITimezone {
-        // (undocumented)
-        timezone: {
-            id: string;
-            displayName: string;
-            shortDisplayName: string;
-            currentOffsetMs: number;
-        };
-    }
-    // (undocumented)
-    export interface IUserProject {
-        // (undocumented)
-        userProject: {
-            projectState: UserProjectState;
-            userState: UserProjectState;
-            projectDescription: string;
-            projectTitle: string;
-            links: {
-                self: Uri;
-            };
-            demoProject?: boolean;
-        };
-    }
-    // (undocumented)
-    export interface IUserProjectsParams {
-        // (undocumented)
-        limit: number;
-        // (undocumented)
-        offset: number;
-        // (undocumented)
-        projectStates: "ENABLED";
-        // (undocumented)
-        titleSubstring?: string;
-        // (undocumented)
-        userId: string;
-        // (undocumented)
-        userState: "ENABLED";
-    }
-    // (undocumented)
-    export interface IUserProjectsResponse {
-        // (undocumented)
-        userProjects: {
-            items: IUserProject[];
-            paging: GdcPaging.IBearPagingWithTotalCount;
-        };
-    }
-    // (undocumented)
-    export type UserProjectState = "ENABLED" | "DISABLED";
 }
+export { GdcFilterContext }
 
-// @public (undocumented)
-export namespace GdcProjectDashboard {
-    // (undocumented)
-    export interface IProjectDashboard {
-        // (undocumented)
-        content: {
-            tabs: Array<{
-                title: string;
-                identifier: string;
-            }>;
-        };
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IWrappedProjectDashboard {
-        // (undocumented)
-        projectDashboard: IProjectDashboard;
+declare namespace GdcKpi {
+    export {
+        isKpiContentWithoutComparison,
+        isKpi,
+        isWrappedKpi,
+        IKPI,
+        IWrappedKPI,
+        IKpiContentBase,
+        IKpiConfiguration,
+        IKpiDescriptionConfiguration,
+        KpiDescriptionSourceType,
+        IKpiContentWithComparison,
+        IKpiContentWithoutComparison,
+        IKpiProjectDashboardLink,
+        IKpiComparisonTypeNoComparison,
+        IKpiComparisonTypeComparison,
+        IKpiComparisonDirection
     }
 }
+export { GdcKpi }
 
-// @public (undocumented)
-export namespace GdcReport {
-    // (undocumented)
-    export interface IGridContent {
-        // (undocumented)
-        columns: string[];
-        // (undocumented)
-        columnWidths: any[];
-        // (undocumented)
-        metrics: IGridContentMetrics[];
-        // (undocumented)
-        rows: IGridContentRow[];
-        // (undocumented)
-        sort: IGridContent;
+declare namespace GdcMetadata {
+    export {
+        isAttribute_2 as isAttribute,
+        isWrappedAttribute,
+        isWrappedAttributeDisplayForm,
+        isAttributeDisplayForm,
+        isWrappedMetric,
+        isMetric,
+        isWrappedFact,
+        isFact,
+        isKpiAlert,
+        isWrappedKpiAlert,
+        isDataSet,
+        isWrappedDataSet,
+        isPrompt,
+        isWrappedPrompt,
+        isTheme,
+        isWrappedTheme,
+        ObjectCategory,
+        IObjectMeta,
+        IMetadataObject,
+        IAttribute_3 as IAttribute,
+        IMaqlAstPosition,
+        IMaqlTree,
+        IMetric,
+        IFact,
+        IPrompt,
+        IAttributeDisplayForm,
+        IKpiAlert,
+        IThemeColorFamily,
+        IThemeComplementaryPalette,
+        IThemePalette,
+        ITheme,
+        IDataSet,
+        IWrappedAttribute,
+        IWrappedMetric,
+        IWrappedFact,
+        IWrappedPrompt,
+        IWrappedAttributeDisplayForm,
+        IWrappedKpiAlert,
+        IWrappedDataSet,
+        IWrappedAttributeElement,
+        IAttributeElement,
+        IWrappedAttributeElements,
+        IWrappedTheme,
+        IObjectXrefEntry,
+        SortDirection_3 as SortDirection,
+        IValidElementsParams,
+        IValidElementsResponse,
+        IObjectLink,
+        IGetObjectUsing,
+        IGetObjectUsedBy,
+        IGetObjectUsingManyEntry,
+        IGetObjectsUsedByManyEntry
     }
-    // (undocumented)
-    export interface IGridContentMetrics {
-        // (undocumented)
-        alias: string;
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IGridContentRow {
-        // (undocumented)
-        attribute: IGridContentRowAttribute;
-    }
-    // (undocumented)
-    export interface IGridContentRowAttribute {
-        // (undocumented)
-        alias: string;
-        // (undocumented)
-        totals: any[][];
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IReport {
-        // (undocumented)
-        content: IReportContent;
-        // (undocumented)
-        meta: IObjectMeta;
-    }
-    // (undocumented)
-    export interface IReportContent {
-        // (undocumented)
-        definitions: Uri[];
-        // (undocumented)
-        domains: Uri[];
-    }
-    // (undocumented)
-    export interface IReportDefinition {
-        // (undocumented)
-        content: IReportDefinitionContent;
-        // (undocumented)
-        links?: IReportDefinitionLinks;
-        // (undocumented)
-        meta: IObjectMeta;
-    }
-    // (undocumented)
-    export interface IReportDefinitionContent {
-        // (undocumented)
-        chart?: any;
-        // (undocumented)
-        filters: IReportFilter[];
-        // (undocumented)
-        format: ReportFormat;
-        // (undocumented)
-        grid: IGridContent;
-        // (undocumented)
-        oneNumber?: any;
-        // (undocumented)
-        sortedLookups?: any;
-    }
-    // (undocumented)
-    export interface IReportDefinitionLinks {
-        // (undocumented)
-        explain2?: string;
-    }
-    // (undocumented)
-    export interface IReportFilter {
-        // (undocumented)
-        expression: any;
-        // (undocumented)
-        tree?: any;
-    }
-    // (undocumented)
-    export interface IWrappedReport {
-        // (undocumented)
-        report: IReport;
-    }
-    // (undocumented)
-    export interface IWrappedReportDefinition {
-        // (undocumented)
-        reportDefinition: IReportDefinition;
-    }
-    // (undocumented)
-    export type ReportFormat = "grid" | "chart" | "oneNumber";
 }
+export { GdcMetadata }
 
-// @public (undocumented)
-export namespace GdcScheduledMail {
-    // (undocumented)
-    export type ExportFormat = "xls" | "pdf" | "html" | "csv" | "xlsx";
-    // (undocumented)
-    export interface IDashboardAttachment {
-        // (undocumented)
-        dashboardAttachment: {
-            uri: Uri;
-            allTabs?: boolean;
-            tabs: string[];
-            executionContext?: Uri;
-        };
+declare namespace GdcMetadataObject {
+    export {
+        unwrapMetadataObject,
+        IObject,
+        WrappedObject
     }
-    // (undocumented)
-    export interface IKpiDashboardAttachment {
-        // (undocumented)
-        kpiDashboardAttachment: {
-            uri: Uri;
-            format: "pdf";
-            filterContext?: Uri;
-        };
-    }
-    // (undocumented)
-    export interface IReportAttachment {
-        // (undocumented)
-        reportAttachment: {
-            uri?: Uri;
-            formats: ExportFormat[];
-            exportOptions?: IReportExportOptions;
-        };
-    }
-    // (undocumented)
-    export interface IReportExportOptions {
-        // (undocumented)
-        includeFilterContext?: "no" | "yes";
-        // (undocumented)
-        mergeHeaders?: "no" | "yes";
-        // (undocumented)
-        optimalColumnWidth?: "no" | "yes";
-        // (undocumented)
-        pageOrientation?: "portrait" | "landscape";
-        // (undocumented)
-        scaling?: {
-            pageScalePercentage?: number;
-            scaleToPages?: number;
-            scaleToPagesX?: number;
-            scaleToPagesY?: number;
-        };
-        // (undocumented)
-        urlParams: Array<{
-            name: string;
-            value: string;
-        }>;
-    }
-    // (undocumented)
-    export interface IScheduledMail {
-        // (undocumented)
-        content: IScheduledMailContent;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IScheduledMailContent {
-        // (undocumented)
-        attachments: ScheduledMailAttachment[];
-        // (undocumented)
-        bcc?: Email[];
-        // (undocumented)
-        body: string;
-        // (undocumented)
-        lastSuccessfull?: Timestamp;
-        // (undocumented)
-        subject: string;
-        // (undocumented)
-        to: Email[];
-        // (undocumented)
-        unsubscribed?: Email[];
-        // (undocumented)
-        when: IScheduledMailWhen;
-    }
-    // (undocumented)
-    export interface IScheduledMailWhen {
-        // (undocumented)
-        endDate?: DateString;
-        // (undocumented)
-        recurrency: string;
-        // (undocumented)
-        startDate: DateString;
-        // (undocumented)
-        timeZone: string;
-    }
-    // (undocumented)
-    export function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment;
-    // (undocumented)
-    export function isVisualizationWidgetAttachment(obj: unknown): obj is IVisualizationWidgetAttachment;
-    // (undocumented)
-    export interface IVisualizationWidgetAttachment {
-        // (undocumented)
-        visualizationWidgetAttachment: {
-            uri: Uri;
-            dashboardUri: Uri;
-            formats: ("csv" | "xlsx")[];
-            filterContext?: Uri;
-            exportOptions?: {
-                mergeHeaders?: "yes" | "no";
-                includeFilterContext?: "yes" | "no";
-            };
-        };
-    }
-    // (undocumented)
-    export interface IWrappedScheduledMail {
-        // (undocumented)
-        scheduledMail: IScheduledMail;
-    }
-    // (undocumented)
-    export type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment | IVisualizationWidgetAttachment;
 }
+export { GdcMetadataObject }
 
-// @public (undocumented)
-export namespace GdcUser {
-    // (undocumented)
-    export type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
-    // (undocumented)
-    export interface IAccountInfo {
-        // (undocumented)
-        firstName: string;
-        // (undocumented)
-        lastName: string;
-        // (undocumented)
-        login: string;
-        // (undocumented)
-        loginMD5: string;
-        // (undocumented)
-        logoutUri: string;
-        // (undocumented)
-        organizationName: string;
-        // (undocumented)
-        profileUri: string;
+declare namespace GdcOrganization {
+    export {
+        IOrganization
     }
-    // (undocumented)
-    export interface IAccountInfoResponse {
-        // (undocumented)
-        accountInfo: IAccountInfo;
-    }
-    // (undocumented)
-    export interface IAccountSetting {
-        // (undocumented)
-        authenticationModes?: Array<"SSO" | "PASSWORD">;
-        // (undocumented)
-        companyName?: string | null;
-        // (undocumented)
-        country?: string | null;
-        // (undocumented)
-        created?: Timestamp;
-        // (undocumented)
-        effectiveIpWhitelist?: string[] | null;
-        // (undocumented)
-        email?: Email | null;
-        // (undocumented)
-        firstName: string;
-        // (undocumented)
-        formatLocale?: string;
-        // (undocumented)
-        ipWhitelist?: string[] | null;
-        // (undocumented)
-        language?: string;
-        // (undocumented)
-        lastName: string;
-        // (undocumented)
-        licence?: BooleanAsString;
-        // (undocumented)
-        links?: {
-            projects?: Uri;
-            self?: Uri;
-            domain?: Uri;
-            auditEvents?: Uri;
-        };
-        // (undocumented)
-        login?: Email | null;
-        // (undocumented)
-        old_password?: string;
-        // (undocumented)
-        password?: string;
-        // (undocumented)
-        phoneNumber?: string | null;
-        // (undocumented)
-        position?: string | null;
-        // (undocumented)
-        ssoProvider?: string | null;
-        // (undocumented)
-        timezone?: number | null;
-        // (undocumented)
-        updated?: Timestamp;
-        // (undocumented)
-        verifyPassword?: string;
-    }
-    // (undocumented)
-    export interface IAssociatedProjectPermissions {
-        // (undocumented)
-        associatedPermissions: IProjectPermissions;
-    }
-    // (undocumented)
-    export interface IBootstrapResource {
-        // (undocumented)
-        bootstrapResource: {
-            accountSetting: IAccountSetting;
-            profileSetting: IProfileSetting;
-            hostnameBase: string;
-            settings?: IUISettings;
-            current?: {
-                mapboxToken?: string;
-                project: IProject | null;
-                projectLcm?: IProjectLcm;
-                featureFlags?: IFeatureFlags;
-                projectPermissions: IProjectPermissions | null;
-                projectTemplates: ITemplateInfo[] | null;
-                projectIcons: IProjectIcons[] | null;
-                dataUploadsInfo: IDataUploadInfo | null;
-                loginMD5: string | null;
-                integrations: Array<IIntegration | IZendesk4Integration>;
-                projectStyleSettings?: IStyleSettingsType | null;
-                clusterStatus?: "ONLINE" | "OFFLINE";
-                requiresRedirect: boolean;
-                timezone: ITimezoneInfo | null;
-                analyticalDashboards?: Uri[] | null;
-                walkMe?: string | null;
-                walkMeEnvironment?: string | null;
-                includeTrialSnippet?: string | null;
-                clientSecret?: string;
-                user?: {
-                    passwordExpirationTimestamp?: DateString;
-                };
-            };
-        };
-    }
-    // (undocumented)
-    export interface IDataUploadInfo {
-        // (undocumented)
-        statusesCount: {
-            [status in DataUploadStatus]?: number;
-        };
-    }
-    // (undocumented)
-    export interface IFeatureFlags {
-        // (undocumented)
-        [key: string]: number | boolean | string;
-    }
-    export interface IGetUserListParams {
-        groupId?: string;
-        indicatePermission?: string;
-        limit?: number;
-        offset?: number;
-        prefixSearch?: string;
-        userState: UserListItemState;
-    }
-    export interface IGetUserListResponse {
-        // (undocumented)
-        userList: {
-            paging: {
-                offset?: number | null;
-                limit: number;
-                next?: Uri | null;
-                count: number;
-                totalCount: number;
-            };
-            items: IUserListItem[];
-        };
-    }
-    // (undocumented)
-    export interface IIntegration {
-        // (undocumented)
-        active: boolean;
-        // (undocumented)
-        projectTemplate: Uri;
-    }
-    // (undocumented)
-    export interface IProcessBody {
-        // (undocumented)
-        finished: TimeIso8601;
-        // (undocumented)
-        links: {
-            self: Uri;
-        };
-        // (undocumented)
-        started: TimeIso8601;
-        // (undocumented)
-        status: IStatus;
-    }
-    // (undocumented)
-    export interface IProfileSetting {
-        // (undocumented)
-        currentProjectUri: Uri | null;
-        // (undocumented)
-        defaults?: {
-            projectUri: string;
-            dashboardUri?: string;
-            tabId?: string;
-            links?: {
-                self: Uri;
-            };
-        };
-        // (undocumented)
-        hints: {
-            [key: string]: boolean;
-        };
-        // (undocumented)
-        links?: {
-            self: Uri;
-            profile: Uri;
-        };
-        // (undocumented)
-        navigationState?: "collapsed" | "pinned" | "floating";
-        // (undocumented)
-        npsLastParticipation?: Timestamp;
-        // (undocumented)
-        projectSettings: {
-            [projectUri: string]: {
-                dashboard: Uri | null;
-                tab: string | null;
-                recentSearches: string[];
-                introDisplayed?: boolean;
-                manageReportsSettings?: {
-                    folder?: string;
-                    orderBy?: number;
-                    tags?: string[];
-                };
-            };
-        };
-        // (undocumented)
-        releaseNotice: string[];
-        // (undocumented)
-        separators?: ISeparators;
-    }
-    // (undocumented)
-    export interface IProject {
-        // (undocumented)
-        content: {
-            guidedNavigation: BooleanAsString;
-            authorizationToken?: string | null;
-            state?: "PREPARING" | "PREPARED" | "LOADING" | "ENABLED" | "DISABLED" | "DELETED" | "ARCHIVED" | "MIGRATED";
-            isPublic?: BooleanAsString;
-            cluster?: string;
-            driver?: "mysql" | "Pg" | "vertica";
-            environment?: "PRODUCTION" | "DEVELOPMENT" | "TESTING";
-        };
-        // (undocumented)
-        links?: {
-            self: Uri;
-            users: Uri;
-            userRoles?: Uri;
-            userPermissions?: Uri;
-            roles: Uri;
-            invitations: Uri;
-            ldm: Uri;
-            ldm_thumbnail: Uri;
-            metadata: Uri;
-            publicartifacts: Uri;
-            uploads?: Uri;
-            templates: Uri;
-            connectors: Uri;
-            dataload: Uri;
-            schedules: Uri;
-            execute: Uri;
-            clearCaches: Uri;
-            projectFeatureFlags: Uri;
-            config?: Uri;
-        };
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IProjectIcons {
-        // (undocumented)
-        icon: string;
-        // (undocumented)
-        integration: Uri;
-    }
-    // (undocumented)
-    export interface IProjectLcm {
-        // (undocumented)
-        clientId?: string;
-        // (undocumented)
-        dataProductId?: string;
-        // (undocumented)
-        segmentId?: string;
-    }
-    // (undocumented)
-    export interface IProjectPermissions {
-        // (undocumented)
-        links?: {
-            project: Uri;
-            user: Uri;
-        };
-        // (undocumented)
-        permissions: {
-            [permission in ProjectPermission]?: BooleanAsString;
-        };
-    }
-    // (undocumented)
-    export interface ISeparators {
-        // (undocumented)
-        decimal: string;
-        // (undocumented)
-        thousand: string;
-    }
-    export interface ISeparatorsResponse {
-        // (undocumented)
-        separators: {
-            decimal: string;
-            thousand: string;
-            links: {
-                self: string;
-            };
-        };
-    }
-    // (undocumented)
-    export interface IStatus {
-        // (undocumented)
-        code: "NEW" | "SCHEDULED" | "DOWNLOADING" | "DOWNLOADED" | "TRANSFORMING" | "TRANSFORMED" | "UPLOADING" | "UPLOADED" | "SYNCHRONIZED" | "ERROR" | "USER_ERROR";
-        // (undocumented)
-        description: string;
-        // (undocumented)
-        detail: string;
-    }
-    // (undocumented)
-    export interface IStyleSettingsType {
-        // (undocumented)
-        chartFont?: {
-            family: string;
-        };
-        // (undocumented)
-        chartPalette: Array<{
-            guid: string;
-            fill: {
-                r: number;
-                g: number;
-                b: number;
-            };
-        }>;
-    }
-    // (undocumented)
-    export interface ITemplateInfo {
-        // (undocumented)
-        connectorId?: string;
-        // (undocumented)
-        createIntegration?: string;
-        // (undocumented)
-        url: Uri | null;
-        // (undocumented)
-        urn: string;
-        // (undocumented)
-        version: string;
-    }
-    // (undocumented)
-    export interface ITimezoneInfo {
-        // (undocumented)
-        currentOffsetMs: number;
-        // (undocumented)
-        displayName: string;
-        // (undocumented)
-        id: string;
-        // (undocumented)
-        shortDisplayName: string;
-    }
-    // (undocumented)
-    export interface IUISettings {
-        // (undocumented)
-        activeColor?: string;
-        // (undocumented)
-        appleTouchIconUrl?: Uri;
-        // (undocumented)
-        applicationBackgroundColor?: string;
-        // (undocumented)
-        applicationBackgroundUrl?: Uri;
-        // (undocumented)
-        applicationTitle: string;
-        // (undocumented)
-        brandColor?: string;
-        // (undocumented)
-        displayAccountPage: boolean;
-        // (undocumented)
-        displayFlashNews: boolean;
-        // (undocumented)
-        displayNPS?: boolean;
-        // (undocumented)
-        displayProjects: boolean;
-        // (undocumented)
-        documentationUrl?: string;
-        // (undocumented)
-        faviconUrl?: Uri | null;
-        // (undocumented)
-        headerColor?: string;
-        // (undocumented)
-        headerTextColor?: string;
-        // (undocumented)
-        hideRegistration?: boolean;
-        // (undocumented)
-        highlightColor?: string;
-        // (undocumented)
-        includeTrialSnippet?: string;
-        // (undocumented)
-        isBranded: boolean;
-        // (undocumented)
-        largeLogoUrl?: Uri;
-        // (undocumented)
-        logoUrl: Uri;
-        // (undocumented)
-        organizationName: string;
-        // (undocumented)
-        privacyPolicyUrl?: Uri;
-        // (undocumented)
-        securityStatementUrl?: Uri;
-        // (undocumented)
-        showServiceProviderInitiatedLogin?: boolean;
-        // (undocumented)
-        showSSOCustomUnauthorizedLoginPage?: boolean;
-        // (undocumented)
-        skipClientRedirect?: boolean;
-        // (undocumented)
-        ssoExpiredUrl?: Uri;
-        // (undocumented)
-        ssoLogoutUrl?: Uri;
-        // (undocumented)
-        ssoUnauthorizedUrl?: Uri;
-        // (undocumented)
-        supportEmail?: string;
-        // (undocumented)
-        supportForumUrl?: string;
-        // (undocumented)
-        termsOfUseUrl?: Uri;
-        // (undocumented)
-        trustUrl?: Uri;
-        // (undocumented)
-        useOnboarding?: boolean;
-        // (undocumented)
-        walkMe?: string;
-        // (undocumented)
-        walkMeEnvironment?: string;
-    }
-    // (undocumented)
-    export interface IUserFeatureFlags {
-        // (undocumented)
-        featureFlags: IFeatureFlags;
-    }
-    // (undocumented)
-    export interface IUserListItem {
-        // (undocumented)
-        email: Email;
-        // (undocumented)
-        firstName?: string | null;
-        // (undocumented)
-        hasRequestedPermissions?: boolean;
-        // (undocumented)
-        lastName?: string | null;
-        // (undocumented)
-        login: Email;
-        // (undocumented)
-        roles?: Uri[];
-        // (undocumented)
-        state?: UserListItemState;
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IUsersItem {
-        // (undocumented)
-        content: {
-            status?: UsersItemStatus;
-            firstname?: string;
-            lastname?: string;
-            email?: Email;
-            login?: Email;
-            phonenumber?: string;
-        };
-        // (undocumented)
-        links?: {
-            self: Uri;
-            roles?: Uri;
-            permissions?: Uri;
-            projectRelUri?: Uri;
-        };
-    }
-    // (undocumented)
-    export interface IWrappedAccountSetting {
-        // (undocumented)
-        accountSetting: IAccountSetting;
-    }
-    // (undocumented)
-    export interface IZendesk4Integration {
-        // (undocumented)
-        active: boolean;
-        // (undocumented)
-        lastFinishedProcess?: IProcessBody | null;
-        // (undocumented)
-        lastSuccessfulProcess?: IProcessBody | null;
-        // (undocumented)
-        links?: {
-            self: Uri;
-            processes: Uri;
-            configuration: Uri;
-        };
-        // (undocumented)
-        projectTemplate: Uri;
-        // (undocumented)
-        runningProcess?: IProcessBody | null;
-        // (undocumented)
-        ui?: object;
-    }
-    // (undocumented)
-    export type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
-    // (undocumented)
-    export type UserListItemState = "ACTIVE" | "INACTIVE" | "PENDING";
-    // (undocumented)
-    export type UsersItemStatus = "ENABLED" | "DISABLED";
 }
+export { GdcOrganization }
 
-// @alpha (undocumented)
-export namespace GdcUserGroup {
-    export interface IGetUserGroupsParams {
-        limit?: number;
-        offset?: string;
-    }
-    export interface IGetUserGroupsResponse {
-        // (undocumented)
-        userGroups: {
-            paging: {
-                offset?: number | null;
-                limit: number;
-                next?: Uri | null;
-            };
-            items: IWrappedUserGroupItem[];
-        };
-    }
-    // (undocumented)
-    export interface IUserGroupItem {
-        // (undocumented)
-        content: {
-            name: string;
-            id?: string | null;
-            description?: string | null;
-            domain?: Uri | null;
-            project?: Uri | null;
-        };
-        // (undocumented)
-        links?: {
-            self: Uri;
-            members: Uri;
-            modifyMembers: Uri;
-        };
-        // (undocumented)
-        meta: {
-            created?: Timestamp;
-            updated?: Timestamp;
-        };
-    }
-    // (undocumented)
-    export interface IWrappedUserGroupItem {
-        // (undocumented)
-        userGroup: IUserGroupItem;
+declare namespace GdcPaging {
+    export {
+        IBearPaging,
+        IBearPagingWithTotalCount
     }
 }
+export { GdcPaging }
 
-// @public (undocumented)
-export namespace GdcVisualizationClass {
-    // (undocumented)
-    export interface IVisualizationClass {
-        // (undocumented)
-        content: IVisualizationClassContent;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IVisualizationClassContent {
-        // (undocumented)
-        checksum: string;
-        // (undocumented)
-        icon: string;
-        // (undocumented)
-        iconSelected: string;
-        // (undocumented)
-        orderIndex?: number;
-        // (undocumented)
-        url: string;
-    }
-    // (undocumented)
-    export interface IVisualizationClassWrapped {
-        // (undocumented)
-        visualizationClass: IVisualizationClass;
+declare namespace GdcProject {
+    export {
+        UserProjectState,
+        IUserProject,
+        IUserProjectsParams,
+        IUserProjectsResponse,
+        IProjectLcmIdentifiers,
+        IProjectId,
+        ITimezone
     }
 }
+export { GdcProject }
 
-// @public (undocumented)
-export namespace GdcVisualizationObject {
-    // (undocumented)
-    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
-    // (undocumented)
-    export type AttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
-    // (undocumented)
-    export type BucketItem = IMeasure | IAttribute;
-    // (undocumented)
-    export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
-    // (undocumented)
-    export type DateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
-    // (undocumented)
-    export type ExtendedFilter = Filter | IMeasureValueFilter | IRankingFilter;
-    // (undocumented)
-    export type Filter = DateFilter | AttributeFilter;
-    // (undocumented)
-    export interface IAbsoluteDateFilter {
-        // (undocumented)
-        absoluteDateFilter: {
-            dataSet: ObjQualifier;
-            from?: string;
-            to?: string;
-        };
+declare namespace GdcProjectDashboard {
+    export {
+        IProjectDashboard,
+        IWrappedProjectDashboard
     }
-    // (undocumented)
-    export interface IArithmeticMeasureDefinition {
-        // (undocumented)
-        arithmeticMeasure: {
-            measureIdentifiers: Identifier[];
-            operator: ArithmeticMeasureOperator;
-        };
-    }
-    // (undocumented)
-    export interface IAttribute {
-        // (undocumented)
-        visualizationAttribute: IVisualizationAttributeContent;
-    }
-    // (undocumented)
-    export interface IBucket {
-        // (undocumented)
-        items: BucketItem[];
-        // (undocumented)
-        localIdentifier?: Identifier;
-        // (undocumented)
-        totals?: ITotal[];
-    }
-    // (undocumented)
-    export interface IComparisonCondition {
-        // (undocumented)
-        comparison: {
-            operator: ComparisonConditionOperator;
-            value: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export type Identifier = string;
-    // (undocumented)
-    export interface ILocalIdentifierQualifier {
-        // (undocumented)
-        localIdentifier: string;
-    }
-    // (undocumented)
-    export interface IMeasure {
-        // (undocumented)
-        measure: IMeasureContent;
-    }
-    // (undocumented)
-    export interface IMeasureContent {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        definition: IMeasureDefinitionType;
-        // (undocumented)
-        format?: string;
-        // (undocumented)
-        localIdentifier: Identifier;
-        // (undocumented)
-        title?: string;
-    }
-    // (undocumented)
-    export interface IMeasureDefinition {
-        // (undocumented)
-        measureDefinition: {
-            item: ObjQualifier;
-            aggregation?: MeasureAggregation;
-            filters?: Filter[];
-            computeRatio?: boolean;
-        };
-    }
-    // (undocumented)
-    export type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
-    // (undocumented)
-    export interface IMeasureValueFilter {
-        // (undocumented)
-        measureValueFilter: {
-            measure: IObjUriQualifier | ILocalIdentifierQualifier;
-            condition?: MeasureValueFilterCondition;
-        };
-    }
-    // (undocumented)
-    export interface INegativeAttributeFilter {
-        // (undocumented)
-        negativeAttributeFilter: {
-            displayForm: ObjQualifier;
-            notIn: string[];
-        };
-    }
-    // (undocumented)
-    export interface IObjIdentifierQualifier {
-        // (undocumented)
-        identifier: string;
-    }
-    // (undocumented)
-    export interface IObjUriQualifier {
-        // (undocumented)
-        uri: string;
-    }
-    // (undocumented)
-    export interface IPoPMeasureDefinition {
-        // (undocumented)
-        popMeasureDefinition: {
-            measureIdentifier: Identifier;
-            popAttribute: ObjQualifier;
-        };
-    }
-    // (undocumented)
-    export interface IPositiveAttributeFilter {
-        // (undocumented)
-        positiveAttributeFilter: {
-            displayForm: ObjQualifier;
-            in: string[];
-        };
-    }
-    // (undocumented)
-    export interface IPreviousPeriodDateDataSet {
-        // (undocumented)
-        dataSet: ObjQualifier;
-        // (undocumented)
-        periodsAgo: number;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasureDefinition {
-        // (undocumented)
-        previousPeriodMeasure: {
-            measureIdentifier: Identifier;
-            dateDataSets: IPreviousPeriodDateDataSet[];
-        };
-    }
-    // (undocumented)
-    export interface IRangeCondition {
-        // (undocumented)
-        range: {
-            operator: RangeConditionOperator;
-            from: number;
-            to: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export interface IRankingFilter {
-        // (undocumented)
-        rankingFilter: {
-            measures: (IObjUriQualifier | ILocalIdentifierQualifier)[];
-            attributes?: (IObjUriQualifier | ILocalIdentifierQualifier)[];
-            operator: RankingFilterOperator;
-            value: number;
-        };
-    }
-    // (undocumented)
-    export interface IReferenceItems {
-        // (undocumented)
-        [identifier: string]: string;
-    }
-    // (undocumented)
-    export interface IRelativeDateFilter {
-        // (undocumented)
-        relativeDateFilter: {
-            dataSet: ObjQualifier;
-            granularity: string;
-            from?: number;
-            to?: number;
-        };
-    }
-    // (undocumented)
-    export function isAbsoluteDateFilter(filter: DateFilter): filter is IAbsoluteDateFilter;
-    // (undocumented)
-    export function isArithmeticMeasureDefinition(definition: IMeasureDefinitionType): definition is IArithmeticMeasureDefinition;
-    // (undocumented)
-    export function isAttribute(bucketItem: IMeasure | IAttribute): bucketItem is IAttribute;
-    // (undocumented)
-    export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter;
-    // (undocumented)
-    export function isComparisonCondition(condition: MeasureValueFilterCondition): condition is IComparisonCondition;
-    // (undocumented)
-    export function isDateFilter(filter: ExtendedFilter): filter is DateFilter;
-    // (undocumented)
-    export function isLocalIdentifierQualifier(objectQualifier: unknown): objectQualifier is ILocalIdentifierQualifier;
-    // (undocumented)
-    export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure;
-    // (undocumented)
-    export function isMeasureDefinition(definition: IMeasureDefinitionType): definition is IMeasureDefinition;
-    // (undocumented)
-    export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter;
-    // (undocumented)
-    export function isNegativeAttributeFilter(filter: AttributeFilter): filter is INegativeAttributeFilter;
-    // (undocumented)
-    export function isObjIdentifierQualifier(objQualifier: ObjQualifier): objQualifier is IObjIdentifierQualifier;
-    // (undocumented)
-    export function isObjUriQualifier(objQualifier: ObjQualifier): objQualifier is IObjUriQualifier;
-    // (undocumented)
-    export function isPopMeasureDefinition(definition: IMeasureDefinitionType): definition is IPoPMeasureDefinition;
-    // (undocumented)
-    export function isPositiveAttributeFilter(filter: AttributeFilter): filter is IPositiveAttributeFilter;
-    // (undocumented)
-    export function isPreviousPeriodMeasureDefinition(definition: IMeasureDefinitionType): definition is IPreviousPeriodMeasureDefinition;
-    // (undocumented)
-    export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition;
-    // (undocumented)
-    export function isRankingFilter(filter: ExtendedFilter): filter is IRankingFilter;
-    // (undocumented)
-    export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter;
-    // (undocumented)
-    export function isVisualization(obj: unknown): obj is IVisualization;
-    // (undocumented)
-    export interface ITotal {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        attributeIdentifier: string;
-        // (undocumented)
-        measureIdentifier: string;
-        // (undocumented)
-        type: TotalType;
-    }
-    // (undocumented)
-    export interface IVisualization {
-        // (undocumented)
-        visualizationObject: IVisualizationObject;
-    }
-    // (undocumented)
-    export interface IVisualizationAttributeContent {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        displayForm: ObjQualifier;
-        // (undocumented)
-        localIdentifier: Identifier;
-        // (undocumented)
-        showAllValues?: boolean;
-    }
-    // (undocumented)
-    export interface IVisualizationObject {
-        // (undocumented)
-        content: IVisualizationObjectContent;
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IVisualizationObjectContent {
-        // (undocumented)
-        buckets: IBucket[];
-        // (undocumented)
-        filters?: ExtendedFilter[];
-        // (undocumented)
-        properties?: string;
-        // (undocumented)
-        references?: IReferenceItems;
-        // (undocumented)
-        visualizationClass: IObjUriQualifier;
-    }
-    // (undocumented)
-    export interface IVisualizationObjectResponse {
-        // (undocumented)
-        visualizationObject: IVisualizationObject;
-    }
-    // (undocumented)
-    export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
-    // (undocumented)
-    export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
-    // (undocumented)
-    export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
-    // (undocumented)
-    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
-    // (undocumented)
-    export type RankingFilterOperator = "TOP" | "BOTTOM";
-    // (undocumented)
-    export type SortDirection = "asc" | "desc";
-    // (undocumented)
-    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    // (undocumented)
-    export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
 }
+export { GdcProjectDashboard }
 
-// @public (undocumented)
-export namespace GdcVisualizationWidget {
-    // (undocumented)
-    export type DrillFromType = IDrillFromMeasure | IDrillFromAttribute;
-    // (undocumented)
-    export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
-    // (undocumented)
-    export interface IDrillFromAttribute {
-        // (undocumented)
-        drillFromAttribute: GdcVisualizationObject.ILocalIdentifierQualifier;
+declare namespace GdcReport {
+    export {
+        IReportContent,
+        IReport,
+        ReportFormat,
+        IReportFilter,
+        IGridContentMetrics,
+        IGridContentRowAttribute,
+        IGridContentRow,
+        IGridContent,
+        IReportDefinitionContent,
+        IReportDefinitionLinks,
+        IReportDefinition,
+        IWrappedReport,
+        IWrappedReportDefinition
     }
-    // (undocumented)
-    export interface IDrillFromMeasure {
-        // (undocumented)
-        drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface IDrillToAttributeUrl {
-        // (undocumented)
-        drillToAttributeUrl: {
-            target: "new-window";
-            from: DrillFromType;
-            insightAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
-            drillToAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
-        };
-    }
-    // (undocumented)
-    export interface IDrillToCustomUrl {
-        // (undocumented)
-        drillToCustomUrl: {
-            target: "new-window";
-            from: DrillFromType;
-            customUrl: string;
-        };
-    }
-    // (undocumented)
-    export interface IDrillToDashboard {
-        // (undocumented)
-        drillToDashboard: {
-            target: "in-place";
-            from: DrillFromType;
-            toDashboard?: Identifier;
-        };
-    }
-    // (undocumented)
-    export interface IDrillToVisualization {
-        // (undocumented)
-        drillToVisualization: {
-            target: "pop-up";
-            from: DrillFromType;
-            toVisualization: GdcVisualizationObject.IObjUriQualifier;
-        };
-    }
-    // (undocumented)
-    export function isDrillFromAttribute(obj: DrillFromType): obj is IDrillFromAttribute;
-    // (undocumented)
-    export function isDrillFromMeasure(obj: DrillFromType): obj is IDrillFromMeasure;
-    // (undocumented)
-    export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
-    // (undocumented)
-    export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
-    // (undocumented)
-    export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
-    // (undocumented)
-    export function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization;
-    // (undocumented)
-    export function isVisualizationWidget(obj: unknown): obj is IVisualizationWidget;
-    // (undocumented)
-    export function isWrappedVisualizationWidget(obj: unknown): obj is IWrappedVisualizationWidget;
-    // (undocumented)
-    export interface IVisualizationWidget {
-        // (undocumented)
-        content: {
-            visualization: string;
-            dateDataSet?: string;
-            ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
-            drills?: IDrillDefinition[];
-            properties?: string;
-            references?: GdcVisualizationObject.IReferenceItems;
-            configuration?: IVisualizationWidgetConfiguration;
-        };
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export interface IVisualizationWidgetConfiguration {
-        // (undocumented)
-        description?: IVisualizationWidgetDescriptionConfiguration;
-        // (undocumented)
-        hideTitle?: boolean;
-    }
-    // (undocumented)
-    export interface IVisualizationWidgetDescriptionConfiguration {
-        // (undocumented)
-        includeMetrics: boolean;
-        // (undocumented)
-        source: VisualizatioWidgetDescriptionSourceType;
-        // (undocumented)
-        visible: boolean;
-    }
-    // (undocumented)
-    export interface IWrappedVisualizationWidget {
-        // (undocumented)
-        visualizationWidget: IVisualizationWidget;
-    }
-    // (undocumented)
-    export type VisualizatioWidgetDescriptionSourceType = "widget" | "insight";
 }
+export { GdcReport }
+
+declare namespace GdcScheduledMail {
+    export {
+        isKpiDashboardAttachment,
+        isVisualizationWidgetAttachment,
+        IScheduledMailWhen,
+        IScheduledMailContent,
+        IScheduledMail,
+        IWrappedScheduledMail,
+        ScheduledMailAttachment,
+        ExportFormat,
+        IReportExportOptions,
+        IReportAttachment,
+        IDashboardAttachment,
+        IKpiDashboardAttachment,
+        IVisualizationWidgetAttachment
+    }
+}
+export { GdcScheduledMail }
+
+declare namespace GdcUser {
+    export {
+        IAccountSetting,
+        IWrappedAccountSetting,
+        IProfileSetting,
+        IUISettings,
+        ProjectPermission,
+        ISeparators,
+        IFeatureFlags,
+        IUserFeatureFlags,
+        IProjectPermissions,
+        IAssociatedProjectPermissions,
+        IProject,
+        IStatus,
+        ITemplateInfo,
+        IProjectIcons,
+        DataUploadStatus,
+        IDataUploadInfo,
+        IProcessBody,
+        IZendesk4Integration,
+        IIntegration,
+        IStyleSettingsType,
+        ITimezoneInfo,
+        IProjectLcm,
+        IBootstrapResource,
+        UserListItemState,
+        IUserListItem,
+        IGetUserListParams,
+        IGetUserListResponse,
+        ISeparatorsResponse,
+        UsersItemStatus,
+        IUsersItem,
+        IAccountInfoResponse,
+        IAccountInfo
+    }
+}
+export { GdcUser }
+
+declare namespace GdcUserGroup {
+    export {
+        IUserGroupItem,
+        IWrappedUserGroupItem,
+        IGetUserGroupsParams,
+        IGetUserGroupsResponse
+    }
+}
+export { GdcUserGroup }
+
+declare namespace GdcVisualizationClass {
+    export {
+        IVisualizationClassContent,
+        IVisualizationClass,
+        IVisualizationClassWrapped
+    }
+}
+export { GdcVisualizationClass }
+
+declare namespace GdcVisualizationObject {
+    export {
+        isObjUriQualifier,
+        isObjIdentifierQualifier_2 as isObjIdentifierQualifier,
+        isVisualization,
+        isMeasure,
+        isAttribute,
+        isMeasureDefinition,
+        isArithmeticMeasureDefinition_2 as isArithmeticMeasureDefinition,
+        isPopMeasureDefinition_2 as isPopMeasureDefinition,
+        isPreviousPeriodMeasureDefinition_2 as isPreviousPeriodMeasureDefinition,
+        isAttributeFilter_2 as isAttributeFilter,
+        isDateFilter_2 as isDateFilter,
+        isPositiveAttributeFilter_2 as isPositiveAttributeFilter,
+        isNegativeAttributeFilter_2 as isNegativeAttributeFilter,
+        isMeasureValueFilter_2 as isMeasureValueFilter,
+        isRankingFilter_2 as isRankingFilter,
+        isAbsoluteDateFilter_2 as isAbsoluteDateFilter,
+        isRelativeDateFilter_2 as isRelativeDateFilter,
+        isLocalIdentifierQualifier_2 as isLocalIdentifierQualifier,
+        isComparisonCondition,
+        isRangeCondition,
+        SortDirection_2 as SortDirection,
+        Identifier_3 as Identifier,
+        MeasureAggregation,
+        TotalType_2 as TotalType,
+        VisualizationType,
+        ArithmeticMeasureOperator_2 as ArithmeticMeasureOperator,
+        BucketItem,
+        ExtendedFilter_2 as ExtendedFilter,
+        Filter,
+        DateFilter,
+        AttributeFilter,
+        IObjUriQualifier_2 as IObjUriQualifier,
+        IObjIdentifierQualifier_2 as IObjIdentifierQualifier,
+        ObjQualifier_2 as ObjQualifier,
+        IPositiveAttributeFilter_2 as IPositiveAttributeFilter,
+        INegativeAttributeFilter_2 as INegativeAttributeFilter,
+        IAbsoluteDateFilter_2 as IAbsoluteDateFilter,
+        IRelativeDateFilter_2 as IRelativeDateFilter,
+        ComparisonConditionOperator_2 as ComparisonConditionOperator,
+        IComparisonCondition_2 as IComparisonCondition,
+        RangeConditionOperator_2 as RangeConditionOperator,
+        IRangeCondition_2 as IRangeCondition,
+        MeasureValueFilterCondition_2 as MeasureValueFilterCondition,
+        ILocalIdentifierQualifier_2 as ILocalIdentifierQualifier,
+        IMeasureValueFilter_2 as IMeasureValueFilter,
+        RankingFilterOperator_2 as RankingFilterOperator,
+        IRankingFilter_2 as IRankingFilter,
+        IVisualizationObjectContent,
+        IReferenceItems,
+        IBucket,
+        ITotal,
+        IMeasureDefinitionType,
+        IMeasure_2 as IMeasure,
+        IMeasureContent,
+        IAttribute_2 as IAttribute,
+        IVisualizationAttributeContent,
+        IMeasureDefinition,
+        IArithmeticMeasureDefinition_2 as IArithmeticMeasureDefinition,
+        IPoPMeasureDefinition,
+        IPreviousPeriodMeasureDefinition_2 as IPreviousPeriodMeasureDefinition,
+        IPreviousPeriodDateDataSet_2 as IPreviousPeriodDateDataSet,
+        IVisualizationObject,
+        IVisualization,
+        IVisualizationObjectResponse
+    }
+}
+export { GdcVisualizationObject }
+
+declare namespace GdcVisualizationWidget {
+    export {
+        isDrillToVisualization,
+        isDrillToDashboard,
+        isDrillToCustomUrl,
+        isDrillToAttributeUrl,
+        isDrillFromMeasure,
+        isDrillFromAttribute,
+        isVisualizationWidget,
+        isWrappedVisualizationWidget,
+        IVisualizationWidget,
+        IWrappedVisualizationWidget,
+        IDrillDefinition,
+        DrillFromType,
+        IDrillFromMeasure,
+        IDrillFromAttribute,
+        IDrillToVisualization,
+        IDrillToDashboard,
+        IDrillToCustomUrl,
+        IDrillToAttributeUrl,
+        IVisualizationWidgetConfiguration,
+        IVisualizationWidgetDescriptionConfiguration,
+        VisualizatioWidgetDescriptionSourceType
+    }
+}
+export { GdcVisualizationWidget }
 
 // @public (undocumented)
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[];
+
+// @public
+type GUID = string;
+
+// @public (undocumented)
+interface IAbsoluteDateFilter {
+    // (undocumented)
+    absoluteDateFilter: {
+        dataSet: ObjQualifier;
+        from: string;
+        to: string;
+    };
+}
+
+// @public (undocumented)
+interface IAbsoluteDateFilter_2 {
+    // (undocumented)
+    absoluteDateFilter: {
+        dataSet: ObjQualifier_2;
+        from?: string;
+        to?: string;
+    };
+}
+
+// @public (undocumented)
+interface IAccountInfo {
+    // (undocumented)
+    firstName: string;
+    // (undocumented)
+    lastName: string;
+    // (undocumented)
+    login: string;
+    // (undocumented)
+    loginMD5: string;
+    // (undocumented)
+    logoutUri: string;
+    // (undocumented)
+    organizationName: string;
+    // (undocumented)
+    profileUri: string;
+}
+
+// @public (undocumented)
+interface IAccountInfoResponse {
+    // (undocumented)
+    accountInfo: IAccountInfo;
+}
+
+// @public (undocumented)
+interface IAccountSetting {
+    // (undocumented)
+    authenticationModes?: Array<"SSO" | "PASSWORD">;
+    // (undocumented)
+    companyName?: string | null;
+    // (undocumented)
+    country?: string | null;
+    // (undocumented)
+    created?: Timestamp;
+    // (undocumented)
+    effectiveIpWhitelist?: string[] | null;
+    // (undocumented)
+    email?: Email | null;
+    // (undocumented)
+    firstName: string;
+    // (undocumented)
+    formatLocale?: string;
+    // (undocumented)
+    ipWhitelist?: string[] | null;
+    // (undocumented)
+    language?: string;
+    // (undocumented)
+    lastName: string;
+    // (undocumented)
+    licence?: BooleanAsString;
+    // (undocumented)
+    links?: {
+        projects?: Uri;
+        self?: Uri;
+        domain?: Uri;
+        auditEvents?: Uri;
+    };
+    // (undocumented)
+    login?: Email | null;
+    // (undocumented)
+    old_password?: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    phoneNumber?: string | null;
+    // (undocumented)
+    position?: string | null;
+    // (undocumented)
+    ssoProvider?: string | null;
+    // (undocumented)
+    timezone?: number | null;
+    // (undocumented)
+    updated?: Timestamp;
+    // (undocumented)
+    verifyPassword?: string;
+}
+
+// @public (undocumented)
+interface IAfm {
+    // (undocumented)
+    attributes?: IAttribute[];
+    // (undocumented)
+    filters?: CompatibilityFilter[];
+    // (undocumented)
+    measures?: IMeasure[];
+    // (undocumented)
+    nativeTotals?: INativeTotalItem[];
+}
+
+// @public (undocumented)
+interface IAnalyticalDashboard {
+    // (undocumented)
+    content: IAnalyticalDashboardContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IAnalyticalDashboardContent {
+    // (undocumented)
+    dateFilterConfig?: IDashboardDateFilterConfig;
+    // (undocumented)
+    filterContext?: string;
+    // (undocumented)
+    layout?: Layout;
+    // (undocumented)
+    plugins?: IDashboardPluginLink[];
+    // (undocumented)
+    widgets: string[];
+}
+
+// @public (undocumented)
+interface IArithmeticMeasure {
+    // (undocumented)
+    measureIdentifiers: Identifier_2[];
+    // (undocumented)
+    operator: ArithmeticMeasureOperator;
+}
+
+// @public (undocumented)
+interface IArithmeticMeasureDefinition {
+    // (undocumented)
+    arithmeticMeasure: IArithmeticMeasure;
+}
+
+// @public (undocumented)
+interface IArithmeticMeasureDefinition_2 {
+    // (undocumented)
+    arithmeticMeasure: {
+        measureIdentifiers: Identifier_3[];
+        operator: ArithmeticMeasureOperator_2;
+    };
+}
+
+// @public (undocumented)
+interface IAssociatedProjectPermissions {
+    // (undocumented)
+    associatedPermissions: IProjectPermissions;
+}
+
+// @public (undocumented)
+interface IAttribute {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    displayForm: ObjQualifier;
+    // (undocumented)
+    localIdentifier: Identifier_2;
+}
+
+// @public (undocumented)
+interface IAttribute_2 {
+    // (undocumented)
+    visualizationAttribute: IVisualizationAttributeContent;
+}
+
+// @public (undocumented)
+interface IAttribute_3 extends IMetadataObject {
+    // (undocumented)
+    content: {
+        dimension?: string;
+        displayForms: IAttributeDisplayForm[];
+        type?: string;
+        drillDownStepAttributeDF?: Uri;
+        linkAttributeDF?: Uri;
+    };
+}
+
+// @public (undocumented)
+interface IAttributeDisplayForm extends IMetadataObject {
+    // (undocumented)
+    content: {
+        expression: MaqlExpression;
+        formOf: Uri;
+        ldmexpression?: string;
+        type?: string;
+        default?: number;
+    };
+    // (undocumented)
+    links: {
+        self: string;
+        elements: string;
+    };
+}
+
+// @public (undocumented)
+interface IAttributeElement {
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    uri: string;
+}
+
+// @public (undocumented)
+interface IAttributeElementsByRef {
+    // (undocumented)
+    uris: string[];
+}
+
+// @public (undocumented)
+interface IAttributeElementsByValue {
+    // (undocumented)
+    values: string[];
+}
+
+// @public (undocumented)
+interface IAttributeFilter {
+    // (undocumented)
+    attributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        attributeElements: string[];
+        localIdentifier?: string;
+        title?: string;
+        filterElementsBy?: Array<{
+            filterLocalIdentifier: string;
+            over: {
+                attributes: Array<string>;
+            };
+        }>;
+        selectionMode?: AttributeFilterSelectionMode;
+    };
+}
+
+// @public (undocumented)
+interface IAttributeFilterReference {
+    // (undocumented)
+    attributeFilterReference: {
+        displayForm: string;
+    };
+}
+
+// @public (undocumented)
+interface IAttributeHeader {
+    // (undocumented)
+    attributeHeader: {
+        uri: string;
+        identifier: string;
+        localIdentifier: string;
+        name: string;
+        totalItems?: ITotalHeaderItem[];
+        formOf: {
+            uri: string;
+            identifier: string;
+            name: string;
+        };
+    };
+}
+
+// @public (undocumented)
+interface IAttributeLocatorItem {
+    // (undocumented)
+    attributeLocatorItem: {
+        attributeIdentifier: Identifier_2;
+        element: string;
+    };
+}
+
+// @public (undocumented)
+interface IAttributeSortItem {
+    // (undocumented)
+    attributeSortItem: {
+        direction: SortDirection;
+        attributeIdentifier: Identifier_2;
+        aggregation?: "sum";
+    };
+}
+
+// @public (undocumented)
+interface IBaseExportConfig {
+    format?: "xlsx" | "csv" | "raw";
+    mergeHeaders?: boolean;
+    title?: string;
+}
+
+// @public (undocumented)
+interface IBearPaging {
+    // (undocumented)
+    count: number;
+    // (undocumented)
+    limit: number;
+    // (undocumented)
+    offset: number;
+}
+
+// @public (undocumented)
+interface IBearPagingWithTotalCount extends IBearPaging {
+    // (undocumented)
+    totalCount: number;
+}
+
+// @public (undocumented)
+interface IBootstrapResource {
+    // (undocumented)
+    bootstrapResource: {
+        accountSetting: IAccountSetting;
+        profileSetting: IProfileSetting;
+        hostnameBase: string;
+        settings?: IUISettings;
+        current?: {
+            mapboxToken?: string;
+            project: IProject | null;
+            projectLcm?: IProjectLcm;
+            featureFlags?: IFeatureFlags;
+            projectPermissions: IProjectPermissions | null;
+            projectTemplates: ITemplateInfo[] | null;
+            projectIcons: IProjectIcons[] | null;
+            dataUploadsInfo: IDataUploadInfo | null;
+            loginMD5: string | null;
+            integrations: Array<IIntegration | IZendesk4Integration>;
+            projectStyleSettings?: IStyleSettingsType | null;
+            clusterStatus?: "ONLINE" | "OFFLINE";
+            requiresRedirect: boolean;
+            timezone: ITimezoneInfo | null;
+            analyticalDashboards?: Uri[] | null;
+            walkMe?: string | null;
+            walkMeEnvironment?: string | null;
+            includeTrialSnippet?: string | null;
+            clientSecret?: string;
+            user?: {
+                passwordExpirationTimestamp?: DateString;
+            };
+        };
+    };
+}
+
+// @public (undocumented)
+interface IBucket {
+    // (undocumented)
+    items: BucketItem[];
+    // (undocumented)
+    localIdentifier?: Identifier_3;
+    // (undocumented)
+    totals?: ITotal[];
+}
+
+// @public (undocumented)
+interface ICatalogAttribute extends ICatalogItemBase {
+    // (undocumented)
+    readonly links: {
+        readonly self: string;
+        readonly defaultDisplayForm: string;
+        readonly geoPinDisplayForms?: string[];
+    };
+    // (undocumented)
+    readonly type: "attribute";
+}
+
+// @public (undocumented)
+interface ICatalogFact extends ICatalogItemBase {
+    // (undocumented)
+    readonly type: "fact";
+}
+
+// @public (undocumented)
+interface ICatalogGroup {
+    // (undocumented)
+    readonly identifier: string;
+    // (undocumented)
+    readonly title: string;
+}
+
+// @public (undocumented)
+interface ICatalogItemBase {
+    // (undocumented)
+    readonly groups?: string[];
+    // (undocumented)
+    readonly identifier: string;
+    // (undocumented)
+    readonly links: {
+        self: string;
+    };
+    // (undocumented)
+    readonly production: boolean;
+    // (undocumented)
+    readonly summary: string;
+    // (undocumented)
+    readonly title: string;
+    // (undocumented)
+    readonly type: CatalogItemType;
+}
+
+// @public (undocumented)
+interface ICatalogMetric extends ICatalogItemBase {
+    // (undocumented)
+    readonly expression: string;
+    // (undocumented)
+    readonly format: string;
+    // (undocumented)
+    readonly type: "metric";
+}
+
+// @public (undocumented)
+interface IColumnsAndDefinitions {
+    // (undocumented)
+    columns: string[];
+    // (undocumented)
+    definitions: Array<{
+        metricDefinition: {
+            identifier: string;
+            uri: string;
+        };
+    }>;
+}
+
+// @public (undocumented)
+interface IComparisonCondition {
+    // (undocumented)
+    comparison: {
+        operator: ComparisonConditionOperator;
+        value: number;
+        treatNullValuesAs?: number;
+    };
+}
+
+// @public (undocumented)
+interface IComparisonCondition_2 {
+    // (undocumented)
+    comparison: {
+        operator: ComparisonConditionOperator_2;
+        value: number;
+        treatNullValuesAs?: number;
+    };
+}
+
+// @public (undocumented)
+interface IDashboardAttachment {
+    // (undocumented)
+    dashboardAttachment: {
+        uri: Uri;
+        allTabs?: boolean;
+        tabs: string[];
+        executionContext?: Uri;
+    };
+}
+
+// @public (undocumented)
+interface IDashboardDateFilterAddedPresets {
+    // (undocumented)
+    absolutePresets?: IDateFilterAbsolutePreset[];
+    // (undocumented)
+    relativePresets?: IDateFilterRelativePreset[];
+}
+
+// @public (undocumented)
+interface IDashboardDateFilterConfig {
+    // (undocumented)
+    addPresets?: IDashboardDateFilterAddedPresets;
+    // (undocumented)
+    filterName: string;
+    // (undocumented)
+    hideGranularities?: DateFilterGranularity[];
+    // (undocumented)
+    hideOptions?: GUID[];
+    // (undocumented)
+    mode: DashboardDateFilterConfigMode;
+}
+
+// @public (undocumented)
+interface IDashboardPlugin {
+    // (undocumented)
+    content: IDashboardPluginContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IDashboardPluginContent {
+    // (undocumented)
+    url: string;
+}
+
+// @public (undocumented)
+interface IDashboardPluginLink {
+    // (undocumented)
+    parameters?: string;
+    // (undocumented)
+    type: string;
+}
+
+// @public
+interface IDataColumn {
+    // (undocumented)
+    column: {
+        name: string;
+        type: DataColumnType;
+        skip?: boolean;
+        format?: string;
+    };
+}
+
+// @public
+interface IDataHeader {
+    // (undocumented)
+    columns: IDataColumn[];
+    // (undocumented)
+    headerRowIndex?: number;
+}
+
+// @public (undocumented)
+interface IDataSet extends IMetadataObject {
+    // (undocumented)
+    attributes: Uri[];
+    // (undocumented)
+    dataLoadingColumns: Uri[];
+    // (undocumented)
+    facts: Uri[];
+    // (undocumented)
+    mode: string;
+}
+
+// @public
+interface IDataset {
+    // (undocumented)
+    dataset: {
+        name: string;
+        dataHeader: IDataHeader;
+        datasetId: string;
+        loadedRowCount: number;
+        datasetLoadStatus: DatasetLoadStatus;
+        firstSuccessfulUpdate?: IDatasetLoadInfo;
+        lastSuccessfulUpdate?: IDatasetLoadInfo;
+        lastUpdate?: IDatasetLoadInfo;
+    };
+}
+
+// @public (undocumented)
+interface IDataSet_2 {
+    // (undocumented)
+    content: IDataSetContent;
+    // (undocumented)
+    links?: {
+        dataUploads: Uri | null;
+        uploadConfiguration?: Uri;
+    };
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IDataSetContent {
+    // (undocumented)
+    attributes: Uri[];
+    // (undocumented)
+    customUploadIdentifier?: string;
+    // (undocumented)
+    customUploadState?: string;
+    // (undocumented)
+    customUploadTimestamp?: number;
+    // (undocumented)
+    dataLoadingColumns: Uri[];
+    // (undocumented)
+    facts: Uri[];
+    // (undocumented)
+    hasUploadConfiguration?: BooleanAsString;
+    // (undocumented)
+    identifierPrefix?: string;
+    // (undocumented)
+    mode: "SLI" | "DLI" | "";
+    // (undocumented)
+    ties: Uri[];
+    // (undocumented)
+    titleSuffix?: string;
+    // (undocumented)
+    urn?: string;
+}
+
+// @public
+interface IDatasetLoadInfo {
+    // (undocumented)
+    created: string;
+    // (undocumented)
+    owner: IDatasetUser;
+    // (undocumented)
+    status: DatasetLoadStatus;
+}
+
+// @public (undocumented)
+interface IDatasetsResponse {
+    // (undocumented)
+    datasets: {
+        items: IDataset[];
+    };
+}
+
+// @public
+interface IDatasetUser {
+    // (undocumented)
+    fullName: string;
+    // (undocumented)
+    login: string;
+    // (undocumented)
+    profileUri: string;
+}
+
+// @public (undocumented)
+interface IDataUploadInfo {
+    // (undocumented)
+    statusesCount: {
+        [status in DataUploadStatus]?: number;
+    };
+}
+
+// @public
+interface IDateDataSet {
+    // (undocumented)
+    availableDateAttributes?: IDateDataSetAttribute[];
+    // (undocumented)
+    meta: IObjectMeta;
+    // (undocumented)
+    relevance: number;
+}
+
+// @public
+interface IDateDataSetAttribute {
+    // (undocumented)
+    attributeMeta: IObjectMeta;
+    // (undocumented)
+    defaultDisplayFormMeta: IObjectMeta;
+    // (undocumented)
+    type: IDateDataSetAttributeGranularity;
+}
+
+// @public (undocumented)
+type IDateDataSetAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
+
+// @public
+interface IDateDataSetResponse {
+    // (undocumented)
+    dateDataSetsResponse: {
+        dateDataSets: IDateDataSet[];
+        unavailableDateDataSetsCount?: number;
+    };
+}
+
+// @public (undocumented)
+interface IDateFilter {
+    // (undocumented)
+    dateFilter: {
+        type: DateFilterType;
+        granularity: DateFilterGranularity;
+        from?: DateString_2 | NumberAsString;
+        to?: DateString_2 | NumberAsString;
+        dataSet?: string;
+        attribute?: string;
+    };
+}
+
+// @public (undocumented)
+type IDateFilterAbsoluteForm = IDateFilterBase;
+
+// @public (undocumented)
+interface IDateFilterAbsolutePreset extends IDateFilterBase {
+    // (undocumented)
+    from: DateString_2;
+    // (undocumented)
+    to: DateString_2;
+}
+
+// @public (undocumented)
+type IDateFilterAllTime = IDateFilterBase;
+
+// @public (undocumented)
+interface IDateFilterBase {
+    // (undocumented)
+    localIdentifier: GUID;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    visible: boolean;
+}
+
+// @public (undocumented)
+interface IDateFilterConfig {
+    // (undocumented)
+    content: IDateFilterConfigContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IDateFilterConfigContent {
+    // (undocumented)
+    absoluteForm?: IDateFilterAbsoluteForm;
+    // (undocumented)
+    absolutePresets?: IDateFilterAbsolutePreset[];
+    // (undocumented)
+    allTime?: IDateFilterAllTime;
+    // (undocumented)
+    relativeForm?: IDateFilterRelativeForm;
+    // (undocumented)
+    relativePresets?: IDateFilterRelativePreset[];
+    // (undocumented)
+    selectedOption: GUID;
+}
+
+// @public (undocumented)
+interface IDateFilterReference {
+    // (undocumented)
+    dateFilterReference: {
+        dataSet: string;
+    };
+}
+
+// @public (undocumented)
+interface IDateFilterRelativeForm extends IDateFilterBase {
+    // (undocumented)
+    granularities: DateFilterGranularity[];
+}
+
+// @public (undocumented)
+interface IDateFilterRelativePreset extends IDateFilterBase {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: DateFilterGranularity;
+    // (undocumented)
+    to: number;
+}
 
 // @public (undocumented)
 export type Identifier = string;
 
 // @public (undocumented)
+type Identifier_2 = string;
+
+// @public (undocumented)
+type Identifier_3 = string;
+
+// @public (undocumented)
+interface IDimension {
+    // (undocumented)
+    itemIdentifiers: Identifier_2[];
+    // (undocumented)
+    totals?: ITotalItem[];
+}
+
+// @public (undocumented)
+type IDrillDefinition = IDrillToVisualization | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+
+// @public (undocumented)
+interface IDrillFromAttribute {
+    // (undocumented)
+    drillFromAttribute: ILocalIdentifierQualifier_2;
+}
+
+// @public (undocumented)
+interface IDrillFromMeasure {
+    // (undocumented)
+    drillFromMeasure: ILocalIdentifierQualifier_2;
+}
+
+// @public (undocumented)
+interface IDrillToAttributeUrl {
+    // (undocumented)
+    drillToAttributeUrl: {
+        target: "new-window";
+        from: DrillFromType;
+        insightAttributeDisplayForm: IObjUriQualifier_2;
+        drillToAttributeDisplayForm: IObjUriQualifier_2;
+    };
+}
+
+// @public (undocumented)
+interface IDrillToCustomUrl {
+    // (undocumented)
+    drillToCustomUrl: {
+        target: "new-window";
+        from: DrillFromType;
+        customUrl: string;
+    };
+}
+
+// @public (undocumented)
+interface IDrillToDashboard {
+    // (undocumented)
+    drillToDashboard: {
+        target: "in-place";
+        from: DrillFromType;
+        toDashboard?: Identifier;
+    };
+}
+
+// @public (undocumented)
+interface IDrillToVisualization {
+    // (undocumented)
+    drillToVisualization: {
+        target: "pop-up";
+        from: DrillFromType;
+        toVisualization: IObjUriQualifier_2;
+    };
+}
+
+// @public (undocumented)
+interface IError extends Error {
+    // (undocumented)
+    response: Response;
+}
+
+// @public (undocumented)
+interface IExecution {
+    // (undocumented)
+    execution: {
+        afm: IAfm;
+        resultSpec?: IResultSpec;
+    };
+}
+
+// @public (undocumented)
+interface IExecutionResponse {
+    // (undocumented)
+    dimensions: IResultDimension[];
+    // (undocumented)
+    links: {
+        executionResult: string;
+    };
+}
+
+// @public
+interface IExecutionResponses {
+    // (undocumented)
+    executionResponse: IExecutionResponse;
+    // (undocumented)
+    executionResult: IExecutionResult | null;
+}
+
+// @public (undocumented)
+interface IExecutionResponseWrapper {
+    // (undocumented)
+    executionResponse: IExecutionResponse;
+}
+
+// @public (undocumented)
+interface IExecutionResult {
+    // (undocumented)
+    data: DataValue[][] | DataValue[];
+    // (undocumented)
+    headerItems?: IResultHeaderItem[][][];
+    // (undocumented)
+    paging: {
+        count: number[];
+        offset: number[];
+        total: number[];
+    };
+    // (undocumented)
+    totals?: DataValue[][][];
+    // (undocumented)
+    totalTotals?: DataValue[][][];
+    // (undocumented)
+    warnings?: Warning[];
+}
+
+// @public (undocumented)
+interface IExecutionResultWrapper {
+    // (undocumented)
+    executionResult: IExecutionResult;
+}
+
+// @public
+interface IExportBlobResponse {
+    fileName?: string;
+    objectUrl: string;
+    uri: string;
+}
+
+// @public (undocumented)
+interface IExportConfig extends IBaseExportConfig {
+    afm?: IAfm;
+    showFilters?: boolean;
+}
+
+// @public (undocumented)
+interface IExportResponse {
+    // (undocumented)
+    uri: string;
+}
+
+// @public @deprecated (undocumented)
+interface IExpressionFilter {
+    // (undocumented)
+    expression: {
+        value: string;
+    };
+}
+
+// @public (undocumented)
+interface IFact extends IMetadataObject {
+    // (undocumented)
+    content: any;
+}
+
+// @public (undocumented)
+interface IFeatureFlags {
+    // (undocumented)
+    [key: string]: number | boolean | string;
+}
+
+// @public (undocumented)
+interface IFilterContext {
+    // (undocumented)
+    content: {
+        filters: FilterContextItem[];
+    };
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IFluidLayout {
+    // (undocumented)
+    fluidLayout: {
+        rows: IFluidLayoutRow[];
+        size?: IFluidLayoutSize;
+        style?: string;
+    };
+}
+
+// @public (undocumented)
+interface IFluidLayoutColSize {
+    // (undocumented)
+    lg?: IFluidLayoutSize;
+    // (undocumented)
+    md?: IFluidLayoutSize;
+    // (undocumented)
+    sm?: IFluidLayoutSize;
+    // (undocumented)
+    xl: IFluidLayoutSize;
+    // (undocumented)
+    xs?: IFluidLayoutSize;
+}
+
+// @public (undocumented)
+interface IFluidLayoutColumn {
+    // (undocumented)
+    content?: LayoutContent;
+    // (undocumented)
+    size: IFluidLayoutColSize;
+    // (undocumented)
+    style?: string;
+}
+
+// @public (undocumented)
+interface IFluidLayoutRow {
+    // (undocumented)
+    columns: IFluidLayoutColumn[];
+    // (undocumented)
+    header?: SectionHeader;
+    // (undocumented)
+    style?: string;
+}
+
+// @public (undocumented)
+interface IFluidLayoutSize {
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    heightAsRatio?: number;
+    // (undocumented)
+    width: number;
+}
+
+// @alpha
+interface IGetGranteesParams {
+    // (undocumented)
+    permission?: Permission;
+}
+
+// @alpha
+interface IGetGranteesResponse {
+    // (undocumented)
+    grantees: {
+        items: IGranteeEntry[];
+    };
+}
+
+// @public (undocumented)
+interface IGetObjectsUsedByManyEntry {
+    // (undocumented)
+    entries: IObjectLink[];
+    // (undocumented)
+    uri: Uri;
+}
+
+// @public (undocumented)
+interface IGetObjectUsedBy {
+    // (undocumented)
+    entries: IObjectLink[];
+}
+
+// @public (undocumented)
+interface IGetObjectUsing {
+    // (undocumented)
+    entries: IObjectLink[];
+}
+
+// @public (undocumented)
+interface IGetObjectUsingManyEntry {
+    // (undocumented)
+    entries: IObjectLink[];
+    // (undocumented)
+    uri: Uri;
+}
+
+// @alpha
+interface IGetUserGroupsParams {
+    limit?: number;
+    offset?: string;
+}
+
+// @alpha
+interface IGetUserGroupsResponse {
+    // (undocumented)
+    userGroups: {
+        paging: {
+            offset?: number | null;
+            limit: number;
+            next?: Uri | null;
+        };
+        items: IWrappedUserGroupItem[];
+    };
+}
+
+// @public
+interface IGetUserListParams {
+    groupId?: string;
+    indicatePermission?: string;
+    limit?: number;
+    offset?: number;
+    prefixSearch?: string;
+    userState: UserListItemState;
+}
+
+// @public
+interface IGetUserListResponse {
+    // (undocumented)
+    userList: {
+        paging: {
+            offset?: number | null;
+            limit: number;
+            next?: Uri | null;
+            count: number;
+            totalCount: number;
+        };
+        items: IUserListItem[];
+    };
+}
+
+// @alpha (undocumented)
+interface IGranteeEntry {
+    // (undocumented)
+    aclEntry: {
+        permission: Permission;
+        grantee: IGranteeUserInfo | IGranteeUserGroupInfo;
+    };
+}
+
+// @alpha (undocumented)
+interface IGranteeUserGroupInfo {
+    // (undocumented)
+    userGroup: IUserGroupItem;
+}
+
+// @alpha (undocumented)
+interface IGranteeUserInfo {
+    // (undocumented)
+    user: IUsersItem;
+}
+
+// @public (undocumented)
+interface IGridContent {
+    // (undocumented)
+    columns: string[];
+    // (undocumented)
+    columnWidths: any[];
+    // (undocumented)
+    metrics: IGridContentMetrics[];
+    // (undocumented)
+    rows: IGridContentRow[];
+    // (undocumented)
+    sort: IGridContent;
+}
+
+// @public (undocumented)
+interface IGridContentMetrics {
+    // (undocumented)
+    alias: string;
+    // (undocumented)
+    uri: Uri;
+}
+
+// @public (undocumented)
+interface IGridContentRow {
+    // (undocumented)
+    attribute: IGridContentRowAttribute;
+}
+
+// @public (undocumented)
+interface IGridContentRowAttribute {
+    // (undocumented)
+    alias: string;
+    // (undocumented)
+    totals: any[][];
+    // (undocumented)
+    uri: Uri;
+}
+
+// @public (undocumented)
+type IHeader = IMeasureGroupHeader | IAttributeHeader;
+
+// @public (undocumented)
+interface IIntegration {
+    // (undocumented)
+    active: boolean;
+    // (undocumented)
+    projectTemplate: Uri;
+}
+
+// @public (undocumented)
+interface IKPI {
+    // (undocumented)
+    content: IKpiContentWithoutComparison | IKpiContentWithComparison;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IKpiAlert extends IMetadataObject {
+    // (undocumented)
+    content: {
+        kpi: Uri;
+        dashboard: Uri;
+        threshold: number;
+        isTriggered: boolean;
+        whenTriggered: "underThreshold" | "aboveThreshold";
+        filterContext?: Uri;
+    };
+}
+
+// @public (undocumented)
+type IKpiComparisonDirection = "growIsGood" | "growIsBad";
+
+// @public (undocumented)
+type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+
+// @public (undocumented)
+type IKpiComparisonTypeNoComparison = "none";
+
+// @public (undocumented)
+interface IKpiConfiguration {
+    // (undocumented)
+    description?: IKpiDescriptionConfiguration;
+}
+
+// @public (undocumented)
+interface IKpiContentBase {
+    // (undocumented)
+    configuration?: IKpiConfiguration;
+    // (undocumented)
+    dateDataSet?: string;
+    // (undocumented)
+    dateDimension?: string;
+    // (undocumented)
+    drillTo?: IKpiProjectDashboardLink;
+    // (undocumented)
+    ignoreDashboardFilters: Array<IDateFilterReference | IAttributeFilterReference>;
+    // (undocumented)
+    metric: string;
+}
+
+// @public (undocumented)
+interface IKpiContentWithComparison extends IKpiContentBase {
+    // (undocumented)
+    comparisonDirection: IKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: IKpiComparisonTypeComparison;
+}
+
+// @public (undocumented)
+interface IKpiContentWithoutComparison extends IKpiContentBase {
+    // (undocumented)
+    comparisonType: IKpiComparisonTypeNoComparison;
+}
+
+// @public (undocumented)
+interface IKpiDashboardAttachment {
+    // (undocumented)
+    kpiDashboardAttachment: {
+        uri: Uri;
+        format: "pdf";
+        filterContext?: Uri;
+    };
+}
+
+// @public (undocumented)
+interface IKpiDescriptionConfiguration {
+    source: KpiDescriptionSourceType;
+    visible: boolean;
+}
+
+// @public (undocumented)
+interface IKpiProjectDashboardLink {
+    // (undocumented)
+    projectDashboard: string;
+    // (undocumented)
+    projectDashboardTab: string;
+}
+
+// @public
+interface ILoadAvailableCatalogItemsParams {
+    // (undocumented)
+    catalogQueryRequest: {
+        bucketItems: ItemDescription[];
+        types?: CatalogItemType[];
+    };
+}
+
+// @public
+interface ILoadAvailableCatalogItemsResponse {
+    // (undocumented)
+    catalogAvailableItems: {
+        items: string[];
+    };
+}
+
+// @public
+interface ILoadCatalogGroupsParams {
+    // (undocumented)
+    readonly csvDataSets?: string[];
+    // (undocumented)
+    readonly excludeWithTags?: string[];
+    // (undocumented)
+    readonly includeWithTags?: string[];
+    // (undocumented)
+    readonly production?: 1 | 0;
+}
+
+// @public
+interface ILoadCatalogGroupsResponse {
+    // (undocumented)
+    catalogGroups: ICatalogGroup[];
+}
+
+// @public
+interface ILoadCatalogItemsParams {
+    // (undocumented)
+    readonly csvDataSets?: string[];
+    // (undocumented)
+    readonly excludeWithTags?: string[];
+    // (undocumented)
+    readonly includeWithTags?: string[];
+    // (undocumented)
+    readonly limit?: number;
+    // (undocumented)
+    readonly offset?: number;
+    // (undocumented)
+    readonly production?: 1 | 0;
+    // (undocumented)
+    readonly types?: CatalogItemType[];
+}
+
+// @public
+interface ILoadCatalogItemsResponse {
+    // (undocumented)
+    catalogItems: {
+        items: CatalogItem[];
+        paging: {
+            offset: number;
+            limit: number;
+        };
+    };
+}
+
+// @public (undocumented)
+interface ILoadDateDataSetsParams {
+    // (undocumented)
+    attributesMap?: Record<string, unknown>;
+    // (undocumented)
+    bucketItems?: IVisualizationObjectContent;
+    // (undocumented)
+    dataSetIdentifier?: string;
+    // (undocumented)
+    excludeObjectsWithTags?: string[];
+    // (undocumented)
+    includeAvailableDateAttributes?: boolean;
+    // (undocumented)
+    includeDateGranularities?: string[];
+    // (undocumented)
+    includeObjectsWithTags?: string[];
+    // (undocumented)
+    includeUnavailableDateDataSetsCount?: boolean;
+    // (undocumented)
+    returnAllDateDataSets?: boolean;
+    // (undocumented)
+    returnAllRelatedDateDataSets?: boolean;
+}
+
+// @public (undocumented)
+interface ILocalIdentifierQualifier {
+    // (undocumented)
+    localIdentifier: string;
+}
+
+// @public (undocumented)
+interface ILocalIdentifierQualifier_2 {
+    // (undocumented)
+    localIdentifier: string;
+}
+
+// @public (undocumented)
+interface IMaqlAstPosition {
+    // (undocumented)
+    column: number;
+    // (undocumented)
+    line: number;
+}
+
+// @public (undocumented)
+interface IMaqlTree {
+    // (undocumented)
+    content?: IMaqlTree;
+    // (undocumented)
+    position: IMaqlAstPosition;
+    // (undocumented)
+    type: string;
+    // (undocumented)
+    value?: string | Date | number;
+}
+
+// @public (undocumented)
+interface IMeasure {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: MeasureDefinition;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: Identifier_2;
+}
+
+// @public (undocumented)
+interface IMeasure_2 {
+    // (undocumented)
+    measure: IMeasureContent;
+}
+
+// @public (undocumented)
+interface IMeasureContent {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: IMeasureDefinitionType;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: Identifier_3;
+    // (undocumented)
+    title?: string;
+}
+
+// @public (undocumented)
+interface IMeasureDefinition {
+    // (undocumented)
+    measureDefinition: {
+        item: ObjQualifier_2;
+        aggregation?: MeasureAggregation;
+        filters?: Filter[];
+        computeRatio?: boolean;
+    };
+}
+
+// @public (undocumented)
+type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition_2 | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition_2;
+
+// @public (undocumented)
+interface IMeasureGroupHeader {
+    // (undocumented)
+    measureGroupHeader: {
+        items: IMeasureHeaderItem[];
+        totalItems?: ITotalHeaderItem[];
+    };
+}
+
+// @public (undocumented)
+interface IMeasureHeaderItem {
+    // (undocumented)
+    measureHeaderItem: {
+        uri?: string;
+        identifier?: string;
+        localIdentifier: string;
+        name: string;
+        format: string;
+    };
+}
+
+// @public (undocumented)
+interface IMeasureLocatorItem {
+    // (undocumented)
+    measureLocatorItem: {
+        measureIdentifier: Identifier_2;
+    };
+}
+
+// @public (undocumented)
+interface IMeasureSortItem {
+    // (undocumented)
+    measureSortItem: {
+        direction: SortDirection;
+        locators: LocatorItem[];
+    };
+}
+
+// @public (undocumented)
+interface IMeasureValueFilter {
+    // (undocumented)
+    measureValueFilter: {
+        measure: Qualifier;
+        condition?: MeasureValueFilterCondition;
+    };
+}
+
+// @public (undocumented)
+interface IMeasureValueFilter_2 {
+    // (undocumented)
+    measureValueFilter: {
+        measure: IObjUriQualifier_2 | ILocalIdentifierQualifier_2;
+        condition?: MeasureValueFilterCondition_2;
+    };
+}
+
+// @public (undocumented)
+interface IMetadataObject {
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IMetric extends IMetadataObject {
+    // (undocumented)
+    content: {
+        expression: MaqlExpression;
+        tree?: IMaqlTree;
+        format?: string;
+        folders?: string[];
+    };
+}
+
+// @public (undocumented)
+interface INativeTotalItem {
+    // (undocumented)
+    attributeIdentifiers: Identifier_2[];
+    // (undocumented)
+    measureIdentifier: Identifier_2;
+}
+
+// @public (undocumented)
+interface INegativeAttributeFilter {
+    // (undocumented)
+    negativeAttributeFilter: {
+        displayForm: ObjQualifier;
+        notIn: AttributeElements;
+    };
+}
+
+// @public (undocumented)
+interface INegativeAttributeFilter_2 {
+    // (undocumented)
+    negativeAttributeFilter: {
+        displayForm: ObjQualifier_2;
+        notIn: string[];
+    };
+}
+
+// @public (undocumented)
+type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet | GdcReport.IReport | GdcReport.IReportDefinition | GdcDashboardPlugin.IDashboardPlugin;
+
+// @public (undocumented)
+interface IObjectLink {
+    // (undocumented)
+    author?: Uri;
+    // (undocumented)
+    category?: ObjectCategory;
+    // (undocumented)
+    contributor?: Uri;
+    // (undocumented)
+    created?: Timestamp;
+    // (undocumented)
+    deprecated?: BooleanAsString;
+    // (undocumented)
+    flags?: string[];
+    // (undocumented)
+    help?: Uri;
+    // (undocumented)
+    identifier?: string;
+    // (undocumented)
+    isProduction?: boolean;
+    // (undocumented)
+    link: Uri;
+    // (undocumented)
+    locked?: boolean;
+    // (undocumented)
+    projectTemplate?: string;
+    // (undocumented)
+    sharedWithSomeone?: boolean;
+    // (undocumented)
+    summary?: string;
+    // (undocumented)
+    tags?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    unlisted?: boolean;
+    // (undocumented)
+    updated?: Timestamp;
+}
+
+// @public (undocumented)
+interface IObjectMeta {
+    // (undocumented)
+    author?: string;
+    // (undocumented)
+    category?: ObjectCategory;
+    // (undocumented)
+    contributor?: string;
+    // (undocumented)
+    created?: Timestamp;
+    // (undocumented)
+    deprecated?: "0" | "1";
+    // (undocumented)
+    flags?: string[];
+    // (undocumented)
+    identifier?: string;
+    // (undocumented)
+    isProduction?: 1 | 0;
+    // (undocumented)
+    locked?: boolean;
+    // (undocumented)
+    projectTemplate?: string;
+    // (undocumented)
+    sharedWithSomeone?: 1 | 0;
+    // (undocumented)
+    summary?: string;
+    // (undocumented)
+    tags?: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    unlisted?: 1 | 0;
+    // (undocumented)
+    updated?: Timestamp;
+    // (undocumented)
+    uri?: string;
+}
+
+// @public
+interface IObjectXrefEntry {
+    author: string;
+    // (undocumented)
+    category: string;
+    contributor: string;
+    created: string;
+    deprecated: string;
+    identifier: string;
+    link: string;
+    locked: 0 | 1;
+    summary: string;
+    title: string;
+    unlisted: 0 | 1;
+    updated: string;
+}
+
+// @public (undocumented)
+interface IObjIdentifierQualifier {
+    // (undocumented)
+    identifier: string;
+}
+
+// @public (undocumented)
+interface IObjIdentifierQualifier_2 {
+    // (undocumented)
+    identifier: string;
+}
+
+// @public (undocumented)
+interface IObjUriQualifier {
+    // (undocumented)
+    uri: string;
+}
+
+// @public (undocumented)
+interface IObjUriQualifier_2 {
+    // (undocumented)
+    uri: string;
+}
+
+// @public (undocumented)
+interface IOrganization {
+    // (undocumented)
+    organization: {
+        id: string;
+        name: string;
+    };
+}
+
+// @public (undocumented)
+interface IPersistedWidget {
+    // (undocumented)
+    widget: {
+        qualifier: GdcVisualizationObject.ObjQualifier;
+    };
+}
+
+// @public (undocumented)
+interface IPopMeasure {
+    // (undocumented)
+    measureIdentifier: Identifier_2;
+    // (undocumented)
+    popAttribute: ObjQualifier;
+}
+
+// @public (undocumented)
+interface IPoPMeasureDefinition {
+    // (undocumented)
+    popMeasureDefinition: {
+        measureIdentifier: Identifier_3;
+        popAttribute: ObjQualifier_2;
+    };
+}
+
+// @public (undocumented)
+interface IPopMeasureDefinition {
+    // (undocumented)
+    popMeasure: IPopMeasure;
+}
+
+// @public (undocumented)
+interface IPositiveAttributeFilter {
+    // (undocumented)
+    positiveAttributeFilter: {
+        displayForm: ObjQualifier;
+        in: AttributeElements;
+    };
+}
+
+// @public (undocumented)
+interface IPositiveAttributeFilter_2 {
+    // (undocumented)
+    positiveAttributeFilter: {
+        displayForm: ObjQualifier_2;
+        in: string[];
+    };
+}
+
+// @public (undocumented)
+interface IPreviousPeriodDateDataSet {
+    // (undocumented)
+    dataSet: ObjQualifier;
+    // (undocumented)
+    periodsAgo: number;
+}
+
+// @public (undocumented)
+interface IPreviousPeriodDateDataSet_2 {
+    // (undocumented)
+    dataSet: ObjQualifier_2;
+    // (undocumented)
+    periodsAgo: number;
+}
+
+// @public (undocumented)
+interface IPreviousPeriodMeasure {
+    // (undocumented)
+    dateDataSets: IPreviousPeriodDateDataSet[];
+    // (undocumented)
+    measureIdentifier: Identifier_2;
+}
+
+// @public (undocumented)
+interface IPreviousPeriodMeasureDefinition {
+    // (undocumented)
+    previousPeriodMeasure: IPreviousPeriodMeasure;
+}
+
+// @public (undocumented)
+interface IPreviousPeriodMeasureDefinition_2 {
+    // (undocumented)
+    previousPeriodMeasure: {
+        measureIdentifier: Identifier_3;
+        dateDataSets: IPreviousPeriodDateDataSet_2[];
+    };
+}
+
+// @public (undocumented)
+interface IProcessBody {
+    // (undocumented)
+    finished: TimeIso8601;
+    // (undocumented)
+    links: {
+        self: Uri;
+    };
+    // (undocumented)
+    started: TimeIso8601;
+    // (undocumented)
+    status: IStatus;
+}
+
+// @public (undocumented)
+interface IProfileSetting {
+    // (undocumented)
+    currentProjectUri: Uri | null;
+    // (undocumented)
+    defaults?: {
+        projectUri: string;
+        dashboardUri?: string;
+        tabId?: string;
+        links?: {
+            self: Uri;
+        };
+    };
+    // (undocumented)
+    hints: {
+        [key: string]: boolean;
+    };
+    // (undocumented)
+    links?: {
+        self: Uri;
+        profile: Uri;
+    };
+    // (undocumented)
+    navigationState?: "collapsed" | "pinned" | "floating";
+    // (undocumented)
+    npsLastParticipation?: Timestamp;
+    // (undocumented)
+    projectSettings: {
+        [projectUri: string]: {
+            dashboard: Uri | null;
+            tab: string | null;
+            recentSearches: string[];
+            introDisplayed?: boolean;
+            manageReportsSettings?: {
+                folder?: string;
+                orderBy?: number;
+                tags?: string[];
+            };
+        };
+    };
+    // (undocumented)
+    releaseNotice: string[];
+    // (undocumented)
+    separators?: ISeparators;
+}
+
+// @public (undocumented)
+interface IProject {
+    // (undocumented)
+    content: {
+        guidedNavigation: BooleanAsString;
+        authorizationToken?: string | null;
+        state?: "PREPARING" | "PREPARED" | "LOADING" | "ENABLED" | "DISABLED" | "DELETED" | "ARCHIVED" | "MIGRATED";
+        isPublic?: BooleanAsString;
+        cluster?: string;
+        driver?: "mysql" | "Pg" | "vertica";
+        environment?: "PRODUCTION" | "DEVELOPMENT" | "TESTING";
+    };
+    // (undocumented)
+    links?: {
+        self: Uri;
+        users: Uri;
+        userRoles?: Uri;
+        userPermissions?: Uri;
+        roles: Uri;
+        invitations: Uri;
+        ldm: Uri;
+        ldm_thumbnail: Uri;
+        metadata: Uri;
+        publicartifacts: Uri;
+        uploads?: Uri;
+        templates: Uri;
+        connectors: Uri;
+        dataload: Uri;
+        schedules: Uri;
+        execute: Uri;
+        clearCaches: Uri;
+        projectFeatureFlags: Uri;
+        config?: Uri;
+    };
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IProjectDashboard {
+    // (undocumented)
+    content: {
+        tabs: Array<{
+            title: string;
+            identifier: string;
+        }>;
+    };
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IProjectIcons {
+    // (undocumented)
+    icon: string;
+    // (undocumented)
+    integration: Uri;
+}
+
+// @public (undocumented)
+interface IProjectId {
+    // (undocumented)
+    projectId: string;
+}
+
+// @public (undocumented)
+interface IProjectLcm {
+    // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    dataProductId?: string;
+    // (undocumented)
+    segmentId?: string;
+}
+
+// @public (undocumented)
+interface IProjectLcmIdentifiers {
+    // (undocumented)
+    projectLcm: {
+        projectId?: string;
+        dataProductId?: string;
+        clientId?: string;
+        segmentId?: string;
+    };
+}
+
+// @public (undocumented)
+interface IProjectPermissions {
+    // (undocumented)
+    links?: {
+        project: Uri;
+        user: Uri;
+    };
+    // (undocumented)
+    permissions: {
+        [permission in ProjectPermission]?: BooleanAsString;
+    };
+}
+
+// @public (undocumented)
+interface IPrompt extends IMetadataObject {
+    // (undocumented)
+    content: {
+        type: "scalar";
+    } | {
+        type: "filter";
+        attribute: Uri;
+    };
+}
+
+// @public (undocumented)
+interface IRangeCondition {
+    // (undocumented)
+    range: {
+        operator: RangeConditionOperator;
+        from: number;
+        to: number;
+        treatNullValuesAs?: number;
+    };
+}
+
+// @public (undocumented)
+interface IRangeCondition_2 {
+    // (undocumented)
+    range: {
+        operator: RangeConditionOperator_2;
+        from: number;
+        to: number;
+        treatNullValuesAs?: number;
+    };
+}
+
+// @public (undocumented)
+interface IRankingFilter {
+    // (undocumented)
+    rankingFilter: {
+        measures: Qualifier[];
+        attributes?: Qualifier[];
+        operator: RankingFilterOperator;
+        value: number;
+    };
+}
+
+// @public (undocumented)
+interface IRankingFilter_2 {
+    // (undocumented)
+    rankingFilter: {
+        measures: (IObjUriQualifier_2 | ILocalIdentifierQualifier_2)[];
+        attributes?: (IObjUriQualifier_2 | ILocalIdentifierQualifier_2)[];
+        operator: RankingFilterOperator_2;
+        value: number;
+    };
+}
+
+// @public (undocumented)
+interface IReferenceItems {
+    // (undocumented)
+    [identifier: string]: string;
+}
+
+// @public (undocumented)
+interface IRelativeDateFilter {
+    // (undocumented)
+    relativeDateFilter: {
+        dataSet: ObjQualifier;
+        granularity: string;
+        from: number;
+        to: number;
+    };
+}
+
+// @public (undocumented)
+interface IRelativeDateFilter_2 {
+    // (undocumented)
+    relativeDateFilter: {
+        dataSet: ObjQualifier_2;
+        granularity: string;
+        from?: number;
+        to?: number;
+    };
+}
+
+// @public (undocumented)
+interface IReport {
+    // (undocumented)
+    content: IReportContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IReportAttachment {
+    // (undocumented)
+    reportAttachment: {
+        uri?: Uri;
+        formats: ExportFormat[];
+        exportOptions?: IReportExportOptions;
+    };
+}
+
+// @public (undocumented)
+interface IReportContent {
+    // (undocumented)
+    definitions: Uri[];
+    // (undocumented)
+    domains: Uri[];
+}
+
+// @public (undocumented)
+interface IReportDefinition {
+    // (undocumented)
+    content: IReportDefinitionContent;
+    // (undocumented)
+    links?: IReportDefinitionLinks;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IReportDefinitionContent {
+    // (undocumented)
+    chart?: any;
+    // (undocumented)
+    filters: IReportFilter[];
+    // (undocumented)
+    format: ReportFormat;
+    // (undocumented)
+    grid: IGridContent;
+    // (undocumented)
+    oneNumber?: any;
+    // (undocumented)
+    sortedLookups?: any;
+}
+
+// @public (undocumented)
+interface IReportDefinitionLinks {
+    // (undocumented)
+    explain2?: string;
+}
+
+// @public (undocumented)
+interface IReportExportOptions {
+    // (undocumented)
+    includeFilterContext?: "no" | "yes";
+    // (undocumented)
+    mergeHeaders?: "no" | "yes";
+    // (undocumented)
+    optimalColumnWidth?: "no" | "yes";
+    // (undocumented)
+    pageOrientation?: "portrait" | "landscape";
+    // (undocumented)
+    scaling?: {
+        pageScalePercentage?: number;
+        scaleToPages?: number;
+        scaleToPagesX?: number;
+        scaleToPagesY?: number;
+    };
+    // (undocumented)
+    urlParams: Array<{
+        name: string;
+        value: string;
+    }>;
+}
+
+// @public (undocumented)
+interface IReportFilter {
+    // (undocumented)
+    expression: any;
+    // (undocumented)
+    tree?: any;
+}
+
+// @public (undocumented)
+interface IResultAttributeHeaderItem {
+    // (undocumented)
+    attributeHeaderItem: {
+        uri: string;
+        name: string;
+    };
+}
+
+// @public (undocumented)
+interface IResultDimension {
+    // (undocumented)
+    headers: IHeader[];
+}
+
+// @public (undocumented)
+type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
+
+// @public (undocumented)
+interface IResultMeasureHeaderItem {
+    // (undocumented)
+    measureHeaderItem: {
+        name: string;
+        order: number;
+    };
+}
+
+// @public (undocumented)
+interface IResultSpec {
+    // (undocumented)
+    dimensions?: IDimension[];
+    // (undocumented)
+    sorts?: SortItem[];
+}
+
+// @public (undocumented)
+interface IResultTotalHeaderItem {
+    // (undocumented)
+    totalHeaderItem: {
+        name: string;
+        type: string;
+    };
+}
+
+// @public (undocumented)
+function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter;
+
+// @public (undocumented)
+function isAbsoluteDateFilter_2(filter: DateFilter): filter is IAbsoluteDateFilter_2;
+
+// @public (undocumented)
+function isArithmeticMeasureDefinition(definition: MeasureDefinition): definition is IArithmeticMeasureDefinition;
+
+// @public (undocumented)
+function isArithmeticMeasureDefinition_2(definition: IMeasureDefinitionType): definition is IArithmeticMeasureDefinition_2;
+
+// @public (undocumented)
+function isAttribute(bucketItem: IMeasure_2 | IAttribute_2): bucketItem is IAttribute_2;
+
+// @public (undocumented)
+function isAttribute_2(obj: unknown): obj is IAttribute_3;
+
+// @public (undocumented)
+function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm;
+
+// @public (undocumented)
+function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[];
+
+// @public (undocumented)
+function isAttributeElementsByRef(attributeElements: AttributeElements): attributeElements is IAttributeElementsByRef;
+
+// @public (undocumented)
+function isAttributeElementsByValue(attributeElements: AttributeElements): attributeElements is IAttributeElementsByValue;
+
+// @public (undocumented)
+function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem;
+
+// @public (undocumented)
+function isAttributeFilter_2(filter: ExtendedFilter_2): filter is AttributeFilter;
+
+// @public (undocumented)
+function isAttributeFilter_3(filter: FilterContextItem): filter is IAttributeFilter;
+
+// @public (undocumented)
+const isAttributeFilterReference: (obj: unknown) => obj is IAttributeFilterReference;
+
+// @public (undocumented)
+function isAttributeHeader(header: IHeader): header is IAttributeHeader;
+
+// @public (undocumented)
+function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem;
+
+// @public (undocumented)
+function isAttributeLocatorItem(locator: LocatorItem): locator is IAttributeLocatorItem;
+
+// @public (undocumented)
+function isAttributeSortItem(sortItem: SortItem): sortItem is IAttributeSortItem;
+
+// @public (undocumented)
+function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
+
+// @public (undocumented)
+function isCatalogFact(obj: unknown): obj is ICatalogFact;
+
+// @public (undocumented)
+function isCatalogMetric(obj: unknown): obj is ICatalogMetric;
+
+// @public (undocumented)
+interface IScheduledMail {
+    // (undocumented)
+    content: IScheduledMailContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IScheduledMailContent {
+    // (undocumented)
+    attachments: ScheduledMailAttachment[];
+    // (undocumented)
+    bcc?: Email[];
+    // (undocumented)
+    body: string;
+    // (undocumented)
+    lastSuccessfull?: Timestamp;
+    // (undocumented)
+    subject: string;
+    // (undocumented)
+    to: Email[];
+    // (undocumented)
+    unsubscribed?: Email[];
+    // (undocumented)
+    when: IScheduledMailWhen;
+}
+
+// @public (undocumented)
+interface IScheduledMailWhen {
+    // (undocumented)
+    endDate?: DateString;
+    // (undocumented)
+    recurrency: string;
+    // (undocumented)
+    startDate: DateString;
+    // (undocumented)
+    timeZone: string;
+}
+
+// @public (undocumented)
+function isComparisonCondition(condition: MeasureValueFilterCondition_2): condition is IComparisonCondition_2;
+
+// @public (undocumented)
+function isDashboardPlugin(obj: unknown): obj is IWrappedDashboardPlugin;
+
+// @public (undocumented)
+function isDataSet(obj: unknown): obj is IDataSet;
+
+// @public (undocumented)
+function isDateFilter(filter: CompatibilityFilter): filter is DateFilterItem;
+
+// @public (undocumented)
+function isDateFilter_2(filter: ExtendedFilter_2): filter is DateFilter;
+
+// @public (undocumented)
+function isDateFilter_3(filter: FilterContextItem): filter is IDateFilter;
+
+// @public (undocumented)
+const isDateFilterReference: (obj: unknown) => obj is IDateFilterReference;
+
+// @public (undocumented)
+function isDrillFromAttribute(obj: DrillFromType): obj is IDrillFromAttribute;
+
+// @public (undocumented)
+function isDrillFromMeasure(obj: DrillFromType): obj is IDrillFromMeasure;
+
+// @public (undocumented)
+function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
+
+// @public (undocumented)
+function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
+
+// @public (undocumented)
+function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
+
+// @public (undocumented)
+function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization;
+
+// @public (undocumented)
+interface ISectionDescription {
+    // (undocumented)
+    description: string;
+}
+
+// @public (undocumented)
+interface ISectionHeader {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public (undocumented)
+interface ISeparators {
+    // (undocumented)
+    decimal: string;
+    // (undocumented)
+    thousand: string;
+}
+
+// @public
+interface ISeparatorsResponse {
+    // (undocumented)
+    separators: {
+        decimal: string;
+        thousand: string;
+        links: {
+            self: string;
+        };
+    };
+}
+
+// @public (undocumented)
+function isExpressionFilter(filter: CompatibilityFilter): filter is IExpressionFilter;
+
+// @public (undocumented)
+function isFact(obj: unknown): obj is IFact;
+
+// @public (undocumented)
+function isFilterContext(obj: unknown): obj is IFilterContext;
+
+// @public (undocumented)
+function isFluidLayout(obj: unknown): obj is IFluidLayout;
+
+// @public (undocumented)
+interface ISimpleMeasure {
+    // (undocumented)
+    aggregation?: SimpleMeasureAggregation;
+    // (undocumented)
+    computeRatio?: boolean;
+    // (undocumented)
+    filters?: FilterItem[];
+    // (undocumented)
+    item: ObjQualifier;
+}
+
+// @public (undocumented)
+interface ISimpleMeasureDefinition {
+    // (undocumented)
+    measure: ISimpleMeasure;
+}
+
+// @public (undocumented)
+function isKpi(obj: unknown): obj is IKPI;
+
+// @public (undocumented)
+function isKpiAlert(obj: unknown): obj is IKpiAlert;
+
+// @public (undocumented)
+function isKpiContentWithoutComparison(obj: unknown): obj is IKpiContentWithoutComparison;
+
+// @public (undocumented)
+function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment;
+
+// @public (undocumented)
+function isLayoutWidget(obj: unknown): obj is IPersistedWidget;
+
+// @public (undocumented)
+function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier;
+
+// @public (undocumented)
+function isLocalIdentifierQualifier_2(objectQualifier: unknown): objectQualifier is ILocalIdentifierQualifier_2;
+
+// @public (undocumented)
+function isMeasure(bucketItem: IMeasure_2 | IAttribute_2): bucketItem is IMeasure_2;
+
+// @public (undocumented)
+function isMeasureDefinition(definition: IMeasureDefinitionType): definition is IMeasureDefinition;
+
+// @public (undocumented)
+function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
+
+// @public (undocumented)
+function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem;
+
+// @public (undocumented)
+function isMeasureLocatorItem(locator: LocatorItem): locator is IMeasureLocatorItem;
+
+// @public (undocumented)
+function isMeasureSortItem(sortItem: SortItem): sortItem is IMeasureSortItem;
+
+// @public (undocumented)
+function isMeasureValueFilter(filter: CompatibilityFilter): filter is IMeasureValueFilter;
+
+// @public (undocumented)
+function isMeasureValueFilter_2(filter: ExtendedFilter_2): filter is IMeasureValueFilter_2;
+
+// @public (undocumented)
+function isMetric(obj: unknown): obj is IMetric;
+
+// @public (undocumented)
+function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter;
+
+// @public (undocumented)
+function isNegativeAttributeFilter_2(filter: AttributeFilter): filter is INegativeAttributeFilter_2;
+
+// @public (undocumented)
+function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier;
+
+// @public (undocumented)
+function isObjIdentifierQualifier(qualifier: ObjQualifier): qualifier is IObjIdentifierQualifier;
+
+// @public (undocumented)
+function isObjIdentifierQualifier_2(objQualifier: ObjQualifier_2): objQualifier is IObjIdentifierQualifier_2;
+
+// @public (undocumented)
+function isObjUriQualifier(objQualifier: ObjQualifier_2): objQualifier is IObjUriQualifier_2;
+
+// @public (undocumented)
+function isPopMeasureDefinition(definition: MeasureDefinition): definition is IPopMeasureDefinition;
+
+// @public (undocumented)
+function isPopMeasureDefinition_2(definition: IMeasureDefinitionType): definition is IPoPMeasureDefinition;
+
+// @public (undocumented)
+function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter;
+
+// @public (undocumented)
+function isPositiveAttributeFilter_2(filter: AttributeFilter): filter is IPositiveAttributeFilter_2;
+
+// @public (undocumented)
+function isPreviousPeriodMeasureDefinition(definition: MeasureDefinition): definition is IPreviousPeriodMeasureDefinition;
+
+// @public (undocumented)
+function isPreviousPeriodMeasureDefinition_2(definition: IMeasureDefinitionType): definition is IPreviousPeriodMeasureDefinition_2;
+
+// @public (undocumented)
+function isPrompt(obj: unknown): obj is IPrompt;
+
+// @public (undocumented)
+function isRangeCondition(condition: MeasureValueFilterCondition_2): condition is IRangeCondition_2;
+
+// @public (undocumented)
+function isRankingFilter(filter: CompatibilityFilter): filter is IRankingFilter;
+
+// @public (undocumented)
+function isRankingFilter_2(filter: ExtendedFilter_2): filter is IRankingFilter_2;
+
+// @public (undocumented)
+function isRelativeDateFilter(filter: CompatibilityFilter): filter is IRelativeDateFilter;
+
+// @public (undocumented)
+function isRelativeDateFilter_2(filter: DateFilter): filter is IRelativeDateFilter_2;
+
+// @public (undocumented)
+function isSimpleMeasureDefinition(definition: MeasureDefinition): definition is ISimpleMeasureDefinition;
+
+// @public (undocumented)
+interface IStatus {
+    // (undocumented)
+    code: "NEW" | "SCHEDULED" | "DOWNLOADING" | "DOWNLOADED" | "TRANSFORMING" | "TRANSFORMED" | "UPLOADING" | "UPLOADED" | "SYNCHRONIZED" | "ERROR" | "USER_ERROR";
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    detail: string;
+}
+
+// @public (undocumented)
+function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+
+// @public (undocumented)
+function isTheme(obj: unknown): obj is ITheme;
+
+// @public (undocumented)
+function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem;
+
+// @public (undocumented)
+interface IStyleSettingsType {
+    // (undocumented)
+    chartFont?: {
+        family: string;
+    };
+    // (undocumented)
+    chartPalette: Array<{
+        guid: string;
+        fill: {
+            r: number;
+            g: number;
+            b: number;
+        };
+    }>;
+}
+
+// @public (undocumented)
+function isVisualization(obj: unknown): obj is IVisualization;
+
+// @public (undocumented)
+function isVisualizationWidget(obj: unknown): obj is IVisualizationWidget;
+
+// @public (undocumented)
+function isVisualizationWidgetAttachment(obj: unknown): obj is IVisualizationWidgetAttachment;
+
+// @public (undocumented)
+function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute;
+
+// @public (undocumented)
+function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm;
+
+// @public (undocumented)
+function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet;
+
+// @public (undocumented)
+function isWrappedFact(obj: unknown): obj is IWrappedFact;
+
+// @public (undocumented)
+function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext;
+
+// @public (undocumented)
+function isWrappedKpi(obj: unknown): obj is IWrappedKPI;
+
+// @public (undocumented)
+function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert;
+
+// @public (undocumented)
+function isWrappedMetric(obj: unknown): obj is IWrappedMetric;
+
+// @public (undocumented)
+function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt;
+
+// @public (undocumented)
+function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext;
+
+// @public (undocumented)
+function isWrappedTheme(obj: unknown): obj is IWrappedTheme;
+
+// @public (undocumented)
+function isWrappedVisualizationWidget(obj: unknown): obj is IWrappedVisualizationWidget;
+
+// @public (undocumented)
+type ItemDescription = {
+    uri: string;
+} | {
+    expression: string;
+};
+
+// @public
+interface ITempFilterContext {
+    // (undocumented)
+    created: Timestamp;
+    // (undocumented)
+    filters: FilterContextItem[];
+    // (undocumented)
+    uri: Uri;
+}
+
+// @public (undocumented)
+interface ITemplateInfo {
+    // (undocumented)
+    connectorId?: string;
+    // (undocumented)
+    createIntegration?: string;
+    // (undocumented)
+    url: Uri | null;
+    // (undocumented)
+    urn: string;
+    // (undocumented)
+    version: string;
+}
+
+// @public (undocumented)
+interface ITheme extends IMetadataObject {
+    // (undocumented)
+    content: {
+        typography?: {
+            font?: ThemeFontUri;
+            fontBold?: ThemeFontUri;
+        };
+        palette?: IThemePalette;
+        button?: {
+            borderRadius?: string;
+            dropShadow?: boolean;
+            textCapitalization?: boolean;
+        };
+        tooltip?: {
+            backgroundColor?: ThemeColor;
+            color?: ThemeColor;
+        };
+        modal?: {
+            title?: {
+                color?: ThemeColor;
+                lineColor?: ThemeColor;
+            };
+            outsideBackgroundColor?: ThemeColor;
+            dropShadow?: boolean;
+            borderWidth?: string;
+            borderColor?: ThemeColor;
+            borderRadius?: string;
+        };
+        dashboards?: {
+            title?: {
+                color?: ThemeColor;
+                backgroundColor?: ThemeColor;
+                borderColor?: ThemeColor;
+            };
+            section?: {
+                title?: {
+                    color?: ThemeColor;
+                    lineColor?: ThemeColor;
+                };
+                description?: {
+                    color?: ThemeColor;
+                };
+            };
+            filterBar?: {
+                backgroundColor?: ThemeColor;
+                borderColor?: ThemeColor;
+                filterButton?: {
+                    backgroundColor?: ThemeColor;
+                };
+            };
+            content?: {
+                backgroundColor?: ThemeColor;
+                widget?: {
+                    title?: {
+                        color?: ThemeColor;
+                        textAlign?: string;
+                    };
+                    backgroundColor?: ThemeColor;
+                    borderColor?: ThemeColor;
+                    borderWidth?: string;
+                    borderRadius?: string;
+                    dropShadow?: boolean;
+                };
+                kpiWidget?: {
+                    title?: {
+                        color?: ThemeColor;
+                        textAlign?: string;
+                    };
+                    backgroundColor?: ThemeColor;
+                    borderColor?: ThemeColor;
+                    borderWidth?: string;
+                    borderRadius?: string;
+                    dropShadow?: boolean;
+                    kpi?: {
+                        value?: {
+                            textAlign?: string;
+                            positiveColor?: ThemeColor;
+                            negativeColor?: ThemeColor;
+                        };
+                        primaryMeasureColor?: ThemeColor;
+                        secondaryInfoColor?: ThemeColor;
+                    };
+                };
+            };
+            navigation?: {
+                backgroundColor?: ThemeColor;
+                borderColor?: ThemeColor;
+                header?: {
+                    color?: ThemeColor;
+                };
+                item?: {
+                    color?: ThemeColor;
+                    hoverColor?: ThemeColor;
+                    selectedColor?: ThemeColor;
+                    selectedBackgroundColor?: ThemeColor;
+                };
+            };
+            editPanel?: {
+                backgroundColor?: ThemeColor;
+            };
+        };
+        analyticalDesigner?: {
+            title?: {
+                color?: ThemeColor;
+            };
+        };
+    };
+}
+
+// @public (undocumented)
+interface IThemeColorFamily {
+    // (undocumented)
+    base: ThemeColor;
+    // (undocumented)
+    contrast?: ThemeColor;
+    // (undocumented)
+    dark?: ThemeColor;
+    // (undocumented)
+    light?: ThemeColor;
+}
+
+// @public (undocumented)
+interface IThemeComplementaryPalette {
+    // (undocumented)
+    c0: ThemeColor;
+    // (undocumented)
+    c1?: ThemeColor;
+    // (undocumented)
+    c2?: ThemeColor;
+    // (undocumented)
+    c3?: ThemeColor;
+    // (undocumented)
+    c4?: ThemeColor;
+    // (undocumented)
+    c5?: ThemeColor;
+    // (undocumented)
+    c6?: ThemeColor;
+    // (undocumented)
+    c7?: ThemeColor;
+    // (undocumented)
+    c8?: ThemeColor;
+    // (undocumented)
+    c9: ThemeColor;
+}
+
+// @public (undocumented)
+interface IThemePalette {
+    // (undocumented)
+    complementary?: IThemeComplementaryPalette;
+    // (undocumented)
+    error?: IThemeColorFamily;
+    // (undocumented)
+    info?: IThemeColorFamily;
+    // (undocumented)
+    primary?: IThemeColorFamily;
+    // (undocumented)
+    success?: IThemeColorFamily;
+    // (undocumented)
+    warning?: IThemeColorFamily;
+}
+
+// @public (undocumented)
+interface ITimezone {
+    // (undocumented)
+    timezone: {
+        id: string;
+        displayName: string;
+        shortDisplayName: string;
+        currentOffsetMs: number;
+    };
+}
+
+// @public (undocumented)
+interface ITimezoneInfo {
+    // (undocumented)
+    currentOffsetMs: number;
+    // (undocumented)
+    displayName: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    shortDisplayName: string;
+}
+
+// @public (undocumented)
+interface ITotal {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    attributeIdentifier: string;
+    // (undocumented)
+    measureIdentifier: string;
+    // (undocumented)
+    type: TotalType_2;
+}
+
+// @public (undocumented)
+interface ITotalHeaderItem {
+    // (undocumented)
+    totalHeaderItem: {
+        name: string;
+    };
+}
+
+// @public (undocumented)
+interface ITotalItem {
+    // (undocumented)
+    attributeIdentifier: Identifier_2;
+    // (undocumented)
+    measureIdentifier: Identifier_2;
+    // (undocumented)
+    type: TotalType;
+}
+
+// @public (undocumented)
+interface IUISettings {
+    // (undocumented)
+    activeColor?: string;
+    // (undocumented)
+    appleTouchIconUrl?: Uri;
+    // (undocumented)
+    applicationBackgroundColor?: string;
+    // (undocumented)
+    applicationBackgroundUrl?: Uri;
+    // (undocumented)
+    applicationTitle: string;
+    // (undocumented)
+    brandColor?: string;
+    // (undocumented)
+    displayAccountPage: boolean;
+    // (undocumented)
+    displayFlashNews: boolean;
+    // (undocumented)
+    displayNPS?: boolean;
+    // (undocumented)
+    displayProjects: boolean;
+    // (undocumented)
+    documentationUrl?: string;
+    // (undocumented)
+    faviconUrl?: Uri | null;
+    // (undocumented)
+    headerColor?: string;
+    // (undocumented)
+    headerTextColor?: string;
+    // (undocumented)
+    hideRegistration?: boolean;
+    // (undocumented)
+    highlightColor?: string;
+    // (undocumented)
+    includeTrialSnippet?: string;
+    // (undocumented)
+    isBranded: boolean;
+    // (undocumented)
+    largeLogoUrl?: Uri;
+    // (undocumented)
+    logoUrl: Uri;
+    // (undocumented)
+    organizationName: string;
+    // (undocumented)
+    privacyPolicyUrl?: Uri;
+    // (undocumented)
+    securityStatementUrl?: Uri;
+    // (undocumented)
+    showServiceProviderInitiatedLogin?: boolean;
+    // (undocumented)
+    showSSOCustomUnauthorizedLoginPage?: boolean;
+    // (undocumented)
+    skipClientRedirect?: boolean;
+    // (undocumented)
+    ssoExpiredUrl?: Uri;
+    // (undocumented)
+    ssoLogoutUrl?: Uri;
+    // (undocumented)
+    ssoUnauthorizedUrl?: Uri;
+    // (undocumented)
+    supportEmail?: string;
+    // (undocumented)
+    supportForumUrl?: string;
+    // (undocumented)
+    termsOfUseUrl?: Uri;
+    // (undocumented)
+    trustUrl?: Uri;
+    // (undocumented)
+    useOnboarding?: boolean;
+    // (undocumented)
+    walkMe?: string;
+    // (undocumented)
+    walkMeEnvironment?: string;
+}
+
+// @public (undocumented)
+interface IUserFeatureFlags {
+    // (undocumented)
+    featureFlags: IFeatureFlags;
+}
+
+// @alpha (undocumented)
+interface IUserGroupItem {
+    // (undocumented)
+    content: {
+        name: string;
+        id?: string | null;
+        description?: string | null;
+        domain?: Uri | null;
+        project?: Uri | null;
+    };
+    // (undocumented)
+    links?: {
+        self: Uri;
+        members: Uri;
+        modifyMembers: Uri;
+    };
+    // (undocumented)
+    meta: {
+        created?: Timestamp;
+        updated?: Timestamp;
+    };
+}
+
+// @public (undocumented)
+interface IUserListItem {
+    // (undocumented)
+    email: Email;
+    // (undocumented)
+    firstName?: string | null;
+    // (undocumented)
+    hasRequestedPermissions?: boolean;
+    // (undocumented)
+    lastName?: string | null;
+    // (undocumented)
+    login: Email;
+    // (undocumented)
+    roles?: Uri[];
+    // (undocumented)
+    state?: UserListItemState;
+    // (undocumented)
+    uri: Uri;
+}
+
+// @public (undocumented)
+interface IUserProject {
+    // (undocumented)
+    userProject: {
+        projectState: UserProjectState;
+        userState: UserProjectState;
+        projectDescription: string;
+        projectTitle: string;
+        links: {
+            self: Uri;
+        };
+        demoProject?: boolean;
+    };
+}
+
+// @public (undocumented)
+interface IUserProjectsParams {
+    // (undocumented)
+    limit: number;
+    // (undocumented)
+    offset: number;
+    // (undocumented)
+    projectStates: "ENABLED";
+    // (undocumented)
+    titleSubstring?: string;
+    // (undocumented)
+    userId: string;
+    // (undocumented)
+    userState: "ENABLED";
+}
+
+// @public (undocumented)
+interface IUserProjectsResponse {
+    // (undocumented)
+    userProjects: {
+        items: IUserProject[];
+        paging: IBearPagingWithTotalCount;
+    };
+}
+
+// @public (undocumented)
+interface IUsersItem {
+    // (undocumented)
+    content: {
+        status?: UsersItemStatus;
+        firstname?: string;
+        lastname?: string;
+        email?: Email;
+        login?: Email;
+        phonenumber?: string;
+    };
+    // (undocumented)
+    links?: {
+        self: Uri;
+        roles?: Uri;
+        permissions?: Uri;
+        projectRelUri?: Uri;
+    };
+}
+
+// @public
+interface IValidElementsParams {
+    // (undocumented)
+    afm?: IAfm;
+    // (undocumented)
+    complement?: boolean;
+    // (undocumented)
+    filter?: string;
+    // (undocumented)
+    includeTotalCountWithoutFilters?: boolean;
+    // (undocumented)
+    limit?: number;
+    // (undocumented)
+    offset?: number;
+    // (undocumented)
+    order?: SortDirection_3;
+    // (undocumented)
+    prompt?: string;
+    // (undocumented)
+    restrictiveDefinition?: string;
+    // (undocumented)
+    restrictiveDefinitionContent?: object;
+    // (undocumented)
+    uris?: string[];
+}
+
+// @public
+interface IValidElementsResponse {
+    // (undocumented)
+    validElements: {
+        items: IWrappedAttributeElement[];
+        paging: {
+            total: NumberAsString;
+            count: number;
+            offset: NumberAsString;
+        };
+        totalCountWithoutFilters?: string;
+        elementsMeta: {
+            attribute: Uri;
+            attributeDisplayForm: Uri;
+            filter: string;
+            order: SortDirection_3;
+        };
+    };
+}
+
+// @public (undocumented)
+interface IVisualization {
+    // (undocumented)
+    visualizationObject: IVisualizationObject;
+}
+
+// @public (undocumented)
+interface IVisualizationAttributeContent {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    displayForm: ObjQualifier_2;
+    // (undocumented)
+    localIdentifier: Identifier_3;
+    // (undocumented)
+    showAllValues?: boolean;
+}
+
+// @public (undocumented)
+interface IVisualizationClass {
+    // (undocumented)
+    content: IVisualizationClassContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IVisualizationClassContent {
+    // (undocumented)
+    checksum: string;
+    // (undocumented)
+    icon: string;
+    // (undocumented)
+    iconSelected: string;
+    // (undocumented)
+    orderIndex?: number;
+    // (undocumented)
+    url: string;
+}
+
+// @public (undocumented)
+interface IVisualizationClassWrapped {
+    // (undocumented)
+    visualizationClass: IVisualizationClass;
+}
+
+// @public (undocumented)
+interface IVisualizationObject {
+    // (undocumented)
+    content: IVisualizationObjectContent;
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IVisualizationObjectContent {
+    // (undocumented)
+    buckets: IBucket[];
+    // (undocumented)
+    filters?: ExtendedFilter_2[];
+    // (undocumented)
+    properties?: string;
+    // (undocumented)
+    references?: IReferenceItems;
+    // (undocumented)
+    visualizationClass: IObjUriQualifier_2;
+}
+
+// @public (undocumented)
+interface IVisualizationObjectResponse {
+    // (undocumented)
+    visualizationObject: IVisualizationObject;
+}
+
+// @public (undocumented)
+interface IVisualizationStyle {
+    // (undocumented)
+    visualizationStyle: {
+        type: VisualizationStyleType;
+        colorPalette: {
+            measure?: {
+                color: string;
+                periodOverPeriod: string;
+            };
+            stack?: any;
+        };
+    };
+}
+
+// @public (undocumented)
+interface IVisualizationWidget {
+    // (undocumented)
+    content: {
+        visualization: string;
+        dateDataSet?: string;
+        ignoreDashboardFilters: Array<IDateFilterReference | IAttributeFilterReference>;
+        drills?: IDrillDefinition[];
+        properties?: string;
+        references?: IReferenceItems;
+        configuration?: IVisualizationWidgetConfiguration;
+    };
+    // (undocumented)
+    meta: IObjectMeta;
+}
+
+// @public (undocumented)
+interface IVisualizationWidgetAttachment {
+    // (undocumented)
+    visualizationWidgetAttachment: {
+        uri: Uri;
+        dashboardUri: Uri;
+        formats: ("csv" | "xlsx")[];
+        filterContext?: Uri;
+        exportOptions?: {
+            mergeHeaders?: "yes" | "no";
+            includeFilterContext?: "yes" | "no";
+        };
+    };
+}
+
+// @public (undocumented)
+interface IVisualizationWidgetConfiguration {
+    // (undocumented)
+    description?: IVisualizationWidgetDescriptionConfiguration;
+    // (undocumented)
+    hideTitle?: boolean;
+}
+
+// @public (undocumented)
+interface IVisualizationWidgetDescriptionConfiguration {
+    // (undocumented)
+    includeMetrics: boolean;
+    // (undocumented)
+    source: VisualizatioWidgetDescriptionSourceType;
+    // (undocumented)
+    visible: boolean;
+}
+
+// @public (undocumented)
+interface IWrappedAccountSetting {
+    // (undocumented)
+    accountSetting: IAccountSetting;
+}
+
+// @public (undocumented)
+interface IWrappedAnalyticalDashboard {
+    // (undocumented)
+    analyticalDashboard: IAnalyticalDashboard;
+}
+
+// @public (undocumented)
+interface IWrappedAttribute {
+    // (undocumented)
+    attribute: IAttribute_3;
+}
+
+// @public (undocumented)
+interface IWrappedAttributeDisplayForm {
+    // (undocumented)
+    attributeDisplayForm: IAttributeDisplayForm;
+}
+
+// @public (undocumented)
+interface IWrappedAttributeElement {
+    // (undocumented)
+    element: IAttributeElement;
+}
+
+// @public (undocumented)
+interface IWrappedAttributeElements {
+    // (undocumented)
+    attributeElements: {
+        elementsMeta: {
+            count: number;
+            mode: "includeuris";
+            filter: string;
+            records: NumberAsString;
+            prompt: string;
+            attribute: Uri;
+            order: "asc" | "desc";
+            attributeDisplayForm: Uri;
+            offset: NumberAsString;
+        };
+        elements: IAttributeElement[];
+        paging: {
+            next: null | string;
+            count: number;
+            total: NumberAsString;
+            offset: NumberAsString;
+        };
+    };
+}
+
+// @public (undocumented)
+interface IWrappedDashboardPlugin {
+    // (undocumented)
+    dashboardPlugin: IDashboardPlugin;
+}
+
+// @public (undocumented)
+interface IWrappedDataSet {
+    // (undocumented)
+    dataSet: IDataSet;
+}
+
+// @public (undocumented)
+interface IWrappedDataSet_2 {
+    // (undocumented)
+    dataSet: IDataSet_2;
+}
+
+// @public (undocumented)
+interface IWrappedDateFilterConfig {
+    // (undocumented)
+    dateFilterConfig: IDateFilterConfig;
+}
+
+// @public (undocumented)
+interface IWrappedFact {
+    // (undocumented)
+    fact: IFact;
+}
+
+// @public (undocumented)
+interface IWrappedFilterContext {
+    // (undocumented)
+    filterContext: IFilterContext;
+}
+
+// @public (undocumented)
+interface IWrappedKPI {
+    // (undocumented)
+    kpi: IKPI;
+}
+
+// @public (undocumented)
+interface IWrappedKpiAlert {
+    // (undocumented)
+    kpiAlert: IKpiAlert;
+}
+
+// @public (undocumented)
+interface IWrappedMetric {
+    // (undocumented)
+    metric: IMetric;
+}
+
+// @public (undocumented)
+interface IWrappedProjectDashboard {
+    // (undocumented)
+    projectDashboard: IProjectDashboard;
+}
+
+// @public (undocumented)
+interface IWrappedPrompt {
+    // (undocumented)
+    prompt: IPrompt;
+}
+
+// @public (undocumented)
+interface IWrappedReport {
+    // (undocumented)
+    report: IReport;
+}
+
+// @public (undocumented)
+interface IWrappedReportDefinition {
+    // (undocumented)
+    reportDefinition: IReportDefinition;
+}
+
+// @public (undocumented)
+interface IWrappedScheduledMail {
+    // (undocumented)
+    scheduledMail: IScheduledMail;
+}
+
+// @public (undocumented)
+interface IWrappedTempFilterContext {
+    // (undocumented)
+    tempFilterContext: ITempFilterContext;
+}
+
+// @public (undocumented)
+interface IWrappedTheme {
+    // (undocumented)
+    theme: ITheme;
+}
+
+// @alpha (undocumented)
+interface IWrappedUserGroupItem {
+    // (undocumented)
+    userGroup: IUserGroupItem;
+}
+
+// @public (undocumented)
+interface IWrappedVisualizationWidget {
+    // (undocumented)
+    visualizationWidget: IVisualizationWidget;
+}
+
+// @public (undocumented)
+interface IZendesk4Integration {
+    // (undocumented)
+    active: boolean;
+    // (undocumented)
+    lastFinishedProcess?: IProcessBody | null;
+    // (undocumented)
+    lastSuccessfulProcess?: IProcessBody | null;
+    // (undocumented)
+    links?: {
+        self: Uri;
+        processes: Uri;
+        configuration: Uri;
+    };
+    // (undocumented)
+    projectTemplate: Uri;
+    // (undocumented)
+    runningProcess?: IProcessBody | null;
+    // (undocumented)
+    ui?: object;
+}
+
+// @public (undocumented)
+type KpiDescriptionSourceType = "kpi" | "metric";
+
+// @public (undocumented)
+type Layout = IFluidLayout;
+
+// @public (undocumented)
+type LayoutContent = Widget | Layout;
+
+// @public (undocumented)
+type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+
+// @public (undocumented)
 export type MaqlExpression = string;
+
+// @public (undocumented)
+type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+
+// @public (undocumented)
+type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IPopMeasureDefinition | IPreviousPeriodMeasureDefinition;
+
+// @public (undocumented)
+type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
+// @public (undocumented)
+type MeasureValueFilterCondition_2 = IComparisonCondition_2 | IRangeCondition_2;
 
 // @public (undocumented)
 export type NumberAsString = string;
 
 // @public (undocumented)
+type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dashboardPlugin" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme" | "colorPalette";
+
+// @public (undocumented)
+type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+
+// @public (undocumented)
+type ObjQualifier_2 = IObjUriQualifier_2 | IObjIdentifierQualifier_2;
+
+// @alpha (undocumented)
+type Permission = "read";
+
+// @public (undocumented)
+type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
+
+// @public (undocumented)
+type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
+
+// @public (undocumented)
+type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+
+// @public (undocumented)
+type RangeConditionOperator_2 = "BETWEEN" | "NOT_BETWEEN";
+
+// @public (undocumented)
+type RankingFilterOperator = "TOP" | "BOTTOM";
+
+// @public (undocumented)
+type RankingFilterOperator_2 = "TOP" | "BOTTOM";
+
+// @public (undocumented)
+type RelativeGranularityOffset = number;
+
+// @public (undocumented)
+type RelativeType = "relative";
+
+// @public (undocumented)
+type ReportFormat = "grid" | "chart" | "oneNumber";
+
+// @public (undocumented)
 export function sanitizeFiltersForExport(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
+
+// @public (undocumented)
+type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment | IVisualizationWidgetAttachment;
+
+// @public (undocumented)
+type SectionHeader = ISectionHeader | ISectionDescription;
+
+// @public (undocumented)
+type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+
+// @public (undocumented)
+type SortDirection = "asc" | "desc";
+
+// @public (undocumented)
+type SortDirection_2 = "asc" | "desc";
+
+// @public (undocumented)
+type SortDirection_3 = "asc" | "desc";
+
+// @public (undocumented)
+type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
 export type ThemeColor = string;
@@ -3186,6 +4095,49 @@ export type TimeIso8601 = string;
 export type Timestamp = string;
 
 // @public (undocumented)
+type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
+
+// @public (undocumented)
+type TotalType_2 = "sum" | "avg" | "max" | "min" | "nat" | "med";
+
+// @public (undocumented)
+function unwrapMetadataObject(object: WrappedObject): IObject;
+
+// @public (undocumented)
 export type Uri = string;
+
+// @public (undocumented)
+type UserListItemState = "ACTIVE" | "INACTIVE" | "PENDING";
+
+// @public (undocumented)
+type UserProjectState = "ENABLED" | "DISABLED";
+
+// @public (undocumented)
+type UsersItemStatus = "ENABLED" | "DISABLED";
+
+// @public (undocumented)
+type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar" | "area";
+
+// @public (undocumented)
+type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
+
+// @public (undocumented)
+type VisualizatioWidgetDescriptionSourceType = "widget" | "insight";
+
+// @public (undocumented)
+interface Warning {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    parameters?: any[];
+    // (undocumented)
+    warningCode: string;
+}
+
+// @public (undocumented)
+type Widget = IPersistedWidget;
+
+// @public (undocumented)
+type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition | GdcDashboardPlugin.IWrappedDashboardPlugin;
 
 ```

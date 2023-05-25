@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     ISettings,
@@ -29,7 +29,7 @@ import {
     VisualizationEnvironment,
     IOpenAsReportUiConfig,
 } from "@gooddata/sdk-ui";
-import { IAvailableSortsGroup, ISortConfig } from "./SortConfig";
+import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
 
 export type RenderFunction = (component: any, target: Element) => void;
 

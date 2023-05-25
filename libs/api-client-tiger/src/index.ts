@@ -9,20 +9,19 @@
  *
  * @packageDocumentation
  */
-import { tigerClientFactory, ITigerClient } from "./client";
+import { tigerClientFactory, ITigerClient } from "./client.js";
 import {
     axios as defaultAxios,
     newAxios,
     setAxiosAuthorizationToken,
     setGlobalAuthorizationToken,
-} from "./axios";
-
-export { VisualizationObjectModelV1 } from "./gd-tiger-model/VisualizationObjectModelV1";
-export { VisualizationObjectModelV2 } from "./gd-tiger-model/VisualizationObjectModelV2";
-export { AnalyticalDashboardModelV1 } from "./gd-tiger-model/AnalyticalDashboardModelV1";
-export { AnalyticalDashboardModelV2 } from "./gd-tiger-model/AnalyticalDashboardModelV2";
+} from "./axios.js";
 
 export {
+    VisualizationObjectModelV1,
+    VisualizationObjectModelV2,
+    AnalyticalDashboardModelV1,
+    AnalyticalDashboardModelV2,
     isAttributeHeader,
     isAfmObjectIdentifier,
     isResultAttributeHeader,
@@ -31,7 +30,7 @@ export {
     isVisualizationObjectsItem,
     isFilterContextData,
     isDashboardPluginsItem,
-} from "./gd-tiger-model/typeGuards";
+} from "./gd-tiger-model/index.js";
 
 export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };
 
@@ -166,15 +165,15 @@ export {
     TotalFunctionEnum,
     AttributeFormat,
     ElementsResponseGranularityEnum,
-} from "./generated/afm-rest-api/api";
+} from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,
     ActionsApiInterface as AuthActionsApiInterface,
     ActionsApiProcessInvitationRequest,
     Invitation,
-} from "./generated/auth-json-api/api";
-export { Configuration, ConfigurationParameters } from "./generated/auth-json-api/configuration";
-export * from "./generated/metadata-json-api/api";
+} from "./generated/auth-json-api/api.js";
+export { Configuration, ConfigurationParameters } from "./generated/auth-json-api/configuration.js";
+export * from "./generated/metadata-json-api/api.js";
 export {
     ActionsApiCreatePdfExportRequest,
     ActionsApiGetExportedFileRequest,
@@ -186,7 +185,7 @@ export {
     CustomLabel,
     CustomMetric,
     PdfExportRequest,
-} from "./generated/export-json-api/api";
+} from "./generated/export-json-api/api.js";
 
 export {
     ActionsApiGetDataSourceSchemataRequest,
@@ -213,11 +212,11 @@ export {
     SqlColumnDataTypeEnum as ScanApiSqlColumnDataTypeEnum,
     SqlColumn as ScanApiSqlColumn,
     ScanSqlRequest,
-} from "./generated/scan-json-api/api";
+} from "./generated/scan-json-api/api.js";
 
-export * from "./client";
+export * from "./client.js";
 
-export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants";
+export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants.js";
 
 export {
     MetadataUtilities,
@@ -229,7 +228,7 @@ export {
     MetadataGetEntitiesColorPaletteParams,
     MetadataGetEntitiesWorkspaceParams,
     MetadataGetEntitiesUserParams,
-} from "./metadataUtilities";
+} from "./metadataUtilities.js";
 
 export {
     OrganizationUtilities,
@@ -237,7 +236,7 @@ export {
     OrganizationGetEntitiesSupportingIncludedResult,
     OrganizationGetEntitiesFn,
     OrganizationGetEntitiesParams,
-} from "./organizationUtilities";
+} from "./organizationUtilities.js";
 
 const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
 

@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
-import { validateAgainstList } from "../securitySettings";
+import { describe, expect, it } from "vitest";
+import { validateAgainstList } from "../securitySettings.js";
 
 describe("validateAgainstList", () => {
     const Scenarios: Array<[boolean, string, string, any]> = [

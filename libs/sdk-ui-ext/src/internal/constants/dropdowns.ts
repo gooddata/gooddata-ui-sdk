@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { IDropdownItem } from "../interfaces/Dropdown";
-import { messages } from "../../locales";
+import { IDropdownItem } from "../interfaces/Dropdown.js";
+import { messages } from "../../locales.js";
 
 export const pushpinSizeDropdownItems: IDropdownItem[] = [
     { title: messages.autoDefault.id, value: "default" },

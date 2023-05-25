@@ -1,12 +1,12 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect";
-import { getRelativeDateFilterItems } from "../DynamicSelect/utils";
+import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect.js";
+import { getRelativeDateFilterItems } from "../DynamicSelect/utils.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu";
-import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces";
+import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
+import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
 
 interface IRelativeRangePickerProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
@@ -79,7 +79,7 @@ class RelativeRangePickerComponent extends React.Component<
              */
             isTouchDevice
                 ? setTimeout(() => {
-                      this.toFieldRef.current.focus();
+                      this.toFieldRef.current?.focus();
                   }, 0)
                 : this.toFieldRef.current.focus();
         }
@@ -90,7 +90,7 @@ class RelativeRangePickerComponent extends React.Component<
         if (this.toFieldRef.current) {
             isTouchDevice
                 ? setTimeout(() => {
-                      this.toFieldRef.current.blur();
+                      this.toFieldRef.current?.blur();
                   }, 0)
                 : this.toFieldRef.current.blur();
         }

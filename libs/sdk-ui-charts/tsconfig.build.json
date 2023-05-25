@@ -1,6 +1,26 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/index.ts", "src/typings.d.ts"],
+    "include": [
+        "src/index.ts",
+        "src/typings.d.ts",
+        "src/charts/areaChart/CoreAreaChart.tsx",
+        "src/charts/barChart/CoreBarChart.tsx",
+        "src/charts/bubbleChart/CoreBubbleChart.tsx",
+        "src/charts/bulletChart/CoreBulletChart.tsx",
+        "src/charts/columnChart/CoreColumnChart.tsx",
+        "src/charts/comboChart/CoreComboChart.tsx",
+        "src/charts/dependencyWheelChart/CoreDependencyWheelChart.tsx",
+        "src/charts/donutChart/CoreDonutChart.tsx",
+        "src/charts/funnelChart/CoreFunnelChart.tsx",
+        "src/charts/headline/CoreHeadline.tsx",
+        "src/charts/heatmap/CoreHeatmap.tsx",
+        "src/charts/lineChart/CoreLineChart.tsx",
+        "src/charts/pieChart/CorePieChart.tsx",
+        "src/charts/sankeyChart/CoreSankeyChart.tsx",
+        "src/charts/scatterPlot/CoreScatterPlot.tsx",
+        "src/charts/treemap/CoreTreemap.tsx",
+        "src/charts/xirr/CoreXirr.tsx"
+    ],
     "compilerOptions": {
         "baseUrl": null,
         "paths": null,

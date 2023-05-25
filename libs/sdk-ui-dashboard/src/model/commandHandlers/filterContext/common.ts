@@ -4,13 +4,13 @@ import { SagaIterator } from "redux-saga";
 import { select } from "redux-saga/effects";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "../../commands/base";
-import { filterContextChanged } from "../../events/filters";
-import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../types/commonTypes";
-import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher";
-import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
-import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping";
+import { IDashboardCommand } from "../../commands/base.js";
+import { filterContextChanged } from "../../events/filters.js";
+import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
+import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,

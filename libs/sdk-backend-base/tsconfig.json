@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
         "lib": ["es2017", "dom"],
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
         "importHelpers": true,
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
@@ -19,5 +19,5 @@
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"]
         }
     },
-    "exclude": ["**/node_modules", "dist", "esm"]
+    "exclude": ["**/node_modules", "esm"]
 }

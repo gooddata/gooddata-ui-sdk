@@ -7,11 +7,11 @@ import { IFilter, IWidgetAlertDefinition, IKpiWidgetDefinition } from "@gooddata
 import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { DashboardItemKpi } from "../../../../presentationComponents";
-import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../../common";
+import { DashboardItemKpi } from "../../../../presentationComponents/index.js";
+import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../../common/index.js";
 
-import { isAlertingTemporarilyDisabledForGivenFilter } from "./utils/filterUtils";
-import { KpiDescriptionTrigger } from "./KpiDescriptionTrigger";
+import { isAlertingTemporarilyDisabledForGivenFilter } from "./utils/filterUtils.js";
+import { KpiDescriptionTrigger } from "./KpiDescriptionTrigger.js";
 
 // adapted from jQuery:
 // https://github.com/jquery/jquery/blob/a503c691dc06c59acdafef6e54eca2613c6e4032/src/offset.js#L83-L97

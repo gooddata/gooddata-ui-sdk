@@ -2,15 +2,16 @@
 import React from "react";
 import { act, render } from "@testing-library/react";
 import { AgGridReact } from "@ag-grid-community/react";
+import { describe, it, expect } from "vitest";
 
-import ApiWrapper from "../agApiWrapper";
+import ApiWrapper from "../agApiWrapper.js";
 import {
     AllCommunityModules,
     GridApi,
     GridReadyEvent,
     ICellRendererParams,
 } from "@ag-grid-community/all-modules";
-import { ICustomGridOptions } from "../../privateTypes";
+import { ICustomGridOptions } from "../../privateTypes.js";
 
 describe("agGridApiWrapper", () => {
     const firstAttributeColumnId = "a_123";

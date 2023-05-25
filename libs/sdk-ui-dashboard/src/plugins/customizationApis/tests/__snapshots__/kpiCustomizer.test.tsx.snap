@@ -1,25 +1,25 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`KPI customizer should fallback to rendering default component 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`KPI customizer > should fallback to rendering default component 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`KPI customizer withCustomDecorator should decorate custom component registered for an insight 1`] = `"<div id=\\"decorator1\\"><div id=\\"fromCustomProvider\\"></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should decorate custom component registered for an insight 1`] = `"<div id=\\"decorator1\\"><div id=\\"fromCustomProvider\\"></div></div>"`;
 
-exports[`KPI customizer withCustomDecorator should decorate default component if insight does not match custom component criteria  1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should decorate default component if insight does not match custom component criteria  1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
 
-exports[`KPI customizer withCustomDecorator should decorate default component if no other providers are registered 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should decorate default component if no other providers are registered 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
 
-exports[`KPI customizer withCustomDecorator should decorate if insight matches criteria 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should decorate if insight matches criteria 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
 
-exports[`KPI customizer withCustomDecorator should not decorate if insight does not match criteria 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`KPI customizer > withCustomDecorator > should not decorate if insight does not match criteria 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`KPI customizer withCustomDecorator should only use only those decorators that match criteria and then use custom component 1`] = `"<div id=\\"decorator2\\"><div id=\\"customProvider1\\"></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should only use only those decorators that match criteria and then use custom component 1`] = `"<div id=\\"decorator2\\"><div id=\\"customProvider1\\"></div></div>"`;
 
-exports[`KPI customizer withCustomDecorator should use multiple decorators and custom component if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"customProvider1\\"></div></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should use multiple decorators and custom component if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"customProvider1\\"></div></div></div>"`;
 
-exports[`KPI customizer withCustomDecorator should use multiple decorators if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"default\\"></div></div></div>"`;
+exports[`KPI customizer > withCustomDecorator > should use multiple decorators if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"default\\"></div></div></div>"`;
 
-exports[`KPI customizer withCustomProvider should fallback to default component if insight does not match provider criteria 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`KPI customizer > withCustomProvider > should fallback to default component if insight does not match provider criteria 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`KPI customizer withCustomProvider should use component from latest registered provider that matches the insight 1`] = `"<div id=\\"fromCustomProvider3\\"></div>"`;
+exports[`KPI customizer > withCustomProvider > should use component from latest registered provider that matches the insight 1`] = `"<div id=\\"fromCustomProvider3\\"></div>"`;
 
-exports[`KPI customizer withCustomProvider should work for KPI that matches predicate 1`] = `"<div id=\\"fromCustomProvider\\"></div>"`;
+exports[`KPI customizer > withCustomProvider > should work for KPI that matches predicate 1`] = `"<div id=\\"fromCustomProvider\\"></div>"`;

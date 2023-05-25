@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { createContext, useContext } from "react";
 
-import { IMenuButtonConfiguration } from "../topBar/types";
+import { IMenuButtonConfiguration } from "../topBar/types.js";
 
 interface IDashboardConfigContext {
     menuButtonConfig: IMenuButtonConfiguration | undefined;

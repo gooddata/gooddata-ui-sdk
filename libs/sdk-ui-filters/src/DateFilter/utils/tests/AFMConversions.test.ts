@@ -4,8 +4,9 @@ import {
     IRelativeDateFilterPreset,
     IAllTimeDateFilterOption,
 } from "@gooddata/sdk-model";
-import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions";
-import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../interfaces";
+import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions.js";
+import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../interfaces/index.js";
+import { describe, it, expect } from "vitest";
 
 const dataSet = {
     uri: "foo",

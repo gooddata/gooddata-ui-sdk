@@ -9,7 +9,7 @@ import {
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 import { IKpiComparisonDirection } from "@gooddata/sdk-model";
-import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
+import { CONFIG_PANEL_INNER_WIDTH } from "../constants.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 

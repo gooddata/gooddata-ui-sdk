@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import { CustomizedScenario, UnboundVisProps } from "../../../src";
+import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 
 const ConfigVariants: Array<[string]> = [["90"], ["-90"], ["60"], ["-60"]];
 

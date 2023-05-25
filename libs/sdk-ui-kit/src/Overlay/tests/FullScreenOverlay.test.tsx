@@ -1,8 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { renderIntoDocumentWithUnmount } from "../../test/utils";
+import { renderIntoDocumentWithUnmount } from "../../test/utils.js";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 
-import { FullScreenOverlay } from "../FullScreenOverlay";
+import { FullScreenOverlay } from "../FullScreenOverlay.js";
 
 function renderOverlay(options: any) {
     return renderIntoDocumentWithUnmount(<FullScreenOverlay {...options} />);

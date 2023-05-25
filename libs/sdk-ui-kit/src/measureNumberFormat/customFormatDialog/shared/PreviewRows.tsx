@@ -2,7 +2,7 @@
 import React from "react";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { FormattedPreview } from "./FormattedPreview";
+import { FormattedPreview } from "./FormattedPreview.js";
 
 interface IPreviewNumberRowProps {
     previewNumber: number;

@@ -1,16 +1,22 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useRef } from "react";
-import Measure from "react-measure";
+import DefaultMeasure from "react-measure";
 import cx from "classnames";
 
-import { IntlWrapper } from "../../localization";
-import { selectLocale, useDashboardSelector } from "../../../model";
+import { IntlWrapper } from "../../localization/index.js";
+import { selectLocale, useDashboardSelector } from "../../../model/index.js";
 
-import { BulletsBar } from "../../dragAndDrop";
-import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
-import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator";
-import { useFilterBarState } from "./hooks/useFilterBarState";
-import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop";
+import { BulletsBar } from "../../dragAndDrop/index.js";
+import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
+import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js";
+import { useFilterBarState } from "./hooks/useFilterBarState.js";
+import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(DefaultMeasure);
 
 const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =

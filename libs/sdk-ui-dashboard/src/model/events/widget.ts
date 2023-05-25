@@ -4,8 +4,8 @@ import { IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 
-import { DashboardEventBody, IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import { DashboardEventBody, IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DashboardWidgetExecutionStarted} event.

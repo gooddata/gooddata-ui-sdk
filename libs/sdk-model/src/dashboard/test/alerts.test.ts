@@ -1,8 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
-
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isWidgetAlert, isWidgetAlertDefinition } from "../alert";
-import { widgetAlert, widgetAlertDefinitionToCreate, widgetAlertDefinitionToUpdate } from "./alerts.fixtures";
+import { describe, expect, it } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isWidgetAlert, isWidgetAlertDefinition } from "../alert.js";
+import {
+    widgetAlert,
+    widgetAlertDefinitionToCreate,
+    widgetAlertDefinitionToUpdate,
+} from "./alerts.fixtures.js";
 
 describe("dashboard widget alerts type guards", () => {
     describe("isWidgetAlert", () => {

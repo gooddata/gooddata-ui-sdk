@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
-import { executionResultsAdapter } from "./executionResultsEntityAdapter";
+import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
 
 const executionResultsSlice = createSlice({
     name: "executionResults",

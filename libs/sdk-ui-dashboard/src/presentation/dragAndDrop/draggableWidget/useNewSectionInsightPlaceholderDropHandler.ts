@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 import { idRef } from "@gooddata/sdk-model";
 
-import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing";
+import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing.js";
 import {
     selectSettings,
     useDashboardDispatch,
@@ -10,8 +10,8 @@ import {
     useDashboardCommandProcessing,
     uiActions,
     addLayoutSection,
-} from "../../../model";
-import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../widgets";
+} from "../../../model/index.js";
+import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../widgets/index.js";
 
 export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: number) {
     const dispatch = useDashboardDispatch();

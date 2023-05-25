@@ -14,11 +14,11 @@ export {
     ThemeProvider,
     ThemeModifier,
     isDarkTheme,
-} from "./ThemeProvider/ThemeProvider";
+} from "./ThemeProvider/ThemeProvider.js";
 export {
     IThemeContextProviderProps,
     withTheme,
     useTheme,
     useThemeIsLoading,
     ThemeContextProvider,
-} from "./ThemeProvider/Context";
+} from "./ThemeProvider/Context.js";

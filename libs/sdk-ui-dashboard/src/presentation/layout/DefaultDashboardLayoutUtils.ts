@@ -11,16 +11,16 @@ import {
     IDashboardWidget,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import LRUCache from "lru-cache";
+import { invariant } from "ts-invariant";
+import { LRUCache } from "lru-cache";
 import stringify from "json-stable-stringify";
-import flow from "lodash/flow";
+import flow from "lodash/flow.js";
 
 import {
     DashboardLayoutItemModifications,
     IDashboardLayoutItemBuilder,
     validateDashboardLayoutWidgetSize,
-} from "./DefaultDashboardLayoutRenderer";
+} from "./DefaultDashboardLayoutRenderer/index.js";
 
 /**
  * We need to aggressively memoize the widget sanitization results in order to prevent expensive re-renders

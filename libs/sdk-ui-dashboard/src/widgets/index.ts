@@ -1,2 +1,2 @@
 // (C) 2022 GoodData Corporation
-export * from "./placeholders";
+export * from "./placeholders/index.js";

@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { ResolvedEntitlements } from "../../types/commonTypes";
+import { ResolvedEntitlements } from "../../types/commonTypes.js";
 
 /**
  * @beta

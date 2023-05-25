@@ -1,21 +1,25 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
-import noop from "lodash/noop";
+import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
+import noop from "lodash/noop.js";
 import {
     DateFilterGranularity,
     isAbsoluteDateFilterForm,
     DashboardDateFilterConfigMode,
     WeekStart,
 } from "@gooddata/sdk-model";
-import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion";
+import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 
-import { DateFilterCore } from "./DateFilterCore";
-import { validateFilterOption } from "./validation/OptionValidation";
-import { DateFilterOption, IDateFilterOptionsByType, isUiRelativeDateFilterForm } from "./interfaces";
-import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
-import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization";
+import { DateFilterCore } from "./DateFilterCore.js";
+import { validateFilterOption } from "./validation/OptionValidation.js";
+import {
+    DateFilterOption,
+    IDateFilterOptionsByType,
+    isUiRelativeDateFilterForm,
+} from "./interfaces/index.js";
+import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
+import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.

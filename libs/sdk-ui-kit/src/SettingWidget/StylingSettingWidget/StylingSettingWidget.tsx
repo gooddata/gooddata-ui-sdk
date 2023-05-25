@@ -1,22 +1,22 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { useIntl } from "react-intl";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { StylingSettingBody } from "./StylingSettingBody";
-import { Separator } from "../Separator";
-import { SettingWidget } from "../SettingWidget";
-import { Header } from "../Header";
-import { Footer } from "../Footer";
-import { Button } from "../../Button";
-import { Message } from "../../Messages";
-import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
-import { useMediaQuery } from "../../responsive";
-import { Title } from "../Title";
-import { FooterButtons } from "../FooterButtons";
-import { Hyperlink } from "../../Hyperlink";
+import { StylingSettingBody } from "./StylingSettingBody.js";
+import { Separator } from "../Separator.js";
+import { SettingWidget } from "../SettingWidget.js";
+import { Header } from "../Header.js";
+import { Footer } from "../Footer.js";
+import { Button } from "../../Button/index.js";
+import { Message } from "../../Messages/index.js";
+import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
+import { useMediaQuery } from "../../responsive/index.js";
+import { Title } from "../Title.js";
+import { FooterButtons } from "../FooterButtons.js";
+import { Hyperlink } from "../../Hyperlink/index.js";
 
 /**
  * @internal

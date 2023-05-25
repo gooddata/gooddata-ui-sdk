@@ -1,14 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import isNil from "lodash/isNil";
+import isNil from "lodash/isNil.js";
 
-import { AttributeFilterReducer } from "../store/state";
+import { AttributeFilterReducer } from "../store/state.js";
 import {
     selectCommittedSelection,
     selectIsCommittedSelectionInverted,
     selectIsWorkingSelectionInverted,
     selectWorkingSelection,
-} from "./selectionSelectors";
+} from "./selectionSelectors.js";
 
 const changeSelection: AttributeFilterReducer<
     PayloadAction<{ selection: string[]; isInverted?: boolean }>

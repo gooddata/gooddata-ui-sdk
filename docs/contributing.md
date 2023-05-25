@@ -45,7 +45,7 @@ Always run `rush install`; this will make sure all the dependencies from the loc
 the projects managed in the repository. After that run `rush build`.
 
 In case the pull brings in new projects or large bulk of changes, it is safer (albeit more time-consuming) to run
-`rush install && rush link --force && rush clean && rush rebuild`.
+`rush clean && rush purge && rush install && rush rebuild`.
 
 ## IDE Settings
 
@@ -105,7 +105,8 @@ On top of Rush built-in commands, we have added our own custom commands (see [co
 | Command               | Description                                                                                                 |
 | --------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `rush audit`          | Performs security audit of all packages listed in global lock file                                          |
-| `rush clean`          | Cleans up artifacts created by build and tests. Cleans Jest caches. Full 'rebuild' required after cleaning. |
+| `rush purge`          | Delete all installed npm modules, clean temp and node_modules directories                                            |
+| `rush clean`          | Cleans up artifacts created by build and tests. Full 'rebuild' required after cleaning. |
 | `rush validate`       | Validates code in all projects.                                                                             |
 | `rush validate-ci`    | Validates code in all projects in CI mode.                                                                  |
 | `rush test-once`      | Tests code in all projects.                                                                                 |

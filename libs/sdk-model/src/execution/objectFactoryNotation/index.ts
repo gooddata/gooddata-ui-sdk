@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
-import compact from "lodash/compact";
-import flow from "lodash/flow";
-import isNil from "lodash/isNil";
-import isString from "lodash/isString";
+import compact from "lodash/compact.js";
+import flow from "lodash/flow.js";
+import isNil from "lodash/isNil.js";
+import isString from "lodash/isString.js";
 import stringifyObject from "stringify-object";
-import { isUriRef, ObjRefInScope, isIdentifierRef } from "../../objRef";
+import { isUriRef, ObjRefInScope, isIdentifierRef } from "../../objRef/index.js";
 import {
     isMeasureLocator,
     IAttributeLocatorItem,
@@ -14,7 +14,7 @@ import {
     IMeasureSortItem,
     IMeasureLocatorItem,
     isAttributeAreaSort,
-} from "../base/sort";
+} from "../base/sort.js";
 import {
     IFilter,
     isAbsoluteDateFilter,
@@ -31,7 +31,7 @@ import {
     isRangeCondition,
     isRankingFilter,
     IRankingFilter,
-} from "../filter";
+} from "../filter/index.js";
 import {
     isMeasureDefinition,
     isArithmeticMeasureDefinition,
@@ -43,9 +43,9 @@ import {
     IArithmeticMeasureDefinition,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
-} from "../measure";
-import { isAttribute, IAttribute } from "../attribute";
-import { isTotal, ITotal } from "../base/totals";
+} from "../measure/index.js";
+import { isAttribute, IAttribute } from "../attribute/index.js";
+import { isTotal, ITotal } from "../base/totals.js";
 
 const commonStringifySettings = {
     singleQuotes: false,

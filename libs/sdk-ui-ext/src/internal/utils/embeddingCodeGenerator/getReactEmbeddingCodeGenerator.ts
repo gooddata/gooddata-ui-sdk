@@ -1,29 +1,29 @@
 // (C) 2022 GoodData Corporation
-import compact from "lodash/compact";
-import flow from "lodash/fp/flow";
-import groupBy from "lodash/fp/groupBy";
-import isEmpty from "lodash/isEmpty";
-import isFunction from "lodash/isFunction";
-import isString from "lodash/isString";
-import join from "lodash/fp/join";
-import map from "lodash/fp/map";
-import partition from "lodash/fp/partition";
-import repeat from "lodash/repeat";
-import sortBy from "lodash/sortBy";
-import toPairs from "lodash/fp/toPairs";
-import uniqBy from "lodash/uniqBy";
+import compact from "lodash/compact.js";
+import flow from "lodash/fp/flow.js";
+import groupBy from "lodash/fp/groupBy.js";
+import isEmpty from "lodash/isEmpty.js";
+import isFunction from "lodash/isFunction.js";
+import isString from "lodash/isString.js";
+import join from "lodash/fp/join.js";
+import map from "lodash/fp/map.js";
+import partition from "lodash/fp/partition.js";
+import repeat from "lodash/repeat.js";
+import sortBy from "lodash/sortBy.js";
+import toPairs from "lodash/fp/toPairs.js";
+import uniqBy from "lodash/uniqBy.js";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
 
-import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor";
+import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
-import { normalizeInsight } from "./normalizeInsight";
+import { normalizeInsight } from "./normalizeInsight.js";
 import {
     IAdditionalFactoryDefinition,
     IEmbeddingCodeGeneratorSpecification,
     IImportInfo,
     PropsWithMeta,
     PropWithMeta,
-} from "./types";
+} from "./types.js";
 
 // these are in line with what `factoryNotationFor` supports
 const defaultFactories: IImportInfo[] = [

@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GeoChartInner should use custom Legend renderer 1`] = `
-Object {
-  "categoryItems": Array [
-    Object {
+exports[`GeoChartInner > should use custom Legend renderer 1`] = `
+{
+  "categoryItems": [
+    {
       "color": "rgb(20,178,226)",
       "isVisible": true,
       "legendIndex": 0,
       "name": "Florida",
       "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
     },
-    Object {
+    {
       "color": "rgb(0,193,141)",
       "isVisible": true,
       "legendIndex": 1,
       "name": "Texas",
       "uri": "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
     },
-    Object {
+    {
       "color": "rgb(229,77,66)",
       "isVisible": true,
       "legendIndex": 2,
@@ -29,9 +29,9 @@ Object {
   "containerId": Any<String>,
   "contentRect": undefined,
   "format": "#,##0.00",
-  "geoData": Object {
-    "color": Object {
-      "data": Array [
+  "geoData": {
+    "color": {
+      "data": [
         4969,
         256,
         56,
@@ -48,49 +48,49 @@ Object {
       "index": 1,
       "name": "Density",
     },
-    "location": Object {
-      "data": Array [
-        Object {
+    "location": {
+      "data": [
+        {
           "lat": 25.7839,
           "lng": -80.2102,
         },
-        Object {
+        {
           "lat": 26.2181,
           "lng": -98.418,
         },
-        Object {
+        {
           "lat": 26.2585,
           "lng": -97.695,
         },
-        Object {
+        {
           "lat": 26.3024,
           "lng": -98.6425,
         },
-        Object {
+        {
           "lat": 26.5281,
           "lng": -80.0811,
         },
-        Object {
+        {
           "lat": 27.9942,
           "lng": -82.4451,
         },
-        Object {
+        {
           "lat": 28.2405,
           "lng": -82.1796,
         },
-        Object {
+        {
           "lat": 28.4772,
           "lng": -81.3369,
         },
-        Object {
+        {
           "lat": 32.8312,
           "lng": -117.1225,
         },
-        Object {
+        {
           "lat": 34.1139,
           "lng": -118.4068,
         },
-        Object {
+        {
           "lat": 37.7562,
           "lng": -122.443,
         },
@@ -98,8 +98,8 @@ Object {
       "index": 0,
       "name": "City",
     },
-    "segment": Object {
-      "data": Array [
+    "segment": {
+      "data": [
         "Florida",
         "Texas",
         "Texas",
@@ -114,7 +114,7 @@ Object {
       ],
       "index": 1,
       "name": "State Name",
-      "uris": Array [
+      "uris": [
         "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340105",
         "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
         "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=4436534",
@@ -128,8 +128,8 @@ Object {
         "/gdc/md/liveexamplesworkspace/obj/9461/elements?id=6340116",
       ],
     },
-    "size": Object {
-      "data": Array [
+    "size": {
+      "data": [
         6381966,
         2228,
         121,
@@ -146,8 +146,8 @@ Object {
       "index": 0,
       "name": "Population",
     },
-    "tooltipText": Object {
-      "data": Array [
+    "tooltipText": {
+      "data": [
         "Miami",
         "Abram",
         "Lasana",

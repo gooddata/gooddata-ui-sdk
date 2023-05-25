@@ -10,10 +10,10 @@
  * @packageDocumentation
  */
 
-import { CustomElementContext, getContext, setContext } from "./context";
-import { Insight } from "./visualizations/Insight";
-import { Dashboard } from "./visualizations/Dashboard";
-import initializeAutoAuth from "./autoAuth";
+import { CustomElementContext, getContext, setContext } from "./context.js";
+import { Insight } from "./visualizations/Insight.js";
+import { Dashboard } from "./visualizations/Dashboard.js";
+import initializeAutoAuth from "./autoAuth.js";
 
 // Include styles async to use native link injection from MiniCssExtractPlugin
 import("./visualizations/components.css").catch((error) => {

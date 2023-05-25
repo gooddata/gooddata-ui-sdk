@@ -2,9 +2,9 @@
 import {
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableComboChartDeprecated } from "./PluggableComboChartDeprecated";
-import { BigChartDescriptor } from "../BigChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableComboChartDeprecated } from "./PluggableComboChartDeprecated.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 
 export class ComboChartDescriptorDeprecated extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

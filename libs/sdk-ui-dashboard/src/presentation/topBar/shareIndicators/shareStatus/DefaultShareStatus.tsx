@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { IShareStatusProps } from "./types";
+import { IShareStatusProps } from "./types.js";
 import {
     selectCanManageAnalyticalDashboard,
     selectEnableAnalyticalDashboardPermissions,
     selectSupportsAccessControlCapability,
     useDashboardSelector,
-} from "../../../../model";
-import { ShareStatusIndicator } from "./ShareStatusIndicator";
+} from "../../../../model/index.js";
+import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
 
 /**
  * @alpha

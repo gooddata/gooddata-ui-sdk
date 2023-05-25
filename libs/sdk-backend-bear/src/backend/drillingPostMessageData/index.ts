@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
-import compact from "lodash/compact";
-import includes from "lodash/includes";
-import isArray from "lodash/isArray";
-import uniq from "lodash/uniq";
+import compact from "lodash/compact.js";
+import includes from "lodash/includes.js";
+import isArray from "lodash/isArray.js";
+import uniq from "lodash/uniq.js";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 const getUriFromPairByIdentifier = (

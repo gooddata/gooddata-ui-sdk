@@ -2,8 +2,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 
-import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal";
+import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
 
 class MockedRenderChildrenInPortal extends React.Component {
     portalNode: HTMLElement;

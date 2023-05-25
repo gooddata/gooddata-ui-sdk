@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
-import lowerFirst from "lodash/lowerFirst";
+import lowerFirst from "lodash/lowerFirst.js";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import {
     absoluteDateFilterValues,
@@ -14,7 +14,7 @@ import {
     DateFilterGranularity,
     IDashboardDateFilter,
 } from "@gooddata/sdk-model";
-import { messages } from "../../../../../../locales";
+import { messages } from "../../../../../../locales.js";
 
 export type KpiAlertTranslationData = {
     rangeText: string;

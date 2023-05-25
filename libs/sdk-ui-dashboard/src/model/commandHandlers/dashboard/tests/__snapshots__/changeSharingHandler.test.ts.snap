@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`change dashboard sharing handler for a existing dashboard should emit correct events 1`] = `
-Array [
-  Object {
+exports[`change dashboard sharing handler > for a existing dashboard > should emit correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.SHARING.CHANGE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.SHARING.CHANGED",
   },

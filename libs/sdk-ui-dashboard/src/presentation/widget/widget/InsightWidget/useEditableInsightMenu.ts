@@ -3,14 +3,14 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { useDashboardCustomizationsContext } from "../../../dashboardContexts";
-import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
+import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu/index.js";
 import {
     selectDrillTargetsByWidgetRef,
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
 type UseEditableInsightMenuConfig = {
     insight: IInsight;

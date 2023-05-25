@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { Correlation } from "../../../types";
-import { AttributeFilterReducer } from "../store/state";
+import { Correlation } from "../../../types/index.js";
+import { AttributeFilterReducer } from "../store/state.js";
 
 const init: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
 

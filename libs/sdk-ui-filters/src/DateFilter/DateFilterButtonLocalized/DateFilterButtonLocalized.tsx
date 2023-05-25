@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { DateFilterButton } from "../DateFilterButton/DateFilterButton";
-import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
-import { DateFilterOption } from "../interfaces";
+import { DateFilterButton } from "../DateFilterButton/DateFilterButton.js";
+import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
+import { DateFilterOption } from "../interfaces/index.js";
 
 export interface IDateFilterButtonLocalizedProps {
     dateFilterOption: DateFilterOption;

@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import { newTestAttributeFilterHandler } from "./fixtures";
-import { waitForAsync } from "./testUtils";
+import { newTestAttributeFilterHandler } from "./fixtures.js";
+import { waitForAsync } from "./testUtils.js";
+import { describe, it, expect } from "vitest";
 
 describe("AttributeFilterHandler", () => {
     it("hiddenElements option should hide element in getAllElements()", async () => {

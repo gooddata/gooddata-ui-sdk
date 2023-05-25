@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { removeUseless } from "../removeUseless";
+import { removeUseless } from "../removeUseless.js";
+import { describe, it, expect } from "vitest";
 
 describe("removeUseless", () => {
     it("should handle a simple case", () => {

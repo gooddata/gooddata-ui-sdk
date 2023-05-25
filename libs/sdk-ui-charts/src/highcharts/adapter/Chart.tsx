@@ -1,19 +1,33 @@
 // (C) 2007-2023 GoodData Corporation
-import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
 import React from "react";
-import { initChartPlugins } from "./chartPlugins";
-import Highcharts, { HighchartsOptions } from "../lib";
+import { initChartPlugins } from "./chartPlugins.js";
+import Highcharts, { HighchartsOptions } from "../lib/index.js";
+import { defaultImport } from "default-import";
 
-import HighchartsMore from "highcharts/highcharts-more";
-import drillmodule from "highcharts/modules/drilldown";
-import treemapModule from "highcharts/modules/treemap";
-import bulletModule from "highcharts/modules/bullet";
-import funnelModule from "highcharts/modules/funnel";
-import heatmap from "highcharts/modules/heatmap";
-import patternFill from "highcharts/modules/pattern-fill";
-import sankeyModule from "highcharts/modules/sankey";
-import dependencyWheelModule from "highcharts/modules/dependency-wheel";
+import defaultHighchartsMore from "highcharts/highcharts-more.js";
+import defaultDrillmodule from "highcharts/modules/drilldown.js";
+import defaultTreemapModule from "highcharts/modules/treemap.js";
+import defaultBulletModule from "highcharts/modules/bullet.js";
+import defaultFunnelModule from "highcharts/modules/funnel.js";
+import defaultHeatmap from "highcharts/modules/heatmap.js";
+import defaultPatternFill from "highcharts/modules/pattern-fill.js";
+import defaultSankeyModule from "highcharts/modules/sankey.js";
+import defaultDependencyWheelModule from "highcharts/modules/dependency-wheel.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+export const drillmodule = defaultImport(defaultDrillmodule);
+export const treemapModule = defaultImport(defaultTreemapModule);
+export const bulletModule = defaultImport(defaultBulletModule);
+export const funnelModule = defaultImport(defaultFunnelModule);
+export const sankeyModule = defaultImport(defaultSankeyModule);
+export const dependencyWheelModule = defaultImport(defaultDependencyWheelModule);
+export const heatmap = defaultImport(defaultHeatmap);
+export const HighchartsMore = defaultImport(defaultHighchartsMore);
+export const patternFill = defaultImport(defaultPatternFill);
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);

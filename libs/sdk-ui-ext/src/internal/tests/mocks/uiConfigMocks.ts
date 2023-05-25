@@ -4,11 +4,11 @@ import {
     MAX_CATEGORIES_COUNT,
     MAX_STACKS_COUNT,
     MAX_FILTERS_COUNT,
-} from "../../constants/uiConfig";
+} from "../../constants/uiConfig.js";
 
-import { METRIC, FACT, ATTRIBUTE, DATE } from "../../constants/bucket";
+import { METRIC, FACT, ATTRIBUTE, DATE } from "../../constants/bucket.js";
 
-import { IExportUiConfig, IUiConfig } from "../../interfaces/Visualization";
+import { IExportUiConfig, IUiConfig } from "../../interfaces/Visualization.js";
 import { OverTimeComparisonType, IOpenAsReportUiConfig } from "@gooddata/sdk-ui";
 
 const measuresBase = {

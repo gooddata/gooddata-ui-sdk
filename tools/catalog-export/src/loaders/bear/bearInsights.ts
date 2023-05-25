@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
-import { ObjectMeta } from "../../base/types";
+import { ObjectMeta } from "../../base/types.js";
 
 /**
  * Loads information about insights defined in the workspace. Only descriptive information about

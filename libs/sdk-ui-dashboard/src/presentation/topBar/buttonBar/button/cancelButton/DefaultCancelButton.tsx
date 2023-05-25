@@ -11,8 +11,8 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model";
-import { ICancelButtonProps } from "./types";
+} from "../../../../../model/index.js";
+import { ICancelButtonProps } from "./types.js";
 
 /**
  * @internal

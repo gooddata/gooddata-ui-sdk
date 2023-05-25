@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`removeDrillsForInsightWidgetHandler remove should emit the appropriate events for remove alerts and propagate correlationId 1`] = `
-Array [
-  Object {
+exports[`removeDrillsForInsightWidgetHandler > remove > should emit the appropriate events for remove alerts and propagate correlationId 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.ALERTS.REMOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.ALERTS.REMOVED",
   },

@@ -8,7 +8,11 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-import { selectCanManageScheduledMail, selectDashboardRef, useDashboardSelector } from "../../../model";
+import {
+    selectCanManageScheduledMail,
+    selectDashboardRef,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 export interface IScheduledEmailManagement {
     scheduledEmails: IScheduledMail[];

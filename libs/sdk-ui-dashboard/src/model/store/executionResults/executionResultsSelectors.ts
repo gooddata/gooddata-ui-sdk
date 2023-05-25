@@ -2,18 +2,18 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
-import { DashboardSelector, DashboardState } from "../types";
-import { createMemoizedSelector } from "../_infra/selectors";
-import { executionResultsAdapter } from "./executionResultsEntityAdapter";
-import { IExecutionResultEnvelope } from "./types";
-import { selectAnalyticalWidgetByRef } from "../layout/layoutSelectors";
-import { isNonExportableError } from "../../../_staging/errors/errorPredicates";
-import { selectCanExportTabular, selectCanExecuteRaw } from "../permissions/permissionsSelectors";
-import { selectSettings } from "../config/configSelectors";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
+import { IExecutionResultEnvelope } from "./types.js";
+import { selectAnalyticalWidgetByRef } from "../layout/layoutSelectors.js";
+import { isNonExportableError } from "../../../_staging/errors/errorPredicates.js";
+import { selectCanExportTabular, selectCanExecuteRaw } from "../permissions/permissionsSelectors.js";
+import { selectSettings } from "../config/configSelectors.js";
 import {
     selectSupportsExportToXlsx,
     selectSupportsExportToCsv,
-} from "../backendCapabilities/backendCapabilitiesSelectors";
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

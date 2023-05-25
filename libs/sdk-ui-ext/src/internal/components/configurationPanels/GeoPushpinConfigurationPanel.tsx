@@ -11,16 +11,16 @@ import {
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
+} from "../../constants/bubble.js";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import CheckboxControl from "../configurationControls/CheckboxControl";
-import ConfigSection from "../configurationControls/ConfigSection";
-import PushpinSizeControl from "../configurationControls/PushpinSizeControl";
-import PushpinViewportControl from "../configurationControls/PushpinViewportControl";
-import LegendSection from "../configurationControls/legend/LegendSection";
-import ColorsSection from "../configurationControls/colors/ColorsSection";
-import { messages } from "../../../locales";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import PushpinSizeControl from "../configurationControls/PushpinSizeControl.js";
+import PushpinViewportControl from "../configurationControls/PushpinViewportControl.js";
+import LegendSection from "../configurationControls/legend/LegendSection.js";
+import ColorsSection from "../configurationControls/colors/ColorsSection.js";
+import { messages } from "../../../locales.js";
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {

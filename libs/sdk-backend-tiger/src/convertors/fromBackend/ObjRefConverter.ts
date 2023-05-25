@@ -2,10 +2,14 @@
 import { AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, idRef, ObjRef } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
-import { TigerObjectType } from "../../types";
-import { isTigerType, TigerCompatibleObjectType, tigerIdTypeToObjectType } from "../../types/refTypeMapping";
+import { TigerObjectType } from "../../types/index.js";
+import {
+    isTigerType,
+    TigerCompatibleObjectType,
+    tigerIdTypeToObjectType,
+} from "../../types/refTypeMapping.js";
 
 export function toObjectType(value: TigerObjectType): TigerCompatibleObjectType {
     if (!isTigerType(value)) {

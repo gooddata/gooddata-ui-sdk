@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { TigerWorkspacePermissionsFactory } from "../index";
+import { TigerWorkspacePermissionsFactory } from "../index.js";
+import { describe, expect, it, vi } from "vitest";
 
 type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE";
 
@@ -9,9 +10,9 @@ describe("TigerWorkspacePermissionsFactory", () => {
 
     function getWithDefinedPermissions(
         permissions: Array<TigerPermissionType>,
-    ): [TigerWorkspacePermissionsFactory, ReturnType<typeof jest.fn>] {
-        const authCall = jest.fn();
-        const getEntityWorkspacesCall = jest.fn();
+    ): [TigerWorkspacePermissionsFactory, ReturnType<typeof vi.fn>] {
+        const authCall = vi.fn();
+        const getEntityWorkspacesCall = vi.fn();
 
         authCall.mockImplementation((handler) => {
             return handler({ entities: { getEntityWorkspaces: getEntityWorkspacesCall } });

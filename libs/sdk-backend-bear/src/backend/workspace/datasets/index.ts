@@ -2,9 +2,9 @@
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import { IMetadataObject, IDataset } from "@gooddata/sdk-model";
-import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
-import { convertDataSet } from "../../../convertors/fromBackend/DataSetConverter";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";
+import { convertDataSet } from "../../../convertors/fromBackend/DataSetConverter.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 
 export class BearWorkspaceDataSets implements IWorkspaceDatasetsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

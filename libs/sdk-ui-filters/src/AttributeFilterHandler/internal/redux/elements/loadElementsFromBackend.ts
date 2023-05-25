@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     IAnalyticalBackend,
     IElementsQueryAttributeFilter,
@@ -23,10 +23,10 @@ import {
 } from "@gooddata/sdk-model";
 import { convertError, DataViewFacade } from "@gooddata/sdk-ui";
 
-import { ILoadElementsOptions } from "../../../types";
-import { AttributeFilterHandlerStoreContext } from "../store/types";
-import { IHiddenElementsInfo } from "./types";
-import { InMemoryPaging } from "./InMemoryPaging";
+import { ILoadElementsOptions } from "../../../types/index.js";
+import { AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { IHiddenElementsInfo } from "./types.js";
+import { InMemoryPaging } from "./InMemoryPaging.js";
 
 async function loadElementsAsExecution(
     backend: IAnalyticalBackend,

@@ -1,14 +1,12 @@
 // (C) 2020 GoodData Corporation
 
 import { action } from "@storybook/addon-actions";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import React from "react";
-import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/base";
-import ColorDropdown from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
-import ColoredItemContent from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";
-import { getLargePalette } from "../mocks/testColorHelper";
-import { ConfigurationControls } from "../../../_infra/storyGroups";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { DefaultColorPalette } from "@gooddata/sdk-ui";
+import { getLargePalette } from "../mocks/testColorHelper.js";
+import { ConfigurationControls } from "../../../_infra/storyGroups.js";
+import { InternalIntlWrapper, ColorDropdown, ColoredItemContent } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
 

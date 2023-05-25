@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { StaticLegend } from "../StaticLegend";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types";
+import { StaticLegend } from "../StaticLegend.js";
+import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types.js";
 
-import { LegendDialog } from "./LegendDialog";
-import { RowLegend } from "./RowLegend";
+import { LegendDialog } from "./LegendDialog.js";
+import { RowLegend } from "./RowLegend.js";
 
 const PAGINATION_HEIGHT = 34;
 

@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableTreemap should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for 1 M, 1 Vb, 1 Sb 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for 1 M, 1 Vb, 1 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -16,12 +16,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -30,12 +30,12 @@ Object {
       ],
       "localIdentifier": "view",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -45,20 +45,20 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -69,18 +69,18 @@ Object {
         "localIdentifier": "a1",
         "type": "attribute",
       },
-      Object {
+      {
         "aggregation": null,
         "attribute": "attr.stage.iswon",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.stage.iswon",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "iswon/attribute/df/uri",
             },
             "isInverted": true,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -94,11 +94,11 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -106,12 +106,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -128,8 +128,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -141,8 +141,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -153,30 +153,30 @@ Object {
         "icon": "local:treemap/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableTreemap should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Attrs 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Attrs 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -187,12 +187,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.datedataset",
-          "dateDatasetRef": Object {
+          "dateDatasetRef": {
             "identifier": "ds1",
           },
           "localIdentifier": "a1",
@@ -202,12 +202,12 @@ Object {
       ],
       "localIdentifier": "view",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -217,15 +217,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -233,12 +233,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -255,8 +255,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"date-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -268,8 +268,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -280,30 +280,30 @@ Object {
         "icon": "local:treemap/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableTreemap should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Vb, 0 Sb 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Vb, 0 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -314,12 +314,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -328,12 +328,12 @@ Object {
       ],
       "localIdentifier": "view",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -343,20 +343,20 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -367,18 +367,18 @@ Object {
         "localIdentifier": "a1",
         "type": "attribute",
       },
-      Object {
+      {
         "aggregation": null,
         "attribute": "attr.stage.iswon",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.stage.iswon",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "iswon/attribute/df/uri",
             },
             "isInverted": true,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -392,11 +392,11 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -404,12 +404,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -426,8 +426,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -439,8 +439,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -451,30 +451,30 @@ Object {
         "icon": "local:treemap/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableTreemap should return ref. point with n M, 0 Vb, 0 Sb for n M, 0 Attr 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n M, 0 Attr 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -482,7 +482,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -490,7 +490,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -498,7 +498,7 @@ Object {
           "showOnSecondaryAxis": true,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "acfWntEMcom0",
           "localIdentifier": "m4",
@@ -509,24 +509,24 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "view",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -534,12 +534,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -555,8 +555,8 @@ Object {
         "itemsLimit": 20,
         "title": "Measures",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -568,8 +568,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -580,31 +580,31 @@ Object {
         "icon": "local:treemap/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 0,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
         "warningMessage": "To view by, an insight can have only one measure",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableTreemap should return ref. point with n M, 0 Vb, 1 Sb for n M, 0 Vb, 1 Sb 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n M, 0 Vb, 1 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -612,7 +612,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -620,7 +620,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -628,7 +628,7 @@ Object {
           "showOnSecondaryAxis": true,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "acfWntEMcom0",
           "localIdentifier": "m4",
@@ -639,16 +639,16 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "view",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -658,15 +658,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -674,12 +674,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -695,8 +695,8 @@ Object {
         "itemsLimit": 20,
         "title": "Measures",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -708,8 +708,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -720,31 +720,31 @@ Object {
         "icon": "local:treemap/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 0,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
         "warningMessage": "To view by, an insight can have only one measure",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableTreemap should return reference point with 1 M, 0 Vb, 0 Sb for 1 M, 0 Vb, 0 Sb 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb for 1 M, 0 Vb, 0 Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -755,24 +755,24 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "view",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -780,12 +780,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -801,8 +801,8 @@ Object {
         "itemsLimit": 20,
         "title": "Measures",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -814,8 +814,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -826,20 +826,20 @@ Object {
         "icon": "local:treemap/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;

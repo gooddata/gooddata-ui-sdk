@@ -5,13 +5,17 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Dialog, Typography, Tabs, ITab } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
 
-import { ScheduledEmails } from "./ScheduledEmails";
-import { IScheduledEmailManagement, useScheduledEmailManagement } from "./useScheduledEmailManagement";
-import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog";
+import { ScheduledEmails } from "./ScheduledEmails.js";
+import { IScheduledEmailManagement, useScheduledEmailManagement } from "./useScheduledEmailManagement.js";
+import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog.js";
 
-import { IScheduledEmailManagementDialogProps } from "../types";
-import { selectCurrentUser, useDashboardSelector, selectCanManageScheduledMail } from "../../../model";
-import { messages } from "../../../locales";
+import { IScheduledEmailManagementDialogProps } from "../types.js";
+import {
+    selectCurrentUser,
+    useDashboardSelector,
+    selectCanManageScheduledMail,
+} from "../../../model/index.js";
+import { messages } from "../../../locales.js";
 
 /**
  * @alpha

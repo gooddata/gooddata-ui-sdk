@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BuildScheduler should build only single package if it is root 1`] = `
-Array [
+exports[`BuildScheduler > should build only single package if it is root 1`] = `
+[
   "@gooddata/sdk-ui-ext",
 ]
 `;
 
-exports[`BuildScheduler should build single package if the package change is marked as independent 1`] = `
-Array [
+exports[`BuildScheduler > should build single package if the package change is marked as independent 1`] = `
+[
   "@gooddata/sdk-model",
 ]
 `;
 
-exports[`BuildScheduler should build the entire subtree if leaf changes 1`] = `
-Array [
+exports[`BuildScheduler > should build the entire subtree if leaf changes 1`] = `
+[
   "@gooddata/sdk-model",
   "@gooddata/sdk-embedding",
   "@gooddata/sdk-backend-spi",
@@ -34,8 +34,8 @@ Array [
 ]
 `;
 
-exports[`BuildScheduler should build the other subtree if leaf changes 1`] = `
-Array [
+exports[`BuildScheduler > should build the other subtree if leaf changes 1`] = `
+[
   "@gooddata/api-model-bear",
   "@gooddata/sdk-embedding",
   "@gooddata/api-client-bear",

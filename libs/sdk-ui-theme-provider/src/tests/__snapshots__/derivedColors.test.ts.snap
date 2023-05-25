@@ -1,21 +1,21 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`derivedColors getHigherContrastColor should generate higher contrast color 1`] = `"#4c4c4c"`;
+exports[`derivedColors > getHigherContrastColor > should generate higher contrast color 1`] = `"#4c4c4c"`;
 
-exports[`derivedColors getHigherContrastColor should generate higher contrast color 2`] = `"#b2b2b2"`;
+exports[`derivedColors > getHigherContrastColor > should generate higher contrast color 2`] = `"#b2b2b2"`;
 
-exports[`derivedColors getLeastContrastColor should generate least contrast color 1`] = `"#ffebeb"`;
+exports[`derivedColors > getLeastContrastColor > should generate least contrast color 1`] = `"#ffebeb"`;
 
-exports[`derivedColors getLeastContrastColor should generate least contrast color 2`] = `"#140000"`;
+exports[`derivedColors > getLeastContrastColor > should generate least contrast color 2`] = `"#140000"`;
 
-exports[`derivedColors getLowerContrastColor should generate lower contrast color 1`] = `"#b2b2b2"`;
+exports[`derivedColors > getLowerContrastColor > should generate lower contrast color 1`] = `"#b2b2b2"`;
 
-exports[`derivedColors getLowerContrastColor should generate lower contrast color 2`] = `"#4c4c4c"`;
+exports[`derivedColors > getLowerContrastColor > should generate lower contrast color 2`] = `"#4c4c4c"`;
 
-exports[`derivedColors mixWith0ComplementaryColor should generate color mixed with first color from the complementary palette 1`] = `"#ff7f7f"`;
+exports[`derivedColors > mixWith0ComplementaryColor > should generate color mixed with first color from the complementary palette 1`] = `"#ff7f7f"`;
 
-exports[`derivedColors mixWith0ComplementaryColor should generate color mixed with first color from the complementary palette 2`] = `"#7f0000"`;
+exports[`derivedColors > mixWith0ComplementaryColor > should generate color mixed with first color from the complementary palette 2`] = `"#7f0000"`;
 
-exports[`derivedColors mixWith8ComplementaryColor should generate color mixed with 8th color from the complementary palette 1`] = `"#991919"`;
+exports[`derivedColors > mixWith8ComplementaryColor > should generate color mixed with 8th color from the complementary palette 1`] = `"#991919"`;
 
-exports[`derivedColors mixWith8ComplementaryColor should generate color mixed with 8th color from the complementary palette 2`] = `"#e56666"`;
+exports[`derivedColors > mixWith8ComplementaryColor > should generate color mixed with 8th color from the complementary palette 2`] = `"#e56666"`;

@@ -13,9 +13,9 @@ import {
     useDashboardSelector,
     selectIsReadOnly,
     DashboardSelector,
-} from "../../../../../model";
-import { ISaveAsNewButtonProps } from "./types";
-import { selectCanEnterEditModeAndIsLoaded } from "../selectors";
+} from "../../../../../model/index.js";
+import { ISaveAsNewButtonProps } from "./types.js";
+import { selectCanEnterEditModeAndIsLoaded } from "../selectors.js";
 import { createSelector } from "@reduxjs/toolkit";
 
 /**

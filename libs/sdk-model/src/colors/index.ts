@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty";
-import { IMetadataObject } from "../ldm/metadata";
+import isEmpty from "lodash/isEmpty.js";
+import { IMetadataObject } from "../ldm/metadata/index.js";
 
 /**
  * RGB Color value specification.

@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import parse from "date-fns/parse";
+import parse from "date-fns/parse/index.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
 export const dateFormats = [

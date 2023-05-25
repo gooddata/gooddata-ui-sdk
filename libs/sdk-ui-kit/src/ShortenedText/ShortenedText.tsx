@@ -2,9 +2,9 @@
 import React, { PureComponent } from "react";
 import cx from "classnames";
 
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger";
-import { Bubble } from "../Bubble/Bubble";
-import { IAlignPoint } from "../typings/positioning";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { IAlignPoint } from "../typings/positioning.js";
 
 // ShortenText adds ellipsis (…) in the middle of the string.
 // SIDE_SCALE_RATIO is a constant which tells the percentage of

@@ -8,9 +8,9 @@ import {
     TranslationsCustomizationProvider,
 } from "@gooddata/sdk-ui";
 
-import { translations } from "./translations";
+import { translations } from "./translations.js";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import LRUCache from "lru-cache";
+import { LRUCache } from "lru-cache";
 
 const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";

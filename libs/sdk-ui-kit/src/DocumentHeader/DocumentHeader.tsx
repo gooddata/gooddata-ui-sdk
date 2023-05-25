@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { Helmet } from "react-helmet";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
 /**
  * @internal

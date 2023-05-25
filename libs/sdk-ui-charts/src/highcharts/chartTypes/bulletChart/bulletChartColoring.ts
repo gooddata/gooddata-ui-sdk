@@ -4,7 +4,7 @@ import {
     isComparativeSeries,
     isPrimarySeries,
     isTargetSeries,
-} from "./bulletChartSeries";
+} from "./bulletChartSeries.js";
 import {
     IColorPalette,
     Identifier,
@@ -15,8 +15,8 @@ import {
     IMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IColorMapping } from "../../../interfaces";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
+import { IColorMapping } from "../../../interfaces/index.js";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     ColorStrategy,
@@ -29,7 +29,7 @@ import {
     normalizeColorToRGB,
     parseRGBString,
 } from "@gooddata/sdk-ui-vis-commons";
-import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color";
+import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
 
 class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

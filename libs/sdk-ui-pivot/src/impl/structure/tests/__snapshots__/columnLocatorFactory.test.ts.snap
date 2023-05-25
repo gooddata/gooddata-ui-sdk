@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createColumnLocator creates valid group column locator for second-level group in table with column attributes 1`] = `
-Array [
-  Object {
-    "attributeLocatorItem": Object {
+exports[`createColumnLocator > creates valid group column locator for second-level group in table with column attributes 1`] = `
+[
+  {
+    "attributeLocatorItem": {
       "attributeIdentifier": "a_label.stage.name.stagename",
       "element": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498",
     },
   },
-  Object {
-    "attributeLocatorItem": Object {
+  {
+    "attributeLocatorItem": {
       "attributeIdentifier": "a_label.owner.region",
       "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
     },
@@ -17,10 +17,10 @@ Array [
 ]
 `;
 
-exports[`createColumnLocator creates valid group column locator for top-level group in table with column attributes 1`] = `
-Array [
-  Object {
-    "attributeLocatorItem": Object {
+exports[`createColumnLocator > creates valid group column locator for top-level group in table with column attributes 1`] = `
+[
+  {
+    "attributeLocatorItem": {
       "attributeIdentifier": "a_label.stage.name.stagename",
       "element": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498",
     },
@@ -28,32 +28,32 @@ Array [
 ]
 `;
 
-exports[`createColumnLocator creates valid leaf column locator in table with column attributes 1`] = `
-Array [
-  Object {
-    "attributeLocatorItem": Object {
+exports[`createColumnLocator > creates valid leaf column locator in table with column attributes 1`] = `
+[
+  {
+    "attributeLocatorItem": {
       "attributeIdentifier": "a_label.stage.name.stagename",
       "element": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498",
     },
   },
-  Object {
-    "attributeLocatorItem": Object {
+  {
+    "attributeLocatorItem": {
       "attributeIdentifier": "a_label.owner.region",
       "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
     },
   },
-  Object {
-    "measureLocatorItem": Object {
+  {
+    "measureLocatorItem": {
       "measureIdentifier": "m_aangOxLSeztu",
     },
   },
 ]
 `;
 
-exports[`createColumnLocator creates valid leaf column locator in table without column attributes 1`] = `
-Array [
-  Object {
-    "measureLocatorItem": Object {
+exports[`createColumnLocator > creates valid leaf column locator in table without column attributes 1`] = `
+[
+  {
+    "measureLocatorItem": {
       "measureIdentifier": "m_aangOxLSeztu",
     },
   },

@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDashboardWidgetCustomizer } from "../customizer";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
-import { CustomDashboardWidgetComponent, OptionalWidgetComponentProvider } from "../../presentation";
-import { isCustomWidget } from "../../model";
+import { IDashboardWidgetCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomDashboardWidgetComponent, OptionalWidgetComponentProvider } from "../../presentation/index.js";
+import { isCustomWidget } from "../../model/index.js";
 
 /*
  * For now, this type is kept private. eventually, as we open the dashboard API for editing that includes

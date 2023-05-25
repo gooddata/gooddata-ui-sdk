@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
+import { Bubble, BubbleHoverTrigger } from "../../../../Bubble/index.js";
 
 const alignPoints = [{ align: "cr cl" }];
 

@@ -12,13 +12,13 @@ import {
     DashboardModelCustomizationFns,
     DashboardState,
     WidgetsOverlayFn,
-} from "../../model";
-import { CustomFilterBarComponent } from "../filterBar";
-import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout";
+} from "../../model/index.js";
+import { CustomFilterBarComponent } from "../filterBar/index.js";
+import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/index.js";
 import {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
-} from "../scheduledEmail";
+} from "../scheduledEmail/index.js";
 import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
@@ -26,9 +26,9 @@ import {
     CustomTitleComponent,
     CustomTopBarComponent,
     IMenuButtonConfiguration,
-} from "../topBar";
-import { CustomSaveAsDialogComponent } from "../saveAs";
-import { CustomShareDialogComponent } from "../shareDialog";
+} from "../topBar/index.js";
+import { CustomSaveAsDialogComponent } from "../saveAs/index.js";
+import { CustomShareDialogComponent } from "../shareDialog/index.js";
 import {
     InsightMenuItemsProvider,
     OptionalAttributeFilterComponentProvider,
@@ -40,10 +40,10 @@ import {
     OptionalWidgetComponentProvider,
     OptionalDateFilterComponentProvider,
     OptionalInsightMenuTitleComponentProvider,
-} from "../dashboardContexts";
-import { CustomSidebarComponent } from "./DashboardSidebar/types";
-import { InsightComponentSetProvider } from "../componentDefinition/types";
-import { CustomToolbarComponent } from "../toolbar";
+} from "../dashboardContexts/index.js";
+import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
+import { InsightComponentSetProvider } from "../componentDefinition/types.js";
+import { CustomToolbarComponent } from "../toolbar/index.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard

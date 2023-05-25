@@ -3,11 +3,11 @@ import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
-import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge";
-import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
-import { InitializeDashboard } from "../../../commands/dashboard";
-import { DashboardContext } from "../../../types/commonTypes";
-import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError";
+import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge.js";
+import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation.js";
+import { InitializeDashboard } from "../../../commands/dashboard.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 
 export interface DateFilterMergeResult {
     config: IDateFilterConfig;

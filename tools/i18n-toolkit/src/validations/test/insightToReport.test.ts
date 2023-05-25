@@ -2,11 +2,12 @@
 
 import { getInsightToReportCheck } from "../insightToReport";
 import { LocalesStructure } from "../../schema/localization";
+import { describe, it, expect, vi } from "vitest";
 
 type Scenario = [string, LocalesStructure, string | null];
 
 let returnValue: LocalesStructure;
-jest.mock("../../utils", () => ({
+vi.mock("../../utils", () => ({
     readFile: () => Promise.resolve(Buffer.from(JSON.stringify(returnValue))),
 }));
 
@@ -94,7 +95,7 @@ describe("validate insight to report", () => {
         ],
     ];
 
-    it.each(scenarios)("validate %s", async (_, locales, err) => {
+    it.each(scenarios)("validate %s", async (_: any, locales: any, err: any) => {
         returnValue = locales;
         if (err) {
             await expect(getInsightToReportCheck([["en-US.json", locales]])).rejects.toThrowError(err);

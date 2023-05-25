@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.Drilling)

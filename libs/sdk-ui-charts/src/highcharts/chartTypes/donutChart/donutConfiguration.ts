@@ -1,9 +1,9 @@
 // (C) 2007-2021 GoodData Corporation
-import merge from "lodash/merge";
-import { getPieConfiguration } from "../pieChart/pieConfiguration";
-import { alignChart } from "../_chartCreators/helpers";
-import { IChartConfig } from "../../../interfaces";
-import { HighchartsOptions } from "../../../highcharts/lib";
+import merge from "lodash/merge.js";
+import { getPieConfiguration } from "../pieChart/pieConfiguration.js";
+import { alignChart } from "../_chartCreators/helpers.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { HighchartsOptions } from "../../lib/index.js";
 
 export function getDonutConfiguration(config: IChartConfig): HighchartsOptions {
     return merge({}, getPieConfiguration(config), {

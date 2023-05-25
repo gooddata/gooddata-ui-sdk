@@ -6,13 +6,13 @@ import {
     convertFilter,
     convertMeasureFilter,
     convertRankingFilter,
-} from "../FilterConverter";
+} from "../FilterConverter.js";
 import {
     absoluteFilter,
     relativeFilter,
     measureValueFilterWithoutCondition,
     negativeEmptyAttributeFilter,
-} from "./InvalidInputs.fixture";
+} from "./InvalidInputs.fixture.js";
 import {
     newAbsoluteDateFilter,
     newRelativeDateFilter,
@@ -23,6 +23,7 @@ import {
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, expect, it } from "vitest";
 
 describe("bear filter converter from model to AFM", () => {
     describe("convert absolute date filter", () => {

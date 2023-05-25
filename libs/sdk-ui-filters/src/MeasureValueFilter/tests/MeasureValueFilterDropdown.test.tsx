@@ -1,13 +1,17 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { newMeasureValueFilter, IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
 
-import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown";
-import { MeasureValueFilterDropdown, IMeasureValueFilterDropdownProps } from "../MeasureValueFilterDropdown";
-import { IWarningMessage } from "../typings";
+import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown.js";
+import {
+    MeasureValueFilterDropdown,
+    IMeasureValueFilterDropdownProps,
+} from "../MeasureValueFilterDropdown.js";
+import { IWarningMessage } from "../typings.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {
@@ -194,7 +198,7 @@ describe("Measure value filter dropdown", () => {
 
     describe("onApply callback", () => {
         it("should be called with comparison type measure value filter when comparison operator is selected and value is filled", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
@@ -209,7 +213,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should be called with range type measure value filter when range operator is selected and both values are filled", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 100, 200);
@@ -225,7 +229,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should be called with null value when All operator is applied", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
             renderComponent({ filter, onApply });
 
@@ -235,7 +239,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should be called with raw value when the measure is displayed as percentage with a comparison type measure value filter", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply, usePercentage: true });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 1);
@@ -250,7 +254,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should be called with raw value when the measure is displayed as percentage with a range type measure value filter", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply, usePercentage: true });
 
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 1, 2);
@@ -266,7 +270,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should be called with null value when All operator is applied when the measure is displayed as percentage", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
             renderComponent({ filter, onApply, usePercentage: true });
 
@@ -276,7 +280,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should compensate for JavaScript division result precision problem for comparison filter", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply, usePercentage: true });
 
             component
@@ -290,7 +294,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should compensate for JavaScript division result precision problem for range filter", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ onApply, usePercentage: true });
 
             component
@@ -471,7 +475,7 @@ describe("Measure value filter dropdown", () => {
             });
 
             it("should handle the change from comparison to range filter", () => {
-                const onApply = jest.fn();
+                const onApply = vi.fn();
                 renderComponent({ usePercentage: true, onApply });
 
                 const expectedComparisonFilter = newMeasureValueFilter(
@@ -505,7 +509,7 @@ describe("Measure value filter dropdown", () => {
     describe("press enter", () => {
         it("should be able to press enter to apply when apply button is enabled", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ filter, onApply });
 
             component.setComparisonValue("20").pressEnterInComparisonInput();
@@ -515,7 +519,7 @@ describe("Measure value filter dropdown", () => {
 
         it("should not be able to press enter to apply when apply button is disabled", () => {
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({ filter, onApply });
 
             component.pressEnterInComparisonInput();
@@ -526,7 +530,7 @@ describe("Measure value filter dropdown", () => {
 
     describe("onCancel feedback", () => {
         it("should be called when cancelled", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             renderComponent({ onCancel });
 
             component.openOperatorDropdown().selectOperator("BETWEEN").setRangeFrom("100").clickCancel();
@@ -537,7 +541,7 @@ describe("Measure value filter dropdown", () => {
 
     describe("filter with treat-null-values-as", () => {
         it("should contain 'treatNullValuesAs' property if checked", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
 
@@ -553,7 +557,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should contain 'treatNullValuesAs' equal to 0 if checked, but no 'treatNullAsZeroDefaultValue' was provided", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
             const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
 
@@ -569,7 +573,7 @@ describe("Measure value filter dropdown", () => {
         });
 
         it("should be called with filter not containing 'treatNullValuesAs' property if treat-null-values-as checkbox was unchecked", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
 
             const filterWithTreatNullValuesAsZero = newMeasureValueFilter(
                 localIdRef("myMeasure"),

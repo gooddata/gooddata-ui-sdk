@@ -1,16 +1,16 @@
 // (C) 2007-2023 GoodData Corporation
-import clone from "lodash/clone";
-import includes from "lodash/includes";
-import isNil from "lodash/isNil";
-import setWith from "lodash/setWith";
+import clone from "lodash/clone.js";
+import includes from "lodash/includes.js";
+import isNil from "lodash/isNil.js";
+import setWith from "lodash/setWith.js";
 import { numberFormat } from "@gooddata/numberjs";
-import escape from "lodash/escape";
-import isEqual from "lodash/fp/isEqual";
-import unescape from "lodash/unescape";
+import escape from "lodash/escape.js";
+import isEqual from "lodash/fp/isEqual.js";
+import unescape from "lodash/unescape.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartOptions, ISeriesItem } from "../../typings/unsafe";
-import { IChartConfig } from "../../../interfaces";
-import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format";
+import { IChartOptions, ISeriesItem } from "../../typings/unsafe.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
 
 export function parseValue(value: string): number | null {
     const parsedValue = parseFloat(value);

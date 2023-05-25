@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { IDataView } from "../workspace/execution";
+import isEmpty from "lodash/isEmpty.js";
+import { IDataView } from "../workspace/execution/index.js";
 
 /**
  * Types of errors that can be raised by Analytical Backends.

@@ -2,8 +2,8 @@
 import React, { ReactNode, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { dialogEmptyInsightMessageLabels } from "../../../../locales";
-import { EmbedType, InsightCodeType } from "../types";
+import { dialogEmptyInsightMessageLabels } from "../../../../locales.js";
+import { EmbedType, InsightCodeType } from "../types.js";
 
 /**
  * @internal

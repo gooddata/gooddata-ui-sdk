@@ -8,11 +8,19 @@ import { getBackend, getHost, getProjectId } from "../../support/constants";
 import { EditMode } from "../../tools/editMode";
 import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
 
-const DEPARTMENT_ID = "1087";
-const PRODUCT_ID = "1054";
+//!!!!!!!!!!! this constant could be shifted check gray pages if test failed before each or after hook
+const DEPARTMENT_ID = "1090";
+//!!!!!!!!!!! this constant could be shifted check gray pages if test failed before each or after hook
+const PRODUCT_ID = "1056";
 const drillModal = new DrillToModal();
 const editMode = new EditMode();
 
+/**
+ *
+ * This method is getting data from bear if this failed one reason could be that data are shifted
+ * If test failed in before each or after each hook DEPARTMENT_ID, PRODUCT_ID could be shifted
+ * @returns
+ */
 const postDrillDownStepAttributeDF = (value?: string) => {
     if (getBackend() !== "BEAR") {
         return;

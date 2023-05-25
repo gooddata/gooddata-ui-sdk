@@ -5,14 +5,15 @@ import {
     IDashboardLayoutSectionHeader,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import { DashboardLayoutBuilder } from "../layout";
-import { DashboardLayoutSectionBuilder } from "../section";
+import { DashboardLayoutBuilder } from "../layout.js";
+import { DashboardLayoutSectionBuilder } from "../section.js";
 import {
     createEmptyDashboardLayoutBuilder,
     createEmptyDashboardLayoutSectionBuilder,
     createValueOrUpdateCallbackTestCases,
     defaultItemXlSize,
-} from "./utils";
+} from "./utils.js";
+import { describe, it, expect } from "vitest";
 
 describe("DashboardLayoutSectionBuilder", () => {
     describe("constructors", () => {

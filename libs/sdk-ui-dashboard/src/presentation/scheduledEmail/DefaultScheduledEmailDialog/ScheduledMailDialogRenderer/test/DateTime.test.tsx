@@ -2,12 +2,13 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { formatTime } from "@gooddata/sdk-ui-kit";
-import format from "date-fns/format";
-import noop from "lodash/noop";
+import format from "date-fns/format/index.js";
+import noop from "lodash/noop.js";
+import { describe, it, expect } from "vitest";
 
-import { DateTime, IDateTimeProps } from "../DateTime";
+import { DateTime, IDateTimeProps } from "../DateTime.js";
 
-import { IntlWrapper } from "../../../../localization/IntlWrapper";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 
 const date = new Date();
 const dateFormat = "MM/dd/yyyy";

@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { convertDashboard } from "../DashboardConverter";
+import { convertDashboard } from "../DashboardConverter/index.js";
 import {
     dashboardWithoutLayout,
     dashboardWithoutLayoutDependencies,
@@ -17,7 +17,8 @@ import {
     dashboardWithLayoutDependencies,
     dashboardWithExtendedDateFilterConfig,
     dashboardWithLayoutAndCustomGridHeight,
-} from "./DashboardConverter.fixtures";
+} from "./DashboardConverter.fixtures.js";
+import { describe, expect, it } from "vitest";
 
 describe("dashboard converter", () => {
     describe("convert dashboard", () => {

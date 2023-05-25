@@ -1,11 +1,11 @@
 // (C) 2007-2023 GoodData Corporation
 import ora from "ora";
-import { logError } from "../../cli/loggers";
-import { CatalogExportError, WorkspaceMetadata } from "../../base/types";
-import { loadCatalog } from "./bearCatalog";
-import { loadDateDataSets } from "./bearDateDatasets";
-import { loadInsights } from "./bearInsights";
-import { loadAnalyticalDashboard } from "./bearAnalyticalDashboard";
+import { logError } from "../../cli/loggers.js";
+import { CatalogExportError, WorkspaceMetadata } from "../../base/types.js";
+import { loadCatalog } from "./bearCatalog.js";
+import { loadDateDataSets } from "./bearDateDatasets.js";
+import { loadInsights } from "./bearInsights.js";
+import { loadAnalyticalDashboard } from "./bearAnalyticalDashboard.js";
 
 /**
  * Loads all workspace metadata that can be used for exporting into catalog.

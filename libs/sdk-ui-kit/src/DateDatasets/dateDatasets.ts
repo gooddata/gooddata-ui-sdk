@@ -1,9 +1,9 @@
 // (C) 2007-2021 GoodData Corporation
-import groupBy from "lodash/groupBy";
-import takeWhile from "lodash/takeWhile";
-import first from "lodash/first";
+import groupBy from "lodash/groupBy.js";
+import takeWhile from "lodash/takeWhile.js";
+import first from "lodash/first.js";
 
-import { IDateDataset, IDateDatasetHeader } from "./typings";
+import { IDateDataset, IDateDatasetHeader } from "./typings.js";
 
 /**
  * @internal

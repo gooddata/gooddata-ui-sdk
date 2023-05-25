@@ -3,9 +3,9 @@ import React, { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 
-import { Overlay } from "../Overlay";
+import { Overlay } from "../Overlay/index.js";
 
-import { IHeaderAccountState, IHeaderMenuItem, IHeaderAccountProps } from "./typings";
+import { IHeaderAccountState, IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
 
 class WrappedHeaderAccount extends PureComponent<
     IHeaderAccountProps & WrappedComponentProps,

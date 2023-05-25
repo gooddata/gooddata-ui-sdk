@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { put, PutEffect } from "redux-saga/effects";
-import { ICustomDashboardEvent, IDashboardEvent } from "../../events/base";
+import { ICustomDashboardEvent, IDashboardEvent } from "../../events/base.js";
 
 /**
  * Creates an effect which will dispatch the provided event. Yield whatever this function returns

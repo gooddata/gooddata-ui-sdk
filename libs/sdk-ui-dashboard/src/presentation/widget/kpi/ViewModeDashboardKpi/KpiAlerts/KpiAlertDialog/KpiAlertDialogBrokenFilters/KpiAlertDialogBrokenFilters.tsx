@@ -2,11 +2,11 @@
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import partition from "lodash/partition";
+import partition from "lodash/partition.js";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
-import { IBrokenAlertFilter } from "../../types";
-import { getFilterLabelFilter } from "./utils/filterUtils";
+import { IBrokenAlertFilter } from "../../types.js";
+import { getFilterLabelFilter } from "./utils/filterUtils.js";
 
 const ITEMS_SCROLL_LIMIT = 5;
 

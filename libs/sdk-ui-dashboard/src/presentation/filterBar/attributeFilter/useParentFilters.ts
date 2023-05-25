@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 import { useMemo } from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IAttributeFilter, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
-import { selectFilterContextAttributeFilters, useDashboardSelector } from "../../../model";
+import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { selectFilterContextAttributeFilters, useDashboardSelector } from "../../../model/index.js";
 import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 /**

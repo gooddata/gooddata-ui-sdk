@@ -1,9 +1,10 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { createInternalIntl } from "../../../../localization/createInternalIntl";
-import { getScheduledEmailSummaryString } from "../scheduledMailSummary";
-import { IScheduleEmailRepeat } from "../../interfaces";
-import { REPEAT_TYPES } from "../../constants";
+import { createInternalIntl } from "../../../../localization/createInternalIntl.js";
+import { getScheduledEmailSummaryString } from "../scheduledMailSummary.js";
+import { IScheduleEmailRepeat } from "../../interfaces.js";
+import { REPEAT_TYPES } from "../../constants.js";
+import { describe, it, expect } from "vitest";
 
 interface ICustomRepeatOptions {
     year?: number;

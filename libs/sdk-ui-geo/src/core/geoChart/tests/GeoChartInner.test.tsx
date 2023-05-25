@@ -1,13 +1,14 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { GeoChartInner, IGeoChartInnerProps, IGeoChartInnerOptions } from "../GeoChartInner";
-import { RecShortcuts } from "../../../../__mocks__/recordings";
+import { GeoChartInner, IGeoChartInnerProps, IGeoChartInnerOptions } from "../GeoChartInner.js";
+import { RecShortcuts } from "../../../../__mocks__/recordings.js";
 import { LegendPosition, FLUID_LEGEND_THRESHOLD, PositionType } from "@gooddata/sdk-ui-vis-commons";
-import { IGeoConfig } from "../../../GeoChart";
+import { IGeoConfig } from "../../../GeoChart.js";
 import { createIntlMock, DefaultColorPalette } from "@gooddata/sdk-ui";
-import { getColorStrategy } from "../colorStrategy/geoChart";
-import { createCategoryLegendItems } from "../GeoChartOptionsWrapper";
+import { getColorStrategy } from "../colorStrategy/geoChart.js";
+import { createCategoryLegendItems } from "../GeoChartOptionsWrapper.js";
+import { describe, it, expect, vi } from "vitest";
 
 const { dv, geoData } = RecShortcuts.AllAndSmall;
 
@@ -23,13 +24,17 @@ function buildGeoChartOptions(): IGeoChartInnerOptions {
     };
 }
 
-jest.mock("mapbox-gl", () => ({
-    ...jest.requireActual("mapbox-gl"),
-    Map: jest.fn(() => ({
-        addControl: jest.fn(),
-        on: jest.fn(),
-        remove: jest.fn(),
-    })),
+vi.mock("mapbox-gl", async () => ({
+    default: {
+        Map: vi.fn(() => ({
+            addControl: vi.fn(),
+            on: vi.fn(),
+            remove: vi.fn(),
+        })),
+        Popup: vi.fn(),
+        AttributionControl: vi.fn(),
+        NavigationControl: vi.fn(),
+    },
 }));
 
 const intl = createIntlMock();
@@ -88,13 +93,13 @@ describe("GeoChartInner", () => {
     });
 
     it("should use custom Chart renderer", () => {
-        const chartRenderer = jest.fn().mockReturnValue(<div />);
+        const chartRenderer = vi.fn().mockReturnValue(<div />);
         renderComponent({ chartRenderer });
         expect(chartRenderer).toHaveBeenCalledTimes(1);
     });
 
     it("should use custom Legend renderer", () => {
-        const legendRenderer = jest.fn().mockReturnValue(<div />);
+        const legendRenderer = vi.fn().mockReturnValue(<div />);
         renderComponent({ legendRenderer });
 
         expect(legendRenderer).toHaveBeenCalledTimes(1);
@@ -106,7 +111,7 @@ describe("GeoChartInner", () => {
     });
 
     it("should call pushData", () => {
-        const pushData = jest.fn();
+        const pushData = vi.fn();
         const props: Partial<IGeoChartInnerProps> = {
             pushData,
         };
@@ -145,7 +150,7 @@ describe("GeoChartInner", () => {
         };
 
         it("should not render if legend is disabled", () => {
-            const legendRenderer = jest.fn().mockReturnValue(<div />);
+            const legendRenderer = vi.fn().mockReturnValue(<div />);
             renderComponent({ legendRenderer }, { legend: { enabled: false } });
             expect(legendRenderer).toHaveBeenCalledTimes(0);
         });

@@ -1,17 +1,17 @@
 // (C) 2007-2023 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     getChartType,
     getVisibleSeries,
     isStacked,
     getShapeAttributes,
-} from "../../chartTypes/_chartCreators/helpers";
+} from "../../chartTypes/_chartCreators/helpers.js";
 
-import { getDataLabelAttributes } from "../../chartTypes/_chartCreators/dataLabelsHelpers";
+import { getDataLabelAttributes } from "../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 
 import { parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
-import { isOneOfTypes } from "../../chartTypes/_util/common";
+import { isOneOfTypes } from "../../chartTypes/_util/common.js";
 
 const setWhiteColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = "#fff";

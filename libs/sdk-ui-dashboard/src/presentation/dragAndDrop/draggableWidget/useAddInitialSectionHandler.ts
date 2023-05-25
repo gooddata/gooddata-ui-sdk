@@ -8,15 +8,15 @@ import {
     selectIsLayoutEmpty,
     addLayoutSection,
     selectSettings,
-} from "../../../model";
+} from "../../../model/index.js";
 import {
     DraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
-} from "../types";
-import { newInitialPlaceholderWidget } from "../../../widgets";
-import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
+} from "../types.js";
+import { newInitialPlaceholderWidget } from "../../../widgets/index.js";
+import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing.js";
 
 export function useAddInitialSectionHandler() {
     const dispatch = useDashboardDispatch();

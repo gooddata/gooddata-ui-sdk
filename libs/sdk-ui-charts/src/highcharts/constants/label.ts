@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import Highcharts from "../lib";
+import Highcharts from "../lib/index.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { styleVariables } from "../chartTypes/_chartCreators/styles/variables";
+import { styleVariables } from "../chartTypes/_chartCreators/styles/variables.js";
 
 export const WHITE_LABEL: Highcharts.CSSObject = {
     color: "#ffffff",

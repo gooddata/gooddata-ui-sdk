@@ -1,18 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-import { initializeDashboard } from "../../../../commands";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { DashboardInitialized } from "../../../../events";
-import { selectConfig } from "../../../../store/config/configSelectors";
-import { selectPermissions } from "../../../../store/permissions/permissionsSelectors";
-import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
-import { selectLayout } from "../../../../store/layout/layoutSelectors";
+import { initializeDashboard } from "../../../../commands/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { DashboardInitialized } from "../../../../events/index.js";
+import { selectConfig } from "../../../../store/config/configSelectors.js";
+import { selectPermissions } from "../../../../store/permissions/permissionsSelectors.js";
+import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
+import { selectLayout } from "../../../../store/layout/layoutSelectors.js";
 import {
     selectAttributeFilterDisplayForms,
     selectFilterContextDefinition,
     selectFilterContextIdentity,
-} from "../../../../store/filterContext/filterContextSelectors";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors";
+} from "../../../../store/filterContext/filterContextSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors.js";
+import { describe, it, expect, beforeAll } from "vitest";
 
 describe("initialize dashboard handler", () => {
     it("should emit event when dashboard successfully loaded", async () => {
@@ -54,8 +55,9 @@ describe("initialize dashboard handler", () => {
 
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeAll(
-            preloadedTesterFactory(
+
+        beforeAll(async () => {
+            await preloadedTesterFactory(
                 (tester) => {
                     Tester = tester;
                 },
@@ -63,8 +65,8 @@ describe("initialize dashboard handler", () => {
                 {
                     initCommand: initializeDashboard(undefined, undefined, TestCorrelation),
                 },
-            ),
-        );
+            );
+        });
 
         it("should resolve config props that can be obtained from backend", () => {
             const config = selectConfig(Tester.state());
@@ -110,11 +112,12 @@ describe("initialize dashboard handler", () => {
 
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
-        beforeAll(
-            preloadedTesterFactory((tester) => {
+
+        beforeAll(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, EmptyDashboardIdentifier),
-        );
+            }, EmptyDashboardIdentifier);
+        });
 
         it("should add default layout for an empty dashboard", () => {
             const layout = selectLayout(Tester.state());
@@ -131,11 +134,12 @@ describe("initialize dashboard handler", () => {
 
     describe("for a new dashboard", () => {
         let Tester: DashboardTester;
-        beforeAll(
-            preloadedTesterFactory((tester) => {
+
+        beforeAll(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }),
-        );
+            });
+        });
 
         it("should initialize new dashboard with default layout", () => {
             const layout = selectLayout(Tester.state());

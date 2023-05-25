@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { IBucket } from "@gooddata/sdk-model";
 import { BucketNames, DefaultLocale, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ATTRIBUTE, METRIC, DATE } from "../../constants/bucket";
-import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
+import { ATTRIBUTE, METRIC, DATE } from "../../constants/bucket.js";
+import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -13,9 +13,9 @@ import {
     IUiConfig,
     DATE_DATASET_ATTRIBUTE,
     IFiltersBucketItem,
-} from "../../interfaces/Visualization";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
-import { oneMeasureOneStack, oneMeasureOneView } from "../../tests/mocks/visualizationObjectMocks";
+} from "../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import { oneMeasureOneStack, oneMeasureOneView } from "../../tests/mocks/visualizationObjectMocks.js";
 import {
     applyUiConfig,
     filterOutArithmeticMeasuresFromDerived,
@@ -51,8 +51,9 @@ import {
     setBucketTitles,
     transformMeasureBuckets,
     isComparisonAvailable,
-} from "../bucketHelper";
-import { createInternalIntl } from "../internalIntlProvider";
+} from "../bucketHelper.js";
+import { createInternalIntl } from "../internalIntlProvider.js";
+import { describe, it, expect } from "vitest";
 
 const simpleMeasure1 = { localIdentifier: "m1" };
 const simpleMeasure2 = { localIdentifier: "m2" };

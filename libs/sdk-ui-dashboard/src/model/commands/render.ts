@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link RequestAsyncRender} command.

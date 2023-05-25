@@ -9,9 +9,9 @@ import {
     useDashboardSelector,
     selectCatalogAttributes,
     selectAttributeFilterDisplayFormByLocalId,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 interface IParentFiltersDisabledItemProps {
     itemTitle: string;

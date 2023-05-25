@@ -25,7 +25,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 import {
     selectDrillableItems,
     selectCanCreateScheduledMail,
@@ -43,14 +43,14 @@ import {
     selectEnableWidgetCustomHeight,
     selectDateFormat,
     useWidgetSelection,
-} from "../../../../model";
-import { DashboardItemHeadline } from "../../../presentationComponents";
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types";
+} from "../../../../model/index.js";
+import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types.js";
 
-import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
-import { useKpiAlertOperations } from "./useKpiAlertOperations";
-import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
-import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
+import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper.js";
+import { useKpiAlertOperations } from "./useKpiAlertOperations.js";
+import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts/index.js";
+import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery.js";
 import {
     dashboardFilterToFilterContextItem,
     getAlertThresholdInfo,
@@ -59,8 +59,8 @@ import {
     KpiRenderer,
     stripDateDatasets,
     useKpiExecutionDataView,
-} from "../common";
-import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../constants";
+} from "../common/index.js";
+import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../constants/index.js";
 
 interface IKpiExecutorProps {
     dashboardRef?: ObjRef;

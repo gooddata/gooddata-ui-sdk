@@ -8,16 +8,16 @@ import {
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
-import { PluggablePivotTable } from "./PluggablePivotTable";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { IDrillDownContext } from "../../../interfaces/Visualization";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { PluggablePivotTable } from "./PluggablePivotTable.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
+import { IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
-} from "../drillDownUtil";
+} from "../drillDownUtil.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -29,9 +29,9 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     sortsInsightConversion,
     totalsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight";
-import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
+import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

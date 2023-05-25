@@ -2,12 +2,12 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { IdentifierParametersSection } from "./CustomUrlEditorParametersSections/IdentifierParametersSection";
+import { IdentifierParametersSection } from "./CustomUrlEditorParametersSections/IdentifierParametersSection.js";
 import {
     IInsightParametersSectionProps,
     InsightParametersSection,
-} from "./CustomUrlEditorParametersSections/InsightParametersSection";
-import { IIdentifierParametersSectionProps } from "./types";
+} from "./CustomUrlEditorParametersSections/InsightParametersSection.js";
+import { IIdentifierParametersSectionProps } from "./types.js";
 
 type IParametersPanelProps = IInsightParametersSectionProps & IIdentifierParametersSectionProps;
 

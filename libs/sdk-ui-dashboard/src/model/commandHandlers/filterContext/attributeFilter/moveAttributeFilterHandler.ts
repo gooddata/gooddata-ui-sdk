@@ -1,18 +1,18 @@
 // (C) 2021 GoodData Corporation
 import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { MoveAttributeFilter } from "../../../commands/filters";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { attributeFilterMoved } from "../../../events/filters";
-import { filterContextActions } from "../../../store/filterContext";
+import { MoveAttributeFilter } from "../../../commands/filters.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { attributeFilterMoved } from "../../../events/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 import {
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterIndexByLocalId,
     selectFilterContextFilters,
-} from "../../../store/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../../types/commonTypes";
-import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
+} from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged } from "../common.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 
 export function* moveAttributeFilterHandler(
     ctx: DashboardContext,

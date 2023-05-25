@@ -1,11 +1,12 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
-import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import * as uiKit from "@gooddata/sdk-ui-kit";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import ColorOverlay, { IColorOverlayProps, DropdownVersionType } from "../ColorOverlay";
+import ColorOverlay, { IColorOverlayProps, DropdownVersionType } from "../ColorOverlay.js";
 
 const defaultProps: IColorOverlayProps = {
     alignTo: "#somestyle",
@@ -20,7 +21,7 @@ function createComponent(customProps: Partial<IColorOverlayProps> = {}) {
 
 describe("ColorOverlay", () => {
     beforeEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it("should render ColorOverlay control", () => {
@@ -29,7 +30,7 @@ describe("ColorOverlay", () => {
     });
 
     it("ColorOverlay should be aligned to top left or bottom left", () => {
-        const overlaySpy = jest.spyOn(uiKit, "Overlay").mockImplementation(() => null);
+        const overlaySpy = vi.spyOn(uiKit, "Overlay").mockImplementation((): null => null);
 
         createComponent();
 
@@ -57,7 +58,7 @@ describe("ColorOverlay", () => {
     });
 
     it("ColorOverlay should be aligned to center left or bottom left ", () => {
-        const overlaySpy = jest.spyOn(uiKit, "Overlay").mockImplementation(() => null);
+        const overlaySpy = vi.spyOn(uiKit, "Overlay").mockImplementation((): null => null);
 
         createComponent({ dropdownVersion: DropdownVersionType.ColorPicker });
 

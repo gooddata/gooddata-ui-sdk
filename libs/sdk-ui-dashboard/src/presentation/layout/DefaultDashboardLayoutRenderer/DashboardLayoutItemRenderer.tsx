@@ -1,13 +1,13 @@
 // (C) 2007-2023 GoodData Corporation
 import cx from "classnames";
 import React from "react";
-import { ILayoutCoordinates } from "../../../types";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { RowEndHotspot, WidgetDropZoneColumn, useIsDraggingCurrentItem } from "../../dragAndDrop";
-import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
-import { IDashboardLayoutItemRenderer } from "./interfaces";
-import { renderModeAware } from "../../componentDefinition";
-import { isCustomWidgetBase } from "../../../model";
+import { ILayoutCoordinates } from "../../../types.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { RowEndHotspot, WidgetDropZoneColumn, useIsDraggingCurrentItem } from "../../dragAndDrop/index.js";
+import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
+import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { renderModeAware } from "../../componentDefinition/index.js";
+import { isCustomWidgetBase } from "../../../model/index.js";
 
 function getLayoutCoordinates(item: IDashboardLayoutItemFacade<unknown>): ILayoutCoordinates {
     return {

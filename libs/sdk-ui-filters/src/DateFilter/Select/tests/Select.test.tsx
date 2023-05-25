@@ -1,10 +1,11 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Select, ISelectProps } from "../Select";
-import { SelectMenu, ISelectMenuProps } from "../SelectMenu";
-import { ISelectItemOption, ISelectItemSeparator, ISelectItemHeading, ISelectItem } from "../types";
-import { getSelectableItems } from "../utils";
+import { Select, ISelectProps } from "../Select.js";
+import { SelectMenu, ISelectMenuProps } from "../SelectMenu.js";
+import { ISelectItemOption, ISelectItemSeparator, ISelectItemHeading, ISelectItem } from "../types.js";
+import { getSelectableItems } from "../utils.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("Select", () => {
     const optionFirst: ISelectItemOption<string> = { type: "option", value: "first", label: "First" };
@@ -40,7 +41,7 @@ describe("Select", () => {
     });
 
     it("should call onChange when option is selected", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         mountSelect({ onChange });
 
         // First option is selected by default

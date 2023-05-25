@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { IOperatorDropdownItem } from "../types";
-import { OperatorDropdownBody } from "./OperatorDropdownBody";
+import { IOperatorDropdownItem } from "../types.js";
+import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 const operatorItems = [
     { value: "TOP", translationId: messages.top.id },

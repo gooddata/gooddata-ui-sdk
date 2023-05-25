@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import memoize from "lodash/memoize";
+import memoize from "lodash/memoize.js";
 import stringify from "json-stable-stringify";
 
 /**

@@ -12,10 +12,10 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
-} from "../../../interfaces/Visualization";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket";
-import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig";
+} from "../../../interfaces/Visualization.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
+import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     getAttributeItemsWithoutStacks,
     getItemsCount,
@@ -27,11 +27,11 @@ import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     removeShowOnSecondaryAxis,
-} from "../../../utils/bucketHelper";
-import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper";
-import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties";
-import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
+} from "../../../utils/bucketHelper.js";
+import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
+import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
+import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     attributeAlias,
@@ -55,12 +55,12 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
-import set from "lodash/set";
-import isEmpty from "lodash/isEmpty";
-import includes from "lodash/includes";
-import cloneDeep from "lodash/cloneDeep";
-import { configurePercent } from "../../../utils/bucketConfig";
-import { removeSort } from "../../../utils/sort";
+import set from "lodash/set.js";
+import isEmpty from "lodash/isEmpty.js";
+import includes from "lodash/includes.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { configurePercent } from "../../../utils/bucketConfig.js";
+import { removeSort } from "../../../utils/sort.js";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 

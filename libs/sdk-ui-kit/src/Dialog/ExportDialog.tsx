@@ -1,9 +1,9 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
-import { Overlay } from "../Overlay";
-import { IAlignPoint } from "../typings/positioning";
-import { ExportDialogBase } from "./ExportDialogBase";
-import { IExportDialogBaseProps } from "./typings";
+import { Overlay } from "../Overlay/index.js";
+import { IAlignPoint } from "../typings/positioning.js";
+import { ExportDialogBase } from "./ExportDialogBase.js";
+import { IExportDialogBaseProps } from "./typings.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

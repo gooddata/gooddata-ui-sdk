@@ -17,7 +17,7 @@ import {
     JsonApiLabelOutWithLinks,
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { toSdkGranularity } from "./dateGranularityConversions";
+import { toSdkGranularity } from "./dateGranularityConversions.js";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     IGroupableCatalogItemBuilder,
@@ -28,9 +28,9 @@ import {
     newCatalogFact,
     newCatalogMeasure,
 } from "@gooddata/sdk-backend-base";
-import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
-import { isInheritedObject } from "./ObjectInheritance";
-import { convertLabelType } from "./LabelTypeConverter";
+import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter.js";
+import { isInheritedObject } from "./ObjectInheritance.js";
+import { convertLabelType } from "./LabelTypeConverter.js";
 
 const commonGroupableCatalogItemModifications =
     <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(

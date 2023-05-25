@@ -3,15 +3,15 @@ export {
     ITranslationsCustomizationContextProviderProps,
     TranslationsCustomizationContextProvider,
     withTranslationsCustomization,
-} from "./Context";
+} from "./Context.js";
 export {
     ITranslationsCustomizationProviderProps,
     TranslationsCustomizationProvider,
-} from "./TranslationsCustomizationProvider";
+} from "./TranslationsCustomizationProvider.js";
 export {
     pickCorrectInsightWording,
     pickCorrectMetricWording,
     pickCorrectWording,
     removeAllInsightToReportTranslations,
     removeAllWordingTranslationsWithSpecialSuffix,
-} from "./utils";
+} from "./utils.js";

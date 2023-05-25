@@ -15,5 +15,5 @@ declare module "*.json" {
 }
 
 declare module "custom-event" {
-    export = CustomEvent;
+    export default CustomEvent;
 }

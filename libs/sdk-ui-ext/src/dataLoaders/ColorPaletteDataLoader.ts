@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory";
+import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory.js";
 
 /**
  * @internal

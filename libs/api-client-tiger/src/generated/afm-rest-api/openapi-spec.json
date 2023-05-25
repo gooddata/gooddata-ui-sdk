@@ -451,11 +451,13 @@
                 "properties": {
                     "title": {
                         "type": "string",
-                        "description": "Title of requested label."
+                        "description": "Title of requested label.",
+                        "nullable": true
                     },
                     "primaryTitle": {
                         "type": "string",
-                        "description": "Title of primary label of attribute owning requested label or null if the primary label is excluded"
+                        "description": "Title of primary label of attribute owning requested label or null if the primary label is excluded",
+                        "nullable": true
                     }
                 },
                 "description": "List of returned elements."
@@ -894,7 +896,8 @@
                         "items": {
                             "type": "string",
                             "description": "Set of label values.",
-                            "example": "[\"value1\",\"value2\"]"
+                            "example": "[\"value1\",\"value2\"]",
+                            "nullable": true
                         }
                     }
                 },

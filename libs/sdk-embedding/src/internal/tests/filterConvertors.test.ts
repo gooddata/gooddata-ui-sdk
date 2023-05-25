@@ -1,5 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
-
+import { describe, expect, it } from "vitest";
 import {
     transformFilterContext,
     isValidFiltersFormat,
@@ -8,8 +8,8 @@ import {
     isAllTimeDateFilterItem,
     IExternalFiltersObject,
     isValidRemoveFiltersFormat,
-} from "../filterConvertors";
-import { EmbeddedGdc } from "../../iframe/common";
+} from "../filterConvertors.js";
+import { EmbeddedGdc } from "../../iframe/common.js";
 
 describe("filter convertors", () => {
     const absoluteDateFilter: EmbeddedGdc.IAbsoluteDateFilter = {

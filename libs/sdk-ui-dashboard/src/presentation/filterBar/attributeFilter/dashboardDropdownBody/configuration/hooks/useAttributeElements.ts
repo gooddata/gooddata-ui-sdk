@@ -6,7 +6,7 @@ import {
     queryAttributeElements,
     useDashboardQueryProcessing,
     IUseAttributeElements,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
 /**
  * @internal

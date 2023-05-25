@@ -3,8 +3,8 @@ import React, { useCallback } from "react";
 import { IntlShape } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 
-import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
-import { IAvailableSortsGroup, IBucketItemDescriptors } from "./types";
+import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
+import { IAvailableSortsGroup, IBucketItemDescriptors } from "./types.js";
 
 interface ChartSortingProps {
     currentSort: ISortItem[];

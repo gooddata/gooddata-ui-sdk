@@ -4,9 +4,9 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 
-import ColoredItem from "./ColoredItem";
-import { getSearchedItems } from "../../../../utils/colors";
-import { IColoredItem } from "../../../../interfaces/Colors";
+import ColoredItem from "./ColoredItem.js";
+import { getSearchedItems } from "../../../../utils/colors.js";
+import { IColoredItem } from "../../../../interfaces/Colors.js";
 
 const VISIBLE_ITEMS_COUNT = 5;
 const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;

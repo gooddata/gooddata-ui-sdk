@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import isError from "lodash/isError";
+import isError from "lodash/isError.js";
 
 /**
  * @internal

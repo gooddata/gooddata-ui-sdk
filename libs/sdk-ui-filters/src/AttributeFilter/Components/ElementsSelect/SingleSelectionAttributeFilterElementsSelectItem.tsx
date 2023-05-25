@@ -1,10 +1,10 @@
 // (C) 2023 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
-import camelCase from "lodash/camelCase";
-import { IAttributeFilterElementsSelectItemProps } from "./types";
+import camelCase from "lodash/camelCase.js";
+import { IAttributeFilterElementsSelectItemProps } from "./types.js";
 import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { getElementTitle } from "../../utils";
+import { getElementTitle } from "../../utils.js";
 import { useIntl } from "react-intl";
 
 /**

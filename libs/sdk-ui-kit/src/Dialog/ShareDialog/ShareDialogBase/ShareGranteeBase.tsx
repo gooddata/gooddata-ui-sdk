@@ -1,17 +1,17 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
-import { ConfirmDialogBase } from "../../ConfirmDialogBase";
+import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 
-import { ContentDivider } from "./ContentDivider";
-import { ShareGranteeContent } from "./ShareGranteeContent";
-import { IShareGranteeBaseProps } from "./types";
-import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl";
-import { SharedObjectLockControl } from "./SharedObjectLockControl";
-import { useAdminInformationMessageState } from "./useAdminInformationMessage";
-import { AdminInformationMessage } from "./AdminInformationMessage";
+import { ContentDivider } from "./ContentDivider.js";
+import { ShareGranteeContent } from "./ShareGranteeContent.js";
+import { IShareGranteeBaseProps } from "./types.js";
+import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl.js";
+import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
+import { useAdminInformationMessageState } from "./useAdminInformationMessage.js";
+import { AdminInformationMessage } from "./AdminInformationMessage.js";
 
 /**
  * @internal

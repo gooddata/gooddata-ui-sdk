@@ -6,9 +6,9 @@ import {
     IColorLegendConfig,
     IHeatmapLegendLabel as IColorLegendLabel,
     getColorLegendConfiguration,
-} from "./helpers";
-import { TOP, BOTTOM } from "./PositionTypes";
-import { IColorLegendItem, IColorLegendSize } from "./types";
+} from "./helpers.js";
+import { TOP, BOTTOM } from "./PositionTypes.js";
+import { IColorLegendItem, IColorLegendSize } from "./types.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 

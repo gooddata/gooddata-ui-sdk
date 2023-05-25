@@ -1,39 +1,50 @@
 // (C) 2021 GoodData Corporation
-import { GdcUser } from "../user/GdcUser";
-import { GdcUserGroup } from "../userGroup/GdcUserGroup";
+import { IUsersItem } from "../user/GdcUser.js";
+import { IUserGroupItem } from "../userGroup/GdcUserGroup.js";
 
 /**
  * @alpha
  */
-export namespace GdcAccessControl {
-    export type Permission = "read";
+export type Permission = "read";
 
-    export interface IGranteeUserInfo {
-        user: GdcUser.IUsersItem;
-    }
+/**
+ * @alpha
+ */
+export interface IGranteeUserInfo {
+    user: IUsersItem;
+}
 
-    export interface IGranteeUserGroupInfo {
-        userGroup: GdcUserGroup.IUserGroupItem;
-    }
-    export interface IGranteeEntry {
-        aclEntry: {
-            permission: Permission;
-            grantee: IGranteeUserInfo | IGranteeUserGroupInfo;
-        };
-    }
-    /**
-     * Request params for GET /gdc/userGroups?project=\{projectId\} /gdc/projects/\{projectId\}/obj/\{objectId\}/grantees
-     */
-    export interface IGetGranteesParams {
-        permission?: Permission;
-    }
+/**
+ * @alpha
+ */
+export interface IGranteeUserGroupInfo {
+    userGroup: IUserGroupItem;
+}
 
-    /**
-     * Response for GET /gdc/userGroups?project=\{projectId\} /gdc/projects/\{projectId\}/obj/\{objectId\}/grantees
-     */
-    export interface IGetGranteesResponse {
-        grantees: {
-            items: IGranteeEntry[];
-        };
-    }
+/**
+ * @alpha
+ */
+export interface IGranteeEntry {
+    aclEntry: {
+        permission: Permission;
+        grantee: IGranteeUserInfo | IGranteeUserGroupInfo;
+    };
+}
+
+/**
+ * Request params for GET /gdc/userGroups?project=\{projectId\} /gdc/projects/\{projectId\}/obj/\{objectId\}/grantees
+ * @alpha
+ */
+export interface IGetGranteesParams {
+    permission?: Permission;
+}
+
+/**
+ * Response for GET /gdc/userGroups?project=\{projectId\} /gdc/projects/\{projectId\}/obj/\{objectId\}/grantees
+ * @alpha
+ */
+export interface IGetGranteesResponse {
+    grantees: {
+        items: IGranteeEntry[];
+    };
 }

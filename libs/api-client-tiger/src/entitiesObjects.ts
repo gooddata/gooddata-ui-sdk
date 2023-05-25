@@ -5,9 +5,9 @@ import {
     EntitiesApiInterface,
     Configuration,
     ConfigurationParameters,
-} from "./generated/metadata-json-api";
+} from "./generated/metadata-json-api/index.js";
 
-import { BaseAPI, RequestArgs } from "./generated/metadata-json-api/base";
+import { BaseAPI, RequestArgs } from "./generated/metadata-json-api/base.js";
 
 export {
     Configuration as MetadataConfiguration,

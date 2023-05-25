@@ -5,9 +5,9 @@ import {
     InvertableAttributeElementSelection,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
-} from "../types";
-import { AttributeFilterLoader } from "./loader";
-import { AttributeFilterHandlerConfig } from "./types";
+} from "../types/index.js";
+import { AttributeFilterLoader } from "./loader.js";
+import { AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

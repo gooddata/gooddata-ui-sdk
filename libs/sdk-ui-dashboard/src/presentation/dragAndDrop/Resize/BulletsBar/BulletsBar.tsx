@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout/config";
-import { useResizeWidthStatus } from "../../LayoutResizeContext";
-import { Bullet } from "./Bullet";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout/config.js";
+import { useResizeWidthStatus } from "../../LayoutResizeContext.js";
+import { Bullet } from "./Bullet.js";
 
 export interface BulletsBarProps {
     visible: boolean;

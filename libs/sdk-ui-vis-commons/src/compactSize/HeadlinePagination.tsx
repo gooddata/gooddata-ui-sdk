@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useState } from "react";
 
-import { HeadlinePaginationRenderer } from "./HeadlinePaginationRenderer";
+import { HeadlinePaginationRenderer } from "./HeadlinePaginationRenderer.js";
 
 /**
  * @internal

@@ -8,7 +8,8 @@ import {
     newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { resolveWidgetFilters } from "../widgetFilters";
+import { resolveWidgetFilters } from "../widgetFilters.js";
+import { describe, expect, it } from "vitest";
 
 describe("resolveWidgetFilters", () => {
     const objRefsToIdentifiersMock: Parameters<typeof resolveWidgetFilters>[3] = (refs) =>

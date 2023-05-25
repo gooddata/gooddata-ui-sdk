@@ -7,7 +7,7 @@ import {
     DefaultDashboardAttributeFilter,
     DefaultDashboardDateFilter,
     DefaultDashboardAttributeFilterComponentSetFactory,
-} from "../../filterBar";
+} from "../../filterBar/index.js";
 import {
     DefaultDashboardWidget,
     DefaultDashboardInsightMenuButton,
@@ -20,8 +20,8 @@ import {
     DefaultDashboardInsightComponentSetFactory,
     DefaultDashboardKpiComponentSetFactory,
     DefaultDashboardInsightMenuTitle,
-} from "../../widget";
-import { IDashboardProps } from "../types";
+} from "../../widget/index.js";
+import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     AttributeFilterComponentProvider,
@@ -33,12 +33,12 @@ import {
     KpiComponentProvider,
     DateFilterComponentProvider,
     InsightMenuTitleComponentProvider,
-} from "../../dashboardContexts";
+} from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
-} from "../../componentDefinition";
+} from "../../componentDefinition/index.js";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;

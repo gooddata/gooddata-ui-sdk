@@ -18,13 +18,13 @@ import {
     SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { defaultDimensions } from "../_commons/dimensions";
-import { IBucketChartProps, IChartConfig } from "../../interfaces";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { CoreComboChart } from "./CoreComboChart";
-import isArray from "lodash/isArray";
-import { withChart } from "../_base/withChart";
-import { sanitizeConfig } from "../_commons/sanitizeStacking";
+import { defaultDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps, IChartConfig } from "../../interfaces/index.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { CoreComboChart } from "./CoreComboChart.js";
+import isArray from "lodash/isArray.js";
+import { withChart } from "../_base/withChart.js";
+import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 
 //
 // Internals

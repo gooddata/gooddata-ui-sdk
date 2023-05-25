@@ -2,9 +2,9 @@
 
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { TigerPreparedExecution } from "./preparedExecution";
+import { TigerPreparedExecution } from "./preparedExecution.js";
 import { AbstractExecutionFactory, AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 
 /*
  * Note: if you come here one day to implement the forInsightByRef because tiger supports execute-by-reference,

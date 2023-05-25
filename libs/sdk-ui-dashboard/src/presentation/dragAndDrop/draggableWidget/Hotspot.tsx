@@ -2,20 +2,20 @@
 import cx from "classnames";
 import React, { useCallback, useEffect, useRef } from "react";
 
-import { getDropZoneDebugStyle } from "../debug";
+import { getDropZoneDebugStyle } from "../debug.js";
 import {
     isInsightDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
-} from "../types";
-import { useDashboardDrop } from "../useDashboardDrop";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
-import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler";
-import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers";
+} from "../types.js";
+import { useDashboardDrop } from "../useDashboardDrop.js";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 interface IHotspotProps {
     sectionIndex: number;

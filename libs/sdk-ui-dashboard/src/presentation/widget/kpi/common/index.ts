@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
-export * from "./filterUtils";
-export { KpiRenderer } from "./KpiRenderer";
-export * from "./resultUtils";
-export * from "./types";
-export { useKpiData } from "./useKpiData";
-export { useKpiExecutionDataView } from "./useKpiExecutionDataView";
+export * from "./filterUtils.js";
+export { KpiRenderer } from "./KpiRenderer.js";
+export * from "./resultUtils.js";
+export * from "./types.js";
+export { useKpiData } from "./useKpiData.js";
+export { useKpiExecutionDataView } from "./useKpiExecutionDataView.js";

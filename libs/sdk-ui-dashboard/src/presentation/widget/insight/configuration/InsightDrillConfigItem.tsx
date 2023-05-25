@@ -3,11 +3,11 @@ import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
-import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types";
-import { DrillOriginItem } from "./DrillOriginItem";
-import { IDrillTargetType } from "./useDrillTargetTypeItems";
-import { DrillTargetType } from "./DrillTargetType";
-import { DrillTargets } from "./DrillTargets/DrillTargets";
+import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
+import { DrillOriginItem } from "./DrillOriginItem.js";
+import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
+import { DrillTargetType } from "./DrillTargetType.js";
+import { DrillTargets } from "./DrillTargets/DrillTargets.js";
 import {
     areObjRefsEqual,
     InsightDrillDefinition,
@@ -20,8 +20,8 @@ import {
     selectSelectedWidgetRef,
     useDashboardSelector,
     selectCatalogDateDatasets,
-} from "../../../../model";
-import invariant from "ts-invariant";
+} from "../../../../model/index.js";
+import { invariant } from "ts-invariant";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;

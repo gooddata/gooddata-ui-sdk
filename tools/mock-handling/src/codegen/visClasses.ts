@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import compact from "lodash/compact";
-import { VisClassesRecording } from "../recordings/visClasses";
+import compact from "lodash/compact.js";
+import { VisClassesRecording } from "../recordings/visClasses.js";
 
 function visClassesRecordingInit(rec: VisClassesRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());

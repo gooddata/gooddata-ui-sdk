@@ -20,7 +20,7 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
-import { App } from "./App";
+import { App } from "./App.js";
 
 const rootDOMNode = document.createElement("div");
 rootDOMNode.className = "root";

@@ -13,9 +13,9 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model";
-import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling";
-import { useIsFilterNotApplied } from "./useIsFilterNotApplied";
+import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model/index.js";
+import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
+import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

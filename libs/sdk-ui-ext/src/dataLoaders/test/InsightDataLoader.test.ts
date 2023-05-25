@@ -2,9 +2,10 @@
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IInsight, idRef, ObjRef } from "@gooddata/sdk-model";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { insightDataLoaderFactory } from "../InsightDataLoader";
-import { noopWorkspaceInsightsService } from "./dataLoaders.mock";
+import { insightDataLoaderFactory } from "../InsightDataLoader.js";
+import { noopWorkspaceInsightsService } from "./dataLoaders.mock.js";
 
 describe("InsightDataLoader", () => {
     const workspace = "foo";
@@ -27,7 +28,7 @@ describe("InsightDataLoader", () => {
 
     it("should cache getInsight calls", async () => {
         const loader = insightDataLoaderFactory.forWorkspace(workspace);
-        const getInsight = jest.fn(() => Promise.resolve({} as any));
+        const getInsight = vi.fn(() => Promise.resolve({} as any));
         const backend = getMockBackend(getInsight);
 
         const ref = idRef("foo");
@@ -43,7 +44,7 @@ describe("InsightDataLoader", () => {
 
     it("should not cache getInsight errors", async () => {
         const loader = insightDataLoaderFactory.forWorkspace(workspace);
-        const getInsight = jest.fn(() => Promise.resolve({} as any));
+        const getInsight = vi.fn(() => Promise.resolve({} as any));
         const errorBackend = getMockBackend(() => {
             throw new Error("FAIL");
         });

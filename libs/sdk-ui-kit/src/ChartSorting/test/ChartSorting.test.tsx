@@ -2,17 +2,17 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
-import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor, within } from "@testing-library/react";
-import noop from "lodash/noop";
-import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting";
+import { render, screen, waitFor, within, fireEvent } from "@testing-library/react";
+import noop from "lodash/noop.js";
+import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
 import {
     singleNormalAttributeSortConfig,
     singleAreaAttributeSortConfig,
     multipleAttributesSortConfig,
-} from "./mock";
+} from "./mock.js";
 
-import { IBucketItemDescriptors } from "../types";
+import { IBucketItemDescriptors } from "../types.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const bucketItems: IBucketItemDescriptors = {
     m1: {
@@ -71,8 +71,8 @@ describe("ChartSorting", () => {
             expect(screen.getByText("Z to A")).toBeInTheDocument();
         });
 
-        it("should set correct attribute dropdown value", async () => {
-            await userEvent.click(screen.getByText("Z to A"));
+        it("should set correct attribute dropdown value", () => {
+            fireEvent.click(screen.getByText("Z to A"));
             expect(screen.queryByText("A to Z")).toBeInTheDocument();
         });
     });
@@ -93,8 +93,8 @@ describe("ChartSorting", () => {
             expect(screen.getByText("Newest to oldest")).toBeInTheDocument();
         });
 
-        it("should render dialog with correctly preselected value when config with just one chronological desc date is provided", async () => {
-            await userEvent.click(screen.getByText("Newest to oldest"));
+        it("should render dialog with correctly preselected value when config with just one chronological desc date is provided", () => {
+            fireEvent.click(screen.getByText("Newest to oldest"));
             expect(screen.queryByText("Oldest to newest")).toBeInTheDocument();
         });
     });
@@ -130,13 +130,13 @@ describe("ChartSorting", () => {
             expect(screen.getByText("Total").closest("button")).toHaveClass("disabled");
         });
 
-        it("should allow to set normal attribute sort item and hide measure dropdown", async () => {
-            await userEvent.click(screen.getByText("Smallest to largest"));
+        it("should allow to set normal attribute sort item and hide measure dropdown", () => {
+            fireEvent.click(screen.getByText("Smallest to largest"));
 
             expect(screen.getByText("A to Z")).toBeInTheDocument();
             expect(screen.getAllByText("Smallest to largest")[0]).toBeInTheDocument();
 
-            await userEvent.click(screen.getByText("Z to A"));
+            fireEvent.click(screen.getByText("Z to A"));
             expect(screen.getByText("Z to A")).toBeInTheDocument();
 
             expect(screen.queryByText("Sum of all metrics (total)")).not.toBeInTheDocument();
@@ -157,55 +157,55 @@ describe("ChartSorting", () => {
             expect(within(sortAttributes[1]).getByText("Smallest to largest")).toBeInTheDocument();
         });
 
-        it("should allow to change metric dropdown", async () => {
-            await userEvent.click(screen.getByText("Snapshot (M1)"));
-            await userEvent.click(screen.getByText("Timeline").closest("button"));
+        it("should allow to change metric dropdown", () => {
+            fireEvent.click(screen.getByText("Snapshot (M1)"));
+            fireEvent.click(screen.getByText("Timeline").closest("button"));
             expect(screen.getByText("Timeline (M2)")).toBeInTheDocument();
         });
     });
 
     describe("onCancel", () => {
-        it("should call onCancel when Cancel button is clicked", async () => {
-            const onCancel = jest.fn();
+        it("should call onCancel when Cancel button is clicked", () => {
+            const onCancel = vi.fn();
             renderComponent({ onCancel });
 
-            await userEvent.click(screen.getByText("Cancel"));
+            fireEvent.click(screen.getByText("Cancel"));
             expect(onCancel).toHaveBeenCalled();
         });
     });
 
     describe("onApply", () => {
-        it("should not call onApply when disabled Apply button is clicked", async () => {
-            const onApply = jest.fn();
+        it("should not call onApply when disabled Apply button is clicked", () => {
+            const onApply = vi.fn();
             renderComponent({ onApply });
 
-            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
             expect(screen.getByText(/Apply/i).closest("button")).toHaveClass("disabled");
             expect(onApply).not.toHaveBeenCalled();
         });
 
-        it("should call onApply when Apply button is clicked", async () => {
-            const onApply = jest.fn();
+        it("should call onApply when Apply button is clicked", () => {
+            const onApply = vi.fn();
             renderComponent({ onApply });
 
-            await userEvent.click(screen.getByText("Z to A"));
-            await userEvent.click(screen.getByText("A to Z"));
-            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText("Z to A"));
+            fireEvent.click(screen.getByText("A to Z"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
 
             expect(screen.getByText(/Apply/i).closest("button")).not.toHaveClass("disabled");
             expect(onApply).toHaveBeenCalled();
         });
 
-        it("should call onApply for simple normal attribute with correct SortItem payload", async () => {
-            const onApply = jest.fn();
+        it("should call onApply for simple normal attribute with correct SortItem payload", () => {
+            const onApply = vi.fn();
             renderComponent({
                 onApply,
                 ...singleNormalAttributeSortConfig,
             });
 
-            await userEvent.click(screen.getByText("Z to A"));
-            await userEvent.click(screen.getByText("A to Z"));
-            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText("Z to A"));
+            fireEvent.click(screen.getByText("A to Z"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -217,16 +217,16 @@ describe("ChartSorting", () => {
             ]);
         });
 
-        it("should call onApply for simple area attribute with correct SortItem payload", async () => {
-            const onApply = jest.fn();
+        it("should call onApply for simple area attribute with correct SortItem payload", () => {
+            const onApply = vi.fn();
             renderComponent({
                 onApply,
                 ...singleAreaAttributeSortConfig,
             });
 
-            await userEvent.click(screen.getByText("Smallest to largest"));
-            await userEvent.click(screen.getByText("Largest to smallest"));
-            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText("Smallest to largest"));
+            fireEvent.click(screen.getByText("Largest to smallest"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -240,19 +240,19 @@ describe("ChartSorting", () => {
         });
 
         it("should call onApply for multiple attributes with correct SortItem payload", async () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             renderComponent({
                 onApply,
                 ...multipleAttributesSortConfig,
             });
 
             const secondAttribute = screen.getByText("Smallest to largest").closest("button");
-            await userEvent.click(secondAttribute);
+            fireEvent.click(secondAttribute);
 
             const secondSort = screen.queryAllByText("Largest to smallest")[1];
-            await userEvent.click(secondSort);
+            fireEvent.click(secondSort);
 
-            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
             await waitFor(() => {
                 expect(onApply).toHaveBeenCalledWith([
                     {

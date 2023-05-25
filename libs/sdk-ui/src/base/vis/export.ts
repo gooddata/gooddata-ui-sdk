@@ -1,8 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
 
 import { IExecutionResult, IExportConfig, IExportBlobResult } from "@gooddata/sdk-backend-spi";
-import { IExportFunction, IExtendedExportConfig } from "./Events";
-import { GoodDataSdkError } from "../errors/GoodDataSdkError";
+import { IExportFunction, IExtendedExportConfig } from "./Events.js";
+import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
 
 const escapeFileName = (str: string) => str?.replace(/[/?<>\\:*|"]/g, "");
 

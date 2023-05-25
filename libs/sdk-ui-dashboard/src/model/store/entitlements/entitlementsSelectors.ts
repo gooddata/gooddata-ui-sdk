@@ -1,9 +1,9 @@
 // (C) 2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
-import { DashboardSelector, DashboardState } from "../types";
-import invariant from "ts-invariant";
-import { ResolvedEntitlements } from "../../types/commonTypes";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { invariant } from "ts-invariant";
+import { ResolvedEntitlements } from "../../types/commonTypes.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

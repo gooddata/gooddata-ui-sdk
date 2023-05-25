@@ -6,10 +6,10 @@ import {
     selectWidgetsOverlayState,
     selectSectionModification,
     uiActions,
-} from "../../../model";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout";
-import { getRefsForSection } from "../refs";
-import { DashboardItemOverlay } from "./DashboardItemOverlay";
+} from "../../../model/index.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/index.js";
+import { getRefsForSection } from "../refs.js";
+import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
 
 interface IDashboardLayoutSectionOverlayControllerProps {
     section: IDashboardLayoutSectionFacade<unknown>;

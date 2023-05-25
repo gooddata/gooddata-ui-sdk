@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { EllipsisText } from "./EllipsisText";
-import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble";
-import { useMediaQuery } from "../responsive";
+import { EllipsisText } from "./EllipsisText.js";
+import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { useMediaQuery } from "../responsive/index.js";
 import cx from "classnames";
 
 /**

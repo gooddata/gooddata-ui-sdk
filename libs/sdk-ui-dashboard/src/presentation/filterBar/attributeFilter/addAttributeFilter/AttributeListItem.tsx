@@ -1,10 +1,10 @@
 // (C) 2023 GoodData Corporation
 import React, { useMemo } from "react";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty.js";
 import { ICatalogAttribute } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import { AttributeListItemTooltip } from "./attributeListItemTooltip/AttributeListItemTooltip";
+import { AttributeListItemTooltip } from "./attributeListItemTooltip/AttributeListItemTooltip.js";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeListItemProps {

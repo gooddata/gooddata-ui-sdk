@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketOfFun } from "../../../interfaces/Visualization";
+import { IBucketOfFun } from "../../../interfaces/Visualization.js";
 import {
     getAllAttributeItems,
     getDateItems,
@@ -10,7 +10,7 @@ import {
     limitNumberOfMeasuresInBuckets,
     transformMeasureBuckets,
     getMainDateItem,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 
 const measureBucketItemsLimit: IMeasureBucketItemsLimit[] = [
     {

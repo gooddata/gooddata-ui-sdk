@@ -9,9 +9,9 @@ import {
     DropdownButton,
 } from "@gooddata/sdk-ui-kit";
 import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
-import { InsightDescription } from "./InsightDescription";
-import { useDashboardSelector, selectInsightByRef } from "../../../../../model";
-import { IncludeMetrics } from "./IncludeMetrics";
+import { InsightDescription } from "./InsightDescription.js";
+import { useDashboardSelector, selectInsightByRef } from "../../../../../model/index.js";
+import { IncludeMetrics } from "./IncludeMetrics.js";
 
 interface IInsightDescriptionConfigProps {
     widget: IInsightWidget;

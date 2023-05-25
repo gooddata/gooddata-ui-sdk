@@ -1,17 +1,18 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { GeoChartOptionsWrapper } from "../GeoChartOptionsWrapper";
-import { IGeoChartInnerProps, GeoChartInner } from "../GeoChartInner";
-import { RecShortcuts } from "../../../../__mocks__/recordings";
+import { GeoChartOptionsWrapper } from "../GeoChartOptionsWrapper.js";
+import { IGeoChartInnerProps, GeoChartInner } from "../GeoChartInner.js";
+import { RecShortcuts } from "../../../../__mocks__/recordings.js";
 import { createIntlMock, DefaultColorPalette } from "@gooddata/sdk-ui";
-import { IGeoConfig } from "../../../GeoChart";
+import { IGeoConfig } from "../../../GeoChart.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../GeoChartInner", () => ({
-    GeoChartInner: jest.fn(() => null),
+vi.mock("../GeoChartInner", () => ({
+    GeoChartInner: vi.fn(() => null),
 }));
 
 const intl = createIntlMock({
@@ -24,7 +25,7 @@ const intl = createIntlMock({
 
 describe("GeoChartOptionsWrapper", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     function renderComponent(
@@ -73,7 +74,7 @@ describe("GeoChartOptionsWrapper", () => {
     });
 
     it("should call onDataTooLarge", () => {
-        const onDataTooLarge = jest.fn();
+        const onDataTooLarge = vi.fn();
         const { dv } = RecShortcuts.LocationOnlySmall;
         const props: Partial<IGeoChartInnerProps> = {
             config: { limit: 5, mapboxToken: "" },

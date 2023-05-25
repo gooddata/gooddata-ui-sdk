@@ -1,9 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
 import { ReferenceData } from "@gooddata/reference-workspace";
-import { createTestRow, TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor } from "./drilling.fixture";
-import { createDrillIntersection } from "../drillIntersectionFactory";
-import { IGridRow } from "../../data/resultTypes";
-import { AnyCol } from "../../structure/tableDescriptorTypes";
+import { createTestRow, TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor } from "./drilling.fixture.js";
+import { createDrillIntersection } from "../drillIntersectionFactory.js";
+import { IGridRow } from "../../data/resultTypes.js";
+import { AnyCol } from "../../structure/tableDescriptorTypes.js";
+import { describe, it, expect } from "vitest";
 
 describe("createDrillIntersection", () => {
     const TestTable = TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor;

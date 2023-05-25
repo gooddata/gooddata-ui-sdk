@@ -1,11 +1,12 @@
 // (C) 2023 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-import { getTooltipWaterfallChart } from "../chartTooltips";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { getMVS } from "../../_util/test/helper";
-import { IChartConfig } from "../../../../interfaces";
-import { IUnsafeHighchartsTooltipPoint } from "../../../../highcharts/typings/unsafe";
+import { getTooltipWaterfallChart } from "../chartTooltips.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { getMVS } from "../../_util/test/helper.js";
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
+import { describe, it, expect } from "vitest";
 
 describe("chartTooltips", () => {
     describe("getTooltipWaterfallChart", () => {

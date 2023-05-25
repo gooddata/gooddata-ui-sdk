@@ -1,26 +1,36 @@
 // (C) 2007-2019 GoodData Corporation
 
-// These imports and actions need to be done first because of mocks
-const Original = jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/dependencyWheelChart/CoreDependencyWheelChart");
-import { withPropsExtractor } from "../../_infra/withProps";
-const { extractProps, wrap } = withPropsExtractor();
-
-import flatMap from "lodash/flatMap";
+import { describe, it, expect, vi } from "vitest";
+import { withPropsExtractor } from "../../_infra/withProps.js";
+import flatMap from "lodash/flatMap.js";
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
-import dependencyWheelChartScenarios from "../../../scenarios/charts/dependencyWheelChart";
-import { ScenarioAndDescription } from "../../../src";
-import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
-import { mountChartAndCapture } from "../../_infra/render";
-import { mountInsight } from "../../_infra/renderPlugVis";
-import { cleanupCoreChartProps } from "../../_infra/utils";
+import dependencyWheelChartScenarios from "../../../scenarios/charts/dependencyWheelChart/index.js";
+import { ScenarioAndDescription } from "../../../src/index.js";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
+import { mountChartAndCapture } from "../../_infra/render.js";
+import { mountInsight } from "../../_infra/renderPlugVis.js";
+import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
 const Chart = "DependencyWheelChart";
 
-jest.mock("@gooddata/sdk-ui-charts/dist/charts/dependencyWheelChart/CoreDependencyWheelChart", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/dependencyWheelChart/CoreDependencyWheelChart"),
-    CoreDependencyWheelChart: wrap(Original.CoreDependencyWheelChart),
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
 }));
+
+vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreDependencyWheelChart", async () => {
+    const Original = await vi.importActual<any>(
+        "@gooddata/sdk-ui-charts/internal-tests/CoreDependencyWheelChart",
+    );
+    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
+    extractProps = originalExtractProps;
+
+    return {
+        ...Original,
+        CoreDependencyWheelChart: wrap(Original.CoreDependencyWheelChart),
+    };
+});
 
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<IDependencyWheelChartProps>> = flatMap(

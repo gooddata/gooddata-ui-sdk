@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
-import { uiInitialState } from "./uiState";
-import { uiReducers } from "./uiReducers";
+import { uiInitialState } from "./uiState.js";
+import { uiReducers } from "./uiReducers.js";
 
 const uiSlice = createSlice({
     name: "uiSlice",

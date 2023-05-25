@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { isMobileView } from "../../utils/responsive";
+import { isMobileView } from "../../utils/responsive.js";
 
 export interface IAttachmentProps {
     className?: string;

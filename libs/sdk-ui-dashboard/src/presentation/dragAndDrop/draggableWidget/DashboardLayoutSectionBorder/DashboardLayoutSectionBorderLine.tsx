@@ -2,8 +2,8 @@
 import React from "react";
 import cx from "classnames";
 
-import { DashboardLayoutSectionBorderMarker } from "./DashboardLayoutSectionBorderMarker";
-import { DashboardLayoutSectionBorderStatus } from "./types";
+import { DashboardLayoutSectionBorderMarker } from "./DashboardLayoutSectionBorderMarker.js";
+import { DashboardLayoutSectionBorderStatus } from "./types.js";
 
 interface IDashboardLayoutSectionBorderLineProps {
     position: "top" | "bottom";

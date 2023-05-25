@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import { TableDescriptor } from "../structure/tableDescriptor";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderName, getMappingHeaderUri, hasMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { invariant } from "ts-invariant";
-import { IGridRow } from "../data/resultTypes";
+import { IGridRow } from "../data/resultTypes.js";
 
 /**
  * @deprecated this is linked to deprecated API

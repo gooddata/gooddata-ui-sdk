@@ -1,14 +1,14 @@
 // (C) 2007-2023 GoodData Corporation
-import isPlainObject from "lodash/isPlainObject";
-import isFunction from "lodash/isFunction";
-import set from "lodash/set";
-import defaults from "lodash/defaults";
-import merge from "lodash/merge";
-import result from "lodash/result";
-import pkgInfo from "../package.json";
-import { stringify } from "./utils/queryString";
+import isPlainObject from "lodash/isPlainObject.js";
+import isFunction from "lodash/isFunction.js";
+import set from "lodash/set.js";
+import defaults from "lodash/defaults.js";
+import merge from "lodash/merge.js";
+import result from "lodash/result.js";
+import { stringify } from "./utils/queryString.js";
 
-const { name: pkgName, version: pkgVersion } = pkgInfo;
+import { LIB_VERSION, LIB_NAME } from "./__version.js";
+
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
  * Interface is the same as original jQuery.ajax.
@@ -31,7 +31,7 @@ const LATEST_REST_API_VERSION = 5;
  * Gooddata-js package signature
  * @internal
  */
-export const thisPackage = { name: pkgName, version: pkgVersion };
+export const thisPackage = { name: LIB_NAME, version: LIB_VERSION };
 
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {

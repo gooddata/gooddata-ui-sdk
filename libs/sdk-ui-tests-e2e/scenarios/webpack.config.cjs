@@ -139,23 +139,22 @@ module.exports = async (env, argv) => {
         node: {
             __filename: true,
         },
+        experiments: { outputModule: true },
         resolve: {
             extensions: [".js", ".jsx", ".ts", ".tsx"],
+            extensionAlias: {
+                ".js": [".ts", ".tsx", ".js", ".jsx"],
+            },
             alias: {
                 react: path.resolve("./node_modules/react"),
                 // fixes tilde imports in CSS from sdk-ui-ext
                 "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
                 "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
                 "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
-                "@gooddata/sdk-backend-spi": path.resolve("./node_modules/@gooddata/sdk-backend-spi"),
-                "@gooddata/sdk-ui": path.resolve("./node_modules/@gooddata/sdk-ui"),
                 "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
                 "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
                 "@gooddata/sdk-ui-geo": path.resolve("./node_modules/@gooddata/sdk-ui-geo"),
                 "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
-                "@gooddata/sdk-model": path.resolve("./node_modules/@gooddata/sdk-model"),
-                "@gooddata/sdk-backend-bear": path.resolve("./node_modules/@gooddata/sdk-backend-bear"),
-                "@gooddata/sdk-backend-tiger": path.resolve("./node_modules/@gooddata/sdk-backend-tiger"),
             },
 
             // Prefer ESM versions of packages to enable tree shaking and easier dev experience

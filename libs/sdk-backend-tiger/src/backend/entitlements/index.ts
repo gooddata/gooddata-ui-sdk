@@ -2,7 +2,7 @@
 
 import { IEntitlements } from "@gooddata/sdk-backend-spi";
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../types";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerEntitlements implements IEntitlements {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}

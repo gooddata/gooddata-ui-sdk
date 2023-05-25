@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @beta

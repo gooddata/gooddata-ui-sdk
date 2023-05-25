@@ -1,16 +1,16 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { logInfo } from "./terminal/loggers";
+import { logInfo } from "./terminal/loggers.js";
 import fse from "fs-extra";
 import { parse } from "dotenv";
 import { readFileSync } from "fs";
-import { TargetBackendType } from "./types";
+import { TargetBackendType } from "./types.js";
 
 function readDotEnv(): Record<string, string> {
     logInfo("Reading .env and .env.secrets files.");
 
-    const env = fse.existsSync(".env") ? parse(readFileSync(".env"), {}) : {};
-    const secrets = fse.existsSync(".env.secrets") ? parse(readFileSync(".env.secrets"), {}) : {};
+    const env = fse.existsSync(".env") ? parse(readFileSync(".env")) : {};
+    const secrets = fse.existsSync(".env.secrets") ? parse(readFileSync(".env.secrets")) : {};
 
     return {
         ...env,

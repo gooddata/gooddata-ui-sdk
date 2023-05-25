@@ -12,7 +12,7 @@ import {
     IDashboardAttributeFilterDisplayForms,
     setAttributeFilterDisplayForm,
     useDashboardCommandProcessing,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
 export function useDisplayFormConfiguration(
     currentFilter: IDashboardAttributeFilter,

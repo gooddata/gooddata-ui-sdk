@@ -1,14 +1,14 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
-import { IInsightMenuItem } from "../types";
-import { InsightConfiguration } from "../../insight/configuration/InsightConfiguration";
-import { InsightInteractions } from "../../insight/configuration/InsightInteractions";
+import { IInsightMenuItem } from "../types.js";
+import { InsightConfiguration } from "../../insight/configuration/InsightConfiguration.js";
+import { InsightInteractions } from "../../insight/configuration/InsightInteractions.js";
 
 import { Icon } from "@gooddata/sdk-ui-kit";
-import { useDashboardDispatch, eagerRemoveSectionItemByWidgetRef } from "../../../../model";
+import { useDashboardDispatch, eagerRemoveSectionItemByWidgetRef } from "../../../../model/index.js";
 import { IInsightWidget } from "@gooddata/sdk-model";
 
 /**

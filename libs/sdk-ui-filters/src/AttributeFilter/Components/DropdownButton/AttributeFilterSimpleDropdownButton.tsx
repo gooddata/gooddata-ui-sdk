@@ -3,7 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
-import { IAttributeFilterDropdownButtonProps } from "./AttributeFilterDropdownButton";
+import { IAttributeFilterDropdownButtonProps } from "./AttributeFilterDropdownButton.js";
 
 /**
  * Component using the {@link IAttributeFilterDropdownButtonProps} props showing just the attribute title.

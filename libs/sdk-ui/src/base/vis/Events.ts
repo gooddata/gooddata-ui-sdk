@@ -8,8 +8,8 @@ import {
     IMeasureDescriptor,
     IAttributeDescriptor,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "../errors/GoodDataSdkError";
-import { IMappingHeader } from "../headerMatching/MappingHeader";
+import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
+import { IMappingHeader } from "../headerMatching/MappingHeader.js";
 
 /**
  * @public

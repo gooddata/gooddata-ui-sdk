@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
-import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types";
-import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types";
+import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
+import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 
 const addOrUpdateDrillConfigItem = (drillConfigItems: IDrillConfigItem[], newItem: IDrillConfigItem) => {
     const found = drillConfigItems.findIndex(

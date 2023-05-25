@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useState } from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { Button, ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -9,12 +9,12 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { action } from "@storybook/addon-actions";
 import { uriRef } from "@gooddata/sdk-model";
 
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
-import { BackstopConfig } from "../../../_infra/backstopScenario";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 
-import { defaultUser, defaultUserPermissions, groupAll, owner } from "./GranteeMock";
-import { LabelsMock } from "./LabelsMock";
+import { defaultUser, defaultUserPermissions, groupAll, owner } from "./GranteeMock.js";
+import { LabelsMock } from "./LabelsMock.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";

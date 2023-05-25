@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { recordedDataFacade } from "../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 

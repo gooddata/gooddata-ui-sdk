@@ -1,22 +1,29 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
-import { addLayoutSection, addSectionItem, removeLayoutSection, replaceSectionItem } from "../../../commands";
-import { selectLayout } from "../../../store/layout/layoutSelectors";
-import { removeSectionItem } from "../../../commands/layout";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    addLayoutSection,
+    addSectionItem,
+    removeLayoutSection,
+    replaceSectionItem,
+} from "../../../commands/index.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { removeSectionItem } from "../../../commands/layout.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
-import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures.js";
 
 describe("stashing", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, ComplexDashboardIdentifier),
-    );
+        }, ComplexDashboardIdentifier);
+    });
 
     const [ThirdSectionFirstItem] = ComplexDashboardWithReferences.dashboard.layout!.sections[2].items;
     const [SecondSectionFirstItem, SecondSectionSecondItem] =

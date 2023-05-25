@@ -5,7 +5,7 @@ import {
     IFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
-} from "../filter";
+} from "./index.js";
 
 /**
  * Determines if a filter has a semantic effect and thus must be taken into account when computing fingerprints.

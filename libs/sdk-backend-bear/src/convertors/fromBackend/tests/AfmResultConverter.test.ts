@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { transformResultHeaders } from "@gooddata/sdk-backend-base";
-import { findDateAttributeUris } from "../../dateFormatting/dateFormatter";
-import { createResultHeaderTransformer } from "../afm/result";
+import { findDateAttributeUris } from "../../dateFormatting/dateFormatter.js";
+import { createResultHeaderTransformer } from "../afm/result.js";
 import {
     dimensionHeaders,
     dimensions,
@@ -10,7 +10,8 @@ import {
     transformedDimensionHeaders_DDMMYYYY_SlashSeparated,
     transformedDimensionHeaders_MDYY,
     transformedDimensionHeaders_YYYYMMDD,
-} from "./AfmResultConverter.fixtures";
+} from "./AfmResultConverter.fixtures.js";
+import { describe, expect, it } from "vitest";
 
 describe("AfmResultConverter", () => {
     const Scenarios: Array<[string, any]> = [

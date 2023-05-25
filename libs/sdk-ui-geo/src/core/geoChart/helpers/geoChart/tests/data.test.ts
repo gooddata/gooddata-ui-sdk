@@ -1,9 +1,10 @@
 // (C) 2020-2023 GoodData Corporation
-import { getGeoData, getLocation, parseCoordinate } from "../../geoChart/data";
+import { getGeoData, getLocation, parseCoordinate } from "../data.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { RecShortcuts } from "../../../../../../__mocks__/recordings";
+import { RecShortcuts } from "../../../../../../__mocks__/recordings.js";
+import { describe, it, expect } from "vitest";
 
 describe("getLocation", () => {
     it("should return { lat, lng } from location string", () => {

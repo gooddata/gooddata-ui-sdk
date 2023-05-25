@@ -1,12 +1,13 @@
 // (C) 2020-2023 GoodData Corporation
 
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { ILiveFeatures } from "@gooddata/api-client-tiger";
-import { getFeatureHubFeatures, FeatureHubResponse } from "../hub";
-import { FeatureDef } from "../feature";
-import { pickContext } from "../index";
+import { getFeatureHubFeatures, FeatureHubResponse } from "../hub.js";
+import { FeatureDef } from "../feature.js";
+import { pickContext } from "../index.js";
+import { describe, expect, it, vi } from "vitest";
 
-jest.mock("axios");
+const axiosGetSpy = vi.spyOn(axios, "get");
 
 describe("live features", () => {
     function createFeatures(earlyAccess = ""): ILiveFeatures["live"] {
@@ -29,20 +30,20 @@ describe("live features", () => {
         status = 200,
         etag = "current",
     ) {
-        (axios.get as any).mockResolvedValueOnce({
+        axiosGetSpy.mockResolvedValueOnce({
             data: [{ id: "test", features }],
             headers: { etag },
             status,
             statusText: "",
             config: {},
-        } as AxiosResponse<FeatureHubResponse>);
+        } as any);
     }
 
     it("call axios", async () => {
         mockReturn([]);
 
         await getFeatureHubFeatures(createFeatures());
-        expect(axios.get).toHaveBeenCalledWith("/features", {
+        expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
@@ -59,7 +60,7 @@ describe("live features", () => {
         mockReturn([]);
 
         await getFeatureHubFeatures(createFeatures(), pickContext({ earlyAccess: "omega" }));
-        expect(axios.get).toHaveBeenCalledWith("/features", {
+        expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
@@ -77,7 +78,7 @@ describe("live features", () => {
         mockReturn([]);
 
         await getFeatureHubFeatures(createFeatures("beta"));
-        expect(axios.get).toHaveBeenCalledWith("/features", {
+        expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
@@ -95,7 +96,7 @@ describe("live features", () => {
         mockReturn([]);
 
         await getFeatureHubFeatures(createFeatures("beta"), pickContext({ earlyAccess: "omega" }));
-        expect(axios.get).toHaveBeenCalledWith("/features", {
+        expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",

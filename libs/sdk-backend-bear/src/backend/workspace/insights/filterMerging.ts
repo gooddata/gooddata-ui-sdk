@@ -24,8 +24,8 @@ import {
     IMeasureValueFilter,
     IRankingFilter,
 } from "@gooddata/sdk-model";
-import partition from "lodash/fp/partition";
-import zip from "lodash/fp/zip";
+import partition from "lodash/fp/partition.js";
+import zip from "lodash/fp/zip.js";
 
 /**
  * Appends a set of filters to an existing set making sure that all the filters compared regardless of their ObjRef types.

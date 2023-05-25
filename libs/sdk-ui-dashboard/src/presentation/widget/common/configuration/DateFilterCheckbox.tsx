@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { ICatalogDateDataset, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
-import { getUnrelatedDateDataset } from "./utils";
+import { getUnrelatedDateDataset } from "./utils.js";
 
 interface IDateFilterCheckboxProps {
     widget: IWidget;

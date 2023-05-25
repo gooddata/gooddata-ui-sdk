@@ -2,11 +2,11 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import DropdownControl from "../DropdownControl";
-import { legendPositionDropdownItems } from "../../../constants/dropdowns";
-import { getTranslatedDropdownItems } from "../../../utils/translations";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import { messages } from "../../../../locales";
+import DropdownControl from "../DropdownControl.js";
+import { legendPositionDropdownItems } from "../../../constants/dropdowns.js";
+import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { messages } from "../../../../locales.js";
 
 export interface ILegendPositionControl {
     disabled: boolean;

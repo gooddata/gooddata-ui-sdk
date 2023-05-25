@@ -9,17 +9,17 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeSharing } from "../../commands";
-import { DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard";
-import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/metaSelectors";
-import { invalidArgumentsProvided } from "../../events/general";
-import { metaActions } from "../../store/meta";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeSharing } from "../../commands/index.js";
+import { DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard.js";
+import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { metaActions } from "../../store/meta/index.js";
 import { BatchAction, batchActions } from "redux-batched-actions";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
-import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions";
-import { dashboardPermissionsActions } from "../../store/dashboardPermissions";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
+import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
+import { dashboardPermissionsActions } from "../../store/dashboardPermissions/index.js";
 
 type DashboardSaveSharingContext = {
     cmd: ChangeSharing;

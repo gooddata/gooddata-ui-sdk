@@ -1,9 +1,9 @@
 // (C) 2023 GoodData Corporation
 
-import { Bubble } from "./Bubble";
-import { BubbleHoverTrigger } from "./BubbleHoverTrigger";
+import { Bubble } from "./Bubble.js";
+import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
 import React from "react";
-import { IAlignPoint } from "../typings/positioning";
+import { IAlignPoint } from "../typings/positioning.js";
 import { useIntl } from "react-intl";
 
 /**

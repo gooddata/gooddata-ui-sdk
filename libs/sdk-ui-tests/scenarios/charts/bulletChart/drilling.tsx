@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
-import { AttributeElements } from "../../_infra/predicates";
-import { BulletChartWithAllMeasuresAndTwoViewBy, BulletChartWithAllMeasuresAndViewBy } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { AttributeElements } from "../../_infra/predicates.js";
+import { BulletChartWithAllMeasuresAndTwoViewBy, BulletChartWithAllMeasuresAndViewBy } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.Drilling)

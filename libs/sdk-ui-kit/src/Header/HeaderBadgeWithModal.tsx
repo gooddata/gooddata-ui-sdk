@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useState } from "react";
 
-import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge";
+import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge.js";
 
 /**
  * @internal

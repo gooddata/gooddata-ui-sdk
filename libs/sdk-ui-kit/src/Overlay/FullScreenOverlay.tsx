@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
-import merge from "lodash/merge";
-import { Overlay } from "./Overlay";
-import { IOverlayProps, IOverlayState } from "./typings";
+import merge from "lodash/merge.js";
+import { Overlay } from "./Overlay.js";
+import { IOverlayProps, IOverlayState } from "./typings.js";
 
 /**
  * @internal

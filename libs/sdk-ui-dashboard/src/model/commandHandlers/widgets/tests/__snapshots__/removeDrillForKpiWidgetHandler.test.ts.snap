@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`removeDrillForKpiWidgetHandler remove should emit the appropriate events for remove drill for Kpi Widget command 1`] = `
-Array [
-  Object {
+exports[`removeDrillForKpiWidgetHandler > remove > should emit the appropriate events for remove drill for Kpi Widget command 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED",
   },
 ]
 `;
 
-exports[`removeDrillForKpiWidgetHandler validate should fail if trying to remove drills of insight widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1310\\"} exists but is not a KPI widget."`;
+exports[`removeDrillForKpiWidgetHandler > validate > should fail if trying to remove drills of insight widget 1`] = `"Widget with ref: {\\"uri\\":\\"/gdc/md/referenceworkspace/obj/1310\\"} exists but is not a KPI widget."`;
 
-exports[`removeDrillForKpiWidgetHandler validate should fail if trying to remove drills of insight widget 2`] = `"USER_ERROR"`;
+exports[`removeDrillForKpiWidgetHandler > validate > should fail if trying to remove drills of insight widget 2`] = `"USER_ERROR"`;
 
-exports[`removeDrillForKpiWidgetHandler validate should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
+exports[`removeDrillForKpiWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 1`] = `"Cannot find insight widget with ref: {\\"uri\\":\\"missing\\"}."`;
 
-exports[`removeDrillForKpiWidgetHandler validate should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;
+exports[`removeDrillForKpiWidgetHandler > validate > should fail if trying to remove drills of non-existent widget 2`] = `"USER_ERROR"`;

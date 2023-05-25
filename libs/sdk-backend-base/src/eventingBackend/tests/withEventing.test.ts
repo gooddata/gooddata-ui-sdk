@@ -1,8 +1,9 @@
 // (C) 2007-2021 GoodData Corporation
+import { describe, it, expect, vi } from "vitest";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newMeasure } from "@gooddata/sdk-model";
-import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
-import { withEventing } from "../index";
+import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
+import { withEventing } from "../index.js";
 
 function prepareExecution(backend: IAnalyticalBackend): IPreparedExecution {
     return backend
@@ -13,7 +14,7 @@ function prepareExecution(backend: IAnalyticalBackend): IPreparedExecution {
 
 describe("withEventing backend", () => {
     it("emits beforeExecute", () => {
-        const beforeExecute = jest.fn();
+        const beforeExecute = vi.fn();
         const backend = withEventing(dummyBackend(), { beforeExecute });
 
         prepareExecution(backend).execute();
@@ -22,7 +23,7 @@ describe("withEventing backend", () => {
     });
 
     it("emits successfulExecute", async () => {
-        const successfulExecute = jest.fn();
+        const successfulExecute = vi.fn();
         const backend = withEventing(dummyBackend(), { successfulExecute });
 
         await prepareExecution(backend).execute();
@@ -31,7 +32,7 @@ describe("withEventing backend", () => {
     });
 
     it("emits successfulExecute even if no data", async () => {
-        const successfulExecute = jest.fn();
+        const successfulExecute = vi.fn();
         const backend = withEventing(dummyBackend(), { successfulExecute });
 
         await prepareExecution(backend).execute();
@@ -40,7 +41,7 @@ describe("withEventing backend", () => {
     });
 
     it("emits successfulResultReadAll", async () => {
-        const successfulResultReadAll = jest.fn();
+        const successfulResultReadAll = vi.fn();
         const backend = withEventing(dummyBackendEmptyData(), { successfulResultReadAll });
 
         await (await prepareExecution(backend).execute()).readAll();
@@ -49,7 +50,7 @@ describe("withEventing backend", () => {
     });
 
     it("emits successfulResultReadWindow", async () => {
-        const successfulResultReadWindow = jest.fn();
+        const successfulResultReadWindow = vi.fn();
         const backend = withEventing(dummyBackendEmptyData(), { successfulResultReadWindow });
 
         await (await prepareExecution(backend).execute()).readWindow([1, 2], [100, 1000]);
@@ -63,7 +64,7 @@ describe("withEventing backend", () => {
     });
 
     it("emits failedResultReadAll", async () => {
-        const failedResultReadAll = jest.fn();
+        const failedResultReadAll = vi.fn();
         const backend = withEventing(dummyBackend(), { failedResultReadAll });
 
         try {
@@ -76,7 +77,7 @@ describe("withEventing backend", () => {
     });
 
     it("emits failedResultReadWindow", async () => {
-        const failedResultReadWindow = jest.fn();
+        const failedResultReadWindow = vi.fn();
         const backend = withEventing(dummyBackend(), {
             failedResultReadWindow,
         });

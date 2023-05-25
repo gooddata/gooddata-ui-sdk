@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import range from "lodash/range";
+import range from "lodash/range.js";
 import cx from "classnames";
 
 /**

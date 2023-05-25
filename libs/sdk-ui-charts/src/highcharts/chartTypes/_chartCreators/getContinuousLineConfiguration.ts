@@ -1,8 +1,8 @@
 // (C) 2023 GoodData Corporation
-import { IChartConfig } from "../../../interfaces";
-import { IChartOptions } from "../../typings/unsafe";
-import { HighchartsOptions } from "../../lib";
-import { isAreaChart, isComboChart } from "../_util/common";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { IChartOptions } from "../../typings/unsafe.js";
+import { HighchartsOptions } from "../../lib/index.js";
+import { isAreaChart, isComboChart } from "../_util/common.js";
 import { SeriesAreaOptions } from "highcharts";
 
 const removeStacking = (series: SeriesAreaOptions[]) =>

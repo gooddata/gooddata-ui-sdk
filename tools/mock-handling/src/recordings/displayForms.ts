@@ -1,12 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
 
-import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
+import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 import { IAnalyticalBackend, IElementsQuery } from "@gooddata/sdk-backend-spi";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import fs from "fs";
 import path from "path";
 import { idRef, IAttributeDisplayFormMetadataObject, IAttributeElement } from "@gooddata/sdk-model";
-import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
+import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 
 //
 // internal constants & types

@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 
-import { DefaultDashboardEventHandling } from "../dashboardEventHandling";
-import { DashboardEventHandler, singleEventTypeHandler } from "../../../model";
+import { DefaultDashboardEventHandling } from "../dashboardEventHandling.js";
+import { DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 function assertCorrectHandler(handler: DashboardEventHandler, expectedEvtType: string, handlerFn: any): void {
     // handler function should be kept as is
@@ -18,7 +19,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should add event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             const { eventHandlers } = Facade.getDashboardEventing();
@@ -27,7 +28,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should remove event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
@@ -37,7 +38,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not do anything if trying to remove non-existing handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             const { eventHandlers } = Facade.getDashboardEventing();
@@ -46,8 +47,8 @@ describe("dashboard event handling", () => {
         });
 
         it("should add two event handlers for same event", () => {
-            const handler1 = jest.fn();
-            const handler2 = jest.fn();
+            const handler1 = vi.fn();
+            const handler2 = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler1);
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler2);
@@ -60,7 +61,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not double-add same handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
@@ -70,7 +71,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should add custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
@@ -81,7 +82,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should remove custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
@@ -92,7 +93,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not do anything if trying to remove non-existing custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.removeCustomEventHandler(eventHandler);
@@ -102,7 +103,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not double-add same custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
@@ -113,8 +114,8 @@ describe("dashboard event handling", () => {
         });
 
         it("should allow subscriptions to state changes", () => {
-            const callback1 = jest.fn();
-            const callback2 = jest.fn();
+            const callback1 = vi.fn();
+            const callback2 = vi.fn();
 
             Facade.subscribeToStateChanges(callback1);
             Facade.subscribeToStateChanges(callback2);
@@ -133,13 +134,13 @@ describe("dashboard event handling", () => {
      * by the tests above (and in a simpler fashion); handler creation logic is the same.
      */
     describe("after registration", () => {
-        let registerFn: jest.Mock;
-        let unregisterFn: jest.Mock;
+        let registerFn: vi.Mock;
+        let unregisterFn: vi.Mock;
         let Facade: DefaultDashboardEventHandling;
 
         beforeEach(() => {
-            registerFn = jest.fn();
-            unregisterFn = jest.fn();
+            registerFn = vi.fn();
+            unregisterFn = vi.fn();
             Facade = new DefaultDashboardEventHandling();
 
             // this emulates what happens during plugin initialization. engine gets a hold of dashboard eventing
@@ -151,14 +152,14 @@ describe("dashboard event handling", () => {
         });
 
         it("should add event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             expect(registerFn).toHaveBeenCalledTimes(1);
         });
 
         it("should remove event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
@@ -168,15 +169,15 @@ describe("dashboard event handling", () => {
         });
 
         it("should not do anything if trying to remove non-existing handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             expect(unregisterFn).not.toHaveBeenCalled();
         });
 
         it("should add two event handlers for same event", () => {
-            const handler1 = jest.fn();
-            const handler2 = jest.fn();
+            const handler1 = vi.fn();
+            const handler2 = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler1);
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler2);
@@ -185,7 +186,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not double-add same handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
@@ -194,7 +195,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should add custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
@@ -203,7 +204,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should remove custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
@@ -214,7 +215,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not do anything if trying to remove non-existing custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.removeCustomEventHandler(eventHandler);
@@ -222,7 +223,7 @@ describe("dashboard event handling", () => {
         });
 
         it("should not double-add same custom event handler", () => {
-            const handler = jest.fn();
+            const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);

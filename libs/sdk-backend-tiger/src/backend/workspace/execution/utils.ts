@@ -7,7 +7,7 @@ import {
     measureMasterIdentifier,
 } from "@gooddata/sdk-model";
 import { CustomLabel, CustomMetric, CustomOverride } from "@gooddata/api-client-tiger";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 export type ExportMetrics = { [key: string]: CustomMetric };
 export type ExportLabels = { [key: string]: CustomLabel };

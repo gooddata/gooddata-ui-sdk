@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 
-import { GD_COLOR_HIGHLIGHT } from "../utils/constants";
+import { GD_COLOR_HIGHLIGHT } from "../utils/constants.js";
 
 /**
  * @internal

@@ -6,7 +6,8 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { convertAfmFilters } from "../AfmFiltersConverter";
+import { convertAfmFilters } from "../AfmFiltersConverter.js";
+import { describe, expect, it } from "vitest";
 
 describe("convertAfmFilters", () => {
     const ratioMeasure = newMeasure("test", (m) => m.localId("ratio").ratio(true));

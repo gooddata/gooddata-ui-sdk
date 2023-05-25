@@ -1,15 +1,18 @@
 // (C) 2020 GoodData Corporation
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { HeadlineWithTwoMeasures } from "../../../../scenarios/charts/headline/base";
-import { CustomStories } from "../../../_infra/storyGroups";
-import { ScreenshotReadyWrapper, createElementCountResolver } from "../../../_infra/ScreenshotReadyWrapper";
+import { HeadlineWithTwoMeasures } from "../../../../scenarios/charts/headline/base.js";
+import { CustomStories } from "../../../_infra/storyGroups.js";
+import {
+    ScreenshotReadyWrapper,
+    createElementCountResolver,
+} from "../../../_infra/ScreenshotReadyWrapper.js";
 
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "../insightStories.css";
-import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
-import { wrapWithTheme } from "../../themeWrapper";
+import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const backend = StorybookBackend();
 

@@ -12,7 +12,7 @@ import {
     ObjRef,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 
 /**
  * @internal

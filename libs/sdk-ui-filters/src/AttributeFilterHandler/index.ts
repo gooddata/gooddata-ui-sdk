@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
-export * from "./types";
+export * from "./types/index.js";
 export {
     newAttributeFilterHandler,
     IAttributeFilterHandlerOptions,
     IAttributeFilterHandlerOptionsBase,
     IMultiSelectAttributeFilterHandlerOptions,
     ISingleSelectAttributeFilterHandlerOptions,
-} from "./factory";
+} from "./factory.js";

@@ -1,47 +1,47 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`changeAttributeTitleHandler should emit the appropriate events for changed attribute filter title 1`] = `
-Array [
-  Object {
+exports[`changeAttributeTitleHandler > should emit the appropriate events for changed attribute filter title 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`changeAttributeTitleHandler should emit the appropriate events when trying to update title of a non-existent attribute filter 1`] = `
-Array [
-  Object {
+exports[`changeAttributeTitleHandler > should emit the appropriate events when trying to update title of a non-existent attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
 `;
 
-exports[`changeAttributeTitleHandler should set the attribute title in state on changed attribute filter 1`] = `
-Object {
-  "attributeFilter": Object {
-    "attributeElements": Object {
-      "uris": Array [],
+exports[`changeAttributeTitleHandler > should set the attribute title in state on changed attribute filter 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
     },
-    "displayForm": Object {
+    "displayForm": {
       "uri": "/gdc/md/referenceworkspace/obj/1089",
     },
-    "filterElementsBy": Array [],
+    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
     "title": "Updated title",

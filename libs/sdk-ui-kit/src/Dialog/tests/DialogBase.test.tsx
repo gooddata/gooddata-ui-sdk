@@ -1,9 +1,10 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { ReactNode } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { DialogBase } from "../DialogBase";
-import { Input } from "../../Form/Input";
-import { IDialogBaseProps } from "../typings";
+import { DialogBase } from "../DialogBase.js";
+import { Input } from "../../Form/Input.js";
+import { IDialogBaseProps } from "../typings.js";
+import { describe, it, expect, vi } from "vitest";
 
 function renderDialog(options: Partial<IDialogBaseProps>, children?: ReactNode) {
     return render(<DialogBase {...options}>{children ?? "Dialog content"}</DialogBase>);
@@ -27,7 +28,7 @@ describe("Dialog", () => {
 
     describe("submit", () => {
         it("should call `onSubmit` when enter is pressed", () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             renderDialog({
                 onSubmit,
             });
@@ -47,7 +48,7 @@ describe("Dialog", () => {
         ])(
             'should %s "onSubmit" when submitOnEnterKey is %s',
             (_actionText, submitOnEnterKey, expectedCalledTimes) => {
-                const onSubmit = jest.fn();
+                const onSubmit = vi.fn();
                 renderDialog(
                     {
                         submitOnEnterKey,
@@ -69,7 +70,7 @@ describe("Dialog", () => {
 
     describe("cancel", () => {
         it("should call `onCancel` when escape is pressed", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             renderDialog({
                 onCancel,
             });

@@ -1,13 +1,14 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { BearExecution } from "../executionFactory";
-import { BearAuthenticatedCallGuard } from "../../../../types/auth";
+import { BearExecution } from "../executionFactory.js";
+import { BearAuthenticatedCallGuard } from "../../../../types/auth.js";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
-import bearFactory from "../../../../index";
+import bearFactory from "../../../../index.js";
+import { describe, expect, it } from "vitest";
 
 const UnsupportedAuthCall: BearAuthenticatedCallGuard = () => {
     throw new NotSupported("you got too far");

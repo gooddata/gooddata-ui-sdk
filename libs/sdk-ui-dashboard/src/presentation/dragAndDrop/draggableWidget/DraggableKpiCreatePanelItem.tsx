@@ -2,9 +2,9 @@
 import React from "react";
 
 import { KPI_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
-import { CustomCreatePanelItemComponent } from "../../componentDefinition";
-import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
-import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types";
+import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
+import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
+import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.js";
 
 /**
  * @internal

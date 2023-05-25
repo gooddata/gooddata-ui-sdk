@@ -2,10 +2,10 @@
 import React, { ChangeEvent, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { InsightCodeType } from "../types";
-import { dialogChangeMessageLabels } from "../../../../locales";
+import { InsightCodeType } from "../types.js";
+import { dialogChangeMessageLabels } from "../../../../locales.js";
 
-import { ComponentTypeItem } from "./ComponentTypeItem";
+import { ComponentTypeItem } from "./ComponentTypeItem.js";
 
 /**
  * @internal

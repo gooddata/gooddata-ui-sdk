@@ -5,9 +5,9 @@ import { ScrollablePanel, OverlayController, OverlayControllerProvider } from "@
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 
-import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel";
+import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

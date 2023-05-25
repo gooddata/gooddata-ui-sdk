@@ -5,7 +5,7 @@ import { IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { ScheduledEmail } from "./ScheduledEmail";
+import { ScheduledEmail } from "./ScheduledEmail.js";
 
 interface IScheduledEmailsProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;

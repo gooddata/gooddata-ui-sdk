@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import { removeMetadata, sanitizeLocaleForMoment } from "../translationUtils";
+import { expect, describe, it } from "vitest";
+import { removeMetadata, sanitizeLocaleForMoment } from "../translationUtils.js";
 
 const translations = {
     "some.key.1": {

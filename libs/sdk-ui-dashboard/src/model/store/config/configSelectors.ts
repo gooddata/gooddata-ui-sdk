@@ -8,9 +8,9 @@ import {
     WeekStart,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardSelector, DashboardState } from "../types";
-import invariant from "ts-invariant";
-import { ObjectAvailabilityConfig, ResolvedDashboardConfig } from "../../types/commonTypes";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { invariant } from "ts-invariant";
+import { ObjectAvailabilityConfig, ResolvedDashboardConfig } from "../../types/commonTypes.js";
 import { ILocale } from "@gooddata/sdk-ui";
 
 const selectSelf = createSelector(

@@ -10,7 +10,7 @@ import {
     useDashboardQueryProcessing,
     useDashboardSelector,
     selectFilterContextFilters,
-} from "../../../model";
+} from "../../../model/index.js";
 
 export const useWidgetBrokenAlertsQuery = (
     widget: IKpiWidget,

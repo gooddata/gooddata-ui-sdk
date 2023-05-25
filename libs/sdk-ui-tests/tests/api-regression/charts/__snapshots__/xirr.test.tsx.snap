@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`XIRR with correct config should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`XIRR > with correct config > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "timeline.aag81lMifn6q",
           "type": "displayForm",
         },
@@ -13,14 +13,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aadpHDMBecIy",
                   "type": "measure",
                 },
@@ -32,11 +32,11 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "timeline.aag81lMifn6q",
               "type": "displayForm",
             },
@@ -47,21 +47,21 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
         "a_timeline.aag81lMifn6q",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aadpHDMBecIy",
               "type": "measure",
             },
@@ -71,25 +71,25 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with correct config should create expected props for core chart 1`] = `
-Object {
+exports[`XIRR > with correct config > should create expected props for core chart 1`] = `
+{
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with drilling on single measure should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`XIRR > with drilling on single measure > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "timeline.aag81lMifn6q",
           "type": "displayForm",
         },
@@ -97,14 +97,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aadpHDMBecIy",
                   "type": "measure",
                 },
@@ -116,11 +116,11 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "timeline.aag81lMifn6q",
               "type": "displayForm",
             },
@@ -131,21 +131,21 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
         "a_timeline.aag81lMifn6q",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aadpHDMBecIy",
               "type": "measure",
             },
@@ -155,15 +155,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with drilling on single measure should create expected props for core chart 1`] = `
-Object {
-  "drillableItems": Array [
+exports[`XIRR > with drilling on single measure > should create expected props for core chart 1`] = `
+{
+  "drillableItems": [
     [Function],
   ],
   "exportTitle": "Xirr",
@@ -171,12 +171,12 @@ Object {
 }
 `;
 
-exports[`XIRR with drilling on single measure with underlining disabled should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`XIRR > with drilling on single measure with underlining disabled > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "timeline.aag81lMifn6q",
           "type": "displayForm",
         },
@@ -184,14 +184,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aadpHDMBecIy",
                   "type": "measure",
                 },
@@ -203,11 +203,11 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "timeline.aag81lMifn6q",
               "type": "displayForm",
             },
@@ -218,21 +218,21 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
         "a_timeline.aag81lMifn6q",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aadpHDMBecIy",
               "type": "measure",
             },
@@ -242,18 +242,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with drilling on single measure with underlining disabled should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`XIRR > with drilling on single measure with underlining disabled > should create expected props for core chart 1`] = `
+{
+  "config": {
     "disableDrillUnderline": true,
   },
-  "drillableItems": Array [
+  "drillableItems": [
     [Function],
   ],
   "exportTitle": "Xirr",
@@ -261,17 +261,17 @@ Object {
 }
 `;
 
-exports[`XIRR with only measure should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`XIRR > with only measure > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "aadpHDMBecIy",
                   "type": "measure",
                 },
@@ -283,25 +283,25 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aadpHDMBecIy",
               "type": "measure",
             },
@@ -311,25 +311,25 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with only measure should create expected props for core chart 1`] = `
-Object {
+exports[`XIRR > with only measure > should create expected props for core chart 1`] = `
+{
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with semantically wrong measure should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`XIRR > with semantically wrong measure > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "timeline.aag81lMifn6q",
           "type": "displayForm",
         },
@@ -337,14 +337,14 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "abYgDBRagANw",
                   "type": "measure",
                 },
@@ -356,11 +356,11 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "timeline.aag81lMifn6q",
               "type": "displayForm",
             },
@@ -371,21 +371,21 @@ Object {
       "localIdentifier": "attribute",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
         "a_timeline.aag81lMifn6q",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "abYgDBRagANw",
               "type": "measure",
             },
@@ -395,14 +395,14 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`XIRR with semantically wrong measure should create expected props for core chart 1`] = `
-Object {
+exports[`XIRR > with semantically wrong measure > should create expected props for core chart 1`] = `
+{
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }

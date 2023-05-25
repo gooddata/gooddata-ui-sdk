@@ -1,9 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
-import isUndefined from "lodash/isUndefined";
-import omitBy from "lodash/omitBy";
+import isUndefined from "lodash/isUndefined.js";
+import omitBy from "lodash/omitBy.js";
+import { describe, it, expect } from "vitest";
 
-import { getFilterLabelFilter } from "../filterUtils";
-import { IBrokenAlertDateFilter, IBrokenAlertAttributeFilter } from "../../../../types";
+import { getFilterLabelFilter } from "../filterUtils.js";
+import { IBrokenAlertDateFilter, IBrokenAlertAttributeFilter } from "../../../../types.js";
 
 describe("getFilterLabelFilter", () => {
     const pickDefined = (obj: object) => omitBy(obj, isUndefined);

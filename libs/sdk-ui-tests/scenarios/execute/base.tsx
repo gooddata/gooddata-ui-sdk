@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { scenariosFor } from "../../src";
+import { scenariosFor } from "../../src/index.js";
 import { Execute, IExecuteProps, WithLoadingResult } from "@gooddata/sdk-ui";
 
 const DumpingComponent = (load: WithLoadingResult) => {

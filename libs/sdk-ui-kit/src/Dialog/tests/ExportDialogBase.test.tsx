@@ -1,10 +1,17 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import assignIn from "lodash/assignIn";
+import defaultUserEvent from "@testing-library/user-event";
+import assignIn from "lodash/assignIn.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { ExportDialogBase } from "../ExportDialogBase";
+import { ExportDialogBase } from "../ExportDialogBase.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("ExportDialogBase", () => {
     const defaultProps = {
@@ -45,7 +52,7 @@ describe("ExportDialogBase", () => {
     });
 
     it("should update value correctly", async () => {
-        const submitSpy = jest.fn();
+        const submitSpy = vi.fn();
         const newProps = {
             includeFilterContext: defaultProps.includeFilterContext,
             mergeHeaders: defaultProps.mergeHeaders,

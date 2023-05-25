@@ -1,97 +1,97 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly in cases 1 measure and 0 attribute  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 0 attribute  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "",
         "name": "",
         "to": "",
         "weight": 116625456.54,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [],
+    "nodes": [],
     "seriesIndex": 0,
   },
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly in cases 1 measure and 1 attribute_from  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 1 attribute_from  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "CompuSci",
         "name": "CompuSci",
         "to": undefined,
         "weight": 27222899.64,
       },
-      Object {
+      {
         "from": "Educationly",
         "name": "Educationly",
         "to": undefined,
         "weight": 22946895.47,
       },
-      Object {
+      {
         "from": "Explorer",
         "name": "Explorer",
         "to": undefined,
         "weight": 38596194.86,
       },
-      Object {
+      {
         "from": "Grammar Plus",
         "name": "Grammar Plus",
         "to": undefined,
         "weight": 8042031.92,
       },
-      Object {
+      {
         "from": "PhoenixSoft",
         "name": "PhoenixSoft",
         "to": undefined,
         "weight": 9525857.91,
       },
-      Object {
+      {
         "from": "WonderKid",
         "name": "WonderKid",
         "to": undefined,
         "weight": 10291576.74,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [
-      Object {
+    "nodes": [
+      {
         "color": "rgb(195,49,73)",
         "id": "CompuSci",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "Educationly",
       },
-      Object {
+      {
         "color": "rgb(243,217,177)",
         "id": "Explorer",
       },
-      Object {
+      {
         "color": "rgb(194,153,121)",
         "id": "Grammar Plus",
       },
-      Object {
+      {
         "color": "rgb(162,37,34)",
         "id": "PhoenixSoft",
       },
-      Object {
+      {
         "color": "rgb(195,49,73)",
         "id": "WonderKid",
       },
@@ -101,35 +101,35 @@ Array [
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly in cases 1 measure and 1 attribute_to  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 1 attribute_to  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "East Coast",
         "name": "East Coast",
         "to": undefined,
         "weight": 28017096.42,
       },
-      Object {
+      {
         "from": "West Coast",
         "name": "West Coast",
         "to": undefined,
         "weight": 88608360.12,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [
-      Object {
+    "nodes": [
+      {
         "color": "rgb(195,49,73)",
         "id": "East Coast",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "West Coast",
       },
@@ -139,119 +139,119 @@ Array [
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly in cases 1 measure and 2 attributes  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly in cases 1 measure and 2 attributes  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "CompuSci",
         "name": "CompuSci",
         "to": "East Coast",
         "weight": 5099309.54,
       },
-      Object {
+      {
         "from": "CompuSci",
         "name": "CompuSci",
         "to": "West Coast",
         "weight": 22123590.1,
       },
-      Object {
+      {
         "from": "Educationly",
         "name": "Educationly",
         "to": "East Coast",
         "weight": 6614222.47,
       },
-      Object {
+      {
         "from": "Educationly",
         "name": "Educationly",
         "to": "West Coast",
         "weight": 16332673,
       },
-      Object {
+      {
         "from": "Explorer",
         "name": "Explorer",
         "to": "East Coast",
         "weight": 8269682.68,
       },
-      Object {
+      {
         "from": "Explorer",
         "name": "Explorer",
         "to": "West Coast",
         "weight": 30326512.18,
       },
-      Object {
+      {
         "from": "Grammar Plus",
         "name": "Grammar Plus",
         "to": "East Coast",
         "weight": 2761931.26,
       },
-      Object {
+      {
         "from": "Grammar Plus",
         "name": "Grammar Plus",
         "to": "West Coast",
         "weight": 5280100.66,
       },
-      Object {
+      {
         "from": "PhoenixSoft",
         "name": "PhoenixSoft",
         "to": "East Coast",
         "weight": 2664832.4,
       },
-      Object {
+      {
         "from": "PhoenixSoft",
         "name": "PhoenixSoft",
         "to": "West Coast",
         "weight": 6861025.51,
       },
-      Object {
+      {
         "from": "WonderKid",
         "name": "WonderKid",
         "to": "East Coast",
         "weight": 2607118.07,
       },
-      Object {
+      {
         "from": "WonderKid",
         "name": "WonderKid",
         "to": "West Coast",
         "weight": 7684458.67,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [
-      Object {
+    "nodes": [
+      {
         "color": "rgb(195,49,73)",
         "id": "CompuSci",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "Educationly",
       },
-      Object {
+      {
         "color": "rgb(243,217,177)",
         "id": "Explorer",
       },
-      Object {
+      {
         "color": "rgb(194,153,121)",
         "id": "Grammar Plus",
       },
-      Object {
+      {
         "color": "rgb(162,37,34)",
         "id": "PhoenixSoft",
       },
-      Object {
+      {
         "color": "rgb(195,49,73)",
         "id": "WonderKid",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "East Coast",
       },
-      Object {
+      {
         "color": "rgb(243,217,177)",
         "id": "West Coast",
       },
@@ -261,98 +261,98 @@ Array [
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly with custom color mappings in cases 1 measure and 0 attribute  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 0 attribute  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "",
         "name": "",
         "to": "",
         "weight": 116625456.54,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [],
+    "nodes": [],
     "seriesIndex": 0,
   },
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly with custom color mappings in cases 1 measure and 1 attribute_from  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 1 attribute_from  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "CompuSci",
         "name": "CompuSci",
         "to": undefined,
         "weight": 27222899.64,
       },
-      Object {
+      {
         "from": "Educationly",
         "name": "Educationly",
         "to": undefined,
         "weight": 22946895.47,
       },
-      Object {
+      {
         "from": "Explorer",
         "name": "Explorer",
         "to": undefined,
         "weight": 38596194.86,
       },
-      Object {
+      {
         "from": "Grammar Plus",
         "name": "Grammar Plus",
         "to": undefined,
         "weight": 8042031.92,
       },
-      Object {
+      {
         "from": "PhoenixSoft",
         "name": "PhoenixSoft",
         "to": undefined,
         "weight": 9525857.91,
       },
-      Object {
+      {
         "from": "WonderKid",
         "name": "WonderKid",
         "to": undefined,
         "weight": 10291576.74,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [
-      Object {
+    "nodes": [
+      {
         "color": "rgb(195,49,73)",
         "id": "CompuSci",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "Educationly",
       },
-      Object {
+      {
         "color": "rgb(255,0,0)",
         "id": "Explorer",
       },
-      Object {
+      {
         "color": "rgb(194,153,121)",
         "id": "Grammar Plus",
       },
-      Object {
+      {
         "color": "rgb(162,37,34)",
         "id": "PhoenixSoft",
       },
-      Object {
+      {
         "color": "rgb(0,0,0)",
         "id": "WonderKid",
       },
@@ -362,35 +362,35 @@ Array [
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly with custom color mappings in cases 1 measure and 1 attribute_to  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 1 attribute_to  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "East Coast",
         "name": "East Coast",
         "to": undefined,
         "weight": 28017096.42,
       },
-      Object {
+      {
         "from": "West Coast",
         "name": "West Coast",
         "to": undefined,
         "weight": 88608360.12,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [
-      Object {
+    "nodes": [
+      {
         "color": "rgb(195,49,73)",
         "id": "East Coast",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "West Coast",
       },
@@ -400,119 +400,119 @@ Array [
 ]
 `;
 
-exports[`SankeyChart buildSankeyChartSeries should return series correctly with custom color mappings in cases 1 measure and 2 attributes  1`] = `
-Array [
-  Object {
-    "data": Array [
-      Object {
+exports[`SankeyChart buildSankeyChartSeries > should return series correctly with custom color mappings in cases 1 measure and 2 attributes  1`] = `
+[
+  {
+    "data": [
+      {
         "from": "CompuSci",
         "name": "CompuSci",
         "to": "East Coast",
         "weight": 5099309.54,
       },
-      Object {
+      {
         "from": "CompuSci",
         "name": "CompuSci",
         "to": "West Coast",
         "weight": 22123590.1,
       },
-      Object {
+      {
         "from": "Educationly",
         "name": "Educationly",
         "to": "East Coast",
         "weight": 6614222.47,
       },
-      Object {
+      {
         "from": "Educationly",
         "name": "Educationly",
         "to": "West Coast",
         "weight": 16332673,
       },
-      Object {
+      {
         "from": "Explorer",
         "name": "Explorer",
         "to": "East Coast",
         "weight": 8269682.68,
       },
-      Object {
+      {
         "from": "Explorer",
         "name": "Explorer",
         "to": "West Coast",
         "weight": 30326512.18,
       },
-      Object {
+      {
         "from": "Grammar Plus",
         "name": "Grammar Plus",
         "to": "East Coast",
         "weight": 2761931.26,
       },
-      Object {
+      {
         "from": "Grammar Plus",
         "name": "Grammar Plus",
         "to": "West Coast",
         "weight": 5280100.66,
       },
-      Object {
+      {
         "from": "PhoenixSoft",
         "name": "PhoenixSoft",
         "to": "East Coast",
         "weight": 2664832.4,
       },
-      Object {
+      {
         "from": "PhoenixSoft",
         "name": "PhoenixSoft",
         "to": "West Coast",
         "weight": 6861025.51,
       },
-      Object {
+      {
         "from": "WonderKid",
         "name": "WonderKid",
         "to": "East Coast",
         "weight": 2607118.07,
       },
-      Object {
+      {
         "from": "WonderKid",
         "name": "WonderKid",
         "to": "West Coast",
         "weight": 7684458.67,
       },
     ],
-    "keys": Array [
+    "keys": [
       "from",
       "to",
       "weight",
       "name",
     ],
-    "nodes": Array [
-      Object {
+    "nodes": [
+      {
         "color": "rgb(195,49,73)",
         "id": "CompuSci",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "Educationly",
       },
-      Object {
+      {
         "color": "rgb(255,0,0)",
         "id": "Explorer",
       },
-      Object {
+      {
         "color": "rgb(194,153,121)",
         "id": "Grammar Plus",
       },
-      Object {
+      {
         "color": "rgb(162,37,34)",
         "id": "PhoenixSoft",
       },
-      Object {
+      {
         "color": "rgb(0,0,0)",
         "id": "WonderKid",
       },
-      Object {
+      {
         "color": "rgb(168,194,86)",
         "id": "East Coast",
       },
-      Object {
+      {
         "color": "rgb(243,217,177)",
         "id": "West Coast",
       },

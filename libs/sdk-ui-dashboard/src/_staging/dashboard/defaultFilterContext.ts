@@ -7,10 +7,10 @@ import {
     IDashboardDateFilter,
     IFilterContextDefinition,
 } from "@gooddata/sdk-model";
-import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters";
-import { flattenDateFilterOptions } from "../dateFilterConfig/dateFilterOptionMapping";
+import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
+import { flattenDateFilterOptions } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { DateFilterOption } from "@gooddata/sdk-ui-filters";
-import { convertOptionToDateFilter } from "../dateFilterConfig/dateFilterOptionConverters";
+import { convertOptionToDateFilter } from "../dateFilterConfig/dateFilterOptionConverters.js";
 
 /**
  * Returns the date filter option that should be used for new dashboards (respecting the selectedOption configuration).

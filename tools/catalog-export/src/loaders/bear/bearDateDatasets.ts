@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
 import { GdcDataSets } from "@gooddata/api-model-bear";
-import { Attribute, DateDataSet, DisplayForm } from "../../base/types";
+import { Attribute, DateDataSet, DisplayForm } from "../../base/types.js";
 
 /**
  * Loads date data sets defined in the provided workspace. This function retrieves the minimum

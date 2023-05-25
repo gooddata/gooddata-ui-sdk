@@ -1,30 +1,30 @@
 // (C) 2020-2023 GoodData Corporation
-import last from "lodash/last";
+import last from "lodash/last.js";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
-import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor";
-import { AreaChartDescriptor } from "./pluggableVisualizations/areaChart/AreaChartDescriptor";
-import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor";
-import { BubbleChartDescriptor } from "./pluggableVisualizations/bubbleChart/BubbleChartDescriptor";
-import { BulletChartDescriptor } from "./pluggableVisualizations/bulletChart/BulletChartDescriptor";
-import { ColumnChartDescriptor } from "./pluggableVisualizations/columnChart/ColumnChartDescriptor";
-import { ComboChartDescriptor } from "./pluggableVisualizations/comboChart/ComboChartDescriptor";
-import { ComboChartDescriptorDeprecated } from "./pluggableVisualizations/comboChart/ComboChartDescriptorDeprecated";
-import { DonutChartDescriptor } from "./pluggableVisualizations/donutChart/DonutChartDescriptor";
-import { FunnelChartDescriptor } from "./pluggableVisualizations/funnelChart/FunnelChartDescriptor";
-import { PyramidChartDescriptor } from "./pluggableVisualizations/pyramidChart/PyramidChartDescriptor";
-import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor";
-import { HeatmapDescriptor } from "./pluggableVisualizations/heatMap/HeatmapDescriptor";
-import { LineChartDescriptor } from "./pluggableVisualizations/lineChart/LineChartDescriptor";
-import { PieChartDescriptor } from "./pluggableVisualizations/pieChart/PieChartDescriptor";
-import { PivotTableDescriptor } from "./pluggableVisualizations/pivotTable/PivotTableDescriptor";
-import { ScatterPlotDescriptor } from "./pluggableVisualizations/scatterPlot/ScatterPlotDescriptor";
-import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDescriptor";
-import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor";
-import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor";
-import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor";
-import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor";
-import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor";
-import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor";
+import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
+import { AreaChartDescriptor } from "./pluggableVisualizations/areaChart/AreaChartDescriptor.js";
+import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor.js";
+import { BubbleChartDescriptor } from "./pluggableVisualizations/bubbleChart/BubbleChartDescriptor.js";
+import { BulletChartDescriptor } from "./pluggableVisualizations/bulletChart/BulletChartDescriptor.js";
+import { ColumnChartDescriptor } from "./pluggableVisualizations/columnChart/ColumnChartDescriptor.js";
+import { ComboChartDescriptor } from "./pluggableVisualizations/comboChart/ComboChartDescriptor.js";
+import { ComboChartDescriptorDeprecated } from "./pluggableVisualizations/comboChart/ComboChartDescriptorDeprecated.js";
+import { DonutChartDescriptor } from "./pluggableVisualizations/donutChart/DonutChartDescriptor.js";
+import { FunnelChartDescriptor } from "./pluggableVisualizations/funnelChart/FunnelChartDescriptor.js";
+import { PyramidChartDescriptor } from "./pluggableVisualizations/pyramidChart/PyramidChartDescriptor.js";
+import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor.js";
+import { HeatmapDescriptor } from "./pluggableVisualizations/heatMap/HeatmapDescriptor.js";
+import { LineChartDescriptor } from "./pluggableVisualizations/lineChart/LineChartDescriptor.js";
+import { PieChartDescriptor } from "./pluggableVisualizations/pieChart/PieChartDescriptor.js";
+import { PivotTableDescriptor } from "./pluggableVisualizations/pivotTable/PivotTableDescriptor.js";
+import { ScatterPlotDescriptor } from "./pluggableVisualizations/scatterPlot/ScatterPlotDescriptor.js";
+import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDescriptor.js";
+import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor.js";
+import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor.js";
+import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor.js";
+import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor.js";
+import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor.js";
+import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor.js";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will

@@ -4,11 +4,11 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import fs from "fs";
 import path from "path";
-import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
-import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
-import { RecordingFiles } from "../interface";
-import { DataRecorderError } from "../base/types";
-import { logError } from "../cli/loggers";
+import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
+import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
+import { RecordingFiles } from "../interface.js";
+import { DataRecorderError } from "../base/types.js";
+import { logError } from "../cli/loggers.js";
 
 //
 // Public API

@@ -7,7 +7,7 @@ import { ResponsiveText, LoadingDots } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
-import { HYPHEN, formatMetric, isValueUnhandledNull } from "./utils/format";
+import { HYPHEN, formatMetric, isValueUnhandledNull } from "./utils/format.js";
 
 const NO_DATA_PLACEHOLDER = HYPHEN;
 export interface IKpiValueProps {

@@ -5,9 +5,9 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useDashboardDrop } from "../useDashboardDrop";
-import { useDashboardSelector, selectIsInEditMode } from "../../../model";
-import { getDropZoneDebugStyle } from "../debug";
+import { useDashboardDrop } from "../useDashboardDrop.js";
+import { useDashboardSelector, selectIsInEditMode } from "../../../model/index.js";
+import { getDropZoneDebugStyle } from "../debug.js";
 
 export type AttributeFilterDropZoneProps = {
     targetIndex: number;

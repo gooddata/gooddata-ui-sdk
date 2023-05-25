@@ -6,10 +6,10 @@ import {
     IDashboardLayoutItemRenderer,
     IDashboardLayoutWidgetRenderer,
     IDashboardLayoutWidgetRenderProps,
-} from "./interfaces";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
-import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer";
+} from "./interfaces.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
+import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";
 
 /**
  * @alpha

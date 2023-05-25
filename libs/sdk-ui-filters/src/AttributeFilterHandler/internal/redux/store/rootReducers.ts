@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
-import { initReducers } from "../init/initReducers";
-import { loadAttributeReducers } from "../loadAttribute/loadAttributeReducers";
-import { loadCustomElementsReducers } from "../loadCustomElements/loadCustomElementsReducers";
-import { loadInitialElementsPageReducers } from "../loadInitialElementsPage/loadInitialElementsPageReducers";
-import { loadNextElementsPageReducers } from "../loadNextElementsPage/loadNextElementsPageReducers";
-import { selectionReducers } from "../selection/selectionReducers";
-import { elementsReducers } from "../elements/elementsReducers";
+import { initReducers } from "../init/initReducers.js";
+import { loadAttributeReducers } from "../loadAttribute/loadAttributeReducers.js";
+import { loadCustomElementsReducers } from "../loadCustomElements/loadCustomElementsReducers.js";
+import { loadInitialElementsPageReducers } from "../loadInitialElementsPage/loadInitialElementsPageReducers.js";
+import { loadNextElementsPageReducers } from "../loadNextElementsPage/loadNextElementsPageReducers.js";
+import { selectionReducers } from "../selection/selectionReducers.js";
+import { elementsReducers } from "../elements/elementsReducers.js";
 
 /**
  * @internal

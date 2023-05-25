@@ -68,12 +68,12 @@ import {
     IDashboardPluginLink,
     isKpiWithComparison,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
-import isEmpty from "lodash/isEmpty";
-import omitBy from "lodash/omitBy";
-import { serializeProperties } from "../fromBackend/PropertiesConverter";
-import { assertNoNulls } from "./utils";
+import { invariant } from "ts-invariant";
+import { convertUrisToReferences } from "../fromBackend/ReferenceConverter.js";
+import isEmpty from "lodash/isEmpty.js";
+import omitBy from "lodash/omitBy.js";
+import { serializeProperties } from "../fromBackend/PropertiesConverter.js";
+import { assertNoNulls } from "./utils.js";
 
 const refToUri = (ref: ObjRef) => {
     invariant(isUriRef(ref));

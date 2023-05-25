@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardContext } from "../../../types/commonTypes";
+import { DashboardContext } from "../../../types/commonTypes.js";
 import { IWorkspaceCatalog, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 

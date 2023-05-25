@@ -1,10 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import { describe, it, expect } from "vitest";
 
-import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization";
-import * as bucketRules from "../bucketRules";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
+import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization.js";
+import * as bucketRules from "../bucketRules.js";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 describe("isShowInPercentAllowed", () => {

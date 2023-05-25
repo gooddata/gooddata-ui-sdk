@@ -5,9 +5,9 @@ import React, { useRef } from "react";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     IDashboardLayoutWidgetRenderProps,
-} from "../../../DefaultDashboardLayoutRenderer";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes";
-import { DashboardEditLayoutWidget } from "./DashboardEditLayoutWidget";
+} from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
+import { DashboardEditLayoutWidget } from "./DashboardEditLayoutWidget.js";
 
 type IDashboardEditLayoutWidgetRendererOwnProps =
     IDashboardLayoutWidgetRenderProps<IDashboardEditLayoutContent>;

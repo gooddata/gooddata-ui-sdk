@@ -2,21 +2,21 @@
 
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import ora from "ora";
-import { createBackend } from "../_base/backend";
-import { getDashboardFromOptions } from "../_base/inputHandling/extractors";
+import { createBackend } from "../_base/backend.js";
+import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
 import {
     asyncValidOrDie,
     createDashboardPluginValidator,
     createDashboardValidator,
     createWorkspaceValidator,
     InputValidator,
-} from "../_base/inputHandling/validators";
-import { logError } from "../_base/terminal/loggers";
-import { promptDashboardIdWithoutChoice, promptPluginParameters } from "../_base/terminal/prompts";
-import { ActionOptions } from "../_base/types";
-import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
+} from "../_base/inputHandling/validators.js";
+import { logError } from "../_base/terminal/loggers.js";
+import { promptDashboardIdWithoutChoice, promptPluginParameters } from "../_base/terminal/prompts.js";
+import { ActionOptions } from "../_base/types.js";
+import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 
 export type UpdatePluginParamsCmdConfig = WorkspaceTargetConfig & {
     /**

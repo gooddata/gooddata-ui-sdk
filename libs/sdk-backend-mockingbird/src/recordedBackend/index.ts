@@ -50,20 +50,20 @@ import {
     IColorPaletteMetadataObject,
     IColorPaletteDefinition,
 } from "@gooddata/sdk-model";
-import { RecordedExecutionFactory } from "./execution";
-import { RecordedBackendConfig, RecordingIndex } from "./types";
-import { RecordedInsights } from "./insights";
-import { RecordedCatalogFactory } from "./catalog";
-import { RecordedAttributes } from "./attributes";
-import { RecordedMeasures } from "./measures";
-import { RecordedFacts } from "./facts";
-import { RecordedDashboards } from "./dashboards";
+import { RecordedExecutionFactory } from "./execution.js";
+import { RecordedBackendConfig, RecordingIndex } from "./types.js";
+import { RecordedInsights } from "./insights.js";
+import { RecordedCatalogFactory } from "./catalog.js";
+import { RecordedAttributes } from "./attributes.js";
+import { RecordedMeasures } from "./measures.js";
+import { RecordedFacts } from "./facts.js";
+import { RecordedDashboards } from "./dashboards.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     recordedAccessControlFactory,
     recordedUserGroupsQuery,
     RecordedWorkspaceUsersQuery,
-} from "./userManagement";
+} from "./userManagement.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",

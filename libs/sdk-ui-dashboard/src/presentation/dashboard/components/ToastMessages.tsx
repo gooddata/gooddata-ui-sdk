@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback, useContext, useMemo } from "react";
 import { Messages, ToastMessageContext } from "@gooddata/sdk-ui-kit";
-import { useDrillValidationMessages } from "./useDrillValidationMessages";
+import { useDrillValidationMessages } from "./useDrillValidationMessages.js";
 
 /**
  * @internal

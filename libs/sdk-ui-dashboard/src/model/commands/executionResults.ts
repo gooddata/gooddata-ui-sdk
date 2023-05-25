@@ -3,9 +3,9 @@
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import isString from "lodash/isString";
-import { IExecutionResultEnvelope } from "../store/executionResults/types";
-import { IDashboardCommand } from "./base";
+import isString from "lodash/isString.js";
+import { IExecutionResultEnvelope } from "../store/executionResults/types.js";
+import { IDashboardCommand } from "./base.js";
 
 /**
  * Triggers an event.

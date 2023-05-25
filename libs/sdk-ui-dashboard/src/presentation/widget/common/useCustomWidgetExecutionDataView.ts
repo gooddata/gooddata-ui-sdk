@@ -10,9 +10,9 @@ import {
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
-import { ICustomWidget } from "../../../model";
+import { ICustomWidget } from "../../../model/index.js";
 
-import { useWidgetFilters } from "./useWidgetFilters";
+import { useWidgetFilters } from "./useWidgetFilters.js";
 
 /**
  * Configuration options for the {@link useCustomWidgetExecutionDataView} hook.

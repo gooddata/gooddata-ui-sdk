@@ -3,10 +3,10 @@ import React from "react";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import { DescriptionClickTrigger } from "./DescriptionClickTrigger";
+import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 
-import { IInsightWidgetDescriptionTriggerProps } from "./types";
-import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "./../../../model";
+import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "../../../model/index.js";
 
 export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
     const { widget, insight } = props;

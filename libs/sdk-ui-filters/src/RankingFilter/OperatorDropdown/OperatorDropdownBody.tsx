@@ -4,8 +4,8 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
-import { OperatorDropdownItem } from "./OperatorDropdownItem";
-import { IOperatorDropdownItem } from "../types";
+import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
+import { IOperatorDropdownItem } from "../types.js";
 
 interface IOperatorDropdownBodyComponentOwnProps {
     items: IOperatorDropdownItem[];

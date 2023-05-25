@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { HEADER_LABEL_CLASS } from "../../base/constants";
+import { HEADER_LABEL_CLASS } from "../../base/constants.js";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";

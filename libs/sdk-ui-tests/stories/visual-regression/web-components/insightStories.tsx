@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { storiesOf } from "../../_infra/storyRepository";
-import { WebComponents } from "../../_infra/storyGroups";
-import "../../_infra/webComponents";
+import { storiesOf } from "../../_infra/storyRepository.js";
+import { WebComponents } from "../../_infra/storyGroups.js";
+import "../../_infra/webComponents.js";
 
 const insightIds = [
     ReferenceRecordings.Insights.PivotTable.TwoMeasuresAndGrandTotalsAndMultipleSubtotals,

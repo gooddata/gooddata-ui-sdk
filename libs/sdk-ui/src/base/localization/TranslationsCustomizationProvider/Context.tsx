@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { wrapDisplayName } from "../../react/wrapDisplayName";
-import compose from "lodash/flowRight";
+import { wrapDisplayName } from "../../react/wrapDisplayName.js";
+import compose from "lodash/flowRight.js";
 
 const TranslationsCustomizationContext = React.createContext<Record<string, string> | undefined>(undefined);
 TranslationsCustomizationContext.displayName = "TranslationsCustomizationContext";

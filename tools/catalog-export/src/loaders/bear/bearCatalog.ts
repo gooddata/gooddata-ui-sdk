@@ -1,9 +1,9 @@
 // (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
 import pmap from "p-map";
-import flatMap from "lodash/flatMap";
-import range from "lodash/range";
-import { isAttribute, isMetric, Catalog, Attribute, Metric, Fact } from "../../base/types";
+import flatMap from "lodash/flatMap.js";
+import range from "lodash/range.js";
+import { isAttribute, isMetric, Catalog, Attribute, Metric, Fact } from "../../base/types.js";
 
 type CatalogItemsResponse = {
     paging: {

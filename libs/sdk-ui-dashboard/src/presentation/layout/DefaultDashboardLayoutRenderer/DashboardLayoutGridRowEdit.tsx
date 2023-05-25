@@ -1,13 +1,13 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { Col, Row } from "react-grid-system";
-import reverse from "lodash/fp/reverse";
+import reverse from "lodash/fp/reverse.js";
 
-import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop";
-import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow";
-import { DashboardLayoutItem } from "./DashboardLayoutItem";
-import { IDashboardLayoutItemKeyGetter } from "./interfaces";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop/index.js";
+import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
+import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
+import { IDashboardLayoutItemKeyGetter } from "./interfaces.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 

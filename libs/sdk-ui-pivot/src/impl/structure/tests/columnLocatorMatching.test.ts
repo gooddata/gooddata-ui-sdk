@@ -5,11 +5,12 @@ import {
     SingleMeasureWithColumnAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
-} from "./table.fixture";
+} from "./table.fixture.js";
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { ColumnLocator, newAttributeColumnLocator, newMeasureColumnLocator } from "../../../columnWidths";
-import { createHeadersAndColDefs } from "../tableDescriptorFactory";
-import { searchForLocatorMatch } from "../colLocatorMatching";
+import { ColumnLocator, newAttributeColumnLocator, newMeasureColumnLocator } from "../../../columnWidths.js";
+import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
+import { searchForLocatorMatch } from "../colLocatorMatching.js";
+import { describe, it, expect } from "vitest";
 
 describe("searchForLocatorMatch", () => {
     const Scenarios: Array<[string, ColumnLocator[], DataViewFacade, string | undefined]> = [

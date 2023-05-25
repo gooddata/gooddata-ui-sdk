@@ -2,12 +2,12 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import ColoredItemContent from "./ColoredItemContent";
-import ColorDropdown from "../colorDropdown/ColorDropdown";
-import { IColoredItem } from "../../../../interfaces/Colors";
+import ColoredItemContent from "./ColoredItemContent.js";
+import ColorDropdown from "../colorDropdown/ColorDropdown.js";
+import { IColoredItem } from "../../../../interfaces/Colors.js";
 import { getMappingHeaderFormattedName, IMappingHeader } from "@gooddata/sdk-ui";
-import { getTranslation } from "../../../../utils/translations";
-import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper";
+import { getTranslation } from "../../../../utils/translations.js";
+import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;

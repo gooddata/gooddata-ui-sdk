@@ -5,7 +5,7 @@ import { IDateFilter, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { getKpiAlertTranslationData } from "../utils/translationUtils";
+import { getKpiAlertTranslationData } from "../utils/translationUtils.js";
 
 interface IKpiAlertDialogDateRangeProps {
     filter: IDateFilter | IDashboardDateFilter | undefined;

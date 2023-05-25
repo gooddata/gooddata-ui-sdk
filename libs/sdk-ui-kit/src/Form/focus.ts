@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 type AutofocusData = {
     frame: number | null;

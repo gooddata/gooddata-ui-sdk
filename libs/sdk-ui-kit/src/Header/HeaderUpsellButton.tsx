@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
-import { IHeaderUpsellButtonProps } from "./typings";
+import { IHeaderUpsellButtonProps } from "./typings.js";
 
 export const HeaderUpsellButton: React.FC<IHeaderUpsellButtonProps> = ({ onUpsellButtonClick }) => {
     const intl = useIntl();

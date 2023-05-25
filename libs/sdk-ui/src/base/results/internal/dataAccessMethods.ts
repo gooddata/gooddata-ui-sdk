@@ -6,10 +6,10 @@ import {
     IDataSeriesCollection,
     IDataSlice,
     IDataSliceCollection,
-} from "../dataAccess";
+} from "../dataAccess.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataAccessImpl } from "./dataAccessImpl";
-import { DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig";
+import { DataAccessImpl } from "./dataAccessImpl.js";
+import { DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
 import {
     IMeasure,
     IAttribute,

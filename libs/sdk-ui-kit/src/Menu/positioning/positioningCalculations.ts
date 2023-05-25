@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { MenuAlignment } from "../MenuSharedTypes";
+import { MenuAlignment } from "../MenuSharedTypes.js";
 
 export interface IDimensions {
     width: number;

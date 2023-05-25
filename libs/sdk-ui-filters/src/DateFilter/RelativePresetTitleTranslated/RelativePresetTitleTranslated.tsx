@@ -2,7 +2,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 export const RelativePresetTitleTranslated: React.FC<{
     granularity: DateFilterGranularity;

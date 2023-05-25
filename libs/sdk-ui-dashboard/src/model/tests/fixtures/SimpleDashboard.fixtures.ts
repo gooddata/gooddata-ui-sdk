@@ -13,7 +13,7 @@ import {
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures";
-import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes";
+import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 
 export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards

@@ -10,15 +10,15 @@ import {
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { DashboardContext, FiltersInfo } from "../types/commonTypes";
-import { IDashboardEvent } from "./base";
+import { DashboardContext, FiltersInfo } from "../types/commonTypes.js";
+import { IDashboardEvent } from "./base.js";
 import {
     IDashboardDrillEvent,
     IDrillDownDefinition,
     DashboardDrillContext,
     IDashboardFilter,
-} from "../../types";
-import { eventGuard } from "./util";
+} from "../../types.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DashboardDrillRequested} event.

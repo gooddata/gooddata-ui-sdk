@@ -9,7 +9,7 @@ import {
     OptionalKpiComponentProvider,
     OptionalDateFilterComponentProvider,
     OptionalAttributeFilterComponentProvider,
-} from "../presentation";
+} from "../presentation/index.js";
 import {
     DashboardDispatch,
     DashboardEventHandler,
@@ -20,7 +20,7 @@ import {
     ExtendedDashboardWidget,
     ICustomDashboardEvent,
     ICustomWidget,
-} from "../model";
+} from "../model/index.js";
 import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
 
 /**

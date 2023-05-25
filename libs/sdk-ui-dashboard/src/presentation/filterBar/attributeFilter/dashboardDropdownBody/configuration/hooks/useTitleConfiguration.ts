@@ -6,7 +6,7 @@ import {
     setAttributeFilterTitle,
     useDashboardCommandProcessing,
     useDashboardUserInteraction,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
 export function useTitleConfiguration(
     currentFilter: IDashboardAttributeFilter,

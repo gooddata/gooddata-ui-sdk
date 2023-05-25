@@ -6,7 +6,7 @@ import {
     IMeasureMetadataObjectDefinition,
     IInsight,
 } from "@gooddata/sdk-model";
-import { IMeasureExpressionToken } from "./measure";
+import { IMeasureExpressionToken } from "./measure.js";
 
 /**
  * Contains information about objects that may be referencing an measure. {@link IWorkspaceMeasuresService.getMeasureReferencingObjects} function.

@@ -8,7 +8,7 @@ import {
     loadInitialElementsPageWorker,
     loadNextElementsPageWorker,
     loadCustomElementsWorker,
-} from "./sagas";
+} from "./sagas.js";
 
 export function* rootSaga(): SagaIterator<void> {
     try {

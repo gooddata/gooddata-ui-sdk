@@ -1,4 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
+import { describe, expect, it } from "vitest";
 
 import {
     Won,
@@ -8,9 +9,14 @@ import {
     NonEmptyFiltersAdhoc,
     FalseComputeRatioAdhoc,
     TrueComputeRatioAdhoc,
-} from "../../../../__mocks__/model";
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { newArithmeticMeasure, newPopMeasure, newPreviousPeriodMeasure, newInlineMeasure } from "../factory";
+} from "../../../../__mocks__/model.js";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import {
+    newArithmeticMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+    newInlineMeasure,
+} from "../factory.js";
 import {
     isArithmeticMeasure,
     isPoPMeasure,
@@ -19,7 +25,7 @@ import {
     measureLocalId,
     isAdhocMeasure,
     isInlineMeasure,
-} from "../index";
+} from "../index.js";
 
 const SimpleMeasure = Won;
 const ArithmeticMeasure = newArithmeticMeasure([Won, Velocity.Min], "sum");

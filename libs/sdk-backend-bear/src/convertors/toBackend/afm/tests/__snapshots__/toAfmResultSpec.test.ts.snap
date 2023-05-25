@@ -1,76 +1,76 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`converts execution definition to AFM Execution AFM Execution with definition that has no filter 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {},
-    "resultSpec": Object {},
+exports[`converts execution definition to AFM Execution > AFM Execution with definition that has no filter 1`] = `
+{
+  "execution": {
+    "afm": {},
+    "resultSpec": {},
   },
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {
-      "attributes": Array [
-        Object {
+exports[`converts execution definition to AFM Execution > AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
+{
+  "execution": {
+    "afm": {
+      "attributes": [
+        {
           "alias": "alias",
-          "displayForm": Object {
+          "displayForm": {
             "identifier": "attribute1",
           },
           "localIdentifier": "a_724874d1_attribute1",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "attribute2",
           },
           "localIdentifier": "a_attribute2",
         },
       ],
     },
-    "resultSpec": Object {},
+    "resultSpec": {},
   },
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with definition with filters 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {
-      "attributes": Array [
-        Object {
-          "displayForm": Object {
+exports[`converts execution definition to AFM Execution > AFM Execution with definition with filters 1`] = `
+{
+  "execution": {
+    "afm": {
+      "attributes": [
+        {
+          "displayForm": {
             "identifier": "label.account.id.name",
           },
           "localIdentifier": "a_label.account.id.name",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.activity.id.subject",
           },
           "localIdentifier": "a_label.activity.id.subject",
         },
       ],
-      "filters": Array [
-        Object {
-          "positiveAttributeFilter": Object {
-            "displayForm": Object {
+      "filters": [
+        {
+          "positiveAttributeFilter": {
+            "displayForm": {
               "identifier": "label.account.id.name",
             },
-            "in": Object {
-              "values": Array [
+            "in": {
+              "values": [
                 "myAccount",
               ],
             },
           },
         },
       ],
-      "measures": Array [
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+      "measures": [
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "acugFHNJgsBy",
               },
             },
@@ -79,19 +79,19 @@ Object {
         },
       ],
     },
-    "resultSpec": Object {},
+    "resultSpec": {},
   },
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with dimensions 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {},
-    "resultSpec": Object {
-      "dimensions": Array [
-        Object {
-          "itemIdentifiers": Array [
+exports[`converts execution definition to AFM Execution > AFM Execution with dimensions 1`] = `
+{
+  "execution": {
+    "afm": {},
+    "resultSpec": {
+      "dimensions": [
+        {
+          "itemIdentifiers": [
             "localId1",
           ],
         },
@@ -101,45 +101,45 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native grand totals for columns 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {
-      "attributes": Array [
-        Object {
-          "displayForm": Object {
+exports[`converts execution definition to AFM Execution > AFM Execution with dimensions with native grand totals for columns 1`] = `
+{
+  "execution": {
+    "afm": {
+      "attributes": [
+        {
+          "displayForm": {
             "identifier": "label.activity.id",
           },
           "localIdentifier": "a_label.activity.id",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.account.id.name",
           },
           "localIdentifier": "a_label.account.id.name",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.owner.department",
           },
           "localIdentifier": "a_label.owner.department",
         },
       ],
-      "measures": Array [
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+      "measures": [
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "acugFHNJgsBy",
               },
             },
           },
           "localIdentifier": "m_acugFHNJgsBy",
         },
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "abZgFKGPaGYM",
               },
             },
@@ -147,40 +147,40 @@ Object {
           "localIdentifier": "m_abZgFKGPaGYM",
         },
       ],
-      "nativeTotals": Array [
-        Object {
-          "attributeIdentifiers": Array [],
+      "nativeTotals": [
+        {
+          "attributeIdentifiers": [],
           "measureIdentifier": "m_acugFHNJgsBy",
         },
-        Object {
-          "attributeIdentifiers": Array [
+        {
+          "attributeIdentifiers": [
             "a_label.account.id.name",
           ],
           "measureIdentifier": "m_acugFHNJgsBy",
         },
       ],
     },
-    "resultSpec": Object {
-      "dimensions": Array [
-        Object {
-          "itemIdentifiers": Array [
+    "resultSpec": {
+      "dimensions": [
+        {
+          "itemIdentifiers": [
             "a_label.account.id.name",
           ],
-          "totals": Array [
-            Object {
+          "totals": [
+            {
               "attributeIdentifier": "a_label.account.id.name",
               "measureIdentifier": "m_acugFHNJgsBy",
               "type": "nat",
             },
           ],
         },
-        Object {
-          "itemIdentifiers": Array [
+        {
+          "itemIdentifiers": [
             "a_label.owner.department",
             "measureGroup",
           ],
-          "totals": Array [
-            Object {
+          "totals": [
+            {
               "attributeIdentifier": "a_label.owner.department",
               "measureIdentifier": "m_acugFHNJgsBy",
               "type": "nat",
@@ -193,57 +193,57 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native sub totals for columns 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {
-      "attributes": Array [
-        Object {
-          "displayForm": Object {
+exports[`converts execution definition to AFM Execution > AFM Execution with dimensions with native sub totals for columns 1`] = `
+{
+  "execution": {
+    "afm": {
+      "attributes": [
+        {
+          "displayForm": {
             "identifier": "label.activity.id",
           },
           "localIdentifier": "a_label.activity.id",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.account.id.name",
           },
           "localIdentifier": "a_label.account.id.name",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.opportunitysnapshot.forecastcategory",
           },
           "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.owner.department",
           },
           "localIdentifier": "a_label.owner.department",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.stage.isactive",
           },
           "localIdentifier": "a_label.stage.isactive",
         },
       ],
-      "measures": Array [
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+      "measures": [
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "acugFHNJgsBy",
               },
             },
           },
           "localIdentifier": "m_acugFHNJgsBy",
         },
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "abZgFKGPaGYM",
               },
             },
@@ -251,15 +251,15 @@ Object {
           "localIdentifier": "m_abZgFKGPaGYM",
         },
       ],
-      "nativeTotals": Array [
-        Object {
-          "attributeIdentifiers": Array [
+      "nativeTotals": [
+        {
+          "attributeIdentifiers": [
             "a_label.account.id.name",
           ],
           "measureIdentifier": "m_acugFHNJgsBy",
         },
-        Object {
-          "attributeIdentifiers": Array [
+        {
+          "attributeIdentifiers": [
             "a_label.account.id.name",
             "a_label.opportunitysnapshot.forecastcategory",
             "a_label.owner.department",
@@ -268,29 +268,29 @@ Object {
         },
       ],
     },
-    "resultSpec": Object {
-      "dimensions": Array [
-        Object {
-          "itemIdentifiers": Array [
+    "resultSpec": {
+      "dimensions": [
+        {
+          "itemIdentifiers": [
             "a_label.account.id.name",
             "a_label.opportunitysnapshot.forecastcategory",
           ],
-          "totals": Array [
-            Object {
+          "totals": [
+            {
               "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
               "measureIdentifier": "m_acugFHNJgsBy",
               "type": "nat",
             },
           ],
         },
-        Object {
-          "itemIdentifiers": Array [
+        {
+          "itemIdentifiers": [
             "a_label.owner.department",
             "a_label.stage.isactive",
             "measureGroup",
           ],
-          "totals": Array [
-            Object {
+          "totals": [
+            {
               "attributeIdentifier": "a_label.stage.isactive",
               "measureIdentifier": "m_acugFHNJgsBy",
               "type": "nat",
@@ -303,39 +303,39 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native totals and attribute is in bucket 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {
-      "attributes": Array [
-        Object {
-          "displayForm": Object {
+exports[`converts execution definition to AFM Execution > AFM Execution with dimensions with native totals and attribute is in bucket 1`] = `
+{
+  "execution": {
+    "afm": {
+      "attributes": [
+        {
+          "displayForm": {
             "identifier": "label.activity.id",
           },
           "localIdentifier": "a_label.activity.id",
         },
-        Object {
-          "displayForm": Object {
+        {
+          "displayForm": {
             "identifier": "label.account.id.name",
           },
           "localIdentifier": "a_label.account.id.name",
         },
       ],
-      "measures": Array [
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+      "measures": [
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "acugFHNJgsBy",
               },
             },
           },
           "localIdentifier": "m_acugFHNJgsBy",
         },
-        Object {
-          "definition": Object {
-            "measure": Object {
-              "item": Object {
+        {
+          "definition": {
+            "measure": {
+              "item": {
                 "identifier": "abZgFKGPaGYM",
               },
             },
@@ -343,26 +343,26 @@ Object {
           "localIdentifier": "m_abZgFKGPaGYM",
         },
       ],
-      "nativeTotals": Array [
-        Object {
-          "attributeIdentifiers": Array [],
+      "nativeTotals": [
+        {
+          "attributeIdentifiers": [],
           "measureIdentifier": "m_acugFHNJgsBy",
         },
       ],
     },
-    "resultSpec": Object {
-      "dimensions": Array [
-        Object {
-          "itemIdentifiers": Array [
+    "resultSpec": {
+      "dimensions": [
+        {
+          "itemIdentifiers": [
             "a_label.account.id.name",
           ],
         },
-        Object {
-          "itemIdentifiers": Array [
+        {
+          "itemIdentifiers": [
             "measureGroup",
           ],
-          "totals": Array [
-            Object {
+          "totals": [
+            {
               "attributeIdentifier": "a_label.account.id.name",
               "measureIdentifier": "m_acugFHNJgsBy",
               "type": "nat",
@@ -375,23 +375,23 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with empty definition 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {},
-    "resultSpec": Object {},
+exports[`converts execution definition to AFM Execution > AFM Execution with empty definition 1`] = `
+{
+  "execution": {
+    "afm": {},
+    "resultSpec": {},
   },
 }
 `;
 
-exports[`converts execution definition to AFM Execution AFM Execution with sorts 1`] = `
-Object {
-  "execution": Object {
-    "afm": Object {},
-    "resultSpec": Object {
-      "sorts": Array [
-        Object {
-          "attributeSortItem": Object {
+exports[`converts execution definition to AFM Execution > AFM Execution with sorts 1`] = `
+{
+  "execution": {
+    "afm": {},
+    "resultSpec": {
+      "sorts": [
+        {
+          "attributeSortItem": {
             "attributeIdentifier": "a_label.account.id.name",
             "direction": "asc",
           },
@@ -402,37 +402,37 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution should remove empty negative filters and not cause RAIL-2083 1`] = `
-Array [
-  Object {
-    "positiveAttributeFilter": Object {
-      "displayForm": Object {
+exports[`converts execution definition to AFM Execution > should remove empty negative filters and not cause RAIL-2083 1`] = `
+[
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
         "identifier": "label.product.id.name",
       },
-      "in": Object {
-        "values": Array [],
+      "in": {
+        "values": [],
       },
     },
   },
-  Object {
-    "positiveAttributeFilter": Object {
-      "displayForm": Object {
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
         "identifier": "label.product.id.name",
       },
-      "in": Object {
-        "values": Array [
+      "in": {
+        "values": [
           "value 1",
         ],
       },
     },
   },
-  Object {
-    "negativeAttributeFilter": Object {
-      "displayForm": Object {
+  {
+    "negativeAttributeFilter": {
+      "displayForm": {
         "identifier": "label.product.id.name",
       },
-      "notIn": Object {
-        "values": Array [
+      "notIn": {
+        "values": [
           "value 2",
         ],
       },
@@ -441,4 +441,4 @@ Array [
 ]
 `;
 
-exports[`converts execution definition to AFM Execution throw error with dimensions with native totals but no attribute in bucket 1`] = `"Native total references attribute that is not in any dimension: a_label.account.id.name"`;
+exports[`converts execution definition to AFM Execution > throw error with dimensions with native totals but no attribute in bucket 1`] = `"Native total references attribute that is not in any dimension: a_label.account.id.name"`;

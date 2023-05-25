@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 
-import { convertMeasure } from "../MeasureConverter";
+import { convertMeasure } from "../MeasureConverter.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     DateGranularity,
@@ -11,7 +11,8 @@ import {
     newPreviousPeriodMeasure,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture";
+import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture.js";
+import { describe, expect, it } from "vitest";
 
 describe("measure converter", () => {
     const Scenarios: Array<[string, any]> = [

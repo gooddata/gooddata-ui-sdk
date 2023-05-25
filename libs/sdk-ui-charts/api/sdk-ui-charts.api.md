@@ -26,7 +26,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
-import { LodashIsEqual1x1 } from 'lodash/fp';
+import { LodashIsEqual1x1 } from 'lodash/fp.js';
 import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';

@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { axisNameCustomization } from "../_infra/axisNameCustomization";
-import { BulletChartWithAllMeasuresAndViewBy } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const singleAxisNameConfig = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

@@ -2,14 +2,15 @@
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect } from "vitest";
 
-import { getMVS } from "../../_util/test/helper";
-import { ColorFactory } from "../../_chartOptions/colorFactory";
-import { MeasureColorStrategy } from "../measure";
-import { IColorMapping } from "../../../../interfaces";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { TwoColorPalette } from "./color.fixture";
-import { getColorsFromStrategy } from "./helper";
+import { getMVS } from "../../_util/test/helper.js";
+import { ColorFactory } from "../../_chartOptions/colorFactory.js";
+import { MeasureColorStrategy } from "../measure.js";
+import { IColorMapping } from "../../../../interfaces/index.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { TwoColorPalette } from "./color.fixture.js";
+import { getColorsFromStrategy } from "./helper.js";
 
 describe("MeasureColorStrategy", () => {
     describe("derived measure color", () => {

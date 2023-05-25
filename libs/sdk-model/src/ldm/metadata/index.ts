@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute";
+import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute/index.js";
 import {
     IAttributeDisplayFormMetadataObject,
     isAttributeDisplayFormMetadataObject,
@@ -7,10 +7,10 @@ import {
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
     AttributeDisplayFormType,
-} from "./attributeDisplayForm";
-import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard";
-import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet";
-import { IFactMetadataObject, isFactMetadataObject } from "./fact";
+} from "./attributeDisplayForm/index.js";
+import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard/index.js";
+import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet/index.js";
+import { IFactMetadataObject, isFactMetadataObject } from "./fact/index.js";
 import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
@@ -18,9 +18,9 @@ import {
     IMeasureMetadataObjectDefinition,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
-} from "./measure";
-import { IMetadataObject, IMetadataObjectBase, IMetadataObjectIdentity, isMetadataObject } from "./types";
-import { isVariableMetadataObject, IVariableMetadataObject } from "./variable";
+} from "./measure/index.js";
+import { IMetadataObject, IMetadataObjectBase, IMetadataObjectIdentity, isMetadataObject } from "./types.js";
+import { isVariableMetadataObject, IVariableMetadataObject } from "./variable/index.js";
 
 export {
     IMetadataObject,

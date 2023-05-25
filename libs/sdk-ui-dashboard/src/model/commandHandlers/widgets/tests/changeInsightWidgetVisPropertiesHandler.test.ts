@@ -1,24 +1,28 @@
 // (C) 2021-2022 GoodData Corporation
-
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { ChangeInsightWidgetVisProperties, changeInsightWidgetVisProperties } from "../../../commands";
-import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events";
-import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    ChangeInsightWidgetVisProperties,
+    changeInsightWidgetVisProperties,
+} from "../../../commands/index.js";
+import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events/index.js";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
 import { idRef, uriRef, IInsightWidget } from "@gooddata/sdk-model";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 
 describe("change insight widget vis properties handler", () => {
     describe("for dashboard with KPIs and insights", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, ComplexDashboardIdentifier),
-        );
+            }, ComplexDashboardIdentifier);
+        });
 
         const TestProperties = { controls: { legend: false } };
 

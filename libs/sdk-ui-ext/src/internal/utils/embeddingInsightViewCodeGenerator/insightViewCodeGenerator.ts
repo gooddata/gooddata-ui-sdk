@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 
 import { IInsight, insightId, insightTitle } from "@gooddata/sdk-model";
-import { IInsightViewProps } from "../../interfaces/InsightView";
-import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator";
-import { removeUseless } from "../removeUseless";
-import { configForInsightView, localeForInsightView } from "./insightViewConfig";
+import { IInsightViewProps } from "../../interfaces/InsightView.js";
+import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator/index.js";
+import { removeUseless } from "../removeUseless.js";
+import { configForInsightView, localeForInsightView } from "./insightViewConfig.js";
 
 /**
  * DO NOT USE THIS INSIGHTVIEW CODE GENERATOR, IT'S FOR INTERNAL PURPOSE ONLY.

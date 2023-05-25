@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IColorStrategy } from "../base";
+import { IColorStrategy } from "../base.js";
 
 export function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];

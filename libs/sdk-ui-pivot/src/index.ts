@@ -7,8 +7,8 @@
  *
  * @packageDocumentation
  */
-export { PivotTable, pivotTableMenuForCapabilities } from "./PivotTable";
-export { CorePivotTable } from "./CorePivotTable";
+export { PivotTable, pivotTableMenuForCapabilities } from "./PivotTable.js";
+export { CorePivotTable } from "./CorePivotTable.js";
 
 export {
     IPivotTableBucketProps,
@@ -20,7 +20,7 @@ export {
     ICorePivotTableProps,
     ColumnResizedCallback,
     IMenu,
-} from "./publicTypes";
+} from "./publicTypes.js";
 
 export {
     IWeakMeasureColumnWidthItem,
@@ -54,4 +54,4 @@ export {
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
     newWidthForSelectedColumns,
-} from "./columnWidths";
+} from "./columnWidths.js";

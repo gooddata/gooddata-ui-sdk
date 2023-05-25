@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createDrillHeaders should generate drill item containing all scoping attribute's headers and descriptors and measure from measure's data col 1`] = `
-Array [
-  Object {
-    "attributeHeaderItem": Object {
+exports[`createDrillHeaders > should generate drill item containing all scoping attribute's headers and descriptors and measure from measure's data col 1`] = `
+[
+  {
+    "attributeHeaderItem": {
       "name": "Exclude",
       "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.opportunitysnapshot.forecastcategory",
         "name": "Forecast Category",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1062",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1062",
@@ -21,24 +21,24 @@ Array [
       "identifier": "label.opportunitysnapshot.forecastcategory",
       "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       "name": "Forecast Category",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1063",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1063",
     },
   },
-  Object {
-    "attributeHeaderItem": Object {
+  {
+    "attributeHeaderItem": {
       "name": "East Coast",
       "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1086",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -46,19 +46,19 @@ Array [
       "identifier": "label.owner.region",
       "localIdentifier": "a_label.owner.region",
       "name": "Region",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1087",
     },
   },
-  Object {
-    "measureHeaderItem": Object {
+  {
+    "measureHeaderItem": {
       "format": "$#,##0.00",
       "identifier": "aangOxLSeztu",
       "localIdentifier": "m_aangOxLSeztu",
       "name": "Amount",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1271",
@@ -67,20 +67,20 @@ Array [
 ]
 `;
 
-exports[`createDrillHeaders should generate drill item containing both parent's and second level's group attribute and descriptor from second level group 1`] = `
-Array [
-  Object {
-    "attributeHeaderItem": Object {
+exports[`createDrillHeaders > should generate drill item containing both parent's and second level's group attribute and descriptor from second level group 1`] = `
+[
+  {
+    "attributeHeaderItem": {
       "name": "Exclude",
       "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.opportunitysnapshot.forecastcategory",
         "name": "Forecast Category",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1062",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1062",
@@ -88,24 +88,24 @@ Array [
       "identifier": "label.opportunitysnapshot.forecastcategory",
       "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       "name": "Forecast Category",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1063",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1063",
     },
   },
-  Object {
-    "attributeHeaderItem": Object {
+  {
+    "attributeHeaderItem": {
       "name": "East Coast",
       "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1086",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -113,7 +113,7 @@ Array [
       "identifier": "label.owner.region",
       "localIdentifier": "a_label.owner.region",
       "name": "Region",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1087",
@@ -122,20 +122,20 @@ Array [
 ]
 `;
 
-exports[`createDrillHeaders should generate drill item containing first attribute's header and descriptor from first slice column 1`] = `
-Array [
-  Object {
-    "attributeHeaderItem": Object {
+exports[`createDrillHeaders > should generate drill item containing first attribute's header and descriptor from first slice column 1`] = `
+[
+  {
+    "attributeHeaderItem": {
       "name": "CompuSci",
       "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.product.id",
         "name": "Product",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1054",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -143,7 +143,7 @@ Array [
       "identifier": "label.product.id.name",
       "localIdentifier": "a_label.product.id.name",
       "name": "Product Name",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1055",
@@ -152,20 +152,20 @@ Array [
 ]
 `;
 
-exports[`createDrillHeaders should generate drill item containing just first level group's attribute header and descriptor from first level group 1`] = `
-Array [
-  Object {
-    "attributeHeaderItem": Object {
+exports[`createDrillHeaders > should generate drill item containing just first level group's attribute header and descriptor from first level group 1`] = `
+[
+  {
+    "attributeHeaderItem": {
       "name": "Exclude",
       "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.opportunitysnapshot.forecastcategory",
         "name": "Forecast Category",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1062",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1062",
@@ -173,7 +173,7 @@ Array [
       "identifier": "label.opportunitysnapshot.forecastcategory",
       "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       "name": "Forecast Category",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1063",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1063",
@@ -182,20 +182,20 @@ Array [
 ]
 `;
 
-exports[`createDrillHeaders should generate drill item containing second attribute's header and descriptor from second column 1`] = `
-Array [
-  Object {
-    "attributeHeaderItem": Object {
+exports[`createDrillHeaders > should generate drill item containing second attribute's header and descriptor from second column 1`] = `
+[
+  {
+    "attributeHeaderItem": {
       "name": "Direct Sales",
       "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
     },
   },
-  Object {
-    "attributeHeader": Object {
-      "formOf": Object {
+  {
+    "attributeHeader": {
+      "formOf": {
         "identifier": "attr.owner.department",
         "name": "Department",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1088",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1088",
@@ -203,7 +203,7 @@ Array [
       "identifier": "label.owner.department",
       "localIdentifier": "a_label.owner.department",
       "name": "Department",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1089",
       },
       "uri": "/gdc/md/referenceworkspace/obj/1089",

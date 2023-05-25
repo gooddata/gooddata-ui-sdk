@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { PayloadAction } from "@reduxjs/toolkit";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 
-import { Correlation, ILoadElementsResult } from "../../../types";
-import { getElementCacheKey } from "../common/selectors";
-import { AttributeFilterReducer } from "../store/state";
+import { Correlation, ILoadElementsResult } from "../../../types/index.js";
+import { getElementCacheKey } from "../common/selectors.js";
+import { AttributeFilterReducer } from "../store/state.js";
 
 const loadInitialElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> =
     identity;

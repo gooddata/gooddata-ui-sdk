@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
-import { alertsAdapter } from "./alertsEntityAdapter";
+import { alertsAdapter } from "./alertsEntityAdapter.js";
 
 const alertsSlice = createSlice({
     name: "alerts",

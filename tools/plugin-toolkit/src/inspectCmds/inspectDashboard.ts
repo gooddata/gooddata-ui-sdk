@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 /* eslint-disable no-console */
-import { InspectCmdActionConfig } from "./actionConfig";
-import { ActionOptions } from "../_base/types";
+import { InspectCmdActionConfig } from "./actionConfig.js";
+import { ActionOptions } from "../_base/types.js";
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
-import { printObjectSummary } from "./output";
+import { printObjectSummary } from "./output.js";
 import columnify from "columnify";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 export async function inspectDashboard(
     config: InspectCmdActionConfig,

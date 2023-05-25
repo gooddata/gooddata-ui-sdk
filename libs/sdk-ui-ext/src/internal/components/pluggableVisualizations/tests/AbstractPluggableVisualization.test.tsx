@@ -1,11 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import { IVisProps, IDrillDownContext } from "../../../interfaces/Visualization";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
+import { IVisProps, IDrillDownContext } from "../../../interfaces/Visualization.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { DummyVisConstruct } from "./visConstruct.fixture";
+import { DummyVisConstruct } from "./visConstruct.fixture.js";
+import { describe, it, expect } from "vitest";
 
 describe("AbstractPluggableVisualization", () => {
     class DummyPluggableVisualization extends AbstractPluggableVisualization {

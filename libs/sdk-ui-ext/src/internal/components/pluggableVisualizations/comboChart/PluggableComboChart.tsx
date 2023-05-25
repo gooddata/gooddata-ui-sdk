@@ -1,9 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import without from "lodash/without";
-import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import without from "lodash/without.js";
+import isEmpty from "lodash/isEmpty.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
 import {
@@ -14,13 +14,13 @@ import {
     insightBucket,
 } from "@gooddata/sdk-model";
 
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
-import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { BUCKETS, METRIC } from "../../../constants/bucket";
-import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties";
-import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig";
+import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
+import { BUCKETS, METRIC } from "../../../constants/bucket.js";
+import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties.js";
+import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 
 import {
     IBucketItem,
@@ -31,11 +31,11 @@ import {
     IVisualizationProperties,
     IBucketOfFun,
     IVisProps,
-} from "../../../interfaces/Visualization";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+} from "../../../interfaces/Visualization.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import {
     applyUiConfig,
     findBucket,
@@ -48,15 +48,15 @@ import {
     sanitizeFilters,
     setMeasuresShowOnSecondaryAxis,
     getBucketItems,
-} from "../../../utils/bucketHelper";
-import { getMasterMeasuresCount } from "../../../utils/bucketRules";
+} from "../../../utils/bucketHelper.js";
+import { getMasterMeasuresCount } from "../../../utils/bucketRules.js";
 import {
     getReferencePointWithSupportedProperties,
     isDualAxisOrSomeSecondaryAxisMeasure,
     setSecondaryMeasures,
-} from "../../../utils/propertiesHelper";
-import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
+} from "../../../utils/propertiesHelper.js";
+import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper.js";
+import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 
 /**
  * PluggableComboChart

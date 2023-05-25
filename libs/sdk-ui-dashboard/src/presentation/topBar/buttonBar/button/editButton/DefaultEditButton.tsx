@@ -9,9 +9,9 @@ import {
     switchToEditRenderMode,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model";
-import { selectCanEnterEditMode } from "../selectors";
-import { IEditButtonProps } from "./types";
+} from "../../../../../model/index.js";
+import { selectCanEnterEditMode } from "../selectors.js";
+import { IEditButtonProps } from "./types.js";
 
 /**
  * @internal

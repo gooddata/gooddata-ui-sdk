@@ -1,12 +1,15 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import NativeListener from "react-native-listener";
-import noop from "lodash/noop";
+import DefaultNativeListener from "react-native-listener";
+import noop from "lodash/noop.js";
+import { defaultImport } from "default-import";
 
-import { ENUM_KEY_CODE } from "../typings/utilities";
-import { IDomNative, IDomNativeProps } from "../typings/domNative";
-import { runAutofocus } from "./focus";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
+import { runAutofocus } from "./focus.js";
+
+const NativeListener = defaultImport(DefaultNativeListener);
 
 /**
  * @internal

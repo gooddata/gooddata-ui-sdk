@@ -3,8 +3,8 @@ import React, { ReactNode } from "react";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 
-import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types";
-import { messages } from "../locales";
+import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types.js";
+import { messages } from "../locales.js";
 
 interface IPreviewProps {
     measure: IMeasureDropdownItem;

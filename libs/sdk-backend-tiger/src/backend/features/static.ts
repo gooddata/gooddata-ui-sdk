@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { IStaticFeatures } from "@gooddata/api-client-tiger";
-import { ITigerFeatureFlags } from "../uiFeatures";
-import { FeatureDef, FeaturesMap, mapFeatures } from "./feature";
+import { ITigerFeatureFlags } from "../uiFeatures.js";
+import { FeatureDef, FeaturesMap, mapFeatures } from "./feature.js";
 
 export async function getStaticFeatures(
     features: IStaticFeatures["static"],

@@ -4,7 +4,7 @@ import bearFactory, {
     ContextDeferredAuthProvider,
 } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { DEFAULT_BACKEND_URL } from "./constants";
+import { DEFAULT_BACKEND_URL } from "./constants.js";
 
 export function hasCredentialsSetup(): boolean {
     return !!(process.env.GDC_USERNAME && process.env.GDC_PASSWORD);

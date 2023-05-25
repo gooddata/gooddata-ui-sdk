@@ -2,7 +2,7 @@
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { idRef } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
 import {
     defaultUser,
@@ -11,12 +11,13 @@ import {
     granularGranteesAccess,
     granularGranteeUser,
     granularGranteeUser2,
-} from "./GranteeMock";
+} from "./GranteeMock.js";
 
-import { useShareDialogBase } from "../useShareDialogBase";
-import { IGranularGranteeUser, IShareDialogBaseProps } from "../types";
+import { useShareDialogBase } from "../useShareDialogBase.js";
+import { IGranularGranteeUser, IShareDialogBaseProps } from "../types.js";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 const recordedBackendConfig: RecordedBackendConfig = {
     userManagement: {
@@ -28,8 +29,8 @@ const recordedBackendConfig: RecordedBackendConfig = {
 };
 const mockBackend = recordedBackend(ReferenceRecordings.Recordings, recordedBackendConfig);
 
-jest.mock("@gooddata/sdk-ui", () => ({
-    ...(jest.requireActual("@gooddata/sdk-ui") as object),
+vi.mock("@gooddata/sdk-ui", async () => ({
+    ...((await vi.importActual("@gooddata/sdk-ui")) as object),
     useBackendStrict: () => mockBackend,
     useWorkspaceStrict: () => "workspace",
 }));
@@ -66,12 +67,12 @@ const renderTestedHook = (props?: Partial<IShareDialogBaseProps>) => {
 
 describe("useShareDialogBase", () => {
     afterEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     describe("granular permissions", () => {
         it("isShareDialogDirty should be true when granular permission is changed and onSubmitShareGrantee should be called with correct parameters", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             const { result } = renderTestedHook({ onSubmit });
             await waitFor(() => {
                 expect(result.current.isGranteesLoading).toEqual(false);
@@ -97,7 +98,7 @@ describe("useShareDialogBase", () => {
         });
 
         it("isShareDialogDirty should be true when grantee is removed and onSubmitShareGrantee should be called with correct parameters", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             const { result } = renderTestedHook({ onSubmit });
             await waitFor(() => {
                 expect(result.current.isGranteesLoading).toEqual(false);
@@ -118,7 +119,7 @@ describe("useShareDialogBase", () => {
         });
 
         it("isAddDialogDirty should be true when grantee is added and onSubmitAddGrantee should be called with correct parameters", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             const { result } = renderTestedHook({ onSubmit });
             await waitFor(() => {
                 expect(result.current.isGranteesLoading).toEqual(false);
@@ -145,7 +146,7 @@ describe("useShareDialogBase", () => {
         });
 
         it("isShareDialogDirty should be true when granular permission is changed, grantee is added and back button action is used", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             const { result } = renderTestedHook({ onSubmit });
             await waitFor(() => {
                 expect(result.current.isGranteesLoading).toEqual(false);

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { GD_COLOR_HIGHLIGHT } from "../utils/constants";
+import { GD_COLOR_HIGHLIGHT } from "../utils/constants.js";
 
 const HEX3_REGEX = /^#([\da-f])([\da-f])([\da-f])/i;
 const HEX6_REGEX = /^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/;

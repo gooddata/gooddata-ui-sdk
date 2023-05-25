@@ -4,12 +4,12 @@ import { select, fork, take, race, SagaReturnType, call } from "redux-saga/effec
 import { isAttributeElementsByRef } from "@gooddata/sdk-model";
 import { AnyAction } from "@reduxjs/toolkit";
 
-import { Correlation } from "../../../types";
-import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga";
-import { selectAttributeFilterElements } from "../filter/filterSelectors";
-import { actions } from "../store/slice";
-import { getAttributeFilterContext } from "../common/sagas";
-import { selectElementsForm } from "../common/selectors";
+import { Correlation } from "../../../types/index.js";
+import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga.js";
+import { selectAttributeFilterElements } from "../filter/filterSelectors.js";
+import { actions } from "../store/slice.js";
+import { getAttributeFilterContext } from "../common/sagas.js";
+import { selectElementsForm } from "../common/selectors.js";
 
 /**
  * @internal

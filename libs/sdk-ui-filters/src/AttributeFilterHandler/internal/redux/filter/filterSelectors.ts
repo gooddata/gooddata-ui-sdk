@@ -8,15 +8,15 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import difference from "lodash/difference";
-import union from "lodash/union";
+import difference from "lodash/difference.js";
+import union from "lodash/union.js";
 
-import { selectState } from "../common/selectors";
+import { selectState } from "../common/selectors.js";
 import {
     selectCommittedSelection,
     selectIsCommittedSelectionInverted,
-} from "../selection/selectionSelectors";
-import { FilterSelector } from "../common/types";
+} from "../selection/selectionSelectors.js";
+import { FilterSelector } from "../common/types.js";
 
 /**
  * @internal

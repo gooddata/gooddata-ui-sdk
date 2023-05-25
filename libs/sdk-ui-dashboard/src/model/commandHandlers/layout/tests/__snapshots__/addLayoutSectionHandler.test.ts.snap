@@ -1,44 +1,44 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`add layout section handler for a dashboard with existing sections should add new first section by using index 0 1`] = `
-Object {
+exports[`add layout section handler > for a dashboard with existing sections > should add new first section by using index 0 1`] = `
+{
   "header": undefined,
-  "items": Array [],
+  "items": [],
   "type": "IDashboardLayoutSection",
 }
 `;
 
-exports[`add layout section handler for a dashboard with existing sections should add new last section by using relative index -1 1`] = `
-Object {
+exports[`add layout section handler > for a dashboard with existing sections > should add new last section by using relative index -1 1`] = `
+{
   "header": undefined,
-  "items": Array [],
+  "items": [],
   "type": "IDashboardLayoutSection",
 }
 `;
 
-exports[`add layout section handler for an empty dashboard should add a new empty section at relative index -1 1`] = `
-Object {
+exports[`add layout section handler > for an empty dashboard > should add a new empty section at relative index -1 1`] = `
+{
   "header": undefined,
-  "items": Array [],
+  "items": [],
   "type": "IDashboardLayoutSection",
 }
 `;
 
-exports[`add layout section handler for an empty dashboard should add a new empty section at relative index 0 1`] = `
-Object {
+exports[`add layout section handler > for an empty dashboard > should add a new empty section at relative index 0 1`] = `
+{
   "header": undefined,
-  "items": Array [],
+  "items": [],
   "type": "IDashboardLayoutSection",
 }
 `;
 
-exports[`add layout section handler for an empty dashboard should add a new section and initialize its header 1`] = `
-Object {
-  "header": Object {
+exports[`add layout section handler > for an empty dashboard > should add a new section and initialize its header 1`] = `
+{
+  "header": {
     "description": "My Section Description",
     "title": "My Section",
   },
-  "items": Array [],
+  "items": [],
   "type": "IDashboardLayoutSection",
 }
 `;

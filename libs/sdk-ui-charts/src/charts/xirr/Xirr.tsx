@@ -20,9 +20,9 @@ import {
     NullableFiltersOrPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
-import { CoreXirr } from "./CoreXirr";
-import omit from "lodash/omit";
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
+import { CoreXirr } from "./CoreXirr.js";
+import omit from "lodash/omit.js";
 
 //
 // Public interface

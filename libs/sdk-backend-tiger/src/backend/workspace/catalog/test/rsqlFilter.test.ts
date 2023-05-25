@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
-
-import { tagsToRsqlFilter } from "../rsqlFilter";
+import { describe, expect, it } from "vitest";
+import { tagsToRsqlFilter } from "../rsqlFilter.js";
 
 describe("tagsToRsqlFilter", () => {
     it("should parse tags input with correct RSQL format filtering", () => {

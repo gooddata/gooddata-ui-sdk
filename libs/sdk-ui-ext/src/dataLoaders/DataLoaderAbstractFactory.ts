@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
-import LRUCache from "lru-cache";
-import { LOADER_CACHE_SIZE } from "./constants";
-import { IDataLoaderFactory } from "./types";
+import { LRUCache } from "lru-cache";
+import { LOADER_CACHE_SIZE } from "./constants.js";
+import { IDataLoaderFactory } from "./types.js";
 
 export const dataLoaderAbstractFactory = <TLoader>(
     createLoader: (workspace: string) => TLoader,

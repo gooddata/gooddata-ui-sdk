@@ -4,15 +4,18 @@ import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react"
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model";
+import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model/index.js";
 
-import { isDataError } from "../../../../_staging/errors/errorPredicates";
-import { useDashboardCustomizationsContext, InsightMenuItemsProvider } from "../../../dashboardContexts";
+import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
+import {
+    useDashboardCustomizationsContext,
+    InsightMenuItemsProvider,
+} from "../../../dashboardContexts/index.js";
 import {
     getDefaultInsightMenuItems,
     getDefaultLegacyInsightMenuItems,
     IInsightMenuItem,
-} from "../../insightMenu";
+} from "../../insightMenu/index.js";
 
 type UseInsightMenuConfig = {
     insight: IInsight;

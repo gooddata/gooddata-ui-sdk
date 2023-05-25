@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 import LinesEllipsis from "react-lines-ellipsis";
-import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
-import { IInsightTitleProps } from "../internal";
+import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC.js";
+import { IInsightTitleProps } from "../internal/index.js";
 
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 

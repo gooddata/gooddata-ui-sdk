@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { useEffect, useState, useRef } from "react";
-import { PromiseCache } from "./PromiseCache";
+import { PromiseCache } from "./PromiseCache.js";
 
 /**
  * @internal

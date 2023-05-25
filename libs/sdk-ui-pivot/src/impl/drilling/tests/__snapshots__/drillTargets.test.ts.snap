@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAvailableDrillTargets gets propper available drill targets - ignoring column attributes 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+exports[`getAvailableDrillTargets > gets propper available drill targets - ignoring column attributes 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "attr.product.id",
             "name": "Product",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -17,19 +17,19 @@ Object {
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
-      "intersectionAttributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -37,7 +37,7 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
@@ -45,13 +45,13 @@ Object {
         },
       ],
     },
-    Object {
-      "attribute": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "attr.owner.department",
             "name": "Department",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1088",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1088",
@@ -59,19 +59,19 @@ Object {
           "identifier": "label.owner.department",
           "localIdentifier": "a_label.owner.department",
           "name": "Department",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1089",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1089",
         },
       },
-      "intersectionAttributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -79,18 +79,18 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.department",
               "name": "Department",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1088",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1088",
@@ -98,7 +98,7 @@ Object {
             "identifier": "label.owner.department",
             "localIdentifier": "a_label.owner.department",
             "name": "Department",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1089",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1089",
@@ -107,15 +107,15 @@ Object {
       ],
     },
   ],
-  "measures": Array [
-    Object {
-      "attributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+  "measures": [
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -123,18 +123,18 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.department",
               "name": "Department",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1088",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1088",
@@ -142,18 +142,18 @@ Object {
             "identifier": "label.owner.department",
             "localIdentifier": "a_label.owner.department",
             "name": "Department",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1089",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1089",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.opportunitysnapshot.forecastcategory",
               "name": "Forecast Category",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1062",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1062",
@@ -161,18 +161,18 @@ Object {
             "identifier": "label.opportunitysnapshot.forecastcategory",
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
             "name": "Forecast Category",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1063",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1063",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.region",
               "name": "Region",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -180,34 +180,34 @@ Object {
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
-      "measure": Object {
-        "measureHeaderItem": Object {
+      "measure": {
+        "measureHeaderItem": {
           "format": "$#,##0.00",
           "identifier": "aangOxLSeztu",
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
-    Object {
-      "attributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -215,18 +215,18 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.department",
               "name": "Department",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1088",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1088",
@@ -234,18 +234,18 @@ Object {
             "identifier": "label.owner.department",
             "localIdentifier": "a_label.owner.department",
             "name": "Department",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1089",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1089",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.opportunitysnapshot.forecastcategory",
               "name": "Forecast Category",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1062",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1062",
@@ -253,18 +253,18 @@ Object {
             "identifier": "label.opportunitysnapshot.forecastcategory",
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
             "name": "Forecast Category",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1063",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1063",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.region",
               "name": "Region",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -272,20 +272,20 @@ Object {
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
-      "measure": Object {
-        "measureHeaderItem": Object {
+      "measure": {
+        "measureHeaderItem": {
           "format": "$#,##0.00",
           "identifier": "acugFHNJgsBy",
           "localIdentifier": "m_acugFHNJgsBy",
           "name": "Won",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1272",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1272",
@@ -296,16 +296,16 @@ Object {
 }
 `;
 
-exports[`getAvailableDrillTargets gets propper available drill targets for duplicated row attribute 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+exports[`getAvailableDrillTargets > gets propper available drill targets for duplicated row attribute 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "attr.product.id",
             "name": "Product",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -313,19 +313,19 @@ Object {
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
-      "intersectionAttributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -333,7 +333,7 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
@@ -341,13 +341,13 @@ Object {
         },
       ],
     },
-    Object {
-      "attribute": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "attr.owner.region",
             "name": "Region",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -355,19 +355,19 @@ Object {
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
-      "intersectionAttributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -375,18 +375,18 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.region",
               "name": "Region",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -394,7 +394,7 @@ Object {
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1087",
@@ -402,13 +402,13 @@ Object {
         },
       ],
     },
-    Object {
-      "attribute": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "attr.product.id",
             "name": "Product",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -416,19 +416,19 @@ Object {
           "identifier": "label.product.id.name",
           "localIdentifier": "product.name.test",
           "name": "Product Name",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
-      "intersectionAttributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -436,18 +436,18 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.region",
               "name": "Region",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -455,18 +455,18 @@ Object {
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -474,7 +474,7 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "product.name.test",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
@@ -483,15 +483,15 @@ Object {
       ],
     },
   ],
-  "measures": Array [
-    Object {
-      "attributes": Array [
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+  "measures": [
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -499,18 +499,18 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.owner.region",
               "name": "Region",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -518,18 +518,18 @@ Object {
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
-        Object {
-          "attributeHeader": Object {
-            "formOf": Object {
+        {
+          "attributeHeader": {
+            "formOf": {
               "identifier": "attr.product.id",
               "name": "Product",
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
               "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -537,20 +537,20 @@ Object {
             "identifier": "label.product.id.name",
             "localIdentifier": "product.name.test",
             "name": "Product Name",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
             "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
-      "measure": Object {
-        "measureHeaderItem": Object {
+      "measure": {
+        "measureHeaderItem": {
           "format": "$#,##0.00",
           "identifier": "aangOxLSeztu",
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1271",

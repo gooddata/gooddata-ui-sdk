@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-export { Dashboard } from "./Dashboard";
-export { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
-export { CustomSidebarComponent, ISidebarProps } from "./DashboardSidebar/types";
-export { SidebarConfigurationPanel } from "./DashboardSidebar";
-export * from "./types";
+export { Dashboard } from "./Dashboard.js";
+export { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier.js";
+export { CustomSidebarComponent, ISidebarProps } from "./DashboardSidebar/types.js";
+export { SidebarConfigurationPanel } from "./DashboardSidebar/index.js";
+export * from "./types.js";

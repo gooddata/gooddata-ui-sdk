@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
 
-import { DashboardCustomizationLogger } from "../customizationLogging";
-import { DefaultWidgetCustomizer } from "../widgetCustomizer";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+import { DefaultWidgetCustomizer } from "../widgetCustomizer.js";
 import React from "react";
-import { ICustomWidget } from "../../../model";
+import { ICustomWidget } from "../../../model/index.js";
 import { idRef } from "@gooddata/sdk-model";
+import { describe, it, expect, beforeEach } from "vitest";
 
 const TestWidget1: React.FC = () => {
     return <div>Test Widget 1</div>;

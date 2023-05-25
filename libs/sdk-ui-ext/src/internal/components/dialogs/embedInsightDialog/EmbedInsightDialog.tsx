@@ -17,9 +17,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
-import { FullVisualizationCatalog } from "../../VisualizationCatalog";
-import { insightViewCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator";
-import { getWebComponentsCodeGenerator } from "../../../utils/embeddingCodeGenerator/getWebComponentsCodeGenerator";
+import { FullVisualizationCatalog } from "../../VisualizationCatalog.js";
+import { insightViewCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator.js";
+import { getWebComponentsCodeGenerator } from "../../../utils/embeddingCodeGenerator/getWebComponentsCodeGenerator.js";
 
 const INSIGHT_VIEW_PROPERTIES_LINK =
     "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";

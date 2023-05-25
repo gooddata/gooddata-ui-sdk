@@ -1,255 +1,255 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 2`] = `55.083333333333336`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 2`] = `55.083333333333336`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 3`] = `110.16666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 3`] = `110.16666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 4`] = `165.25`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 4`] = `165.25`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 5`] = `220.33333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 5`] = `220.33333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 6`] = `275.4166666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 6`] = `275.4166666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 7`] = `330.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 7`] = `330.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 8`] = `385.58333333333337`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 8`] = `385.58333333333337`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 9`] = `440.6666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 9`] = `440.6666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 10`] = `495.75`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 10`] = `495.75`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 11`] = `550.8333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 11`] = `550.8333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 12`] = `605.9166666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 50 12`] = `605.9166666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 2`] = `110.16666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 2`] = `110.16666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 3`] = `220.33333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 3`] = `220.33333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 4`] = `330.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 4`] = `330.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 5`] = `440.6666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 5`] = `440.6666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 6`] = `550.8333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 6`] = `550.8333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 7`] = `661`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 7`] = `661`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 8`] = `771.1666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 8`] = `771.1666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 9`] = `881.3333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 9`] = `881.3333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 10`] = `991.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 10`] = `991.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 11`] = `1101.6666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 11`] = `1101.6666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 12`] = `1211.8333333333335`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for lg screen with ratio 100 12`] = `1211.8333333333335`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 2`] = `40.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 2`] = `40.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 3`] = `81`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 3`] = `81`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 4`] = `121.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 4`] = `121.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 5`] = `162`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 5`] = `162`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 6`] = `202.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 6`] = `202.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 7`] = `243`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 7`] = `243`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 8`] = `283.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 8`] = `283.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 9`] = `324`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 9`] = `324`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 10`] = `364.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 10`] = `364.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 11`] = `405`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 11`] = `405`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 12`] = `445.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 50 12`] = `445.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 2`] = `81`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 2`] = `81`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 3`] = `162`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 3`] = `162`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 4`] = `243`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 4`] = `243`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 5`] = `324`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 5`] = `324`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 6`] = `405`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 6`] = `405`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 7`] = `486`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 7`] = `486`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 8`] = `567`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 8`] = `567`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 9`] = `648`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 9`] = `648`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 10`] = `729`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 10`] = `729`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 11`] = `810`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 11`] = `810`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 12`] = `891`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for md screen with ratio 100 12`] = `891`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 2`] = `25.916666666666668`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 2`] = `25.916666666666668`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 3`] = `51.833333333333336`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 3`] = `51.833333333333336`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 4`] = `77.75`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 4`] = `77.75`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 5`] = `103.66666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 5`] = `103.66666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 6`] = `129.58333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 6`] = `129.58333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 7`] = `155.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 7`] = `155.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 8`] = `181.41666666666669`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 8`] = `181.41666666666669`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 9`] = `207.33333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 9`] = `207.33333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 10`] = `233.25`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 10`] = `233.25`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 11`] = `259.1666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 11`] = `259.1666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 12`] = `285.08333333333337`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 50 12`] = `285.08333333333337`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 2`] = `51.833333333333336`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 2`] = `51.833333333333336`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 3`] = `103.66666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 3`] = `103.66666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 4`] = `155.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 4`] = `155.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 5`] = `207.33333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 5`] = `207.33333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 6`] = `259.1666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 6`] = `259.1666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 7`] = `311`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 7`] = `311`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 8`] = `362.83333333333337`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 8`] = `362.83333333333337`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 9`] = `414.6666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 9`] = `414.6666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 10`] = `466.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 10`] = `466.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 11`] = `518.3333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 11`] = `518.3333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 12`] = `570.1666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for sm screen with ratio 100 12`] = `570.1666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 2`] = `68.83333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 2`] = `68.83333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 3`] = `137.66666666666666`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 3`] = `137.66666666666666`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 4`] = `206.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 4`] = `206.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 5`] = `275.3333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 5`] = `275.3333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 6`] = `344.16666666666663`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 6`] = `344.16666666666663`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 7`] = `413`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 7`] = `413`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 8`] = `481.8333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 8`] = `481.8333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 9`] = `550.6666666666666`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 9`] = `550.6666666666666`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 10`] = `619.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 10`] = `619.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 11`] = `688.3333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 11`] = `688.3333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 12`] = `757.1666666666666`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 50 12`] = `757.1666666666666`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 2`] = `137.66666666666666`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 2`] = `137.66666666666666`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 3`] = `275.3333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 3`] = `275.3333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 4`] = `413`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 4`] = `413`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 5`] = `550.6666666666666`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 5`] = `550.6666666666666`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 6`] = `688.3333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 6`] = `688.3333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 7`] = `826`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 7`] = `826`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 8`] = `963.6666666666666`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 8`] = `963.6666666666666`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 9`] = `1101.3333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 9`] = `1101.3333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 10`] = `1239`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 10`] = `1239`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 11`] = `1376.6666666666665`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 11`] = `1376.6666666666665`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 12`] = `1514.3333333333333`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xl screen with ratio 100 12`] = `1514.3333333333333`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 2`] = `12.583333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 2`] = `12.583333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 3`] = `25.166666666666668`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 3`] = `25.166666666666668`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 4`] = `37.75`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 4`] = `37.75`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 5`] = `50.333333333333336`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 5`] = `50.333333333333336`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 6`] = `62.91666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 6`] = `62.91666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 7`] = `75.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 7`] = `75.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 8`] = `88.08333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 8`] = `88.08333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 9`] = `100.66666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 9`] = `100.66666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 10`] = `113.25`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 10`] = `113.25`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 11`] = `125.83333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 11`] = `125.83333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 12`] = `138.41666666666669`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 50 12`] = `138.41666666666669`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 1`] = `0`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 2`] = `25.166666666666668`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 2`] = `25.166666666666668`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 3`] = `50.333333333333336`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 3`] = `50.333333333333336`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 4`] = `75.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 4`] = `75.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 5`] = `100.66666666666667`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 5`] = `100.66666666666667`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 6`] = `125.83333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 6`] = `125.83333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 7`] = `151`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 7`] = `151`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 8`] = `176.16666666666669`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 8`] = `176.16666666666669`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 9`] = `201.33333333333334`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 9`] = `201.33333333333334`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 10`] = `226.5`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 10`] = `226.5`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 11`] = `251.66666666666669`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 11`] = `251.66666666666669`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 12`] = `276.83333333333337`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for xs screen with ratio 100 12`] = `276.83333333333337`;
 
-exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for zero width and ratio 1`] = `0`;
+exports[`sizing > getDashboardLayoutItemHeightForRatioAndScreen > should calculate widget height for zero width and ratio 1`] = `0`;
 
-exports[`sizing getLayoutWithoutGridHeights should remove gridHeight from dashboard layout item size 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+exports[`sizing > getLayoutWithoutGridHeights > should remove gridHeight from dashboard layout item size 1`] = `
+{
+  "sections": [
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 10,
             },
           },
@@ -263,425 +263,425 @@ Object {
 }
 `;
 
-exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "lg": Object {
+exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layout column heights for various item sizes 1`] = `
+{
+  "sections": [
+    {
+      "items": [
+        {
+          "size": {
+            "lg": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "area",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 1,
               "heightAsRatio": 200,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 2,
               "heightAsRatio": 150,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 1,
               "heightAsRatio": 200,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "bar",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 2,
               "heightAsRatio": 100,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 4,
               "heightAsRatio": 75,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 2,
               "heightAsRatio": 100,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "bubble",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 3,
               "heightAsRatio": 66.67,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 3,
               "heightAsRatio": 66.67,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "bullet",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 4,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 4,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "column",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 5,
               "heightAsRatio": 60,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 5,
               "heightAsRatio": 60,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "combo",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "combo2",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 7,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 7,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "donut",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 8,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 8,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "funnel",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 9,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 9,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "headline",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 10,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 10,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "heatmap",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 11,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 11,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "line",
             },
             "title": "",
@@ -691,212 +691,212 @@ Object {
       ],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "lg": Object {
+    {
+      "items": [
+        {
+          "size": {
+            "lg": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 0,
               "heightAsRatio": 0,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "pushpin",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 1,
               "heightAsRatio": 200,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 2,
               "heightAsRatio": 150,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 1,
               "heightAsRatio": 200,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "pie",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 2,
               "heightAsRatio": 100,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 4,
               "heightAsRatio": 75,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 2,
               "heightAsRatio": 100,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "scatter",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 3,
               "heightAsRatio": 66.67,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 3,
               "heightAsRatio": 66.67,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "table",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 4,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 4,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "treemap",
             },
             "title": "",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "lg": Object {
+        {
+          "size": {
+            "lg": {
               "gridWidth": 5,
               "heightAsRatio": 50,
             },
-            "md": Object {
+            "md": {
               "gridWidth": 6,
               "heightAsRatio": 50,
             },
-            "sm": Object {
+            "sm": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
-            "xl": Object {
+            "xl": {
               "gridWidth": 5,
               "heightAsRatio": 50,
             },
-            "xs": Object {
+            "xs": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "xirr",
             },
             "title": "",

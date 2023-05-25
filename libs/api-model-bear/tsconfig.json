@@ -1,17 +1,17 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
         "target": "es2017",
         "lib": ["es2017", "dom"],
-        "module": "commonjs",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
         "importHelpers": true,
-        "moduleResolution": "node",
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "dist",
+        "outDir": "./esm",
         "strict": true,
-        "sourceMap": true
+        "sourceMap": true,
     },
-    "exclude": ["**/node_modules", "dist", "esm"]
+    "exclude": ["**/node_modules", "esm"]
 }

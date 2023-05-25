@@ -1,22 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
-import { removeAttributeFilter } from "../../../../commands";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
+import { beforeEach, describe, it, expect } from "vitest";
+import { removeAttributeFilter } from "../../../../commands/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
-} from "../../../../store/filterContext/filterContextSelectors";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectLayout } from "../../../../store/layout/layoutSelectors";
+} from "../../../../store/filterContext/filterContextSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectLayout } from "../../../../store/layout/layoutSelectors.js";
 import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-model";
-import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("removeAttributeFilterHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     it("should emit the appropriate events for removed attribute filter", async () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter

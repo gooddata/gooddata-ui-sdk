@@ -2,8 +2,8 @@
 import React, { useCallback } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-import compact from "lodash/compact";
-import { IDeleteDialogProps } from "./types";
+import compact from "lodash/compact.js";
+import { IDeleteDialogProps } from "./types.js";
 import {
     deleteDashboard,
     dispatchAndWaitFor,
@@ -14,7 +14,7 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../model";
+} from "../../model/index.js";
 
 const deleteMessages = defineMessages({
     alertsAndEmails: {

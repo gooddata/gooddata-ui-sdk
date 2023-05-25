@@ -1,26 +1,26 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableHeadline getExtendedReferencePoint should correctly process empty reference point 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [],
+exports[`PluggableHeadline > getExtendedReferencePoint > should correctly process empty reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "secondary_measures",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -28,12 +28,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -50,8 +50,8 @@ Object {
         "subtitle": "primary",
         "title": "Measure",
       },
-      "secondary_measures": Object {
-        "accepts": Array [
+      "secondary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -69,14 +69,14 @@ Object {
         "title": "Measure",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": false,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -84,12 +84,12 @@ Object {
 }
 `;
 
-exports[`PluggableHeadline getExtendedReferencePoint should return proper extended reference point 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableHeadline > getExtendedReferencePoint > should return proper extended reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -100,9 +100,9 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -114,15 +114,15 @@ Object {
       "localIdentifier": "secondary_measures",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -130,12 +130,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -152,8 +152,8 @@ Object {
         "subtitle": "primary",
         "title": "Measure",
       },
-      "secondary_measures": Object {
-        "accepts": Array [
+      "secondary_measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -171,14 +171,14 @@ Object {
         "title": "Measure",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": false,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],

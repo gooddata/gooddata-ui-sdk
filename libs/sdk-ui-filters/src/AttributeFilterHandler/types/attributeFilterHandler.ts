@@ -1,11 +1,11 @@
 // (C) 2022 GoodData Corporation
-import { IAttributeFilterLoader } from "./attributeFilterLoader";
-import { AttributeElementKey } from "./common";
+import { IAttributeFilterLoader } from "./attributeFilterLoader.js";
+import { AttributeElementKey } from "./common.js";
 import {
     InvertableSelection,
     IStagedInvertableSelectionHandler,
     IStagedSingleSelectionHandler,
-} from "./selectionHandler";
+} from "./selectionHandler.js";
 
 /**
  * Invertable selection with list of the unique attribute elements keys.

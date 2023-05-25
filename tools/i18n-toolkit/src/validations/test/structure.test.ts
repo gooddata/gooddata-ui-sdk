@@ -2,6 +2,7 @@
 
 import { LocalesStructure } from "../../schema/localization";
 import { getStructureCheck } from "../structure";
+import { describe, it, expect } from "vitest";
 
 type Scenario = [string, LocalesStructure, string | null];
 
@@ -69,7 +70,7 @@ describe("validate structure tests", () => {
         ],
     ];
 
-    it.each(scenarios)("validate %s", async (_, structure, err) => {
+    it.each(scenarios)("validate %s", async (_: any, structure: any, err: any) => {
         if (err) {
             await expect(getStructureCheck([["en-US.json", structure]])).rejects.toThrowError(err);
         } else {

@@ -1,22 +1,29 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import noop from "lodash/noop";
+import defaultUserEvent from "@testing-library/user-event";
+import noop from "lodash/noop.js";
 import cx from "classnames";
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat";
+import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat.js";
 
-import { IFormatTemplate, IToggleButtonProps } from "../typings";
+import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 // CodeMirror window method requirements
-(window as any).document.body.createTextRange = jest.fn(() => {
+(window as any).document.body.createTextRange = vi.fn(() => {
     return {
-        setStart: jest.fn(),
-        setEnd: jest.fn(),
-        getBoundingClientRect: jest.fn(),
-        getClientRects: jest.fn(() => {
+        setStart: vi.fn(),
+        setEnd: vi.fn(),
+        getBoundingClientRect: vi.fn(),
+        getClientRects: vi.fn(() => {
             return { length: null };
         }),
     };
@@ -116,7 +123,7 @@ describe("Measure number format", () => {
     });
 
     it("should call 'setFormat' callback with format when preset is selected", async () => {
-        const setFormat = jest.fn();
+        const setFormat = vi.fn();
         renderComponent({ setFormat });
 
         await togglePresetsDropdown();
@@ -131,7 +138,7 @@ describe("Measure number format", () => {
 
     describe("custom format", () => {
         it("should close the presets dropdown and open the dialog when custom preset is selected", async () => {
-            const setFormat = jest.fn();
+            const setFormat = vi.fn();
             renderComponent({ setFormat });
 
             await togglePresetsDropdown();
@@ -164,7 +171,7 @@ describe("Measure number format", () => {
         });
 
         it("should call 'setFormat' callback with custom format when format is set and apply button clicked", async () => {
-            const setFormat = jest.fn();
+            const setFormat = vi.fn();
             renderComponent({ setFormat });
 
             await togglePresetsDropdown();

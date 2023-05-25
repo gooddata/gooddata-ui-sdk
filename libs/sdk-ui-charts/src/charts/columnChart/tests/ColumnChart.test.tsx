@@ -1,8 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { ColumnChart } from "../ColumnChart";
-import { IChartConfig } from "../../../interfaces";
+import { ColumnChart } from "../ColumnChart.js";
+import { IChartConfig } from "../../../interfaces/index.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     IAttributeOrMeasure,
@@ -10,8 +10,9 @@ import {
     newTwoDimensional,
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
-import { CoreColumnChart } from "../CoreColumnChart";
+import { CoreColumnChart } from "../CoreColumnChart.js";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
     return render(
@@ -22,13 +23,13 @@ function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreColumnChart", () => ({
-    CoreColumnChart: jest.fn(() => null),
+vi.mock("../CoreColumnChart", () => ({
+    CoreColumnChart: vi.fn(() => null),
 }));
 
 describe("ColumnChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render with custom SDK", () => {

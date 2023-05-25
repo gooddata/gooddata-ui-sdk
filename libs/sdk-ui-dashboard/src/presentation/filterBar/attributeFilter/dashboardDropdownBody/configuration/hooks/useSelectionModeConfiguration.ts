@@ -5,7 +5,7 @@ import {
     useDashboardCommandProcessing,
     setAttributeFilterSelectionMode,
     changeAttributeFilterSelection,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
 export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttributeFilter) => {
     const { run: changeSelectionMode } = useDashboardCommandProcessing({

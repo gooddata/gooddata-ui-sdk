@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`updateColumnDefinitionsWithWidths should enrich colDefs based on column width items 1`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should enrich colDefs based on column width items 1`] = `
+[
+  {
     "colId": "c_0",
     "field": "c_0",
     "headerName": "Amount",
@@ -12,7 +12,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 666,
   },
-  Object {
+  {
     "colId": "c_1",
     "field": "c_1",
     "headerName": "Won",
@@ -22,7 +22,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 175,
   },
-  Object {
+  {
     "colId": "c_2",
     "field": "c_2",
     "headerName": "Amount",
@@ -32,7 +32,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 666,
   },
-  Object {
+  {
     "colId": "c_3",
     "field": "c_3",
     "headerName": "Won",
@@ -42,7 +42,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 175,
   },
-  Object {
+  {
     "colId": "c_4",
     "field": "c_4",
     "headerName": "Amount",
@@ -52,7 +52,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 200,
   },
-  Object {
+  {
     "colId": "c_5",
     "field": "c_5",
     "headerName": "Won",
@@ -62,7 +62,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 175,
   },
-  Object {
+  {
     "colId": "c_6",
     "field": "c_6",
     "headerName": "Amount",
@@ -72,7 +72,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 666,
   },
-  Object {
+  {
     "colId": "c_7",
     "field": "c_7",
     "headerName": "Won",
@@ -85,9 +85,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should enrich colDefs based on column width items 2`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should enrich colDefs based on column width items 2`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -98,7 +98,7 @@ Array [
     "type": "ROW_ATTRIBUTE_COLUMN",
     "width": 300,
   },
-  Object {
+  {
     "colId": "r_1",
     "field": "r_1",
     "headerName": "Department",
@@ -111,9 +111,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should enrich colDefs when mix of manual and auto-resizing 1`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of manual and auto-resizing 1`] = `
+[
+  {
     "colId": "c_0",
     "field": "c_0",
     "headerName": "Amount",
@@ -123,7 +123,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 200,
   },
-  Object {
+  {
     "colId": "c_1",
     "field": "c_1",
     "headerName": "Won",
@@ -136,9 +136,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should enrich colDefs when mix of manual and auto-resizing 2`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of manual and auto-resizing 2`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -152,9 +152,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on 1`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on 1`] = `
+[
+  {
     "colId": "c_0",
     "field": "c_0",
     "headerName": "Amount",
@@ -164,7 +164,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 500,
   },
-  Object {
+  {
     "colId": "c_1",
     "field": "c_1",
     "headerName": "Won",
@@ -177,9 +177,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on 2`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on 2`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -193,9 +193,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should set with to default if no other size specification provided 1`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should set with to default if no other size specification provided 1`] = `
+[
+  {
     "colId": "c_0",
     "field": "c_0",
     "headerName": "Amount",
@@ -205,7 +205,7 @@ Array [
     "type": "MEASURE_COLUMN",
     "width": 666,
   },
-  Object {
+  {
     "colId": "c_1",
     "field": "c_1",
     "headerName": "Won",
@@ -218,9 +218,9 @@ Array [
 ]
 `;
 
-exports[`updateColumnDefinitionsWithWidths should set with to default if no other size specification provided 2`] = `
-Array [
-  Object {
+exports[`updateColumnDefinitionsWithWidths > should set with to default if no other size specification provided 2`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",

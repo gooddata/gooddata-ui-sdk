@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { scenariosFor } from "../../src";
-import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base";
-import { GermanNumberFormat } from "../_infra/formatting";
+import { scenariosFor } from "../../src/index.js";
+import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
+import { GermanNumberFormat } from "../_infra/formatting.js";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals";
-import { ScenarioGroupNames } from "../charts/_infra/groupNames";
+import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals.js";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 
 const MeasureWithCustomFormat = modifyMeasure(ReferenceMd.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),

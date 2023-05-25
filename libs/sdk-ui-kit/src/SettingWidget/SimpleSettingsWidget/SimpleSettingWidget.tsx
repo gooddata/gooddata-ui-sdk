@@ -1,14 +1,14 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { Button } from "../../Button";
-import { LoadingSpinner } from "../../LoadingSpinner";
-import { SettingWidget } from "../SettingWidget";
-import { Header } from "../Header";
-import { Footer } from "../Footer";
-import { Separator } from "../Separator";
-import { Title } from "../Title";
-import { FooterButtons } from "../FooterButtons";
-import { Hyperlink } from "../../Hyperlink";
+import { Button } from "../../Button/index.js";
+import { LoadingSpinner } from "../../LoadingSpinner/index.js";
+import { SettingWidget } from "../SettingWidget.js";
+import { Header } from "../Header.js";
+import { Footer } from "../Footer.js";
+import { Separator } from "../Separator.js";
+import { Title } from "../Title.js";
+import { FooterButtons } from "../FooterButtons.js";
+import { Hyperlink } from "../../Hyperlink/index.js";
 
 /**
  * @internal

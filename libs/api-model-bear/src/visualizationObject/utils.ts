@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { GdcVisualizationObject } from "./GdcVisualizationObject";
+import { GdcVisualizationObject } from "./index.js";
 import IVisualizationObjectContent = GdcVisualizationObject.IVisualizationObjectContent;
 import IBucket = GdcVisualizationObject.IBucket;
 import BucketItem = GdcVisualizationObject.BucketItem;

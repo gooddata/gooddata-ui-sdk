@@ -8,18 +8,18 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { createCachedQueryService } from "../store/_infra/queryService";
-import { DashboardContext } from "../types/commonTypes";
-import { MeasureDateDatasets, QueryMeasureDateDatasets } from "../queries/kpis";
+import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { MeasureDateDatasets, QueryMeasureDateDatasets } from "../queries/kpis.js";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets";
-import fromPairs from "lodash/fromPairs";
+import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
+import fromPairs from "lodash/fromPairs.js";
 import {
     sanitizeDateDatasetTitle,
     sortByRelevanceAndTitle,
-} from "../../_staging/catalog/dateDatasetOrdering";
-import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors";
-import { invalidQueryArguments } from "../events/general";
+} from "../../_staging/catalog/dateDatasetOrdering.js";
+import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors.js";
+import { invalidQueryArguments } from "../events/general.js";
 
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(
     "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",

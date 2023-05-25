@@ -1,339 +1,519 @@
 // (C) 2007-2023 GoodData Corporation
-import { GdcMetadata } from "../meta/GdcMetadata";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
+import { IObjectMeta } from "../meta/GdcMetadata.js";
 
 /**
  * @public
  */
-export namespace GdcVisualizationObject {
-    export type SortDirection = "asc" | "desc";
-    export type Identifier = string;
-    export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
-    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    export type VisualizationType =
-        | "table"
-        | "line"
-        | "column"
-        | "bar"
-        | "pie"
-        | "doughnut"
-        | "combo"
-        | "area";
-    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+export type SortDirection = "asc" | "desc";
 
-    export type BucketItem = IMeasure | IAttribute;
+/**
+ * @public
+ */
+export type Identifier = string;
 
-    export type ExtendedFilter = Filter | IMeasureValueFilter | IRankingFilter;
-    export type Filter = DateFilter | AttributeFilter;
+/**
+ * @public
+ */
+export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
-    export type DateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
+/**
+ * @public
+ */
+export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
-    export type AttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+/**
+ * @public
+ */
+export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
 
-    export interface IObjUriQualifier {
-        uri: string;
-    }
+/**
+ * @public
+ */
+export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
-    export interface IObjIdentifierQualifier {
-        identifier: string;
-    }
+/**
+ * @public
+ */
+export type BucketItem = IMeasure | IAttribute;
 
-    export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+/**
+ * @public
+ */
+export type ExtendedFilter = Filter | IMeasureValueFilter | IRankingFilter;
 
-    export function isObjUriQualifier(objQualifier: ObjQualifier): objQualifier is IObjUriQualifier {
-        return !isEmpty(objQualifier) && (objQualifier as IObjUriQualifier).uri !== undefined;
-    }
+/**
+ * @public
+ */
+export type Filter = DateFilter | AttributeFilter;
 
-    export function isObjIdentifierQualifier(
-        objQualifier: ObjQualifier,
-    ): objQualifier is IObjIdentifierQualifier {
-        return !isEmpty(objQualifier) && (objQualifier as IObjIdentifierQualifier).identifier !== undefined;
-    }
+/**
+ * @public
+ */
+export type DateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
-    export interface IPositiveAttributeFilter {
-        positiveAttributeFilter: {
-            displayForm: ObjQualifier;
-            in: string[];
-        };
-    }
+/**
+ * @public
+ */
+export type AttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
 
-    export interface INegativeAttributeFilter {
-        negativeAttributeFilter: {
-            displayForm: ObjQualifier;
-            notIn: string[];
-        };
-    }
+/**
+ * @public
+ */
+export interface IObjUriQualifier {
+    uri: string;
+}
 
-    export interface IAbsoluteDateFilter {
-        absoluteDateFilter: {
-            dataSet: ObjQualifier;
-            from?: string;
-            to?: string;
-        };
-    }
+/**
+ * @public
+ */
+export interface IObjIdentifierQualifier {
+    identifier: string;
+}
 
-    export interface IRelativeDateFilter {
-        relativeDateFilter: {
-            dataSet: ObjQualifier;
-            granularity: string;
-            from?: number;
-            to?: number;
-        };
-    }
+/**
+ * @public
+ */
+export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
 
-    export type ComparisonConditionOperator =
-        | "GREATER_THAN"
-        | "GREATER_THAN_OR_EQUAL_TO"
-        | "LESS_THAN"
-        | "LESS_THAN_OR_EQUAL_TO"
-        | "EQUAL_TO"
-        | "NOT_EQUAL_TO";
+/**
+ * @public
+ */
+export function isObjUriQualifier(objQualifier: ObjQualifier): objQualifier is IObjUriQualifier {
+    return !isEmpty(objQualifier) && (objQualifier as IObjUriQualifier).uri !== undefined;
+}
 
-    export interface IComparisonCondition {
-        comparison: {
-            operator: ComparisonConditionOperator;
-            value: number;
-            treatNullValuesAs?: number;
-        };
-    }
+/**
+ * @public
+ */
+export function isObjIdentifierQualifier(
+    objQualifier: ObjQualifier,
+): objQualifier is IObjIdentifierQualifier {
+    return !isEmpty(objQualifier) && (objQualifier as IObjIdentifierQualifier).identifier !== undefined;
+}
 
-    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
-
-    export interface IRangeCondition {
-        range: {
-            operator: RangeConditionOperator;
-            from: number;
-            to: number;
-            treatNullValuesAs?: number;
-        };
-    }
-
-    export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
-
-    export interface ILocalIdentifierQualifier {
-        localIdentifier: string;
-    }
-
-    export interface IMeasureValueFilter {
-        measureValueFilter: {
-            measure: IObjUriQualifier | ILocalIdentifierQualifier;
-            condition?: MeasureValueFilterCondition;
-        };
-    }
-
-    export type RankingFilterOperator = "TOP" | "BOTTOM";
-
-    export interface IRankingFilter {
-        rankingFilter: {
-            measures: (IObjUriQualifier | ILocalIdentifierQualifier)[];
-            attributes?: (IObjUriQualifier | ILocalIdentifierQualifier)[];
-            operator: RankingFilterOperator;
-            value: number;
-        };
-    }
-
-    export interface IVisualizationObjectContent {
-        visualizationClass: IObjUriQualifier;
-        buckets: IBucket[];
-        filters?: ExtendedFilter[];
-        properties?: string;
-        references?: IReferenceItems;
-    }
-
-    export interface IReferenceItems {
-        [identifier: string]: string;
-    }
-
-    export interface IBucket {
-        localIdentifier?: Identifier;
-        items: BucketItem[];
-        totals?: ITotal[];
-    }
-
-    export interface ITotal {
-        type: TotalType;
-        measureIdentifier: string;
-        attributeIdentifier: string;
-        alias?: string;
-    }
-
-    export type IMeasureDefinitionType =
-        | IMeasureDefinition
-        | IArithmeticMeasureDefinition
-        | IPoPMeasureDefinition
-        | IPreviousPeriodMeasureDefinition;
-
-    export interface IMeasure {
-        measure: IMeasureContent;
-    }
-
-    export interface IMeasureContent {
-        localIdentifier: Identifier;
-        definition: IMeasureDefinitionType;
-        alias?: string;
-        title?: string;
-        format?: string;
-    }
-
-    export interface IAttribute {
-        visualizationAttribute: IVisualizationAttributeContent;
-    }
-
-    export interface IVisualizationAttributeContent {
-        localIdentifier: Identifier;
+/**
+ * @public
+ */
+export interface IPositiveAttributeFilter {
+    positiveAttributeFilter: {
         displayForm: ObjQualifier;
-        alias?: string;
-        showAllValues?: boolean;
-    }
+        in: string[];
+    };
+}
 
-    export interface IMeasureDefinition {
-        measureDefinition: {
-            item: ObjQualifier;
-            aggregation?: MeasureAggregation;
-            filters?: Filter[];
-            computeRatio?: boolean;
-        };
-    }
+/**
+ * @public
+ */
+export interface INegativeAttributeFilter {
+    negativeAttributeFilter: {
+        displayForm: ObjQualifier;
+        notIn: string[];
+    };
+}
 
-    export interface IArithmeticMeasureDefinition {
-        arithmeticMeasure: {
-            measureIdentifiers: Identifier[];
-            operator: ArithmeticMeasureOperator;
-        };
-    }
-
-    export interface IPoPMeasureDefinition {
-        popMeasureDefinition: {
-            measureIdentifier: Identifier;
-            popAttribute: ObjQualifier;
-        };
-    }
-
-    export interface IPreviousPeriodMeasureDefinition {
-        previousPeriodMeasure: {
-            measureIdentifier: Identifier;
-            dateDataSets: IPreviousPeriodDateDataSet[];
-        };
-    }
-
-    export interface IPreviousPeriodDateDataSet {
+/**
+ * @public
+ */
+export interface IAbsoluteDateFilter {
+    absoluteDateFilter: {
         dataSet: ObjQualifier;
-        periodsAgo: number;
-    }
+        from?: string;
+        to?: string;
+    };
+}
 
-    export interface IVisualizationObject {
-        meta: GdcMetadata.IObjectMeta;
-        content: IVisualizationObjectContent;
-    }
+/**
+ * @public
+ */
+export interface IRelativeDateFilter {
+    relativeDateFilter: {
+        dataSet: ObjQualifier;
+        granularity: string;
+        from?: number;
+        to?: number;
+    };
+}
 
-    export interface IVisualization {
-        visualizationObject: IVisualizationObject;
-    }
+/**
+ * @public
+ */
+export type ComparisonConditionOperator =
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
 
-    export interface IVisualizationObjectResponse {
-        visualizationObject: IVisualizationObject;
-    }
+/**
+ * @public
+ */
+export interface IComparisonCondition {
+    comparison: {
+        operator: ComparisonConditionOperator;
+        value: number;
+        treatNullValuesAs?: number;
+    };
+}
 
-    export function isVisualization(obj: unknown): obj is IVisualization {
-        return !isEmpty(obj) && (obj as IVisualization).visualizationObject !== undefined;
-    }
+/**
+ * @public
+ */
+export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
-    export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure {
-        return !isEmpty(bucketItem) && (bucketItem as IMeasure).measure !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IRangeCondition {
+    range: {
+        operator: RangeConditionOperator;
+        from: number;
+        to: number;
+        treatNullValuesAs?: number;
+    };
+}
 
-    export function isAttribute(bucketItem: IMeasure | IAttribute): bucketItem is IAttribute {
-        return !isEmpty(bucketItem) && (bucketItem as IAttribute).visualizationAttribute !== undefined;
-    }
+/**
+ * @public
+ */
+export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
 
-    export function isMeasureDefinition(
-        definition: IMeasureDefinitionType,
-    ): definition is IMeasureDefinition {
-        return !isEmpty(definition) && (definition as IMeasureDefinition).measureDefinition !== undefined;
-    }
+/**
+ * @public
+ */
+export interface ILocalIdentifierQualifier {
+    localIdentifier: string;
+}
 
-    export function isArithmeticMeasureDefinition(
-        definition: IMeasureDefinitionType,
-    ): definition is IArithmeticMeasureDefinition {
-        return (
-            !isEmpty(definition) &&
-            (definition as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined
-        );
-    }
+/**
+ * @public
+ */
+export interface IMeasureValueFilter {
+    measureValueFilter: {
+        measure: IObjUriQualifier | ILocalIdentifierQualifier;
+        condition?: MeasureValueFilterCondition;
+    };
+}
 
-    export function isPopMeasureDefinition(
-        definition: IMeasureDefinitionType,
-    ): definition is IPoPMeasureDefinition {
-        return (
-            !isEmpty(definition) && (definition as IPoPMeasureDefinition).popMeasureDefinition !== undefined
-        );
-    }
+/**
+ * @public
+ */
+export type RankingFilterOperator = "TOP" | "BOTTOM";
 
-    export function isPreviousPeriodMeasureDefinition(
-        definition: IMeasureDefinitionType,
-    ): definition is IPreviousPeriodMeasureDefinition {
-        return (
-            !isEmpty(definition) &&
-            (definition as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined
-        );
-    }
+/**
+ * @public
+ */
+export interface IRankingFilter {
+    rankingFilter: {
+        measures: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+        attributes?: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+        operator: RankingFilterOperator;
+        value: number;
+    };
+}
 
-    export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter {
-        return (
-            !isEmpty(filter) &&
-            ((filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined ||
-                (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined)
-        );
-    }
+/**
+ * @public
+ */
+export interface IVisualizationObjectContent {
+    visualizationClass: IObjUriQualifier;
+    buckets: IBucket[];
+    filters?: ExtendedFilter[];
+    properties?: string;
+    references?: IReferenceItems;
+}
 
-    export function isDateFilter(filter: ExtendedFilter): filter is DateFilter {
-        return (
-            !isEmpty(filter) &&
-            ((filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined ||
-                (filter as IRelativeDateFilter).relativeDateFilter !== undefined)
-        );
-    }
+/**
+ * @public
+ */
+export interface IReferenceItems {
+    [identifier: string]: string;
+}
 
-    export function isPositiveAttributeFilter(filter: AttributeFilter): filter is IPositiveAttributeFilter {
-        return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IBucket {
+    localIdentifier?: Identifier;
+    items: BucketItem[];
+    totals?: ITotal[];
+}
 
-    export function isNegativeAttributeFilter(filter: AttributeFilter): filter is INegativeAttributeFilter {
-        return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
-    }
+/**
+ * @public
+ */
+export interface ITotal {
+    type: TotalType;
+    measureIdentifier: string;
+    attributeIdentifier: string;
+    alias?: string;
+}
 
-    export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter {
-        return !isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
-    }
+/**
+ * @public
+ */
+export type IMeasureDefinitionType =
+    | IMeasureDefinition
+    | IArithmeticMeasureDefinition
+    | IPoPMeasureDefinition
+    | IPreviousPeriodMeasureDefinition;
 
-    export function isRankingFilter(filter: ExtendedFilter): filter is IRankingFilter {
-        return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IMeasure {
+    measure: IMeasureContent;
+}
 
-    export function isAbsoluteDateFilter(filter: DateFilter): filter is IAbsoluteDateFilter {
-        return !isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IMeasureContent {
+    localIdentifier: Identifier;
+    definition: IMeasureDefinitionType;
+    alias?: string;
+    title?: string;
+    format?: string;
+}
 
-    export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter {
-        return !isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IAttribute {
+    visualizationAttribute: IVisualizationAttributeContent;
+}
 
-    export function isLocalIdentifierQualifier(
-        objectQualifier: unknown,
-    ): objectQualifier is ILocalIdentifierQualifier {
-        return (
-            !isEmpty(objectQualifier) &&
-            (objectQualifier as ILocalIdentifierQualifier).localIdentifier !== undefined
-        );
-    }
+/**
+ * @public
+ */
+export interface IVisualizationAttributeContent {
+    localIdentifier: Identifier;
+    displayForm: ObjQualifier;
+    alias?: string;
+    showAllValues?: boolean;
+}
 
-    export function isComparisonCondition(
-        condition: MeasureValueFilterCondition,
-    ): condition is IComparisonCondition {
-        return !isEmpty(condition) && (condition as IComparisonCondition).comparison !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IMeasureDefinition {
+    measureDefinition: {
+        item: ObjQualifier;
+        aggregation?: MeasureAggregation;
+        filters?: Filter[];
+        computeRatio?: boolean;
+    };
+}
 
-    export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition {
-        return !isEmpty(condition) && (condition as IRangeCondition).range !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IArithmeticMeasureDefinition {
+    arithmeticMeasure: {
+        measureIdentifiers: Identifier[];
+        operator: ArithmeticMeasureOperator;
+    };
+}
+
+/**
+ * @public
+ */
+export interface IPoPMeasureDefinition {
+    popMeasureDefinition: {
+        measureIdentifier: Identifier;
+        popAttribute: ObjQualifier;
+    };
+}
+
+/**
+ * @public
+ */
+export interface IPreviousPeriodMeasureDefinition {
+    previousPeriodMeasure: {
+        measureIdentifier: Identifier;
+        dateDataSets: IPreviousPeriodDateDataSet[];
+    };
+}
+
+/**
+ * @public
+ */
+export interface IPreviousPeriodDateDataSet {
+    dataSet: ObjQualifier;
+    periodsAgo: number;
+}
+
+/**
+ * @public
+ */
+export interface IVisualizationObject {
+    meta: IObjectMeta;
+    content: IVisualizationObjectContent;
+}
+
+/**
+ * @public
+ */
+export interface IVisualization {
+    visualizationObject: IVisualizationObject;
+}
+
+/**
+ * @public
+ */
+export interface IVisualizationObjectResponse {
+    visualizationObject: IVisualizationObject;
+}
+
+/**
+ * @public
+ */
+export function isVisualization(obj: unknown): obj is IVisualization {
+    return !isEmpty(obj) && (obj as IVisualization).visualizationObject !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure {
+    return !isEmpty(bucketItem) && (bucketItem as IMeasure).measure !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isAttribute(bucketItem: IMeasure | IAttribute): bucketItem is IAttribute {
+    return !isEmpty(bucketItem) && (bucketItem as IAttribute).visualizationAttribute !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isMeasureDefinition(definition: IMeasureDefinitionType): definition is IMeasureDefinition {
+    return !isEmpty(definition) && (definition as IMeasureDefinition).measureDefinition !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isArithmeticMeasureDefinition(
+    definition: IMeasureDefinitionType,
+): definition is IArithmeticMeasureDefinition {
+    return (
+        !isEmpty(definition) && (definition as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined
+    );
+}
+
+/**
+ * @public
+ */
+export function isPopMeasureDefinition(
+    definition: IMeasureDefinitionType,
+): definition is IPoPMeasureDefinition {
+    return !isEmpty(definition) && (definition as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isPreviousPeriodMeasureDefinition(
+    definition: IMeasureDefinitionType,
+): definition is IPreviousPeriodMeasureDefinition {
+    return (
+        !isEmpty(definition) &&
+        (definition as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined
+    );
+}
+
+/**
+ * @public
+ */
+export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter {
+    return (
+        !isEmpty(filter) &&
+        ((filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined ||
+            (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined)
+    );
+}
+
+/**
+ * @public
+ */
+export function isDateFilter(filter: ExtendedFilter): filter is DateFilter {
+    return (
+        !isEmpty(filter) &&
+        ((filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined ||
+            (filter as IRelativeDateFilter).relativeDateFilter !== undefined)
+    );
+}
+
+/**
+ * @public
+ */
+export function isPositiveAttributeFilter(filter: AttributeFilter): filter is IPositiveAttributeFilter {
+    return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isNegativeAttributeFilter(filter: AttributeFilter): filter is INegativeAttributeFilter {
+    return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter {
+    return !isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isRankingFilter(filter: ExtendedFilter): filter is IRankingFilter {
+    return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isAbsoluteDateFilter(filter: DateFilter): filter is IAbsoluteDateFilter {
+    return !isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter {
+    return !isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isLocalIdentifierQualifier(
+    objectQualifier: unknown,
+): objectQualifier is ILocalIdentifierQualifier {
+    return (
+        !isEmpty(objectQualifier) &&
+        (objectQualifier as ILocalIdentifierQualifier).localIdentifier !== undefined
+    );
+}
+
+/**
+ * @public
+ */
+export function isComparisonCondition(
+    condition: MeasureValueFilterCondition,
+): condition is IComparisonCondition {
+    return !isEmpty(condition) && (condition as IComparisonCondition).comparison !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition {
+    return !isEmpty(condition) && (condition as IRangeCondition).range !== undefined;
 }

@@ -18,11 +18,11 @@ import {
     UrlDrillTarget,
     isDrillToCustomUrlConfig,
     isDrillToAttributeUrlConfig,
-} from "../../../../drill/types";
-import { DrillTargetInsightItem } from "./DrillTargetInsightItem";
-import { DrillTargetUrlItem } from "./DrillTargetUrlItem";
-import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem";
-import { IDrillableDashboardListItem } from "../../../../dashboardList";
+} from "../../../../drill/types.js";
+import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
+import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
+import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
+import { IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;

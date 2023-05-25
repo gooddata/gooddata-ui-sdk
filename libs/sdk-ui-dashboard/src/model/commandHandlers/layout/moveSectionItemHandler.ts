@@ -1,19 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { MoveSectionItem } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { MoveSectionItem } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { put, select } from "redux-saga/effects";
 import {
     validateItemExists,
     validateItemPlacement,
     validateSectionExists,
     validateSectionPlacement,
-} from "./validation/layoutValidation";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout";
-import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps";
+} from "./validation/layoutValidation.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
+import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
 import { batchActions } from "redux-batched-actions";
 
 type MoveSectionItemContext = {

@@ -1,26 +1,26 @@
 // (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import compact from "lodash/compact";
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
-import { DashboardContext } from "../../types/commonTypes";
-import { DrillToDashboard } from "../../commands/drill";
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { DrillToDashboard } from "../../commands/drill.js";
 import {
     DashboardDrillToDashboardResolved,
     drillToDashboardRequested,
     drillToDashboardResolved,
-} from "../../events/drill";
+} from "../../events/drill.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
-} from "../../store/filterContext/filterContextSelectors";
-import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
-import { IDashboardFilter } from "../../../types";
+} from "../../store/filterContext/filterContextSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { IDashboardFilter } from "../../../types.js";
 import {
     dashboardAttributeFilterToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
-} from "../../../converters";
+} from "../../../converters/index.js";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
@@ -43,9 +43,9 @@ import {
     newAllTimeFilter,
     IDateFilter,
 } from "@gooddata/sdk-model";
-import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors";
-import { DashboardState } from "../../store/types";
+import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { DashboardState } from "../../store/types.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,

@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import { AccessGranularPermission, ShareStatus } from "@gooddata/sdk-model";
-import isString from "lodash/isString";
-import { DashboardEventBody, IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import isString from "lodash/isString.js";
+import { DashboardEventBody, IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * @beta

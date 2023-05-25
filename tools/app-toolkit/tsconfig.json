@@ -1,20 +1,20 @@
 {
     "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
     "compilerOptions": {
-        "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
         "lib": ["es2017", "dom"],
+        "esModuleInterop": true,
         "importHelpers": true,
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "dist",
+        "outDir": "./esm",
         "sourceMap": true,
         "baseUrl": ".."
     },
     "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "esm", "**/__mocks__/**/*"]
 }

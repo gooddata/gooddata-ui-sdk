@@ -1,18 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors";
-import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates";
-import { coloringCustomizer } from "../_infra/coloringVariants";
+import { scenariosFor } from "../../../src/index.js";
+import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
+import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import {
     ColumnChartViewByDateAndPop,
     ColumnChartWithSingleMeasureViewByAndStackBy,
     ColumnChartWithTwoMeasuresAndViewBy,
-} from "./base";
-import { replaceMappingPredicates } from "../_infra/insightConverters";
+} from "./base.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

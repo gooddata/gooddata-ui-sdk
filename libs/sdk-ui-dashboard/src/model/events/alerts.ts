@@ -1,9 +1,9 @@
 // (C) 2021-2023 GoodData Corporation
 import { IWidgetAlert } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../types/commonTypes";
-import { IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import { DashboardContext } from "../types/commonTypes.js";
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DashboardAlertCreated} event.

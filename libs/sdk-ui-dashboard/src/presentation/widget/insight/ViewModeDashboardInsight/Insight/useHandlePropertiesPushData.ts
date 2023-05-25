@@ -8,7 +8,7 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     changeInsightWidgetVisProperties,
-} from "../../../../../model";
+} from "../../../../../model/index.js";
 
 function isSupportedWidgetProperties(properties: IPushData["properties"]): boolean {
     // currently we only support the columnWidths for pivot tables

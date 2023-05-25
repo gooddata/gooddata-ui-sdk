@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import { fireDrillEvent } from "../drilling";
-import { IDrillEvent } from "../DrillEvents";
+import { fireDrillEvent } from "../drilling.js";
+import { IDrillEvent } from "../DrillEvents.js";
+import { describe, expect, it, vi } from "vitest";
 
 describe("fireDrillEvent", () => {
     it("should dispatch expected drill post message", () => {
@@ -8,8 +9,8 @@ describe("fireDrillEvent", () => {
             dataView: {},
             drillContext: {},
         };
-        const eventHandler = jest.fn();
-        const drillFunction = jest.fn();
+        const eventHandler = vi.fn();
+        const drillFunction = vi.fn();
         const target = {
             dispatchEvent: eventHandler,
         };
@@ -34,11 +35,11 @@ describe("fireDrillEvent", () => {
             dataView: {},
             drillContext: {},
         };
-        const eventHandler = jest.fn();
+        const eventHandler = vi.fn();
         const target = {
             dispatchEvent: eventHandler,
         };
-        const drillEventFunction = jest.fn(() => true);
+        const drillEventFunction = vi.fn(() => true);
 
         fireDrillEvent(drillEventFunction, eventData as IDrillEvent, target as any as EventTarget);
 
@@ -61,12 +62,12 @@ describe("fireDrillEvent", () => {
             dataView: {},
             drillContext: {},
         };
-        const eventHandler = jest.fn();
+        const eventHandler = vi.fn();
         const target = {
             dispatchEvent: eventHandler,
         };
 
-        const drillEventFunction = jest.fn(() => false);
+        const drillEventFunction = vi.fn(() => false);
 
         fireDrillEvent(drillEventFunction, eventData as IDrillEvent, target as any as EventTarget);
 

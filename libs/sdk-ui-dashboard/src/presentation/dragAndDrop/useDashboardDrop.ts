@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { DropTargetMonitor, DropTargetHookSpec, useDrop } from "react-dnd";
-import { DraggableItem, DraggableItemType, DraggableItemTypeMapping } from "./types";
+import { DraggableItem, DraggableItemType, DraggableItemTypeMapping } from "./types.js";
 
 type DashboardDropTargetHookSpec<DragObject, CollectedProps> = Pick<
     DropTargetHookSpec<DragObject, void, CollectedProps>,

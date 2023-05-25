@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { IScenario, WorkspaceType } from "../../src";
+import { IScenario, WorkspaceType } from "../../src/index.js";
 import process from "process";
 import path from "path";
 import fs from "fs";

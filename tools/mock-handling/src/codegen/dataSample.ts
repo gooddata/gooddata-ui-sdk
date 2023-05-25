@@ -1,9 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import * as path from "path";
-import { createUniqueVariableName } from "../base/variableNaming";
-import { DisplayFormRecording } from "../recordings/displayForms";
-import groupBy from "lodash/groupBy";
+import { createUniqueVariableName } from "../base/variableNaming.js";
+import { DisplayFormRecording } from "../recordings/displayForms.js";
+import groupBy from "lodash/groupBy.js";
 
 const DataSampleConstName = "DataSamples";
 

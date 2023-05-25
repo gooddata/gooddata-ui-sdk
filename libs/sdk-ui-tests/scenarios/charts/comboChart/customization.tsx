@@ -1,18 +1,21 @@
 // (C) 2007-2019 GoodData Corporation
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
-import { dataPointCustomizer } from "../_infra/dataPointVariants";
-import { legendCustomizer } from "../_infra/legendVariants";
+import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
 import {
     ComboChartWithTwoMeasuresAndViewBy,
     ComboChartWithManyDataPoints,
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     ComboChartViewByDate,
-} from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+} from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
 
 export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
     baseName: string,
@@ -73,7 +76,13 @@ const connectNullsScenarios = scenariosFor<IComboChartProps>("ComboChart", Combo
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("connect nulls values", {
         ...ComboChartViewByDate,
-        config: { continuousLine: { enabled: true }}
+        config: { continuousLine: { enabled: true } },
     });
 
-export default [legendScenarios, dataLabelScenarios, dataPointScenarios, connectNullsScenarios, ...legendResponziveScenarios];
+export default [
+    legendScenarios,
+    dataLabelScenarios,
+    dataPointScenarios,
+    connectNullsScenarios,
+    ...legendResponziveScenarios,
+];

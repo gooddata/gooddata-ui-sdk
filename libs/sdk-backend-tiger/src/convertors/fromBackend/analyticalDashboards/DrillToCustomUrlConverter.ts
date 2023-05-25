@@ -2,11 +2,11 @@
 
 import { LayoutPath } from "@gooddata/sdk-backend-spi";
 import { IDrillToCustomUrl, IDashboardLayout } from "@gooddata/sdk-model";
-import update from "lodash/fp/update";
+import update from "lodash/fp/update.js";
 
-import { getDrillToCustomUrlPaths } from "../../toBackend/AnalyticalDashboardConverter";
-import isEmpty from "lodash/isEmpty";
-import { joinDrillUrlParts } from "@gooddata/sdk-model/dist/dashboard/drillUrl";
+import { getDrillToCustomUrlPaths } from "../../toBackend/AnalyticalDashboardConverter.js";
+import isEmpty from "lodash/isEmpty.js";
+import { joinDrillUrlParts } from "@gooddata/sdk-model/internal";
 
 function convertTargetUrlPartsToString(drill: IDrillToCustomUrl) {
     return update(["target", "url"], joinDrillUrlParts, drill);

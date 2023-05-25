@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
-import range from "lodash/range";
-import flatMap from "lodash/flatMap";
-import isNil from "lodash/isNil";
+import { invariant } from "ts-invariant";
+import range from "lodash/range.js";
+import flatMap from "lodash/flatMap.js";
+import isNil from "lodash/isNil.js";
 
 /**
  * This implementation of {@link @gooddata/sdk-backend-spi#IPagedResource} pages over a list of items

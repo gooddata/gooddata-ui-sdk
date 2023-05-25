@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import {
     AreaChartViewByDate,
     AreaChartWithTwoMeasuresAndViewBy,
     AreaChartWithViewAndStackBy,
     AreaChartWithViewBy,
-} from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+} from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
@@ -51,7 +51,8 @@ export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .addScenario("undefined values and disabled stacking", {
         ...AreaChartViewByDate,
         config: { stacking: false },
-    }).addScenario("undefined values, disabled stacking and the continuous line enabled", {
+    })
+    .addScenario("undefined values, disabled stacking and the continuous line enabled", {
         ...AreaChartViewByDate,
         config: { stacking: false, continuousLine: { enabled: true } },
     });

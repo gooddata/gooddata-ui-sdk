@@ -6,10 +6,10 @@ import {
     ExtendedDashboardLayoutSection,
     ExtendedDashboardWidget,
     StashedDashboardItemsId,
-} from "../types/layoutTypes";
-import { DashboardContext } from "../types/commonTypes";
-import { IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+} from "../types/layoutTypes.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DashboardLayoutSectionAdded} event.

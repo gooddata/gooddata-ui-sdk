@@ -1,12 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { GdcProject, GdcUser, GdcUserGroup, GdcAccessControl } from "@gooddata/api-model-bear";
 
-import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingItemValue } from "./util";
-import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces";
-import { IFeatureFlagsResponse, IStyleSettingsResponse } from "./apiResponsesInterfaces";
-import { ApiError, ApiResponse, XhrModule } from "./xhr";
-import { stringify } from "./utils/queryString";
+import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingItemValue } from "./util.js";
+import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces.js";
+import { IFeatureFlagsResponse, IStyleSettingsResponse } from "./apiResponsesInterfaces.js";
+import { ApiError, ApiResponse, XhrModule } from "./xhr.js";
+import { stringify } from "./utils/queryString.js";
 
 export const DEFAULT_PALETTE = [
     { r: 0x2b, g: 0x6b, b: 0xae },

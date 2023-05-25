@@ -3,10 +3,10 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel";
-import { InsightDrillConfigList } from "../InsightDrillConfigList";
-import { DrillOriginSelector } from "../DrillOriginSelector/DrillOriginSelector";
-import { ZoomInsightConfiguration } from "../ZoomInsightConfiguration";
+import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";
+import { InsightDrillConfigList } from "../InsightDrillConfigList.js";
+import { DrillOriginSelector } from "../DrillOriginSelector/DrillOriginSelector.js";
+import { ZoomInsightConfiguration } from "../ZoomInsightConfiguration.js";
 
 /**
  * @internal

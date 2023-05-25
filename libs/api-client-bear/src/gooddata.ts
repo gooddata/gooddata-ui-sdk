@@ -1,19 +1,19 @@
 // (C) 2007-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 import { getAttributesDisplayForms } from "@gooddata/api-model-bear";
-import { XhrModule } from "./xhr";
-import { UserModule } from "./user";
-import { MetadataModule } from "./metadata";
-import { MetadataModuleExt } from "./metadataExt";
-import { ExecutionModule } from "./execution";
-import { ProjectModule } from "./project";
-import { ReportModule } from "./report/report";
-import { DashboardModule } from "./dashboard/dashboard";
-import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config";
-import { CatalogueModule } from "./catalogue";
-import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
-import { LdmModule } from "./ldm";
-import { OrganizationModule } from "./organization";
+import { XhrModule } from "./xhr.js";
+import { UserModule } from "./user.js";
+import { MetadataModule } from "./metadata.js";
+import { MetadataModuleExt } from "./metadataExt.js";
+import { ExecutionModule } from "./execution.js";
+import { ProjectModule } from "./project.js";
+import { ReportModule } from "./report/report.js";
+import { DashboardModule } from "./dashboard/dashboard.js";
+import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config.js";
+import { CatalogueModule } from "./catalogue.js";
+import { AttributesMapLoaderModule } from "./utils/attributesMapLoader.js";
+import { LdmModule } from "./ldm.js";
+import { OrganizationModule } from "./organization.js";
 
 /**
  * This package provides low-level functions for communication with the GoodData platform.

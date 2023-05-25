@@ -2,18 +2,18 @@
 import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
-import difference from "lodash/difference";
-import partition from "lodash/partition";
+import difference from "lodash/difference.js";
+import partition from "lodash/partition.js";
 
-import { RemoveAttributeFilters } from "../../../commands/filters";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { attributeFilterRemoved } from "../../../events/filters";
-import { filterContextActions } from "../../../store/filterContext";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../../types/commonTypes";
-import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
-import { layoutActions } from "../../../store/layout";
+import { RemoveAttributeFilters } from "../../../commands/filters.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { attributeFilterRemoved } from "../../../events/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged } from "../common.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { layoutActions } from "../../../store/layout/index.js";
 
 export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,

@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-
-import { catalogAttribute, catalogMetric, catalogFact } from "../../../__mocks__/catalog";
-import { GdcCatalog } from "../GdcCatalog";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { describe, it, expect } from "vitest";
+import { catalogAttribute, catalogMetric, catalogFact } from "../../../__mocks__/catalog.js";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isCatalogAttribute, isCatalogFact, isCatalogMetric } from "../GdcCatalog.js";
 
 describe("catalog attribute type guard", () => {
     describe("isCatalogAttribute", () => {
@@ -14,7 +14,7 @@ describe("catalog attribute type guard", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcCatalog.isCatalogAttribute(input)).toBe(expectedResult);
+            expect(isCatalogAttribute(input)).toBe(expectedResult);
         });
     });
 
@@ -27,7 +27,7 @@ describe("catalog attribute type guard", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcCatalog.isCatalogMetric(input)).toBe(expectedResult);
+            expect(isCatalogMetric(input)).toBe(expectedResult);
         });
     });
 
@@ -40,7 +40,7 @@ describe("catalog attribute type guard", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcCatalog.isCatalogFact(input)).toBe(expectedResult);
+            expect(isCatalogFact(input)).toBe(expectedResult);
         });
     });
 });

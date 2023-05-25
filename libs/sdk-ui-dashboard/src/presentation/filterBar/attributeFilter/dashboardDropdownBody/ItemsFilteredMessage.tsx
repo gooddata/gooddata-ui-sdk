@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React, { ReactNode } from "react";
-import { IItemsFilteredMessageProps } from "./AllItemsFilteredMessage";
+import { IItemsFilteredMessageProps } from "./AllItemsFilteredMessage.js";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 

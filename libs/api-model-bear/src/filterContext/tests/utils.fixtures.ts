@@ -1,7 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { GdcFilterContext } from "../GdcFilterContext";
-import IAttributeFilter = GdcFilterContext.IAttributeFilter;
-import IDateFilter = GdcFilterContext.IDateFilter;
+import { IAttributeFilter, IDateFilter } from "../GdcFilterContext.js";
 
 export const relativeDateFilter: IDateFilter = {
     dateFilter: {

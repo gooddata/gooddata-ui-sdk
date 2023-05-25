@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/sdk-ui";
 import { stripColors, numberFormat, containsNullConditionalFormat } from "@gooddata/numberjs";
-import isNull from "lodash/isNull";
+import isNull from "lodash/isNull.js";
 
 export const HYPHEN = "–"; // EN DASH (not usual 'minus')
 

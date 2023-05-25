@@ -2,6 +2,7 @@
 import { EventBus, packagesChanged, PackagesRebuilt, sourceInitialized, targetSelected } from "../../events";
 import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture";
 import { BuildScheduler } from "../buildScheduler";
+import { describe, it, beforeEach, expect } from "vitest";
 
 describe("BuildScheduler", () => {
     let eventBus: EventBus | undefined;

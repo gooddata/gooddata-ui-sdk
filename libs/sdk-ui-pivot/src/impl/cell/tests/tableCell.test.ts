@@ -1,8 +1,9 @@
 // (C) 2007-2023 GoodData Corporation
 import { render } from "@testing-library/react";
 import { identity } from "lodash";
-import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils";
-import { createCellRenderer } from "../cellRenderer";
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils.js";
+import { createCellRenderer } from "../cellRenderer.js";
+import { describe, it, expect } from "vitest";
 
 describe("cellRenderer", () => {
     it("should escape value", () => {

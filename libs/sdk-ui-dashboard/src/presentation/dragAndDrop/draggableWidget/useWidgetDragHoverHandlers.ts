@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
 
-import { uiActions, useDashboardDispatch } from "../../../model";
-import { ILayoutCoordinates } from "../../../types";
+import { uiActions, useDashboardDispatch } from "../../../model/index.js";
+import { ILayoutCoordinates } from "../../../types.js";
 
 /**
  * @internal

@@ -3,11 +3,11 @@ import { SagaIterator } from "redux-saga";
 import { SagaReturnType, select } from "redux-saga/effects";
 import { KpiDrillDefinition } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { selectLegacyDashboards } from "../../../store/legacyDashboards/legacyDashboardsSelectors";
-import { IDashboardCommand } from "../../../commands";
-import { validateKpiDrillTarget } from "./kpiDrillValidationUtils";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { selectLegacyDashboards } from "../../../store/legacyDashboards/legacyDashboardsSelectors.js";
+import { IDashboardCommand } from "../../../commands/index.js";
+import { validateKpiDrillTarget } from "./kpiDrillValidationUtils.js";
 
 export function* validateKpiDrill(
     drill: KpiDrillDefinition,

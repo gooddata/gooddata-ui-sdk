@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getColorsPreviewFromTheme should return correct array of colors when only complementary colors are set in theme 1`] = `
-Array [
+exports[`getColorsPreviewFromTheme > should return correct array of colors when only complementary colors are set in theme 1`] = `
+[
   "#323232",
   "#292727",
   "#14b2e2",
@@ -11,8 +11,8 @@ Array [
 ]
 `;
 
-exports[`getColorsPreviewFromTheme should return correct array of colors when theme is fully defined 1`] = `
-Array [
+exports[`getColorsPreviewFromTheme > should return correct array of colors when theme is fully defined 1`] = `
+[
   "#f0f0f0",
   "#dfdfdf",
   "#eba12a",
@@ -22,8 +22,8 @@ Array [
 ]
 `;
 
-exports[`getColorsPreviewFromTheme should return default array of colors when theme is empty 1`] = `
-Array [
+exports[`getColorsPreviewFromTheme > should return default array of colors when theme is empty 1`] = `
+[
   "#303442",
   "#fff",
   "#14b2e2",

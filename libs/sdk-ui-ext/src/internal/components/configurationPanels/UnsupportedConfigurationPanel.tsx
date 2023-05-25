@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import omit from "lodash/omit";
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import UnsupportedProperties from "../configurationControls/UnsupportedProperties";
+import omit from "lodash/omit.js";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import UnsupportedProperties from "../configurationControls/UnsupportedProperties.js";
 
 export default class UnsupportedConfigurationPanel extends ConfigurationPanelContent {
     public componentDidMount(): void {

@@ -1,9 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import isNumber from "lodash/isNumber";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import isNumber from "lodash/isNumber.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
 import {
     DataViewFacade,
@@ -15,7 +15,7 @@ import {
     HeadlineElementType,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
+import { IHeadlineData, IHeadlineDataItem } from "../../Headlines.js";
 import { Identifier, DataValue, IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {

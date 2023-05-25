@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect";
+import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { sanitizeCustomInput, sanitizeInput } from "./utils";
+import { sanitizeCustomInput, sanitizeInput } from "./utils.js";
 
 interface IValueDropdownOwnProps {
     selectedValue: number;

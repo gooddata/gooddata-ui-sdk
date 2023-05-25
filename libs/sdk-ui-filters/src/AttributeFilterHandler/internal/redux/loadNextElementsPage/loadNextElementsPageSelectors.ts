@@ -1,17 +1,17 @@
 // (C) 2021-2023 GoodData Corporation
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { createSelector } from "@reduxjs/toolkit";
-import isEqual from "lodash/isEqual";
-import omit from "lodash/omit";
+import isEqual from "lodash/isEqual.js";
+import omit from "lodash/omit.js";
 
-import { selectState } from "../common/selectors";
+import { selectState } from "../common/selectors.js";
 import {
     selectElementsTotalCount,
     selectLastLoadedElementsOptions,
     selectLoadElementsOptions,
-} from "../elements/elementsSelectors";
-import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types";
-import { FilterSelector } from "../common/types";
+} from "../elements/elementsSelectors.js";
+import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
+import { FilterSelector } from "../common/types.js";
 
 /**
  * @internal

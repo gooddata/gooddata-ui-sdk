@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import compose from "lodash/flowRight";
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
+import compose from "lodash/flowRight.js";
+import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition.js";
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 

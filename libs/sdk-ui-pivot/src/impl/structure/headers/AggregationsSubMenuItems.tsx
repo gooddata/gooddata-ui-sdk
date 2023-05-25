@@ -10,9 +10,9 @@ import {
 } from "@gooddata/sdk-model";
 import { Header, Item } from "@gooddata/sdk-ui-kit";
 
-import { IColumnTotal } from "./aggregationsMenuTypes";
-import menuHelper from "./aggregationsMenuHelper";
-import { IMenuAggregationClickConfig } from "../../privateTypes";
+import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import menuHelper from "./aggregationsMenuHelper.js";
+import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 
 interface IAggregationsSubMenuItemsProps {
     intl: IntlShape;

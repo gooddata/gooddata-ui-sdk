@@ -28,14 +28,14 @@ import {
     ObjRef,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { TigerAuthenticatedCallGuard } from "../../../../types";
-import { getRelativeDateFilterShiftedValues } from "./date";
-import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions";
-import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter";
-import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types";
-import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter";
-import { TigerCancellationConverter } from "../../../../cancelation";
+import { invariant } from "ts-invariant";
+import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
+import { getRelativeDateFilterShiftedValues } from "./date.js";
+import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
+import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
+import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
+import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
+import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -115,13 +115,13 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
 
             return isElementsQueryOptionsElementsByValue(elements)
                 ? {
-                      exactFilter: elements.values,
+                      exactFilter: elements.values as string[],
                       filterBy: {
                           labelType: FilterByLabelTypeEnum.REQUESTED,
                       },
                   }
                 : {
-                      exactFilter: elements.primaryValues,
+                      exactFilter: elements.primaryValues as string[],
                       filterBy: {
                           labelType: FilterByLabelTypeEnum.PRIMARY,
                       },

@@ -1,12 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "@storybook/addon-actions";
 import { ConfirmDialogBase, ContentDivider, DialogList, DialogListHeader } from "@gooddata/sdk-ui-kit";
-import { itemsMock as items } from "./itemsMock";
+import { itemsMock as items } from "./itemsMock.js";
 
 import "./styles.scss";
 

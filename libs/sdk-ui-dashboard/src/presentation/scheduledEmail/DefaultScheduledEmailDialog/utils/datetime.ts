@@ -1,10 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
-import isDate from "lodash/isDate";
-import format from "date-fns/format";
+import isDate from "lodash/isDate.js";
+import format from "date-fns/format/index.js";
 
-import { PLATFORM_DATE_FORMAT } from "../constants";
+import { PLATFORM_DATE_FORMAT } from "../constants.js";
 import { IntlShape } from "react-intl";
-import capitalize from "lodash/capitalize";
+import capitalize from "lodash/capitalize.js";
 
 export function convertDateToPlatformDateString(date: Date): string;
 export function convertDateToPlatformDateString(date: Date | undefined | null): string | undefined | null {

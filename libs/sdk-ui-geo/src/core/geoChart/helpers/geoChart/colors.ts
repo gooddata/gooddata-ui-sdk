@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IRgbColorValue } from "@gooddata/sdk-model";
-import isString from "lodash/isString";
-import range from "lodash/range";
+import isString from "lodash/isString.js";
+import range from "lodash/range.js";
 
 function formatColor(red: number, green: number, blue: number, opacity: number = 1): string {
     if (opacity === 1) {

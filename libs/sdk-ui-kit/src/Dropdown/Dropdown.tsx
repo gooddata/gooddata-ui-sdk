@@ -1,12 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { v4 as uuid } from "uuid";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
-import { FullScreenOverlay, Overlay } from "../Overlay";
-import { useMediaQuery } from "../responsive/useMediaQuery";
-import { IAlignPoint } from "../typings/positioning";
-import { OverlayPositionType } from "../typings/overlay";
+import { FullScreenOverlay, Overlay } from "../Overlay/index.js";
+import { useMediaQuery } from "../responsive/useMediaQuery.js";
+import { IAlignPoint } from "../typings/positioning.js";
+import { OverlayPositionType } from "../typings/overlay.js";
 
 const SCROLLBAR_SELECTOR = ".fixedDataTableLayout_main .ScrollbarLayout_main";
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [

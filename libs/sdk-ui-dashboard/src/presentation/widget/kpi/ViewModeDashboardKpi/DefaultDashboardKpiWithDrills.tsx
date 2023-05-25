@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { IDashboardKpiProps } from "../types";
-import { DashboardKpiCore } from "./DashboardKpiCore";
-import { useKpiDrill } from "../common/useKpiDrill";
+import { IDashboardKpiProps } from "../types.js";
+import { DashboardKpiCore } from "./DashboardKpiCore.js";
+import { useKpiDrill } from "../common/useKpiDrill.js";
 
 /**
  * @internal

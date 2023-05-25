@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
+import { Textarea, ITextareaProps } from "../Textarea.js";
 
-import { Textarea, ITextareaProps } from "../Textarea";
-
-import { IntlWrapper } from "../../../../localization/IntlWrapper";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 
 describe("Textarea", () => {
     function renderComponent(customProps: Partial<ITextareaProps> = {}) {
@@ -38,7 +38,7 @@ describe("Textarea", () => {
 
     it("should trigger onChange event", async () => {
         const value = "new value";
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderComponent({ onChange });
 
         fireEvent.change(screen.getByRole("textbox"), { target: { value } });

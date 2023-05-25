@@ -8,7 +8,7 @@ import {
     selectInsightByRef,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model";
+} from "../../../../model/index.js";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 interface ZoomInsightConfigurationProps {
@@ -56,11 +56,11 @@ export function ZoomInsightConfiguration(props: ZoomInsightConfigurationProps) {
                     {intl.formatMessage({ id: "configurationPanel.zoomInsight.help" })}
                 </Bubble>
             </BubbleHoverTrigger>
-            {zoomInsightState && (
+            {zoomInsightState ? (
                 <Message type="progress">
                     {intl.formatMessage({ id: "configurationPanel.zoomInsight.notice" })}
                 </Message>
-            )}
+            ) : null}
         </div>
     );
 }

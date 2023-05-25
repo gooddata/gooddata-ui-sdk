@@ -8,9 +8,9 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { newRankingFilter, measureLocalId, attributeLocalId, localIdRef } from "@gooddata/sdk-model";
 import { ExperimentalMd } from "@gooddata/experimental-workspace";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
-import { FilterStories } from "../../../_infra/storyGroups";
+import { FilterStories } from "../../../_infra/storyGroups.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
 

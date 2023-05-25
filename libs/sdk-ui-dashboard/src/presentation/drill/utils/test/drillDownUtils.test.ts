@@ -1,9 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IDrillToAttributeUrl } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep";
-import { IDrillDownDefinition } from "../../../../types";
-import { filterDrillFromAttributeByPriority } from "../drillDownUtils";
+import cloneDeep from "lodash/cloneDeep.js";
+import { IDrillDownDefinition } from "../../../../types.js";
+import { filterDrillFromAttributeByPriority } from "../drillDownUtils.js";
+import { describe, it, expect } from "vitest";
 
 describe("filterDrillFromAttributeByPriority", () => {
     const drillToAttributeUrl: IDrillToAttributeUrl = {

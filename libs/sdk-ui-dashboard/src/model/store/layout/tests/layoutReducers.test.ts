@@ -1,18 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import { LayoutState } from "../layoutState";
-import { InitialUndoState } from "../../_infra/undoEnhancer";
+import cloneDeep from "lodash/cloneDeep.js";
+import { LayoutState } from "../layoutState.js";
+import { InitialUndoState } from "../../_infra/undoEnhancer.js";
 import { InsightDrillDefinition, IInsightWidget, IDashboardLayout } from "@gooddata/sdk-model";
-import { layoutReducers } from "../layoutReducers";
-import { modifyDrillsForInsightWidget, removeLayoutSection } from "../../../commands";
-import { layoutActions } from "../index";
+import { layoutReducers } from "../layoutReducers.js";
+import { modifyDrillsForInsightWidget, removeLayoutSection } from "../../../commands/index.js";
+import { layoutActions } from "../index.js";
 import { produce } from "immer";
 import {
     DrillToDashboardFromWonMeasureDefinition,
     SimpleDashboardLayout,
     SimpleSortedTableWidgetRef,
-} from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
+} from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { describe, it, expect } from "vitest";
 
 describe("layout slice reducer", () => {
     function createLayoutSliceInitialState(layout?: IDashboardLayout): LayoutState {

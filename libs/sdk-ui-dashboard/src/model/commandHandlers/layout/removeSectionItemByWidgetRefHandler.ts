@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import { selectWidgetCoordinatesByRef } from "../../store/layout/layoutSelectors";
-import { DashboardContext } from "../../types/commonTypes";
+import { selectWidgetCoordinatesByRef } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
-import { RemoveSectionItemByWidgetRef } from "../../commands/layout";
-import { removeSectionItemSaga } from "./removeSectionItemHandler";
-import { invalidArgumentsProvided } from "../../events/general";
+import { RemoveSectionItemByWidgetRef } from "../../commands/layout.js";
+import { removeSectionItemSaga } from "./removeSectionItemHandler.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import { objRefToString } from "@gooddata/sdk-model";
 
 export function* removeSectionItemByWidgetRefHandler(

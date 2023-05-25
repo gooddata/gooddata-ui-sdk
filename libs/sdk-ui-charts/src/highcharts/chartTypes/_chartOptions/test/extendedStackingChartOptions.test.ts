@@ -1,14 +1,15 @@
 // (C) 2007-2022 GoodData Corporation
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
-import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
-import { getMVSForViewByTwoAttributes } from "../../_util/test/helper";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
+import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions.js";
+import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { attributeIdentifier, measureIdentifier, uriRef, IAttributeDescriptor } from "@gooddata/sdk-model";
 import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { MeasureColorStrategy } from "../../_chartColoring/measure";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { getSeries } from "../chartSeries";
-import { getDrillableSeries } from "../chartDrilling";
+import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { getSeries } from "../chartSeries.js";
+import { getDrillableSeries } from "../chartDrilling.js";
+import { describe, it, expect } from "vitest";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {

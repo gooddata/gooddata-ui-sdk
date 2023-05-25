@@ -1,14 +1,15 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, ReactNode, RefObject } from "react";
 import { v4 as uuid } from "uuid";
-import identity from "lodash/identity";
-import TextareaAutosize from "react-textarea-autosize";
+import identity from "lodash/identity.js";
+import ReactTextareaAutosize from "react-textarea-autosize";
 import cx from "classnames";
+import { defaultImport } from "default-import";
 
-import { Overlay } from "../Overlay";
-import { ENUM_KEY_CODE } from "../typings/utilities";
+import { Overlay } from "../Overlay/index.js";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
 
-import { IEditableLabelProps, IEditableLabelState } from "./typings";
+import { IEditableLabelProps, IEditableLabelState } from "./typings.js";
 
 /**
  * @internal
@@ -16,6 +17,11 @@ import { IEditableLabelProps, IEditableLabelState } from "./typings";
 export interface IEditableLabelInnerProps extends IEditableLabelProps {
     innerRef: React.ForwardedRef<HTMLDivElement>;
 }
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const TextareaAutosize = defaultImport(ReactTextareaAutosize);
 
 /**
  * @internal

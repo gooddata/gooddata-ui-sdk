@@ -2,8 +2,8 @@
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsCount,
@@ -16,7 +16,7 @@ import {
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { IAttributeFilterBaseProps } from "./types";
+import { IAttributeFilterBaseProps } from "./types.js";
 
 /**
  * @internal

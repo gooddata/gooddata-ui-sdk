@@ -8,7 +8,8 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { emptyDef, uriRef, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { getValidColorPalette } from "../color";
+import { getValidColorPalette } from "../color.js";
+import { describe, it, expect } from "vitest";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {

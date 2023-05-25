@@ -2,7 +2,7 @@
 import { IAnalyticalBackend, NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 
-import { BackendType } from "./base/types";
+import { BackendType } from "./base/types.js";
 
 let backend: IAnalyticalBackend | null = null;
 

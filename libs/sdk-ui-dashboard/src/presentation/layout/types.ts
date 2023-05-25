@@ -3,7 +3,7 @@ import { ComponentType } from "react";
 import { IErrorProps, OnError } from "@gooddata/sdk-ui";
 import { FilterContextItem } from "@gooddata/sdk-model";
 
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../types";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../types.js";
 
 /**
  * @alpha

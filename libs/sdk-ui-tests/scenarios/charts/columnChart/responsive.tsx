@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
+import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [

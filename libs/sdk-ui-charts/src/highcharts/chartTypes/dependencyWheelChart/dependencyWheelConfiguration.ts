@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import { HighchartsOptions } from "../../lib";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
+import cloneDeep from "lodash/cloneDeep.js";
+import { HighchartsOptions } from "../../lib/index.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
 
 const DEPENDENCY_WHEEL_TEMPLATE = {
     chart: {

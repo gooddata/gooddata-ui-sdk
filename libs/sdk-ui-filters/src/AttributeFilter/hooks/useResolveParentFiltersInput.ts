@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { AttributeFiltersOrPlaceholders, useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
 import { filterIsEmpty, IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
-import isFunction from "lodash/isFunction";
-import { ParentFilterOverAttributeType } from "../types";
+import isFunction from "lodash/isFunction.js";
+import { ParentFilterOverAttributeType } from "../types.js";
 
 /**
  * @internal

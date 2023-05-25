@@ -16,19 +16,19 @@ import {
     isGranteeGroupAll,
     isGranularGranteeUser,
     isGranularGranteeGroup,
-} from "./types";
-import { getGranteeLabel, getGranteeItemTestId } from "./utils";
+} from "./types.js";
+import { getGranteeLabel, getGranteeItemTestId } from "./utils.js";
 import {
     GranteeGroupIcon,
     GranteeOwnerRemoveIcon,
     GranteeRemoveIcon,
     GranteeUserIcon,
     GranteeUserInactiveIcon,
-} from "./GranteeIcons";
-import { Button } from "../../../Button";
-import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem";
-import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem";
-import invariant from "ts-invariant";
+} from "./GranteeIcons.js";
+import { Button } from "../../../Button/index.js";
+import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem.js";
+import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem.js";
+import { invariant } from "ts-invariant";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;

@@ -2,9 +2,9 @@
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import React from "react";
-import { VALUE_CLASS } from "../base/constants";
-import { TableFacade } from "../tableFacade";
-import { ICorePivotTableProps } from "../../publicTypes";
+import { VALUE_CLASS } from "../base/constants.js";
+import { TableFacade } from "../tableFacade.js";
+import { ICorePivotTableProps } from "../../publicTypes.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 /**

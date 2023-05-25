@@ -1,13 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import noop from "lodash/noop";
-import times from "lodash/times";
+import noop from "lodash/noop.js";
+import times from "lodash/times.js";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
 import { withIntl } from "@gooddata/sdk-ui";
-import { wrapWithTheme } from "../../themeWrapper";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 
 import "./styles.scss";
 

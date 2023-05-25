@@ -3,11 +3,9 @@
 /**
  * @public
  */
-export namespace GdcOrganization {
-    export interface IOrganization {
-        organization: {
-            id: string;
-            name: string;
-        };
-    }
+export interface IOrganization {
+    organization: {
+        id: string;
+        name: string;
+    };
 }

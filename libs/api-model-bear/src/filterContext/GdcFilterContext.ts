@@ -1,100 +1,147 @@
 // (C) 2019-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
-import { GdcMetadata } from "../meta/GdcMetadata";
-import { Uri, Timestamp, NumberAsString } from "../aliases";
+import isEmpty from "lodash/isEmpty.js";
+import { Uri, Timestamp, NumberAsString } from "../aliases.js";
+import { DateFilterGranularity, DateString } from "../extendedDateFilters/GdcExtendedDateFilters.js";
+import { IObjectMeta } from "../meta/GdcMetadata.js";
 
 /**
  * @public
  */
-export namespace GdcFilterContext {
-    export type RelativeType = "relative";
-    export type AbsoluteType = "absolute";
-    export type DateFilterType = RelativeType | AbsoluteType;
-    export type AttributeFilterSelectionMode = "single" | "multi";
+export type RelativeType = "relative";
 
-    export interface IFilterContext {
-        meta: GdcMetadata.IObjectMeta;
-        content: {
-            filters: FilterContextItem[];
-        };
-    }
+/**
+ * @public
+ */
+export type AbsoluteType = "absolute";
 
-    export interface IWrappedFilterContext {
-        filterContext: IFilterContext;
-    }
+/**
+ * @public
+ */
+export type DateFilterType = RelativeType | AbsoluteType;
 
-    /**
-     * Temporary filter context stored during exports
-     */
-    export interface ITempFilterContext {
-        uri: Uri;
-        created: Timestamp;
+/**
+ * @public
+ */
+export type AttributeFilterSelectionMode = "single" | "multi";
+
+/**
+ * @public
+ */
+export interface IFilterContext {
+    meta: IObjectMeta;
+    content: {
         filters: FilterContextItem[];
-    }
+    };
+}
 
-    export interface IWrappedTempFilterContext {
-        tempFilterContext: ITempFilterContext;
-    }
+/**
+ * @public
+ */
+export interface IWrappedFilterContext {
+    filterContext: IFilterContext;
+}
 
-    export interface IAttributeFilter {
-        attributeFilter: {
-            displayForm: string;
-            negativeSelection: boolean;
-            attributeElements: string[];
-            localIdentifier?: string;
-            title?: string;
-            filterElementsBy?: Array<{
-                filterLocalIdentifier: string;
-                over: {
-                    attributes: Array<string>;
-                };
-            }>;
-            selectionMode?: AttributeFilterSelectionMode;
-        };
-    }
+/**
+ * Temporary filter context stored during exports
+ * @public
+ */
+export interface ITempFilterContext {
+    uri: Uri;
+    created: Timestamp;
+    filters: FilterContextItem[];
+}
 
-    export interface IDateFilter {
-        dateFilter: {
-            type: DateFilterType;
-            granularity: GdcExtendedDateFilters.DateFilterGranularity;
-            from?: GdcExtendedDateFilters.DateString | NumberAsString;
-            to?: GdcExtendedDateFilters.DateString | NumberAsString;
-            dataSet?: string;
-            attribute?: string;
-        };
-    }
+/**
+ * @public
+ */
+export interface IWrappedTempFilterContext {
+    tempFilterContext: ITempFilterContext;
+}
 
-    export type FilterContextItem = IAttributeFilter | IDateFilter;
+/**
+ * @public
+ */
+export interface IAttributeFilter {
+    attributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        attributeElements: string[];
+        localIdentifier?: string;
+        title?: string;
+        filterElementsBy?: Array<{
+            filterLocalIdentifier: string;
+            over: {
+                attributes: Array<string>;
+            };
+        }>;
+        selectionMode?: AttributeFilterSelectionMode;
+    };
+}
 
-    export function isDateFilter(filter: FilterContextItem): filter is IDateFilter {
-        return !isEmpty(filter) && !!(filter as IDateFilter).dateFilter;
-    }
+/**
+ * @public
+ */
+export interface IDateFilter {
+    dateFilter: {
+        type: DateFilterType;
+        granularity: DateFilterGranularity;
+        from?: DateString | NumberAsString;
+        to?: DateString | NumberAsString;
+        dataSet?: string;
+        attribute?: string;
+    };
+}
 
-    export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter {
-        return !isEmpty(filter) && !!(filter as IAttributeFilter).attributeFilter;
-    }
+/**
+ * @public
+ */
+export type FilterContextItem = IAttributeFilter | IDateFilter;
 
-    export function isFilterContext(obj: unknown): obj is IFilterContext {
-        return !isEmpty(obj) && (obj as IFilterContext).meta.category === "filterContext";
-    }
+/**
+ * @public
+ */
+export function isDateFilter(filter: FilterContextItem): filter is IDateFilter {
+    return !isEmpty(filter) && !!(filter as IDateFilter).dateFilter;
+}
 
-    export function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext {
-        // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && (obj as IWrappedFilterContext).hasOwnProperty("filterContext");
-    }
+/**
+ * @public
+ */
+export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter {
+    return !isEmpty(filter) && !!(filter as IAttributeFilter).attributeFilter;
+}
 
-    export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
-        return !!(
-            !isEmpty(obj) &&
-            (obj as ITempFilterContext).created &&
-            (obj as ITempFilterContext).uri &&
-            (obj as ITempFilterContext).filters.every((x) => isDateFilter(x) || isAttributeFilter(x))
-        );
-    }
+/**
+ * @public
+ */
+export function isFilterContext(obj: unknown): obj is IFilterContext {
+    return !isEmpty(obj) && (obj as IFilterContext).meta.category === "filterContext";
+}
 
-    export function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext {
-        // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && (obj as IWrappedTempFilterContext).hasOwnProperty("tempFilterContext");
-    }
+/**
+ * @public
+ */
+export function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext {
+    // eslint-disable-next-line no-prototype-builtins
+    return !isEmpty(obj) && (obj as IWrappedFilterContext).hasOwnProperty("filterContext");
+}
+
+/**
+ * @public
+ */
+export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
+    return !!(
+        !isEmpty(obj) &&
+        (obj as ITempFilterContext).created &&
+        (obj as ITempFilterContext).uri &&
+        (obj as ITempFilterContext).filters.every((x) => isDateFilter(x) || isAttributeFilter(x))
+    );
+}
+
+/**
+ * @public
+ */
+export function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext {
+    // eslint-disable-next-line no-prototype-builtins
+    return !isEmpty(obj) && (obj as IWrappedTempFilterContext).hasOwnProperty("tempFilterContext");
 }

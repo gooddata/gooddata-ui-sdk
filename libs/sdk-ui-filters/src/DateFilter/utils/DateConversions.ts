@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import moment from "moment";
-import isString from "lodash/isString";
-import isDate from "lodash/isDate";
-import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform";
+import isString from "lodash/isString.js";
+import isDate from "lodash/isDate.js";
+import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
 
 export const convertDateToPlatformDateString = (
     date: Date | undefined | null,

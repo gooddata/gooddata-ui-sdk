@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";

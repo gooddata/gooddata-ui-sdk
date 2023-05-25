@@ -9,17 +9,27 @@ import {
     ClassNames,
     DayPickerProps,
 } from "react-day-picker";
-import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
-import { mergeDayPickerProps } from "./utils";
-import { DateRangePickerError } from "./DateRangePickerError";
-import { IExtendedDateFilterErrors } from "../interfaces";
-import { DateTimePickerWithInt } from "./DateTimePicker";
+import { mergeDayPickerProps } from "./utils.js";
+import { DateRangePickerError } from "./DateRangePickerError.js";
+import { IExtendedDateFilterErrors } from "../interfaces/index.js";
+import { DateTimePickerWithInt } from "./DateTimePicker.js";
 
-import { DAY_END_TIME } from "../constants/Platform";
+import { DAY_END_TIME } from "../constants/Platform.js";
+
+import enUS from "date-fns/locale/en-US/index.js";
+import de from "date-fns/locale/de/index.js";
+import es from "date-fns/locale/es/index.js";
+import fr from "date-fns/locale/fr/index.js";
+import ja from "date-fns/locale/ja/index.js";
+import nl from "date-fns/locale/nl/index.js";
+import pt from "date-fns/locale/pt/index.js";
+import ptBR from "date-fns/locale/pt-BR/index.js";
+import zhCN from "date-fns/locale/zh-CN/index.js";
+import ru from "date-fns/locale/ru/index.js";
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,

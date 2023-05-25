@@ -1,29 +1,29 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`insight factory should create new empty insight 1`] = `
-Object {
-  "insight": Object {
-    "buckets": Array [],
-    "filters": Array [],
-    "properties": Object {},
-    "sorts": Array [],
+exports[`insight factory > should create new empty insight 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "filters": [],
+    "properties": {},
+    "sorts": [],
     "title": "Untitled",
     "visualizationUrl": "local:bar",
   },
 }
 `;
 
-exports[`insight factory should create new empty insight with buckets, filters and sorts 1`] = `
-Object {
-  "insight": Object {
-    "buckets": Array [
-      Object {
-        "items": Array [
-          Object {
-            "measure": Object {
-              "definition": Object {
-                "measureDefinition": Object {
-                  "item": Object {
+exports[`insight factory > should create new empty insight with buckets, filters and sorts 1`] = `
+{
+  "insight": {
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "item": {
                     "identifier": "afSEwRwdbMeQ",
                   },
                 },
@@ -35,25 +35,25 @@ Object {
         "localIdentifier": "test",
       },
     ],
-    "filters": Array [
-      Object {
-        "positiveAttributeFilter": Object {
-          "displayForm": Object {
+    "filters": [
+      {
+        "positiveAttributeFilter": {
+          "displayForm": {
             "identifier": "label.owner.department",
             "type": "displayForm",
           },
-          "in": Object {
-            "values": Array [
+          "in": {
+            "values": [
               "Inside Sales",
             ],
           },
         },
       },
     ],
-    "properties": Object {},
-    "sorts": Array [
-      Object {
-        "attributeSortItem": Object {
+    "properties": {},
+    "sorts": [
+      {
+        "attributeSortItem": {
           "attributeIdentifier": "a_label.owner.department",
           "direction": "asc",
         },
@@ -65,30 +65,30 @@ Object {
 }
 `;
 
-exports[`insight factory should create new empty insight with custom properties 1`] = `
-Object {
-  "insight": Object {
-    "buckets": Array [],
-    "filters": Array [],
-    "properties": Object {
-      "controls": Object {
+exports[`insight factory > should create new empty insight with custom properties 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "filters": [],
+    "properties": {
+      "controls": {
         "grid": true,
       },
     },
-    "sorts": Array [],
+    "sorts": [],
     "title": "Untitled",
     "visualizationUrl": "local:bar",
   },
 }
 `;
 
-exports[`insight factory should create new empty insight with custom title 1`] = `
-Object {
-  "insight": Object {
-    "buckets": Array [],
-    "filters": Array [],
-    "properties": Object {},
-    "sorts": Array [],
+exports[`insight factory > should create new empty insight with custom title 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "filters": [],
+    "properties": {},
+    "sorts": [],
     "title": "My Insight",
     "visualizationUrl": "local:bar",
   },

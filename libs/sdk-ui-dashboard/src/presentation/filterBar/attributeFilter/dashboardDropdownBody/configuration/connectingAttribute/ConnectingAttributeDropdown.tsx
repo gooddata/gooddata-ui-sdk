@@ -3,10 +3,10 @@ import React from "react";
 
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { IConnectingAttribute } from "../../../../../../model";
-import { ConnectingAttributeItem } from "./ConnectingAttributeItem";
+import { IConnectingAttribute } from "../../../../../../model/index.js";
+import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
 
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 interface IConnectingAttributeDropdownProps {
     itemLocalId: string;

@@ -4,8 +4,6 @@
  */
 {
     "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/common-versions.schema.json",
-
-    "implicitlyPreferredVersions": false,
     /**
      * A table that specifies a "preferred version" for a dependency package. The "preferred version"
      * is typically used to hold an indirect dependency back to a specific version, however generally
@@ -18,7 +16,7 @@
     "preferredVersions": {
         "@types/node": "^16.18.23",
 
-        "@microsoft/api-extractor": "^7.20.0",
+        "@microsoft/api-extractor": "^7.36.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@gooddata/frontend-npm-scripts": "1.2.0",
 

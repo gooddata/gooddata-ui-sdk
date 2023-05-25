@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createExecution should create correct definition for scoped series only 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for scoped series only 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
@@ -13,22 +13,22 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -38,27 +38,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`createExecution should create correct definition for scoped series with slicing 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for scoped series with slicing 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -66,27 +66,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -96,27 +96,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`createExecution should create correct definition for scoped series with slicing and filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for scoped series with slicing and filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -124,41 +124,41 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "CompuSci",
           ],
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -168,27 +168,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`createExecution should create correct definition for scoped series with slicing and sortBy 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for scoped series with slicing and sortBy 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -196,27 +196,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -226,10 +226,10 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [
-    Object {
-      "attributeSortItem": Object {
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a_label.product.id.name",
         "direction": "desc",
       },
@@ -239,21 +239,21 @@ Object {
 }
 `;
 
-exports[`createExecution should create correct definition for scoped series with slicing and totals 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for scoped series with slicing and totals 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -261,34 +261,34 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
-      "totals": Array [
-        Object {
+      "totals": [
+        {
           "attributeIdentifier": "a_label.product.id.name",
           "measureIdentifier": "m_aangOxLSeztu",
           "type": "sum",
         },
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -298,30 +298,30 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`createExecution should create correct definition for unscoped series only 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`createExecution > should create correct definition for unscoped series only 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -331,18 +331,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`createExecution should create correct definition for unscoped series only with only attributes (RAIL-4265) 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for unscoped series only with only attributes (RAIL-4265) 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -350,28 +350,28 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`createExecution should create correct definition for unscoped series with slicing 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`createExecution > should create correct definition for unscoped series with slicing 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -379,26 +379,26 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -408,8 +408,8 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;

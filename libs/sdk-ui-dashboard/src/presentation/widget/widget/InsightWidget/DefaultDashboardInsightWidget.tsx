@@ -11,20 +11,20 @@ import {
     useDashboardScheduledEmails,
     selectCanExportTabular,
     selectSettings,
-} from "../../../../model";
+} from "../../../../model/index.js";
 import {
     DashboardItem,
     DashboardItemHeadline,
     DashboardItemVisualization,
     getVisTypeCssClass,
-} from "../../../presentationComponents";
-import { DashboardInsight } from "../../insight";
-import { useInsightExport } from "../../common";
-import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import { useInsightMenu } from "./useInsightMenu";
-import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
-import { IDefaultDashboardInsightWidgetProps } from "./types";
-import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger";
+} from "../../../presentationComponents/index.js";
+import { DashboardInsight } from "../../insight/index.js";
+import { useInsightExport } from "../../common/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { useInsightMenu } from "./useInsightMenu.js";
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
+import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,

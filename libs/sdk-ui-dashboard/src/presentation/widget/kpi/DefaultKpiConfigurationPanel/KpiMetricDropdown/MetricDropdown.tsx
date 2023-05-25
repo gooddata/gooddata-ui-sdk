@@ -4,16 +4,16 @@ import { useIntl } from "react-intl";
 import { areObjRefsEqual, IMeasureMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import debounce from "lodash/debounce";
+import debounce from "lodash/debounce.js";
 
 import {
     useDashboardSelector,
     selectCatalogMeasures,
     selectEnableRenamingMeasureToMetric,
-} from "../../../../../model";
+} from "../../../../../model/index.js";
 
-import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
-import { MetricDropdownItem } from "./MetricDropdownItem";
+import { CONFIG_PANEL_INNER_WIDTH } from "../constants.js";
+import { MetricDropdownItem } from "./MetricDropdownItem.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }];
 

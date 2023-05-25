@@ -1,23 +1,28 @@
 // (C) 2007-2019 GoodData Corporation
 
-import flatMap from "lodash/flatMap";
-import unionBy from "lodash/unionBy";
-import isArray from "lodash/isArray";
-import isObject from "lodash/isObject";
+import flatMap from "lodash/flatMap.js";
+import unionBy from "lodash/unionBy.js";
+import isArray from "lodash/isArray.js";
+import isObject from "lodash/isObject.js";
 import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
-import allScenarios from "../../scenarios";
-import { IScenario } from "../../src";
-import { ChartInteractions } from "../_infra/backendWithCapturing";
-import { createInsightDefinitionForChart } from "../_infra/insightFactory";
-import { mountChartAndCaptureNormalized } from "../_infra/render";
-import { mountInsight } from "../_infra/renderPlugVis";
-import { storeDirectoryFor } from "./store";
-import { readJsonSync, writeAsJsonSync } from "./utils";
+import allScenarios from "../../scenarios/index.js";
+import { IScenario } from "../../src/index.js";
+import { ChartInteractions } from "../_infra/backendWithCapturing.js";
+import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";
+import { mountChartAndCaptureNormalized } from "../_infra/render.js";
+import { mountInsight } from "../_infra/renderPlugVis.js";
+import { storeDirectoryFor } from "./store.js";
+import { readJsonSync, writeAsJsonSync } from "./utils.js";
 import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
+import { describe, it, expect } from "vitest";
 
 type AllScenariosType = [string, IScenario<any>];
+
+function fail(message: string) {
+    expect(0).eq(1, message);
+}
 
 function scenarioSaveDataCaptureRequests(
     scenario: IScenario<any>,

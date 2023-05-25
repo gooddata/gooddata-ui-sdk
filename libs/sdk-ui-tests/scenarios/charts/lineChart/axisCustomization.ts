@@ -3,10 +3,10 @@
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { axisNameCustomization } from "../_infra/axisNameCustomization";
-import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

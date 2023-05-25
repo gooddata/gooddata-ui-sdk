@@ -8,7 +8,7 @@ import {
     ResultDimensionHeader,
     MeasureExecutionResultHeader,
     TotalExecutionResultHeader,
-} from "../generated/afm-rest-api";
+} from "../generated/afm-rest-api/index.js";
 import {
     JsonApiFilterContextIn,
     JsonApiVisualizationObjectOutWithLinks,
@@ -16,12 +16,18 @@ import {
     JsonApiDashboardPluginOutWithLinksTypeEnum,
     JsonApiFilterContextInTypeEnum,
     JsonApiVisualizationObjectOutWithLinksTypeEnum,
-} from "../generated/metadata-json-api";
+} from "../generated/metadata-json-api/index.js";
 
+/**
+ * @public
+ */
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeaderOut {
     return header && (header as AttributeHeaderOut).attributeHeader !== undefined;
 }
 
+/**
+ * @public
+ */
 export const isAfmObjectIdentifier = (value: unknown): value is AfmObjectIdentifier => {
     return !!(
         (value as Partial<AfmObjectIdentifier>)?.identifier?.id &&
@@ -29,20 +35,32 @@ export const isAfmObjectIdentifier = (value: unknown): value is AfmObjectIdentif
     );
 };
 
+/**
+ * @public
+ */
 export function isResultAttributeHeader(
     header: ExecutionResultHeader,
 ): header is AttributeExecutionResultHeader {
     return (header as AttributeExecutionResultHeader).attributeHeader !== undefined;
 }
 
+/**
+ * @public
+ */
 export function isResultMeasureHeader(header: ExecutionResultHeader): header is MeasureExecutionResultHeader {
     return (header as MeasureExecutionResultHeader).measureHeader !== undefined;
 }
 
+/**
+ * @public
+ */
 export function isResultTotalHeader(header: ExecutionResultHeader): header is TotalExecutionResultHeader {
     return (header as TotalExecutionResultHeader).totalHeader !== undefined;
 }
 
+/**
+ * @public
+ */
 export function isVisualizationObjectsItem(
     visualizationObject: unknown,
 ): visualizationObject is JsonApiVisualizationObjectOutWithLinks {
@@ -52,10 +70,16 @@ export function isVisualizationObjectsItem(
     );
 }
 
+/**
+ * @public
+ */
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn {
     return (filterContext as JsonApiFilterContextIn).type === JsonApiFilterContextInTypeEnum.FILTER_CONTEXT;
 }
 
+/**
+ * @public
+ */
 export function isDashboardPluginsItem(
     dashboardPlugin: unknown,
 ): dashboardPlugin is JsonApiDashboardPluginOutWithLinks {

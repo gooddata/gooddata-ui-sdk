@@ -1,16 +1,17 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { Headline } from "../Headline";
-import { CoreHeadline } from "../CoreHeadline";
+import { Headline } from "../Headline.js";
+import { CoreHeadline } from "../CoreHeadline.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreHeadline", () => ({
-    CoreHeadline: jest.fn(() => null),
+vi.mock("../CoreHeadline", () => ({
+    CoreHeadline: vi.fn(() => null),
 }));
 
 describe("Headline", () => {

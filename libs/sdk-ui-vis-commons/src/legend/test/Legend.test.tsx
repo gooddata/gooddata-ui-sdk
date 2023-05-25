@@ -1,9 +1,10 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { render, screen } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
-import { ILegendProps, Legend } from "../Legend";
+import { ILegendProps, Legend } from "../Legend.js";
+import { describe, it, expect } from "vitest";
 
 describe("Legend", () => {
     const series = [

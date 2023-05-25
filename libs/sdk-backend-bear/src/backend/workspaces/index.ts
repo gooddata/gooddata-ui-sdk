@@ -6,10 +6,10 @@ import {
     IWorkspacesQueryResult,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter";
-import { BearAuthenticatedCallGuard } from "../../types/auth";
-import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
-import { BearWorkspace } from "../workspace";
+import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter.js";
+import { BearAuthenticatedCallGuard } from "../../types/auth.js";
+import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api.js";
+import { BearWorkspace } from "../workspace/index.js";
 
 export class BearWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}

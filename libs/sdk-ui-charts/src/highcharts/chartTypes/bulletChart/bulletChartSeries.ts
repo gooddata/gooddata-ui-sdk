@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
-import { parseValue, unwrap } from "../_util/common";
-import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
+import { parseValue, unwrap } from "../_util/common.js";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { bucketIsEmpty, IBucket, Identifier, DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
-import isEmpty from "lodash/isEmpty";
+import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+import isEmpty from "lodash/isEmpty.js";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 const SUPPORTED_MEASURE_BUCKETS: ReadonlyArray<Identifier> = [

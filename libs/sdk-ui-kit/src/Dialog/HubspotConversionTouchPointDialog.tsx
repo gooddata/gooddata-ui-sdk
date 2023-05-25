@@ -2,11 +2,11 @@
 import React from "react";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
-import { Dialog } from "./Dialog";
+import { Dialog } from "./Dialog.js";
 import {
     HubspotConversionTouchPointDialogBase,
     IHubspotConversionTouchPointDialogBaseProps,
-} from "./HubspotConversionTouchPointDialogBase";
+} from "./HubspotConversionTouchPointDialogBase.js";
 
 /**
  * @public

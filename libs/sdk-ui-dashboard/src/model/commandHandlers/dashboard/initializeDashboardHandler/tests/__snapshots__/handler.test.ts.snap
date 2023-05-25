@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`initialize dashboard handler for a new dashboard should initialize new dashboard with default filter context 1`] = `
-Object {
+exports[`initialize dashboard handler > for a new dashboard > should initialize new dashboard with default filter context 1`] = `
+{
   "description": "",
-  "filters": Array [
-    Object {
-      "dateFilter": Object {
+  "filters": [
+    {
+      "dateFilter": {
         "from": 0,
         "granularity": "GDC.time.month",
         "to": 0,
@@ -17,35 +17,35 @@ Object {
 }
 `;
 
-exports[`initialize dashboard handler for a new dashboard should initialize new dashboard with default layout 1`] = `
-Object {
-  "sections": Array [],
+exports[`initialize dashboard handler > for a new dashboard > should initialize new dashboard with default layout 1`] = `
+{
+  "sections": [],
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`initialize dashboard handler for an empty dashboard should add default filter context for an empty dashboard 1`] = `
-Object {
+exports[`initialize dashboard handler > for an empty dashboard > should add default filter context for an empty dashboard 1`] = `
+{
   "description": "",
-  "filters": Array [],
+  "filters": [],
   "title": "filterContext",
 }
 `;
 
-exports[`initialize dashboard handler for an empty dashboard should add default layout for an empty dashboard 1`] = `
-Object {
-  "sections": Array [],
+exports[`initialize dashboard handler > for an empty dashboard > should add default layout for an empty dashboard 1`] = `
+{
+  "sections": [],
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`initialize dashboard handler for any dashboard should resolve config props that can be obtained from backend 1`] = `
-Object {
+exports[`initialize dashboard handler > for any dashboard > should resolve config props that can be obtained from backend 1`] = `
+{
   "allowCreateInsightRequest": false,
   "allowUnfinishedFeatures": false,
-  "colorPalette": Array [],
-  "dateFilterConfig": Object {
-    "absoluteForm": Object {
+  "colorPalette": [],
+  "dateFilterConfig": {
+    "absoluteForm": {
       "from": Any<String>,
       "localIdentifier": "ABSOLUTE_FORM",
       "name": "",
@@ -53,18 +53,18 @@ Object {
       "type": "absoluteForm",
       "visible": true,
     },
-    "absolutePresets": Array [],
-    "allTime": Object {
+    "absolutePresets": [],
+    "allTime": {
       "localIdentifier": "ALL_TIME",
       "name": "",
       "type": "allTime",
       "visible": true,
     },
-    "ref": Object {
+    "ref": {
       "identifier": "defaultDateFilterProjectConfig",
     },
-    "relativeForm": Object {
-      "availableGranularities": Array [
+    "relativeForm": {
+      "availableGranularities": [
         "GDC.time.month",
         "GDC.time.date",
         "GDC.time.quarter",
@@ -75,8 +75,8 @@ Object {
       "type": "relativeForm",
       "visible": true,
     },
-    "relativePresets": Array [
-      Object {
+    "relativePresets": [
+      {
         "from": -6,
         "granularity": "GDC.time.date",
         "localIdentifier": "LAST_7_DAYS",
@@ -85,7 +85,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -29,
         "granularity": "GDC.time.date",
         "localIdentifier": "LAST_30_DAYS",
@@ -94,7 +94,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -89,
         "granularity": "GDC.time.date",
         "localIdentifier": "LAST_90_DAYS",
@@ -103,7 +103,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": 0,
         "granularity": "GDC.time.month",
         "localIdentifier": "THIS_MONTH",
@@ -112,7 +112,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -1,
         "granularity": "GDC.time.month",
         "localIdentifier": "LAST_MONTH",
@@ -121,7 +121,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -11,
         "granularity": "GDC.time.month",
         "localIdentifier": "LAST_12_MONTHS",
@@ -130,7 +130,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": 0,
         "granularity": "GDC.time.quarter",
         "localIdentifier": "THIS_QUARTER",
@@ -139,7 +139,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -1,
         "granularity": "GDC.time.quarter",
         "localIdentifier": "LAST_QUARTER",
@@ -148,7 +148,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -3,
         "granularity": "GDC.time.quarter",
         "localIdentifier": "LAST_4_QUARTERS",
@@ -157,7 +157,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": 0,
         "granularity": "GDC.time.year",
         "localIdentifier": "THIS_YEAR",
@@ -166,7 +166,7 @@ Object {
         "type": "relativePreset",
         "visible": true,
       },
-      Object {
+      {
         "from": -1,
         "granularity": "GDC.time.year",
         "localIdentifier": "LAST_YEAR",
@@ -189,21 +189,21 @@ Object {
   "isWhiteLabeled": false,
   "locale": "en-US",
   "mapboxToken": undefined,
-  "menuButtonItemsVisibility": Object {},
-  "objectAvailability": Object {},
-  "separators": Object {
+  "menuButtonItemsVisibility": {},
+  "objectAvailability": {},
+  "separators": {
     "decimal": ".",
     "thousand": ",",
   },
-  "settings": Object {
+  "settings": {
     "enableKPIDashboardDrillFromAttribute": true,
   },
-  "widgetsOverlay": Object {},
+  "widgetsOverlay": {},
 }
 `;
 
-exports[`initialize dashboard handler for any dashboard should resolve permissions if none provided 1`] = `
-Object {
+exports[`initialize dashboard handler > for any dashboard > should resolve permissions if none provided 1`] = `
+{
   "canAccessWorkbench": true,
   "canCreateAnalyticalDashboard": true,
   "canCreateReport": true,
@@ -228,22 +228,22 @@ Object {
 }
 `;
 
-exports[`initialize dashboard handler should emit events in correct order and carry-over correlationId 1`] = `
-Array [
-  Object {
+exports[`initialize dashboard handler > should emit events in correct order and carry-over correlationId 1`] = `
+[
+  {
     "correlationId": "renderCorrelation",
     "type": "GDC.DASH/EVT.RENDER.REQUESTED",
   },
-  Object {
+  {
     "commandType": "GDC.DASH/CMD.INITIALIZE",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.INITIALIZED",
   },

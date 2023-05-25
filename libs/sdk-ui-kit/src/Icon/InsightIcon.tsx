@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
 import React from "react";
-import { Icon } from "./Icon";
-import { IIconProps } from "./typings";
+import { Icon } from "./Icon.js";
+import { IIconProps } from "./typings.js";
 
 const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
     "local:scatter": Icon.ScatterPlot,

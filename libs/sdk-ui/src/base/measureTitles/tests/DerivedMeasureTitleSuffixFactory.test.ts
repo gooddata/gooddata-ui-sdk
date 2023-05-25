@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { DerivedMeasureTitleSuffixFactory } from "../DerivedMeasureTitleSuffixFactory";
-import { OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison";
+import { DerivedMeasureTitleSuffixFactory } from "../DerivedMeasureTitleSuffixFactory.js";
+import { OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison.js";
+import { describe, expect, it } from "vitest";
 
 describe("DerivedMeasureTitleSuffixFactory", () => {
     describe("getSuffix", () => {

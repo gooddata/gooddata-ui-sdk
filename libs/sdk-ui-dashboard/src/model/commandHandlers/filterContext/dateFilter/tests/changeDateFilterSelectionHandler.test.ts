@@ -1,17 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-import { changeDateFilterSelection, clearDateFilterSelection } from "../../../../commands";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { selectFilterContextDateFilter } from "../../../../store/filterContext/filterContextSelectors";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { changeDateFilterSelection, clearDateFilterSelection } from "../../../../commands/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { selectFilterContextDateFilter } from "../../../../store/filterContext/filterContextSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("changeDateFilterSelectionHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     it("should emit the appropriate events for changed date filter", async () => {
         Tester.dispatch(

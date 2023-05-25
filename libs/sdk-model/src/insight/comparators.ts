@@ -7,8 +7,8 @@ import {
     insightTitle,
     insightUpdated,
     insightUpdatedBy,
-} from "./index";
-import { stringComparatorFactory } from "../base/comparators";
+} from "./index.js";
+import { stringComparatorFactory } from "../base/comparators.js";
 
 /**
  * @beta

@@ -1,15 +1,15 @@
 // (C) 2023 GoodData Corporation
 import React, { useEffect } from "react";
-import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import ConfigSection from "../ConfigSection";
-import InputControl from "../InputControl";
-import { messages } from "../../../../locales";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import { getTranslation } from "../../../utils/translations";
-import { isTotalSectionEnabled } from "../../../utils/propertiesHelper";
+import ConfigSection from "../ConfigSection.js";
+import InputControl from "../InputControl.js";
+import { messages } from "../../../../locales.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { getTranslation } from "../../../utils/translations.js";
+import { isTotalSectionEnabled } from "../../../utils/propertiesHelper.js";
 
 export interface ITotalSectionProps {
     controlsDisabled: boolean;

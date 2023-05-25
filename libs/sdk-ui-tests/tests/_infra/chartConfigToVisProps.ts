@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import omit from "lodash/omit";
-import isEmpty from "lodash/isEmpty";
+import omit from "lodash/omit.js";
+import isEmpty from "lodash/isEmpty.js";
 import { IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { attributeDisplayFormRef, isUriRef } from "@gooddata/sdk-model";

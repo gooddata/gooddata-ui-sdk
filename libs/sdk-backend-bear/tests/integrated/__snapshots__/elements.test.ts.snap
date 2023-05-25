@@ -1,4 +1,422 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`bear elements > forDisplayForm > should load attribute elements for existing display form 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": ".decimal",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2870",
+    },
+    {
+      "title": "(add)ventures",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=6",
+    },
+    {
+      "title": "(blank)",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4846",
+    },
+    {
+      "title": "(mt) Media Temple",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=7",
+    },
+    {
+      "title": "@properties",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=8",
+    },
+    {
+      "title": "1 Source Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871",
+    },
+    {
+      "title": "1-800 Postcards",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+    },
+    {
+      "title": "1-800 We Answer",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+    },
+    {
+      "title": "1-888-OhioComp",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875",
+    },
+    {
+      "title": "1000Bulbs.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426",
+    },
+    {
+      "title": "101 Financial",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427",
+    },
+    {
+      "title": "123 Exteriors",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2872",
+    },
+    {
+      "title": "14 West",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
+    },
+    {
+      "title": "1Source International",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1429",
+    },
+    {
+      "title": "1st Choice Staffing & Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2876",
+    },
+    {
+      "title": "1st in Video - Music World",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
+    },
+    {
+      "title": "2 Wheel Bikes",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+    },
+    {
+      "title": "2HB Software Designs",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1432",
+    },
+    {
+      "title": "352 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
+    },
+    {
+      "title": "3balls.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+    },
+  ],
+  "limit": 20,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements > forDisplayForm > should load attribute elements for existing display form with a limiting measure 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": ".decimal",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2870",
+    },
+    {
+      "title": "(add)ventures",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=6",
+    },
+    {
+      "title": "(mt) Media Temple",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=7",
+    },
+    {
+      "title": "@properties",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=8",
+    },
+    {
+      "title": "1 Source Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871",
+    },
+    {
+      "title": "1-800 Postcards",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+    },
+    {
+      "title": "1-800 We Answer",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+    },
+    {
+      "title": "1-888-OhioComp",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875",
+    },
+    {
+      "title": "1000Bulbs.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426",
+    },
+    {
+      "title": "101 Financial",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427",
+    },
+    {
+      "title": "123 Exteriors",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2872",
+    },
+    {
+      "title": "14 West",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
+    },
+    {
+      "title": "1Source International",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1429",
+    },
+    {
+      "title": "1st Choice Staffing & Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2876",
+    },
+    {
+      "title": "1st in Video - Music World",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
+    },
+    {
+      "title": "2 Wheel Bikes",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+    },
+    {
+      "title": "2HB Software Designs",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1432",
+    },
+    {
+      "title": "352 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
+    },
+    {
+      "title": "3balls.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+    },
+    {
+      "title": "3dCart Shopping Cart Software",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+    },
+  ],
+  "limit": 20,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 4844,
+}
+`;
+
+exports[`bear elements > forDisplayForm > should load attribute elements for existing display form with a parent filter 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": ".decimal",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2870",
+    },
+    {
+      "title": "1-800 Postcards",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+    },
+    {
+      "title": "1-800 We Answer",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+    },
+    {
+      "title": "14 West",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
+    },
+    {
+      "title": "1st in Video - Music World",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
+    },
+    {
+      "title": "2 Wheel Bikes",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+    },
+    {
+      "title": "352 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
+    },
+    {
+      "title": "3balls.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+    },
+    {
+      "title": "3dCart Shopping Cart Software",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+    },
+    {
+      "title": "49er Communications",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436",
+    },
+    {
+      "title": "614 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438",
+    },
+    {
+      "title": "7-Eleven",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440",
+    },
+    {
+      "title": "720 Strategies",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439",
+    },
+    {
+      "title": "A White Orchid Wedding",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=11",
+    },
+    {
+      "title": "A&C Plastics",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1444",
+    },
+    {
+      "title": "A+ Mortgage Services",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1445",
+    },
+    {
+      "title": "A1 Pool Parts",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888",
+    },
+    {
+      "title": "A10 Clinical Solutions",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513",
+    },
+    {
+      "title": "Aaron's Sales and Lease",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
+    },
+    {
+      "title": "Aaron's Sales and Lease Ownership",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446",
+    },
+  ],
+  "limit": 20,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 2952,
+}
+`;
+
+exports[`bear elements > forFilter > should load attribute filter elements for provided negative attribute filter 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": "Educationly",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847",
+    },
+  ],
+  "limit": 50,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`bear elements > forFilter > should load attribute filter elements for provided positive attribute filter 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": "Educationly",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847",
+    },
+  ],
+  "limit": 50,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`bear elements > forFilter > should load no attribute filter elements for provided ALL attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": [],
+  "items": [],
+  "limit": 50,
+  "offset": 0,
+  "totalCount": 0,
+}
+`;
+
+exports[`bear elements > forFilter > should return attribute filter elements for provided attribute filter with elements by value 1`] = `
+InMemoryPaging {
+  "allItems": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": [
+    {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 50,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`bear elements > forFilter > should return correct page for given displayForm 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [
+    {
+      "title": "1-800 Postcards",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+    },
+    {
+      "title": "1-800 We Answer",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+    },
+  ],
+  "limit": 2,
+  "next": [Function],
+  "offset": 6,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements > forFilter > should return empty result for out-of-range page in initial request 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [],
+  "limit": 100,
+  "next": [Function],
+  "offset": 5000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements > forFilter > should return empty result for out-of-range page with goTo 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [],
+  "limit": 100,
+  "next": [Function],
+  "offset": 10000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements > forFilter > should return empty result for out-of-range page with next 1`] = `
+ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
+  "getData": [Function],
+  "goTo": [Function],
+  "items": [],
+  "limit": 100,
+  "next": [Function],
+  "offset": 4940,
+  "totalCount": 4846,
+}
+`;
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form 1`] = `
 ServerPaging {

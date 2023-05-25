@@ -1,20 +1,20 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeInsightWidgetFilterSettings } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardInsightWidgetFilterSettingsChanged } from "../../events";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../store/layout";
-import { insightWidgetFilterSettingsChanged } from "../../events/insight";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
 import { IDashboardAttributeFilterReference, IAnalyticalWidget, IInsightWidget } from "@gooddata/sdk-model";
-import { FilterValidators, processFilterOp } from "./common/filterOperations";
+import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
-} from "./validation/filterValidation";
+} from "./validation/filterValidation.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
     dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,

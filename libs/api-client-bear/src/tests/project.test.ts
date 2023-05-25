@@ -1,18 +1,19 @@
 // (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
-import noop from "lodash/noop";
-import range from "lodash/range";
+import { describe, afterEach, expect, it } from "vitest";
+import fetchMock from "fetch-mock/esm/client.js";
+import noop from "lodash/noop.js";
+import range from "lodash/range.js";
 import {
     ProjectModule,
     IProjectConfigSettingItem,
     IProjectConfigResponse,
     DEFAULT_PALETTE,
-} from "../project";
-import { ApiError, XhrModule } from "../xhr";
-import { mockPollingRequest } from "./utils/polling";
-import { IColorPalette, IFeatureFlags } from "../interfaces";
-import { IStyleSettingsResponse, IFeatureFlagsResponse } from "../apiResponsesInterfaces";
+} from "../project.js";
+import { ApiError, XhrModule } from "../xhr.js";
+import { mockPollingRequest } from "./utils/polling.js";
+import { IColorPalette, IFeatureFlags } from "../interfaces.js";
+import { IStyleSettingsResponse, IFeatureFlagsResponse } from "../apiResponsesInterfaces.js";
 
 const createProject = () => new ProjectModule(new XhrModule(fetch, {}));
 

@@ -21,15 +21,15 @@ import {
     IExecutionConfig,
     defWithDateFormat,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
-import isEmpty from "lodash/isEmpty";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertExecutionApiError } from "../../../utils/errorHandling";
-import { BearExecutionResult } from "./executionResult";
-import { convertResultSpec } from "../../../convertors/toBackend/afm/ExecutionConverter";
+import isEqual from "lodash/isEqual.js";
+import isEmpty from "lodash/isEmpty.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertExecutionApiError } from "../../../utils/errorHandling.js";
+import { BearExecutionResult } from "./executionResult.js";
+import { convertResultSpec } from "../../../convertors/toBackend/afm/ExecutionConverter.js";
 import { SDK } from "@gooddata/api-client-bear";
-import { objRefToUri } from "../../../utils/api";
-import { convertFilters } from "../../../convertors/toBackend/afm/FilterConverter";
+import { objRefToUri } from "../../../utils/api.js";
+import { convertFilters } from "../../../convertors/toBackend/afm/FilterConverter.js";
 
 // avoid importing the type directly from some dist subdirectory of api-client-bear
 type IVisualizationExecution = Parameters<SDK["execution"]["_getVisExecutionResponse"]>[1];

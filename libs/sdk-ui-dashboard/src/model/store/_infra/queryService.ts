@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import { DashboardContext } from "../../types/commonTypes";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import {
     CaseReducer,
@@ -14,12 +14,12 @@ import {
     PayloadAction,
     Reducer,
 } from "@reduxjs/toolkit";
-import { DashboardQueryType, IDashboardQuery } from "../../queries/base";
-import { DashboardState } from "../types";
+import { DashboardQueryType, IDashboardQuery } from "../../queries/base.js";
+import { DashboardState } from "../types.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import memoize from "lodash/memoize";
+import memoize from "lodash/memoize.js";
 import { invariant } from "ts-invariant";
-import capitalize from "lodash/capitalize";
+import capitalize from "lodash/capitalize.js";
 
 /*
  * Below are typings for query cache slices. They may look daunting so here some background.

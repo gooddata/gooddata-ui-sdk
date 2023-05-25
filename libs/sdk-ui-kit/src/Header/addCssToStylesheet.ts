@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 
-import { removeFromDom } from "../utils/domUtilities";
+import { removeFromDom } from "../utils/domUtilities.js";
 
 /**
  * Appends CSS rules to existing stylesheet or creates it and appends to DOM first, if it does not exists.

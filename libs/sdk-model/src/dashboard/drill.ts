@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { ObjRef, ObjRefInScope } from "../objRef";
+import isEmpty from "lodash/isEmpty.js";
+import { ObjRef, ObjRefInScope } from "../objRef/index.js";
 
 /**
  * Insight widget drill definition

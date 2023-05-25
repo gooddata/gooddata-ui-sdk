@@ -1,9 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
-export * from "./DefaultDashboardInsightMenu";
-export * from "./LegacyDefaultDashboardInsightMenu";
-export { DashboardInsightMenuButton } from "./DashboardInsightMenuButton";
-export { DashboardInsightMenu } from "./DashboardInsightMenu";
-export { DashboardInsightMenuTitle } from "./DashboardInsightMenuTitle";
+export * from "./DefaultDashboardInsightMenu/index.js";
+export * from "./LegacyDefaultDashboardInsightMenu/index.js";
+export { DashboardInsightMenuButton } from "./DashboardInsightMenuButton.js";
+export { DashboardInsightMenu } from "./DashboardInsightMenu.js";
+export { DashboardInsightMenuTitle } from "./DashboardInsightMenuTitle.js";
 export {
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
@@ -15,4 +15,4 @@ export {
     IInsightMenuSubmenu,
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
-} from "./types";
+} from "./types.js";
