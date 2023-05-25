@@ -1041,6 +1041,7 @@ importers:
       eslint: ^8.25.0
       eslint-plugin-header: ^3.0.0
       eslint-plugin-import: ^2.22.0
+      eslint-plugin-import-esm: ^1.2.1
       eslint-plugin-jest: ^27.1.1
       eslint-plugin-no-only-tests: ^2.4.0
       eslint-plugin-prettier: ^4.0.0
@@ -1081,6 +1082,7 @@ importers:
       eslint: 8.38.0
       eslint-plugin-header: 3.1.1_eslint@8.38.0
       eslint-plugin-import: 2.27.5_eslint@8.38.0
+      eslint-plugin-import-esm: 1.2.1_eslint@8.38.0
       eslint-plugin-jest: 27.2.1_dqn24hrnvdtdd4mxnskmahyyq4
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.2.1_odtficzbtx3ydo73x7yvkhbrxu
@@ -3139,6 +3141,7 @@ importers:
   ../../libs/util:
     specifiers:
       '@gooddata/eslint-config': ^4.1.0
+      '@jest/globals': ^29.5.0
       '@microsoft/api-documenter': ^7.17.0
       '@microsoft/api-extractor': ^7.20.0
       '@types/jest': ^29.5.1
@@ -3150,6 +3153,7 @@ importers:
       eslint: ^8.25.0
       eslint-plugin-header: ^3.0.0
       eslint-plugin-import: ^2.22.0
+      eslint-plugin-import-esm: ^1.2.1
       eslint-plugin-jest: ^27.1.1
       eslint-plugin-no-only-tests: ^2.4.0
       eslint-plugin-prettier: ^4.0.0
@@ -3170,6 +3174,7 @@ importers:
       tslib: 2.5.0
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
+      '@jest/globals': 29.5.0
       '@microsoft/api-documenter': 7.21.7
       '@microsoft/api-extractor': 7.34.4
       '@types/jest': 29.5.1
@@ -3181,6 +3186,7 @@ importers:
       eslint: 8.38.0
       eslint-plugin-header: 3.1.1_eslint@8.38.0
       eslint-plugin-import: 2.27.5_eslint@8.38.0
+      eslint-plugin-import-esm: 1.2.1_eslint@8.38.0
       eslint-plugin-jest: 27.2.1_dqn24hrnvdtdd4mxnskmahyyq4
       eslint-plugin-no-only-tests: 2.6.0
       eslint-plugin-prettier: 4.2.1_odtficzbtx3ydo73x7yvkhbrxu
@@ -13560,6 +13566,15 @@ packages:
       eslint: '>=7.7.0'
     dependencies:
       eslint: 8.38.0
+
+  /eslint-plugin-import-esm/1.2.1_eslint@8.38.0:
+    resolution: {integrity: sha512-7SbavWNrzkCjgGEUXM2eP6XNOD9zSvzTUOvibbtQBO44EIB8LCD8OPItt1KeEbpvSpxs4CGxNsh3oGFMYn887Q==}
+    engines: {node: ^14.17.0 || ^16.0.0 || >= 18.0.0}
+    peerDependencies:
+      eslint: '>=7'
+    dependencies:
+      eslint: 8.38.0
+    dev: true
 
   /eslint-plugin-import/2.27.5_eslint@8.38.0:
     resolution: {integrity: sha512-LmEt3GVofgiGuiE+ORpnvP+kAm3h6MLZJ4Q5HCyHADofsb4VzXFsRiWj3c0OFiV+3DWFh0qg3v9gcPlfc3zRow==}

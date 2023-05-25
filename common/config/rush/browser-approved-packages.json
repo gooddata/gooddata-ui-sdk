@@ -220,6 +220,10 @@
     },
     {
       "name": "@gooddata/util",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@jest/globals",
       "allowedCategories": [ "production" ]
     },
     {
@@ -357,6 +361,10 @@
     {
       "name": "@types/lodash",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@types/lodash-es",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/mapbox-gl",
@@ -639,6 +647,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-import-esm",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "eslint-plugin-jest",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -793,6 +805,10 @@
     {
       "name": "lodash",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "lodash-es",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "lodash-webpack-plugin",
