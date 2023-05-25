@@ -172,8 +172,8 @@ export class Widget {
         const catalog = new InsightsCatalog();
         catalog.searchExistingInsight(name);
         const dataTransfer = new DataTransfer();
-        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { dataTransfer });
-        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("drop", { dataTransfer });
+        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { dataTransfer, force: true });
+        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("drop", { dataTransfer, force: true });
         return this;
     }
 
