@@ -78,7 +78,7 @@ describe("Header section", () => {
                 const desc = data["LimitTexts"].description;
                 const headerRow_01 = layoutRow_01.getHeader();
                 const headerRow_02 = layoutRow_02.getHeader();
-
+                insightCatalog.waitForCatalogReload();
                 headerRow_01.setTitle(title).selectTitleInput().hasLimitMessage("128/256 caractères restant");
                 headerRow_02
                     .scrollIntoView()
