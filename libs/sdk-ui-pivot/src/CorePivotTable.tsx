@@ -665,11 +665,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.pushDataGuard({
             properties: {
                 sortItems,
-            },
-        });
-
-        this.pushDataGuard({
-            properties: {
                 totals,
                 bucketType: BucketNames.ATTRIBUTE,
             },
