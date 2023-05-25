@@ -82,8 +82,12 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
         attributeBucket!.totals?.forEach((attributeTotal, index) => {
             let hasRowAndColumnGrandTotals = false;
             let hasRowAndColumnSubTotals = false;
+            let hasRowSubtotalAndColumnGrandTotal = false;
+            let hasColumnSubtotalAndRowGrandTotal = false;
             let attributeDimensionIndex = 0;
             let columnDimensionIndex = 0;
+            let attributeSubtotalDimensionIndex = 0;
+            let columnSubtotalDimensionIndex = 0;
             columnBucket!.totals?.forEach((columnTotal, columnIndex) => {
                 const attributeMeasureId = attributeTotal.measureIdentifier;
                 const attributeType = attributeTotal.type;
@@ -121,6 +125,28 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
 
                         hasRowAndColumnSubTotals = true;
                     }
+
+                    // Check for rows subtotals within columns grand totals
+                    if (
+                        attributeTotal.attributeIdentifier !== attributeIdentifiers[0] &&
+                        columnTotal.attributeIdentifier === columnIdentifiers[0]
+                    ) {
+                        hasRowSubtotalAndColumnGrandTotal = true;
+                        attributeSubtotalDimensionIndex = attributeIdentifiers.findIndex(
+                            (aI) => aI === attributeTotal.attributeIdentifier,
+                        );
+                    }
+
+                    // Check for columns subtotals within rows grand totals
+                    if (
+                        attributeTotal.attributeIdentifier === attributeIdentifiers[0] &&
+                        columnTotal.attributeIdentifier !== columnIdentifiers[0]
+                    ) {
+                        hasColumnSubtotalAndRowGrandTotal = true;
+                        columnSubtotalDimensionIndex = columnIdentifiers.findIndex(
+                            (cI) => cI === columnTotal.attributeIdentifier,
+                        );
+                    }
                 }
 
                 /**
@@ -155,6 +181,61 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
                     newTotals = [...newTotals, ...marginalTotal];
                 }
             });
+
+            /**
+             * Extend marginal totals of rows within column grand totals payload.
+             *
+             * We need to slice through the attribute ids on the bucket from second dimension, until the selected
+             * attribute identifier is found.
+             */
+            if (hasRowSubtotalAndColumnGrandTotal) {
+                const grandTotalOfSubTotal: Total[] = [
+                    {
+                        function: convertTotalType(attributeTotal.type),
+                        metric: attributeTotal.measureIdentifier,
+                        localIdentifier: subTotalColumnLocalIdentifier(attributeTotal, index),
+                        totalDimensions: [
+                            {
+                                dimensionIdentifier: "dim_0",
+                                totalDimensionItems: attributeIdentifiers.slice(
+                                    0,
+                                    attributeSubtotalDimensionIndex,
+                                ),
+                            },
+                            {
+                                dimensionIdentifier: "dim_1",
+                                totalDimensionItems: [MeasureGroupIdentifier],
+                            },
+                        ],
+                    },
+                ];
+                newTotals = [...newTotals, ...grandTotalOfSubTotal];
+            }
+
+            /**
+             * Extend marginal of columns within rows grand totals payload.
+             *
+             * We need to slice through the attribute ids on the bucket from first dimension, until the selected
+             * attribute identifier is found.
+             */
+            if (hasColumnSubtotalAndRowGrandTotal) {
+                const grandTotalOfSubTotal: Total[] = [
+                    {
+                        function: convertTotalType(attributeTotal.type),
+                        metric: attributeTotal.measureIdentifier,
+                        localIdentifier: subTotalRowLocalIdentifier(attributeTotal, index),
+                        totalDimensions: [
+                            {
+                                dimensionIdentifier: "dim_1",
+                                totalDimensionItems: columnIdentifiers
+                                    .slice(0, columnSubtotalDimensionIndex)
+                                    .concat(MeasureGroupIdentifier),
+                            },
+                        ],
+                    },
+                ];
+                newTotals = [...newTotals, ...grandTotalOfSubTotal];
+            }
 
             // extend grand totals payload
             if (hasRowAndColumnGrandTotals) {
@@ -215,6 +296,14 @@ export function totalLocalIdentifier(total: ITotal, dimIdx: number): string {
 
 export function grandTotalLocalIdentifier(total: ITotal, dimIdx: number): string {
     return `total_of_totals_${total.type}_${total.measureIdentifier}_by_${total.attributeIdentifier}_${dimIdx}`;
+}
+
+export function subTotalRowLocalIdentifier(total: ITotal, dimIdx: number): string {
+    return `subtotal_row_${total.type}_${total.measureIdentifier}_by_${total.attributeIdentifier}_${dimIdx}`;
+}
+
+export function subTotalColumnLocalIdentifier(total: ITotal, dimIdx: number): string {
+    return `subtotal_column_${total.type}_${total.measureIdentifier}_by_${total.attributeIdentifier}_${dimIdx}`;
 }
 
 export function marginalTotalLocalIdentifier(total: ITotal, dimIdx: number): string {

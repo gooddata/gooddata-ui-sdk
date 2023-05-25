@@ -1202,15 +1202,23 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
 // @internal
 export interface IResultDataMethods {
     // (undocumented)
+    columnTotals(): DataValue[][] | undefined;
+    // (undocumented)
     data(): DataValue[][] | DataValue[];
     // (undocumented)
     dataAt(index: number): DataValue | DataValue[];
     // (undocumented)
     firstDimSize(): number;
+    hasColumnTotals(): boolean;
+    hasRowTotals(): boolean;
     hasTotals(): boolean;
     // (undocumented)
     isEmpty(): boolean;
+    // (undocumented)
+    rowTotals(): DataValue[][] | undefined;
     singleDimData(): DataValue[];
+    // (undocumented)
+    totalOfTotals(): DataValue[][][] | undefined;
     // (undocumented)
     totals(): DataValue[][][] | undefined;
     twoDimData(): DataValue[][];

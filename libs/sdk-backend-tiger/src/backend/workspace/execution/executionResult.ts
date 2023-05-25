@@ -218,13 +218,18 @@ class TigerDataView implements IDataView {
     public readonly offset: number[];
     public readonly result: IExecutionResult;
     public readonly totals?: DataValue[][][];
+    public readonly totalTotals?: DataValue[][][];
     private readonly _fingerprint: string;
 
     constructor(result: IExecutionResult, execResult: ExecutionResult, dateFormatter: DateFormatter) {
         this.result = result;
         this.definition = result.definition;
 
-        const transformDimensionHeaders = getTransformDimensionHeaders(result.dimensions, dateFormatter);
+        const transformDimensionHeaders = getTransformDimensionHeaders(
+            result.dimensions,
+            dateFormatter,
+            execResult.grandTotals,
+        );
 
         const transformedResult = transformExecutionResult(execResult, transformDimensionHeaders);
 
@@ -240,6 +245,10 @@ class TigerDataView implements IDataView {
             transformedResult.headerItems,
             transformDimensionHeaders,
         );
+
+        const grandTotalItem = execResult.grandTotals?.find((item) => item?.totalDimensions?.length === 0);
+        const totalTotals = grandTotalItem?.data as DataValue[][];
+        this.totalTotals = totalTotals ? [totalTotals] : undefined;
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }

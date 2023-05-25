@@ -201,6 +201,7 @@ export abstract class DecoratedDataView implements IDataView {
     public headerItems: IResultHeader[][][];
     public data: DataValue[] | DataValue[][];
     public totals?: DataValue[][][];
+    public totalTotals?: DataValue[][][];
     public definition: IExecutionDefinition;
     public result: IExecutionResult;
     public warnings?: IResultWarning[];
@@ -215,6 +216,7 @@ export abstract class DecoratedDataView implements IDataView {
         this.offset = decorated.offset;
         this.totalCount = decorated.totalCount;
         this.totals = decorated.totals;
+        this.totalTotals = decorated.totalTotals;
         this.warnings = decorated.warnings;
     }
 

@@ -110,8 +110,36 @@ const Test12 = defSetDimensions(
         [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
     ),
 );
+// Row total + column subtotal
+const Test13 = defSetDimensions(
+    newDefForBuckets("test", [
+        newBucket("measure", ReferenceMd.WinRate),
+        bucketSetTotals(newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory), [
+            total,
+        ]),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [columnSubTotal]),
+    ]),
+    newTwoDimensional(
+        [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, subtotal],
+        [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+    ),
+);
+// Column total + row subtotal
+const Test14 = defSetDimensions(
+    newDefForBuckets("test", [
+        newBucket("measure", ReferenceMd.WinRate),
+        bucketSetTotals(newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory), [
+            subtotal,
+        ]),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [columnTotal]),
+    ]),
+    newTwoDimensional(
+        [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, subtotal],
+        [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+    ),
+);
 
-const Test13 = defWithDimensions(
+const Test15 = defWithDimensions(
     emptyDef("test"),
     newDimension(["localAttr1", "localAttr2"], [TotalNat1]),
     newDimension([MeasureGroupIdentifier]),
@@ -132,8 +160,10 @@ describe("convertTotals", () => {
         ["total on single dimension result spec", Test10],
         ["two totals and grand total", Test11],
         ["two subtotals and marginal total", Test12],
+        ["row total and column subtotal", Test13],
+        ["column total and row subtotal", Test14],
     ];
-    const ErrorScenarios: Array<[string, IExecutionDefinition]> = [["native total", Test13]];
+    const ErrorScenarios: Array<[string, IExecutionDefinition]> = [["native total", Test15]];
 
     it.each(Scenarios)("should correctly convert %s", (_desc, def) => {
         expect(convertTotals(def)).toMatchSnapshot();

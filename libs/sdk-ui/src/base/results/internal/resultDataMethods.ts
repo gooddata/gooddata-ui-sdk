@@ -59,6 +59,35 @@ export interface IResultDataMethods {
     totals(): DataValue[][][] | undefined;
 
     /**
+     * @returns grand totals for row in the data view, undefined if there are no row grand totals
+     */
+    rowTotals(): DataValue[][] | undefined;
+
+    /**
+     * @returns grand totals for column in the data view, undefined if there are no column grand totals
+     */
+    columnTotals(): DataValue[][] | undefined;
+
+    /**
+     * @returns totals of grand totals in the data view, undefined if there are no totals of grand totals
+     */
+    totalOfTotals(): DataValue[][][] | undefined;
+
+    /**
+     * Tests whether the data view included grand totals for row
+     *
+     * @returns true if row grand totals present, false if not
+     */
+    hasRowTotals(): boolean;
+
+    /**
+     * Tests whether the data view included grand totals for column
+     *
+     * @returns true if column grand totals present, false if not
+     */
+    hasColumnTotals(): boolean;
+
+    /**
      * Tests whether the data view included grand totals.
      *
      * @returns true if grand totals present, false if not
@@ -122,6 +151,38 @@ class ResultDataMethods implements IResultDataMethods {
         return this.dataView.totals;
     }
 
+    public rowTotals(): DataValue[][] | undefined {
+        return this.dataView.totals?.[0];
+    }
+
+    public columnTotals(): DataValue[][] | undefined {
+        return this.dataView.totals?.[1];
+    }
+
+    public totalOfTotals(): DataValue[][][] | undefined {
+        return this.dataView.totalTotals;
+    }
+
+    /**
+     *
+     * @returns - existance of totals for rows
+     */
+    public hasRowTotals(): boolean {
+        return this.dataView.totals?.[0] !== undefined && this.dataView.totals[0].length > 0;
+    }
+
+    /**
+     *
+     * @returns - existance of totals for columns
+     */
+    public hasColumnTotals(): boolean {
+        return this.dataView.totals?.[1] !== undefined && this.dataView.totals[1].length > 0;
+    }
+
+    /**
+     *
+     * @returns - existance of totals
+     */
     public hasTotals(): boolean {
         return this.dataView.totals !== undefined;
     }

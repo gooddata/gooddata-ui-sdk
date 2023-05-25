@@ -12,7 +12,11 @@ import { getTransformDimensionHeaders } from "../DimensionHeaderConverter";
 
 describe("transformExecutionResult", () => {
     it("should format date dimensions values", () => {
-        const transformDimensionHeaders = getTransformDimensionHeaders(mockDimensions, defaultDateFormatter);
+        const transformDimensionHeaders = getTransformDimensionHeaders(
+            mockDimensions,
+            defaultDateFormatter,
+            mockResult.grandTotals,
+        );
         const actual = transformExecutionResult(mockResult, transformDimensionHeaders);
         expect(actual).toMatchSnapshot();
     });
@@ -21,6 +25,7 @@ describe("transformExecutionResult", () => {
         const transformDimensionHeaders = getTransformDimensionHeaders(
             mockDimensionsWithDateFormat,
             defaultDateFormatter,
+            mockResult.grandTotals,
         );
         const actual = transformExecutionResult(mockResult, transformDimensionHeaders);
         expect(actual).toMatchSnapshot();
@@ -30,6 +35,7 @@ describe("transformExecutionResult", () => {
         const transformDimensionHeaders = getTransformDimensionHeaders(
             mockDimensionsWithTotals,
             defaultDateFormatter,
+            mockResult.grandTotals,
         );
         const actual = transformExecutionResult(mockResultWithTotals, transformDimensionHeaders);
         expect(actual).toMatchSnapshot();

@@ -42,7 +42,11 @@ export function transformGrandTotalData(
             definition,
         );
         transformedTotals.forEach((total, totalIdx) => {
-            grandTotalsData[total.dimensionIdx][totalIdx] = total.data;
+            if (total.dimensionIdx === 1) {
+                grandTotalsData[total.dimensionIdx] = grandTotal.data as DataValue[][];
+            } else {
+                grandTotalsData[total.dimensionIdx][totalIdx] = total.data;
+            }
         });
     }
     return grandTotalsData;

@@ -98,6 +98,7 @@ export namespace GdcExecution {
         headerItems?: IResultHeaderItem[][][];
         data: DataValue[][] | DataValue[];
         totals?: DataValue[][][];
+        totalTotals?: DataValue[][][];
         paging: {
             count: number[];
             offset: number[];

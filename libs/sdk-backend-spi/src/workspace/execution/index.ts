@@ -412,6 +412,11 @@ export interface IDataView {
     readonly totals?: DataValue[][][];
 
     /**
+     * Totals of grand totals included in this data view.
+     */
+    readonly totalTotals?: DataValue[][][];
+
+    /**
      * Full definition of execution that computed data included in this DataView.
      */
     readonly definition: IExecutionDefinition;

@@ -222,6 +222,7 @@ class BearDataView implements IDataView {
     public readonly offset: number[];
     public readonly result: IExecutionResult;
     public readonly totals?: DataValue[][][];
+    public readonly totalTotals?: DataValue[][][];
     public readonly warnings?: IResultWarning[];
     private readonly _fingerprint: string;
 
@@ -231,6 +232,7 @@ class BearDataView implements IDataView {
         this.data = dataResult.data;
         this.headerItems = dataResult.headerItems ? dataResult.headerItems : [];
         this.totals = dataResult.totals;
+        this.totalTotals = dataResult.totalTotals;
         this.totalCount = dataResult.paging.total;
         this.count = dataResult.paging.count;
         this.offset = dataResult.paging.offset;

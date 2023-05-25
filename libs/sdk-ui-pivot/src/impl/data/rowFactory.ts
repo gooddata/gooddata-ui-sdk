@@ -117,7 +117,7 @@ export function getRow(
     }
 
     cellData.forEach((cell: DataValue, cellIndex: number) => {
-        const colId = tableDescriptor.headers.leafDataCols[cellIndex].id;
+        const colId = tableDescriptor.headers.leafDataCols[cellIndex]?.id;
 
         invariant(colId);
 
@@ -132,15 +132,15 @@ export function getRowTotals(
     dv: DataViewFacade,
     intl: IntlShape,
 ): IGridTotalsRow[] | null {
-    if (!dv.rawData().hasTotals()) {
+    if (!dv.rawData().hasRowTotals()) {
         return null;
     }
 
-    const totals = dv.rawData().totals();
+    const rowTotals = dv.rawData().rowTotals();
 
-    invariant(totals && totals.length > 0);
+    invariant(rowTotals && rowTotals.length > 0);
 
-    const colGrandTotals = totals[0];
+    const colGrandTotals = rowTotals;
     const colGrandTotalDefs = dv.definition.dimensions[0].totals;
 
     if (!colGrandTotalDefs) {
@@ -150,6 +150,8 @@ export function getRowTotals(
     const grandTotalColDescriptor = tableDescriptor.getGrandTotalCol();
     const grandTotalAttrDescriptor = grandTotalColDescriptor.attributeDescriptor;
     const leafColumns = tableDescriptor.zippedLeaves;
+
+    const totalOfTotals = dv.rawData().totalOfTotals();
 
     return colGrandTotals.map((totalsPerLeafColumn: DataValue[], totalIdx: number) => {
         const grandTotalName = grandTotalColDescriptor.effectiveTotals[totalIdx].totalHeaderItem.name;
@@ -164,7 +166,11 @@ export function getRowTotals(
             })
             .map((total) => total.measureIdentifier);
 
-        totalsPerLeafColumn.forEach((value, idx) => {
+        const mergedTotals = totalOfTotals
+            ? [...totalsPerLeafColumn, ...totalOfTotals[0][totalIdx]]
+            : totalsPerLeafColumn;
+
+        mergedTotals.forEach((value, idx) => {
             const [leafDescriptor] = leafColumns[idx];
 
             // if code bombs here then there must be something wrong in the table / datasource code because
@@ -216,10 +222,22 @@ export function createAgGridPage(
 
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
+    const columnTotalsData = dv.rawData().columnTotals();
+
     const subtotalStyles = getSubtotalStyles(dimensions?.[0]);
-    const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) =>
-        getRow(tableDescriptor, dataRow, dataRowIndex, headerItems[0], subtotalStyles, intl),
-    );
+    const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) => {
+        const mergedDataRowWithColumnTotals = dv.rawData().hasColumnTotals()
+            ? [...dataRow, ...columnTotalsData![dataRowIndex]]
+            : dataRow;
+        return getRow(
+            tableDescriptor,
+            mergedDataRowWithColumnTotals,
+            dataRowIndex,
+            headerItems[0],
+            subtotalStyles,
+            intl,
+        );
+    });
 
     const rowTotals = getRowTotals(tableDescriptor, dv, intl)!;
 

@@ -611,3 +611,231 @@ export const mockDimensions2: IDimensionDescriptor[] = [
         ],
     },
 ];
+
+export const mockDefinition3 = defWithDimensions(
+    newDefForItems("test", [newMeasure("1"), newMeasure("2")]),
+    newDimension(
+        ["localAttr1"],
+        [newTotal("sum", "m_1", "localAttr1"), newTotal("sum", "m_2", "localAttr1")],
+    ),
+    newDimension(["localAttr2", MeasureGroupIdentifier], [newTotal("sum", "m_1", "localAttr2")]),
+);
+
+export const mockResult3 = {
+    data: [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+    ],
+    dimensionHeaders: [
+        {
+            headerGroups: [
+                {
+                    headers: [
+                        {
+                            attributeHeader: {
+                                labelValue: "Clothing",
+                                primaryLabelValue: "Clothing",
+                            },
+                        },
+                        {
+                            attributeHeader: {
+                                labelValue: "Electronics",
+                                primaryLabelValue: "Electronics",
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            headerGroups: [
+                {
+                    headers: [
+                        {
+                            attributeHeader: {
+                                labelValue: "Polo Shirt",
+                                primaryLabelValue: "Polo Shirt",
+                            },
+                        },
+                        {
+                            attributeHeader: {
+                                labelValue: "Pullover",
+                                primaryLabelValue: "Pullover",
+                            },
+                        },
+                    ],
+                },
+                {
+                    headers: [
+                        {
+                            measureHeader: {
+                                measureIndex: 0,
+                            },
+                        },
+                        {
+                            measureHeader: {
+                                measureIndex: 1,
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+    grandTotals: [
+        {
+            data: [[4], [12]],
+            dimensionHeaders: [
+                {
+                    headerGroups: [
+                        {
+                            headers: [
+                                {
+                                    totalHeader: {
+                                        function: "SUM",
+                                    },
+                                },
+                            ],
+                        },
+                        {
+                            headers: [
+                                {
+                                    measureHeader: {
+                                        measureIndex: 0,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            totalDimensions: ["dim_0"],
+        },
+        {
+            data: [[6, null, 10, null]],
+            dimensionHeaders: [
+                {
+                    headerGroups: [
+                        {
+                            headers: [
+                                {
+                                    totalHeader: {
+                                        function: "SUM",
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            totalDimensions: ["dim_1"],
+        },
+        {
+            data: [[16]],
+            dimensionHeaders: [
+                {
+                    headerGroups: [
+                        {
+                            headers: [
+                                {
+                                    totalHeader: {
+                                        function: "SUM",
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    headerGroups: [
+                        {
+                            headers: [
+                                {
+                                    totalHeader: {
+                                        function: "SUM",
+                                    },
+                                },
+                            ],
+                        },
+                        {
+                            headers: [
+                                {
+                                    measureHeader: {
+                                        measureIndex: 0,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            totalDimensions: [],
+        },
+    ],
+    paging: {
+        count: [2, 4],
+        offset: [0, 0],
+        total: [2, 4],
+    },
+};
+
+export const mockDimensions3: IDimensionDescriptor[] = [
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    identifier: "product.name",
+                    localIdentifier: "localAttr2",
+                    name: "Product name",
+                    uri: "foo",
+                    ref: idRef("product.category"),
+                    formOf: {
+                        identifier: "product.category",
+                        uri: "bar",
+                        name: "Product name",
+                        ref: idRef("product.category"),
+                    },
+                },
+            },
+            {
+                measureGroupHeader: {
+                    items: [
+                        {
+                            measureHeaderItem: {
+                                localIdentifier: "m_1",
+                                name: "Metric 1",
+                                format: "#,##0",
+                            },
+                        },
+                        {
+                            measureHeaderItem: {
+                                localIdentifier: "m_2",
+                                name: "Metric 2",
+                                format: "#,##0",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    identifier: "product.category",
+                    localIdentifier: "localAttr1",
+                    name: "Product category",
+                    uri: "fiz",
+                    ref: idRef("product.category"),
+                    formOf: {
+                        identifier: "product.category",
+                        uri: "baz",
+                        name: "Product category",
+                        ref: idRef("product.category"),
+                    },
+                },
+            },
+        ],
+    },
+];
