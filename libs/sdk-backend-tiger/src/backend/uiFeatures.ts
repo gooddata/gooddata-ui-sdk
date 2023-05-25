@@ -15,6 +15,10 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableKPIDashboardDeleteFilterButton = "enableKPIDashboardDeleteFilterButton",
     //boolean + possible values: enabled, disabled
+    // Remove this FF only after 8.12.0 end of life. The following selector is missing parentheses and is not correctly set to true when FF is missing (read more in ticket RAIL-4970)
+    // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
+    DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
+    //boolean + possible values: enabled, disabled
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     //boolean + possible values: enabled, disabled
     EnableLongitudeAndLatitudeLabels = "enableLongitudeAndLatitudeLabels",
@@ -47,6 +51,7 @@ export type ITigerFeatureFlags = {
     ADMeasureValueFilterNullAsZeroOption: typeof FeatureFlagsValues["ADMeasureValueFilterNullAsZeroOption"][number];
     enableMultipleDates: typeof FeatureFlagsValues["enableMultipleDates"][number];
     enableKPIDashboardDeleteFilterButton: typeof FeatureFlagsValues["enableKPIDashboardDeleteFilterButton"][number];
+    dashboardEditModeDevRollout: typeof FeatureFlagsValues["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
@@ -67,6 +72,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
     enableMultipleDates: true,
     enableKPIDashboardDeleteFilterButton: false,
+    dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: true,
     enableDescriptions: true,
@@ -91,6 +97,7 @@ export const FeatureFlagsValues = {
     ] as const,
     enableMultipleDates: [true, false] as const,
     enableKPIDashboardDeleteFilterButton: [true, false] as const,
+    dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableLongitudeAndLatitudeLabels: [true, false] as const,
     enableDescriptions: [true, false] as const,
