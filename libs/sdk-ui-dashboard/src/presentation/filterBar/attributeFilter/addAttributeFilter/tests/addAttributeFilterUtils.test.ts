@@ -1,59 +1,88 @@
 // (C) 2023 GoodData Corporation
 
-import { IInsight } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
 import { isLocationIconEnabled } from "../addAttributeFilterUtils";
+import { newInsightMap } from "../../../../../_staging/metadata/objRefMap";
+import { IInsight } from "@gooddata/sdk-model";
+import { ExtendedDashboardWidget } from "../../../../../model";
 
 describe("add attribute filter utils", () => {
     describe("isLocationIconEnabled", () => {
-        const mockInsight: IInsight = {
+        const createMockInsight = (type: string, id: string): IInsight => ({
             insight: {
                 buckets: [],
                 filters: [],
                 sorts: [],
                 properties: {},
-                visualizationUrl: "local:sankey",
-                title: "Insight Template",
+                visualizationUrl: `local:${type}`,
+                title: id,
                 summary: "",
-                identifier: "87627fc0-72c3-4e5b-9762-0846ec4a8f58",
+                identifier: id,
                 uri: "dummy-url",
                 ref: {
-                    identifier: "87627fc0-72c3-4e5b-9762-0846ec4a8f58",
+                    identifier: id,
                     type: "insight",
                 },
                 isLocked: false,
             },
-        };
-
-        const createMockInsight = (visType: VisType) => ({
-            ...mockInsight,
-            insight: {
-                ...mockInsight.insight,
-                visualizationUrl: `local:${visType}`,
-            },
         });
+
+        const createMockInsightWidget = (id: string): ExtendedDashboardWidget => ({
+            type: "insight",
+            insight: {
+                identifier: id,
+                type: "insight",
+            },
+            ignoreDashboardFilters: [],
+            drills: [],
+            title: "Geo",
+            description: "",
+            ref: {
+                identifier: id,
+            },
+            uri: "url",
+            identifier: id,
+            properties: {},
+        });
+
+        const mockInsightsMap = newInsightMap([
+            createMockInsight("sankey", "insight_sankey"),
+            createMockInsight("dependencywheel", "insight_dependencywheel"),
+            createMockInsight("pushpin", "insight_pushpin"),
+        ]);
 
         it("should returns true if any insight widget has a supported location icon chart type", () => {
             expect(
-                isLocationIconEnabled([
-                    createMockInsight("sankey"),
-                    createMockInsight("dependencywheel"),
-                    createMockInsight("pushpin"),
-                ]),
+                isLocationIconEnabled(
+                    [
+                        createMockInsightWidget("insight_sankey"),
+                        createMockInsightWidget("insight_dependencywheel"),
+                        createMockInsightWidget("insight_pushpin"),
+                    ],
+                    mockInsightsMap,
+                ),
             ).toBe(true);
-            expect(isLocationIconEnabled([createMockInsight("sankey"), createMockInsight("pushpin")])).toBe(
+
+            expect(
+                isLocationIconEnabled(
+                    [createMockInsightWidget("insight_sankey"), createMockInsightWidget("insight_pushpin")],
+                    mockInsightsMap,
+                ),
+            ).toBe(true);
+
+            expect(isLocationIconEnabled([createMockInsightWidget("insight_pushpin")], mockInsightsMap)).toBe(
                 true,
             );
-            expect(isLocationIconEnabled([createMockInsight("pushpin")])).toBe(true);
         });
 
         it("should returns false if no insight widget has a supported location icon chart type", () => {
             expect(
-                isLocationIconEnabled([
-                    createMockInsight("dependencywheel"),
-                    createMockInsight("sankey"),
-                    createMockInsight("column"),
-                ]),
+                isLocationIconEnabled(
+                    [
+                        createMockInsightWidget("insight_sankey"),
+                        createMockInsightWidget("insight_dependencywheel"),
+                    ],
+                    mockInsightsMap,
+                ),
             ).toBe(false);
         });
     });

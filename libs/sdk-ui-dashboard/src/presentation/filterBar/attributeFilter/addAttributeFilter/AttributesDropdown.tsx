@@ -6,7 +6,12 @@ import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 import debounce from "lodash/debounce";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton";
-import { useDashboardSelector, selectCatalogAttributes, selectInsights } from "../../../../model";
+import {
+    useDashboardSelector,
+    selectCatalogAttributes,
+    selectAllInsightWidgets,
+    selectInsightsMap,
+} from "../../../../model";
 import { IDashboardAttributeFilterPlaceholderProps } from "../types";
 import AttributeListItem from "./AttributeListItem";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils";
@@ -88,9 +93,13 @@ export function AttributesDropdown({
     }, []);
 
     const attributes = useDashboardSelector(selectCatalogAttributes);
-    const insights = useDashboardSelector(selectInsights);
+    const insightsMap = useDashboardSelector(selectInsightsMap);
+    const insightWidgets = useDashboardSelector(selectAllInsightWidgets);
 
-    const shouldDisplayLocationIcon = useMemo(() => isLocationIconEnabled(insights), [insights]);
+    const shouldDisplayLocationIcon = useMemo(
+        () => isLocationIconEnabled(insightWidgets, insightsMap),
+        [insightWidgets, insightsMap],
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
