@@ -5,7 +5,7 @@ import set from "lodash/set";
 import without from "lodash/without";
 import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
+import { IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
 import {
     insightBuckets,
     bucketsIsEmpty,
@@ -30,6 +30,7 @@ import {
     IVisConstruct,
     IVisualizationProperties,
     IBucketOfFun,
+    IVisProps,
 } from "../../../interfaces/Visualization";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
@@ -228,6 +229,25 @@ export class PluggableComboChart extends PluggableBaseChart {
                 items: attributes,
             },
         ]);
+    }
+
+    protected buildVisualizationConfig(
+        options: IVisProps,
+        supportedControls: IVisualizationProperties,
+    ): IChartConfig {
+        const baseVisualizationConfig = super.buildVisualizationConfig(options, supportedControls);
+        const { stackMeasures, continuousLine } = baseVisualizationConfig;
+        /**
+         * stackMeasures and continuousLine.enabled can't be the same true. If the stackMeasures is true
+         * and the continuous line enabled, we must check the stackMeasures has already true or not.
+         */
+        if (stackMeasures && stackMeasures === continuousLine?.enabled) {
+            return {
+                ...baseVisualizationConfig,
+                stackMeasures: this.hasStackingAreaChart(this.currentInsight),
+            };
+        }
+        return baseVisualizationConfig;
     }
 
     private configureChartTypes(referencePoint: IReferencePoint): IVisualizationProperties {
