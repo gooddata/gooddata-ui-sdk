@@ -9,6 +9,6 @@ OUTPUT="${ROOTDIR}/src/md/full.ts"
 $EXPORTER \
   --backend bear \
   --hostname "staging3.intgdc.com" \
-  --project-id "d79dpgty2b4ydewi6kbzqm4fq1be2ltm" \
+  --workspace-id "d79dpgty2b4ydewi6kbzqm4fq1be2ltm" \
   --accept-untrusted-ssl \
   --output "${OUTPUT}"
