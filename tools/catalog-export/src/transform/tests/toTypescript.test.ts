@@ -1,10 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { bearLoad } from "../../loaders/bear/bearLoad";
 import { transformToTypescript } from "../toTypescript";
 
 jest.mock("@gooddata/api-client-bear");
 
-describe("transformToCatalog", () => {
+describe("transformToTypescript", () => {
     const projectMeta = bearLoad("test");
 
     it("creates new catalog", async () => {

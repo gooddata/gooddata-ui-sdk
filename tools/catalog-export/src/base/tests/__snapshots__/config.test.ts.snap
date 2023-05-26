@@ -2,90 +2,66 @@
 
 exports[`getConfigFromProgram should complement config from defaults 1`] = `
 Object {
-  "backend": "bear",
-  "demo": false,
+  "backend": "tiger",
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": "project",
   "username": "valid",
-  "workspaceId": null,
-  "workspaceName": null,
+  "workspaceId": "abc",
 }
 `;
 
 exports[`getConfigFromProgram should handle case sensitivity 1`] = `
 Object {
-  "backend": "bear",
-  "demo": false,
+  "backend": "tiger",
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": "valid",
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
 
 exports[`getConfigFromProgram should handle empty object 1`] = `
 Object {
-  "backend": "bear",
-  "demo": false,
+  "backend": "tiger",
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": null,
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
 
 exports[`getConfigFromProgram should handle object with just some of the needed props 1`] = `
 Object {
-  "backend": "bear",
-  "demo": false,
+  "backend": "tiger",
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": "noone",
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;
 
 exports[`getConfigFromProgram should prefer input over default 1`] = `
 Object {
-  "backend": "bear",
-  "demo": false,
+  "backend": "tiger",
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": "abc",
-  "projectName": null,
   "username": "valid",
   "workspaceId": "abc",
-  "workspaceName": null,
 }
 `;
 
-exports[`getConfigFromProgram should propagate tiger backend type 1`] = `
+exports[`getConfigFromProgram should propagate bear backend type 1`] = `
 Object {
-  "backend": "tiger",
-  "demo": false,
+  "backend": "bear",
   "hostname": null,
   "output": null,
   "password": null,
-  "projectId": null,
-  "projectName": null,
   "username": null,
   "workspaceId": null,
-  "workspaceName": null,
 }
 `;

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { transformToTypescript } from "../transform/toTypescript";
 import { format } from "prettier";
 import * as fs from "fs";
@@ -12,11 +12,12 @@ import { WorkspaceMetadata } from "../base/types";
  *
  * @param projectMetadata - project metadata to export into javascript
  * @param outputFile - output typescript file - WILL be overwritten
+ * @param tiger - indicates whether running against tiger, this influences naming strategy to use for date datasets as they are different from bear
  */
 export async function exportMetadataToJavascript(
     projectMetadata: WorkspaceMetadata,
     outputFile: string,
-    tiger = false,
+    tiger = true,
 ): Promise<void> {
     const output = transformToTypescript(projectMetadata, outputFile, tiger);
 

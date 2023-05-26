@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants";
 import * as path from "path";
@@ -33,7 +33,7 @@ export type WorkspaceChoices = {
 
 export async function promptWorkspaceId(
     choices: WorkspaceChoices[],
-    wording: string = "project",
+    wording: string = "workspace",
 ): Promise<string> {
     const question: DistinctQuestion = {
         type: "list",
@@ -47,16 +47,10 @@ export async function promptWorkspaceId(
 }
 
 export async function confirmFileRewrite(fileName: string): Promise<boolean> {
-    let message = `The file ${fileName} already exists. Would you like to merge the new data with the file? (It will keep your possibly renamed "keys")`;
-
-    if (!fileName.endsWith(".json")) {
-        message = `The file ${fileName} already exists. Would you like to overwrite it?`;
-    }
-
     const shouldRewriteQuestion: DistinctQuestion = {
         type: "confirm",
         name: "shouldRewrite",
-        message,
+        message: `The file ${fileName} already exists. Would you like to overwrite it?`,
         default: true,
     };
 

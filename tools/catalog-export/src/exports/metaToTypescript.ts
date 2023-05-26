@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { transformToTypescript } from "../transform/toTypescript";
 import { format } from "prettier";
 import * as fs from "fs";
@@ -14,7 +14,7 @@ import { WorkspaceMetadata } from "../base/types";
 export async function exportMetadataToTypescript(
     projectMetadata: WorkspaceMetadata,
     outputFile: string,
-    tiger = false,
+    tiger = true,
 ): Promise<void> {
     const output = transformToTypescript(projectMetadata, outputFile, tiger);
 

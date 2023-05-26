@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 
 import {
     ITigerClient,
@@ -15,6 +15,7 @@ import {
  * -  Otherwise if username && password are specified, they will be used for basic-auth.
  *
  * @param hostname - hostname where tiger runs
+ * @param token - tiger API token for authentication
  * @param username - username for authentication
  * @param password - password for authentication
  */

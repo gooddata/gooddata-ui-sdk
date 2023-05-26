@@ -4,11 +4,10 @@ import {
     CatalogExportConfig,
     CatalogExportError,
     getConfiguredWorkspaceId,
-    getConfiguredWorkspaceName,
     WorkspaceMetadata,
 } from "../../base/types";
 import ora from "ora";
-import { logError, logInfo, logWarn } from "../../cli/loggers";
+import { logError, logInfo } from "../../cli/loggers";
 import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
@@ -60,8 +59,6 @@ function getTigerApiToken(): string | undefined {
 
 /**
  * Gets the tiger client asking for credentials if they are needed.
- * @param hostname - hostname to use
- * @param usernameFromConfig - username that may have been provided in a config or CLI
  */
 async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient> {
     const token = getTigerApiToken();
@@ -69,10 +66,6 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
     let askedForLogin: boolean = false;
 
     const client = createTigerClient(config.hostname!, token);
-
-    if (config.demo) {
-        return client;
-    }
 
     try {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
@@ -145,13 +138,6 @@ async function selectWorkspace(client: ITigerClient): Promise<string> {
     return promptWorkspaceId(choices, "workspace");
 }
 
-async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): Promise<string | null> {
-    const workspaces = await loadWorkspaces(client);
-    const workspace = workspaces.data.find((ws) => ws.attributes?.name === workspaceName);
-
-    return workspace?.id ?? null;
-}
-
 /**
  * Given the export config, ask for any missing information and then load workspace metadata from
  * a tiger workspace.
@@ -168,23 +154,10 @@ export async function loadWorkspaceMetadataFromTiger(
 ): Promise<WorkspaceMetadata> {
     const client = await getTigerClient(config);
 
-    let workspaceId = getConfiguredWorkspaceId(config, true);
-    const workspaceName = getConfiguredWorkspaceName(config, true);
+    let workspaceId = getConfiguredWorkspaceId(config);
 
-    if (workspaceName && !workspaceId) {
-        workspaceId = await lookupWorkspaceId(client, workspaceName);
-
-        if (!workspaceId) {
-            logWarn(`Workspace with name '${workspaceName}' does not exist.`);
-        }
-    }
-
-    if (!workspaceId && !config.demo) {
+    if (!workspaceId) {
         workspaceId = await selectWorkspace(client);
-    } else if (!workspaceId && config.demo) {
-        logError(
-            "Unable to get workspaceId. Please set workspaceId in your configuration file or provide it with --workspace-id parameter.",
-        );
     }
 
     const workspaceSpinner = ora();

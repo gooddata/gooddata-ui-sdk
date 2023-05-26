@@ -4,13 +4,12 @@ import { program } from "commander";
 import chalk from "chalk";
 import * as path from "path";
 import * as pkg from "../package.json";
-import { logBox, logError, logSuccess, logWarn, printHeader } from "./cli/loggers";
+import { logBox, logError, logSuccess, printHeader } from "./cli/loggers";
 import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromEnv, getConfigFromOptions } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
 import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
-import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
 import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
@@ -19,22 +18,7 @@ import fs from "fs";
 
 program
     .version(pkg.version)
-    .option(
-        "--project-id <id>",
-        "Project id for which you want to export the catalog. This option is deprecated in favor of workspace-id. It will disappear in the next major release.",
-    )
-    .option(
-        "--project-name <value>",
-        "Project name for which you want to export the catalog. This option is deprecated in favor of workspace-id. It will disappear in the next major release.",
-    )
-    .option(
-        "--workspace-id <id>",
-        "Workspace id for which you want to export the catalog. This is a synonym for project-id. If not specified, code will fall back to use project-id.",
-    )
-    .option(
-        "--workspace-name <value>",
-        "Workspace name for which you want to export the catalog. This is a synonym for project-name. If not specified, code will fall back to use project-name.",
-    )
+    .option("--workspace-id <id>", "Workspace id for which you want to export the catalog.")
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
         "--output <value>",
@@ -44,18 +28,17 @@ program
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option(
         "--backend <backend>",
-        "Indicates type of the backend that runs on the hostname. Can be either bear for the GoodData platform or tiger for GoodData Cloud or GoodData.CN. Default: bear",
+        "Indicates type of the backend that runs on the hostname. Can be either tiger for GoodData Cloud or GoodData.CN or bear for the GoodData platform. Default: tiger",
     )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
-    .option("--demo", "Allows to export catalog with demo data without authentication.")
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
-    if (config.backend === "tiger") {
-        return loadWorkspaceMetadataFromTiger(config);
+    if (config.backend === "bear") {
+        return loadWorkspaceMetadataFromBear(config);
     }
 
-    return loadWorkspaceMetadataFromBear(config);
+    return loadWorkspaceMetadataFromTiger(config);
 }
 
 async function checkFolderExists(filePath: string) {
@@ -87,16 +70,10 @@ async function run() {
 
         await checkFolderExists(filePath);
 
-        if (filePath.endsWith(".ts")) {
-            await exportMetadataToTypescript(projectMetadata, filePath, backend === "tiger");
-        } else if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectMetadata, filePath, backend === "tiger");
+        if (filePath.endsWith(".js")) {
+            await exportMetadataToJavascript(projectMetadata, filePath, backend !== "bear");
         } else {
-            logWarn(
-                "Exporting catalog to JSON document is deprecated and will disappear in next major release together with CatalogHelper. Please switch to generating TypeScript or JavaScript code.",
-            );
-
-            await exportMetadataToCatalog(projectMetadata, filePath);
+            await exportMetadataToTypescript(projectMetadata, filePath, backend !== "bear");
         }
 
         logSuccess("All data have been successfully exported");
