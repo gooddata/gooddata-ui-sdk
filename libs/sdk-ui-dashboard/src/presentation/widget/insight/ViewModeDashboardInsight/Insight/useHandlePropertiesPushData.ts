@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
-import { IInsight, IInsightWidget, insightVisualizationUrl, widgetRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
 import { IPushData } from "@gooddata/sdk-ui";
 
 import {
@@ -22,7 +22,7 @@ export function useHandlePropertiesPushData(widget: IInsightWidget, insight: IIn
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
-    const visType = insightVisualizationUrl(insight).split(":")[1];
+    const visType = insightVisualizationType(insight);
 
     return useCallback(
         (data: IPushData): void => {

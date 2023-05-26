@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useIntl } from "react-intl";
 import {
     insightTitle,
-    insightVisualizationUrl,
+    insightVisualizationType,
     IInsight,
     insightUpdated,
     insightIsLocked,
@@ -41,8 +41,7 @@ interface IInsightListItem {
 }
 
 export function getInsightListSourceItem(insight: IInsight): IInsightListItem {
-    const insightUrl = insightVisualizationUrl(insight);
-    const insightType = insightUrl?.split(":")[1];
+    const insightType = insightVisualizationType(insight);
 
     return {
         insight,

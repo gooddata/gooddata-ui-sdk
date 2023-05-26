@@ -380,6 +380,7 @@ export {
     insightTotals,
     insightFilters,
     insightVisualizationUrl,
+    insightVisualizationType,
     insightSetFilters,
     insightSetBuckets,
     insightSetProperties,

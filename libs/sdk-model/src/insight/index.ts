@@ -479,6 +479,17 @@ export function insightVisualizationUrl(insight: IInsightDefinition): string {
 }
 
 /**
+ *
+ * @param insight - insight to get visualization type
+ * @alpha
+ */
+export function insightVisualizationType(insight: IInsightDefinition): string {
+    invariant(insight, "insight to get vis type must be specified");
+
+    return insightVisualizationUrl(insight)?.split(":")[1] || "";
+}
+
+/**
  * Gets the insight title
  *
  * @param insight - insight to get title of

@@ -6,7 +6,7 @@ import {
     insightTitle,
     insightSummary,
     insightUpdated,
-    insightVisualizationUrl,
+    insightVisualizationType,
 } from "@gooddata/sdk-model";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsightListProps, InsightList } from "../../../insightList";
@@ -26,8 +26,7 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                     return <InsightListItem isLoading />;
                 }
 
-                const visualizationUrl = insightVisualizationUrl(insight);
-                const visualizationType = visualizationUrl?.split(":")[1] as VisType;
+                const visualizationType = insightVisualizationType(insight) as VisType;
 
                 const classNames = cx("gd-visualizations-list-item-wrap", {
                     "is-first": isFirst,

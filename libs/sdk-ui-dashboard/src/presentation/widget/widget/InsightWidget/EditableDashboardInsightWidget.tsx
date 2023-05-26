@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
-import { IInsight, insightVisualizationUrl, widgetRef } from "@gooddata/sdk-model";
+import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import {
@@ -29,7 +29,7 @@ export const EditableDashboardInsightWidget: React.FC<
 const EditableDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight: IInsight }
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
-    const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
+    const visType = insightVisualizationType(insight) as VisType;
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
         widgetRef(widget),
