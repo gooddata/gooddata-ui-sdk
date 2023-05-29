@@ -181,20 +181,67 @@ By default, GoodData React SDK is connecting to [the same demo data](https://www
 as you would get in your GoodData Cloud or GoodData.CN trial account. Here are a few steps on how to connect to
 your own data instead.
 
-1. In [`webpack.config.js`](./webpack.config.js) replace the hostname of the server we are loading data from:
+1. In [`package.json`](./package.json) replace `hostname` and `workspaceId` to your own values:
     ```diff
-    -   const BACKEND_URL = "https://public-examples.gooddata.com";
-    +   const BACKEND_URL = "https://<your-gooddata-instance-host>";
+    -    "hostname": "https://public-examples.gooddata.com",
+    -    "workspaceId": "demo",
+    +    "hostname": "https://<your-gooddata-instance-host>",
+    +    "workspaceId": "<your-workspace-id>",
     ```
-    If you're running dev server, you'll need to restart it for the change to take effect. If you have a demo data
-    connected to your trial account [as per our docs](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/connect-data/#example-database),
-    you should have a working project at this point.
-2. Update your workspace ID to point to the workspace where your own data is connected to. In `App.{{language}}x`
+2. Generate an [API Token](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/create-api-token/) for development
+   and put it to the [`.env` file](./.env):
+    ```
+    TIGER_API_TOKEN=<your_api_token>
+    ```
+   Make sure you do not commit the `.env` file to your VCS (e.g. Git)
+3. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `npm run refresh-md`.
+4. Update the `App.{{language}}x`. Since we've switched to your own data, the reference to the insight in `App.{{language}}x` is no longer valid.
+   Select a new insight to render from the catalog and update `App.{{language}}x`:
     ```diff
-    -   <WorkspaceProvider workspace="demo">
-    +   <WorkspaceProvider workspace="<your-workspace-id>">
+    -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
+    +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />
     ```
-    TODO - where do I get workspaceID???
-3. Fetch the new metadata.
+
+Read more about integration with GoodData Cloud or GoodData.CN in [our docs](https://sdk.gooddata.com/gooddata-ui/docs/cloudnative_getting_started.html).
 
 ### Connect your own data from _GoodData Platform_
+
+By default, GoodData React SDK is configured to connect to GoodData Cloud or GoodData.CN server. Here is how you can switch to GoodData Platform instead.
+
+1. Edit `./src/backend.{{language}}` file to use "bear" backend instead of "tiger" one:
+    ```diff
+    -    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
+    +    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
+    ```
+   You'll also need to define a logic on what to do if user is not logged in. The simplest case could look something like this:
+    ```diff
+    -     backendFactory().withAuthentication(new ContextDeferredAuthProvider()),
+    +     backendFactory().withAuthentication(new ContextDeferredAuthProvider(() => {
+    +         window.location.replace(`${window.location.origin}/account.html?lastUrl=${encodeURIComponent(window.location.href)}`);
+    +     })),
+    ```
+   Your setup may vary, see our [documentation on different authentication options GoodData Platform provides](https://sdk.gooddata.com/gooddata-ui/docs/platform_sso.html).
+2. Update `./package.json` to specify you're using "bear" backend. Update the hostname and workspaceId to the ones you'd like to connect to:
+    ```diff
+    -    "hostname": "https://public-examples.gooddata.com",
+    -    "workspaceId": "demo",
+    -    "backend": "tiger",
+    +    "hostname": "https://<your-gooddata-instance-host>",
+    +    "workspaceId": "<your-workspace-id>",
+    +    "backend": "bear",
+    ```
+3. Update `.env` file and put there your `USERNAME` and `PASSWORD`.
+    ```diff
+    -    USERNAME=
+    -    PASSWORD=
+    +    USERNAME=<your-username>
+    +    PASSWORD=<your-password>
+    ```
+   Make sure you do not commit the `.env` file to your VCS (e.g. Git).
+4. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `npm run refresh-md`.
+5. Update the `App.{{language}}x`. Since we've switched to your own data, the reference to the insight in `App.{{language}}x` is no longer valid.
+   Select a new insight to render from the catalog and update `App.{{language}}x`:
+    ```diff
+    -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
+    +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />
+    ```

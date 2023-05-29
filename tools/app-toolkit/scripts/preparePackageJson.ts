@@ -129,6 +129,11 @@ function removeTs(packageJson: Record<string, any>) {
     removeItems(TypeScriptDependencies, dependencies);
 
     delete packageJson.typings;
+
+    if (packageJson.gooddata?.catalogOutput) {
+        // Use .js file for catalog export
+        packageJson.gooddata.catalogOutput = packageJson.gooddata.catalogOutput.replace(/\.ts$/, ".js");
+    }
 }
 
 if (process.argv.length !== 4) {

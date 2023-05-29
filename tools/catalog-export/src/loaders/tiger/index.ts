@@ -21,7 +21,7 @@ import { API_TOKEN_VAR_NAME } from "../../base/constants";
  */
 async function probeAccess(client: ITigerClient): Promise<boolean> {
     try {
-        await client.entities.getAllEntitiesWorkspaces({ page: 0, size: 1 }, { headers: jsonApiHeaders });
+        await client.profile.getCurrent();
 
         return true;
     } catch (err: any) {
