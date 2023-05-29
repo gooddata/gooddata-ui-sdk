@@ -13,7 +13,7 @@ export function exportCatalogBear(host, projectId, username, password) {
     // NOTE: we support this only for goodsales
     const outputFile = BEAR_FIXTURE_CATALOG["goodsales"];
     execSync(
-        `echo '${password}' | npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --output "${outputFile}"`,
+        `echo '${password}' | npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --backend "bear" --output "${outputFile}"`,
         { stdio: "inherit" },
     );
 }
