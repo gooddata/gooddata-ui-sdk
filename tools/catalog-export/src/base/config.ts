@@ -1,58 +1,103 @@
 // (C) 2007-2023 GoodData Corporation
+import * as path from "path";
+import * as fs from "fs/promises";
 import identity from "lodash/identity";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
-import * as fs from "fs";
-import * as path from "path";
-import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";
-import { CatalogExportConfig } from "./types";
 import { OptionValues } from "commander";
+import { CatalogExportConfig } from "./types";
+import { API_TOKEN_VAR_NAME } from "./constants";
 
-function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
-    return {
-        ...prevConfig,
-        ...pickBy(
-            pick(config, ["hostname", "workspaceId", "username", "password", "output", "backend"]),
-            identity,
+export function mergeConfigs(...configs: Partial<CatalogExportConfig>[]): CatalogExportConfig {
+    return Object.assign(
+        {},
+        ...configs.map((config) =>
+            pickBy(
+                pick(config, [
+                    "hostname",
+                    "workspaceId",
+                    "username",
+                    "password",
+                    "token",
+                    "catalogOutput",
+                    "backend",
+                ]),
+                identity,
+            ),
         ),
-    };
-}
-
-function retrieveConfigFromObject(obj: OptionValues): CatalogExportConfig {
-    return {
-        hostname: obj.hostname ?? null,
-        workspaceId: obj.workspaceId ?? null,
-        username: obj.username ?? null,
-        password: obj.password ?? null,
-        output: obj.output ?? null,
-        backend: obj.backend ?? "tiger",
-    };
-}
-
-export function getConfigFromEnv(prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
-    return mergeConfigs(
-        retrieveConfigFromObject({
-            username: process.env.GDC_USERNAME,
-            password: process.env.GDC_PASSWORD,
-        }),
-        prevConfig,
     );
 }
 
-export function getConfigFromOptions(obj: OptionValues, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
-    return mergeConfigs(retrieveConfigFromObject(obj), prevConfig);
+/**
+ * Read credentials from ENV variables
+ */
+export function getConfigFromEnv(env: { [key: string]: string | undefined }): Partial<CatalogExportConfig> {
+    return {
+        username: env.GDC_USERNAME ?? null,
+        password: env.GDC_PASSWORD ?? null,
+        token: env[API_TOKEN_VAR_NAME] ?? null,
+    };
 }
 
-export function getConfigFromConfigFile(
-    filePath = DEFAULT_CONFIG_FILE_NAME,
-    prevConfig = DEFAULT_CONFIG,
-): CatalogExportConfig {
-    const absolutePath = path.resolve(filePath);
+/**
+ * Allow normal props and credentials to be defined as CLI options
+ */
+export function getConfigFromOptions(obj: OptionValues): Partial<CatalogExportConfig> {
+    return pick(obj, [
+        "hostname",
+        "workspaceId",
+        "username",
+        "password",
+        "token",
+        "catalogOutput",
+        "backend",
+    ]);
+}
 
-    if (fs.existsSync(absolutePath)) {
-        const configData = JSON.parse(fs.readFileSync(filePath, "utf8"));
-        return mergeConfigs(configData, prevConfig);
+/**
+ * Config file can only hold normal props, not credentials
+ */
+export async function getConfigFromConfigFile(filePath: string): Promise<Partial<CatalogExportConfig>> {
+    return pick((await readJsonFile<Partial<CatalogExportConfig>>(path.resolve(filePath))) ?? {}, [
+        "hostname",
+        "workspaceId",
+        "catalogOutput",
+        "backend",
+    ]);
+}
+
+/**
+ * package.json can only hold normal props, not credentials
+ */
+export async function getConfigFromPackage(workingDir: string): Promise<Partial<CatalogExportConfig>> {
+    let dir = path.resolve(workingDir);
+    const { root } = path.parse(workingDir);
+    const packages = [];
+
+    while (dir !== root) {
+        packages.push(await readJsonFile<any>(path.join(dir, "package.json")));
+        dir = path.dirname(dir);
     }
 
-    return prevConfig;
+    return mergeConfigs(
+        ...packages
+            .filter(identity)
+            .map((pack) => pick(pack.gooddata ?? {}, ["hostname", "workspaceId", "catalogOutput", "backend"]))
+            .reverse(),
+    );
+}
+
+async function readJsonFile<T>(filePath: string): Promise<T | null> {
+    let text;
+
+    try {
+        text = await fs.readFile(filePath, "utf8");
+    } catch (e) {
+        // Don't care if can't read file
+        // Does not exist or no rights (expected when reading closer to the root)
+        return null;
+    }
+
+    // Let JSON throw if it's not a valid JSON
+    return JSON.parse(text);
 }

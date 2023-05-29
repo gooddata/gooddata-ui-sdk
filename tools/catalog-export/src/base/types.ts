@@ -47,9 +47,14 @@ export type CatalogExportConfig = {
     password: string | null;
 
     /**
+     * Tiger API Token for authentication
+     */
+    token: string | null;
+
+    /**
      * File to write output to.
      */
-    output: string | null;
+    catalogOutput: string | null;
 
     /**
      * Indicates type of backend

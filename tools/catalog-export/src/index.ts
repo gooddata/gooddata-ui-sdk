@@ -3,25 +3,39 @@
 import { program } from "commander";
 import chalk from "chalk";
 import * as path from "path";
+import fs from "fs";
+import * as dotenv from "dotenv";
 import * as pkg from "../package.json";
 import { logBox, logError, logSuccess, printHeader } from "./cli/loggers";
 import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
-import { getConfigFromConfigFile, getConfigFromEnv, getConfigFromOptions } from "./base/config";
-import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
+import {
+    getConfigFromConfigFile,
+    getConfigFromEnv,
+    getConfigFromOptions,
+    getConfigFromPackage,
+    mergeConfigs,
+} from "./base/config";
+import {
+    DEFAULT_CONFIG,
+    DEFAULT_CONFIG_FILE_NAME,
+    DEFAULT_HOSTNAME,
+    DEFAULT_OUTPUT_FILE_NAME,
+} from "./base/constants";
 import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
 import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
 import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger";
-import fs from "fs";
+
+dotenv.config();
 
 program
     .version(pkg.version)
     .option("--workspace-id <id>", "Workspace id for which you want to export the catalog.")
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
-        "--output <value>",
+        "--catalog-output <value>",
         `Output file (defaults to ${DEFAULT_OUTPUT_FILE_NAME}). The output file will be created in current working directory`,
     )
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
@@ -57,15 +71,21 @@ async function run() {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
 
-    const configFilePath = options.config || DEFAULT_CONFIG_FILE_NAME;
-    const mergedConfig = getConfigFromConfigFile(
-        configFilePath,
-        getConfigFromOptions(options, getConfigFromEnv()),
-    );
-    const { output, backend } = mergedConfig;
-
     try {
-        const filePath = path.resolve(output || (await requestFilePath()));
+        const configFilePath = options.config || DEFAULT_CONFIG_FILE_NAME;
+
+        const mergedConfig = mergeConfigs(
+            ...(await Promise.all([
+                DEFAULT_CONFIG,
+                getConfigFromPackage(process.cwd()),
+                getConfigFromConfigFile(configFilePath),
+                getConfigFromEnv(process.env),
+                getConfigFromOptions(options),
+            ])),
+        );
+        const { catalogOutput, backend } = mergedConfig;
+
+        const filePath = path.resolve(catalogOutput || (await requestFilePath()));
         const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
 
         await checkFolderExists(filePath);

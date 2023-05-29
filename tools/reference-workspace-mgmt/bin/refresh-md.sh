@@ -9,4 +9,4 @@ OUTPUT="${ROOTDIR}/../reference-workspace/src/md/full.ts"
 $EXPORTER \
   --backend bear \
   --hostname "secure.gooddata.com" \
-  --output "${OUTPUT}"
+  --catalog-output "${OUTPUT}"
