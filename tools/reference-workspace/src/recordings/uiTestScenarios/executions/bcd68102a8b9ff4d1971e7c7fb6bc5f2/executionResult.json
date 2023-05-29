@@ -1,0 +1,40 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.stage.name",
+                            "name": "Stage Name",
+                            "uri": "/gdc/md/referenceworkspace/obj/1091"
+                        },
+                        "identifier": "label.stage.name.stagename",
+                        "localIdentifier": "a_label.stage.name.stagename",
+                        "name": "Stage Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1092"
+                    }
+                }
+            ]
+        }
+    ]
+}

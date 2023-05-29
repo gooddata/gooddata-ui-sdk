@@ -18,6 +18,7 @@ import {
     isMeasureDescriptor,
     isResultAttributeHeader,
     isUriRef,
+    isColorDescriptor,
 } from "@gooddata/sdk-model";
 import { getMappingHeaderName, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
 import { ColorUtils } from "@gooddata/sdk-ui-charts";
@@ -96,6 +97,8 @@ export function getProperties(
             ? item.attributeHeader.uri
             : item.attributeHeader.identifier;
         return mergeColorMappingToProperties(properties, id, color);
+    } else if (isColorDescriptor(item)) {
+        return mergeColorMappingToProperties(properties, item.colorHeaderItem.id, color);
     }
 
     return {};

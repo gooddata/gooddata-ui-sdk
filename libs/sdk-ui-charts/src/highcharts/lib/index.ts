@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 // Have only one entrypoint to highcharts and drill module
 // Import this reexported variable in other files instead of direct import from highcharts
 import Highcharts from "highcharts";
@@ -17,6 +17,7 @@ export type SeriesPieOptions = Highcharts.SeriesPieOptions;
 export type SeriesAreaOptions = Highcharts.SeriesAreaOptions;
 export type SeriesBubbleOptions = Highcharts.SeriesBubbleOptions;
 export type SeriesLineOptions = Highcharts.SeriesLineOptions;
+export type SeriesWaterfallOptions = Highcharts.SeriesWaterfallOptions;
 export type TooltipPositionerPointObject = Highcharts.TooltipPositionerPointObject;
 export type PointOptionsObject = Highcharts.PointOptionsObject;
 

@@ -2435,36 +2435,216 @@
     "DonutChart.f7aea0c0f284696af4846249255ac262": {
         "comment": "Auto-generated insight for test scenario DonutChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
     },
+    "FunnelChart.00c9a0075155f0a48a5767ea23cd0173": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
+    },
+    "FunnelChart.00dea338db78b5d4a600a8d6ae8d4fb8": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
+    },
+    "FunnelChart.06147c87d19b9e491aa511d59f6e270b": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - single measure and viewBy - legend on top."
+    },
+    "FunnelChart.063a6de71c9acfce6219262984ac94ca": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - forced visible with hidden percentages."
+    },
+    "FunnelChart.0686f741b2c997bccf40567b5c98b042": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - single measure and viewBy - disabled."
+    },
+    "FunnelChart.0cf49c56caea94747adea199d8cfeefa": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "FunnelChart.12f25d08db15b3c362006ee6d6b7d559": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom."
+    },
+    "FunnelChart.221df77bff2107f1a7b1fc0b35db6ee0": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "FunnelChart.2379699740a0421baa711d25e0fd97b0": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
+    },
+    "FunnelChart.2403813525633a94cf2a8460c112b761": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
+    },
+    "FunnelChart.2f066fe0d3de7c48c6ea463ab33aaa4d": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
+    },
+    "FunnelChart.3fb73844e5343532b930b3f1f9d587cc": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - forced hidden."
+    },
+    "FunnelChart.411fd834dba6ede1054d1399d297cf4c": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
+    },
+    "FunnelChart.429a6b3ac217e2bff72c16ea39413586": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - legend on right."
+    },
+    "FunnelChart.4cbbd4abd333238d01da356a08f22525": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - legend on left."
+    },
+    "FunnelChart.5219da3a3c892ad4d0d6053e6fa5c318": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "FunnelChart.5223ed56a9ad1e98b58b6c30592bec2a": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend."
+    },
+    "FunnelChart.5bb9508ffb5077a1577b58ed609ba165": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - vertical alignment - middle."
+    },
+    "FunnelChart.602a8d256ad4e74994d9fb46ea43b91d": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
+    },
+    "FunnelChart.645545ecf85509809f8d0c90a8851914": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "FunnelChart.67dc7a6577892fb22896cb294c7ca93c": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
+    },
+    "FunnelChart.6aa93bf70312bfa425c1606621692be0": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - two measures - disabled."
+    },
+    "FunnelChart.6acca095f48c503a2bd8d1e8ee887346": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - two measures - legend on left."
+    },
+    "FunnelChart.6ad6442f92fcade351c2e1360f8a51d4": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "FunnelChart.6eb387f0ba8d6e46144ae4eff9dfd54c": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - legend at bottom."
+    },
     "FunnelChart.724f3a1a7c032a0ab486b2bfc5411fa6": {
         "comment": "Auto-generated insight for test scenario FunnelChart - two measures.",
         "scenarioName": "two measures",
         "visName": "FunnelChart"
+    },
+    "FunnelChart.72d7d2d7bb291ff16bce6e06fa2d73f2": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
+    },
+    "FunnelChart.75054dab6f7946a2b38b33a27c09fbbc": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - single measure and viewBy - legend on right."
+    },
+    "FunnelChart.7998f8e18126a5518830f41f4de365ca": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - forced visible and german separators."
+    },
+    "FunnelChart.7b7a1150e0d5a482aaa8e40094bc3f3b": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
     },
     "FunnelChart.83976a5542ca9df0ea1bf08e19823033": {
         "comment": "Auto-generated insight for test scenario FunnelChart - arithmetic measures.",
         "scenarioName": "arithmetic measures",
         "visName": "FunnelChart"
     },
+    "FunnelChart.85524049b2ea9ae7ff110cec2c71c5b6": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - single measure and viewBy - legend on left."
+    },
+    "FunnelChart.85fd31a43c12a769cc19bea4e71565f1": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
+    },
+    "FunnelChart.883492d88fb6f94a3b60295e36fa2c1b": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - two measures - auto legend."
+    },
+    "FunnelChart.8cd9977761d23561288726b04105491b": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - single measure and viewBy - legend at bottom."
+    },
     "FunnelChart.8fc79843b9f3b1928ef01105b5e12d99": {
         "comment": "Auto-generated insight for test scenario FunnelChart - assign color to measures."
     },
+    "FunnelChart.908d3598a872cce45722608e5611778d": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "FunnelChart.91ec67f1dbf4166cdd9f6cf9a654aa32": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
+    },
+    "FunnelChart.a1150a703f6989894db15ed4f0711f6d": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
+    },
     "FunnelChart.a275c15d125bb4c2ac125ed6bf771523": {
         "comment": "Auto-generated insight for test scenario FunnelChart - coloring - custom palette."
+    },
+    "FunnelChart.a54608317f04f8a6eaeb1e92aa209afc": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top."
+    },
+    "FunnelChart.a9615c10579057612b71e580435b062d": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "FunnelChart.ae3be80fa6350d2b00e3de8205d15beb": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "FunnelChart.b009bfade0e4ab9505bed65a0e331f41": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - two measures - legend on right."
+    },
+    "FunnelChart.b20f7df46524e1435297140fca568163": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "FunnelChart.b4647d0c69fc78c42c3961599da381a6": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
+    },
+    "FunnelChart.b4764ad2de1221b1b438482a320fe823": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
+    },
+    "FunnelChart.b7b8465713fb51bae8b682c1701e187d": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
+    },
+    "FunnelChart.b7f528cbb6fe987ffaa1de305f87300a": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - two measures - legend on top."
+    },
+    "FunnelChart.b97a1acf34ef9444320c1828adf7c744": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - forced hidden, percentages visible has no effect."
+    },
+    "FunnelChart.bbca0e60dcc9882a5e65df27180516ec": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - vertical alignment - top."
+    },
+    "FunnelChart.c1c4500edc66459b65b33ce60e505bcd": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - auto legend."
+    },
+    "FunnelChart.c2272affee4b8a79392044992070114e": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - forced visible with shown percentages."
+    },
+    "FunnelChart.c6dc36b163271595a086b42b176cc083": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - default."
     },
     "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190": {
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure.",
         "scenarioName": "single measure",
         "visName": "FunnelChart"
     },
+    "FunnelChart.c915a6153592fc73187b13571c725a8f": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "FunnelChart.ca52fad62c72e4836755e458697d7a92": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - auto visibility."
+    },
+    "FunnelChart.caf26194d886f7ce32396d85b8f78dc4": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - two measures - legend at bottom."
+    },
     "FunnelChart.cb31fbf27a3db63eb6524cc8660b03fd": {
         "comment": "Auto-generated insight for test scenario FunnelChart - themed.",
         "scenarioName": "themed",
         "visName": "FunnelChart"
     },
+    "FunnelChart.ce8105b57a64e7c5fcb267810a8aae44": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "FunnelChart.d2c2487d24a9555f188ecadd288139c5": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
+    },
+    "FunnelChart.d811f6be19684684e1f963062d12eaa8": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
+    },
+    "FunnelChart.d8fe8e0cd5ea3d4f9e3766a7c8e1f7ed": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend."
+    },
+    "FunnelChart.dc8c3fb4eef017e11776e6652cd85085": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
+    },
+    "FunnelChart.de9933a4be2126efaad7390d101b3bb2": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - legend on top."
+    },
     "FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f": {
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy.",
         "scenarioName": "single measure with viewBy",
         "visName": "FunnelChart"
+    },
+    "FunnelChart.e2ea8e925196710b0a1bfc6162926431": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - vertical alignment - bottom."
     },
     "FunnelChart.eb371d4d3e9deffd69976abde6392f99": {
         "comment": "Auto-generated insight for test scenario FunnelChart - assign color to attributes."
@@ -2473,6 +2653,18 @@
         "comment": "Auto-generated insight for test scenario FunnelChart - font.",
         "scenarioName": "font",
         "visName": "FunnelChart"
+    },
+    "FunnelChart.ef1dbce338f515c9f279a265d1c2e02c": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
+    },
+    "FunnelChart.efe22026d8653ac8816cfbf62ab22017": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - data labels - forced visible."
+    },
+    "FunnelChart.f7181c58469d3fb723e62e92d315e8cf": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - legend position - single measure and viewBy - auto legend."
+    },
+    "FunnelChart.f81e4fee4294286b6e354c2711bbb708": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - vertical alignment - default."
     },
     "FunnelChart.fa2e577f1efafd0722d957e1ad78d955": {
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy sorted by attribute.",
@@ -3467,38 +3659,221 @@
     "PyramidChart.11a6118f2fcc03ee66a9e651e00dd644": {
         "comment": "Auto-generated insight for test scenario PyramidChart - coloring - custom palette."
     },
+    "PyramidChart.13a8a85e72d611c77152e388e9148ad5": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - data labels - auto visibility."
+    },
+    "PyramidChart.1628c8f3af17f06b7d6ce629184e683f": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "PyramidChart.1a153bba4d7a04859a8eb8dc5eb3c587": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
+    },
+    "PyramidChart.20c421ae83d8cd9d1bef699f69a3e034": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "PyramidChart.28d528971fc5791937ce3451239fce61": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - data labels - forced visible."
+    },
     "PyramidChart.33d920b92ca4575ce35c637de927dc9c": {
         "comment": "Auto-generated insight for test scenario PyramidChart - themed.",
         "scenarioName": "themed",
         "visName": "PyramidChart"
+    },
+    "PyramidChart.38328cddb6933becf186da06f5f24d01": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
+    },
+    "PyramidChart.3a117110b8e7851b2839d9fe1630d42a": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x154 - Force position RIGHT - legend on left."
+    },
+    "PyramidChart.3bf3c2cd04b0971f2ca3538ce6cdaed8": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - two measures - disabled."
+    },
+    "PyramidChart.43df4e89f7801be00c4c57f37d89138a": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top."
     },
     "PyramidChart.464eb5fb4642e4aad8b6db76f42ea7ad": {
         "comment": "Auto-generated insight for test scenario PyramidChart - single measure.",
         "scenarioName": "single measure",
         "visName": "PyramidChart"
     },
+    "PyramidChart.4b7b2433d705b459835cbb4265e04c0b": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - data labels - default."
+    },
+    "PyramidChart.4fbde5c00e3821df58b1a37a8bf678b3": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x154 - Force position RIGHT - legend on right."
+    },
     "PyramidChart.51bc95c3040626e1a5c50dff0615547f": {
         "comment": "Auto-generated insight for test scenario PyramidChart - arithmetic measures.",
         "scenarioName": "arithmetic measures",
         "visName": "PyramidChart"
+    },
+    "PyramidChart.566ed9204ec9005fbd39aea3c0a84b0d": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - two measures - legend on right."
+    },
+    "PyramidChart.5ed7129be22d0860573061b5135a23a6": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend."
+    },
+    "PyramidChart.5f8701cbc058ef6b1e3c0b4e37c6301e": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - vertical alignment - top."
+    },
+    "PyramidChart.60972b3b8e7663f2cff620e7213d2fe2": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "PyramidChart.62503683a356a2acc11e08e90ecfa889": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - two measures - legend on top."
+    },
+    "PyramidChart.625d6873bb223839e220d473292dc683": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "PyramidChart.63d2c4e3f7474ecf1f677006f96b62bd": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
     },
     "PyramidChart.6bff428344dca9ab143adbed602c5c83": {
         "comment": "Auto-generated insight for test scenario PyramidChart - single measure with viewBy sorted by attribute.",
         "scenarioName": "single measure with viewBy sorted by attribute",
         "visName": "PyramidChart"
     },
+    "PyramidChart.6de6e6a15eb3ad4acd639b3f90ba5ab0": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - single measure and viewBy - legend at bottom."
+    },
+    "PyramidChart.732ccaf4e76f3f5f81ea8f688a0f876f": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - single measure and viewBy - legend on right."
+    },
+    "PyramidChart.7b27fed4d239047ce30554cf47cb7f8b": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x154 - Force position RIGHT - auto legend."
+    },
+    "PyramidChart.86c2a4835165a7b68e8004e89f382e53": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
     "PyramidChart.8758ca3e6e1bedfa64fdcce265138e08": {
         "comment": "Auto-generated insight for test scenario PyramidChart - assign color to attributes."
+    },
+    "PyramidChart.88253df78ca6b050e55891e357824324": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
+    },
+    "PyramidChart.8bc77a4d364e518b32e1c80733480dcc": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "PyramidChart.8d349d618e177fd6494d5435f36a5625": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
+    },
+    "PyramidChart.8e1eaa94919d52c2c84eaa57e1ef27ad": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - two measures - legend at bottom."
+    },
+    "PyramidChart.97c8204d27ea32ea7fa4ef90b5bde393": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
+    },
+    "PyramidChart.9c1098a4958de7dc28c9c5591092ee7d": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - vertical alignment - middle."
+    },
+    "PyramidChart.9df75da40b82a096fa12318db0892fca": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - vertical alignment - bottom."
     },
     "PyramidChart.9e5044f56899394fa76cf2fa6ae9e64f": {
         "comment": "Auto-generated insight for test scenario PyramidChart - single measure with viewBy.",
         "scenarioName": "single measure with viewBy",
         "visName": "PyramidChart"
     },
+    "PyramidChart.a0c16be6cdd33dc9bcb6ca6d5d6276b8": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
+    },
+    "PyramidChart.a24c028bf9c4ff00b1b43d2568992251": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
+    },
+    "PyramidChart.a4751a74b33ad8a23313bb9d7464dd73": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - single measure and viewBy - legend on left."
+    },
+    "PyramidChart.a5f661506f8759ae51e35b9e8021e4e5": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
+    },
+    "PyramidChart.a74e2676acd136319e4a3fd0d3b0f1e6": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
+    },
+    "PyramidChart.a9818b2aa67e2f5bde7a3d0bbbd2077d": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend."
+    },
+    "PyramidChart.a98bc20c5127c4454a5e068854f8edcb": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
+    },
+    "PyramidChart.ac1337debcd4e1256953713ee2e88787": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
+    },
+    "PyramidChart.b779e6a3f3da404d87d0f398a918a5a5": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "PyramidChart.c5307bc92b1bc74a939ebf120ac1b23e": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - single measure and viewBy - legend on top."
+    },
     "PyramidChart.c68a087aa3dd851942307cd717aac4c4": {
         "comment": "Auto-generated insight for test scenario PyramidChart - two measures.",
         "scenarioName": "two measures",
         "visName": "PyramidChart"
+    },
+    "PyramidChart.c94d7ebd48aed29e0e45da7b02dc2af9": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "PyramidChart.cbcbf3516f913f24721d6ce86bcf9772": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "PyramidChart.cd07eb102b6f9ca70a3d5fd1cf2976e0": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
+    },
+    "PyramidChart.cdf723a4eb67da572fd29ed202fb57ef": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
+    },
+    "PyramidChart.d40587e02dccf48b6c0c36f47729690d": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
+    },
+    "PyramidChart.d4bfb5c6617efc61bd028ffda1a51861": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x154 - Force position RIGHT - legend at bottom."
+    },
+    "PyramidChart.d90ffe4806c53e5ecaca5642a3454b33": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - data labels - forced hidden."
+    },
+    "PyramidChart.da37ba963f0448ceebb031753a9822c1": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x154 - Force position RIGHT - legend on top."
+    },
+    "PyramidChart.db13da12ba112fa82c43e000b841c5e6": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "PyramidChart.e4390bcff96770591124550a6cbc4504": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "PyramidChart.e5a58f338d3e8b98c735210061d03643": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - single measure and viewBy - disabled."
+    },
+    "PyramidChart.e5f6d78d6556117a01c003a6a355b934": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - two measures - auto legend."
+    },
+    "PyramidChart.e6c1fd8cf82ce8bc8dbcccfcf1c45571": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
+    },
+    "PyramidChart.e82c567c302ee22ca3b75c00f7e90d9d": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
+    },
+    "PyramidChart.e9668fd810a509137c594071d46b9cd9": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "PyramidChart.e9d459dc094f831102d8e36a5bba30f3": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
+    },
+    "PyramidChart.e9ec534dc1addccfcdf387d3d224ba64": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - data labels - forced visible and german separators."
+    },
+    "PyramidChart.ec415270e8908a9f693de2acbd9b9fab": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - single measure and viewBy - auto legend."
+    },
+    "PyramidChart.effb3b549e4538ec21c7b27ed0f13eaa": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - legend position - two measures - legend on left."
+    },
+    "PyramidChart.fb4398ba299316676cf72be3a1b85c99": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
+    },
+    "PyramidChart.fc8f6a25e8535404d7138d52a1a98d3a": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom."
+    },
+    "PyramidChart.fdc00c1bad1d5d19ccac21804f66bd05": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - vertical alignment - default."
     },
     "SankeyChart.028319311f1a319d889aee5ec859c3bc": {
         "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
@@ -4031,6 +4406,21 @@
     },
     "Treemap.feee56882501919c10d216c52d47c1a8": {
         "comment": "Auto-generated insight for test scenario Treemap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
+    },
+    "WaterfallChart.2a797bfd967c0ddf55985ff0123392e5": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - single measure with viewBy.",
+        "scenarioName": "single measure with viewBy",
+        "visName": "WaterfallChart"
+    },
+    "WaterfallChart.917b7a14a68849c9f98511b705dcdfd1": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - single measure.",
+        "scenarioName": "single measure",
+        "visName": "WaterfallChart"
+    },
+    "WaterfallChart.c33d1b9464b049310aebe038257c2b04": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - multi measures.",
+        "scenarioName": "multi measures",
+        "visName": "WaterfallChart"
     },
     "Xirr.2dd4cca9665e247c85d40e207b212db7": {
         "comment": "Auto-generated insight for test scenario Xirr - correct config.",

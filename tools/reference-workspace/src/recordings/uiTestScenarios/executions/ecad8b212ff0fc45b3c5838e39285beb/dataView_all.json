@@ -1,0 +1,17 @@
+{
+    "count": [1, 4],
+    "data": [["250000", "50000", "-35000", "-100000"]],
+    "headerItems": [
+        [],
+        [
+            [
+                { "measureHeaderItem": { "name": "amount_sum", "order": 0 } },
+                { "measureHeaderItem": { "name": "duration_sum", "order": 1 } },
+                { "measureHeaderItem": { "name": "velocity_sum", "order": 2 } },
+                { "measureHeaderItem": { "name": "probability_sum", "order": 3 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 4]
+}

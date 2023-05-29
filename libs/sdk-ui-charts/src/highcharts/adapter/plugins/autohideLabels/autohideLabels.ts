@@ -43,6 +43,7 @@ const autohideLabels = (Highcharts: any): void => {
             if (dataLabelsUserVisibility === "auto") {
                 switch (chartType) {
                     case VisualizationTypes.COLUMN:
+                    case VisualizationTypes.WATERFALL:
                         autohideColumnLabels(chart);
                         return;
                     case VisualizationTypes.BAR:

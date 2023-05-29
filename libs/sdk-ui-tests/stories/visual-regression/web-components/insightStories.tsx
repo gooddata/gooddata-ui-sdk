@@ -25,6 +25,7 @@ const insightIds = [
     ReferenceRecordings.Insights.PieChart.TwoMeasures,
     ReferenceRecordings.Insights.ScatterPlot.XAxisMeasureAndAttribute,
     ReferenceRecordings.Insights.Treemap.TwoMeasuresAndViewBy,
+    ReferenceRecordings.Insights.WaterfallChart.MultiMeasures,
 ].map((insight) => insight.obj.insight.identifier);
 
 type InsightContainerProps = {

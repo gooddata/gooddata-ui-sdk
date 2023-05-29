@@ -1,0 +1,29 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.917b7a14a68849c9f98511b705dcdfd1",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "WaterfallChart - single measure",
+        "uri": "WaterfallChart.917b7a14a68849c9f98511b705dcdfd1",
+        "visualizationUrl": "local:waterfall"
+    }
+}

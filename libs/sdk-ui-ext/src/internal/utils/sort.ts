@@ -174,6 +174,7 @@ export function createSorts(
         case VisualizationTypes.DONUT:
         case VisualizationTypes.PYRAMID:
         case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.WATERFALL:
             if (featureFlags.enableChartsSorting) {
                 return getDefaultPieDonutPyramidFunnelSort(insight);
             }

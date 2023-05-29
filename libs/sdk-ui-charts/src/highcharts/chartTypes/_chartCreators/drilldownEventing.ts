@@ -29,6 +29,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
             return "point";
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BAR:
+        case VisualizationTypes.WATERFALL:
             return "bar";
         case VisualizationTypes.PIE:
         case VisualizationTypes.TREEMAP:

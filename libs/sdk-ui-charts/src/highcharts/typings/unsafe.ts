@@ -80,6 +80,11 @@ export interface ISeriesDataItem {
     from?: string;
     to?: string;
     weight?: number;
+    isSum?: boolean;
+    isIntermediateSum?: boolean;
+    visible?: boolean;
+    format?: string;
+    borderColor?: string;
 }
 
 export interface ISeriesNodeItem {
@@ -265,6 +270,7 @@ export interface ICategory {
 export interface ISeriesItemConfig {
     legendIndex: number;
     seriesIndex: number;
+    upColor?: string;
     color?: string;
     data?: IPointData;
     name?: string;

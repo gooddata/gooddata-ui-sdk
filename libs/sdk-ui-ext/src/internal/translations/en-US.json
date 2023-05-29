@@ -209,6 +209,16 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.waterfall._measure": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.waterfall._metric": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.attribute_title.xirr": {
         "value": "Date attribute",
         "comment": "",
@@ -395,6 +405,11 @@
         "limit": 0
     },
     "dashboard.bucket.view_title.bullet": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.waterfall": {
         "value": "View by",
         "comment": "",
         "limit": 0
@@ -748,6 +763,36 @@
     },
     "properties.legend.position": {
         "value": "Position",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.total.title": {
+        "value": "Total",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.total.name": {
+        "value": "Name",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.total.tooltip": {
+        "value": "Add sum of all values as a column at the end.",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.color.total": {
+        "value": "Total",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.color.positive": {
+        "value": "Positive",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.color.negative": {
+        "value": "Negative",
         "comment": "",
         "limit": 0
     },

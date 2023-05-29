@@ -24,6 +24,7 @@ export interface IConfigSectionOwnProps {
     className?: string;
     pushData?(data: any): void;
     children?: React.ReactNode;
+    toggleMessageId?: string;
 }
 
 export interface IConfigSectionState {
@@ -84,12 +85,13 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
 
     private renderToggleSwitch() {
         if (this.props.canBeToggled) {
-            const { toggledOn, toggleDisabled, showDisabledMessage, id } = this.props;
+            const { toggledOn, toggleDisabled, showDisabledMessage, id, toggleMessageId } = this.props;
 
             return (
                 <DisabledBubbleMessage
                     className="adi-bucket-item-toggle"
                     showDisabledMessage={showDisabledMessage}
+                    messageId={toggleMessageId}
                 >
                     <label className={this.getToggleLabelClassNames()}>
                         <input

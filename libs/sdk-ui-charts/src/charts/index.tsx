@@ -41,6 +41,12 @@ export {
     IDependencyWheelChartBucketProps,
 } from "./dependencyWheelChart/DependencyWheelChart";
 
+export {
+    WaterfallChart,
+    IWaterfallChartProps,
+    IWaterfallChartBucketProps,
+} from "./waterfallChart/WaterfallChart";
+
 export { Xirr, IXirrProps, IXirrBucketProps } from "./xirr/Xirr";
 
 export { CoreXirr } from "./xirr/CoreXirr";

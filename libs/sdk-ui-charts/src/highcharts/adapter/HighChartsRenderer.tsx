@@ -17,6 +17,7 @@ import {
     isOneOfTypes,
     isHeatmap,
     isSankeyOrDependencyWheel,
+    isWaterfall,
 } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib";
@@ -332,7 +333,8 @@ export class HighChartsRenderer extends React.PureComponent<
         if (isPieOrDonutChart(type)) {
             type = VisualizationTypes.PIE;
         }
-        const onItemClick = isSankeyOrDependencyWheel(type) ? noop : this.onLegendItemClick;
+        const onItemClick =
+            isSankeyOrDependencyWheel(type) || isWaterfall(type) ? noop : this.onLegendItemClick;
 
         const legendProps: ILegendProps = {
             responsive: legend.responsive,

@@ -1,11 +1,15 @@
 // (C) 2007-2023 GoodData Corporation
 import head from "lodash/head";
 import isEmpty from "lodash/isEmpty";
+import { IntlShape } from "react-intl";
+import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+import { IColorDescriptor } from "@gooddata/sdk-model";
 
 import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
 import { ISeriesItem, IChartOptions } from "../typings/unsafe";
+import { DEFAULT_WATERFALL_COLORS } from "../chartTypes/_util/color";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
@@ -213,4 +217,21 @@ export function isStackedChart(chartOptions: IChartOptions): boolean {
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
     return !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
+}
+
+export function createWaterfallLegendItems(chartOptions: IChartOptions, intl: IntlShape) {
+    return chartOptions.colorAssignments.map((colorAssignment: IColorAssignment, index: number) => {
+        const { color, headerItem } = colorAssignment;
+        const colorString = getRgbStringFromRGB(
+            getColorByGuid(chartOptions.colorPalette, color.value as string, 0),
+        );
+        const legendName = (headerItem as IColorDescriptor).colorHeaderItem.name;
+        return {
+            name: DEFAULT_WATERFALL_COLORS.includes(legendName)
+                ? intl.formatMessage({ id: legendName })
+                : legendName,
+            color: colorString,
+            legendIndex: index,
+        };
+    });
 }

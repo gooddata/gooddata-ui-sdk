@@ -32,6 +32,7 @@ export {
     isSankey,
     isDependencyWheel,
     isSankeyOrDependencyWheel,
+    isWaterfall,
 } from "./chartTypes/_util/common";
 
 export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";

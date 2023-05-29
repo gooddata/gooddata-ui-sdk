@@ -138,7 +138,10 @@ export function getShapeAttributes(point: any): IRectBySize {
             width: shapeArgs.height,
             height: shapeArgs.width,
         };
-    } else if (options.chart.type === VisualizationTypes.COLUMN) {
+    } else if (
+        options.chart.type === VisualizationTypes.COLUMN ||
+        options.chart.type === VisualizationTypes.WATERFALL
+    ) {
         return {
             x: shapeArgs.x + series.group.translateX,
             y: shapeArgs.y + series.group.translateY,

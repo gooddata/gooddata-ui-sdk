@@ -34,6 +34,7 @@ export {
     isSankey,
     isDependencyWheel,
     isSankeyOrDependencyWheel,
+    isWaterfall,
     updateConfigWithSettings,
 } from "./highcharts";
 

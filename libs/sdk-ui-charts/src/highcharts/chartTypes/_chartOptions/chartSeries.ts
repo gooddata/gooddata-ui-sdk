@@ -11,6 +11,7 @@ import {
     isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
+    isWaterfall,
     parseValue,
     unwrap,
 } from "../_util/common";
@@ -22,6 +23,7 @@ import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries";
 import { getTreemapStackedSeries } from "../treemap/treemapChartSeries";
 import { getBulletChartSeries } from "../bulletChart/bulletChartSeries";
 import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
+import { getWaterfallChartSeries } from "../warterfallChart/waterfallChartsSeries";
 
 export function getSeriesItemData(
     seriesItem: string[],
@@ -196,6 +198,15 @@ export function getSeries(
         return buildSankeyChartSeries(
             dv,
             [viewByParentAttribute, viewByAttribute],
+            colorStrategy,
+            emptyHeaderTitle,
+        );
+    } else if (isWaterfall(type)) {
+        return getWaterfallChartSeries(
+            dv,
+            measureGroup,
+            viewByAttribute,
+            type,
             colorStrategy,
             emptyHeaderTitle,
         );

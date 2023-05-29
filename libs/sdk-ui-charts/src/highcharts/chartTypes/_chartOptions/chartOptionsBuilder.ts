@@ -36,6 +36,7 @@ import {
     stringifyChartTypes,
     unwrap,
     isSankeyOrDependencyWheel,
+    isWaterfall,
 } from "../_util/common";
 import { setMeasuresToSecondaryAxis } from "./dualAxis";
 import {
@@ -67,9 +68,15 @@ import {
     generateTooltipSankeyChartFn,
     generateTooltipXYFn,
     getTooltipFactory,
+    getTooltipWaterfallChart,
 } from "./chartTooltips";
 import { getDrillableSeries } from "./chartDrilling";
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
+import {
+    getWaterfallChartCategories,
+    buildWaterfallChartSeries,
+    getColorAssignment,
+} from "../warterfallChart/waterfallChartOptions";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -355,6 +362,7 @@ export function getChartOptions(
     drillableItems: IHeaderPredicate[],
     emptyHeaderTitle: string,
     theme?: ITheme,
+    totalColumnTitle?: string,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -628,6 +636,51 @@ export function getChartOptions(
             },
             colorPalette,
             colorAssignments,
+        };
+    }
+
+    if (isWaterfall(type)) {
+        const waterfallChartSeries = buildWaterfallChartSeries(
+            series,
+            chartConfig,
+            colorAssignments[0],
+            colorPalette,
+            emptyHeaderTitle,
+        );
+        const waterfallCategories = getWaterfallChartCategories(
+            categories,
+            chartConfig,
+            measureGroup,
+            totalColumnTitle,
+        );
+        return {
+            type,
+            stacking,
+            hasStackByAttribute: Boolean(stackByAttribute),
+            hasViewByAttribute: Boolean(viewByAttribute),
+            legendLayout: config.legendLayout || "horizontal",
+            legendLabel: getLegendLabel(type, viewByAttribute, stackByAttribute),
+            xAxes,
+            yAxes,
+            data: {
+                series: waterfallChartSeries,
+                categories: waterfallCategories,
+            },
+            actions: {
+                tooltip: getTooltipWaterfallChart(viewByAttribute, chartConfig),
+            },
+            grid: {
+                enabled: gridEnabled,
+            },
+            xAxisProps,
+            yAxisProps,
+            secondary_xAxisProps,
+            secondary_yAxisProps,
+            colorAssignments: getColorAssignment(colorAssignments, chartConfig, waterfallChartSeries),
+            colorPalette,
+            isViewByTwoAttributes,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
+            verticalAlign: chart?.verticalAlign,
         };
     }
 

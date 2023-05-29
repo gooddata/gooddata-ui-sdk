@@ -193,6 +193,7 @@ export interface IBucketItem {
     granularity?: string;
     showInPercent?: boolean;
     showOnSecondaryAxis?: boolean;
+    isTotalMeasure?: boolean;
     sort?: ISort;
     masterLocalIdentifier?: string;
     overTimeComparisonType?: OverTimeComparisonType;
@@ -255,6 +256,8 @@ export interface IBucketUiConfig {
     allowShowOnSecondaryAxis?: boolean;
     allowSelectChartType?: boolean;
     allowOptionalStacking?: boolean;
+    isTotalMeasureVisible?: boolean;
+    isTotalMeasureEnabled?: boolean;
 
     // indicates that the visualization prefers date items in the bucket to have the same dimension
     preferSynchronizedDates?: boolean;

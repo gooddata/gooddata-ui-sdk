@@ -24,6 +24,7 @@ import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/Ge
 import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor";
 import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor";
 import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor";
+import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -141,6 +142,7 @@ const DefaultVisualizations = {
     pushpin: GeoPushpinChartDescriptor,
     sankey: SankeyChartDescriptor,
     dependencywheel: DependencyWheelChartDescriptor,
+    waterfall: WaterfallChartDescriptor,
 };
 
 /**

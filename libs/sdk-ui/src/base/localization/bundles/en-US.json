@@ -212,6 +212,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualization.waterfall.total": {
+        "value": "Total",
+        "comment": "The default name for the waterfall total column",
+        "limit": 0
+    },
     "visualization.ErrorMessageGeneric|insight": {
         "value": "Sorry, we can't display this insight",
         "comment": "",

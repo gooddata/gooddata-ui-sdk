@@ -9,6 +9,7 @@ export const supportedDualAxesChartTypes = [
     VisualizationTypes.AREA,
     VisualizationTypes.COMBO,
     VisualizationTypes.COMBO2,
+    VisualizationTypes.WATERFALL,
 ];
 export const supportedTooltipFollowPointerChartTypes = [
     VisualizationTypes.COLUMN,
@@ -16,6 +17,7 @@ export const supportedTooltipFollowPointerChartTypes = [
     VisualizationTypes.BULLET,
     VisualizationTypes.COMBO,
     VisualizationTypes.COMBO2,
+    VisualizationTypes.WATERFALL,
 ];
 export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COLUMN,
@@ -24,6 +26,7 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.AREA,
     VisualizationTypes.COMBO,
     VisualizationTypes.COMBO2,
+    VisualizationTypes.WATERFALL,
 ];
 // types with only many measures or one measure and one attribute
 export const multiMeasuresAlternatingTypes = [

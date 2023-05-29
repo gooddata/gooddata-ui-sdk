@@ -1,0 +1,43 @@
+{
+    "dimensions": [
+        { "headers": [] },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+                                    "name": "m_fact.opportunitysnapshot.amount_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.stagehistory.duration_sum",
+                                    "name": "m_fact.stagehistory.duration_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.stagehistory.velocity_sum",
+                                    "name": "m_fact.stagehistory.velocity_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
+                                    "name": "m_fact.opportunitysnapshot.probability_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

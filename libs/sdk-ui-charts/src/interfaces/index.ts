@@ -16,6 +16,7 @@ export {
     IGridConfig,
     IContinuousLineConfig,
     ITooltipConfig,
+    ITotalConfig,
 } from "./chartConfig";
 
 export {

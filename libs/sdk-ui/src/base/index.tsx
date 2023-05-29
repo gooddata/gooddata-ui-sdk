@@ -176,7 +176,13 @@ export {
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
-export { createIntlMock, withIntl, resolveLocale, emptyHeaderTitleFromIntl } from "./localization/intlUtils";
+export {
+    createIntlMock,
+    withIntl,
+    resolveLocale,
+    emptyHeaderTitleFromIntl,
+    totalColumnTitleFromIntl,
+} from "./localization/intlUtils";
 export {
     ITranslationsCustomizationContextProviderProps,
     TranslationsCustomizationContextProvider,

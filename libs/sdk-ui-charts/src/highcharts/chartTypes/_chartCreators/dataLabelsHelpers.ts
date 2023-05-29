@@ -107,7 +107,7 @@ export function showDataLabelInAxisRange(
 ): void {
     const isSecondAxis = point?.series?.yAxis?.opposite ?? false;
     const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
-    const isInsideAxisRange = pointInRange(value, axisRange);
+    const isInsideAxisRange = pointInRange(Math.abs(value), axisRange);
     if (!isInsideAxisRange) {
         hideDataLabel(point);
     }

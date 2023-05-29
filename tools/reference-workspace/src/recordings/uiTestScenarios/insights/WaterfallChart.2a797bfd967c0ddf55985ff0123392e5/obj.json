@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.2a797bfd967c0ddf55985ff0123392e5",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "WaterfallChart - single measure with viewBy",
+        "uri": "WaterfallChart.2a797bfd967c0ddf55985ff0123392e5",
+        "visualizationUrl": "local:waterfall"
+    }
+}

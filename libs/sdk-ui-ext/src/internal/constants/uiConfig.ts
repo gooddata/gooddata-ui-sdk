@@ -380,6 +380,69 @@ export const PIE_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
     ...enabledOpenAsReportConfig,
 };
 
+export const DEFAULT_WATERFALL_UICONFIG: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            itemsLimit: DEFAULT_PIE_METRICS_COUNT,
+            allowsReordering: false,
+            isTotalMeasureVisible: false,
+            isTotalMeasureEnabled: false,
+        },
+        view: {
+            ...viewBase,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...enabledOpenAsReportConfig,
+    optionalStacking: {
+        supported: true,
+        stackMeasures: false,
+    },
+};
+
+export const WATERFALL_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            isTotalMeasureVisible: false,
+            isTotalMeasureEnabled: false,
+        },
+        view: {
+            ...viewBase,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...enabledOpenAsReportConfig,
+    optionalStacking: {
+        supported: true,
+        stackMeasures: false,
+    },
+};
+
+export const WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            isTotalMeasureVisible: false,
+            isTotalMeasureEnabled: false,
+        },
+        view: {
+            ...viewBase,
+            itemsLimit: 0,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...enabledOpenAsReportConfig,
+    optionalStacking: {
+        supported: true,
+        stackMeasures: false,
+    },
+};
+
 export const DEFAULT_TREEMAP_UICONFIG: IUiConfig = {
     buckets: {
         measures: {

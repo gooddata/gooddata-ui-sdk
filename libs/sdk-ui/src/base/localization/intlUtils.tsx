@@ -60,3 +60,12 @@ export const resolveLocale = (locale: unknown): ILocale => {
 export function emptyHeaderTitleFromIntl(intl: IntlShape): string {
     return `(${intl.formatMessage({ id: "visualization.emptyValue" })})`;
 }
+
+/**
+ * Returns a string meant to represent the total colum when it is empty.
+ * @param intl - the source of i18n strings
+ * @internal
+ */
+export function totalColumnTitleFromIntl(intl: IntlShape): string {
+    return intl.formatMessage({ id: "visualization.waterfall.total" });
+}

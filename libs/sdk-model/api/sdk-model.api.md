@@ -717,6 +717,20 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
 export type IColor = IColorFromPalette | IRgbColor;
 
 // @public
+export interface IColorDescriptor {
+    // (undocumented)
+    colorHeaderItem: IColorDescriptorItem;
+}
+
+// @public
+export interface IColorDescriptorItem {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name: string;
+}
+
+// @public
 export interface IColorFromPalette {
     // (undocumented)
     type: GuidType;
@@ -2116,6 +2130,9 @@ export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<ID
 }
 
 // @public
+export function isColorDescriptor(obj: unknown): obj is IColorDescriptor;
+
+// @public
 export function isColorFromPalette(obj: unknown): obj is IColorFromPalette;
 
 // @public
@@ -2253,6 +2270,7 @@ export interface ISettings {
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
+    enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;

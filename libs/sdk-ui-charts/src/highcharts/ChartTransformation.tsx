@@ -10,6 +10,7 @@ import {
     OnFiredDrillEvent,
     ExplicitDrill,
     emptyHeaderTitleFromIntl,
+    totalColumnTitleFromIntl,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder";
@@ -94,8 +95,9 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         drillablePredicates,
         emptyHeaderTitleFromIntl(intl),
         theme,
+        totalColumnTitleFromIntl(intl),
     );
-    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions);
+    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
     const validationResult = validateData(config.limits, chartOptions);
     const drillConfig = { dataView, onDrill };
     const hcOptions = getHighchartsOptions(

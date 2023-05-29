@@ -10,6 +10,8 @@ import {
     isTotalDescriptor,
     IResultAttributeHeaderItem,
     ITotalDescriptorItem,
+    IColorDescriptor,
+    isColorDescriptor,
 } from "@gooddata/sdk-model";
 
 /**
@@ -22,7 +24,8 @@ export type IMappingHeader =
     | IAttributeDescriptor
     | IResultAttributeHeader
     | IMeasureDescriptor
-    | ITotalDescriptor;
+    | ITotalDescriptor
+    | IColorDescriptor;
 
 //
 //
@@ -50,6 +53,8 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
         return header.attributeHeader.localIdentifier;
     } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.localIdentifier;
+    } else if (isColorDescriptor(header)) {
+        return header.colorHeaderItem.id;
     }
 
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no localIdentifier`);
@@ -65,6 +70,8 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
         return header.attributeHeaderItem.name;
     } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.name;
+    } else if (isColorDescriptor(header)) {
+        return header.colorHeaderItem.name;
     }
 }
 
