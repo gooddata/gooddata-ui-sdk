@@ -7,6 +7,12 @@ type MockedFs = typeof fsType & {
 
 const fs = jest.genMockFromModule<MockedFs>("fs/promises");
 
+class MockError extends Error {
+    constructor(message: string, public code: string | number) {
+        super(message);
+    }
+}
+
 let mockFiles = Object.create(null);
 fs.__setMockFiles = function __setMockFiles(newMockFiles) {
     mockFiles = newMockFiles;
@@ -14,10 +20,7 @@ fs.__setMockFiles = function __setMockFiles(newMockFiles) {
 const readFile = (fs.readFile = async function (path: any) {
     if (mockFiles[path]) return mockFiles[path];
 
-    const err = new Error("File does not exist");
-    //@ts-ignore
-    err.code = "ENOENT";
-    throw err;
+    throw new MockError("File does not exist", "ENOENT");
 });
 
 export default fs;

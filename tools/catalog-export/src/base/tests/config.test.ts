@@ -9,7 +9,15 @@ import {
 
 jest.mock("fs/promises");
 
+let fs: typeof import("./__mocks__/fs/promises").default;
+
 describe("configuration", () => {
+    beforeAll(async () => {
+        // Mocking FS does not work well with TypeScript..
+        fs = (await import("fs/promises"))
+            .default as unknown as typeof import("./__mocks__/fs/promises").default;
+    });
+
     describe("mergeConfigs", () => {
         it("should override the values based on the order", () => {
             const merged = mergeConfigs({ hostname: "old value" }, { hostname: "new value" });
@@ -42,9 +50,9 @@ describe("configuration", () => {
                 username: "tomas",
                 password: "secret",
                 token: "secret",
-                // @ts-ignore - technically, we can't prevent user from putting random vars in JSON file...
                 unknown: "value",
-            });
+                // technically, we can't prevent user from putting random vars in JSON file...
+            } as unknown as import("../types").CatalogExportConfig);
 
             expect(merged).toMatchSnapshot();
         });
@@ -99,9 +107,6 @@ describe("configuration", () => {
 
     describe("getConfigFromConfigFile", () => {
         it("should read the given config file and return allowed values from it", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({
                 "/path/to/config.json": JSON.stringify({
                     hostname: "hostname",
@@ -115,18 +120,12 @@ describe("configuration", () => {
         });
 
         it("should return an empty object if there is no config file", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({});
 
             await expect(getConfigFromConfigFile("/path/to/config.json")).resolves.toEqual({});
         });
 
         it("should not parse credentials out of config file", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({
                 "/path/to/config.json": JSON.stringify({
                     token: "token",
@@ -141,9 +140,6 @@ describe("configuration", () => {
 
     describe("getConfigFromPackage", () => {
         it("should parse allowed values from the package.json file in a given folder", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({
                 "/path/to/project/package.json": JSON.stringify({
                     gooddata: {
@@ -159,9 +155,6 @@ describe("configuration", () => {
         });
 
         it("should override parent folder package.jsons with child ones", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({
                 "/path/to/package.json": JSON.stringify({
                     gooddata: {
@@ -183,9 +176,6 @@ describe("configuration", () => {
         });
 
         it("should ignore credentials and not supported values", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({
                 "/path/to/project/package.json": JSON.stringify({
                     gooddata: {
@@ -203,17 +193,11 @@ describe("configuration", () => {
         });
 
         it("should return an empty object if file does not exist", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({});
 
             await expect(getConfigFromPackage("/path/to/project")).resolves.toEqual({});
         });
         it("should return an empty object if file does not have gooddata property", async () => {
-            const fs = (await import("fs/promises")).default;
-
-            // @ts-ignore
             fs.__setMockFiles({
                 "/path/to/project/package.json": JSON.stringify({
                     name: "my-package",
