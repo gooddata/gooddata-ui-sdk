@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.0e9c4210f4d5fe8958c12b287d205c10",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "WaterfallChart - themed",
+        "uri": "WaterfallChart.0e9c4210f4d5fe8958c12b287d205c10",
+        "visualizationUrl": "local:waterfall"
+    }
+}

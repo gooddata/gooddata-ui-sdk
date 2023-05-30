@@ -1,0 +1,39 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "PyramidChart.e9ec534dc1addccfcdf387d3d224ba64",
+        "properties": { "controls": { "dataLabels": { "visible": true } } },
+        "sorts": [],
+        "title": "PyramidChart - data labels - forced visible and german separators",
+        "uri": "PyramidChart.e9ec534dc1addccfcdf387d3d224ba64",
+        "visualizationUrl": "local:pyramid"
+    }
+}

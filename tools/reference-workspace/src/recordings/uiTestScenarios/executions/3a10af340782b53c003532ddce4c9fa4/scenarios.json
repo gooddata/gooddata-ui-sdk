@@ -62,6 +62,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -131,6 +132,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -200,6 +202,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -269,6 +272,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -338,6 +342,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -406,6 +411,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -474,6 +480,145 @@
                     }
                 }
             ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "themed",
+        "vis": "DonutChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "font",
+        "vis": "DonutChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -542,10 +687,11 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
-        "scenario": "single measure with viewBy sorted by attribute",
+        "scenario": "themed",
         "vis": "FunnelChart"
     },
     {
@@ -610,10 +756,425 @@
                     }
                 }
             ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "font",
+        "vis": "FunnelChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
         "scenario": "single measure with viewBy",
+        "vis": "PyramidChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "themed",
+        "vis": "PyramidChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "font",
+        "vis": "PyramidChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure with viewBy",
+        "vis": "PieChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "themed",
+        "vis": "PieChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "font",
         "vis": "PieChart"
     },
     {
@@ -679,701 +1240,12 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
         "scenario": "single measure and viewBy",
         "vis": "Treemap"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "themed",
-        "vis": "DonutChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "themed",
-        "vis": "FunnelChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "themed",
-        "vis": "PieChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "font",
-        "vis": "DonutChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "font",
-        "vis": "FunnelChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "font",
-        "vis": "PieChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "single measure with viewBy",
-        "vis": "PyramidChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "single measure with viewBy sorted by attribute",
-        "vis": "PyramidChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "themed",
-        "vis": "PyramidChart"
-    },
-    {
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        },
-        "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "buckets": [
-                {
-                    "items": [
-                        {
-                            "measure": {
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                                    }
-                                },
-                                "localIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "measures"
-                },
-                {
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.product.id.name",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.product.id.name"
-                            }
-                        }
-                    ],
-                    "localIdentifier": "view"
-                }
-            ],
-            "dimensions": [
-                { "itemIdentifiers": ["measureGroup"] },
-                { "itemIdentifiers": ["a_label.product.id.name"] }
-            ],
-            "filters": [],
-            "measures": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ],
-            "postProcessing": {},
-            "sortBy": [],
-            "workspace": "reference-workspace"
-        },
-        "scenario": "font",
-        "vis": "PyramidChart"
     },
     {
         "n2oMap": {

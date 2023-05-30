@@ -1,0 +1,46 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "PyramidChart.6d6d3c07306bf56df46a5789cabcd819",
+        "properties": { "controls": { "enableChartSorting": true } },
+        "sorts": [
+            {
+                "measureSortItem": {
+                    "direction": "asc",
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                }
+            }
+        ],
+        "title": "PyramidChart - single measure with viewBy sorted by measure",
+        "uri": "PyramidChart.6d6d3c07306bf56df46a5789cabcd819",
+        "visualizationUrl": "local:pyramid"
+    }
+}

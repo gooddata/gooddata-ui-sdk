@@ -1,0 +1,78 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.stagehistory.duration", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_fact.stagehistory.duration_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.stagehistory.velocity", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_fact.stagehistory.velocity_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.probability",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_fact.opportunitysnapshot.probability_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.f3366b5284c61c116fcb952189f18d64",
+        "properties": {
+            "controls": {
+                "colorMapping": [
+                    { "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } } },
+                    { "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 255 } } },
+                    { "color": { "type": "guid", "value": "05" } }
+                ],
+                "total": { "enabled": true, "name": "Total" }
+            }
+        },
+        "sorts": [],
+        "title": "WaterfallChart - assign color to measures",
+        "uri": "WaterfallChart.f3366b5284c61c116fcb952189f18d64",
+        "visualizationUrl": "local:waterfall"
+    }
+}

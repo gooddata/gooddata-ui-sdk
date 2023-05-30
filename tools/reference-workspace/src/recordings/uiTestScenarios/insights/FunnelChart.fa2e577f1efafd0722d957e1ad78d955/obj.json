@@ -30,8 +30,10 @@
         ],
         "filters": [],
         "identifier": "FunnelChart.fa2e577f1efafd0722d957e1ad78d955",
-        "properties": { "controls": {} },
-        "sorts": [],
+        "properties": { "controls": { "enableChartSorting": true } },
+        "sorts": [
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+        ],
         "title": "FunnelChart - single measure with viewBy sorted by attribute",
         "uri": "FunnelChart.fa2e577f1efafd0722d957e1ad78d955",
         "visualizationUrl": "local:funnel"
