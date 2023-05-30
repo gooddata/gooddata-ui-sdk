@@ -3042,12 +3042,38 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
       "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by measure 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
     ],
     "totals": 0,
   },
@@ -4197,12 +4223,38 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
       "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by measure 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
     ],
     "totals": 0,
   },
@@ -4966,7 +5018,79 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 8,
+    "attributes": 1,
+    "sliceNames": Array [
+      "Interest",
+      "Discovery",
+      "Short List",
+      "Risk Assessment",
+      "Conviction",
+      "Negotiation",
+      "Closed Won",
+      "Closed Lost",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": Array [
+      " > m_fact.opportunitysnapshot.amount_sum",
+      " > m_fact.stagehistory.duration_sum",
+      " > m_fact.stagehistory.velocity_sum",
+      " > m_fact.opportunitysnapshot.probability_sum",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": Array [
+      " > m_fact.opportunitysnapshot.amount_sum",
+      " > m_fact.stagehistory.duration_sum",
+      " > m_fact.stagehistory.velocity_sum",
+      " > m_fact.opportunitysnapshot.probability_sum",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with themed 1`] = `
 Object {
   "seriesDigest": Object {
     "allSeries": 4,
@@ -5008,6 +5132,34 @@ Object {
 `;
 
 exports[`DataAccess should correctly identify series and slices for: WaterfallChart - single measure with viewBy 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 8,
+    "attributes": 1,
+    "sliceNames": Array [
+      "Interest",
+      "Discovery",
+      "Short List",
+      "Risk Assessment",
+      "Conviction",
+      "Negotiation",
+      "Closed Won",
+      "Closed Lost",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - themed 1`] = `
 Object {
   "seriesDigest": Object {
     "allSeries": 1,
