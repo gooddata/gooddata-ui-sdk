@@ -102,6 +102,74 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
     };
 }
 
+
+// TODO remove sonar warning, update template implementation
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function columnAttributeAndMeasuresHeadersTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const cellRenderer = createCellRenderer();
+
+    return {
+        cellClass: cellClassFactory(table, props, "gd-row-attribute-column-header gd-transposed-header"), // TODO unique style
+        headerClass: headerClassFactory(table, props, "gd-row-attribute-column-header"), // TODO unique style
+        colSpan: (params) => {
+            if (
+                // params.data is undefined when rows are in loading state
+                params.data?.colSpan &&
+                AVAILABLE_TOTALS.find((item: string) => item === params.data[params.data.colSpan.headerKey])
+            ) {
+                return params.data.colSpan.count;
+            }
+            return 1;
+        },
+        valueFormatter: (params) => {
+            return params.value === undefined ? null : params.value;
+        },
+        cellRenderer,
+    };
+}
+
+// TODO remove sonar warning, update template implementation
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function columnAttributeAndMeasuresValuesTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const separators = props.config?.separators;
+    const cellRenderer = createCellRenderer();
+
+    return {
+        cellClass: cellClassFactory(table, props, "gd-column-attribute-column"),   // TODO unique styles
+        headerClass: headerClassFactory(table, props, "gd-column-attribute-column-header"), // TODO unique styles
+        valueFormatter: (params: ValueFormatterParams) => {
+            if (params.data?.measureDescriptor) {
+                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+                return params.value !== undefined
+                    ? getMeasureCellFormattedValue(
+                        params.value,
+                        measureDescriptor.measureHeaderItem.format,
+                        separators,
+                    )
+                    : (null as any);
+            }
+            return params.value === undefined ? null : params.value;
+        },
+        cellStyle: (params) => {
+            if (params.data?.measureDescriptor) {
+                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+                return params.value !== undefined
+                    ? getMeasureCellStyle(
+                        params.value,
+                        measureDescriptor.measureHeaderItem.format,
+                        separators,
+                        true,
+                    )
+                    : null;
+            }
+            return null;
+        },
+        cellRenderer,
+    };
+}
+
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 

@@ -49,6 +49,8 @@ import {
     LeafDataCol,
     SliceMeasureCol,
     isSliceMeasureCol,
+    AttributeMeasureHeadersCol,
+    AttributeMeasureValuesCol,
 } from "../structure/tableDescriptorTypes";
 import { createColumnLocator } from "../structure/colLocatorFactory";
 import { colMeasureLocalId } from "../structure/colAccessors";
@@ -553,7 +555,7 @@ export function updateColumnDefinitionsWithWidths(
     const sliceCols = tableDescriptor.zippedSliceCols;
     const leaves = tableDescriptor.zippedLeaves;
 
-    const allSizableCols: Array<[SliceCol | SliceMeasureCol | SeriesCol | ScopeCol, ColDef]> = [];
+    const allSizableCols: Array<[SliceCol | SliceMeasureCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol | SeriesCol | ScopeCol, ColDef]> = [];
     allSizableCols.push(...sliceCols);
     allSizableCols.push(...leaves);
 

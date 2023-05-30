@@ -126,6 +126,8 @@ export interface IPivotTableConfig {
      */
     maxHeight?: number;
     measureGroupDimension?: "columns" | "rows";
+
+    headersPosition?: "top" | "left";
 }
 
 /**

@@ -8,6 +8,8 @@ import {
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
+    ATTRIBUTE_AND_MEASURE_HEADERS_COLUMN,
+    ATTRIBUTE_AND_MEASURE_VALUES_COLUMN,
 } from "../base/constants";
 import {
     agColId,
@@ -18,11 +20,14 @@ import {
     TableCols,
     ScopeCol,
     SliceMeasureCol,
+    AttributeMeasureHeadersCol,
+    AttributeMeasureValuesCol,
 } from "./tableDescriptorTypes";
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { IPivotTableConfig } from '../../publicTypes';
 import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader";
 import { messages } from "../../locales";
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "./../base/constants";
@@ -90,6 +95,50 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
         };
 
         state.rowColDefs.push(colDef);
+        state.allColDefs.push(colDef);
+
+        if (!state.cellRendererPlaced) {
+            state.cellRendererPlaced = colDef;
+        }
+    }
+}
+
+function createAndAddAttributeMeasureHeadersColDefs(attributeMeasureHeadersCol: AttributeMeasureHeadersCol[], state: TransformState) {
+    for (const col of attributeMeasureHeadersCol) {
+        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+
+        const colDef: ColDef = {
+            type: ATTRIBUTE_AND_MEASURE_HEADERS_COLUMN,
+            colId: col.id,
+            field: col.id,
+            headerName: " ", // do not render header, yet leave ability to resize it
+            headerTooltip: undefined,
+            ...cellRendererProp,
+        };
+
+        state.rowColDefs.push(colDef); // TODO maybe add to a new collection
+        state.allColDefs.push(colDef);
+
+        if (!state.cellRendererPlaced) {
+            state.cellRendererPlaced = colDef;
+        }
+    }
+}
+
+function createAndAddAttributeMeasureValuesColDefs(attributeMeasureValuesCol: AttributeMeasureValuesCol[], state: TransformState) {
+    for (const col of attributeMeasureValuesCol) {
+        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+
+        const colDef: ColDef = {
+            type: ATTRIBUTE_AND_MEASURE_VALUES_COLUMN,
+            colId: col.id,
+            field: col.id,
+            headerName: " ", // do not render header, yet leave ability to resize it
+            headerTooltip: undefined,
+            ...cellRendererProp,
+        };
+
+        state.rowColDefs.push(colDef); // TODO maybe add to a new collection
         state.allColDefs.push(colDef);
 
         if (!state.cellRendererPlaced) {
@@ -232,11 +281,13 @@ function createAndAddDataColDefs(table: TableCols, state: TransformState, intl?:
  * @param table - table col descriptors
  * @param initialSorts - initial table sorting definition
  * @param emptyHeaderTitle - what to show for title of headers with empty title
+ * @param config - optional pivot config
  */
 export function createColDefsFromTableDescriptor(
     table: TableCols,
     initialSorts: ISortItem[],
     emptyHeaderTitle: string,
+    config?: IPivotTableConfig,
     intl?: IntlShape,
 ): TableColDefs {
     const state: TransformState = {
@@ -249,8 +300,13 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
-    createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
-    createAndAddDataColDefs(table, state, intl);
+    if (config?.headersPosition === "left") {
+        createAndAddAttributeMeasureHeadersColDefs(table.attributeMeasureHeadersCols, state);
+        createAndAddAttributeMeasureValuesColDefs(table.attributeMeasureValuesCols, state);
+    } else {
+        createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
+	    createAndAddDataColDefs(table, state, intl);    
+	}
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 

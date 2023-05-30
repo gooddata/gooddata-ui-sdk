@@ -4,7 +4,13 @@ import React from "react";
 import { IMenu } from "../../../publicTypes";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell";
-import { isEmptyScopeCol, isSliceCol, isSliceMeasureCol } from "../tableDescriptorTypes";
+import {
+    isEmptyScopeCol,
+    isSliceCol,
+    isSliceMeasureCol,
+    isAttributeMeasureValuesCol,
+    isAttributeMeasureHeadersCol
+} from "../tableDescriptorTypes";
 import { SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
@@ -57,9 +63,9 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     public render() {
         const { displayName, enableSorting, menu, column } = this.props;
         const col = this.getColDescriptor();
-        const textAlign = isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
+        const textAlign = isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) || isAttributeMeasureValuesCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
-        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && enableSorting
+        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && !isAttributeMeasureHeadersCol(col) && !isAttributeMeasureValuesCol(col) && enableSorting
 
         return (
             <HeaderCell

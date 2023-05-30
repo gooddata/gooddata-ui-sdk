@@ -13,7 +13,7 @@ export const ColumnGroupingDescriptorId = "root";
  * @remarks see {@link ScopeCol}
  * @remarks see {@link RootCol}
  */
-export type TableColType = "sliceCol" | "sliceMeasureCol" | "seriesCol" | "scopeCol" | "rootCol";
+export type TableColType = "sliceCol" | "sliceMeasureCol" | "attributeMeasureHeadersCol" | "attributeMeasureValuesCol" | "seriesCol" | "scopeCol" | "rootCol";
 
 /**
  * Base interface for all col types.
@@ -86,8 +86,46 @@ export interface SliceMeasureCol extends TableCol {
     readonly fullIndexPathToHere: number[];
 }
 
+// TODO pivot operates with slices and series. Better name should be used than the introduction of attr/measures.
+export interface AttributeMeasureHeadersCol extends TableCol {
+    readonly type: "attributeMeasureHeadersCol";
+
+    /**
+     * Column index among all slice columns
+     */
+    index: number;  // probably will always be 0 as there will be always just one
+
+    /**
+     * Path of indexes to follow from root, through children in order to get to this node.
+     */
+    readonly fullIndexPathToHere: number[];
+}
+// TODO pivot operates with slices and series. Better name should be used than the introduction of attr/measures.
+
+export interface AttributeMeasureValuesCol extends TableCol {
+    readonly type: "attributeMeasureValuesCol";
+
+    /**
+     * Column index among all slice columns
+     */
+    index: number;
+
+    /**
+     * Path of indexes to follow from root, through children in order to get to this node.
+     */
+    readonly fullIndexPathToHere: number[];
+}
+
 export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {
     return (obj as SliceMeasureCol)?.type === "sliceMeasureCol";
+}
+
+export function isAttributeMeasureHeadersCol(obj: unknown): obj is AttributeMeasureHeadersCol {
+    return (obj as AttributeMeasureHeadersCol)?.type === "attributeMeasureHeadersCol";
+}
+
+export function isAttributeMeasureValuesCol(obj: unknown): obj is AttributeMeasureValuesCol {
+    return (obj as AttributeMeasureValuesCol)?.type === "attributeMeasureValuesCol";
 }
 
 
@@ -244,7 +282,7 @@ export type DataCol = RootCol | LeafDataCol;
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
  */
-export type AnyCol = SliceCol | SliceMeasureCol | DataCol | ScopeCol;
+export type AnyCol = SliceCol | SliceMeasureCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol | DataCol | ScopeCol;
 
 /**
  * Descriptors of all table columns. The table columns are divided into two groups:
@@ -277,6 +315,10 @@ export type TableCols = {
     readonly sliceCols: SliceCol[];
 
     readonly sliceMeasureCols: SliceMeasureCol[];
+
+    readonly attributeMeasureHeadersCols: AttributeMeasureHeadersCol[];
+
+    readonly attributeMeasureValuesCols: AttributeMeasureValuesCol[];
 
     /**
      * Root table cols.

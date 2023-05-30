@@ -21,8 +21,11 @@ import {
     TableCols,
     LeafDataCol,
     SliceMeasureCol,
+    AttributeMeasureHeadersCol,
+    AttributeMeasureValuesCol,
 } from "./tableDescriptorTypes";
 import { createColDefsFromTableDescriptor } from "./colDefFactory";
+import { IPivotTableConfig } from '../../publicTypes';
 
 type ColumnGroupLevel = {
     pkToGroup: Record<string, ScopeCol>;
@@ -246,6 +249,8 @@ function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOper
     return groupColumns(leafColumns, scopingAttributes);
 }
 
+// TODO fix sonar warning
+// eslint-disable-next-line sonarjs/no-identical-functions
 function createColumnDescriptorsForMeasureRows(dv: DataViewFacade): GroupingOperationResult {
     const descriptors = dv.meta().attributeDescriptorsForDim(1);
     const headers = dv.meta().attributeHeadersForDim(1);
@@ -350,25 +355,72 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
     }];
 }
 
-function createTableHeaders(dv: DataViewFacade): TableCols {
-    const rows: SliceCol[] = createRowDescriptors(dv);
-    const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
-    const measureColumns = createMeasureColumnDescriptors(dv, rows);
+function createAttributeMeasureHeadersColumnDescriptors(): AttributeMeasureHeadersCol[] {
+    const idx = 0;
+    // always just one column with mixed attribute and measure headers
+    return [{
+        type: "attributeMeasureHeadersCol",
+        id: `amh_${idx}`,
+        index: idx,
+        fullIndexPathToHere: [idx],
+    }];
+}
 
+function createAttributeMeasureValuesColumnDescriptors(dv: DataViewFacade): AttributeMeasureValuesCol[] {
+    return dv
+        .data()
+        .slices()
+        .toArray()
+        .map((_slice, idx) => ({
+            type: "attributeMeasureValuesCol",
+            id: `amv_${idx}`,
+            index: idx,
+            fullIndexPathToHere: [idx],
+        }));
+}
+
+function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): TableCols {
     const idToDescriptor: Record<string, AnyCol> = {};
 
-    rows.forEach((header) => (idToDescriptor[header.id] = header));
-    measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
-    allColumns.forEach((header) => (idToDescriptor[header.id] = header));
+    if (config?.headersPosition === "left") {
+        const attributeMeasureHeadersCols = createAttributeMeasureHeadersColumnDescriptors();
+        const attributeMeasureValuesCols = createAttributeMeasureValuesColumnDescriptors(dv);
 
-    return {
-        sliceCols: rows,
-        sliceMeasureCols: measureColumns,
-        rootDataCols: rootColumns,
-        leafDataCols: leafColumns,
-        idToDescriptor,
-        scopingAttributes: groupingAttributes,
-    };
+        // TODO DRY
+        attributeMeasureHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
+        attributeMeasureValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
+
+        return {
+            sliceCols: [],
+            sliceMeasureCols: [],
+            rootDataCols: [],
+            leafDataCols: [],
+            idToDescriptor,
+            scopingAttributes: [],
+            attributeMeasureHeadersCols,
+            attributeMeasureValuesCols,
+        };
+    } else {
+        const rows: SliceCol[] = createRowDescriptors(dv);
+        const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
+        const measureColumns = createMeasureColumnDescriptors(dv, rows);
+
+        // TODO DRY
+        rows.forEach((header) => (idToDescriptor[header.id] = header));
+        measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
+        allColumns.forEach((header) => (idToDescriptor[header.id] = header));
+
+        return {
+            sliceCols: rows,
+            sliceMeasureCols: measureColumns,
+            rootDataCols: rootColumns,
+            leafDataCols: leafColumns,
+            idToDescriptor,
+            scopingAttributes: groupingAttributes,
+            attributeMeasureHeadersCols: [],
+            attributeMeasureValuesCols: [],
+        };
+    }
 }
 
 //
@@ -382,20 +434,22 @@ function createTableHeaders(dv: DataViewFacade): TableCols {
  *
  * @param dv - data view facade
  * @param emptyHeaderTitle - what to show for title of headers with empty title
+ * @param config - optional pivot configuration
  * @internal
  */
 export function createHeadersAndColDefs(
     dv: DataViewFacade,
     emptyHeaderTitle: string,
+    config?: IPivotTableConfig
     intl?: IntlShape,
 ): { headers: TableCols; colDefs: TableColDefs } {
-    const headers = createTableHeaders(dv);
+    const headers = createTableHeaders(dv, config);
     const colDefs = createColDefsFromTableDescriptor(
         headers,
         dv.meta().effectiveSortItems(),
         emptyHeaderTitle,
+        config,
         intl,
     );
-
     return { headers, colDefs };
 }

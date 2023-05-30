@@ -134,11 +134,7 @@ export class TableFacade {
         this.currentResult = result;
         this.visibleData = DataViewFacade.for(dataView);
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
-        this.tableDescriptor = TableDescriptor.for(
-            this.visibleData,
-            emptyHeaderTitleFromIntl(props.intl),
-            props.intl,
-        );
+        this.tableDescriptor = TableDescriptor.for(this.visibleData, emptyHeaderTitleFromIntl(props.intl), props.config, props.intl);
 
         this.autoResizedColumns = {};
         this.growToFittedColumns = {};

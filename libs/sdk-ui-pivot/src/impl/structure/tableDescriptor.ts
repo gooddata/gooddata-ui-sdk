@@ -25,6 +25,7 @@ import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting";
 import { createSortItemForCol } from "./colSortItemFactory";
 import keyBy from "lodash/keyBy";
 import findIndex from "lodash/findIndex";
+import { IPivotTableConfig } from '../../publicTypes';
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information
@@ -62,6 +63,8 @@ export class TableDescriptor {
     public readonly zippedLeaves: Array<[LeafDataCol, ColDef]> = [];
     private readonly _seriesColsCount: number;
 
+    // TODO solve zipping and lookup (does not seems to be used in the new transpose mode for now)
+
     private constructor(
         private readonly dv: DataViewFacade,
         public readonly headers: TableCols,
@@ -77,9 +80,10 @@ export class TableDescriptor {
      *
      * @param dv - data view facade
      * @param emptyHeaderTitle - what to show for title of headers with empty title
+     * @param config - optional pivot configuration
      */
-    public static for(dv: DataViewFacade, emptyHeaderTitle: string, intl?: IntlShape): TableDescriptor {
-        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, intl);
+    public static for(dv: DataViewFacade, emptyHeaderTitle: string, config?: IPivotTableConfig, intl?: IntlShape): TableDescriptor {
+        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, config, intl);
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 
