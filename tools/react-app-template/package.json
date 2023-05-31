@@ -23,6 +23,12 @@
         "dist/**/*.map",
         "dist/**/*.svg"
     ],
+    "gooddata": {
+        "hostname": "https://public-examples.gooddata.com",
+        "workspaceId": "demo",
+        "backend": "tiger",
+        "catalogOutput": "src/catalog.ts"
+    },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css && jest --clearCache",
         "build": "webpack --mode production",

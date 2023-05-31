@@ -7,10 +7,13 @@ import { backend } from "./backend";
 import * as Md from "./catalog";
 import img from "./assets/gooddata-logo.svg";
 
+// Workspace ID is injected by WebPack based on the value in package.json
+const workspaceId = WORKSPACE_ID;
+
 export const App: React.FC = () => {
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace="demo">
+            <WorkspaceProvider workspace={workspaceId}>
                 <div className="app">
                     <h1>Hello GoodWorld!</h1>
                     <p>

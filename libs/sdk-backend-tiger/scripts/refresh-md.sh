@@ -8,6 +8,6 @@ PROJECTID="2b7da2afb0d34f4397481c4d2a2d50b0"
 
 $EXPORTER \
   --hostname "https://staging.anywhere.gooddata.com" \
-  --output "${OUTPUT}" \
+  --catalog-output "${OUTPUT}" \
   --project-id "${PROJECTID}" \
   --backend "tiger"

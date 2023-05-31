@@ -1,12 +1,15 @@
 // (C) 2007-2022 GoodData Corporation
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const { EnvironmentPlugin, ProvidePlugin } = require("webpack");
+const { DefinePlugin } = require("webpack");
 const path = require("path");
 const { URL } = require("url");
+const pack = require("./package.json");
+
 require("dotenv").config();
 
-const BACKEND_URL = "https://public-examples.gooddata.com";
+const BACKEND_URL = pack.gooddata.hostname;
+const WORKSPACE_ID = pack.gooddata.workspaceId;
 
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
@@ -15,7 +18,7 @@ module.exports = (_env, argv) => {
         {
             context: ["/api", "/gdc"],
             changeOrigin: true,
-            cookieDomainRewrite: "localhost",
+            cookieDomainRewrite: "127.0.0.1",
             secure: false,
             target: BACKEND_URL,
             headers: {
@@ -26,6 +29,12 @@ module.exports = (_env, argv) => {
                 // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
                 proxyReq.removeHeader("origin");
                 proxyReq.setHeader("accept-encoding", "identity");
+
+                if (pack.gooddata.backend === "tiger" && process.env.TIGER_API_TOKEN) {
+                    // Inject auth token using dev proxy to simplify development setup
+                    // In production, you'll need to implement a proper auth handling, see ./src/backend file
+                    proxyReq.setHeader("Authorization", `Bearer ${process.env.TIGER_API_TOKEN}`);
+                }
             },
         },
     ];
@@ -104,13 +113,8 @@ module.exports = (_env, argv) => {
             },
             plugins: [
                 new CaseSensitivePathsPlugin(),
-                // Provide bogus process.env keys that lru-cache, pseudomap and util packages use unsafely for no reason...
-                new EnvironmentPlugin({
-                    npm_package_name: "",
-                    npm_lifecycle_script: "",
-                    _nodeLRUCacheForceNoSymbol: "",
-                    TEST_PSEUDOMAP: "",
-                    NODE_DEBUG: "",
+                new DefinePlugin({
+                    WORKSPACE_ID: JSON.stringify(WORKSPACE_ID),
                 }),
                 new HtmlWebpackPlugin({
                     template: "./src/public/index.html",

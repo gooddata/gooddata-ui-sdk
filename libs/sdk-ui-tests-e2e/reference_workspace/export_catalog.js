@@ -13,7 +13,7 @@ export function exportCatalogBear(host, projectId, username, password) {
     // NOTE: we support this only for goodsales
     const outputFile = BEAR_FIXTURE_CATALOG["goodsales"];
     execSync(
-        `echo '${password}' | npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --backend "bear" --output "${outputFile}"`,
+        `echo '${password}' | npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --backend "bear" --catalog-output "${outputFile}"`,
         { stdio: "inherit" },
     );
 }
@@ -25,7 +25,7 @@ export function exportCatalogTiger(
     outputFile = TIGER_FIXTURE_CATALOG["goodsales"], // NOTE: we support this only for goodsales
 ) {
     execSync(
-        `export TIGER_API_TOKEN="${tiger_api_token}" && npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --backend "tiger" --output "${outputFile}"`,
+        `export TIGER_API_TOKEN="${tiger_api_token}" && npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --backend "tiger" --catalog-output "${outputFile}"`,
         { stdio: "inherit" },
     );
 }

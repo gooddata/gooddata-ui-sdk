@@ -19,7 +19,7 @@ process.argv.push(
     hostname,
     "--workspace-id",
     workspace,
-    "--output",
+    "--catalog-output",
     output,
 );
 

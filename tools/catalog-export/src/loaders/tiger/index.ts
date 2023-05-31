@@ -13,7 +13,7 @@ import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 import open from "open";
-import dotenv from "dotenv";
+import { API_TOKEN_VAR_NAME } from "../../base/constants";
 
 /**
  * Tests if the provided tiger client can access the backend.
@@ -21,7 +21,7 @@ import dotenv from "dotenv";
  */
 async function probeAccess(client: ITigerClient): Promise<boolean> {
     try {
-        await client.entities.getAllEntitiesWorkspaces({ page: 0, size: 1 }, { headers: jsonApiHeaders });
+        await client.profile.getCurrent();
 
         return true;
     } catch (err: any) {
@@ -44,15 +44,12 @@ async function probeAccess(client: ITigerClient): Promise<boolean> {
     }
 }
 
-const TigerApiTokenVariable = "TIGER_API_TOKEN";
-
 /**
- * Gets token defined in TIGER_API_TOKEN or undefined if no such env variable or the variable contains
+ * Gets token from config or undefined if no such env variable or the variable contains
  * empty value.
  */
-function getTigerApiToken(): string | undefined {
-    dotenv.config({ path: ".env" });
-    const token = process.env[TigerApiTokenVariable];
+function getTigerApiToken(config: CatalogExportConfig): string | undefined {
+    const token = config.token;
 
     return token?.length ? token : undefined;
 }
@@ -61,7 +58,7 @@ function getTigerApiToken(): string | undefined {
  * Gets the tiger client asking for credentials if they are needed.
  */
 async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient> {
-    const token = getTigerApiToken();
+    const token = getTigerApiToken(config);
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
 
@@ -75,9 +72,9 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
 
         if (!hasAccess) {
             if (hasToken) {
-                logError(`It looks like the token you have set in ${TigerApiTokenVariable} has expired.`);
+                logError(`It looks like the token you have set in ${API_TOKEN_VAR_NAME} has expired.`);
             } else {
-                logError(`You do not have the ${TigerApiTokenVariable} environment variable set.`);
+                logError(`You do not have the ${API_TOKEN_VAR_NAME} environment variable set.`);
             }
 
             logInfo("To obtain a token value, follow these steps:");
@@ -90,11 +87,11 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
             logInfo(
                 "2. Once you are on your Tiger developer settings page please " +
                     `create a new personal access token by clicking Manage button in Personal access tokens section. ` +
-                    "For other methods to generate the token see: https://www.gooddata.com/developers/cloud-native/doc/latest/administration/auth/user-token ",
+                    "For other methods to generate the token see: https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/create-api-token/ ",
             );
 
             logInfo(
-                `3. Once you have the token value, please set the ${TigerApiTokenVariable} environment variable and try again.`,
+                `3. Once you have the token value, please set the ${API_TOKEN_VAR_NAME} environment variable and try again.`,
             );
 
             await open(settingsPage, { wait: false });

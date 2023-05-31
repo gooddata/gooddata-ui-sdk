@@ -11,4 +11,4 @@ $EXPORTER \
   --hostname "staging3.intgdc.com" \
   --workspace-id "d79dpgty2b4ydewi6kbzqm4fq1be2ltm" \
   --accept-untrusted-ssl \
-  --output "${OUTPUT}"
+  --catalog-output "${OUTPUT}"
