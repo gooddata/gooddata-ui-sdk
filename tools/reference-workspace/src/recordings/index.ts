@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-17T08:38:25.263Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-31T07:50:37.494Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -666,6 +666,12 @@ const fp_ba942f3e77e766d51677b6438eb470e1 = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ba942f3e77e766d51677b6438eb470e1/dataView_o0_0s100_1000.json"),
     scenarios: require("./uiTestScenarios/executions/ba942f3e77e766d51677b6438eb470e1/scenarios.json"),
 };
+const fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 = {
+    definition: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/scenarios.json"),
+};
 const fp_bcf69fa3cf04052d9e92e1713d8cdf0e = {
     definition: require("./uiTestScenarios/executions/bcf69fa3cf04052d9e92e1713d8cdf0e/definition.json"),
     executionResult: require("./uiTestScenarios/executions/bcf69fa3cf04052d9e92e1713d8cdf0e/executionResult.json"),
@@ -838,6 +844,12 @@ const fp_ec4ab5aacbca8cd180d2bc8115d8cfb7 = {
     dataView_all: require("./uiTestScenarios/executions/ec4ab5aacbca8cd180d2bc8115d8cfb7/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/ec4ab5aacbca8cd180d2bc8115d8cfb7/scenarios.json"),
 };
+const fp_ecad8b212ff0fc45b3c5838e39285beb = {
+    definition: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/scenarios.json"),
+};
 const fp_edd2872a4849d589547def7de056b654 = {
     definition: require("./uiTestScenarios/executions/edd2872a4849d589547def7de056b654/definition.json"),
     executionResult: require("./uiTestScenarios/executions/edd2872a4849d589547def7de056b654/executionResult.json"),
@@ -904,18 +916,6 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     executionResult: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
-};
-const fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 = {
-    definition: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/bcd68102a8b9ff4d1971e7c7fb6bc5f2/scenarios.json"),
-};
-const fp_ecad8b212ff0fc45b3c5838e39285beb = {
-    definition: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/ecad8b212ff0fc45b3c5838e39285beb/scenarios.json"),
 };
 export const Scenarios = {
     ComboChart: {
@@ -1378,7 +1378,11 @@ export const Scenarios = {
     WaterfallChart: {
         SingleMeasure: { scenarioIndex: 9, execution: fp_46588b57054306cfdb4d67c9ce0f0362 },
         SingleMeasureWithViewBy: { scenarioIndex: 0, execution: fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 },
+        Themed: { scenarioIndex: 1, execution: fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 },
+        Font: { scenarioIndex: 2, execution: fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2 },
         MultiMeasures: { scenarioIndex: 0, execution: fp_ecad8b212ff0fc45b3c5838e39285beb },
+        MultiMeasuresWithThemed: { scenarioIndex: 1, execution: fp_ecad8b212ff0fc45b3c5838e39285beb },
+        MultiMeasuresWithFont: { scenarioIndex: 2, execution: fp_ecad8b212ff0fc45b3c5838e39285beb },
     },
     Xirr: {
         CorrectConfig: { scenarioIndex: 0, execution: fp_50b382d97968e85d5afe9cfb78e4c346 },
@@ -3667,32 +3671,224 @@ const i_DonutChart_ec22a82cf1d285839cd56258968ad25c = {
 const i_DonutChart_f7aea0c0f284696af4846249255ac262 = {
     obj: require("./uiTestScenarios/insights/DonutChart.f7aea0c0f284696af4846249255ac262/obj.json"),
 };
+const i_FunnelChart_00c9a0075155f0a48a5767ea23cd0173 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.00c9a0075155f0a48a5767ea23cd0173/obj.json"),
+};
+const i_FunnelChart_00dea338db78b5d4a600a8d6ae8d4fb8 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.00dea338db78b5d4a600a8d6ae8d4fb8/obj.json"),
+};
+const i_FunnelChart_06147c87d19b9e491aa511d59f6e270b = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.06147c87d19b9e491aa511d59f6e270b/obj.json"),
+};
+const i_FunnelChart_063a6de71c9acfce6219262984ac94ca = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.063a6de71c9acfce6219262984ac94ca/obj.json"),
+};
+const i_FunnelChart_0686f741b2c997bccf40567b5c98b042 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.0686f741b2c997bccf40567b5c98b042/obj.json"),
+};
+const i_FunnelChart_0cf49c56caea94747adea199d8cfeefa = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.0cf49c56caea94747adea199d8cfeefa/obj.json"),
+};
+const i_FunnelChart_12f25d08db15b3c362006ee6d6b7d559 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.12f25d08db15b3c362006ee6d6b7d559/obj.json"),
+};
+const i_FunnelChart_221df77bff2107f1a7b1fc0b35db6ee0 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.221df77bff2107f1a7b1fc0b35db6ee0/obj.json"),
+};
+const i_FunnelChart_2379699740a0421baa711d25e0fd97b0 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.2379699740a0421baa711d25e0fd97b0/obj.json"),
+};
+const i_FunnelChart_2403813525633a94cf2a8460c112b761 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.2403813525633a94cf2a8460c112b761/obj.json"),
+};
+const i_FunnelChart_2f066fe0d3de7c48c6ea463ab33aaa4d = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.2f066fe0d3de7c48c6ea463ab33aaa4d/obj.json"),
+};
+const i_FunnelChart_3fb73844e5343532b930b3f1f9d587cc = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.3fb73844e5343532b930b3f1f9d587cc/obj.json"),
+};
+const i_FunnelChart_411fd834dba6ede1054d1399d297cf4c = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.411fd834dba6ede1054d1399d297cf4c/obj.json"),
+};
+const i_FunnelChart_429a6b3ac217e2bff72c16ea39413586 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.429a6b3ac217e2bff72c16ea39413586/obj.json"),
+};
+const i_FunnelChart_4cbbd4abd333238d01da356a08f22525 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.4cbbd4abd333238d01da356a08f22525/obj.json"),
+};
+const i_FunnelChart_5219da3a3c892ad4d0d6053e6fa5c318 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.5219da3a3c892ad4d0d6053e6fa5c318/obj.json"),
+};
+const i_FunnelChart_5223ed56a9ad1e98b58b6c30592bec2a = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.5223ed56a9ad1e98b58b6c30592bec2a/obj.json"),
+};
+const i_FunnelChart_5bb9508ffb5077a1577b58ed609ba165 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.5bb9508ffb5077a1577b58ed609ba165/obj.json"),
+};
+const i_FunnelChart_602a8d256ad4e74994d9fb46ea43b91d = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.602a8d256ad4e74994d9fb46ea43b91d/obj.json"),
+};
+const i_FunnelChart_645545ecf85509809f8d0c90a8851914 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.645545ecf85509809f8d0c90a8851914/obj.json"),
+};
+const i_FunnelChart_67dc7a6577892fb22896cb294c7ca93c = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.67dc7a6577892fb22896cb294c7ca93c/obj.json"),
+};
+const i_FunnelChart_6aa93bf70312bfa425c1606621692be0 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.6aa93bf70312bfa425c1606621692be0/obj.json"),
+};
+const i_FunnelChart_6acca095f48c503a2bd8d1e8ee887346 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.6acca095f48c503a2bd8d1e8ee887346/obj.json"),
+};
+const i_FunnelChart_6ad6442f92fcade351c2e1360f8a51d4 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.6ad6442f92fcade351c2e1360f8a51d4/obj.json"),
+};
+const i_FunnelChart_6eb387f0ba8d6e46144ae4eff9dfd54c = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.6eb387f0ba8d6e46144ae4eff9dfd54c/obj.json"),
+};
 const i_FunnelChart_724f3a1a7c032a0ab486b2bfc5411fa6 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.724f3a1a7c032a0ab486b2bfc5411fa6/obj.json"),
+};
+const i_FunnelChart_72d7d2d7bb291ff16bce6e06fa2d73f2 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.72d7d2d7bb291ff16bce6e06fa2d73f2/obj.json"),
+};
+const i_FunnelChart_75054dab6f7946a2b38b33a27c09fbbc = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.75054dab6f7946a2b38b33a27c09fbbc/obj.json"),
+};
+const i_FunnelChart_7998f8e18126a5518830f41f4de365ca = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.7998f8e18126a5518830f41f4de365ca/obj.json"),
+};
+const i_FunnelChart_7b7a1150e0d5a482aaa8e40094bc3f3b = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.7b7a1150e0d5a482aaa8e40094bc3f3b/obj.json"),
 };
 const i_FunnelChart_83976a5542ca9df0ea1bf08e19823033 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.83976a5542ca9df0ea1bf08e19823033/obj.json"),
 };
+const i_FunnelChart_85524049b2ea9ae7ff110cec2c71c5b6 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.85524049b2ea9ae7ff110cec2c71c5b6/obj.json"),
+};
+const i_FunnelChart_85fd31a43c12a769cc19bea4e71565f1 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.85fd31a43c12a769cc19bea4e71565f1/obj.json"),
+};
+const i_FunnelChart_883492d88fb6f94a3b60295e36fa2c1b = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.883492d88fb6f94a3b60295e36fa2c1b/obj.json"),
+};
+const i_FunnelChart_8cd9977761d23561288726b04105491b = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.8cd9977761d23561288726b04105491b/obj.json"),
+};
 const i_FunnelChart_8fc79843b9f3b1928ef01105b5e12d99 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.8fc79843b9f3b1928ef01105b5e12d99/obj.json"),
+};
+const i_FunnelChart_908d3598a872cce45722608e5611778d = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.908d3598a872cce45722608e5611778d/obj.json"),
+};
+const i_FunnelChart_91ec67f1dbf4166cdd9f6cf9a654aa32 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.91ec67f1dbf4166cdd9f6cf9a654aa32/obj.json"),
+};
+const i_FunnelChart_a1150a703f6989894db15ed4f0711f6d = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.a1150a703f6989894db15ed4f0711f6d/obj.json"),
 };
 const i_FunnelChart_a275c15d125bb4c2ac125ed6bf771523 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.a275c15d125bb4c2ac125ed6bf771523/obj.json"),
 };
+const i_FunnelChart_a54608317f04f8a6eaeb1e92aa209afc = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.a54608317f04f8a6eaeb1e92aa209afc/obj.json"),
+};
+const i_FunnelChart_a9615c10579057612b71e580435b062d = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.a9615c10579057612b71e580435b062d/obj.json"),
+};
+const i_FunnelChart_ae3be80fa6350d2b00e3de8205d15beb = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.ae3be80fa6350d2b00e3de8205d15beb/obj.json"),
+};
+const i_FunnelChart_b009bfade0e4ab9505bed65a0e331f41 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b009bfade0e4ab9505bed65a0e331f41/obj.json"),
+};
+const i_FunnelChart_b20f7df46524e1435297140fca568163 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b20f7df46524e1435297140fca568163/obj.json"),
+};
+const i_FunnelChart_b4647d0c69fc78c42c3961599da381a6 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b4647d0c69fc78c42c3961599da381a6/obj.json"),
+};
+const i_FunnelChart_b4764ad2de1221b1b438482a320fe823 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b4764ad2de1221b1b438482a320fe823/obj.json"),
+};
+const i_FunnelChart_b7b8465713fb51bae8b682c1701e187d = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b7b8465713fb51bae8b682c1701e187d/obj.json"),
+};
+const i_FunnelChart_b7f528cbb6fe987ffaa1de305f87300a = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b7f528cbb6fe987ffaa1de305f87300a/obj.json"),
+};
+const i_FunnelChart_b97a1acf34ef9444320c1828adf7c744 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.b97a1acf34ef9444320c1828adf7c744/obj.json"),
+};
+const i_FunnelChart_bbca0e60dcc9882a5e65df27180516ec = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.bbca0e60dcc9882a5e65df27180516ec/obj.json"),
+};
+const i_FunnelChart_c1c4500edc66459b65b33ce60e505bcd = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.c1c4500edc66459b65b33ce60e505bcd/obj.json"),
+};
+const i_FunnelChart_c2272affee4b8a79392044992070114e = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.c2272affee4b8a79392044992070114e/obj.json"),
+};
+const i_FunnelChart_c6dc36b163271595a086b42b176cc083 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.c6dc36b163271595a086b42b176cc083/obj.json"),
+};
 const i_FunnelChart_c8c4bd66f9a92aefb66ed4231721d190 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.c8c4bd66f9a92aefb66ed4231721d190/obj.json"),
+};
+const i_FunnelChart_c915a6153592fc73187b13571c725a8f = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.c915a6153592fc73187b13571c725a8f/obj.json"),
+};
+const i_FunnelChart_ca52fad62c72e4836755e458697d7a92 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.ca52fad62c72e4836755e458697d7a92/obj.json"),
+};
+const i_FunnelChart_caf26194d886f7ce32396d85b8f78dc4 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.caf26194d886f7ce32396d85b8f78dc4/obj.json"),
 };
 const i_FunnelChart_cb31fbf27a3db63eb6524cc8660b03fd = {
     obj: require("./uiTestScenarios/insights/FunnelChart.cb31fbf27a3db63eb6524cc8660b03fd/obj.json"),
 };
+const i_FunnelChart_ce8105b57a64e7c5fcb267810a8aae44 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.ce8105b57a64e7c5fcb267810a8aae44/obj.json"),
+};
+const i_FunnelChart_d2c2487d24a9555f188ecadd288139c5 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.d2c2487d24a9555f188ecadd288139c5/obj.json"),
+};
+const i_FunnelChart_d811f6be19684684e1f963062d12eaa8 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.d811f6be19684684e1f963062d12eaa8/obj.json"),
+};
+const i_FunnelChart_d8fe8e0cd5ea3d4f9e3766a7c8e1f7ed = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.d8fe8e0cd5ea3d4f9e3766a7c8e1f7ed/obj.json"),
+};
+const i_FunnelChart_dc8c3fb4eef017e11776e6652cd85085 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.dc8c3fb4eef017e11776e6652cd85085/obj.json"),
+};
+const i_FunnelChart_de9933a4be2126efaad7390d101b3bb2 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.de9933a4be2126efaad7390d101b3bb2/obj.json"),
+};
 const i_FunnelChart_e26196f7a6b5f1f5b1147a1791ec065f = {
     obj: require("./uiTestScenarios/insights/FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f/obj.json"),
+};
+const i_FunnelChart_e2ea8e925196710b0a1bfc6162926431 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.e2ea8e925196710b0a1bfc6162926431/obj.json"),
 };
 const i_FunnelChart_eb371d4d3e9deffd69976abde6392f99 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.eb371d4d3e9deffd69976abde6392f99/obj.json"),
 };
 const i_FunnelChart_ec97a9a234a510f8a9eb9a8ef86ac1e2 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.ec97a9a234a510f8a9eb9a8ef86ac1e2/obj.json"),
+};
+const i_FunnelChart_ef1dbce338f515c9f279a265d1c2e02c = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.ef1dbce338f515c9f279a265d1c2e02c/obj.json"),
+};
+const i_FunnelChart_efe22026d8653ac8816cfbf62ab22017 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.efe22026d8653ac8816cfbf62ab22017/obj.json"),
+};
+const i_FunnelChart_f7181c58469d3fb723e62e92d315e8cf = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.f7181c58469d3fb723e62e92d315e8cf/obj.json"),
+};
+const i_FunnelChart_f81e4fee4294286b6e354c2711bbb708 = {
+    obj: require("./uiTestScenarios/insights/FunnelChart.f81e4fee4294286b6e354c2711bbb708/obj.json"),
 };
 const i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955 = {
     obj: require("./uiTestScenarios/insights/FunnelChart.fa2e577f1efafd0722d957e1ad78d955/obj.json"),
@@ -4537,26 +4733,209 @@ const i_PyramidChart_1009bf223b82efe816a16ccb1d1f7744 = {
 const i_PyramidChart_11a6118f2fcc03ee66a9e651e00dd644 = {
     obj: require("./uiTestScenarios/insights/PyramidChart.11a6118f2fcc03ee66a9e651e00dd644/obj.json"),
 };
+const i_PyramidChart_13a8a85e72d611c77152e388e9148ad5 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.13a8a85e72d611c77152e388e9148ad5/obj.json"),
+};
+const i_PyramidChart_1628c8f3af17f06b7d6ce629184e683f = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.1628c8f3af17f06b7d6ce629184e683f/obj.json"),
+};
+const i_PyramidChart_1a153bba4d7a04859a8eb8dc5eb3c587 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.1a153bba4d7a04859a8eb8dc5eb3c587/obj.json"),
+};
+const i_PyramidChart_20c421ae83d8cd9d1bef699f69a3e034 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.20c421ae83d8cd9d1bef699f69a3e034/obj.json"),
+};
+const i_PyramidChart_28d528971fc5791937ce3451239fce61 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.28d528971fc5791937ce3451239fce61/obj.json"),
+};
 const i_PyramidChart_33d920b92ca4575ce35c637de927dc9c = {
     obj: require("./uiTestScenarios/insights/PyramidChart.33d920b92ca4575ce35c637de927dc9c/obj.json"),
+};
+const i_PyramidChart_38328cddb6933becf186da06f5f24d01 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.38328cddb6933becf186da06f5f24d01/obj.json"),
+};
+const i_PyramidChart_3a117110b8e7851b2839d9fe1630d42a = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.3a117110b8e7851b2839d9fe1630d42a/obj.json"),
+};
+const i_PyramidChart_3bf3c2cd04b0971f2ca3538ce6cdaed8 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.3bf3c2cd04b0971f2ca3538ce6cdaed8/obj.json"),
+};
+const i_PyramidChart_43df4e89f7801be00c4c57f37d89138a = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.43df4e89f7801be00c4c57f37d89138a/obj.json"),
 };
 const i_PyramidChart_464eb5fb4642e4aad8b6db76f42ea7ad = {
     obj: require("./uiTestScenarios/insights/PyramidChart.464eb5fb4642e4aad8b6db76f42ea7ad/obj.json"),
 };
+const i_PyramidChart_4b7b2433d705b459835cbb4265e04c0b = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.4b7b2433d705b459835cbb4265e04c0b/obj.json"),
+};
+const i_PyramidChart_4fbde5c00e3821df58b1a37a8bf678b3 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.4fbde5c00e3821df58b1a37a8bf678b3/obj.json"),
+};
 const i_PyramidChart_51bc95c3040626e1a5c50dff0615547f = {
     obj: require("./uiTestScenarios/insights/PyramidChart.51bc95c3040626e1a5c50dff0615547f/obj.json"),
+};
+const i_PyramidChart_566ed9204ec9005fbd39aea3c0a84b0d = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.566ed9204ec9005fbd39aea3c0a84b0d/obj.json"),
+};
+const i_PyramidChart_5ed7129be22d0860573061b5135a23a6 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.5ed7129be22d0860573061b5135a23a6/obj.json"),
+};
+const i_PyramidChart_5f8701cbc058ef6b1e3c0b4e37c6301e = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.5f8701cbc058ef6b1e3c0b4e37c6301e/obj.json"),
+};
+const i_PyramidChart_60972b3b8e7663f2cff620e7213d2fe2 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.60972b3b8e7663f2cff620e7213d2fe2/obj.json"),
+};
+const i_PyramidChart_62503683a356a2acc11e08e90ecfa889 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.62503683a356a2acc11e08e90ecfa889/obj.json"),
+};
+const i_PyramidChart_625d6873bb223839e220d473292dc683 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.625d6873bb223839e220d473292dc683/obj.json"),
+};
+const i_PyramidChart_63d2c4e3f7474ecf1f677006f96b62bd = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.63d2c4e3f7474ecf1f677006f96b62bd/obj.json"),
 };
 const i_PyramidChart_6bff428344dca9ab143adbed602c5c83 = {
     obj: require("./uiTestScenarios/insights/PyramidChart.6bff428344dca9ab143adbed602c5c83/obj.json"),
 };
+const i_PyramidChart_6de6e6a15eb3ad4acd639b3f90ba5ab0 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.6de6e6a15eb3ad4acd639b3f90ba5ab0/obj.json"),
+};
+const i_PyramidChart_732ccaf4e76f3f5f81ea8f688a0f876f = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.732ccaf4e76f3f5f81ea8f688a0f876f/obj.json"),
+};
+const i_PyramidChart_7b27fed4d239047ce30554cf47cb7f8b = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.7b27fed4d239047ce30554cf47cb7f8b/obj.json"),
+};
+const i_PyramidChart_86c2a4835165a7b68e8004e89f382e53 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.86c2a4835165a7b68e8004e89f382e53/obj.json"),
+};
 const i_PyramidChart_8758ca3e6e1bedfa64fdcce265138e08 = {
     obj: require("./uiTestScenarios/insights/PyramidChart.8758ca3e6e1bedfa64fdcce265138e08/obj.json"),
+};
+const i_PyramidChart_88253df78ca6b050e55891e357824324 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.88253df78ca6b050e55891e357824324/obj.json"),
+};
+const i_PyramidChart_8bc77a4d364e518b32e1c80733480dcc = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.8bc77a4d364e518b32e1c80733480dcc/obj.json"),
+};
+const i_PyramidChart_8d349d618e177fd6494d5435f36a5625 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.8d349d618e177fd6494d5435f36a5625/obj.json"),
+};
+const i_PyramidChart_8e1eaa94919d52c2c84eaa57e1ef27ad = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.8e1eaa94919d52c2c84eaa57e1ef27ad/obj.json"),
+};
+const i_PyramidChart_97c8204d27ea32ea7fa4ef90b5bde393 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.97c8204d27ea32ea7fa4ef90b5bde393/obj.json"),
+};
+const i_PyramidChart_9c1098a4958de7dc28c9c5591092ee7d = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.9c1098a4958de7dc28c9c5591092ee7d/obj.json"),
+};
+const i_PyramidChart_9df75da40b82a096fa12318db0892fca = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.9df75da40b82a096fa12318db0892fca/obj.json"),
 };
 const i_PyramidChart_9e5044f56899394fa76cf2fa6ae9e64f = {
     obj: require("./uiTestScenarios/insights/PyramidChart.9e5044f56899394fa76cf2fa6ae9e64f/obj.json"),
 };
+const i_PyramidChart_a0c16be6cdd33dc9bcb6ca6d5d6276b8 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a0c16be6cdd33dc9bcb6ca6d5d6276b8/obj.json"),
+};
+const i_PyramidChart_a24c028bf9c4ff00b1b43d2568992251 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a24c028bf9c4ff00b1b43d2568992251/obj.json"),
+};
+const i_PyramidChart_a4751a74b33ad8a23313bb9d7464dd73 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a4751a74b33ad8a23313bb9d7464dd73/obj.json"),
+};
+const i_PyramidChart_a5f661506f8759ae51e35b9e8021e4e5 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a5f661506f8759ae51e35b9e8021e4e5/obj.json"),
+};
+const i_PyramidChart_a74e2676acd136319e4a3fd0d3b0f1e6 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a74e2676acd136319e4a3fd0d3b0f1e6/obj.json"),
+};
+const i_PyramidChart_a9818b2aa67e2f5bde7a3d0bbbd2077d = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a9818b2aa67e2f5bde7a3d0bbbd2077d/obj.json"),
+};
+const i_PyramidChart_a98bc20c5127c4454a5e068854f8edcb = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.a98bc20c5127c4454a5e068854f8edcb/obj.json"),
+};
+const i_PyramidChart_ac1337debcd4e1256953713ee2e88787 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.ac1337debcd4e1256953713ee2e88787/obj.json"),
+};
+const i_PyramidChart_b779e6a3f3da404d87d0f398a918a5a5 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.b779e6a3f3da404d87d0f398a918a5a5/obj.json"),
+};
+const i_PyramidChart_c5307bc92b1bc74a939ebf120ac1b23e = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.c5307bc92b1bc74a939ebf120ac1b23e/obj.json"),
+};
 const i_PyramidChart_c68a087aa3dd851942307cd717aac4c4 = {
     obj: require("./uiTestScenarios/insights/PyramidChart.c68a087aa3dd851942307cd717aac4c4/obj.json"),
+};
+const i_PyramidChart_c94d7ebd48aed29e0e45da7b02dc2af9 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.c94d7ebd48aed29e0e45da7b02dc2af9/obj.json"),
+};
+const i_PyramidChart_cbcbf3516f913f24721d6ce86bcf9772 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.cbcbf3516f913f24721d6ce86bcf9772/obj.json"),
+};
+const i_PyramidChart_cd07eb102b6f9ca70a3d5fd1cf2976e0 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.cd07eb102b6f9ca70a3d5fd1cf2976e0/obj.json"),
+};
+const i_PyramidChart_cdf723a4eb67da572fd29ed202fb57ef = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.cdf723a4eb67da572fd29ed202fb57ef/obj.json"),
+};
+const i_PyramidChart_d40587e02dccf48b6c0c36f47729690d = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.d40587e02dccf48b6c0c36f47729690d/obj.json"),
+};
+const i_PyramidChart_d4bfb5c6617efc61bd028ffda1a51861 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.d4bfb5c6617efc61bd028ffda1a51861/obj.json"),
+};
+const i_PyramidChart_d90ffe4806c53e5ecaca5642a3454b33 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.d90ffe4806c53e5ecaca5642a3454b33/obj.json"),
+};
+const i_PyramidChart_da37ba963f0448ceebb031753a9822c1 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.da37ba963f0448ceebb031753a9822c1/obj.json"),
+};
+const i_PyramidChart_db13da12ba112fa82c43e000b841c5e6 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.db13da12ba112fa82c43e000b841c5e6/obj.json"),
+};
+const i_PyramidChart_e4390bcff96770591124550a6cbc4504 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e4390bcff96770591124550a6cbc4504/obj.json"),
+};
+const i_PyramidChart_e5a58f338d3e8b98c735210061d03643 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e5a58f338d3e8b98c735210061d03643/obj.json"),
+};
+const i_PyramidChart_e5f6d78d6556117a01c003a6a355b934 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e5f6d78d6556117a01c003a6a355b934/obj.json"),
+};
+const i_PyramidChart_e6c1fd8cf82ce8bc8dbcccfcf1c45571 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e6c1fd8cf82ce8bc8dbcccfcf1c45571/obj.json"),
+};
+const i_PyramidChart_e82c567c302ee22ca3b75c00f7e90d9d = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e82c567c302ee22ca3b75c00f7e90d9d/obj.json"),
+};
+const i_PyramidChart_e9668fd810a509137c594071d46b9cd9 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e9668fd810a509137c594071d46b9cd9/obj.json"),
+};
+const i_PyramidChart_e9d459dc094f831102d8e36a5bba30f3 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e9d459dc094f831102d8e36a5bba30f3/obj.json"),
+};
+const i_PyramidChart_e9ec534dc1addccfcdf387d3d224ba64 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.e9ec534dc1addccfcdf387d3d224ba64/obj.json"),
+};
+const i_PyramidChart_ec415270e8908a9f693de2acbd9b9fab = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.ec415270e8908a9f693de2acbd9b9fab/obj.json"),
+};
+const i_PyramidChart_effb3b549e4538ec21c7b27ed0f13eaa = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.effb3b549e4538ec21c7b27ed0f13eaa/obj.json"),
+};
+const i_PyramidChart_fb4398ba299316676cf72be3a1b85c99 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.fb4398ba299316676cf72be3a1b85c99/obj.json"),
+};
+const i_PyramidChart_fc8f6a25e8535404d7138d52a1a98d3a = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.fc8f6a25e8535404d7138d52a1a98d3a/obj.json"),
+};
+const i_PyramidChart_fdc00c1bad1d5d19ccac21804f66bd05 = {
+    obj: require("./uiTestScenarios/insights/PyramidChart.fdc00c1bad1d5d19ccac21804f66bd05/obj.json"),
 };
 const i_SankeyChart_028319311f1a319d889aee5ec859c3bc = {
     obj: require("./uiTestScenarios/insights/SankeyChart.028319311f1a319d889aee5ec859c3bc/obj.json"),
@@ -5038,14 +5417,230 @@ const i_Treemap_f9d30ca2da6044849becb6641771d6b0 = {
 const i_Treemap_feee56882501919c10d216c52d47c1a8 = {
     obj: require("./uiTestScenarios/insights/Treemap.feee56882501919c10d216c52d47c1a8/obj.json"),
 };
+const i_WaterfallChart_00fc0464b4956acf14d4a232bfb7d94a = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.00fc0464b4956acf14d4a232bfb7d94a/obj.json"),
+};
+const i_WaterfallChart_072b92dcebdcb9fb799302e7b382cd68 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.072b92dcebdcb9fb799302e7b382cd68/obj.json"),
+};
+const i_WaterfallChart_097e765bc576fa0e0318957c07e4614a = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.097e765bc576fa0e0318957c07e4614a/obj.json"),
+};
+const i_WaterfallChart_0e9c4210f4d5fe8958c12b287d205c10 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.0e9c4210f4d5fe8958c12b287d205c10/obj.json"),
+};
+const i_WaterfallChart_10bdaa8599e3822d56e156ae509f8fce = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.10bdaa8599e3822d56e156ae509f8fce/obj.json"),
+};
+const i_WaterfallChart_119b82deec4003c2077857f2aa59d60d = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.119b82deec4003c2077857f2aa59d60d/obj.json"),
+};
+const i_WaterfallChart_14d4b612826029f95ae90dc104850770 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.14d4b612826029f95ae90dc104850770/obj.json"),
+};
+const i_WaterfallChart_1c5eb57bdd81fa013f3857cabbc3f86b = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.1c5eb57bdd81fa013f3857cabbc3f86b/obj.json"),
+};
+const i_WaterfallChart_1cc8875071d54d47d048c30b22c0037f = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.1cc8875071d54d47d048c30b22c0037f/obj.json"),
+};
+const i_WaterfallChart_1ce3e2ac90c36235572ca584eb40369b = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.1ce3e2ac90c36235572ca584eb40369b/obj.json"),
+};
+const i_WaterfallChart_1e44f4c88749093386a6f69ed046c6cd = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.1e44f4c88749093386a6f69ed046c6cd/obj.json"),
+};
+const i_WaterfallChart_266b3460db1f8f3aa15579c3776581f1 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.266b3460db1f8f3aa15579c3776581f1/obj.json"),
+};
+const i_WaterfallChart_274539edc17aa55a9f34566c53b7af74 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.274539edc17aa55a9f34566c53b7af74/obj.json"),
+};
 const i_WaterfallChart_2a797bfd967c0ddf55985ff0123392e5 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.2a797bfd967c0ddf55985ff0123392e5/obj.json"),
+};
+const i_WaterfallChart_2ab42c8bff4f9f62a9c95f798571d1ea = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.2ab42c8bff4f9f62a9c95f798571d1ea/obj.json"),
+};
+const i_WaterfallChart_2b7e0868d7b43ac529d05af287d1756e = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.2b7e0868d7b43ac529d05af287d1756e/obj.json"),
+};
+const i_WaterfallChart_2c49575fbfeaf51a21346dfd413c4571 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.2c49575fbfeaf51a21346dfd413c4571/obj.json"),
+};
+const i_WaterfallChart_301f4cb90a0ff8f9f31e62f92234c3b0 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.301f4cb90a0ff8f9f31e62f92234c3b0/obj.json"),
+};
+const i_WaterfallChart_313823760a49996ee159ff71cc338034 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.313823760a49996ee159ff71cc338034/obj.json"),
+};
+const i_WaterfallChart_3162a227704c56f611105e4b92b6a597 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.3162a227704c56f611105e4b92b6a597/obj.json"),
+};
+const i_WaterfallChart_32e6939264f78445ba74bceff9213102 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.32e6939264f78445ba74bceff9213102/obj.json"),
+};
+const i_WaterfallChart_38ebab04e2da7dc710e29e7c52d8a2dc = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.38ebab04e2da7dc710e29e7c52d8a2dc/obj.json"),
+};
+const i_WaterfallChart_3dce281b7b1a552389fa105b6931ddb9 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.3dce281b7b1a552389fa105b6931ddb9/obj.json"),
+};
+const i_WaterfallChart_5620cdf31981a82d1083c503eed9fa56 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.5620cdf31981a82d1083c503eed9fa56/obj.json"),
+};
+const i_WaterfallChart_5e337da70dd103b5b555e6de4f1abf7f = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.5e337da70dd103b5b555e6de4f1abf7f/obj.json"),
+};
+const i_WaterfallChart_5fa47d5e951339b8ba1be7abde781fff = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.5fa47d5e951339b8ba1be7abde781fff/obj.json"),
+};
+const i_WaterfallChart_62a440743bc1cae8a5e3cc369dacbc48 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.62a440743bc1cae8a5e3cc369dacbc48/obj.json"),
+};
+const i_WaterfallChart_6a9f1abe52e5ff2629813a01997245f0 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.6a9f1abe52e5ff2629813a01997245f0/obj.json"),
+};
+const i_WaterfallChart_6acb0119d3aa8aa956262b0f41400a20 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.6acb0119d3aa8aa956262b0f41400a20/obj.json"),
+};
+const i_WaterfallChart_704bebe6ebdc0b8f6f8b7e45e1278865 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.704bebe6ebdc0b8f6f8b7e45e1278865/obj.json"),
+};
+const i_WaterfallChart_71512eb6af4e024514357f5b12546f7a = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.71512eb6af4e024514357f5b12546f7a/obj.json"),
+};
+const i_WaterfallChart_7179f8592293780d48436e5c829968e0 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.7179f8592293780d48436e5c829968e0/obj.json"),
+};
+const i_WaterfallChart_71d5a6635984032e9bee15e11da1767c = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.71d5a6635984032e9bee15e11da1767c/obj.json"),
+};
+const i_WaterfallChart_722bb140af79af4eaed21aaa6f55909b = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.722bb140af79af4eaed21aaa6f55909b/obj.json"),
+};
+const i_WaterfallChart_7469e0fcdbae6dbb14b7e7e02db12e42 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.7469e0fcdbae6dbb14b7e7e02db12e42/obj.json"),
+};
+const i_WaterfallChart_750253a18bc6ccbac67336df28af0414 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.750253a18bc6ccbac67336df28af0414/obj.json"),
+};
+const i_WaterfallChart_7941b886918b959b397db68b6b1d0744 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.7941b886918b959b397db68b6b1d0744/obj.json"),
+};
+const i_WaterfallChart_79a47c01f5d673bf46cb9a559ac34a0a = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.79a47c01f5d673bf46cb9a559ac34a0a/obj.json"),
+};
+const i_WaterfallChart_872f28fd76ce61dac6d4a0880eba61f6 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.872f28fd76ce61dac6d4a0880eba61f6/obj.json"),
+};
+const i_WaterfallChart_8daa0c4a5187e231ea52bf203513fdd1 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.8daa0c4a5187e231ea52bf203513fdd1/obj.json"),
+};
+const i_WaterfallChart_8dc463ce3a2a381c3c2d9b562bfe6e0d = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.8dc463ce3a2a381c3c2d9b562bfe6e0d/obj.json"),
 };
 const i_WaterfallChart_917b7a14a68849c9f98511b705dcdfd1 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.917b7a14a68849c9f98511b705dcdfd1/obj.json"),
 };
+const i_WaterfallChart_94720fb9e20fdba915237f2aee735b4b = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.94720fb9e20fdba915237f2aee735b4b/obj.json"),
+};
+const i_WaterfallChart_98bad7dc13a20392c60bf1a69cf8f3bb = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.98bad7dc13a20392c60bf1a69cf8f3bb/obj.json"),
+};
+const i_WaterfallChart_99f7d4c7b72916fc8537b2c3681e3fdc = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.99f7d4c7b72916fc8537b2c3681e3fdc/obj.json"),
+};
+const i_WaterfallChart_a59e2d64330fe4e31b7f1227ed817cce = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.a59e2d64330fe4e31b7f1227ed817cce/obj.json"),
+};
+const i_WaterfallChart_a8462e1def3f8fc9ccf020ddcc92b8a2 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.a8462e1def3f8fc9ccf020ddcc92b8a2/obj.json"),
+};
+const i_WaterfallChart_ad7249ba353dc9b816b52723fa6faac4 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.ad7249ba353dc9b816b52723fa6faac4/obj.json"),
+};
+const i_WaterfallChart_ad985b567c0c94bd55f04fe7c3898610 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.ad985b567c0c94bd55f04fe7c3898610/obj.json"),
+};
+const i_WaterfallChart_b87acc8ef7a64265b21f875c93c24935 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.b87acc8ef7a64265b21f875c93c24935/obj.json"),
+};
+const i_WaterfallChart_b88a6c7d3feb15760c2bacf685493ed8 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.b88a6c7d3feb15760c2bacf685493ed8/obj.json"),
+};
+const i_WaterfallChart_b9f52d22808d1f90947cc6497cd44c2f = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.b9f52d22808d1f90947cc6497cd44c2f/obj.json"),
+};
+const i_WaterfallChart_c26e9fd3d32a8fb707bc806ae44b8a65 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c26e9fd3d32a8fb707bc806ae44b8a65/obj.json"),
+};
+const i_WaterfallChart_c2a08779986113fac3613b069818e0c4 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c2a08779986113fac3613b069818e0c4/obj.json"),
+};
+const i_WaterfallChart_c32195b4e13bc65d61a36e199240a4c0 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c32195b4e13bc65d61a36e199240a4c0/obj.json"),
+};
+const i_WaterfallChart_c330b3ded67f589ca1717ebee1eac7f5 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.c330b3ded67f589ca1717ebee1eac7f5/obj.json"),
+};
 const i_WaterfallChart_c33d1b9464b049310aebe038257c2b04 = {
     obj: require("./uiTestScenarios/insights/WaterfallChart.c33d1b9464b049310aebe038257c2b04/obj.json"),
+};
+const i_WaterfallChart_cb51a19006d4639caada16eb2ef0d0fd = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.cb51a19006d4639caada16eb2ef0d0fd/obj.json"),
+};
+const i_WaterfallChart_cff7f5e77f3060ebb10b32808fcb96cf = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.cff7f5e77f3060ebb10b32808fcb96cf/obj.json"),
+};
+const i_WaterfallChart_d09ba4ed8ec8916ed588aa2b01f83066 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.d09ba4ed8ec8916ed588aa2b01f83066/obj.json"),
+};
+const i_WaterfallChart_d7ca7ee8eb46019983a84cba337d3f5c = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.d7ca7ee8eb46019983a84cba337d3f5c/obj.json"),
+};
+const i_WaterfallChart_da84d1d15324cc733e1e62592436610e = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.da84d1d15324cc733e1e62592436610e/obj.json"),
+};
+const i_WaterfallChart_e265dad62a3587264d85179b5e4adc4d = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.e265dad62a3587264d85179b5e4adc4d/obj.json"),
+};
+const i_WaterfallChart_e3ce503116aed97276647aaa896d88ae = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.e3ce503116aed97276647aaa896d88ae/obj.json"),
+};
+const i_WaterfallChart_e553f689c4decbc200725432df780e55 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.e553f689c4decbc200725432df780e55/obj.json"),
+};
+const i_WaterfallChart_e55f6713ca62f9d915d29ee367bf38bc = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.e55f6713ca62f9d915d29ee367bf38bc/obj.json"),
+};
+const i_WaterfallChart_f1cf6003ac5de776188ac5e406ebd6a1 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f1cf6003ac5de776188ac5e406ebd6a1/obj.json"),
+};
+const i_WaterfallChart_f240e01dc07089c63d660e4856531af5 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f240e01dc07089c63d660e4856531af5/obj.json"),
+};
+const i_WaterfallChart_f3366b5284c61c116fcb952189f18d64 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f3366b5284c61c116fcb952189f18d64/obj.json"),
+};
+const i_WaterfallChart_f386acf7225358d6e9a6e483c83a9a2f = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f386acf7225358d6e9a6e483c83a9a2f/obj.json"),
+};
+const i_WaterfallChart_f3c5220c0d153dcf5721e8d192f4cf07 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f3c5220c0d153dcf5721e8d192f4cf07/obj.json"),
+};
+const i_WaterfallChart_f4c15cfc51eed3c451df2dc03df86a90 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f4c15cfc51eed3c451df2dc03df86a90/obj.json"),
+};
+const i_WaterfallChart_f5e6c6094a518ed3887f751a87ed3c76 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f5e6c6094a518ed3887f751a87ed3c76/obj.json"),
+};
+const i_WaterfallChart_f65d773acd11ed836b709ec9389290f1 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f65d773acd11ed836b709ec9389290f1/obj.json"),
+};
+const i_WaterfallChart_f7d0306e9539b4a2c4a5d7ff1ec812d4 = {
+    obj: require("./uiTestScenarios/insights/WaterfallChart.f7d0306e9539b4a2c4a5d7ff1ec812d4/obj.json"),
 };
 const i_Xirr_2dd4cca9665e247c85d40e207b212db7 = {
     obj: require("./uiTestScenarios/insights/Xirr.2dd4cca9665e247c85d40e207b212db7/obj.json"),
@@ -5315,8 +5910,12 @@ export const Insights = {
         SingleMeasureAndViewByFilteredToOneElement: i_Treemap_f92fe7048e24a76694640e2707aea183,
     },
     WaterfallChart: {
+        Themed: i_WaterfallChart_0e9c4210f4d5fe8958c12b287d205c10,
         SingleMeasureWithViewBy: i_WaterfallChart_2a797bfd967c0ddf55985ff0123392e5,
+        MultiMeasuresWithThemed: i_WaterfallChart_71d5a6635984032e9bee15e11da1767c,
         SingleMeasure: i_WaterfallChart_917b7a14a68849c9f98511b705dcdfd1,
+        MultiMeasuresWithFont: i_WaterfallChart_a59e2d64330fe4e31b7f1227ed817cce,
+        Font: i_WaterfallChart_b9f52d22808d1f90947cc6497cd44c2f,
         MultiMeasures: i_WaterfallChart_c33d1b9464b049310aebe038257c2b04,
     },
     Xirr: {
@@ -5477,6 +6076,7 @@ export const Recordings = {
         fp_b8d61c014cc804acb6cbf6497d28fda7,
         fp_ba2d55dcb642baee97a442c5e88d33cd,
         fp_ba942f3e77e766d51677b6438eb470e1,
+        fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2,
         fp_bcf69fa3cf04052d9e92e1713d8cdf0e,
         fp_c1ea61c78a68d705df9a594cf1d8c196,
         fp_c1ed8778da15e48fba8dbb2c00576c77,
@@ -5506,6 +6106,7 @@ export const Recordings = {
         fp_e6413584349322c0dbc6dae41178acb4,
         fp_ea221dc2a27bfbf82a0b9d55f7e4f89f,
         fp_ec4ab5aacbca8cd180d2bc8115d8cfb7,
+        fp_ecad8b212ff0fc45b3c5838e39285beb,
         fp_edd2872a4849d589547def7de056b654,
         fp_f054f2b1c92d5480e3578f6e4279c71d,
         fp_f08540a813dc900e418a3a7df8381aa0,
@@ -5518,8 +6119,6 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
-        fp_bcd68102a8b9ff4d1971e7c7fb6bc5f2,
-        fp_ecad8b212ff0fc45b3c5838e39285beb,
     },
     metadata: {
         catalog,
@@ -6282,15 +6881,79 @@ export const Recordings = {
             i_DonutChart_e208db00287ca98de827d8edd9bb1cd1,
             i_DonutChart_ec22a82cf1d285839cd56258968ad25c,
             i_DonutChart_f7aea0c0f284696af4846249255ac262,
+            i_FunnelChart_00c9a0075155f0a48a5767ea23cd0173,
+            i_FunnelChart_00dea338db78b5d4a600a8d6ae8d4fb8,
+            i_FunnelChart_06147c87d19b9e491aa511d59f6e270b,
+            i_FunnelChart_063a6de71c9acfce6219262984ac94ca,
+            i_FunnelChart_0686f741b2c997bccf40567b5c98b042,
+            i_FunnelChart_0cf49c56caea94747adea199d8cfeefa,
+            i_FunnelChart_12f25d08db15b3c362006ee6d6b7d559,
+            i_FunnelChart_221df77bff2107f1a7b1fc0b35db6ee0,
+            i_FunnelChart_2379699740a0421baa711d25e0fd97b0,
+            i_FunnelChart_2403813525633a94cf2a8460c112b761,
+            i_FunnelChart_2f066fe0d3de7c48c6ea463ab33aaa4d,
+            i_FunnelChart_3fb73844e5343532b930b3f1f9d587cc,
+            i_FunnelChart_411fd834dba6ede1054d1399d297cf4c,
+            i_FunnelChart_429a6b3ac217e2bff72c16ea39413586,
+            i_FunnelChart_4cbbd4abd333238d01da356a08f22525,
+            i_FunnelChart_5219da3a3c892ad4d0d6053e6fa5c318,
+            i_FunnelChart_5223ed56a9ad1e98b58b6c30592bec2a,
+            i_FunnelChart_5bb9508ffb5077a1577b58ed609ba165,
+            i_FunnelChart_602a8d256ad4e74994d9fb46ea43b91d,
+            i_FunnelChart_645545ecf85509809f8d0c90a8851914,
+            i_FunnelChart_67dc7a6577892fb22896cb294c7ca93c,
+            i_FunnelChart_6aa93bf70312bfa425c1606621692be0,
+            i_FunnelChart_6acca095f48c503a2bd8d1e8ee887346,
+            i_FunnelChart_6ad6442f92fcade351c2e1360f8a51d4,
+            i_FunnelChart_6eb387f0ba8d6e46144ae4eff9dfd54c,
             i_FunnelChart_724f3a1a7c032a0ab486b2bfc5411fa6,
+            i_FunnelChart_72d7d2d7bb291ff16bce6e06fa2d73f2,
+            i_FunnelChart_75054dab6f7946a2b38b33a27c09fbbc,
+            i_FunnelChart_7998f8e18126a5518830f41f4de365ca,
+            i_FunnelChart_7b7a1150e0d5a482aaa8e40094bc3f3b,
             i_FunnelChart_83976a5542ca9df0ea1bf08e19823033,
+            i_FunnelChart_85524049b2ea9ae7ff110cec2c71c5b6,
+            i_FunnelChart_85fd31a43c12a769cc19bea4e71565f1,
+            i_FunnelChart_883492d88fb6f94a3b60295e36fa2c1b,
+            i_FunnelChart_8cd9977761d23561288726b04105491b,
             i_FunnelChart_8fc79843b9f3b1928ef01105b5e12d99,
+            i_FunnelChart_908d3598a872cce45722608e5611778d,
+            i_FunnelChart_91ec67f1dbf4166cdd9f6cf9a654aa32,
+            i_FunnelChart_a1150a703f6989894db15ed4f0711f6d,
             i_FunnelChart_a275c15d125bb4c2ac125ed6bf771523,
+            i_FunnelChart_a54608317f04f8a6eaeb1e92aa209afc,
+            i_FunnelChart_a9615c10579057612b71e580435b062d,
+            i_FunnelChart_ae3be80fa6350d2b00e3de8205d15beb,
+            i_FunnelChart_b009bfade0e4ab9505bed65a0e331f41,
+            i_FunnelChart_b20f7df46524e1435297140fca568163,
+            i_FunnelChart_b4647d0c69fc78c42c3961599da381a6,
+            i_FunnelChart_b4764ad2de1221b1b438482a320fe823,
+            i_FunnelChart_b7b8465713fb51bae8b682c1701e187d,
+            i_FunnelChart_b7f528cbb6fe987ffaa1de305f87300a,
+            i_FunnelChart_b97a1acf34ef9444320c1828adf7c744,
+            i_FunnelChart_bbca0e60dcc9882a5e65df27180516ec,
+            i_FunnelChart_c1c4500edc66459b65b33ce60e505bcd,
+            i_FunnelChart_c2272affee4b8a79392044992070114e,
+            i_FunnelChart_c6dc36b163271595a086b42b176cc083,
             i_FunnelChart_c8c4bd66f9a92aefb66ed4231721d190,
+            i_FunnelChart_c915a6153592fc73187b13571c725a8f,
+            i_FunnelChart_ca52fad62c72e4836755e458697d7a92,
+            i_FunnelChart_caf26194d886f7ce32396d85b8f78dc4,
             i_FunnelChart_cb31fbf27a3db63eb6524cc8660b03fd,
+            i_FunnelChart_ce8105b57a64e7c5fcb267810a8aae44,
+            i_FunnelChart_d2c2487d24a9555f188ecadd288139c5,
+            i_FunnelChart_d811f6be19684684e1f963062d12eaa8,
+            i_FunnelChart_d8fe8e0cd5ea3d4f9e3766a7c8e1f7ed,
+            i_FunnelChart_dc8c3fb4eef017e11776e6652cd85085,
+            i_FunnelChart_de9933a4be2126efaad7390d101b3bb2,
             i_FunnelChart_e26196f7a6b5f1f5b1147a1791ec065f,
+            i_FunnelChart_e2ea8e925196710b0a1bfc6162926431,
             i_FunnelChart_eb371d4d3e9deffd69976abde6392f99,
             i_FunnelChart_ec97a9a234a510f8a9eb9a8ef86ac1e2,
+            i_FunnelChart_ef1dbce338f515c9f279a265d1c2e02c,
+            i_FunnelChart_efe22026d8653ac8816cfbf62ab22017,
+            i_FunnelChart_f7181c58469d3fb723e62e92d315e8cf,
+            i_FunnelChart_f81e4fee4294286b6e354c2711bbb708,
             i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955,
             i_Headline_346303855acfc20de32fcfcef4a77a57,
             i_Headline_5a15a98985dbd7379cf2d185cc65f229,
@@ -6572,13 +7235,74 @@ export const Recordings = {
             i_PyramidChart_05aea2e4135f05f4f3e5ce52711e1686,
             i_PyramidChart_1009bf223b82efe816a16ccb1d1f7744,
             i_PyramidChart_11a6118f2fcc03ee66a9e651e00dd644,
+            i_PyramidChart_13a8a85e72d611c77152e388e9148ad5,
+            i_PyramidChart_1628c8f3af17f06b7d6ce629184e683f,
+            i_PyramidChart_1a153bba4d7a04859a8eb8dc5eb3c587,
+            i_PyramidChart_20c421ae83d8cd9d1bef699f69a3e034,
+            i_PyramidChart_28d528971fc5791937ce3451239fce61,
             i_PyramidChart_33d920b92ca4575ce35c637de927dc9c,
+            i_PyramidChart_38328cddb6933becf186da06f5f24d01,
+            i_PyramidChart_3a117110b8e7851b2839d9fe1630d42a,
+            i_PyramidChart_3bf3c2cd04b0971f2ca3538ce6cdaed8,
+            i_PyramidChart_43df4e89f7801be00c4c57f37d89138a,
             i_PyramidChart_464eb5fb4642e4aad8b6db76f42ea7ad,
+            i_PyramidChart_4b7b2433d705b459835cbb4265e04c0b,
+            i_PyramidChart_4fbde5c00e3821df58b1a37a8bf678b3,
             i_PyramidChart_51bc95c3040626e1a5c50dff0615547f,
+            i_PyramidChart_566ed9204ec9005fbd39aea3c0a84b0d,
+            i_PyramidChart_5ed7129be22d0860573061b5135a23a6,
+            i_PyramidChart_5f8701cbc058ef6b1e3c0b4e37c6301e,
+            i_PyramidChart_60972b3b8e7663f2cff620e7213d2fe2,
+            i_PyramidChart_62503683a356a2acc11e08e90ecfa889,
+            i_PyramidChart_625d6873bb223839e220d473292dc683,
+            i_PyramidChart_63d2c4e3f7474ecf1f677006f96b62bd,
             i_PyramidChart_6bff428344dca9ab143adbed602c5c83,
+            i_PyramidChart_6de6e6a15eb3ad4acd639b3f90ba5ab0,
+            i_PyramidChart_732ccaf4e76f3f5f81ea8f688a0f876f,
+            i_PyramidChart_7b27fed4d239047ce30554cf47cb7f8b,
+            i_PyramidChart_86c2a4835165a7b68e8004e89f382e53,
             i_PyramidChart_8758ca3e6e1bedfa64fdcce265138e08,
+            i_PyramidChart_88253df78ca6b050e55891e357824324,
+            i_PyramidChart_8bc77a4d364e518b32e1c80733480dcc,
+            i_PyramidChart_8d349d618e177fd6494d5435f36a5625,
+            i_PyramidChart_8e1eaa94919d52c2c84eaa57e1ef27ad,
+            i_PyramidChart_97c8204d27ea32ea7fa4ef90b5bde393,
+            i_PyramidChart_9c1098a4958de7dc28c9c5591092ee7d,
+            i_PyramidChart_9df75da40b82a096fa12318db0892fca,
             i_PyramidChart_9e5044f56899394fa76cf2fa6ae9e64f,
+            i_PyramidChart_a0c16be6cdd33dc9bcb6ca6d5d6276b8,
+            i_PyramidChart_a24c028bf9c4ff00b1b43d2568992251,
+            i_PyramidChart_a4751a74b33ad8a23313bb9d7464dd73,
+            i_PyramidChart_a5f661506f8759ae51e35b9e8021e4e5,
+            i_PyramidChart_a74e2676acd136319e4a3fd0d3b0f1e6,
+            i_PyramidChart_a9818b2aa67e2f5bde7a3d0bbbd2077d,
+            i_PyramidChart_a98bc20c5127c4454a5e068854f8edcb,
+            i_PyramidChart_ac1337debcd4e1256953713ee2e88787,
+            i_PyramidChart_b779e6a3f3da404d87d0f398a918a5a5,
+            i_PyramidChart_c5307bc92b1bc74a939ebf120ac1b23e,
             i_PyramidChart_c68a087aa3dd851942307cd717aac4c4,
+            i_PyramidChart_c94d7ebd48aed29e0e45da7b02dc2af9,
+            i_PyramidChart_cbcbf3516f913f24721d6ce86bcf9772,
+            i_PyramidChart_cd07eb102b6f9ca70a3d5fd1cf2976e0,
+            i_PyramidChart_cdf723a4eb67da572fd29ed202fb57ef,
+            i_PyramidChart_d40587e02dccf48b6c0c36f47729690d,
+            i_PyramidChart_d4bfb5c6617efc61bd028ffda1a51861,
+            i_PyramidChart_d90ffe4806c53e5ecaca5642a3454b33,
+            i_PyramidChart_da37ba963f0448ceebb031753a9822c1,
+            i_PyramidChart_db13da12ba112fa82c43e000b841c5e6,
+            i_PyramidChart_e4390bcff96770591124550a6cbc4504,
+            i_PyramidChart_e5a58f338d3e8b98c735210061d03643,
+            i_PyramidChart_e5f6d78d6556117a01c003a6a355b934,
+            i_PyramidChart_e6c1fd8cf82ce8bc8dbcccfcf1c45571,
+            i_PyramidChart_e82c567c302ee22ca3b75c00f7e90d9d,
+            i_PyramidChart_e9668fd810a509137c594071d46b9cd9,
+            i_PyramidChart_e9d459dc094f831102d8e36a5bba30f3,
+            i_PyramidChart_e9ec534dc1addccfcdf387d3d224ba64,
+            i_PyramidChart_ec415270e8908a9f693de2acbd9b9fab,
+            i_PyramidChart_effb3b549e4538ec21c7b27ed0f13eaa,
+            i_PyramidChart_fb4398ba299316676cf72be3a1b85c99,
+            i_PyramidChart_fc8f6a25e8535404d7138d52a1a98d3a,
+            i_PyramidChart_fdc00c1bad1d5d19ccac21804f66bd05,
             i_SankeyChart_028319311f1a319d889aee5ec859c3bc,
             i_SankeyChart_03046555df983753f0b597952ae43d81,
             i_SankeyChart_0ebbf1cd21c2bd6499bf93d9ce555584,
@@ -6739,9 +7463,81 @@ export const Recordings = {
             i_Treemap_f9d0fe254f0cf5a8c3486ee7e13ba371,
             i_Treemap_f9d30ca2da6044849becb6641771d6b0,
             i_Treemap_feee56882501919c10d216c52d47c1a8,
+            i_WaterfallChart_00fc0464b4956acf14d4a232bfb7d94a,
+            i_WaterfallChart_072b92dcebdcb9fb799302e7b382cd68,
+            i_WaterfallChart_097e765bc576fa0e0318957c07e4614a,
+            i_WaterfallChart_0e9c4210f4d5fe8958c12b287d205c10,
+            i_WaterfallChart_10bdaa8599e3822d56e156ae509f8fce,
+            i_WaterfallChart_119b82deec4003c2077857f2aa59d60d,
+            i_WaterfallChart_14d4b612826029f95ae90dc104850770,
+            i_WaterfallChart_1c5eb57bdd81fa013f3857cabbc3f86b,
+            i_WaterfallChart_1cc8875071d54d47d048c30b22c0037f,
+            i_WaterfallChart_1ce3e2ac90c36235572ca584eb40369b,
+            i_WaterfallChart_1e44f4c88749093386a6f69ed046c6cd,
+            i_WaterfallChart_266b3460db1f8f3aa15579c3776581f1,
+            i_WaterfallChart_274539edc17aa55a9f34566c53b7af74,
             i_WaterfallChart_2a797bfd967c0ddf55985ff0123392e5,
+            i_WaterfallChart_2ab42c8bff4f9f62a9c95f798571d1ea,
+            i_WaterfallChart_2b7e0868d7b43ac529d05af287d1756e,
+            i_WaterfallChart_2c49575fbfeaf51a21346dfd413c4571,
+            i_WaterfallChart_301f4cb90a0ff8f9f31e62f92234c3b0,
+            i_WaterfallChart_313823760a49996ee159ff71cc338034,
+            i_WaterfallChart_3162a227704c56f611105e4b92b6a597,
+            i_WaterfallChart_32e6939264f78445ba74bceff9213102,
+            i_WaterfallChart_38ebab04e2da7dc710e29e7c52d8a2dc,
+            i_WaterfallChart_3dce281b7b1a552389fa105b6931ddb9,
+            i_WaterfallChart_5620cdf31981a82d1083c503eed9fa56,
+            i_WaterfallChart_5e337da70dd103b5b555e6de4f1abf7f,
+            i_WaterfallChart_5fa47d5e951339b8ba1be7abde781fff,
+            i_WaterfallChart_62a440743bc1cae8a5e3cc369dacbc48,
+            i_WaterfallChart_6a9f1abe52e5ff2629813a01997245f0,
+            i_WaterfallChart_6acb0119d3aa8aa956262b0f41400a20,
+            i_WaterfallChart_704bebe6ebdc0b8f6f8b7e45e1278865,
+            i_WaterfallChart_71512eb6af4e024514357f5b12546f7a,
+            i_WaterfallChart_7179f8592293780d48436e5c829968e0,
+            i_WaterfallChart_71d5a6635984032e9bee15e11da1767c,
+            i_WaterfallChart_722bb140af79af4eaed21aaa6f55909b,
+            i_WaterfallChart_7469e0fcdbae6dbb14b7e7e02db12e42,
+            i_WaterfallChart_750253a18bc6ccbac67336df28af0414,
+            i_WaterfallChart_7941b886918b959b397db68b6b1d0744,
+            i_WaterfallChart_79a47c01f5d673bf46cb9a559ac34a0a,
+            i_WaterfallChart_872f28fd76ce61dac6d4a0880eba61f6,
+            i_WaterfallChart_8daa0c4a5187e231ea52bf203513fdd1,
+            i_WaterfallChart_8dc463ce3a2a381c3c2d9b562bfe6e0d,
             i_WaterfallChart_917b7a14a68849c9f98511b705dcdfd1,
+            i_WaterfallChart_94720fb9e20fdba915237f2aee735b4b,
+            i_WaterfallChart_98bad7dc13a20392c60bf1a69cf8f3bb,
+            i_WaterfallChart_99f7d4c7b72916fc8537b2c3681e3fdc,
+            i_WaterfallChart_a59e2d64330fe4e31b7f1227ed817cce,
+            i_WaterfallChart_a8462e1def3f8fc9ccf020ddcc92b8a2,
+            i_WaterfallChart_ad7249ba353dc9b816b52723fa6faac4,
+            i_WaterfallChart_ad985b567c0c94bd55f04fe7c3898610,
+            i_WaterfallChart_b87acc8ef7a64265b21f875c93c24935,
+            i_WaterfallChart_b88a6c7d3feb15760c2bacf685493ed8,
+            i_WaterfallChart_b9f52d22808d1f90947cc6497cd44c2f,
+            i_WaterfallChart_c26e9fd3d32a8fb707bc806ae44b8a65,
+            i_WaterfallChart_c2a08779986113fac3613b069818e0c4,
+            i_WaterfallChart_c32195b4e13bc65d61a36e199240a4c0,
+            i_WaterfallChart_c330b3ded67f589ca1717ebee1eac7f5,
             i_WaterfallChart_c33d1b9464b049310aebe038257c2b04,
+            i_WaterfallChart_cb51a19006d4639caada16eb2ef0d0fd,
+            i_WaterfallChart_cff7f5e77f3060ebb10b32808fcb96cf,
+            i_WaterfallChart_d09ba4ed8ec8916ed588aa2b01f83066,
+            i_WaterfallChart_d7ca7ee8eb46019983a84cba337d3f5c,
+            i_WaterfallChart_da84d1d15324cc733e1e62592436610e,
+            i_WaterfallChart_e265dad62a3587264d85179b5e4adc4d,
+            i_WaterfallChart_e3ce503116aed97276647aaa896d88ae,
+            i_WaterfallChart_e553f689c4decbc200725432df780e55,
+            i_WaterfallChart_e55f6713ca62f9d915d29ee367bf38bc,
+            i_WaterfallChart_f1cf6003ac5de776188ac5e406ebd6a1,
+            i_WaterfallChart_f240e01dc07089c63d660e4856531af5,
+            i_WaterfallChart_f3366b5284c61c116fcb952189f18d64,
+            i_WaterfallChart_f386acf7225358d6e9a6e483c83a9a2f,
+            i_WaterfallChart_f3c5220c0d153dcf5721e8d192f4cf07,
+            i_WaterfallChart_f4c15cfc51eed3c451df2dc03df86a90,
+            i_WaterfallChart_f5e6c6094a518ed3887f751a87ed3c76,
+            i_WaterfallChart_f65d773acd11ed836b709ec9389290f1,
+            i_WaterfallChart_f7d0306e9539b4a2c4a5d7ff1ec812d4,
             i_Xirr_2dd4cca9665e247c85d40e207b212db7,
             i_Xirr_74456ce90909b92d28a01949e02ac574,
             i_Xirr_e5deb6dfe7ff06cdc5210a56fc84c841,

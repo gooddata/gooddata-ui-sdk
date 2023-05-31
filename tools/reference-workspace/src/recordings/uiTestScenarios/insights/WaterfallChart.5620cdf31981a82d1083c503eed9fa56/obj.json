@@ -1,0 +1,69 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.stagehistory.duration", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_fact.stagehistory.duration_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.stagehistory.velocity", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_fact.stagehistory.velocity_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.probability",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_fact.opportunitysnapshot.probability_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.5620cdf31981a82d1083c503eed9fa56",
+        "properties": { "controls": { "total": { "enabled": false } } },
+        "sorts": [],
+        "title": "WaterfallChart - disable total column",
+        "uri": "WaterfallChart.5620cdf31981a82d1083c503eed9fa56",
+        "visualizationUrl": "local:waterfall"
+    }
+}

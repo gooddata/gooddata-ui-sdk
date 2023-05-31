@@ -1,0 +1,39 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "FunnelChart.ca52fad62c72e4836755e458697d7a92",
+        "properties": { "controls": { "dataLabels": { "visible": "auto" } } },
+        "sorts": [],
+        "title": "FunnelChart - data labels - auto visibility",
+        "uri": "FunnelChart.ca52fad62c72e4836755e458697d7a92",
+        "visualizationUrl": "local:funnel"
+    }
+}

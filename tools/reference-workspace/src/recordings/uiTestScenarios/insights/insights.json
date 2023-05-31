@@ -4407,20 +4407,244 @@
     "Treemap.feee56882501919c10d216c52d47c1a8": {
         "comment": "Auto-generated insight for test scenario Treemap - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
     },
+    "WaterfallChart.00fc0464b4956acf14d4a232bfb7d94a": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
+    },
+    "WaterfallChart.072b92dcebdcb9fb799302e7b382cd68": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - auto legend."
+    },
+    "WaterfallChart.097e765bc576fa0e0318957c07e4614a": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on top."
+    },
+    "WaterfallChart.0e9c4210f4d5fe8958c12b287d205c10": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - themed.",
+        "scenarioName": "themed",
+        "visName": "WaterfallChart"
+    },
+    "WaterfallChart.10bdaa8599e3822d56e156ae509f8fce": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "WaterfallChart.119b82deec4003c2077857f2aa59d60d": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - default legend."
+    },
+    "WaterfallChart.14d4b612826029f95ae90dc104850770": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - forced dataLabels visible and german separators."
+    },
+    "WaterfallChart.1c5eb57bdd81fa013f3857cabbc3f86b": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend at bottom."
+    },
+    "WaterfallChart.1cc8875071d54d47d048c30b22c0037f": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - legend at bottom."
+    },
+    "WaterfallChart.1ce3e2ac90c36235572ca584eb40369b": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend at bottom."
+    },
+    "WaterfallChart.1e44f4c88749093386a6f69ed046c6cd": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels auto visibility."
+    },
+    "WaterfallChart.266b3460db1f8f3aa15579c3776581f1": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
+    },
+    "WaterfallChart.274539edc17aa55a9f34566c53b7af74": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - change the total column name."
+    },
     "WaterfallChart.2a797bfd967c0ddf55985ff0123392e5": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - single measure with viewBy.",
         "scenarioName": "single measure with viewBy",
         "visName": "WaterfallChart"
+    },
+    "WaterfallChart.2ab42c8bff4f9f62a9c95f798571d1ea": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "WaterfallChart.2b7e0868d7b43ac529d05af287d1756e": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "WaterfallChart.2c49575fbfeaf51a21346dfd413c4571": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
+    },
+    "WaterfallChart.301f4cb90a0ff8f9f31e62f92234c3b0": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "WaterfallChart.313823760a49996ee159ff71cc338034": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - default."
+    },
+    "WaterfallChart.3162a227704c56f611105e4b92b6a597": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - auto legend."
+    },
+    "WaterfallChart.32e6939264f78445ba74bceff9213102": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
+    },
+    "WaterfallChart.38ebab04e2da7dc710e29e7c52d8a2dc": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels forced visible."
+    },
+    "WaterfallChart.3dce281b7b1a552389fa105b6931ddb9": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - legend on right."
+    },
+    "WaterfallChart.5620cdf31981a82d1083c503eed9fa56": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - disable total column."
+    },
+    "WaterfallChart.5e337da70dd103b5b555e6de4f1abf7f": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
+    },
+    "WaterfallChart.5fa47d5e951339b8ba1be7abde781fff": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - legend on left."
+    },
+    "WaterfallChart.62a440743bc1cae8a5e3cc369dacbc48": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - default legend."
+    },
+    "WaterfallChart.6a9f1abe52e5ff2629813a01997245f0": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - legend on top."
+    },
+    "WaterfallChart.6acb0119d3aa8aa956262b0f41400a20": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - default legend."
+    },
+    "WaterfallChart.704bebe6ebdc0b8f6f8b7e45e1278865": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
+    },
+    "WaterfallChart.71512eb6af4e024514357f5b12546f7a": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - default legend."
+    },
+    "WaterfallChart.7179f8592293780d48436e5c829968e0": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
+    },
+    "WaterfallChart.71d5a6635984032e9bee15e11da1767c": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - multi measures with themed.",
+        "scenarioName": "multi measures with themed",
+        "visName": "WaterfallChart"
+    },
+    "WaterfallChart.722bb140af79af4eaed21aaa6f55909b": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - auto legend."
+    },
+    "WaterfallChart.7469e0fcdbae6dbb14b7e7e02db12e42": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right."
+    },
+    "WaterfallChart.750253a18bc6ccbac67336df28af0414": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "WaterfallChart.7941b886918b959b397db68b6b1d0744": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - auto legend."
+    },
+    "WaterfallChart.79a47c01f5d673bf46cb9a559ac34a0a": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - disabled."
+    },
+    "WaterfallChart.872f28fd76ce61dac6d4a0880eba61f6": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - coloring - custom palette."
+    },
+    "WaterfallChart.8daa0c4a5187e231ea52bf203513fdd1": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on top."
+    },
+    "WaterfallChart.8dc463ce3a2a381c3c2d9b562bfe6e0d": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels forced hidden totals forced visible."
     },
     "WaterfallChart.917b7a14a68849c9f98511b705dcdfd1": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - single measure.",
         "scenarioName": "single measure",
         "visName": "WaterfallChart"
     },
+    "WaterfallChart.94720fb9e20fdba915237f2aee735b4b": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - default legend."
+    },
+    "WaterfallChart.98bad7dc13a20392c60bf1a69cf8f3bb": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend."
+    },
+    "WaterfallChart.99f7d4c7b72916fc8537b2c3681e3fdc": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "WaterfallChart.a59e2d64330fe4e31b7f1227ed817cce": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - multi measures with font.",
+        "scenarioName": "multi measures with font",
+        "visName": "WaterfallChart"
+    },
+    "WaterfallChart.a8462e1def3f8fc9ccf020ddcc92b8a2": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels forced hidden."
+    },
+    "WaterfallChart.ad7249ba353dc9b816b52723fa6faac4": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
+    },
+    "WaterfallChart.ad985b567c0c94bd55f04fe7c3898610": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - default legend."
+    },
+    "WaterfallChart.b87acc8ef7a64265b21f875c93c24935": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - legend at bottom."
+    },
+    "WaterfallChart.b88a6c7d3feb15760c2bacf685493ed8": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
+    },
+    "WaterfallChart.b9f52d22808d1f90947cc6497cd44c2f": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - font.",
+        "scenarioName": "font",
+        "visName": "WaterfallChart"
+    },
+    "WaterfallChart.c26e9fd3d32a8fb707bc806ae44b8a65": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - default legend."
+    },
+    "WaterfallChart.c2a08779986113fac3613b069818e0c4": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - auto legend."
+    },
+    "WaterfallChart.c32195b4e13bc65d61a36e199240a4c0": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
+    },
+    "WaterfallChart.c330b3ded67f589ca1717ebee1eac7f5": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - default legend."
+    },
     "WaterfallChart.c33d1b9464b049310aebe038257c2b04": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - multi measures.",
         "scenarioName": "multi measures",
         "visName": "WaterfallChart"
+    },
+    "WaterfallChart.cb51a19006d4639caada16eb2ef0d0fd": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - auto legend."
+    },
+    "WaterfallChart.cff7f5e77f3060ebb10b32808fcb96cf": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
+    },
+    "WaterfallChart.d09ba4ed8ec8916ed588aa2b01f83066": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - labels forced hidden totals auto visibility."
+    },
+    "WaterfallChart.d7ca7ee8eb46019983a84cba337d3f5c": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - legend on right."
+    },
+    "WaterfallChart.da84d1d15324cc733e1e62592436610e": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "WaterfallChart.e265dad62a3587264d85179b5e4adc4d": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - legend on left."
+    },
+    "WaterfallChart.e3ce503116aed97276647aaa896d88ae": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
+    },
+    "WaterfallChart.e553f689c4decbc200725432df780e55": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - auto legend."
+    },
+    "WaterfallChart.e55f6713ca62f9d915d29ee367bf38bc": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top."
+    },
+    "WaterfallChart.f1cf6003ac5de776188ac5e406ebd6a1": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels and totals with auto visibility."
+    },
+    "WaterfallChart.f240e01dc07089c63d660e4856531af5": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
+    },
+    "WaterfallChart.f3366b5284c61c116fcb952189f18d64": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - assign color to measures."
+    },
+    "WaterfallChart.f386acf7225358d6e9a6e483c83a9a2f": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "WaterfallChart.f3c5220c0d153dcf5721e8d192f4cf07": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right."
+    },
+    "WaterfallChart.f4c15cfc51eed3c451df2dc03df86a90": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
+    },
+    "WaterfallChart.f5e6c6094a518ed3887f751a87ed3c76": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels forced hidden totals forced hidden."
+    },
+    "WaterfallChart.f65d773acd11ed836b709ec9389290f1": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - legend on top."
+    },
+    "WaterfallChart.f7d0306e9539b4a2c4a5d7ff1ec812d4": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on right."
     },
     "Xirr.2dd4cca9665e247c85d40e207b212db7": {
         "comment": "Auto-generated insight for test scenario Xirr - correct config.",

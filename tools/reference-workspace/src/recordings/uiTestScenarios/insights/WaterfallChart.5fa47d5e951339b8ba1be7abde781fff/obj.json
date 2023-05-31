@@ -1,0 +1,46 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.5fa47d5e951339b8ba1be7abde781fff",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "left", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "WaterfallChart - 610x154 - Force position RIGHT - legend on left",
+        "uri": "WaterfallChart.5fa47d5e951339b8ba1be7abde781fff",
+        "visualizationUrl": "local:waterfall"
+    }
+}

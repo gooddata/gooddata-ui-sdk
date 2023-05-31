@@ -1,0 +1,39 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "PyramidChart.8e1eaa94919d52c2c84eaa57e1ef27ad",
+        "properties": { "controls": { "legend": { "position": "bottom" } } },
+        "sorts": [],
+        "title": "PyramidChart - legend position - two measures - legend at bottom",
+        "uri": "PyramidChart.8e1eaa94919d52c2c84eaa57e1ef27ad",
+        "visualizationUrl": "local:pyramid"
+    }
+}

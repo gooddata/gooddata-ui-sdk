@@ -1,0 +1,46 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.2c49575fbfeaf51a21346dfd413c4571",
+        "properties": {
+            "controls": {
+                "legend": { "enabled": true, "position": "top", "responsive": "autoPositionWithPopup" }
+            }
+        },
+        "sorts": [],
+        "title": "WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top",
+        "uri": "WaterfallChart.2c49575fbfeaf51a21346dfd413c4571",
+        "visualizationUrl": "local:waterfall"
+    }
+}
