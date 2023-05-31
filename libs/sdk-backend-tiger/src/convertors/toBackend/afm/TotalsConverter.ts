@@ -12,6 +12,7 @@ import {
     ITotal,
     MeasureGroupIdentifier,
     TotalType,
+    IMeasure,
 } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
@@ -20,6 +21,16 @@ import { dimensionLocalIdentifier } from "./DimensionsConverter";
 const ATTRIBUTE = "attribute";
 const COLUMNS = "columns";
 
+function getMeasureOrder(total: Total, measures: IMeasure[]) {
+    return measures.findIndex((m) => m.measure.localIdentifier === total.metric);
+}
+
+function enrichTotalWithMeasureIndex(total: Total, measures: IMeasure[]) {
+    return {
+        order: getMeasureOrder(total, measures),
+        total,
+    };
+}
 /**
  * Extracts total definitions from execution definition dimensions and converts them into total specifications for
  * Tiger AFM. Execution definition defines totals by a measure, aggregation function, and the attribute for whose
@@ -39,7 +50,7 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
     });
 
     const totals = flatMap(dimensions, (dim, dimIdx) => {
-        return dim.totals?.map((total) => {
+        const mappedTotals = dim.totals?.map((total) => {
             const tigerTotal: Total = {
                 localIdentifier: totalLocalIdentifier(total, dimIdx),
                 function: convertTotalType(total.type),
@@ -53,6 +64,12 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
             };
             return tigerTotal;
         });
+
+        // need to send these totals ordered to the backend so that we get executed totals in correct order
+        const totalsWithOrders = mappedTotals?.map((total) =>
+            enrichTotalWithMeasureIndex(total, def.measures),
+        );
+        return totalsWithOrders?.sort((total1, total2) => total1.order - total2.order).map((t) => t.total);
     }).filter((total): total is Total => total !== undefined);
 
     /**

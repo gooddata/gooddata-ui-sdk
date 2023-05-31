@@ -262,6 +262,51 @@ Array [
 ]
 `;
 
+exports[`convertTotals should correctly convert subtotals with non-sorted totals 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_abZgFKGPaGYM_by_a_label.owner.department_1",
+    "metric": "m_abZgFKGPaGYM",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "a_label.account.id.name",
+          "a_label.opportunitysnapshot.forecastcategory",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m_acugFHNJgsBy_by_a_label.owner.department_1",
+    "metric": "m_acugFHNJgsBy",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "a_label.account.id.name",
+          "a_label.opportunitysnapshot.forecastcategory",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
 exports[`convertTotals should correctly convert three dimensions 1`] = `
 Array [
   Object {
