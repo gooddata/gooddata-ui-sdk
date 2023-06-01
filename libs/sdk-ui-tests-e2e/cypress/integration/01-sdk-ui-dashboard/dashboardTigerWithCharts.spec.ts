@@ -28,3 +28,19 @@ describe("Dashboard with charts", { tags: ["pre-merge_isolated_tiger"] }, () => 
         });
     });
 });
+
+describe("Dashboard with pyramid and funnel charts", { tags: ["checklist_integrated_tiger"] }, () => {
+    beforeEach(() => {
+        Navigation.visit("dashboard/dashboard-tiger-charts");
+    });
+
+    it("should render default color legend of funnel and pyramid chart correctly", () => {
+        const funnelChart = new Widget(0).getChart();
+        funnelChart.hasLegendColorCount(4);
+        funnelChart.hasMatchingColorLegend("rgb(20, 178, 226)");
+
+        const pyramidChart = new Widget(2).getChart();
+        pyramidChart.hasLegendColorCount(3);
+        pyramidChart.hasMatchingColorLegend("rgb(20, 178, 226)");
+    });
+});

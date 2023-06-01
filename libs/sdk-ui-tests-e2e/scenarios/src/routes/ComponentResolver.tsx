@@ -51,6 +51,8 @@ import { DashboardWithMergeAndUnmergeScenario } from "../components/Scenarios/Da
 import { SingleSelectFilterIntegration } from "../components/Scenarios/Dashboard/SingleSelectFilterIntegration";
 import { DashboardAttributeSelection } from "../components/Scenarios/Dashboard/DashboardAttributeSelection";
 import { DashboardScenarioTigerUnknownVisualization } from "../components/Scenarios/Dashboard/DashboardScenarioTigerUnknownVisualization";
+import { FunnelChartScenario } from "../components/Scenarios/Visualizations/FunnelChart/FunnelChartScenario";
+import { PyramidChartScenario } from "../components/Scenarios/Visualizations/PyramidChart/PyramidChartScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -106,6 +108,8 @@ export const SCENARIO_KEYS = {
     DASHBOARD_WITH_MANY_DATA_SCENARIO: "dashboard/manydata",
     DASHBOARD_WITH_NO_DATA_SCENARIO: "dashboard/nodata",
     SINGLE_SELECT_FILTER_INTEGRATION: "dashboard/single-select-filter-integration",
+    VIS_FUNNEL_CHART: "visualizations/funnelchart/funnel-chart-scenario",
+    VIS_PYRAMID_CHART: "visualizations/pyramidchart/pyramid-chart-scenario",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -160,6 +164,8 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_WITH_MANY_DATA_SCENARIO, DashboardWithManyDataScenario],
     [SCENARIO_KEYS.DASHBOARD_WITH_NO_DATA_SCENARIO, DashboardWithNoDataScenario],
     [SCENARIO_KEYS.SINGLE_SELECT_FILTER_INTEGRATION, SingleSelectFilterIntegration],
+    [SCENARIO_KEYS.VIS_PYRAMID_CHART, PyramidChartScenario],
+    [SCENARIO_KEYS.VIS_FUNNEL_CHART, FunnelChartScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

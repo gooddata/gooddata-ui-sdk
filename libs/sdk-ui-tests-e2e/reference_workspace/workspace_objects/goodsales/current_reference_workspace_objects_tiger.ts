@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-29T09:11:43.097Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-02T10:34:39.137Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -136,14 +136,14 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const Account = {
     /**
-     * Display Form Title: Account
-     * Display Form ID: attr.f_account.account
-     */
-    Default: newAttribute("attr.f_account.account"),
-    /**
      * Display Form Title: Name
      * Display Form ID: label.f_account.account.name
-     */ Name: newAttribute("label.f_account.account.name"),
+     */
+    Name: newAttribute("label.f_account.account.name"),
+    /**
+     * Display Form Title: Account
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Activity
@@ -175,9 +175,9 @@ export const City = {
      * Display Form ID: f_city.id.cityshortname
      */ ShortName: newAttribute("f_city.id.cityshortname"),
     /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */ Location: newAttribute("f_city.id.location"),
     /**
      * Display Form Title: City
      * Display Form ID: f_city.id
@@ -187,13 +187,13 @@ export const City = {
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */ Location: newAttribute("f_city.id.location"),
-    /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
      */ Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
 };
 /**
  * Attribute Title: State
@@ -235,14 +235,14 @@ export const Opportunity = {
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Owner Name
-     * Display Form ID: label.f_owner.salesrep.ownername
-     */
-    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
-    /**
      * Display Form Title: Sales Rep
      * Display Form ID: attr.f_owner.salesrep
-     */ Default: newAttribute("attr.f_owner.salesrep"),
+     */
+    Default: newAttribute("attr.f_owner.salesrep"),
+    /**
+     * Display Form Title: Owner Name
+     * Display Form ID: label.f_owner.salesrep.ownername
+     */ OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
 };
 /**
  * Attribute Title: Product
@@ -250,14 +250,14 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product Name
-     * Display Form ID: label.f_product.product.name
-     */
-    Name: newAttribute("label.f_product.product.name"),
-    /**
      * Display Form Title: Product
      * Display Form ID: attr.f_product.product
-     */ Default: newAttribute("attr.f_product.product"),
+     */
+    Default: newAttribute("attr.f_product.product"),
+    /**
+     * Display Form Title: Product Name
+     * Display Form ID: label.f_product.product.name
+     */ Name: newAttribute("label.f_product.product.name"),
 };
 /**
  * Attribute Title: Stage Name
@@ -2295,6 +2295,10 @@ export const Insights = {
      * Insight ID: c796d21d-a705-439d-a727-23b144591617
      */ TableWithOrder: "c796d21d-a705-439d-a727-23b144591617",
     /**
+     * Insight Title: Waterfall chart
+     * Insight ID: cbe62312-b02c-45a8-b641-b13ea473f0f6
+     */ WaterfallChart: "cbe62312-b02c-45a8-b641-b13ea473f0f6",
+    /**
      * Insight Title: Win Rate
      * Insight ID: cc722659-8411-4813-be8f-4d7fed0fe6a6
      */ WinRate_1: "cc722659-8411-4813-be8f-4d7fed0fe6a6",
@@ -2334,10 +2338,6 @@ export const Insights = {
      * Insight Title: Table with stage name and atribute filter
      * Insight ID: fbcca86f-c473-446b-b316-eb4f4e5de909
      */ TableWithStageNameAndAtributeFilter: "fbcca86f-c473-446b-b316-eb4f4e5de909",
-    /**
-     * Insight Title: Waterfall chart
-     * Insight ID: cbe62312-b02c-45a8-b641-b13ea473f0f6
-     */ WaterfallChart: "cbe62312-b02c-45a8-b641-b13ea473f0f6",
 };
 export const Dashboards = {
     /**

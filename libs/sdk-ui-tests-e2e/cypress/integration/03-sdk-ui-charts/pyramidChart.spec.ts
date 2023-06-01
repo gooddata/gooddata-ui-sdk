@@ -1,0 +1,25 @@
+// (C) 2021 GoodData Corporation
+import * as Navigation from "../../tools/navigation";
+import { Chart } from "../../tools/chart";
+
+describe("Pyramid Chart", { tags: ["checklist_integrated_tiger"] }, () => {
+    beforeEach(() => {
+        Navigation.visit("visualizations/pyramidchart/pyramid-chart-scenario");
+    });
+
+    it(`check default sort of pyramid chart`, () => {
+        const chart = new Chart(".s-pyramid-chart");
+        chart.waitLoaded();
+        chart.hasLegendColorCount(8);
+        chart.hasMatchingPercentageLabels([
+            /\$42,470,571\.16/,
+            /\$38,310,753\.45/,
+            /\$18,447,266\.14/,
+            /\$5,612,062\.60/,
+            /\$4,249,027\.88/,
+            /\$3,067,466\.12/,
+            /\$2,606,293\.46/,
+            /\$1,862,015\.73/,
+        ]);
+    });
+});

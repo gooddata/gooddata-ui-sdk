@@ -4,6 +4,9 @@ export const YAXIS_LABELS_SELECTOR =
     ".highcharts-yaxis-labels text[text-anchor = 'middle'], .highcharts-yaxis-labels text[text-anchor = 'end']";
 export const XAXIS_LABELS_SELECTOR =
     ".highcharts-xaxis-labels text[text-anchor = 'middle'], .highcharts-xaxis-labels text[text-anchor = 'end']";
+const LEGEND_ICON_SELECTOR = ".viz-legend .series-icon";
+
+const DATA_LABELS_SELECTOR = ".highcharts-data-labels .highcharts-label text";
 
 export class Chart {
     constructor(private parentSelector: string) {}
@@ -108,5 +111,24 @@ export class Chart {
         this.getElement()
             .find(".highcharts-root")
             .should(isHighchartsChart ? "exist" : "not.exist");
+    }
+
+    public hasLegendColorCount(count: number) {
+        this.getElement().find(DATA_LABELS_SELECTOR).should("have.length", count);
+    }
+
+    public hasMatchingColorLegend(color: string) {
+        this.getElement()
+            .find(LEGEND_ICON_SELECTOR)
+            .invoke("css", "background-color")
+            .then((backgroundColorItem) => {
+                expect(backgroundColorItem).eq(color);
+            });
+    }
+
+    public hasMatchingPercentageLabels(labels: RegExp[]) {
+        for (let i = 0; i < labels.length; i++) {
+            this.getElement().find(DATA_LABELS_SELECTOR).eq(i).contains(labels[i]).should("exist");
+        }
     }
 }
