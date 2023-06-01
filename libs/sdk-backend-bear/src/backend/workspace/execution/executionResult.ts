@@ -173,8 +173,7 @@ function preprocessTotalHeaderItems(
 
     const buckets = definition.buckets;
     const measures = bucketsMeasures(buckets);
-    // get only attributes which can be part of inline totals (all except first one)
-    const columns = bucketsFind(buckets, "columns")?.items?.slice(1) || [];
+    const columns = bucketsFind(buckets, "columns")?.items || [];
     const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
 
     const lookups = columnTotals
