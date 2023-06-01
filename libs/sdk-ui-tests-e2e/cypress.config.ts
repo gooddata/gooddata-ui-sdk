@@ -49,8 +49,8 @@ export default defineConfig({
             mochaFile: "./cypress/results/result.[hash].xml",
         },
         specPattern: "./cypress/integration/**/*.spec.ts",
-        video: true,
         videoUploadOnPasses: false,
     },
     scrollBehavior: false,
+    video: true,
 });
