@@ -43,6 +43,21 @@ $header-hover-background-color: var(
 
 $total-background-color: var(--gd-table-totalBackgroundColor, var(--gd-palette-complementary-2, #e7ebef));
 
+$row-column-subtotal-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-1, #b0beca33)
+);
+
+$row-total-column-subtotal-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-1, #b0beca4d)
+);
+
+$row-column-total-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-1, #b0beca66)
+);
+
 $total-value-color: var(
     --gd-table-totalValueColor,
     var(--gd-palette-complementary-9, kit-variables.$gd-color-dark)
@@ -175,6 +190,10 @@ $subtotal-odd-background-color: var(
         .gd-column-group-header {
             border-bottom: $cell-border;
             border-bottom-color: $cell-border-color;
+
+            &.gd-column-group-header--subtotal {
+                border-bottom: none;
+            }
         }
 
         .gd-column-group-header-0,
@@ -256,6 +275,19 @@ $subtotal-odd-background-color: var(
             border: none;
         }
 
+        .gd-column-total {
+            border-bottom-color: transparent;
+            color: $total-value-color;
+            font-weight: bold;
+            background-color: $total-background-color;
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $total-background-color !important; // Override ag-grid header hover color
+                cursor: default;
+            }
+        }
+
         .gd-row-total {
             border-bottom-color: transparent;
             color: $total-value-color;
@@ -268,6 +300,17 @@ $subtotal-odd-background-color: var(
             }
         }
 
+        .gd-column-subtotal {
+            font-weight: bold;
+            background-color: $subtotal-even-background-color;
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $subtotal-even-background-color !important; // Override ag-grid header hover color
+                cursor: default;
+            }
+        }
+
         .gd-table-row-subtotal {
             font-weight: bold;
             border-top: 1px solid $cell-border-color;
@@ -276,6 +319,42 @@ $subtotal-odd-background-color: var(
             }
             &-odd {
                 background-color: $subtotal-odd-background-color;
+            }
+        }
+
+        .gd-table-row-column-subtotal {
+            background-color: $total-background-color;
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $total-background-color !important; // Override ag-grid header hover color
+            }
+        }
+
+        .gd-table-row-total-column-subtotal {
+            background-color: $row-total-column-subtotal-background-color;
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $row-total-column-subtotal-background-color !important; // Override ag-grid header hover color
+            }
+        }
+
+        .gd-table-row-subtotal-column-total {
+            background-color: $total-background-color;
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $total-background-color !important; // Override ag-grid header hover color
+            }
+        }
+
+        .gd-table-row-column-total {
+            background-color: $row-column-total-background-color;
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $row-column-total-background-color !important; // Override ag-grid header hover color
             }
         }
 

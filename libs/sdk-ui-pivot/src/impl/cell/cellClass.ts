@@ -12,6 +12,7 @@ import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN } from "../base/constants";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
 import last from "lodash/last";
 import { getCellClassNames } from "./cellUtils";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./../base/constants";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 
@@ -47,6 +48,8 @@ export function cellClassFactory(
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
         const isRowTotal = row.type === ROW_TOTAL;
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
+        const isColumnTotal = colDef.type === COLUMN_TOTAL;
+        const isColumnSubtotal = colDef.type === COLUMN_SUBTOTAL;
         let hasDrillableHeader = false;
 
         const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
@@ -61,16 +64,29 @@ export function cellClassFactory(
         const rowSeparator = !hiddenCell && table.getGroupingProvider().isGroupBoundary(rowIndex);
         const subtotalStyle = row?.subtotalStyle;
 
+        // All new totals combinations
+        const isColAndRowSubtotal = subtotalStyle && isColumnSubtotal;
+        const isRowTotalAndColSubtotal = isRowTotal && isColumnSubtotal;
+        const isRowAndColumnTotal = isRowTotal && isColumnTotal;
+        const isRowSubtotalColumnTotal = isRowSubtotal && isColumnTotal;
+
         return cx(
             classList,
             measureIndex !== undefined ? `gd-column-measure-${measureIndex}` : null,
             getCellClassNames(rowIndex, colIndex, hasDrillableHeader),
             `gd-column-index-${colIndex}`,
             isRowTotal ? "gd-row-total" : null,
+            isColumnTotal ? "gd-column-total" : null,
+            isColumnSubtotal ? "gd-column-subtotal" : null,
             subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
             hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
             rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
             isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null,
+            // All new totals combinations
+            isColAndRowSubtotal ? "gd-table-row-column-subtotal" : null,
+            isRowTotalAndColSubtotal ? "gd-table-row-total-column-subtotal" : null,
+            isRowAndColumnTotal ? "gd-table-row-column-total" : null,
+            isRowSubtotalColumnTotal ? "gd-table-row-subtotal-column-total" : null,
         );
     };
 }

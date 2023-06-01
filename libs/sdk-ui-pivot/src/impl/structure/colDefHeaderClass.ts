@@ -2,8 +2,16 @@
 import { TableFacade } from "../tableFacade";
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import cx from "classnames";
-import { agColId, ColumnGroupingDescriptorId, isSeriesCol, isSliceCol } from "./tableDescriptorTypes";
+import {
+    agColId,
+    ColumnGroupingDescriptorId,
+    isScopeCol,
+    isSeriesCol,
+    isSliceCol,
+} from "./tableDescriptorTypes";
 import { ICorePivotTableProps } from "../../publicTypes";
+import { isResultTotalHeader } from "@gooddata/sdk-model";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants";
 
 export type HeaderClassProvider = (headerClassParams: any) => string;
 
@@ -36,6 +44,9 @@ export function headerClassFactory(
             const treeIndexes = colDesc.fullIndexPathToHere;
             const indexWithinGroup = treeIndexes ? treeIndexes[treeIndexes.length - 1] : undefined;
             const noLeftBorder = tableDescriptor.isFirstCol(colId) || !tableDescriptor.hasScopingCols();
+            const noBottomBorder = isScopeCol(colDesc) && isResultTotalHeader(colDesc.header);
+            const isColumnTotal = (colDef as ColDef).type === COLUMN_TOTAL;
+            const isColumnSubtotal = (colDef as ColDef).type === COLUMN_SUBTOTAL;
             const absoluteColIndex = isSeriesCol(colDesc)
                 ? tableDescriptor.getAbsoluteLeafColIndex(colDesc)
                 : undefined;
@@ -58,7 +69,10 @@ export function headerClassFactory(
                     ? `s-table-measure-column-header-index-${absoluteColIndex}`
                     : null,
                 noLeftBorder ? "gd-column-group-header--first" : null,
-                !colDef.headerName ? "gd-column-group-header--empty" : null,
+                noBottomBorder ? "gd-column-group-header--subtotal" : null,
+                !colDef.headerName && !noBottomBorder ? "gd-column-group-header--empty" : null,
+                isColumnTotal ? "gd-column-total" : null,
+                isColumnSubtotal ? "gd-column-subtotal" : null,
             );
         }
     };

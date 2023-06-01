@@ -6,6 +6,8 @@ import {
     IDimensionItemDescriptor,
     IMeasureGroupDescriptor,
     IResultHeader,
+    IResultAttributeHeader,
+    isResultTotalHeader,
 } from "@gooddata/sdk-model";
 
 /**
@@ -43,4 +45,15 @@ export function measureFormat(measureDescriptor: IMeasureDescriptor): string {
  */
 export function measureName(measureDescriptor: IMeasureDescriptor): string {
     return measureDescriptor.measureHeaderItem.name;
+}
+
+/**
+ * @internal
+ */
+export function getTotalInfo(attributeHeaders: IResultAttributeHeader[]) {
+    const numberOfTotalHeaders = attributeHeaders.filter(isResultTotalHeader).length;
+    return {
+        isTotal: numberOfTotalHeaders > 0 && numberOfTotalHeaders === attributeHeaders.length,
+        isSubtotal: numberOfTotalHeaders > 0 && numberOfTotalHeaders !== attributeHeaders.length,
+    };
 }

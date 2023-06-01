@@ -266,6 +266,8 @@ export type DataSeriesDescriptor = DataSeriesHeaders & DataSeriesDescriptorMetho
     readonly measureDefinition: IMeasure;
     readonly attributeDescriptors?: IAttributeDescriptor[];
     readonly attributeDefinitions?: IAttribute[];
+    readonly isSubtotal?: boolean;
+    readonly isTotal?: boolean;
 };
 
 // @public (undocumented)
@@ -487,6 +489,12 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
 
 // @internal (undocumented)
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
+
+// @internal (undocumented)
+export function getTotalInfo(attributeHeaders: IResultAttributeHeader[]): {
+    isTotal: boolean;
+    isSubtotal: boolean;
+};
 
 // @internal
 export function getTranslation(translationId: string | MessageDescriptor, locale: ILocale, values?: {}): string;

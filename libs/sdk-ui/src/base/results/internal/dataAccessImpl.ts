@@ -12,7 +12,7 @@ import { DataPoint, DataSeriesDescriptor, DataSliceDescriptor, IDataSeries, IDat
 import { createDataAccessDigest, DataAccessDigest } from "./dataAccessDigest";
 import { LazyInitArray } from "./lazyInitArray";
 import invariant, { InvariantError } from "ts-invariant";
-import { measureFormat, measureName } from "./utils";
+import { getTotalInfo, measureFormat, measureName } from "./utils";
 import { DataAccessConfig } from "../dataAccessConfig";
 import partial from "lodash/partial";
 import isArray from "lodash/isArray";
@@ -425,6 +425,8 @@ export class DataAccessImpl {
         const measureDefinition = fromMeasuresDef[measureIndex];
         const { headerTranslator } = this.config;
 
+        const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders);
+
         return {
             id: `${seriesIdx}`,
             measureDescriptor,
@@ -433,6 +435,8 @@ export class DataAccessImpl {
             attributeDefinitions: scopingAttributesDef,
             measureHeader,
             attributeHeaders,
+            isTotal,
+            isSubtotal,
             measureFormat: (): string => {
                 return measureFormat(measureDescriptor);
             },
