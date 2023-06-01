@@ -617,6 +617,7 @@ export interface IDataView {
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     readonly totals?: DataValue_2[][][];
+    readonly totalTotals?: DataValue_2[][][];
     readonly warnings?: IResultWarning_2[];
 }
 

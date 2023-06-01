@@ -195,6 +195,7 @@ class DenormalizedDataView implements IDataView {
     public readonly count: number[];
     public readonly totalCount: number[];
     public readonly totals: DataValue[][][] | undefined;
+    public readonly totalTotals: DataValue[][][] | undefined;
 
     private readonly _fingerprint: string;
 
@@ -211,6 +212,7 @@ class DenormalizedDataView implements IDataView {
         this.offset = cloneDeep(this.normalizedDataView.offset);
         this.totalCount = cloneDeep(this.normalizedDataView.totalCount);
         this.totals = cloneDeep(this.normalizedDataView.totals);
+        this.totalTotals = cloneDeep(this.normalizedDataView.totalTotals);
 
         this._fingerprint = `${this.result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }

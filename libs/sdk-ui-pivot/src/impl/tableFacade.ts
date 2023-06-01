@@ -36,7 +36,6 @@ import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants";
 import { getAvailableDrillTargets } from "./drilling/drillTargets";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
 import identity from "lodash/identity";
-import sumBy from "lodash/sumBy";
 import ApiWrapper from "./base/agApiWrapper";
 import {
     initializeStickyRow,
@@ -787,8 +786,9 @@ export class TableFacade {
         }
 
         const dv = this.visibleData;
-        const aggregationCount = sumBy(dv.rawData().totals(), (total) => total.length);
+
         const rowCount = dv.rawData().firstDimSize();
+        const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;
 
         const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
 
@@ -797,7 +797,7 @@ export class TableFacade {
         const leeway = 2;
 
         const bodyHeight = rowCount * DEFAULT_ROW_HEIGHT + leeway;
-        const footerHeight = aggregationCount * DEFAULT_ROW_HEIGHT;
+        const footerHeight = rowAggregationCount * DEFAULT_ROW_HEIGHT;
 
         return headerHeight + bodyHeight + footerHeight;
     };

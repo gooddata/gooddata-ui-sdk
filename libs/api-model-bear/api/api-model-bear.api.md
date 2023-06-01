@@ -942,6 +942,8 @@ export namespace GdcExecution {
         // (undocumented)
         totals?: DataValue[][][];
         // (undocumented)
+        totalTotals?: DataValue[][][];
+        // (undocumented)
         warnings?: Warning[];
     }
     // (undocumented)

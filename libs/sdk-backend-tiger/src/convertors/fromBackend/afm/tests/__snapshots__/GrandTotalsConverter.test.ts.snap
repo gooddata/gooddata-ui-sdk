@@ -20,6 +20,27 @@ Array [
 ]
 `;
 
+exports[`transformGrandTotalData should correctly transform grand total data with row and column grand totals 1`] = `
+Array [
+  Array [
+    Array [
+      6,
+      null,
+      10,
+      null,
+    ],
+  ],
+  Array [
+    Array [
+      4,
+    ],
+    Array [
+      12,
+    ],
+  ],
+]
+`;
+
 exports[`transformGrandTotalData should correctly transform grand total data with two header groups 1`] = `
 Array [
   Array [

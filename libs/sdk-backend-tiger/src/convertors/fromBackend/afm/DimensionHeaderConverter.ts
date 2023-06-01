@@ -10,6 +10,7 @@ import {
     IResultTotalHeader,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
+    isResultTotalHeader as isResultTotalHeaderModel,
 } from "@gooddata/sdk-model";
 import { DateFormatter, DateParseFormatter } from "../dateFormatting/types";
 import {
@@ -21,6 +22,8 @@ import {
     JsonApiAttributeOutAttributesGranularityEnum,
     MeasureExecutionResultHeader,
     TotalExecutionResultHeader,
+    ExecutionResultGrandTotal,
+    ExecutionResultHeader,
 } from "@gooddata/api-client-tiger";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 import { toSdkGranularity } from "../dateGranularityConversions";
@@ -78,42 +81,126 @@ function getMeasuresFromDimensions(dimensions: IDimensionDescriptor[]): IMeasure
     return [];
 }
 
+/**
+ * Transform measure headers to total headers, based on the information stored
+ * in the indices map which is built on-the fly during the transformation.
+ * Ignore attribute headers as they are not relevant for this mapping.
+ * When transforming the measure header to a total header, linkage to a measure
+ * is preserved with measure index.
+ */
+function getTransformedTotalHeader(
+    header: ExecutionResultHeader,
+    headerIndex: number,
+    grandColumnTotalsMap: { [key: number]: TotalExecutionResultHeader },
+) {
+    if (isResultMeasureHeader(header)) {
+        if (grandColumnTotalsMap[headerIndex]) {
+            const index = header?.measureHeader?.measureIndex;
+            return totalHeaderItem(grandColumnTotalsMap[headerIndex], index);
+        }
+
+        return totalHeaderItem(grandColumnTotalsMap[headerIndex]);
+    } else if (isResultTotalHeader(header)) {
+        grandColumnTotalsMap[headerIndex] = header;
+        return totalHeaderItem(header);
+    }
+
+    return null;
+}
+
+/**
+ * Transform base header for given index. When transforming measure headers, use
+ * built map of indices to transform measure headers to total header items when
+ * totals are present. The measure index is stored with total header item
+ * for proper numeric formatting etc.
+ *
+ * On the leaf header item level, we get only measure items and we need to transform them
+ * to the total header items. As we come along the totals first when traversing the above
+ * levels first, we store indices of these totals  (such as [sum] is on index 2 in the example
+ * below, note that for 0 and 1 there will be nothing)
+ *
+ * | East | East | [sum] | West | West | [sum] |
+ * | m1   | m2   | m1    | m1   | m2   | m1    |
+ *
+ * Then, when processing (leaf) measure items on that index, we flip measure items for total items linked
+ * to the particular total
+ *
+ * | East | East | [sum]      | West | West | [sum]      |
+ * | m1   | m2   | [sum - m1] | m1   | m2   | [sum - m1] |
+ *
+ */
+function getTransformedBaseHeader(
+    header: ExecutionResultHeader,
+    headerGroupIndex: number,
+    measureDescriptors: IMeasureDescriptor[],
+    dateFormatProps: DateAttributeFormatProps | undefined,
+    dateValueFormatter: DateParseFormatter,
+    baseHeadersTotalsMap: { [key: number]: TotalExecutionResultHeader },
+) {
+    if (isResultAttributeHeader(header)) {
+        return attributeMeasureItem(header, dateFormatProps, dateValueFormatter);
+    }
+
+    if (isResultMeasureHeader(header)) {
+        if (baseHeadersTotalsMap[headerGroupIndex]) {
+            const index = header?.measureHeader?.measureIndex;
+            return totalHeaderItem(baseHeadersTotalsMap[headerGroupIndex], index);
+        }
+
+        return measureHeaderItem(header, measureDescriptors);
+    }
+
+    if (isResultTotalHeader(header)) {
+        baseHeadersTotalsMap[headerGroupIndex] = header;
+        return totalHeaderItem(header);
+    }
+
+    // This code should never be reachable
+    throw new Error(`Unexpected type of ResultHeader: ${header}`);
+}
+
 export function getTransformDimensionHeaders(
     dimensions: IDimensionDescriptor[],
     dateFormatter: DateFormatter,
+    grandTotals: ExecutionResultGrandTotal[] = [],
 ): (dimensionHeaders: DimensionHeader[]) => IResultHeader[][][] {
     const measureDescriptors = getMeasuresFromDimensions(dimensions);
     const dateValueFormatter = createDateValueFormatter(dateFormatter);
 
+    const columnGrandTotals = grandTotals.find((total) => total.totalDimensions.includes("dim_0"));
     return (dimensionHeaders: DimensionHeader[]) =>
         dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
-            const totalIndices: { [key: number]: TotalExecutionResultHeader } = {};
+            // we need to declare these maps beforehand as they are utilized when processing all header groups
+            const baseHeadersTotalsMap: { [key: number]: TotalExecutionResultHeader } = {};
+            const grandColumnTotalsMap: { [key: number]: TotalExecutionResultHeader } = {};
             return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
+                let appendedHeaders: IResultTotalHeader[] = [];
+                if (dimensionIndex === 1 && columnGrandTotals) {
+                    // Append appropriate column grand total headers to each row. The result is always of type total header.
+                    const columnGrandTotalHeaderGroups = columnGrandTotals.dimensionHeaders[0].headerGroups;
+                    appendedHeaders = columnGrandTotalHeaderGroups[headerGroupIndex].headers
+                        .map((h, headerIndex) =>
+                            getTransformedTotalHeader(h, headerIndex, grandColumnTotalsMap),
+                        )
+                        .filter(isResultTotalHeaderModel);
+                }
+
                 const dateFormatProps = getDateFormatProps(
                     dimensions[dimensionIndex].headers[headerGroupIndex],
                 );
-                return headerGroup.headers.map((header): IResultHeader => {
-                    if (isResultAttributeHeader(header)) {
-                        return attributeMeasureItem(header, dateFormatProps, dateValueFormatter);
-                    }
 
-                    if (isResultMeasureHeader(header)) {
-                        if (totalIndices[headerGroupIndex]) {
-                            const index = header?.measureHeader?.measureIndex;
-                            return totalHeaderItem(totalIndices[headerGroupIndex], index);
-                        }
-
-                        return measureHeaderItem(header, measureDescriptors);
-                    }
-
-                    if (isResultTotalHeader(header)) {
-                        totalIndices[headerGroupIndex] = header;
-                        return totalHeaderItem(header);
-                    }
-
-                    // This code should never be reachable
-                    throw new Error(`Unexpected type of ResultHeader: ${header}`);
+                const baseHeaders = headerGroup.headers.map((header): IResultHeader => {
+                    return getTransformedBaseHeader(
+                        header,
+                        headerGroupIndex,
+                        measureDescriptors,
+                        dateFormatProps,
+                        dateValueFormatter,
+                        baseHeadersTotalsMap,
+                    );
                 });
+
+                return [...baseHeaders, ...appendedHeaders];
             });
         });
 }
