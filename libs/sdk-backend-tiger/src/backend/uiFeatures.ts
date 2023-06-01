@@ -44,6 +44,8 @@ export enum TigerFeaturesNames {
     EnableCompositeGrain = "enableCompositeGrain",
     //boolean + possible values: enabled, disabled
     EnableTableTotalRows = "enableTableTotalRows",
+    //boolean + possible values: enabled, disabled
+    EnablePdmRemovalDeprecationPhase = "enablePdmRemovalDeprecationPhase",
 }
 
 export type ITigerFeatureFlags = {
@@ -65,6 +67,7 @@ export type ITigerFeatureFlags = {
     enableWaterfallChart: typeof FeatureFlagsValues["enableWaterfallChart"][number];
     enableCompositeGrain: typeof FeatureFlagsValues["enableCompositeGrain"][number];
     enableTableTotalRows: typeof FeatureFlagsValues["enableTableTotalRows"][number];
+    enablePdmRemovalDeprecationPhase: typeof FeatureFlagsValues["enablePdmRemovalDeprecationPhase"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -86,6 +89,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWaterfallChart: false,
     enableCompositeGrain: false,
     enableTableTotalRows: false,
+    enablePdmRemovalDeprecationPhase: false,
 };
 
 export const FeatureFlagsValues = {
@@ -111,4 +115,5 @@ export const FeatureFlagsValues = {
     enableWaterfallChart: [true, false] as const,
     enableCompositeGrain: [true, false] as const,
     enableTableTotalRows: [true, false] as const,
+    enablePdmRemovalDeprecationPhase: [true, false] as const,
 };
