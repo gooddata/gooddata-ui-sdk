@@ -14,10 +14,14 @@ import {
 } from "../../constants/bubble";
 import { messages } from "../../../locales";
 import LegendSection from "../configurationControls/legend/LegendSection";
+import TotalSection from "../configurationControls/total/TotalSection";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
+import { IAxisProperties } from "../../interfaces/AxisType";
+import NameSubsection from "../configurationControls/axis/NameSubsection";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection";
 
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
-import TotalSection from "../configurationControls/total/TotalSection";
 
 const TOOLTIP_ARROW_OFFSET = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const TOOLTIP_ALIGN_POINT = [{ align: "tc bc" }];
@@ -97,5 +101,61 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                 pushData={pushData}
             />
         );
+    }
+
+    protected getBaseChartAxisSection(axes: IAxisProperties[]) {
+        const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
+        const controls = properties?.controls;
+        const controlsDisabled = this.isControlDisabled();
+        const isViewedBy = this.isViewedBy();
+        const itemsOnAxes = countItemsOnAxes(type, controls, insight);
+        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
+        const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
+        const isAxisNameViewByTwoAttributesEnabled: boolean =
+            featureFlags.enableAxisNameViewByTwoAttributes as boolean;
+
+        return axes.map((axis: IAxisProperties) => {
+            const isPrimaryAxisWithMoreThanOneItem: boolean =
+                (axis.primary || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
+            const nameSubsectionDisabled: boolean = !isViewedBy || isPrimaryAxisWithMoreThanOneItem;
+            const { name, title, subtitle, visible } = axis;
+
+            const showFormat = axis.primary && isAxisLabelsFormatEnabled;
+
+            return (
+                <ConfigSection
+                    key={name}
+                    id={`${name}_section`}
+                    title={title}
+                    subtitle={subtitle}
+                    valuePath={`${name}.visible`}
+                    canBeToggled={true}
+                    toggledOn={visible}
+                    toggleDisabled={controlsDisabled}
+                    propertiesMeta={propertiesMeta}
+                    properties={properties}
+                    pushData={pushData}
+                >
+                    {isNameSubsectionVisible ? (
+                        <NameSubsection
+                            disabled={nameSubsectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={axis.name}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+                    ) : null}
+                    <LabelSubsection
+                        disabled={false}
+                        configPanelDisabled={controlsDisabled}
+                        axis={axis.name}
+                        properties={properties}
+                        pushData={pushData}
+                        showFormat={showFormat}
+                    />
+                    {axis.primary ? this.renderMinMax(axis.name) : null}
+                </ConfigSection>
+            );
+        });
     }
 }

@@ -346,7 +346,7 @@ export function getTooltipWaterfallChart(
         const formattedValue = getFormattedValueForTooltip(false, false, point, separators, percentageValue);
         const textData = [[customEscape(point.series.name), formattedValue]];
 
-        if (viewByAttribute) {
+        if (viewByAttribute && !point?.isSum) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
                 customEscape(point.category?.name || point.name),
