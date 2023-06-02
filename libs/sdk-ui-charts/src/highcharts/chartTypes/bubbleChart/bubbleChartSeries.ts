@@ -51,7 +51,7 @@ export function getBubbleChartSeries(
                           emptyHeaderTitle,
                       )
                     : "",
-                color: colorStrategy.getColorByIndex(legendIndex),
+                color: colorStrategy.getColorByIndex(seriesIndex),
                 legendIndex: legendIndex++,
                 data,
                 seriesIndex: seriesIndex++,
