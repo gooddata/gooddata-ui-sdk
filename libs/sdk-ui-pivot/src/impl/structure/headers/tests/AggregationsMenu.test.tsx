@@ -6,11 +6,9 @@ import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";
 import { AVAILABLE_TOTALS } from "../../../base/constants";
 import {
-    attributeLocalId,
     defWithFilters,
     emptyDef,
     ITotal,
-    measureLocalId,
     newPositiveAttributeFilter,
     idRef,
     localIdRef,
@@ -18,7 +16,7 @@ import {
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { TableDescriptor } from "../../tableDescriptor";
 
@@ -93,44 +91,6 @@ describe("AggregationsMenu", () => {
         renderComponent({ availableTotalTypes: ["sum", "avg"], showSubmenu: true });
 
         expect(document.querySelectorAll(".s-menu-aggregation")).toHaveLength(2);
-    });
-
-    it('should render "sum" as only selected item in main menu for rows', () => {
-        const columnTotals: ITotal[] = [
-            {
-                type: "sum",
-                attributeIdentifier: attributeLocalId(ReferenceMd.Product.Name), // first row attribute => grand totals, selected right in menu
-                measureIdentifier: measureLocalId(ReferenceMd.Amount),
-            },
-            {
-                type: "min",
-                attributeIdentifier: attributeLocalId(ReferenceMd.Department), // second row attr => subtotals, selected in submenu
-                measureIdentifier: measureLocalId(ReferenceMd.Amount),
-            },
-        ];
-        renderComponent({ getColumnTotals: () => columnTotals });
-
-        expect(document.querySelectorAll(".is-checked")).toHaveLength(1);
-        expect(document.querySelectorAll(".s-menu-aggregation-sum .is-checked")).toHaveLength(1);
-    });
-
-    it('should render "max" as only selected item in main menu for columns', () => {
-        const rowTotals: ITotal[] = [
-            {
-                type: "max",
-                attributeIdentifier: attributeLocalId(ReferenceMd.StageName.Default), // first column attribute => grand totals, selected right in menu
-                measureIdentifier: measureLocalId(ReferenceMd.Amount),
-            },
-            {
-                type: "sum",
-                attributeIdentifier: attributeLocalId(ReferenceMd.Region), // second column attr => subtotals, selected in submenu
-                measureIdentifier: measureLocalId(ReferenceMd.Amount),
-            },
-        ];
-        renderComponent({ getRowTotals: () => rowTotals, showColumnsSubMenu: true });
-
-        expect(document.querySelectorAll(".is-checked")).toHaveLength(1);
-        expect(document.querySelectorAll(".s-menu-aggregation-max .is-checked")).toHaveLength(1);
     });
 
     it("should render closed main menu when isMenuOpen is set to false", () => {

@@ -2,7 +2,6 @@
 import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
-import noop from "lodash/noop";
 import {
     IExecutionDefinition,
     isMeasureValueFilter,
@@ -12,7 +11,6 @@ import {
     isRankingFilter,
     ITheme,
     IAttributeDescriptor,
-    attributeDescriptorLocalId,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -26,14 +24,13 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import menuHelper from "./aggregationsMenuHelper";
+import menuHelper, { getAttributeDescriptorsLocalId } from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 import { TableDescriptor } from "../tableDescriptor";
 import { isScopeCol, isSeriesCol, isRootCol, isSliceCol } from "../tableDescriptorTypes";
 import { IMenuAggregationClickConfig } from "../../privateTypes";
 import { messages } from "../../../locales";
-import { tableHasColumnAttributes, tableHasRowAttributes } from "../../utils";
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level
  *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide
@@ -162,20 +159,15 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
 
     private renderMenuItemContent(
         totalType: TotalType,
-        onClick: () => void,
         isSelected: boolean,
         hasSubMenu = false,
         disabled: boolean,
         tooltipMessage?: string,
     ) {
         const { intl } = this.props;
-        const onClickHandler = disabled ? noop : onClick;
         const itemElement = (
             <Item checked={isSelected} subMenu={hasSubMenu} disabled={disabled}>
-                <div
-                    onClick={onClickHandler}
-                    className="gd-aggregation-menu-item-inner s-menu-aggregation-inner"
-                >
+                <div className="gd-aggregation-menu-item-inner s-menu-aggregation-inner">
                     {intl.formatMessage(messages[totalType])}
                 </div>
             </Item>
@@ -219,32 +211,19 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         showColumnsSubMenu: boolean,
     ) {
         const { intl, onAggregationSelect, showSubmenu, availableTotalTypes } = this.props;
-        const firstRowAttributeIdentifier = tableHasRowAttributes(rowAttributeDescriptors)
-            ? attributeDescriptorLocalId(rowAttributeDescriptors[0])
-            : "";
-        const firstColumnAttributeIdentifier = tableHasColumnAttributes(columnAttributeDescriptors)
-            ? attributeDescriptorLocalId(columnAttributeDescriptors[0])
-            : "";
         const isFilteredByMeasureValue = this.isTableFilteredByMeasureValue();
         const isFilteredByRankingFilter = this.isTableFilteredByRankingFilter();
+        const rowAttributeIdentifiers = getAttributeDescriptorsLocalId(rowAttributeDescriptors);
+        const columnAttributeIdentifiers = getAttributeDescriptorsLocalId(columnAttributeDescriptors);
 
         return availableTotalTypes.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
-                firstRowAttributeIdentifier,
-                firstColumnAttributeIdentifier,
+                rowAttributeIdentifiers,
+                columnAttributeIdentifiers,
                 totalType,
                 columnTotals,
                 rowTotals,
             );
-            const attributeDescriptor = rowAttributeDescriptors[0] ?? columnAttributeDescriptors[0];
-            const onClick = () =>
-                this.props.onAggregationSelect({
-                    type: totalType,
-                    measureIdentifiers: measureLocalIdentifiers,
-                    include: !isSelected,
-                    attributeIdentifier: attributeDescriptor.attributeHeader.localIdentifier,
-                    isColumn: tableHasRowAttributes(rowAttributeDescriptors) ? true : false,
-                });
             const itemClassNames = this.getItemClassNames(totalType);
 
             const disabled = totalType === "nat" && (isFilteredByMeasureValue || isFilteredByRankingFilter);
@@ -254,7 +233,6 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             const renderSubmenu = !disabled && showSubmenu;
             const toggler = this.renderMenuItemContent(
                 totalType,
-                onClick,
                 isSelected,
                 renderSubmenu,
                 disabled,
