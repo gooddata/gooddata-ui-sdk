@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-29T08:57:16.521Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-02T10:34:56.593Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -136,14 +136,14 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const Account = {
     /**
-     * Display Form Title: Account
-     * Display Form ID: attr.f_account.account
-     */
-    Default: newAttribute("attr.f_account.account"),
-    /**
      * Display Form Title: Name
      * Display Form ID: label.f_account.account.name
-     */ Name: newAttribute("label.f_account.account.name"),
+     */
+    Name: newAttribute("label.f_account.account.name"),
+    /**
+     * Display Form Title: Account
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Activity
@@ -166,30 +166,30 @@ export const Activity = {
  */
 export const City = {
     /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */
+    Name: newAttribute("f_city.id.cityname"),
+    /**
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
-     */
-    Location: newAttribute("f_city.id.location"),
-    /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
+     */ Location: newAttribute("f_city.id.location"),
     /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
     /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
      */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
     /**
      * Display Form Title: City
      * Display Form ID: f_city.id
@@ -216,14 +216,14 @@ export const State = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: SFDC URL
-     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */
-    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
-    /**
      * Display Form Title: Opportunity
      * Display Form ID: attr.f_opportunity.opportunity
-     */ Default: newAttribute("attr.f_opportunity.opportunity"),
+     */
+    Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: SFDC URL
+     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
+     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
@@ -235,14 +235,14 @@ export const Opportunity = {
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Owner Name
-     * Display Form ID: label.f_owner.salesrep.ownername
-     */
-    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
-    /**
      * Display Form Title: Sales Rep
      * Display Form ID: attr.f_owner.salesrep
-     */ Default: newAttribute("attr.f_owner.salesrep"),
+     */
+    Default: newAttribute("attr.f_owner.salesrep"),
+    /**
+     * Display Form Title: Owner Name
+     * Display Form ID: label.f_owner.salesrep.ownername
+     */ OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
 };
 /**
  * Attribute Title: Product
@@ -250,14 +250,14 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product Name
-     * Display Form ID: label.f_product.product.name
-     */
-    Name: newAttribute("label.f_product.product.name"),
-    /**
      * Display Form Title: Product
      * Display Form ID: attr.f_product.product
-     */ Default: newAttribute("attr.f_product.product"),
+     */
+    Default: newAttribute("attr.f_product.product"),
+    /**
+     * Display Form Title: Product Name
+     * Display Form ID: label.f_product.product.name
+     */ Name: newAttribute("label.f_product.product.name"),
 };
 /**
  * Attribute Title: Stage Name
@@ -271,12 +271,12 @@ export const StageName = {
     Order: newAttribute("label.f_stage.stagename.order"),
     /**
      * Display Form Title: Stage Name
-     * Display Form ID: attr.f_stage.stagename
-     */ Default: newAttribute("attr.f_stage.stagename"),
+     * Display Form ID: label.f_stage.stagename.stagename
+     */ Default: newAttribute("label.f_stage.stagename.stagename"),
     /**
      * Display Form Title: Stage Name
-     * Display Form ID: label.f_stage.stagename.stagename
-     */ _1: newAttribute("label.f_stage.stagename.stagename"),
+     * Display Form ID: attr.f_stage.stagename
+     */ _1: newAttribute("attr.f_stage.stagename"),
 };
 /**
  * Metric Title: _Timeline [EOP]
@@ -2294,6 +2294,10 @@ export const Insights = {
      * Insight Title: Table with order
      * Insight ID: c796d21d-a705-439d-a727-23b144591617
      */ TableWithOrder: "c796d21d-a705-439d-a727-23b144591617",
+    /**
+     * Insight Title: Waterfall chart
+     * Insight ID: cbe62312-b02c-45a8-b641-b13ea473f0f6
+     */ WaterfallChart: "cbe62312-b02c-45a8-b641-b13ea473f0f6",
     /**
      * Insight Title: Win Rate
      * Insight ID: cc722659-8411-4813-be8f-4d7fed0fe6a6
