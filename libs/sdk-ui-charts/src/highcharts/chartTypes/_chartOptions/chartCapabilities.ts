@@ -35,6 +35,7 @@ export const multiMeasuresAlternatingTypes = [
     VisualizationTypes.FUNNEL,
     VisualizationTypes.PYRAMID,
     VisualizationTypes.TREEMAP,
+    VisualizationTypes.WATERFALL,
 ];
 export const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PIE,
