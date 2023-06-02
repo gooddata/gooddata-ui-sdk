@@ -128,6 +128,8 @@ export function getValidProperties(
                 return isUriRef(colorAssignment.headerItem.attributeHeader.ref)
                     ? colorAssignment.headerItem.attributeHeader.uri === id
                     : colorAssignment.headerItem.attributeHeader.identifier === id;
+            } else if (isColorDescriptor(colorAssignment.headerItem)) {
+                return colorAssignment.headerItem.colorHeaderItem.id === id;
             }
 
             return false;

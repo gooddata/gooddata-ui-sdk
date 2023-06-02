@@ -5,6 +5,7 @@ import {
     IColorPaletteItem,
     IRgbColorValue,
     isAttributeDescriptor,
+    isColorDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import {
@@ -212,6 +213,10 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
             return testValue
                 ? testValue === header.attributeHeader.uri || testValue === header.attributeHeader.identifier
                 : false;
+        }
+
+        if (isColorDescriptor(header)) {
+            return testValue ? testValue === header.colorHeaderItem.id : false;
         }
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
