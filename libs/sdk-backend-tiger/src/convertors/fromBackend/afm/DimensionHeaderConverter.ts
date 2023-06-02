@@ -189,10 +189,10 @@ export function getTransformDimensionHeaders(
                     dimensions[dimensionIndex].headers[headerGroupIndex],
                 );
 
-                const baseHeaders = headerGroup.headers.map((header): IResultHeader => {
+                const baseHeaders = headerGroup.headers.map((header, index): IResultHeader => {
                     return getTransformedBaseHeader(
                         header,
-                        headerGroupIndex,
+                        index,
                         measureDescriptors,
                         dateFormatProps,
                         dateValueFormatter,

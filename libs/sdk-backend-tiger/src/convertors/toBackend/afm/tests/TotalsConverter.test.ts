@@ -145,6 +145,29 @@ const Test15 = defWithDimensions(
     newDimension([MeasureGroupIdentifier]),
 );
 
+// subtotals, with unsorted totals
+const Test16 = defSetDimensions(
+    newDefForBuckets("test", [
+        newBucket("measure", ReferenceMd.WinRate, ReferenceMd.Won),
+        newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [
+            newTotal("sum", ReferenceMd.Won, ReferenceMd.Department),
+            newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department),
+        ]),
+    ]),
+    newTwoDimensional(
+        [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory],
+        [
+            ReferenceMd.Department,
+            ReferenceMd.IsActive,
+            MeasureGroupIdentifier,
+            // it should be ordered as WinRate, Won in the snapshot
+            newTotal("sum", ReferenceMd.Won, ReferenceMd.Department),
+            newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department),
+        ],
+    ),
+);
+
 describe("convertTotals", () => {
     const Scenarios: Array<[string, IExecutionDefinition]> = [
         ["no totals", Test0],
@@ -162,6 +185,7 @@ describe("convertTotals", () => {
         ["two subtotals and marginal total", Test12],
         ["row total and column subtotal", Test13],
         ["column total and row subtotal", Test14],
+        ["subtotals with non-sorted totals", Test16],
     ];
     const ErrorScenarios: Array<[string, IExecutionDefinition]> = [["native total", Test15]];
 
