@@ -77,6 +77,18 @@ describe("color utils", () => {
         },
     ];
 
+    const waterfallColorHeaderColorAssignments = [
+        {
+            headerItem: {
+                colorHeaderItem: {
+                    id: "properties.color.total",
+                    name: "properties.color.total",
+                },
+            },
+            color: color1,
+        },
+    ];
+
     describe("getValidProperties", () => {
         function getProperties(colorMapping: any) {
             return {
@@ -174,6 +186,28 @@ describe("color utils", () => {
             const properties = getProperties(richColorMapping);
 
             const result = getValidProperties(properties, tigerAttributeHeaderColorAssignments);
+            expect(result.controls.colorMapping).toEqual(colorMapping);
+        });
+
+        it("should keep color mapping for the waterfall color header which are in color assignment", () => {
+            const colorMapping = [
+                {
+                    id: "properties.color.total",
+                    color: color1,
+                },
+            ];
+
+            const richColorMapping = [
+                ...colorMapping,
+                {
+                    id: "label.a2",
+                    color: color1,
+                },
+            ];
+
+            const properties = getProperties(richColorMapping);
+
+            const result = getValidProperties(properties, waterfallColorHeaderColorAssignments);
             expect(result.controls.colorMapping).toEqual(colorMapping);
         });
     });
