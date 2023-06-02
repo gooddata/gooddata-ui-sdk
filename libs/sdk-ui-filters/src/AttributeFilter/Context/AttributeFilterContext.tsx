@@ -24,7 +24,9 @@ export const useAttributeFilterContext = (): IAttributeFilterContext => useConte
 /**
  * @internal
  */
-export const AttributeFilterContextProvider: React.FC<IAttributeFilterCoreProps> = (props) => {
+export const AttributeFilterContextProvider: React.FC<
+    IAttributeFilterCoreProps & { children: React.ReactNode }
+> = (props) => {
     const { children, fullscreenOnMobile, title: titleInput, selectionMode, selectFirst } = props;
 
     const controller = useAttributeFilterController(props);

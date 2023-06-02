@@ -171,5 +171,5 @@ export function* changeSharingHandler(
         shareStatus: dashboard.shareStatus,
     };
 
-    return dashboardSharingChanged(ctx, dashboardRef, updatedDashboardProperties, cmd.correlationId);
+    return dashboardSharingChanged(ctx, updatedDashboardProperties, cmd.correlationId);
 }

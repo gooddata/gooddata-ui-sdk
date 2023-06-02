@@ -57,7 +57,6 @@ export const useAttributeFilterController = (
         workspace: workspaceInput,
 
         filter: filterInput,
-        identifier,
         connectToPlaceholder,
         parentFilters,
         parentFilterOverAttribute,
@@ -77,11 +76,7 @@ export const useAttributeFilterController = (
     const backend = useBackendStrict(backendInput, "AttributeFilter");
     const workspace = useWorkspaceStrict(workspaceInput, "AttributeFilter");
 
-    const { filter, setConnectedPlaceholderValue } = useResolveFilterInput(
-        filterInput,
-        connectToPlaceholder,
-        identifier,
-    );
+    const { filter, setConnectedPlaceholderValue } = useResolveFilterInput(filterInput, connectToPlaceholder);
 
     const limitingAttributeFilters = useResolveParentFiltersInput(parentFilters, parentFilterOverAttribute);
 

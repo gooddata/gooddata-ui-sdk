@@ -14,8 +14,9 @@ import {
     SortsOrPlaceholders,
     TotalsOrPlaceholders,
     UseCancelablePromiseCallbacks,
+    useCancelablePromise,
+    convertError,
 } from "../base";
-import { useDataView } from "./useDataView";
 import isEmpty from "lodash/isEmpty";
 import { createExecution } from "./createExecution";
 
@@ -160,12 +161,36 @@ export function useExecutionDataView(
           })
         : execution;
 
-    return useDataView(
-        { execution: preparedExecution, window, onCancel, onError, onLoading, onPending, onSuccess },
+    return useCancelablePromise<DataViewFacade, GoodDataSdkError>(
+        {
+            promise: preparedExecution
+                ? () =>
+                      preparedExecution
+                          .execute()
+                          .then((executionResult) =>
+                              window
+                                  ? executionResult.readWindow(window.offset, window.size)
+                                  : executionResult.readAll(),
+                          )
+                          .then((dataView) => {
+                              return DataViewFacade.for(dataView);
+                          })
+                          .catch((error) => {
+                              throw convertError(error);
+                          })
+                : null,
+            onCancel,
+            onError,
+            onLoading,
+            onPending,
+            onSuccess,
+        },
         [
             backend,
             workspace,
             preparedExecution?.fingerprint() ?? "__executionFingerprint__",
+            window?.offset ?? "__offset__",
+            window?.size ?? "__size__",
             ...effectiveDeps,
         ],
     );

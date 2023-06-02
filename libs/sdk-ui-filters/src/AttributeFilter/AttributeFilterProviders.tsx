@@ -21,7 +21,6 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         title,
         filter,
         connectToPlaceholder,
-        identifier,
         parentFilters,
         parentFilterOverAttribute,
         hiddenElements,
@@ -83,7 +82,6 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     title={title}
                     filter={filter}
                     connectToPlaceholder={connectToPlaceholder}
-                    identifier={identifier}
                     resetOnParentFilterChange={resetOnParentFilterChange}
                     parentFilters={parentFilters}
                     parentFilterOverAttribute={parentFilterOverAttribute}

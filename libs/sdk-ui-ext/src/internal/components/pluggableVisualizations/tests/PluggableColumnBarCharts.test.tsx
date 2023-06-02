@@ -34,8 +34,8 @@ import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => document.querySelector("body"),
+        configPanelElement: () => null,
         callbacks: {
             afterRender: noop,
             pushData: noop,

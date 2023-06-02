@@ -8,8 +8,6 @@
  *
  * @packageDocumentation
  */
-export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";
-export { IAttributeElementsChildren } from "./AttributeElements/types";
 
 export {
     DateFilter,
@@ -128,6 +126,7 @@ export {
     IAttributeFilterButtonProps,
     IAttributeFilterBaseProps,
     IAttributeFilterErrorProps,
+    IAttributeFilterLoadingProps,
     IAttributeFilterDropdownButtonProps,
     IAttributeFilterDropdownBodyProps,
     IAttributeFilterDropdownActionsProps,
@@ -192,14 +191,3 @@ export {
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
 } from "./AttributeFilter";
-
-export {
-    AttributeListItem,
-    EmptyListItem,
-    isEmptyListItem,
-    isNonEmptyListItem,
-    IAttributeDropdownBodyProps,
-    IAttributeDropdownBodyExtendedProps,
-    IAttributeDropdownListItemProps,
-    IAttributeFilterButtonOwnProps,
-} from "./deprecated";

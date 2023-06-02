@@ -1,10 +1,10 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { useBackendStrict } from "@gooddata/sdk-ui";
-import { AttributeFilterRenderer } from "./Components/AttributeFilterRenderer";
 import { IAttributeFilterBaseProps } from "./types";
 import { validateAttributeFilterProps } from "./utils";
 import { AttributeFilterProviders } from "./AttributeFilterProviders";
+import { AttributeFilterDropdown } from "./Components/Dropdown/AttributeFilterDropdown";
 
 /**
  * @internal
@@ -16,7 +16,7 @@ export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) 
 
     return (
         <AttributeFilterProviders {...props}>
-            <AttributeFilterRenderer />
+            <AttributeFilterDropdown />
         </AttributeFilterProviders>
     );
 };

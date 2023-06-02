@@ -861,22 +861,11 @@ export namespace EmbeddedKpiDashboard {
      */
     export type SwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, IDashboardBody>;
 
-    /**
-     * @deprecated use IPlatformBody instead
-     */
-    export type IPlaformBody = IPlatformBody;
-
     export interface IPlatformBody {
         status?: string;
         errorCode?: number;
         description?: string;
     }
-
-    /**
-     * @public
-     * @deprecated use PlatformData instead
-     */
-    export type PlaformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlaformBody>;
 
     /**
      * @public

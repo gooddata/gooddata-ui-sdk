@@ -37,6 +37,7 @@ export {
     IAttributeDatasetInfoProps,
     EmptyElementsSearchBar,
     IAttributeFilterErrorProps,
+    IAttributeFilterLoadingProps,
     IAttributeFilterDropdownButtonProps,
     IAttributeFilterDropdownBodyProps,
     IAttributeFilterDropdownActionsProps,

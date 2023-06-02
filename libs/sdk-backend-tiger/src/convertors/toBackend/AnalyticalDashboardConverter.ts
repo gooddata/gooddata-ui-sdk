@@ -18,7 +18,7 @@ import omit from "lodash/omit";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 import isEmpty from "lodash/isEmpty";
 import update from "lodash/fp/update";
-import { splitDrillUrlParts } from "@gooddata/sdk-backend-spi/dist/deprecated/dashboard/drillUrls";
+import { splitDrillUrlParts } from "@gooddata/sdk-model/dist/dashboard/drillUrl";
 
 function removeIdentifiers(widget: IDashboardWidget) {
     return omit(widget, ["ref", "uri", "identifier"]);

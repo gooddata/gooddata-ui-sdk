@@ -4,6 +4,7 @@ import { areObjRefsEqual, IAttributeDescriptor, idRef } from "@gooddata/sdk-mode
 import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types";
 import { useDashboardSelector, selectAllCatalogDisplayFormsMap } from "../../../../../model";
 import { useMemo } from "react";
+import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../../../_staging/drills/drillingUtils";
 
 export function useInvalidAttributeDisplayFormIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,
@@ -30,26 +31,4 @@ export function useInvalidAttributeDisplayFormIdentifiers(
         }
         return [];
     }, [displayForms, urlDrillTarget, attributes]);
-}
-
-interface IDrillToUrlPlaceholder {
-    placeholder: string;
-    identifier: string;
-    toBeEncoded: boolean;
-}
-
-const getAttributeIdentifiersPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(/\{attribute_title\((.*?)\)\}/g, url).map((match) => ({
-        placeholder: match[0],
-        identifier: match[1],
-        toBeEncoded: match.index !== 0,
-    }));
-
-function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
-    const matches = [];
-    let match = null;
-    while ((match = regex.exec(text)) !== null) {
-        matches.push(match);
-    }
-    return matches;
 }

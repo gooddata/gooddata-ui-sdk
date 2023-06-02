@@ -131,20 +131,15 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
     private async queryWorker(options: IElementsQueryOptions): Promise<IElementsQueryResult> {
         const objectId = await this.getObjectId();
 
-        const { elements, uris, ...restOptions } = options;
-
-        if (elements && uris) {
-            console.warn(
-                "Both 'elements' and 'uris' used in IElementsQueryOptions, 'uris' property will be ignored.",
-            );
-        }
+        const { elements, ...restOptions } = options;
 
         invariant(
             !isValueBasedElementsQueryOptionsElements(elements),
             "Specifying elements by value is not supported.",
         );
 
-        const urisToUse = elements?.uris ?? uris;
+        const urisToUse = elements?.uris;
+
         invariant(
             !urisToUse || urisToUse.every((item) => item !== null),
             "Nulls are not supported as attribute element uris on bear",
@@ -224,7 +219,9 @@ class BearWorkspaceFilterElementsQuery implements IFilterElementsQuery {
         if (selectedElements.uris.length) {
             return this.elementsQuery
                 .withOptions({
-                    uris: selectedElements.uris,
+                    elements: {
+                        uris: selectedElements.uris,
+                    },
                 })
                 .withOffset(this.offset)
                 .withLimit(this.limit)

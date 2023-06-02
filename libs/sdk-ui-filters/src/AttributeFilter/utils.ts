@@ -73,16 +73,8 @@ export function getElementKey(element: IAttributeElement) {
  * @internal
  */
 export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
-    const {
-        connectToPlaceholder,
-        filter,
-        identifier,
-        onApply,
-        parentFilters,
-        hiddenElements,
-        staticElements,
-        backend,
-    } = props;
+    const { connectToPlaceholder, filter, onApply, parentFilters, hiddenElements, staticElements, backend } =
+        props;
 
     invariant(
         !(filter && connectToPlaceholder),
@@ -94,25 +86,9 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         "It's not possible to use 'filter' property without 'onApply' property. Either provide 'onApply' callback or use placeholders.",
     );
 
-    //deprecated identifier check
     invariant(
-        !(filter && identifier),
-        "It's not possible to combine 'identifier' property with 'filter' property. Either provide an identifier, or a filter.",
-    );
-
-    invariant(
-        !(identifier && !onApply),
-        "It's not possible to use 'identifier' property without 'onApply' property. Either provide 'onApply' callback or use placeholders.",
-    );
-
-    invariant(
-        !(identifier && connectToPlaceholder),
-        "It's not possible to combine 'identifier' property with 'connectToPlaceholder' property. Either provide a idenfifier, or a placeholder.",
-    );
-
-    invariant(
-        identifier || filter || connectToPlaceholder,
-        "No identifier, filter or placeholer provided. Provide one of the properties: 'filter', 'connectToPlaceholder' or 'identifier' (note that identifier is deprecated).",
+        filter || connectToPlaceholder,
+        "No filter or placeholer provided. Provide one of the properties: 'filter', 'connectToPlaceholder'.",
     );
 
     invariant(
@@ -128,12 +104,6 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
         ),
         "Hidden elements are not supported by the current backend implementation.",
     );
-
-    if (identifier) {
-        console.warn(
-            "Definition of an attribute display form using 'identifier' is deprecated, use 'filter' property instead. Please see the documentation of [AttributeFilter component](https://sdk.gooddata.com/gooddata-ui/docs/attribute_filter_component.html) for further details.",
-        );
-    }
 }
 
 /**

@@ -5,8 +5,8 @@ import noop from "lodash/noop";
 export const DummyVisConstruct = {
     projectId: "testWorkspace",
     backend: dummyBackend(),
-    element: "none",
-    configPanelElement: "none",
+    element: (): null => null,
+    configPanelElement: (): null => null,
     callbacks: {
         onError: noop,
         afterRender: noop,

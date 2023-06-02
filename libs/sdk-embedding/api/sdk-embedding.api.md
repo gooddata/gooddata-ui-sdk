@@ -543,8 +543,6 @@ export namespace EmbeddedKpiDashboard {
         reason: string;
     }
     export type InsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IInsightSavedBody>;
-    // @deprecated (undocumented)
-    export type IPlaformBody = IPlatformBody;
     // (undocumented)
     export interface IPlatformBody {
         // (undocumented)
@@ -616,8 +614,6 @@ export namespace EmbeddedKpiDashboard {
     export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
     // (undocumented)
     export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
-    // @deprecated (undocumented)
-    export type PlaformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlaformBody>;
     // (undocumented)
     export type PlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlatformBody>;
     export type RemoveFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
