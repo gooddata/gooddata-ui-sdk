@@ -1,5 +1,7 @@
 // (C) 2021 GoodData Corporation
 
+import { TotalTypes } from "./enum/TotalTypes";
+
 const AUTO_SIZE_TOLERANCE = 10;
 
 export const nonEmptyValue = /\$?[0-9,.]+/;
@@ -17,7 +19,7 @@ export class Table {
         return this;
     }
 
-    public waitRowLoaded(): this {
+    public waitRowColumnLoaded(): this {
         this.getElement().find(".s-loading").should("not.exist");
         return this;
     }
@@ -80,6 +82,15 @@ export class Table {
             .find(`.s-cell-${row}-${column}`);
     }
 
+    existPivotTableColumnTotalCell(row: number, column: number, exist: boolean) {
+        this.getElement()
+            .find(".ag-body-viewport")
+            .find(`.gd-total-column.s-cell-${row}-${column}`)
+            .should(exist ? "exist" : "not.exist");
+
+        return this;
+    }
+
     existPivotTableFooterRow(row: number, exist: boolean) {
         return this.getElement()
             .find(".ag-floating-bottom")
@@ -88,10 +99,32 @@ export class Table {
             .should(exist ? "exist" : "not.exist");
     }
 
-    clickAggregationMenu(element: Cypress.Chainable<JQuery<HTMLElement>>) {
+    existPivotTableColumnTotal(headerPosition: number, exist: boolean) {
+        this.getElement()
+            .find(".ag-header")
+            .find(".ag-header-viewport")
+            .find(`.gd-column-total.gd-column-group-header-${headerPosition}`)
+            .should(exist ? "exist" : "not.exist");
+
+        return this;
+    }
+
+    clickAggregationMenu(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
         element.trigger("mouseover").find(".gd-menuOpenedByClick-togglerWrapped").click();
 
-        cy.get(".s-menu-aggregation-inner").first().click();
+        cy.get(".s-menu-aggregation-inner").contains(aggregationItem).trigger("mouseover");
+    }
+
+    addOrRemoveRowTotal(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
+        this.clickAggregationMenu(element, aggregationItem);
+        cy.get(".s-menu-aggregation-inner").contains("of all rows").click();
+        return this;
+    }
+
+    addOrRemoveColumnTotal(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
+        this.clickAggregationMenu(element, aggregationItem);
+        cy.get(".s-menu-aggregation-inner").contains("of all columns").click();
+        return this;
     }
 
     aggregationSubMenuHasColumn(element: Cypress.Chainable<JQuery<HTMLElement>>, exist = false) {

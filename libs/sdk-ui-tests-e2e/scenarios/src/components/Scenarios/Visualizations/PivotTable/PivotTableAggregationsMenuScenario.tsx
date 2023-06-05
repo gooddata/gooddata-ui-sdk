@@ -16,6 +16,15 @@ const totalsAll: TotalsOrPlaceholders = [
 
 const totalsOne: TotalsOrPlaceholders = [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)];
 
+const columnTotalsAll: TotalsOrPlaceholders = [
+    newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+    newTotal("sum", ReferenceMd.Won, ReferenceMd.ForecastCategory),
+];
+
+const columnTotalsOne: TotalsOrPlaceholders = [
+    newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+];
+
 const pivotTableConfig: IPivotTableConfig = {
     menu: {
         aggregations: true,
@@ -71,6 +80,14 @@ export const PivotTableAggregationsMenuOneTotalScenario = () => {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsOne} />;
 };
 
-export const PivotTableColumnsAggregationsMenuScenario = () => {
+export const PivotTableColumnsAggegationsMenuScenario = () => {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} />;
+};
+
+export const PivotTableAggregationsMenuOneColumnTotalScenario = () => {
+    return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsOne} />;
+};
+
+export const PivotTableColumnsAggregationsMenuAllTotalScenario = () => {
+    return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsAll} />;
 };

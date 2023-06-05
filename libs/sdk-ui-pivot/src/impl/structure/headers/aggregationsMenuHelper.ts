@@ -137,14 +137,11 @@ export function getUpdatedColumnOrRowTotals(
 }
 
 export function getAttributeDescriptorsLocalId(attributeDescriptors: IAttributeDescriptor[]): string[] {
-    const identifiers: string[] = [];
     if (attributeDescriptors) {
-        attributeDescriptors.forEach((attributeDescriptor) =>
-            identifiers.push(attributeDescriptorLocalId(attributeDescriptor)),
-        );
+        return attributeDescriptors.map(attributeDescriptorLocalId);
     }
 
-    return identifiers;
+    return [];
 }
 
 export default {
