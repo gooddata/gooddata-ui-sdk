@@ -168,6 +168,16 @@ export interface ScopeCol extends TableCol {
      * current group.
      */
     readonly headersToHere: IResultAttributeHeader[];
+
+    /**
+     * Checks whether this column group is part of grand total.
+     */
+    readonly isTotal?: boolean;
+
+    /**
+     * Checks whether this column group is part of sub-total.
+     */
+    readonly isSubtotal?: boolean;
 }
 
 export function isScopeCol(obj: unknown): obj is ScopeCol {
@@ -215,7 +225,7 @@ export type DataCol = RootCol | LeafDataCol;
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
  */
-export type AnyCol = SliceCol | DataCol;
+export type AnyCol = SliceCol | DataCol | ScopeCol;
 
 /**
  * Descriptors of all table columns. The table columns are divided into two groups:

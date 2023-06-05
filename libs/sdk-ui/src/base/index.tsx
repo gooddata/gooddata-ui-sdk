@@ -352,3 +352,5 @@ export {
     createNumberJsFormatter,
     DefaultDataAccessConfig,
 } from "./results/dataAccessConfig";
+
+export { getTotalInfo } from "./results/internal/utils";

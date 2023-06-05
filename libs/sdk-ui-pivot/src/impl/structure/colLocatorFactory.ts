@@ -2,7 +2,12 @@
 
 import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes";
 import { ColumnLocator, IAttributeColumnLocator, IMeasureColumnLocator } from "../../columnWidths";
-import { IMeasureDescriptor, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
+import {
+    IMeasureDescriptor,
+    IAttributeDescriptor,
+    IResultAttributeHeader,
+    isResultTotalHeader,
+} from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import zip from "lodash/zip";
 
@@ -18,7 +23,9 @@ function createAttributeLocator(
     return {
         attributeLocatorItem: {
             attributeIdentifier: descriptor.attributeHeader.localIdentifier,
-            element: header.attributeHeaderItem.uri,
+            element: isResultTotalHeader(header)
+                ? `${header.totalHeaderItem.name}-${header.totalHeaderItem.measureIndex}`
+                : header.attributeHeaderItem.uri,
         },
     };
 }

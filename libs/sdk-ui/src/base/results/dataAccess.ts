@@ -156,6 +156,16 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
          * the same index.
          */
         readonly attributeDefinitions?: IAttribute[];
+
+        /**
+         * Identifies whether the Data Serie is part of sub-total.
+         */
+        readonly isSubtotal?: boolean;
+
+        /**
+         * Identifies whether the Data Serie is part of grand total.
+         */
+        readonly isTotal?: boolean;
     };
 
 /**

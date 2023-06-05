@@ -1,6 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import findIndex from "lodash/findIndex";
+import { IntlShape } from "react-intl";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,
@@ -16,10 +17,13 @@ import {
     TableCols,
     ScopeCol,
 } from "./tableDescriptorTypes";
-import { ISortItem, sortDirection } from "@gooddata/sdk-model";
+import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import ColumnTotalGroupHeader from "./headers/ColumnTotalGroupHeader";
+import { messages } from "../../locales";
+import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "./../base/constants";
 
 type TransformState = {
     initialSorts: ISortItem[];
@@ -72,8 +76,12 @@ function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
     }
 }
 
-function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef | ColGroupDef {
-    const children = createColumnHeadersFromDescriptors(col.children, state);
+function createColumnGroupColDef(
+    col: ScopeCol,
+    state: TransformState,
+    intl?: IntlShape,
+): ColDef | ColGroupDef {
+    const children = createColumnHeadersFromDescriptors(col.children, state, intl);
     const headerName = valueWithEmptyHandling(
         getMappingHeaderFormattedName(col.header),
         state.emptyHeaderTitle,
@@ -91,12 +99,28 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
 
         return colDef;
     } else {
-        const colGroup: ColGroupDef = {
-            groupId: col.id,
-            headerName,
-            headerTooltip: headerName,
-            children,
-        };
+        let colGroup: ColDef | ColGroupDef;
+
+        if (isResultTotalHeader(col.header)) {
+            const isTotal = col.isTotal;
+            const isTotalSubGroup = col.headersToHere.some((header) => isResultTotalHeader(header));
+            const totalHeaderName = !isTotalSubGroup ? intl!.formatMessage(messages[headerName]) : "";
+            colGroup = {
+                type: isTotal ? COLUMN_TOTAL : COLUMN_SUBTOTAL,
+                colId: col.id,
+                headerName: totalHeaderName,
+                headerTooltip: totalHeaderName,
+                children,
+                headerGroupComponent: ColumnTotalGroupHeader,
+            };
+        } else {
+            colGroup = {
+                groupId: col.id,
+                headerName,
+                headerTooltip: headerName,
+                children,
+            };
+        }
 
         state.allColDefs.push(colGroup);
 
@@ -107,6 +131,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
 function createColumnHeadersFromDescriptors(
     cols: DataCol[],
     state: TransformState,
+    intl?: IntlShape,
 ): Array<ColGroupDef | ColDef> {
     const colDefs: Array<ColGroupDef | ColDef> = [];
 
@@ -118,7 +143,7 @@ function createColumnHeadersFromDescriptors(
                     .join(COLUMN_GROUPING_DELIMITER);
                 const colDef: ColGroupDef = {
                     groupId: ColumnGroupingDescriptorId,
-                    children: createColumnHeadersFromDescriptors(col.children, state),
+                    children: createColumnHeadersFromDescriptors(col.children, state, intl),
                     headerName,
                     headerTooltip: headerName,
                 };
@@ -129,7 +154,7 @@ function createColumnHeadersFromDescriptors(
                 break;
             }
             case "scopeCol": {
-                colDefs.push(createColumnGroupColDef(col, state));
+                colDefs.push(createColumnGroupColDef(col, state, intl));
 
                 break;
             }
@@ -137,8 +162,11 @@ function createColumnHeadersFromDescriptors(
                 const sortProp = getSortProp(state.initialSorts, (s) => measureSortMatcher(col, s));
                 const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
                 const headerName = col.seriesDescriptor.measureTitle();
+                const isTotal = col.seriesDescriptor.isTotal;
+                const isSubtotal = col.seriesDescriptor.isSubtotal;
+                const colDefType = isTotal ? COLUMN_TOTAL : isSubtotal ? COLUMN_SUBTOTAL : MEASURE_COLUMN;
                 const colDef: ColDef = {
-                    type: MEASURE_COLUMN,
+                    type: colDefType,
                     colId: col.id,
                     field: col.id,
                     headerName,
@@ -163,8 +191,8 @@ function createColumnHeadersFromDescriptors(
     return colDefs;
 }
 
-function createAndAddDataColDefs(table: TableCols, state: TransformState) {
-    const cols = createColumnHeadersFromDescriptors(table.rootDataCols, state);
+function createAndAddDataColDefs(table: TableCols, state: TransformState, intl?: IntlShape) {
+    const cols = createColumnHeadersFromDescriptors(table.rootDataCols, state, intl);
 
     state.rootColDefs.push(...cols);
 }
@@ -186,6 +214,7 @@ export function createColDefsFromTableDescriptor(
     table: TableCols,
     initialSorts: ISortItem[],
     emptyHeaderTitle: string,
+    intl?: IntlShape,
 ): TableColDefs {
     const state: TransformState = {
         initialSorts,
@@ -198,7 +227,7 @@ export function createColDefsFromTableDescriptor(
     };
 
     createAndAddSliceColDefs(table.sliceCols, state);
-    createAndAddDataColDefs(table, state);
+    createAndAddDataColDefs(table, state, intl);
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 

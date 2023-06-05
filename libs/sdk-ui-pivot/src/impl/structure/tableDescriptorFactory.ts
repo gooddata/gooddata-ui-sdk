@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { IntlShape } from "react-intl";
+import { DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
 import {
     IAttributeDescriptor,
     IResultAttributeHeader,
@@ -124,6 +125,8 @@ function groupColumns(
             const groupLevel = columnGroupLevels[level];
             let currentGroup: ScopeCol | undefined = groupLevel.pkToGroup[pathToGroup];
 
+            const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders);
+
             if (!currentGroup) {
                 const fullIndexPathToHere: number[] = parentGroup
                     ? [...parentGroup.fullIndexPathToHere, parentGroup.children.length]
@@ -138,6 +141,8 @@ function groupColumns(
                     headersToHere: attributeHeaders.slice(0, level),
                     children: [],
                     fullIndexPathToHere,
+                    isTotal,
+                    isSubtotal,
                 };
 
                 groupLevel.pkToGroup[pathToGroup] = currentGroup;
@@ -310,12 +315,14 @@ function createTableHeaders(dv: DataViewFacade): TableCols {
 export function createHeadersAndColDefs(
     dv: DataViewFacade,
     emptyHeaderTitle: string,
+    intl?: IntlShape,
 ): { headers: TableCols; colDefs: TableColDefs } {
     const headers = createTableHeaders(dv);
     const colDefs = createColDefsFromTableDescriptor(
         headers,
         dv.meta().effectiveSortItems(),
         emptyHeaderTitle,
+        intl,
     );
 
     return { headers, colDefs };

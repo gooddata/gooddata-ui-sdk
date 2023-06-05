@@ -10,6 +10,7 @@ import { invariant } from "ts-invariant";
 import { isSeriesCol } from "./tableDescriptorTypes";
 import { cellClassFactory } from "../cell/cellClass";
 import { createCellRenderer } from "../cell/cellRenderer";
+import ColumnTotalHeader from "./headers/ColumnTotalHeader";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
@@ -69,6 +70,35 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
                   )
                 : (null as any);
         },
+        cellStyle: (params) => {
+            const colDesc = table.tableDescriptor.getCol(params.colDef);
+
+            invariant(isSeriesCol(colDesc));
+
+            return params.value !== undefined
+                ? getMeasureCellStyle(
+                      params.value,
+                      colDesc.seriesDescriptor.measureFormat(),
+                      separators,
+                      true,
+                  )
+                : null;
+        },
+        cellRenderer,
+    };
+}
+
+export function totalSubTotalColumnTemplate(
+    table: TableFacade,
+    props: Readonly<ICorePivotTableProps>,
+): ColDef {
+    const cellRenderer = createCellRenderer();
+    const separators = props.config?.separators;
+
+    return {
+        headerComponent: ColumnTotalHeader,
+        cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-total-column")),
+        headerClass: headerClassFactory(table, props, "gd-total-column-header"),
         cellStyle: (params) => {
             const colDesc = table.tableDescriptor.getCol(params.colDef);
 

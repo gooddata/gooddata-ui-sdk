@@ -25,6 +25,7 @@ import {
     columnAttributeTemplate,
     measureColumnTemplate,
     rowAttributeTemplate,
+    totalSubTotalColumnTemplate,
 } from "./structure/colDefTemplates";
 import { TableFacade } from "./tableFacade";
 import { ICorePivotTableProps } from "../publicTypes";
@@ -122,9 +123,8 @@ export function createGridOptions(
             [ROW_ATTRIBUTE_COLUMN]: rowAttributeTemplate(table, props),
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
-            // This is temporary, totals/subtotals will receive their corresponding templates
-            [COLUMN_TOTAL]: columnAttributeTemplate(table, props),
-            [COLUMN_SUBTOTAL]: columnAttributeTemplate(table, props),
+            [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
+            [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },
 
         // Custom renderers

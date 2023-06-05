@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-
+import { IntlShape } from "react-intl";
 import {
     AnyCol,
     isScopeCol,
@@ -77,8 +77,8 @@ export class TableDescriptor {
      * @param dv - data view facade
      * @param emptyHeaderTitle - what to show for title of headers with empty title
      */
-    public static for(dv: DataViewFacade, emptyHeaderTitle: string): TableDescriptor {
-        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle);
+    public static for(dv: DataViewFacade, emptyHeaderTitle: string, intl?: IntlShape): TableDescriptor {
+        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, intl);
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 
