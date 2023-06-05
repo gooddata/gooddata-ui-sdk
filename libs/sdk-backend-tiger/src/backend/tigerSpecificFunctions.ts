@@ -35,11 +35,11 @@ import {
     DataSourceParameter,
     JsonApiCspDirectiveInTypeEnum,
     JsonApiCspDirectiveInDocument,
-    JsonApiCustomApplicationSettingOutWithLinks,
     JsonApiCustomApplicationSettingOutTypeEnum,
     ScanSqlResponse,
     HierarchyObjectIdentification,
     IdentifierDuplications,
+    JsonApiCustomApplicationSettingOut,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -384,7 +384,7 @@ export type TigerSpecificFunctions = {
      *
      * @param workspaceId - id of the workspace
      * @param applicationName - name of the appliation the setting was set for - ex: ldmModeler
-     * @returns WorkspaceCustomApplidationSettingList
+     * @returns ICustomApplicationSetting[]
      *
      */
     getWorkspaceCustomAppSettings?: (
@@ -393,20 +393,34 @@ export type TigerSpecificFunctions = {
     ) => Promise<ICustomApplicationSetting[]>;
 
     /**
+     * Return all custom setting of a workspace.
+     *
+     * @param workspaceId - id of the workspace
+     * @param settingId - id of the custom setting
+     * @returns ICustomApplicationSetting
+     *
+     */
+    getWorkspaceCustomAppSetting?: (
+        workspaceId: string,
+        settingId: string,
+    ) => Promise<ICustomApplicationSetting>;
+
+    /**
      * Create a custom setting of a for a workspace.
      *
      * @param workspaceId - id of the workspace
      * @param applicationName - name of the appliation the setting was set for - ex: ldmModeler
-     * @param id - id of the custom setting
      * @param content - setting data - json object
      * @example : \{"layout" : []\}
-     * @returns WorkspaceCustomApplidationSettingList
+     * @param settingId - id of the custom setting, generated if not provided
+     * @returns ICustomApplicationSetting
      *
      */
     createWorkspaceCustomAppSetting?: (
         workspaceId: string,
         applicationName: string,
         content: object,
+        settingId?: string,
     ) => Promise<ICustomApplicationSetting>;
 
     /**
@@ -507,7 +521,7 @@ const dataSourceIdentifierOutDocumentAsDataSourceConnectionInfo = (
 };
 
 const customAppSettingResponseAsICustomApplicationSetting = (
-    response: JsonApiCustomApplicationSettingOutWithLinks,
+    response: JsonApiCustomApplicationSettingOut,
 ): ICustomApplicationSetting => {
     const { id, attributes } = response;
     const { applicationName, content } = attributes;
@@ -1277,11 +1291,25 @@ export const buildTigerSpecificFunctions = (
             );
         });
     },
+    getWorkspaceCustomAppSetting: async (workspaceId: string, settingId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityCustomApplicationSettings({
+                    objectId: settingId,
+                    workspaceId,
+                });
+                return customAppSettingResponseAsICustomApplicationSetting(result.data.data);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
 
     createWorkspaceCustomAppSetting: async (
         workspaceId: string,
         applicationName: string,
         content: object,
+        settingId?: string,
     ) => {
         return await authApiCall(async (sdk) => {
             const result = await sdk.entities.createEntityCustomApplicationSettings({
@@ -1289,6 +1317,7 @@ export const buildTigerSpecificFunctions = (
                 jsonApiCustomApplicationSettingPostOptionalIdDocument: {
                     data: {
                         type: JsonApiCustomApplicationSettingOutTypeEnum.CUSTOM_APPLICATION_SETTING,
+                        id: settingId,
                         attributes: {
                             applicationName,
                             content,
