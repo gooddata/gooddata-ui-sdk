@@ -167,7 +167,11 @@ export interface IPivotTableBucketProps {
 export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
     groupRows?: boolean;
+    // (undocumented)
+    headersPosition?: "top" | "left";
     maxHeight?: number;
+    // (undocumented)
+    measureGroupDimension?: "columns" | "rows";
     menu?: IMenu;
     separators?: ISeparators;
 }

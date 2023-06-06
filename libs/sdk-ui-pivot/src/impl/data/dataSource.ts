@@ -175,7 +175,7 @@ export class AgGridDatasource implements IDatasource {
                         // table right now). After redrive of execution to change sorts/totals, code must make
                         // sure that the new settings are reflected in the table descriptor.
                         const emptyValue = emptyHeaderTitleFromIntl(this.intl);
-                        this.config.tableDescriptor = TableDescriptor.for(dv, emptyValue, this.intl);
+                        this.config.tableDescriptor = TableDescriptor.for(dv, emptyValue, {headersPosition: this.config.tableDescriptor.hasHeadersOnLeft() ? "left" : "top"}, this.intl);
 
                         this.processData(dv, params);
                     })

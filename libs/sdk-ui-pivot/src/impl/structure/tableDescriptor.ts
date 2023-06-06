@@ -13,6 +13,8 @@ import {
     isEmptyScopeCol,
     LeafDataCol,
     SliceMeasureCol,
+    AttributeMeasureHeadersCol,
+    AttributeMeasureValuesCol,
 } from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
@@ -266,6 +268,13 @@ export class TableDescriptor {
     }
 
     /**
+     * Tests whether the table has column headers moved to the
+     */
+    public hasHeadersOnLeft(): boolean {
+        return this.headers.attributeMeasureHeadersCols.length > 0;
+    }
+
+    /**
      * Given a column that may appear as a leaf of table headers this method returns its absolute index in the table.
      *
      * This takes into account that the table columns go from left-to-right, starting with slicing columns first then
@@ -273,7 +282,7 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol): number {
+    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol): number {
         if (isSliceCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
@@ -283,6 +292,8 @@ export class TableDescriptor {
 
             return this.sliceColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
         }
+
+        // TODO INE check index for AttributeMeasureHeadersCol | AttributeMeasureValuesCol
 
         return this.sliceColCount() + col.index;
     }
