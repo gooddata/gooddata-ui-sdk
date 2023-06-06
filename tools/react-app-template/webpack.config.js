@@ -16,7 +16,7 @@ module.exports = (_env, argv) => {
     const protocol = new URL(BACKEND_URL).protocol;
     const proxy = [
         {
-            context: ["/api", "/gdc"],
+            context: pathname => /^\/(api\/|gdc\/|account\.html|truste\.html|account\/)/.test(pathname),
             changeOrigin: true,
             cookieDomainRewrite: "127.0.0.1",
             secure: false,
