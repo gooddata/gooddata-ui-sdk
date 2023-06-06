@@ -38,7 +38,7 @@ import {
     IAuthenticatedAsyncCallContext,
     TelemetryData,
     AnonymousAuthProvider,
-    IAuthProviderCallGuard,
+    IAuthProviderCallGuard, detectReactRuntimeVersion,
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
@@ -375,6 +375,12 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
 
     if (telemetry.props && !isEmpty(telemetry.props)) {
         headers["X-GDC-JS-SDK-COMP-PROPS"] = telemetry.props.join(",");
+    }
+
+    const reactVersion = detectReactRuntimeVersion();
+
+    if (reactVersion) {
+        headers["X-GDC-JS-SDK-REACT"] = reactVersion;
     }
 
     if (implConfig.packageName && implConfig.packageVersion) {

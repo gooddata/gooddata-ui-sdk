@@ -39,7 +39,7 @@ import {
     AuthenticatedAsyncCall,
     IAuthenticatedAsyncCallContext,
     AuthProviderCallGuard,
-    TelemetryData,
+    TelemetryData, detectReactRuntimeVersion,
 } from "@gooddata/sdk-backend-base";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { BearOrganization, BearOrganizations } from "./organization";
@@ -507,6 +507,12 @@ function newSdkInstance(
         if (telemetry.props && !isEmpty(telemetry.props)) {
             sdk.config.setRequestHeader("X-GDC-JS-SDK-COMP-PROPS", telemetry.props.join(","));
         }
+    }
+
+    const reactVersion = detectReactRuntimeVersion();
+    
+    if (reactVersion) {
+        sdk.config.setRequestHeader("X-GDC-JS-SDK-REACT", reactVersion);
     }
 
     return sdk;

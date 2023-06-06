@@ -74,7 +74,7 @@ export {
     AnonymousAuthProvider,
 } from "./toolkit/auth";
 
-export { TelemetryData } from "./toolkit/backend";
+export { TelemetryData, detectReactRuntimeVersion } from "./toolkit/backend";
 
 export {
     AbstractExecutionFactory,

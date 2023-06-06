@@ -583,6 +583,9 @@ export class Denormalizer {
     readonly state: NormalizationState;
 }
 
+// @alpha (undocumented)
+export function detectReactRuntimeVersion(): string | undefined;
+
 // @internal
 export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 

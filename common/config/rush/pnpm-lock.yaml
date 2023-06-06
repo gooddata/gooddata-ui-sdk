@@ -589,6 +589,7 @@ importers:
       '@types/jest': ^29.5.1
       '@types/json-stable-stringify': ^1.0.32
       '@types/lodash': ^4.14.158
+      '@types/node': ^16.18.23
       '@types/spark-md5': ^3.0.1
       '@types/uuid': ^8.3.4
       '@typescript-eslint/eslint-plugin': ^5.57.1
@@ -631,11 +632,12 @@ importers:
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@gooddata/reference-workspace': link:../../tools/reference-workspace
-      '@microsoft/api-documenter': 7.21.7
-      '@microsoft/api-extractor': 7.34.4
+      '@microsoft/api-documenter': 7.21.7_@types+node@16.18.23
+      '@microsoft/api-extractor': 7.34.4_@types+node@16.18.23
       '@types/jest': 29.5.1
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.194
+      '@types/node': 16.18.23
       '@types/spark-md5': 3.0.2
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
@@ -651,7 +653,7 @@ importers:
       eslint-plugin-regexp: 1.14.0_eslint@8.38.0
       eslint-plugin-sonarjs: 0.16.0_eslint@8.38.0
       eslint-plugin-tsdoc: 0.2.17
-      jest: 29.5.0
+      jest: 29.5.0_@types+node@16.18.23
       jest-junit: 3.7.0
       prettier: 2.5.1
       ts-jest: 29.1.0_44ttdtjaknnkcgzh5px4h2qxl4
@@ -13612,7 +13614,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.59.0_j7zcdhslflxhyb4ielvkq3otfy
       '@typescript-eslint/utils': 5.59.0_gtjzorxa7eg3ns2qwm6k5om4ri
       eslint: 8.38.0
-      jest: 29.5.0
+      jest: 29.5.0_@types+node@16.18.23
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -16425,6 +16427,7 @@ packages:
       - '@types/node'
       - supports-color
       - ts-node
+    dev: true
 
   /jest-cli/29.5.0_@types+node@16.18.23:
     resolution: {integrity: sha512-L1KcP1l4HtfwdxXNFCL5bmUbLQiKrakMUriBEcc1Vfz6gx31ORKdreuWvmQVBit+1ss9NNR3yxjwfwzZNdQXJw==}
@@ -16516,6 +16519,7 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /jest-config/29.5.0_@types+node@16.18.23:
     resolution: {integrity: sha512-kvDUKBnNJPNBmFFOhDbm59iu1Fii1Q6SxyhXfvylq3UTHbg6o7j/g8k2dZyXWLvfdKB1vAPxNZnMgtKJcmu3kA==}
@@ -16916,6 +16920,7 @@ packages:
       - '@types/node'
       - supports-color
       - ts-node
+    dev: true
 
   /jest/29.5.0_@types+node@16.18.23:
     resolution: {integrity: sha512-juMg3he2uru1QoXX078zTa7pO85QyB9xajZc6bU+d9yEGwrKX6+vGmJQ3UdVZsvTEUARIdObzH68QItim6OSSQ==}
