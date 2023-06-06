@@ -9,6 +9,7 @@ import {
     IMeasure,
     IMeasureSortItem,
     isAttributeLocator,
+    isMeasureLocator,
     isAttributeSort,
     ISortItem,
     isPoPMeasure,
@@ -310,7 +311,7 @@ class ResultMetaMethods implements IResultMetaMethods {
         return sortMeasureLocators(sortItem).every((locator) => {
             if (isAttributeLocator(locator)) {
                 return this.matchAttributeLocator(locator);
-            } else {
+            } else if (isMeasureLocator(locator)) {
                 return this._measureDescriptorByLocalId[locator.measureLocatorItem.measureIdentifier];
             }
         });

@@ -27,7 +27,7 @@ import { TotalType } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
-export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator;
+export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
 // @public (undocumented)
 export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
@@ -197,6 +197,18 @@ export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWid
 
 // @public
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem;
+
+// @public
+export interface ITotalColumnLocator {
+    // (undocumented)
+    totalLocatorItem: ITotalColumnLocatorBody;
+}
+
+// @public
+export interface ITotalColumnLocatorBody {
+    attributeIdentifier: Identifier;
+    totalFunction: string;
+}
 
 // @public (undocumented)
 export interface IWeakMeasureColumnWidthItem {

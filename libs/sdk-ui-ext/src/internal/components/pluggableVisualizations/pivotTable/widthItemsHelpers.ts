@@ -22,6 +22,7 @@ import {
     isMeasureLocator,
     measureLocalId,
     isAttributeLocator,
+    isTotalLocator,
 } from "@gooddata/sdk-model";
 import { isAttributeFilter } from "../../../utils/bucketHelper";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -33,7 +34,9 @@ const isMeasureWidthItemMatchedByFilter = (
     filter.selectedElements.some((selectedElement) =>
         widthItem.measureColumnWidthItem.locators.some(
             (locator) =>
-                !isMeasureLocator(locator) && locator.attributeLocatorItem.element === selectedElement.uri,
+                (isAttributeLocator(locator) &&
+                    locator.attributeLocatorItem.element === selectedElement.uri) ||
+                isTotalLocator(locator),
         ),
     );
 
@@ -99,7 +102,18 @@ function removeInvalidLocators(
             return includes(measureLocalIdentifiers, locator.measureLocatorItem.measureIdentifier);
         }
         // filter out invalid column attribute locators
-        return includes(columnAttributeLocalIdentifiers, locator.attributeLocatorItem.attributeIdentifier);
+        if (isAttributeLocator(locator)) {
+            return includes(
+                columnAttributeLocalIdentifiers,
+                locator.attributeLocatorItem.attributeIdentifier,
+            );
+        }
+
+        if (isTotalLocator(locator)) {
+            return includes(columnAttributeLocalIdentifiers, locator.totalLocatorItem.attributeIdentifier);
+        }
+
+        return false;
     });
 }
 
@@ -159,6 +173,14 @@ function adaptWidthItemsToPivotTable(
                             if (
                                 columnAttributeIdentifier === locator.attributeLocatorItem.attributeIdentifier
                             ) {
+                                filteredColumnAttributeLocalIdentifiers.push(columnAttributeIdentifier);
+                            }
+                        });
+                    }
+
+                    if (isTotalLocator(locator)) {
+                        columnAttributeLocalIdentifiers.forEach((columnAttributeIdentifier) => {
+                            if (columnAttributeIdentifier === locator.totalLocatorItem.attributeIdentifier) {
                                 filteredColumnAttributeLocalIdentifiers.push(columnAttributeIdentifier);
                             }
                         });

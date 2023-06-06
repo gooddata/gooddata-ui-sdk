@@ -43,6 +43,8 @@ export {
     ColumnLocator,
     IAttributeColumnLocator,
     IAttributeColumnLocatorBody,
+    ITotalColumnLocator,
+    ITotalColumnLocatorBody,
     IMeasureColumnLocator,
     IMeasureColumnLocatorBody,
     isMeasureColumnLocator,

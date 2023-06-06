@@ -7,6 +7,7 @@ import {
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     IAttributeColumnLocator,
+    ITotalColumnLocator,
     IAttributeColumnWidthItem,
     IMeasureColumnLocator,
     IMeasureColumnWidthItem,
@@ -42,7 +43,9 @@ export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidt
 
     const allowGrowToFit = isString(width) ? false : (width as IAbsoluteColumnWidth).allowGrowToFit;
     const attributeLocatorFactories = attributeLocators.map((locator) =>
-        factoryNotationForAttributeColumnLocator(locator),
+        isAttributeColumnLocator(locator)
+            ? factoryNotationForAttributeColumnLocator(locator)
+            : factoryNotationForTotalColumnLocator(locator),
     );
 
     // cannot use lodash compact, that would remove 0 values which we want to keep here
@@ -60,6 +63,15 @@ export function factoryNotationForAttributeColumnLocator(obj: IAttributeColumnLo
     // cannot use lodash compact, that would remove 0 values which we want to keep here
     const params = [`"${attributeIdentifier}"`, element && `"${element}"`].filter((item) => !isNil(item));
     return `newAttributeColumnLocator(${params.join(", ")})`;
+}
+
+export function factoryNotationForTotalColumnLocator(obj: ITotalColumnLocator): string {
+    const { attributeIdentifier, totalFunction } = obj.totalLocatorItem;
+    // cannot use lodash compact, that would remove 0 values which we want to keep here
+    const params = [`"${attributeIdentifier}"`, totalFunction && `"${totalFunction}"`].filter(
+        (item) => !isNil(item),
+    );
+    return `newTotalColumnLocator(${params.join(", ")})`;
 }
 
 export function factoryNotationForWeakMeasureColumnWidthItem(obj: IWeakMeasureColumnWidthItem): string {

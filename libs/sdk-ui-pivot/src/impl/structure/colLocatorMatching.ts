@@ -8,8 +8,15 @@ import {
     isRootCol,
     LeafDataCol,
 } from "./tableDescriptorTypes";
-import { ColumnLocator, isAttributeColumnLocator, isMeasureColumnLocator } from "../../columnWidths";
+import {
+    ColumnLocator,
+    isTotalColumnLocator,
+    isAttributeColumnLocator,
+    isMeasureColumnLocator,
+} from "../../columnWidths";
 import { colMeasureLocalId } from "./colAccessors";
+import isEmpty from "lodash/isEmpty";
+import { isResultTotalHeader } from "@gooddata/sdk-model";
 
 /**
  * Given data sheet columns, this function will traverse them in order to attempt to match the provided
@@ -38,26 +45,33 @@ export function searchForLocatorMatch(
              */
             const groupByAttributeLocalId = col.attributeDescriptor.attributeHeader.localIdentifier;
             const matchingLocator = locators.find((locator) => {
-                return (
-                    isAttributeColumnLocator(locator) &&
-                    locator.attributeLocatorItem.attributeIdentifier === groupByAttributeLocalId
-                );
+                if (isAttributeColumnLocator(locator)) {
+                    return locator.attributeLocatorItem.attributeIdentifier === groupByAttributeLocalId;
+                } else if (isTotalColumnLocator(locator)) {
+                    return locator.totalLocatorItem.attributeIdentifier === groupByAttributeLocalId;
+                }
             });
 
-            if (!isAttributeColumnLocator(matchingLocator)) {
-                // if there is no matching attribute locator yet code is on scope col, then it
+            if (isEmpty(matchingLocator)) {
+                // if there is no matching attribute/total locator yet code is on scope col, then it
                 // means there are less attributes in the table than there are attribute locators. the
                 // table has changed yet some sort items hang around. bail out immediately with no match.
                 return undefined;
             }
 
-            const elementToMatch = matchingLocator.attributeLocatorItem.element;
-            if (col.header.attributeHeaderItem.uri === elementToMatch) {
+            const matchingAttr =
+                isAttributeColumnLocator(matchingLocator) &&
+                matchingLocator.attributeLocatorItem.element === col.header?.attributeHeaderItem?.uri;
+            const matchingTot =
+                isTotalColumnLocator(matchingLocator) &&
+                isResultTotalHeader(col.header) &&
+                matchingLocator.totalLocatorItem.totalFunction === col.header?.totalHeaderItem?.name;
+
+            if (matchingAttr || matchingTot) {
                 if (locators.length === 1) {
                     // elements match; see if all locators exhausted. if so, it means the width item does
                     // not contain any measure locator; it's OK to match the DataColGroup though, so mark it
                     // as found and bail out
-
                     found = col;
                 } else {
                     // otherwise dive deeper to inspect the children. make sure not to send the already-matched locator.

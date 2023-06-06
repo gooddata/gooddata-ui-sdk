@@ -432,6 +432,7 @@ export function convertColumnWidthsToMap(
                 width: widthValidator(width),
             };
         }
+
         if (isMeasureColumnWidthItem(columnWidth)) {
             const result = getMeasureColumnWidthItemFieldAndWidth(tableDescriptor, columnWidth);
 

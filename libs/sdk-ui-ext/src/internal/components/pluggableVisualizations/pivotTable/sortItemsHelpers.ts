@@ -13,6 +13,7 @@ import {
     IMeasureSortItem,
     isAttributeSort,
     isMeasureLocator,
+    isAttributeLocator,
     isMeasureSort,
     ISortItem,
     measureLocalId,
@@ -44,10 +45,14 @@ function filterInvalidSortItems(
                             );
                         }
                         // filter out invalid column attribute locators
-                        return includes(
-                            columnAttributeLocalIdentifiers,
-                            locator.attributeLocatorItem.attributeIdentifier,
-                        );
+                        if (isAttributeLocator(locator)) {
+                            return includes(
+                                columnAttributeLocalIdentifiers,
+                                locator.attributeLocatorItem.attributeIdentifier,
+                            );
+                        }
+
+                        return false;
                     }),
                 },
             };
@@ -180,7 +185,7 @@ function isMeasureSortItemMatchedByFilter(sortItem: IMeasureSortItem, filter: IA
         ? filter.selectedElements.some((selectedElement) =>
               sortItem.measureSortItem.locators.some(
                   (locator) =>
-                      !isMeasureLocator(locator) &&
+                      isAttributeLocator(locator) &&
                       locator.attributeLocatorItem.element === selectedElement.uri,
               ),
           )
