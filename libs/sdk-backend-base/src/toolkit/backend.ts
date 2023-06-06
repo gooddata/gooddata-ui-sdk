@@ -9,20 +9,22 @@ export type TelemetryData = {
 
 let cachedRuntimeReactVersion: string | undefined = undefined;
 
-function detectAndCacheReactRuntimeVersion() {
+(async () => {
     try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const react = require("react");
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line import/no-unresolved
+        const react = await import("react");
         cachedRuntimeReactVersion = react.version ?? "not-supported";
     } catch {
         cachedRuntimeReactVersion = "no-react";
     }
-    return cachedRuntimeReactVersion;
-}
+
+})();
 
 /**
  * @alpha
  */
 export function detectReactRuntimeVersion(): string | undefined {
-    return cachedRuntimeReactVersion ? cachedRuntimeReactVersion : detectAndCacheReactRuntimeVersion();
+    return cachedRuntimeReactVersion;
 }
