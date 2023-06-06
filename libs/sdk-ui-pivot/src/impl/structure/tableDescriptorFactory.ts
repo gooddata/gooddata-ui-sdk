@@ -456,7 +456,7 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
 export function createHeadersAndColDefs(
     dv: DataViewFacade,
     emptyHeaderTitle: string,
-    config?: IPivotTableConfig
+    config?: IPivotTableConfig,
     intl?: IntlShape,
 ): { headers: TableCols; colDefs: TableColDefs } {
     const headers = createTableHeaders(dv, config);
