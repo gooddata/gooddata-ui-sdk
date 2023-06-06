@@ -305,8 +305,10 @@ export function createColDefsFromTableDescriptor(
         createAndAddAttributeMeasureValuesColDefs(table.attributeMeasureValuesCols, state);
     } else {
         createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
-	    createAndAddDataColDefs(table, state, intl);    
-	}
+        createAndAddDataColDefs(table, state, intl);
+        // handle metrics in rows and no column attribute case
+        createAndAddAttributeMeasureValuesColDefs(table.attributeMeasureValuesCols, state);
+    }
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 

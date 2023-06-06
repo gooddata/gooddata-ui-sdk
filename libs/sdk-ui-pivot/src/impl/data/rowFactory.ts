@@ -151,6 +151,10 @@ export function getRow(
         }
     }
 
+    tableDescriptor.headers.attributeMeasureValuesCols.forEach((measureValueHeader, headerIndex) => {
+        row[measureValueHeader.id] = cellData[headerIndex];
+    })
+
     if (!tableDescriptor.hasDataLeafCols()) {
         // table has no leaf columns - it is a row-only table listing a bunch of
         // attribute element values. no point in going further as there is no additional

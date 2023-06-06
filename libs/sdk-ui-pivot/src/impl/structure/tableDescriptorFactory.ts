@@ -379,6 +379,17 @@ function createAttributeMeasureValuesColumnDescriptors(dv: DataViewFacade): Attr
         }));
 }
 
+function createMeasureValuesColumnDescriptors(): AttributeMeasureValuesCol[] {
+    const idx = 0;
+    // always just one column with mixed attribute and measure headers
+    return [{
+        type: "attributeMeasureValuesCol",
+        id: `amv_${idx}`,
+        index: idx,
+        fullIndexPathToHere: [idx],
+    }]
+}
+
 function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): TableCols {
     const idToDescriptor: Record<string, AnyCol> = {};
 
@@ -408,6 +419,11 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
         // TODO DRY
         rows.forEach((header) => (idToDescriptor[header.id] = header));
         measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
+
+        const addMetricValueColumn = measureColumns.length > 0 && groupingAttributes.length === 0;
+        const attributeMeasureValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
+        attributeMeasureValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
+
         allColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
         return {
@@ -418,7 +434,7 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
             idToDescriptor,
             scopingAttributes: groupingAttributes,
             attributeMeasureHeadersCols: [],
-            attributeMeasureValuesCols: [],
+            attributeMeasureValuesCols,
         };
     }
 }
