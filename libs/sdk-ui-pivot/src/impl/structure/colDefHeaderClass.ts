@@ -36,6 +36,7 @@ export function headerClassFactory(
             return cx(
                 classList,
                 "gd-column-group-header",
+                "gd-column-group-header-descriptor",
                 "s-table-column-group-header-descriptor",
                 !tableDescriptor.sliceColCount() ? "gd-column-group-header--first" : null,
             );
@@ -45,6 +46,10 @@ export function headerClassFactory(
             const indexWithinGroup = treeIndexes ? treeIndexes[treeIndexes.length - 1] : undefined;
             const noLeftBorder = tableDescriptor.isFirstCol(colId) || !tableDescriptor.hasScopingCols();
             const noBottomBorder = isScopeCol(colDesc) && isResultTotalHeader(colDesc.header);
+            const topBottomSolidTotal =
+                isScopeCol(colDesc) &&
+                isResultTotalHeader(colDesc.header) &&
+                colDesc.headersToHere.length === 0;
             const isColumnTotal = (colDef as ColDef).type === COLUMN_TOTAL;
             const isColumnSubtotal = (colDef as ColDef).type === COLUMN_SUBTOTAL;
             const absoluteColIndex = isSeriesCol(colDesc)
@@ -70,6 +75,7 @@ export function headerClassFactory(
                     : null,
                 noLeftBorder ? "gd-column-group-header--first" : null,
                 noBottomBorder ? "gd-column-group-header--subtotal" : null,
+                topBottomSolidTotal ? "gd-column-group-header-total--first" : null,
                 !colDef.headerName && !noBottomBorder ? "gd-column-group-header--empty" : null,
                 isColumnTotal ? "gd-column-total" : null,
                 isColumnSubtotal ? "gd-column-subtotal" : null,

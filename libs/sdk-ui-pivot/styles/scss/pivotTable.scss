@@ -41,21 +41,24 @@ $header-hover-background-color: var(
     var(--gd-palette-complementary-1, kit-variables.$gd-palette-primary-dimmed)
 );
 
-$total-background-color: var(--gd-table-totalBackgroundColor, var(--gd-palette-complementary-2, #e7ebef));
+$total-background-color: var(
+    --gd-table-totalBackgroundColor,
+    var(--gd-palette-complementary-2, rgba(176, 190, 202, 0.2))
+);
 
 $row-column-subtotal-background-color: var(
     --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-1, #b0beca33)
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.3))
 );
 
 $row-total-column-subtotal-background-color: var(
     --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-1, #b0beca4d)
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.3))
 );
 
 $row-column-total-background-color: var(
     --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-1, #b0beca66)
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.4))
 );
 
 $total-value-color: var(
@@ -65,11 +68,11 @@ $total-value-color: var(
 
 $subtotal-even-background-color: var(
     --gd-table-subtotalBackgroundColor,
-    var(--gd-palette-complementary-1, #eff2f4)
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.15))
 );
 $subtotal-odd-background-color: var(
     --gd-table-subtotalBackgroundColor,
-    var(--gd-palette-complementary-1, #f7f8f9)
+    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.1))
 );
 
 @use "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin" as ag-balham;
@@ -127,6 +130,10 @@ $subtotal-odd-background-color: var(
             + .ag-header-group-cell.ag-header-group-cell-no-group:not(.ag-header-cell-moving):hover {
             // prevent empty header cells from being highlighted on hover
             background-color: $custom-background-color;
+        }
+
+        .ag-header-row:not(:first-child) .ag-header-cell {
+            border-top: $cell-border;
         }
     }
 
@@ -186,6 +193,45 @@ $subtotal-odd-background-color: var(
             }
         }
 
+        .gd-column-group-header.gd-column-total {
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $total-background-color !important; // Override ag-grid header hover color
+                cursor: default;
+            }
+        }
+
+        .gd-column-group-header.gd-column-subtotal {
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: $subtotal-odd-background-color !important; // Override ag-grid header hover color
+                cursor: default;
+            }
+        }
+
+        .ag-header-container {
+            [aria-rowindex="2"] {
+                // stylelint-disable-next-line max-nesting-depth
+                .ag-header-group-cell:not(.ag-header-group-cell-no-group, .gd-column-total),
+                .ag-header-cell:not(.ag-header-group-cell-no-group, .gd-column-total) {
+                    // stylelint-disable-next-line declaration-no-important
+                    border-top: $cell-border !important; // Override ag-grid headers border
+                    // stylelint-disable-next-line declaration-no-important
+                    border-top-color: $cell-border-color !important; // Override ag-grid headers border
+                }
+
+                // stylelint-disable-next-line max-nesting-depth
+                .gd-column-total {
+                    border-top: 1px solid $cell-border-color;
+                }
+            }
+        }
+
+        .gd-column-group-header-total--first {
+            // stylelint-disable-next-line declaration-no-important
+            border-top: 1px solid $cell-border-color !important; // Override ag-grid headers border
+        }
+
         .ag-header-cell,
         .gd-column-group-header {
             border-bottom: $cell-border;
@@ -194,6 +240,10 @@ $subtotal-odd-background-color: var(
             &.gd-column-group-header--subtotal {
                 border-bottom: none;
             }
+        }
+
+        .gd-column-group-header-descriptor {
+            border-bottom: none;
         }
 
         .gd-column-group-header-0,
@@ -276,16 +326,10 @@ $subtotal-odd-background-color: var(
         }
 
         .gd-column-total {
-            border-bottom-color: transparent;
+            border-left: 1px solid $cell-border-color;
             color: $total-value-color;
             font-weight: bold;
             background-color: $total-background-color;
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background-color: $total-background-color !important; // Override ag-grid header hover color
-                cursor: default;
-            }
         }
 
         .gd-row-total {
@@ -302,13 +346,7 @@ $subtotal-odd-background-color: var(
 
         .gd-column-subtotal {
             font-weight: bold;
-            background-color: $subtotal-even-background-color;
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background-color: $subtotal-even-background-color !important; // Override ag-grid header hover color
-                cursor: default;
-            }
+            background-color: rgba(176, 190, 202, 0.1);
         }
 
         .gd-table-row-subtotal {
@@ -322,40 +360,20 @@ $subtotal-odd-background-color: var(
             }
         }
 
-        .gd-table-row-column-subtotal {
+        .gd-table-row-subtotal-column-subtotal {
             background-color: $total-background-color;
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background-color: $total-background-color !important; // Override ag-grid header hover color
-            }
         }
 
         .gd-table-row-total-column-subtotal {
             background-color: $row-total-column-subtotal-background-color;
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background-color: $row-total-column-subtotal-background-color !important; // Override ag-grid header hover color
-            }
         }
 
         .gd-table-row-subtotal-column-total {
-            background-color: $total-background-color;
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background-color: $total-background-color !important; // Override ag-grid header hover color
-            }
+            background-color: $row-total-column-subtotal-background-color;
         }
 
-        .gd-table-row-column-total {
+        .gd-table-row-total-column-total {
             background-color: $row-column-total-background-color;
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background-color: $row-column-total-background-color !important; // Override ag-grid header hover color
-            }
         }
 
         .gd-column-merged {
