@@ -213,6 +213,39 @@ export class ContractExpired extends AnalyticalBackendError {
 }
 
 /**
+ * @public
+ */
+export interface IErrorResponseData {
+    traceId: string;
+    httpStatus: number;
+    rawData: {
+        [key: string]: any;
+    }
+}
+
+/**
+ * @public
+ */
+export type ErrorResponseData = IErrorResponseData | null;
+
+/**
+ * @public
+ */
+export abstract class BackendApiError extends AnalyticalBackendError {
+    public readonly errorResponseData: ErrorResponseData;
+
+    constructor(error: AnalyticalBackendError) {
+        super(error.message, error.abeType, error.cause);
+
+        Object.setPrototypeOf(this, new.target.prototype);
+
+        this.errorResponseData = this.buildErrorResponseData();
+    }
+
+    protected abstract buildErrorResponseData(): ErrorResponseData;
+}
+
+/**
  * Error converter
  *
  * @public

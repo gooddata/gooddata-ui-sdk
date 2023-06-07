@@ -8,31 +8,10 @@ import {
     ContractExpired,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosError } from "axios";
+import { TigerApiError } from "../errors/BackendApiError";
 
 export function convertApiError(error: Error): AnalyticalBackendError {
-    if (isAnalyticalBackendError(error)) {
-        return error;
-    }
-
-    const notAuthenticated = createNotAuthenticatedError(error);
-
-    if (notAuthenticated) {
-        throw notAuthenticated;
-    }
-
-    const limitReached = createLimitReachedError(error);
-
-    if (limitReached) {
-        throw limitReached;
-    }
-
-    const contractExpired = createContractExpiredError(error);
-
-    if (contractExpired) {
-        return contractExpired;
-    }
-
-    return new UnexpectedError("An unexpected error has occurred", error);
+    return new TigerApiError(detectApiError(error));
 }
 
 export function createNotAuthenticatedError(error: Error): NotAuthenticated | undefined {
@@ -83,4 +62,30 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
     }
 
     return new ContractExpired(axiosErrorResponse.data.tier || "unspecified", error);
+}
+
+function detectApiError(error: Error): AnalyticalBackendError {
+    if (isAnalyticalBackendError(error)) {
+        return error;
+    }
+
+    const notAuthenticated = createNotAuthenticatedError(error);
+
+    if (notAuthenticated) {
+        throw notAuthenticated;
+    }
+
+    const limitReached = createLimitReachedError(error);
+
+    if (limitReached) {
+        throw limitReached;
+    }
+
+    const contractExpired = createContractExpiredError(error);
+
+    if (contractExpired) {
+        return contractExpired;
+    }
+
+    return new UnexpectedError("An unexpected error has occurred", error);
 }

@@ -14,6 +14,7 @@ import {
 import includes from "lodash/includes";
 import isString from "lodash/isString";
 import { StatusCodes as HttpStatusCodes } from "http-status-codes";
+import { BearApiError } from "../errors/BackendApiError";
 
 export function isApiResponseError(error: unknown): error is ApiResponseError {
     return (error as ApiResponseError).response !== undefined;
@@ -60,6 +61,10 @@ export function convertExecutionApiError(error: Error): AnalyticalBackendError {
 }
 
 export function convertApiError(error: Error): AnalyticalBackendError {
+    return new BearApiError(detectApiError(error));
+}
+
+export function detectApiError(error: Error): AnalyticalBackendError {
     if (isAnalyticalBackendError(error)) {
         return error;
     }

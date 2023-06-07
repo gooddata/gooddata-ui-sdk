@@ -89,6 +89,7 @@ export {
     NotAuthenticatedReason,
     LimitReached,
     ContractExpired,
+    BackendApiError,
     ErrorConverter,
     isAnalyticalBackendError,
     isNoDataError,
@@ -102,6 +103,8 @@ export {
     isLimitReached,
     isContractExpired,
     AuthenticationFlow,
+    IErrorResponseData,
+    ErrorResponseData,
     AnalyticalBackendErrorTypes,
 } from "./errors";
 

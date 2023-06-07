@@ -113,6 +113,15 @@ export type AuthenticationFlow = {
     returnRedirectParam: string;
 };
 
+// @public (undocumented)
+export abstract class BackendApiError extends AnalyticalBackendError {
+    constructor(error: AnalyticalBackendError);
+    // (undocumented)
+    protected abstract buildErrorResponseData(): ErrorResponseData;
+    // (undocumented)
+    readonly errorResponseData: ErrorResponseData;
+}
+
 // @beta
 export type CancelableOptions = {
     signal?: AbortSignal;
@@ -133,6 +142,9 @@ export type ElementsQueryOptionsElementsSpecification = IElementsQueryOptionsEle
 
 // @public
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
+
+// @public (undocumented)
+export type ErrorResponseData = IErrorResponseData | null;
 
 // @internal
 export type ExplainConfig<T extends ExplainType | undefined> = {
@@ -377,6 +389,18 @@ export type IElementsQueryResult = IPagedResource<IAttributeElement>;
 // @public
 export interface IEntitlements {
     resolveEntitlements(): Promise<IEntitlementDescriptor[]>;
+}
+
+// @public (undocumented)
+export interface IErrorResponseData {
+    // (undocumented)
+    httpStatus: number;
+    // (undocumented)
+    rawData: {
+        [key: string]: any;
+    };
+    // (undocumented)
+    traceId: string;
 }
 
 // @public
