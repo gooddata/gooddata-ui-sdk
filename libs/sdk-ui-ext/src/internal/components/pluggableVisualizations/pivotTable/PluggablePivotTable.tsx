@@ -530,11 +530,12 @@ export function createPivotTableConfig(
             ...tableConfig,
             menu: pivotTableMenuForCapabilities(capabilities, {
                 aggregations: true,
+                aggregationsSubMenu: true,
             }),
         };
     }
 
-    if (enableTableTotalRows)
+    if (enableTableTotalRows) {
         tableConfig = {
             ...tableConfig,
             menu: {
@@ -542,6 +543,7 @@ export function createPivotTableConfig(
                 aggregationsSubMenuForRows: true,
             },
         };
+    }
 
     const autoSize = settings.enableTableColumnsAutoResizing;
 
