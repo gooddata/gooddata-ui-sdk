@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 const AUTO_SIZE_TOLERANCE = 10;
+const RESIZE_SELECTOR = `.ag-header-cell-resize`;
 
 export const nonEmptyValue = /\$?[0-9,.]+/;
 
@@ -121,6 +122,31 @@ export class Table {
 
     hasCellValue(row: number, column: number, value: string) {
         this.getCellValue(row, column).should("have.text", value);
+        return this;
+    }
+
+    getResizeColumnAndGroupCell(groupIndex: number, columnIndex: number, isColumn: boolean) {
+        if (isColumn) {
+            return this.getElement().find(`.s-table-measure-column-header-index-${columnIndex}`);
+        }
+        return this.getElement().find(
+            `.s-table-measure-column-header-group-cell-${groupIndex}.s-table-measure-column-header-index-${columnIndex}`,
+        );
+    }
+
+    resizeColumn(
+        groupIndex = 0,
+        columnIndex = 0,
+        destinationOffsetX = 0,
+        isColumn: boolean,
+        useMetaKey?: boolean,
+    ) {
+        const mouseDownProperties = useMetaKey ? { button: 0, ctrlKey: true } : { button: 0, force: true };
+        this.getResizeColumnAndGroupCell(groupIndex, columnIndex, isColumn)
+            .find(RESIZE_SELECTOR)
+            .trigger("mousedown", mouseDownProperties)
+            .trigger("mousemove", destinationOffsetX, 0, { force: true })
+            .trigger("mouseup", { force: true });
         return this;
     }
 }

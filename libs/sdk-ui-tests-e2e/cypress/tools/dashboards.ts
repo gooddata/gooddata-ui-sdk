@@ -98,6 +98,10 @@ export class TopBar {
         return this.getElement(".s-header-options-button");
     }
 
+    getDeleteButtonElement(): Cypress.Chainable {
+        return this.getElement(".s-delete_dashboard");
+    }
+
     getFilterBarElement(): Cypress.Chainable {
         return this.getElement("");
     }
@@ -127,6 +131,11 @@ export class TopBar {
         return this;
     }
 
+    hasDeleteButton(expect = true): this {
+        this.getDeleteButtonElement().should(expect ? "exist" : "not.exist");
+        return this;
+    }
+
     menuButtonIsVisible(visible = true): this {
         this.getMenuButtonElement().should(visible ? "exist" : "not.exist");
         return this;
@@ -138,7 +147,7 @@ export class TopBar {
     }
 
     clickMenuButton(): this {
-        this.getMenuButtonElement().click();
+        this.getMenuButtonElement().click({ force: true });
         return this;
     }
 
@@ -193,7 +202,7 @@ export class FilterBar {
     }
 
     selectDateFilterOption(option: string): this {
-        this.getElement(option).click();
+        this.getElement(option).click({ force: true });
         return this;
     }
 

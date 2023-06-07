@@ -2,50 +2,77 @@
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
+import { EditMode } from "../../tools/editMode";
+import { Widget } from "../../tools/widget";
+import { WidgetConfiguration } from "../../tools/widgetConfiguration";
+import { Table } from "../../tools/table";
+
+const topBar = new TopBar();
+const dashboard = new Dashboard();
+const editMode = new EditMode();
+const widget = new Widget(0);
+
+const STAGE_NAME_CHECKBOX = ".s-stage_name";
 
 describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
+            cy.login();
             Navigation.visit("dashboard/dashboard-tiger");
         });
 
         it("should render topBar", () => {
-            const dashboard = new Dashboard();
-
             dashboard.topBarExist();
         });
 
         // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should render title", () => {
-            const topBar = new TopBar();
-
-            topBar.dashboardTitleExist().dashboardTitleHasValue("Test dashboard");
+            topBar.dashboardTitleExist().dashboardTitleHasValue("KPIs");
         });
 
         it("should render edit button", () => {
-            const topBar = new TopBar();
-            const dashboard = new Dashboard();
-
             dashboard.topBarExist();
             topBar.editButtonIsVisible(true);
         });
 
         it("should menu button render", () => {
-            const topBar = new TopBar();
-
             topBar.menuButtonIsVisible();
         });
 
         // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should open menu button and contain items", () => {
-            const topBar = new TopBar();
-
             topBar
                 .menuButtonIsVisible()
                 .clickMenuButton()
                 .topBarMenuItemExist(".s-export_to_pdf")
                 .topBarMenuItemExist(".s-schedule_emailing");
         });
+
+        //Cover ticket: RAIL-4702
+        it("Should enable Save button when resize column", { tags: ["checklist_integrated_tiger"] }, () => {
+            Navigation.visit("dashboard/stage-name");
+            editMode.edit();
+            const table = new Table(".s-dash-item");
+            table.waitLoaded().resizeColumn(0, 1, 500, true);
+            editMode.saveButtonEnabled(true);
+        });
+
+        //Cover ticket: RAIL-4728
+        it(
+            "Should reload widget after check/uncheck attribute filter",
+            { tags: ["checklist_integrated_tiger"] },
+            () => {
+                const widgetConfig = new WidgetConfiguration(0);
+
+                Navigation.visit("dashboard/stage-name");
+                editMode.edit();
+                widget.waitTableLoaded().focus();
+                widgetConfig.openConfiguration().selectFilterCheckbox(STAGE_NAME_CHECKBOX);
+                widget.isLoading(true);
+                widgetConfig.selectFilterCheckbox(STAGE_NAME_CHECKBOX);
+                widget.isLoading(true);
+            },
+        );
     });
 
     describe("FilterBar rendering", () => {
@@ -90,13 +117,11 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
 
     describe("Dashboard body rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard");
+            Navigation.visit("dashboard/kpis");
         });
 
         // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should render single insight", () => {
-            const dashboard = new Dashboard();
-
             dashboard.dashboardBodyExist();
         });
     });

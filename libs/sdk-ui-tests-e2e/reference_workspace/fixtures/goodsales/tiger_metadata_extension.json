@@ -116,6 +116,40 @@
                                     }
                                 ],
                                 "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "fbcca86f-c473-446b-b316-eb4f4e5de909",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Table with stage name and atribute filter",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
                             }
                         ],
                         "type": "IDashboardLayout"
