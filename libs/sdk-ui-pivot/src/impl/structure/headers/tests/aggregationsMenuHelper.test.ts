@@ -182,7 +182,7 @@ describe("aggregationsMenuHelper", () => {
         ];
 
         it("should return false when there is no column and row total defined", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "a2", "sum", [], []);
+            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(["a1"], ["a2"], "sum", [], []);
             expect(result).toBe(false);
         });
 
@@ -200,8 +200,8 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
             const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                "a1",
-                "a3",
+                ["a1"],
+                ["a3"],
                 "sum",
                 columnTotals,
                 rowTotals,
@@ -211,8 +211,8 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return false when the provided column and row total is not defined for an attribute", () => {
             const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                "a1",
-                "a3",
+                ["a1"],
+                ["a3"],
                 "min",
                 columnTotals,
                 rowTotals,
@@ -222,8 +222,8 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return false when no column and row total is not defined for an attribute", () => {
             const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                "a4",
-                "a6",
+                ["a4"],
+                ["a6"],
                 "sum",
                 columnTotals,
                 rowTotals,
@@ -233,8 +233,8 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return true when the provided row total is defined for an attribute", () => {
             const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                "a1",
-                "",
+                ["a1"],
+                [""],
                 "sum",
                 columnTotals,
                 rowTotals,
@@ -244,8 +244,8 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return true when the provided column total is defined for an attribute", () => {
             const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                "",
-                "a3",
+                [""],
+                ["a3"],
                 "max",
                 columnTotals,
                 rowTotals,

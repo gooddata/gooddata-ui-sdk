@@ -615,7 +615,10 @@ $subtotal-odd-background-color: var(
             z-index: 2;
             flex: auto;
             padding: 4px 30px;
-            cursor: pointer;
+
+            &.is-clickable {
+                cursor: pointer;
+            }
         }
 
         &.is-submenu .gd-aggregation-menu-item-inner {
@@ -642,6 +645,7 @@ $subtotal-odd-background-color: var(
             max-width: 190px;
             overflow: hidden;
             text-overflow: ellipsis;
+            cursor: pointer;
         }
     }
 }

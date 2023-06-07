@@ -1,8 +1,9 @@
 // (C) 2022 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { nonEmptyValue, Table } from "../../tools/table";
+import { TotalTypes } from "../../tools/enum/TotalTypes";
 
-describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_isolated_bear"] }, () => {
+describe("Pivot Table Aggregations menu and add row totals", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("visualizations/pivot-table/pivot-table-aggregations-menu");
     });
@@ -66,14 +67,14 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
             .should("have.class", "gd-pivot-table-header-menu--show");
     });
 
-    it("should add totals for one measure (SEPARATE)", () => {
+    it("should add row totals for one measure (SEPARATE)", () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
 
         const element = table.getMeasureCellHeader(0, 2);
-        table.clickAggregationMenu(element);
+        table.addOrRemoveRowTotal(element, TotalTypes.SUM);
 
-        table.waitRowLoaded();
+        table.waitRowColumnLoaded();
 
         table
             .getPivotTableFooterCell(0, 0)
@@ -99,14 +100,14 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
         table.existPivotTableFooterRow(1, false);
     });
 
-    it("should add totals for all measures (SEPARATE)", () => {
+    it("should add row totals for all measures (SEPARATE)", () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
 
         const element = table.getMeasureGroupCell(0).eq(0);
-        table.clickAggregationMenu(element);
+        table.addOrRemoveRowTotal(element, TotalTypes.SUM);
 
-        table.waitRowLoaded();
+        table.waitRowColumnLoaded();
 
         table.getPivotTableFooterCell(0, 0).find(`.s-value`).should("have.text", "Sum");
 
@@ -127,14 +128,14 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
             });
     });
 
-    it("should add totals for group (SEPARATE)", () => {
+    it("should add row totals for group (SEPARATE)", () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
 
         const element = table.getMeasureGroupCell(0).eq(0);
-        table.clickAggregationMenu(element);
+        table.addOrRemoveRowTotal(element, TotalTypes.SUM);
 
-        table.waitRowLoaded();
+        table.waitRowColumnLoaded();
 
         table.getPivotTableFooterCell(0, 0).find(`.s-value`).should("have.text", "Sum");
 
@@ -158,7 +159,7 @@ describe("Pivot Table Aggregations menu and add totals", { tags: ["pre-merge_iso
 
 describe("Pivot Table Column Aggregations menu", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-column-total-aggregations-menu");
+        Navigation.visit("visualizations/pivot-table/pivot-table-column-aggregations-menu");
     });
 
     it("should show aggregation sub menu for columns", () => {

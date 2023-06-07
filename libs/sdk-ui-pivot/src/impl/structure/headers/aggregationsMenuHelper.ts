@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { ITotal, TotalType } from "@gooddata/sdk-model";
+import { attributeDescriptorLocalId, IAttributeDescriptor, ITotal, TotalType } from "@gooddata/sdk-model";
 
 import { AVAILABLE_TOTALS } from "../../base/constants";
 import findIndex from "lodash/findIndex";
@@ -75,17 +75,19 @@ function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: str
 }
 
 function isTotalEnabledForAttribute(
-    attributeLocalIdentifier: string,
-    columnAttributeLocalIdentifier: string,
+    attributeLocalIdentifier: string[],
+    columnAttributeLocalIdentifier: string[],
     totalType: TotalType,
     columnTotals: IColumnTotal[],
     rowTotals: IColumnTotal[],
 ): boolean {
     const columns = columnTotals.some((total: IColumnTotal) => {
-        return total.type === totalType && total.attributes.includes(attributeLocalIdentifier);
+        const find = total.attributes.some((attribute) => attributeLocalIdentifier.includes(attribute));
+        return total.type === totalType && find;
     });
     const rows = rowTotals.some((total: IColumnTotal) => {
-        return total.type === totalType && total.attributes.includes(columnAttributeLocalIdentifier);
+        const find = total.attributes.some((attribute) => columnAttributeLocalIdentifier.includes(attribute));
+        return total.type === totalType && find;
     });
 
     return columns || rows;
@@ -132,6 +134,14 @@ export function getUpdatedColumnOrRowTotals(
     return sortBy(updatedTotals, (total) =>
         findIndex(AVAILABLE_TOTALS, (rankedItem) => rankedItem === total.type),
     );
+}
+
+export function getAttributeDescriptorsLocalId(attributeDescriptors: IAttributeDescriptor[]): string[] {
+    if (attributeDescriptors) {
+        return attributeDescriptors.map(attributeDescriptorLocalId);
+    }
+
+    return [];
 }
 
 export default {
