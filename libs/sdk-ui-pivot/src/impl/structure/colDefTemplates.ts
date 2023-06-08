@@ -99,6 +99,19 @@ export function totalSubTotalColumnTemplate(
         headerComponent: ColumnTotalHeader,
         cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-total-column")),
         headerClass: headerClassFactory(table, props, "gd-total-column-header"),
+        valueFormatter: (params: ValueFormatterParams) => {
+            const colDesc = table.tableDescriptor.getCol(params.colDef);
+
+            invariant(isSeriesCol(colDesc));
+
+            return params.value !== undefined
+                ? getMeasureCellFormattedValue(
+                      params.value,
+                      colDesc.seriesDescriptor.measureFormat(),
+                      separators,
+                  )
+                : (null as any);
+        },
         cellStyle: (params) => {
             const colDesc = table.tableDescriptor.getCol(params.colDef);
 
