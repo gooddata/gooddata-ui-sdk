@@ -42,6 +42,10 @@ function isComplainingAboutAuthorization(error: ApiResponseError): boolean {
     );
 }
 
+function getTraceId(error: ApiResponseError) {
+    return error.response?.headers?.get ? error.response?.headers?.get("x-gdc-request") : null;
+}
+
 export function convertExecutionApiError(error: Error): AnalyticalBackendError {
     if (isApiResponseError(error)) {
         if (error.response.status === HttpStatusCodes.NO_CONTENT) {
@@ -79,7 +83,13 @@ export function convertApiError(error: Error): AnalyticalBackendError {
             return new ProtectedDataError("Request not authorized", error);
         }
 
-        return new UnexpectedResponseError(error.message, error.response.status, error.responseBody, error);
+        return new UnexpectedResponseError(
+            error.message,
+            error.response.status,
+            error.responseBody,
+            getTraceId(error),
+            error,
+        );
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);

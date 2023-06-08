@@ -98,12 +98,14 @@ export class ProtectedDataError extends AnalyticalBackendError {
 export class UnexpectedResponseError extends AnalyticalBackendError {
     public readonly httpStatus: number;
     public readonly responseBody: unknown;
+    public readonly traceId: string | undefined;
 
-    constructor(message: string, httpStatus: number, responseBody: unknown, cause?: Error) {
+    constructor(message: string, httpStatus: number, responseBody: unknown, traceId?: string, cause?: Error) {
         super(message, AnalyticalBackendErrorTypes.UNEXPECTED_HTTP, cause);
 
         this.httpStatus = httpStatus;
         this.responseBody = responseBody;
+        this.traceId = traceId;
     }
 }
 

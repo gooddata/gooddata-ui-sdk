@@ -1017,11 +1017,13 @@ export class UnexpectedError extends AnalyticalBackendError {
 
 // @public
 export class UnexpectedResponseError extends AnalyticalBackendError {
-    constructor(message: string, httpStatus: number, responseBody: unknown, cause?: Error);
+    constructor(message: string, httpStatus: number, responseBody: unknown, traceId?: string, cause?: Error);
     // (undocumented)
     readonly httpStatus: number;
     // (undocumented)
     readonly responseBody: unknown;
+    // (undocumented)
+    readonly traceId: string | undefined;
 }
 
 // @public
