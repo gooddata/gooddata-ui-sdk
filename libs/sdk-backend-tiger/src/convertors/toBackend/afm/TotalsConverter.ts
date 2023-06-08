@@ -13,6 +13,7 @@ import {
     MeasureGroupIdentifier,
     TotalType,
     IMeasure,
+    sanitizeBucketTotals,
 } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
@@ -96,7 +97,15 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
         const attributeIdentifiers = getAttributeBucketIdentifiers(matchingAttributeBucket);
         const columnIdentifiers = getAttributeBucketIdentifiers(matchingColumnBucket);
 
-        attributeBucket!.totals?.forEach((attributeTotal, index) => {
+        if (attributeBucket && isEqual(dimensions[0].totals, bucketTotals(attributeBucket))) {
+            dimensions[0].totals = sanitizeBucketTotals(
+                attributeBucket,
+                def.sortBy,
+                bucketTotals(attributeBucket),
+            );
+        }
+
+        dimensions[0].totals?.forEach((attributeTotal, index) => {
             let hasRowAndColumnGrandTotals = false;
             let hasRowAndColumnSubTotals = false;
             let hasRowSubtotalAndColumnGrandTotal = false;
@@ -105,7 +114,7 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
             let columnDimensionIndex = 0;
             let attributeSubtotalDimensionIndex = 0;
             let columnSubtotalDimensionIndex = 0;
-            columnBucket!.totals?.forEach((columnTotal, columnIndex) => {
+            dimensions[1].totals?.forEach((columnTotal, columnIndex) => {
                 const attributeMeasureId = attributeTotal.measureIdentifier;
                 const attributeType = attributeTotal.type;
                 const columnMeasureId = columnTotal.measureIdentifier;
