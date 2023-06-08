@@ -12,6 +12,7 @@ import {
     IPreviousPeriodMeasureDefinition,
     isArithmeticMeasureDefinition,
     isAttributeLocator,
+    isMeasureLocator,
     isAttributeSort,
     isLocalIdRef,
     isMeasureSort,
@@ -472,7 +473,7 @@ export class Normalizer {
                         locator.attributeLocatorItem.attributeIdentifier = this.normalizedLocalId(
                             locator.attributeLocatorItem.attributeIdentifier,
                         );
-                    } else {
+                    } else if (isMeasureLocator(locator)) {
                         locator.measureLocatorItem.measureIdentifier = this.normalizedLocalId(
                             locator.measureLocatorItem.measureIdentifier,
                         );

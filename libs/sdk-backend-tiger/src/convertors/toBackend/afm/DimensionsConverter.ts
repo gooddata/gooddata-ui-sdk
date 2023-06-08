@@ -11,6 +11,7 @@ import {
     ILocatorItem,
     isAttributeAreaSort,
     isAttributeLocator,
+    isMeasureLocator,
     isAttributeSort,
     ISortItem,
     MeasureGroupIdentifier,
@@ -89,10 +90,12 @@ function convertMeasureLocators(locators: ILocatorItem[]): { [key: string]: stri
                     locator.attributeLocatorItem.element,
                 ),
             };
-        } else {
+        } else if (isMeasureLocator(locator)) {
             return {
                 [MeasureGroupIdentifier]: locator.measureLocatorItem.measureIdentifier,
             };
+        } else {
+            return {};
         }
     });
     return Object.assign({}, ...dataColumnLocators);

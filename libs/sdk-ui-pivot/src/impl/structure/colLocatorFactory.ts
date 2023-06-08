@@ -1,12 +1,18 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes";
-import { ColumnLocator, IAttributeColumnLocator, IMeasureColumnLocator } from "../../columnWidths";
+import {
+    ColumnLocator,
+    ITotalColumnLocator,
+    IAttributeColumnLocator,
+    IMeasureColumnLocator,
+} from "../../columnWidths";
 import {
     IMeasureDescriptor,
     IAttributeDescriptor,
     IResultAttributeHeader,
     isResultTotalHeader,
+    IResultTotalHeader,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import zip from "lodash/zip";
@@ -23,9 +29,24 @@ function createAttributeLocator(
     return {
         attributeLocatorItem: {
             attributeIdentifier: descriptor.attributeHeader.localIdentifier,
-            element: isResultTotalHeader(header)
-                ? `${header.totalHeaderItem.name}-${header.totalHeaderItem.measureIndex}`
-                : header.attributeHeaderItem.uri,
+            element: header.attributeHeaderItem.uri,
+        },
+    };
+}
+
+function createTotalLocator(
+    descriptor: IAttributeDescriptor | undefined,
+    header: IResultTotalHeader | undefined,
+): ITotalColumnLocator {
+    // if this bombs it means something is wrong with the col descriptors or in very bad case in the DVF data access logic.
+    // by contract, all data series have same number of descriptors & headers. therefore the zipping logic should never
+    // run into situation where the arrays are of different size.
+    invariant(descriptor && header);
+
+    return {
+        totalLocatorItem: {
+            attributeIdentifier: descriptor.attributeHeader.localIdentifier,
+            totalFunction: header.totalHeaderItem.name,
         },
     };
 }
@@ -51,7 +72,9 @@ export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
         descriptorsAndHeaders.push([col.attributeDescriptor, col.header]);
 
         return descriptorsAndHeaders.map(([descriptor, header]) =>
-            createAttributeLocator(descriptor, header),
+            isResultTotalHeader(header)
+                ? createTotalLocator(descriptor, header)
+                : createAttributeLocator(descriptor, header),
         );
     } else {
         const result: ColumnLocator[] = [];
@@ -62,9 +85,13 @@ export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
                 col.seriesDescriptor.attributeHeaders,
             );
 
-            descriptorAndHeaders.forEach(([descriptor, header]) =>
-                result.push(createAttributeLocator(descriptor, header)),
-            );
+            descriptorAndHeaders.forEach(([descriptor, header]) => {
+                if (isResultTotalHeader(header)) {
+                    result.push(createTotalLocator(descriptor, header));
+                } else {
+                    result.push(createAttributeLocator(descriptor, header));
+                }
+            });
         }
 
         result.push(createMeasureLocator(col.seriesDescriptor.measureDescriptor));

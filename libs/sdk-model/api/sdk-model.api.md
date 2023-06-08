@@ -1453,7 +1453,7 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
 }
 
 // @public
-export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
@@ -2460,6 +2460,9 @@ export function isTotal(obj: unknown): obj is ITotal;
 export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
 
 // @public
+export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem;
+
+// @public
 export function isUriRef(obj: unknown): obj is UriRef;
 
 // @alpha
@@ -2791,6 +2794,18 @@ export interface ITotalDescriptor {
 export interface ITotalDescriptorItem {
     // (undocumented)
     name: string;
+}
+
+// @public
+export interface ITotalLocatorItem {
+    // (undocumented)
+    totalLocatorItem: ITotalLocatorItemBody;
+}
+
+// @public
+export interface ITotalLocatorItemBody {
+    attributeIdentifier: Identifier;
+    totalFunction: string;
 }
 
 // @public

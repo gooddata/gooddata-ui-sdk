@@ -141,7 +141,7 @@ export type ColumnWidthItem =
 /**
  * @public
  */
-export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator;
+export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
 /**
  * Object defining the {@link IMeasureColumnLocator} object body.
@@ -187,12 +187,38 @@ export interface IAttributeColumnLocatorBody {
 }
 
 /**
+ * Object defining the {@link ITotalColumnLocator} object body.
+ *
+ * @public
+ */
+export interface ITotalColumnLocatorBody {
+    /**
+     * Local identifier of the attribute inside which the subtotal is put
+     */
+    attributeIdentifier: Identifier;
+
+    /**
+     * Function for the total, such as sum, max, min, ...
+     */
+    totalFunction: string;
+}
+
+/**
  * Locates all columns for an attribute or columns for particular attribute element.
  *
  * @public
  */
 export interface IAttributeColumnLocator {
     attributeLocatorItem: IAttributeColumnLocatorBody;
+}
+
+/**
+ * Locates all columns for a columns for particular total.
+ *
+ * @public
+ */
+export interface ITotalColumnLocator {
+    totalLocatorItem: ITotalColumnLocatorBody;
 }
 
 /**
@@ -211,6 +237,15 @@ export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocat
  */
 export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator {
     return !isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
+}
+
+/**
+ * Tests whether object is an instance of {@link TotalColumnLocator}
+ *
+ * @public
+ */
+export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator {
+    return !isEmpty(obj) && (obj as ITotalColumnLocator).totalLocatorItem !== undefined;
 }
 
 /**

@@ -99,7 +99,7 @@ export interface IMeasureSortTarget {
  *
  * @public
  */
-export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
 /**
  * Locator that specifies a concrete attribute element for which the measure values are sliced.
@@ -122,12 +122,38 @@ export interface IAttributeLocatorItemBody {
 }
 
 /**
+ * Locator that specifies a concrete attribute element for which the total is applicable
+ *
+ * @public
+ */
+export interface ITotalLocatorItemBody {
+    /**
+     * Local identifier of the attribute.
+     */
+    attributeIdentifier: Identifier;
+
+    /**
+     * Function for the total, such as sum, max, min, ...
+     */
+    totalFunction: string;
+}
+
+/**
  * Locator that specifies a concrete attribute element for which the measure values are sliced.
  *
  * @public
  */
 export interface IAttributeLocatorItem {
     attributeLocatorItem: IAttributeLocatorItemBody;
+}
+
+/**
+ * Locator that specifies a concrete total element for which the measure values are sliced.
+ *
+ * @public
+ */
+export interface ITotalLocatorItem {
+    totalLocatorItem: ITotalLocatorItemBody;
 }
 
 /**
@@ -198,6 +224,15 @@ export function isMeasureSort(obj: unknown): obj is IMeasureSortItem {
  */
 export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem {
     return !isEmpty(obj) && (obj as IAttributeLocatorItem).attributeLocatorItem !== undefined;
+}
+
+/**
+ * Type guard checking whether an object is a total locator.
+ *
+ * @public
+ */
+export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem {
+    return !isEmpty(obj) && (obj as ITotalLocatorItem).totalLocatorItem !== undefined;
 }
 
 /**

@@ -136,6 +136,7 @@ function groupColumns(
                     type: "scopeCol",
                     id: `g_${groupId++}`,
                     attributeDescriptor: attributeDescriptors![level],
+                    // NOTE: group of totals gets the measure index stored in the first total
                     header: attributeHeaders[level],
                     descriptorsToHere: attributeDescriptors.slice(0, level),
                     headersToHere: attributeHeaders.slice(0, level),

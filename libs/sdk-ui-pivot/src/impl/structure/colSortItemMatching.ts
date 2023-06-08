@@ -4,6 +4,7 @@ import {
     IAttributeLocatorItem,
     IMeasureLocatorItem,
     isAttributeLocator,
+    isMeasureLocator,
     isAttributeSort,
     isMeasureSort,
     ISortItem,
@@ -49,7 +50,7 @@ export function measureSortMatcher(col: SeriesCol, sortItem: ISortItem): boolean
         sortMeasureLocators(sortItem).every((locator) => {
             if (isAttributeLocator(locator)) {
                 return attributeLocatorMatch(col, locator);
-            } else {
+            } else if (isMeasureLocator(locator)) {
                 return measureLocatorMatch(col, locator);
             }
         })
