@@ -6,8 +6,9 @@ import {
     UnexpectedError,
     LimitReached,
     ContractExpired,
+    UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 
 export function convertApiError(error: Error): AnalyticalBackendError {
     if (isAnalyticalBackendError(error)) {
@@ -15,21 +16,23 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     }
 
     const notAuthenticated = createNotAuthenticatedError(error);
-
     if (notAuthenticated) {
         throw notAuthenticated;
     }
 
     const limitReached = createLimitReachedError(error);
-
     if (limitReached) {
         throw limitReached;
     }
 
     const contractExpired = createContractExpiredError(error);
-
     if (contractExpired) {
         return contractExpired;
+    }
+
+    const unexpectedResponseError = createUnexpectedResponseError(error);
+    if (unexpectedResponseError) {
+        return unexpectedResponseError;
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);
@@ -83,4 +86,23 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
     }
 
     return new ContractExpired(axiosErrorResponse.data.tier || "unspecified", error);
+}
+
+function createUnexpectedResponseError(error: Error): UnexpectedResponseError | undefined {
+    const axiosErrorResponse = (error as AxiosError).response;
+    if (!axiosErrorResponse) {
+        return;
+    }
+
+    return new UnexpectedResponseError(
+        error.message,
+        axiosErrorResponse.status,
+        axiosErrorResponse.data,
+        getTraceId(axiosErrorResponse),
+        error,
+    );
+}
+
+function getTraceId(axiosErrorResponse: AxiosResponse): string {
+    return axiosErrorResponse.headers ? axiosErrorResponse.headers["x-gdc-trace-id"] : null;
 }
