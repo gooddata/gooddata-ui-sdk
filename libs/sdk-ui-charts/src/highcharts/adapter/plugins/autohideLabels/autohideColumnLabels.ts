@@ -33,6 +33,7 @@ import {
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { UnsafeInternals, IUnsafeDataLabels, IStackItem } from "../../../typings/unsafe";
+import { isWaterfall } from "../../../chartTypes/_util/common";
 
 /*
  * Code in this file accesses Highchart properties that are not included in
@@ -59,6 +60,7 @@ const toggleNonStackedChartLabels = (
     visiblePoints: any,
     axisRangeForAxes: IAxisRangeForAxes,
     shouldCheckShapeIntersection: boolean = false,
+    type?: string,
 ) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
@@ -87,7 +89,13 @@ const toggleNonStackedChartLabels = (
     if (foundIntersection) {
         hideDataLabels(visiblePoints);
     } else {
-        visiblePoints.forEach((point: any) => showDataLabelInAxisRange(point, point.y, axisRangeForAxes));
+        visiblePoints.forEach((point: any) =>
+            showDataLabelInAxisRange(
+                point,
+                isWaterfall(type) ? Math.abs(point.y) : point.y,
+                axisRangeForAxes,
+            ),
+        );
     }
 };
 
@@ -291,7 +299,7 @@ export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
     if (isStackedChart) {
         toggleStackedChartLabels(visiblePoints.filter(hasLabelInside), axisRangeForAxes);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true);
+        toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true, chart?.options?.chart?.type);
     }
 };
 
