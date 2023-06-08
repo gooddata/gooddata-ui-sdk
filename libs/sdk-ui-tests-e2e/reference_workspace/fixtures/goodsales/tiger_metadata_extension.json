@@ -1555,6 +1555,112 @@
                 "description": "",
                 "id": "ed0a80c8-4266-4cb6-88c7-48eafbe47c1d",
                 "title": "Dashboard order"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "def1b968-bf39-48c3-9a54-0bdfddd098a5",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "aa8db374-7a8b-4019-85df-25f47772db5d",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Table has many rows/columns",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_oppcreated_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [
+                                                {
+                                                    "origin": {
+                                                        "measure": {
+                                                            "localIdentifier": "f39fae64af114ed3819a5df4636e06d6"
+                                                        },
+                                                        "type": "drillFromMeasure"
+                                                    },
+                                                    "target": {
+                                                        "identifier": {
+                                                            "id": "aa8db374-7a8b-4019-85df-25f47772db5d",
+                                                            "type": "visualizationObject"
+                                                        }
+                                                    },
+                                                    "transition": "pop-up",
+                                                    "type": "drillToInsight"
+                                                }
+                                            ],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6d46ac4d-9d6c-434d-a9ae-ff61c98ce066",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Insight has invalid interaction",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "5c8244eb-6c86-488c-9df1-37d46e5450ed",
+                "title": "KD with table has many rows/columns"
             }
         ],
         "dashboardPlugins": [],
@@ -3390,6 +3496,15 @@
                 "description": "",
                 "id": "fefa2616-21cd-4233-a2f4-857c7e0ace10",
                 "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "def1b968-bf39-48c3-9a54-0bdfddd098a5",
+                "title": "filterContext"
             }
         ],
         "metrics": [],
@@ -4899,6 +5014,164 @@
                 "description": "Table with stage name and atribute filter",
                 "id": "fbcca86f-c473-446b-b316-eb4f4e5de909",
                 "title": "Table with stage name and atribute filter"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "f_opportunitysnapshot.f_amount",
+                                                        "type": "fact"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "3c36d9d1e52c4038b1dd8b131e89ae9d",
+                                        "title": "Sum of Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_owner.salesrep.ownername",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "a4c4fec91dc041f0aea51152556c2eac"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "attr.f_stage.stagename",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "132c6d7f66444dccac8da9f6e214026e"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "00855b3622a542d498d7d784f96663db"
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_oppcreated_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "c1988aceaacd45e2ac0a2481cc4f1016"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "a4c4fec91dc041f0aea51152556c2eac",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "description": "",
+                "id": "aa8db374-7a8b-4019-85df-25f47772db5d",
+                "title": "Table has many rows/columns"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "fa313ebe40ab48be83a7c53749352835",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_stage.status_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "4d80e611b37c47b7bdd05778e1fe8c53"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "4d80e611b37c47b7bdd05778e1fe8c53",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "version": "2",
+                    "visualizationUrl": "local:table"
+                },
+                "description": "",
+                "id": "6d46ac4d-9d6c-434d-a9ae-ff61c98ce066",
+                "title": "Insight has invalid interaction"
             }
         ]
     }

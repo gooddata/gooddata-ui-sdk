@@ -5,7 +5,10 @@ import { Widget } from "../../tools/widget";
 import { EditMode } from "../../tools/editMode";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
 import { DateFilter } from "../../tools/dateFilter";
+import { Dashboard } from "../../tools/dashboards";
+import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
+const dashboard = new Dashboard();
 const editMode = new EditMode();
 const widget = new Widget(0);
 const insightCatalog = new InsightsCatalog();
@@ -65,4 +68,14 @@ describe("Insights on dashboard", () => {
         editMode.save();
         widget.waitChartLoaded().hasTitle("<button>hello</button>");
     });
+
+    //Cover ticket: RAIL-4783
+    it(
+        "Dashboard should be displayed well after drag and drop new insight",
+        { tags: ["checklist_integrated_bear"] },
+        () => {
+            dashboard.getWidget(0).addBefore("ColumnChart");
+            new WidgetConfiguration(0).openInteractions().hasInteractions(true);
+        },
+    );
 });

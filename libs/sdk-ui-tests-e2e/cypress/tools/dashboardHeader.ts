@@ -1,7 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
 
-const HEADER_CONTROL_SELECTOR = ".dash-control-buttons";
-const EDIT_BUTTON_SELECTOR = ".s-edit_button";
 const SAVE_AS_NEW_SELECTOR = ".s-save_as_new";
 const SAVE_AS_NEW_DIALOG = ".save-as-new-dialog";
 const CONFIRM_BUTTON = ".s-create_dashboard";
@@ -9,6 +7,24 @@ const INPUT_DASHBOARD_TITLE = ".dashboard-title";
 const LOCK_STATUS = ".s-locked-status";
 
 export class DashboardHeader {
+    getEditButtonElement(): Cypress.Chainable {
+        return cy.get(".s-edit_button");
+    }
+
+    editButtonIsVisible(visible = true): this {
+        this.getEditButtonElement().should(visible ? "exist" : "not.exist");
+        return this;
+    }
+
+    getShareButtonElement(): Cypress.Chainable {
+        return cy.get(".s-header-share-button");
+    }
+
+    shareButtonExists(exist = true): this {
+        this.getShareButtonElement().should(exist ? "exist" : "not.exist");
+        return this;
+    }
+
     hasTitle(title: string) {
         cy.get(".s-dash-title").should("contain.text", title);
         return this;
@@ -17,23 +33,32 @@ export class DashboardHeader {
     getEditableTitleElement() {
         return cy.get(".s-dash-title-editable-label");
     }
+
     hasEditableTitle(title: string) {
         this.getEditableTitleElement().should("contain.text", title);
         return this;
     }
 
     dashboardTitleHasValue(value: string): this {
-        cy.get(".s-gd-dashboard-title").should("have.text", value);
+        this.getDashboardTitleElement().should("have.text", value);
         return this;
     }
 
     dashboardTitleExist(exist = true) {
-        cy.get(".s-gd-dashboard-title").should(exist ? "exist" : "not.exist");
+        this.getDashboardTitleElement().should(exist ? "exist" : "not.exist");
         return this;
     }
 
+    getDashboardTitleElement() {
+        return cy.get(".s-gd-dashboard-title");
+    }
+
+    hasTitlePlaceholder() {
+        this.getDashboardTitleElement().find("textarea").should("have.prop", "placeholder", "Untitled");
+    }
+
     isTitleFocused() {
-        this.getEditableTitleElement().find("textarea").should("be.focused");
+        this.getDashboardTitleElement().find("textarea").should("be.focused");
         return this;
     }
 
@@ -49,13 +74,6 @@ export class DashboardHeader {
 
     hasLockedStatusVisible(expect = true) {
         cy.get(LOCK_STATUS).should(expect ? "be.visible" : "not.exist");
-        return this;
-    }
-
-    isEditButtonPresent(expect = true) {
-        cy.get(HEADER_CONTROL_SELECTOR)
-            .find(EDIT_BUTTON_SELECTOR)
-            .should(expect ? "exist" : "not.exist");
         return this;
     }
 

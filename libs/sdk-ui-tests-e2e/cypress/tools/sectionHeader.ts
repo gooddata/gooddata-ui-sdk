@@ -76,11 +76,16 @@ export class SectionHeader {
         return this;
     }
 
-    hasLimitMessage(message: string) {
+    hasLimitMessage(expected: boolean, message: string) {
         cy.get(".bubble:not(.s-gd-configuration-bubble) .bubble-content .content").should(
-            "have.text",
+            expected ? "have.text" : "not.exist",
             message,
         );
+        return this;
+    }
+
+    clickOutside() {
+        this.getTitleInputWrapper().click("left");
         return this;
     }
 

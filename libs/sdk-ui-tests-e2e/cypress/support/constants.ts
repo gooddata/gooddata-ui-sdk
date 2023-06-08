@@ -17,3 +17,5 @@ export const isRecording = (): string => Cypress.env("IS_RECORDING");
 export const getBackendHost = (): string => Cypress.env("BACKEND_HOST");
 
 export const getWorkingDir = (): string => Cypress.env("WORKING_DIR");
+
+export const getMaximumTimeout = (): number => Cypress.env("timeForInsightLoading");

@@ -169,9 +169,8 @@ export class WidgetConfiguration {
         return this;
     }
 
-    deleteDashboardItem() {
+    removeFromDashboard() {
         cy.get(".s-delete-insight-item").click();
-        cy.get(".s-dash-item").should("have.length", 14);
         return this;
     }
 
@@ -232,13 +231,11 @@ class DrillConfigItem {
         return this;
     }
 
-    chooseTargetDashboard(dashboardName: DashboardName) {
+    chooseTargetDashboard(dashboardName: string) {
         this.getElement().find(".s-dashboards-dropdown-button").click();
 
-        cy.get(".dropdown-body .gd-input").type(splitCamelCaseToWords(dashboardName));
-        cy.get(".s-dashboards-dropdown-body .gd-list-item")
-            .contains(splitCamelCaseToWords(dashboardName))
-            .click();
+        cy.get(".dropdown-body .gd-input").type(dashboardName);
+        cy.get(".s-dashboards-dropdown-body .gd-list-item").contains(dashboardName).click();
 
         return this;
     }

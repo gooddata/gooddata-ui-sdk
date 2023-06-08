@@ -3,6 +3,7 @@ import { LayoutRow } from "./layoutRow";
 import { Widget } from "./widget";
 
 import { WidgetDropZone } from "./enum/DropZone";
+import { getMaximumTimeout } from "../support/constants";
 
 export class Dashboard {
     getElement(element: string): Cypress.Chainable {
@@ -78,6 +79,13 @@ export class Dashboard {
     hasPlaceholderText(text: string) {
         cy.get(".drag-info-placeholder-inner.can-drop").contains(text);
         return this;
+    }
+
+    waitItemLoaded() {
+        cy.wait(500);
+        this.getDashboardBodyElement()
+            .find(".dash-item.type-loading", { timeout: getMaximumTimeout() })
+            .should("not.exist");
     }
 }
 

@@ -1,8 +1,7 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
-import { idRef } from "@gooddata/sdk-model";
-
+import { idRef } from "../../../../../../sdk-model";
 import * as TigerMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import * as BearMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
@@ -12,11 +11,6 @@ export const MDObject = (
     process.env.SDK_BACKEND === "TIGER" ? TigerMDObjects : BearMDObjects
 ) as MDObjectsType;
 
-export const DragDropWidgetScenario: React.FC = () => {
-    return (
-        <Dashboard
-            dashboard={idRef(MDObject.Dashboards.DragDropAndMove)}
-            config={{ initialRenderMode: "edit" }}
-        />
-    );
+export const DashboardWithTableManyRowsColumnsScenario: React.FC = () => {
+    return <Dashboard dashboard={idRef(MDObject.Dashboards.KDWithTableHasManyRowsColumns)} />;
 };

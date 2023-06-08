@@ -7,6 +7,7 @@ import { DrillToModal } from "../../tools/drillToModal";
 import { getBackend, getHost, getProjectId } from "../../support/constants";
 import { EditMode } from "../../tools/editMode";
 import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
+import { Messages } from "../../tools/messages";
 
 //!!!!!!!!!!! this constant could be shifted check gray pages if test failed before each or after hook
 const DEPARTMENT_ID = "1090";
@@ -145,10 +146,6 @@ describe("Interaction", () => {
     const widget = new Widget(0);
     const widgetConfig = new WidgetConfiguration(0);
 
-    beforeEach(() => {
-        Navigation.visit("dashboard/drill-to-insight");
-    });
-
     //Cover ticket: RAIL-4559
     it("Should able to remove existing interactions", { tags: ["checklist_integrated_tiger"] }, () => {
         Navigation.visitCopyOf("dashboard/drill-to-insight");
@@ -165,6 +162,7 @@ describe("Interaction", () => {
         "Should correctly display attribute list in custom URL dialog",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
         () => {
+            Navigation.visit("dashboard/drill-to-insight");
             editMode.edit();
             widget.waitChartLoaded().focus();
             widgetConfig.openInteractions().addInteraction("Sum of Probability", "measure");
@@ -184,6 +182,35 @@ describe("Interaction", () => {
                 .chooseAction("Drill into URL")
                 .openCustomUrlEditor();
             new CustomURLDialog().hasItem("Stage Name");
+        },
+    );
+
+    //Cover ticket: RAIL-4716
+    it(
+        "should display correct insight name on invalid interaction warning",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        () => {
+            const widget1 = new Widget(1);
+            const message = new Messages();
+
+            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            editMode.edit();
+            message
+                .hasWarningMessage(true)
+                .clickShowMore()
+                .hasInsightNameIsBolder(true, "Insight has invalid interaction");
+            widget1
+                .waitChartLoaded()
+                .scrollIntoView()
+                .focus()
+                .setTitle("Insight has invalid interaction rename");
+            message
+                .hasWarningMessage(true)
+                .clickShowMore()
+                .hasInsightNameIsBolder(true, "Insight has invalid interaction rename");
+            widget1.waitChartLoaded().scrollIntoView().focus();
+            new WidgetConfiguration(1).removeFromDashboard();
+            message.hasWarningMessage(false);
         },
     );
 });
