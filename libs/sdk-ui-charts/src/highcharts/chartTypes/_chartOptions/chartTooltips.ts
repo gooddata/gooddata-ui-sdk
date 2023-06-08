@@ -344,16 +344,15 @@ export function getTooltipWaterfallChart(
         percentageValue?: number,
     ): string => {
         const formattedValue = getFormattedValueForTooltip(false, false, point, separators, percentageValue);
-        const textData = [[customEscape(point.series.name), formattedValue]];
+        const textData = [[customEscape(point.name), formattedValue]];
 
         if (viewByAttribute && !point?.isSum) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
                 customEscape(point.category?.name || point.name),
             ]);
-        } else {
-            textData[0][0] = customEscape(point.category?.name);
         }
+
         return renderTooltipHTML(textData, maxTooltipContentWidth);
     };
 }

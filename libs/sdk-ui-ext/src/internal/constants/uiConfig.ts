@@ -386,7 +386,7 @@ export const DEFAULT_WATERFALL_UICONFIG: IUiConfig = {
             ...measuresBase,
             itemsLimit: DEFAULT_PIE_METRICS_COUNT,
             allowsReordering: false,
-            isTotalMeasureVisible: false,
+            isTotalMeasureVisible: true,
             isTotalMeasureEnabled: false,
         },
         view: {
@@ -406,7 +406,7 @@ export const WATERFALL_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
     buckets: {
         measures: {
             ...measuresBase,
-            isTotalMeasureVisible: false,
+            isTotalMeasureVisible: true,
             isTotalMeasureEnabled: false,
         },
         view: {
@@ -426,8 +426,8 @@ export const WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
     buckets: {
         measures: {
             ...measuresBase,
-            isTotalMeasureVisible: false,
-            isTotalMeasureEnabled: false,
+            isTotalMeasureVisible: true,
+            isTotalMeasureEnabled: true,
         },
         view: {
             ...viewBase,

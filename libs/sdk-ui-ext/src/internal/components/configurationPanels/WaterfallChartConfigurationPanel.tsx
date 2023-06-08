@@ -37,6 +37,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
         const { properties, propertiesMeta, pushData, dataLabelDefaultValue = false } = this.props;
 
         const controlsDisabled = this.isControlDisabled();
+        const isTotalControlDisabled = controlsDisabled || this.hasTotalMeasure();
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -46,7 +47,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                     {this.renderLegendSection()}
 
                     <TotalSection
-                        controlsDisabled={controlsDisabled}
+                        controlsDisabled={isTotalControlDisabled}
                         properties={properties}
                         propertiesMeta={propertiesMeta}
                         pushData={pushData}
@@ -157,5 +158,10 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                 </ConfigSection>
             );
         });
+    }
+
+    private hasTotalMeasure() {
+        const { properties } = this.props;
+        return properties.controls?.total?.measures?.length > 0;
     }
 }

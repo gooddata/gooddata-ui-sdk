@@ -275,4 +275,5 @@ export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_CHART_SUPPORTED_PROPERTIES,
     "total.enabled",
     "total.name",
+    "total.measures",
 ];

@@ -380,6 +380,11 @@ export interface ITotalConfig {
      * Custom title for the total column (Total is default)
      */
     name?: string;
+
+    /**
+     * the list of localIdentifier of the measures which are the total measure
+     */
+    measures?: string[];
 }
 
 /**

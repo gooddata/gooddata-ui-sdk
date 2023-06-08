@@ -22,8 +22,8 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
     props: ITotalSectionProps & WrappedComponentProps,
 ) => {
     const { intl, controlsDisabled, properties, propertiesMeta, pushData } = props;
-
-    const isTotalEnabled = isTotalSectionEnabled(properties);
+    //always toggle to false when the control is disabled, otherwise depend on the properties config
+    const isTotalEnabled = controlsDisabled ? false : isTotalSectionEnabled(properties);
     const totalColumnName = properties?.controls?.total?.name;
     const defaultTotalColumnName = getTranslation(messages.totalTitle.id, intl);
 

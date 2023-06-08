@@ -210,12 +210,12 @@
         "limit": 0
     },
     "dashboard.bucket.measures_title.waterfall._measure": {
-        "value": "Measure",
+        "value": "Measures",
         "comment": "",
         "limit": 0
     },
     "dashboard.bucket.measures_title.waterfall._metric": {
-        "value": "Metric",
+        "value": "Metrics",
         "comment": "",
         "limit": 0
     },
