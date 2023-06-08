@@ -36410,6 +36410,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36450,6 +36451,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36491,6 +36493,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36532,6 +36535,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36573,6 +36577,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36614,6 +36619,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36655,6 +36661,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36696,6 +36703,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36734,6 +36742,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36776,6 +36785,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36818,6 +36828,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36860,6 +36871,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36902,6 +36914,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36943,6 +36956,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -36984,6 +36998,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37025,6 +37040,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37066,6 +37082,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37107,6 +37124,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37148,6 +37166,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37189,6 +37208,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37230,6 +37250,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37262,6 +37283,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37293,6 +37315,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37324,6 +37347,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37369,6 +37393,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37414,6 +37439,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37459,6 +37485,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37504,6 +37531,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37545,6 +37573,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37583,6 +37612,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37623,6 +37653,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37659,6 +37690,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37697,6 +37729,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37733,6 +37766,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37772,6 +37806,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37813,6 +37848,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37859,6 +37895,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37905,6 +37942,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37951,6 +37989,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -37997,6 +38036,7 @@ const config: IPivotTableConfig = {
     },
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38038,6 +38078,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38084,6 +38125,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38131,6 +38173,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38176,6 +38219,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38211,6 +38255,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38261,6 +38306,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38310,6 +38356,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38359,6 +38406,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38405,6 +38453,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38455,6 +38504,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38503,6 +38553,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38549,6 +38600,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38598,6 +38650,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38637,6 +38690,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38676,6 +38730,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38713,6 +38768,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38750,6 +38806,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38788,6 +38845,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38831,6 +38889,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38872,6 +38931,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38914,6 +38974,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38951,6 +39012,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -38983,6 +39045,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39026,6 +39089,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39070,6 +39134,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39113,6 +39178,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39154,6 +39220,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39191,6 +39258,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39227,6 +39295,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39278,6 +39347,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39331,6 +39401,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -39366,6 +39437,7 @@ const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
+        aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}

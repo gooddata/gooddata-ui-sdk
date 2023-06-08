@@ -139,6 +139,7 @@ export interface IMeasureColumnWidthItemBody {
 // @public (undocumented)
 export interface IMenu {
     aggregations?: boolean;
+    aggregationsSubMenu?: boolean;
     aggregationsSubMenuForRows?: boolean;
     aggregationTypes?: TotalType[];
 }

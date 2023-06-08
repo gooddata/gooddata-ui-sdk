@@ -26,6 +26,14 @@ export interface IMenu {
      */
     aggregations?: boolean;
     /**
+     * If true, subtotals can be added to the table using table menu.
+     * TODO: remove for SDK9
+     *
+     * @remarks
+     * Default: false
+     */
+    aggregationsSubMenu?: boolean;
+    /**
      * Specifies which aggregation functions can be selected from the menu.
      *
      * @remarks
