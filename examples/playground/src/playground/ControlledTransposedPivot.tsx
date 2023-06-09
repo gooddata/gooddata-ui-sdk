@@ -1,57 +1,17 @@
 import React, { useState, CSSProperties, useMemo } from 'react';
-import { IMeasure, IAttribute } from '@gooddata/sdk-model';
+import { IMeasure, IAttribute, modifyMeasure, modifyAttribute } from '@gooddata/sdk-model';
 import { IPivotTableConfig, PivotTable } from '@gooddata/sdk-ui-pivot';
+import * as Md from '../md/full';
 
 const measures: IMeasure[] = [
-    {
-        measure: {
-            localIdentifier: "m1",
-            alias: "Amount",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        uri: "/gdc/md/ev8aavapbex39vvlnbfebi7wkc8faqgm/obj/1246",
-                    }
-                }
-            }
-        }
-    },
-    {
-        measure: {
-            localIdentifier: "m2",
-            format: "#,##0.00",
-            alias: "Days to close",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        uri: "/gdc/md/ev8aavapbex39vvlnbfebi7wkc8faqgm/obj/1101",
-                    },
-                    aggregation: "sum",
-                },
-            },
-        }
-    }
-];
+    modifyMeasure(Md.Amount, (m) => m.localId("m1").alias("Amount")),
+    modifyMeasure(Md.DaysToClose.Sum, (m) => m.localId("m2").alias("Days to close").format("#,##0.00")),
+]
+
 
 const columns: IAttribute[] = [
-    {
-        attribute: {
-            localIdentifier: "a1",
-            alias: "Product",
-            displayForm: {
-                uri: "/gdc/md/ev8aavapbex39vvlnbfebi7wkc8faqgm/obj/1052",
-            }
-        }
-    },
-    {
-        attribute: {
-            localIdentifier: "a2",
-            alias: "Region",
-            displayForm: {
-                uri: "/gdc/md/ev8aavapbex39vvlnbfebi7wkc8faqgm/obj/1084",
-            }
-        }
-    }
+    modifyAttribute(Md.Product.Default, (a) => a.localId("a1").alias("Product")),
+    modifyAttribute(Md.Region, (a) => a.localId("a2").alias("Region")),
 ];
 
 const pivotWrapper: CSSProperties = {
