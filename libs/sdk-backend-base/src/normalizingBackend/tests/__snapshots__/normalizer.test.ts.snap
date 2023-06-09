@@ -1,5 +1,111 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Normalizer should also normalize col & row totals in buckets 1`] = `
+Array [
+  Object {
+    "items": Array [
+      Object {
+        "measure": Object {
+          "definition": Object {
+            "measureDefinition": Object {
+              "item": Object {
+                "identifier": "acugFHNJgsBy",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+      },
+      Object {
+        "measure": Object {
+          "definition": Object {
+            "measureDefinition": Object {
+              "item": Object {
+                "identifier": "aangOxLSeztu",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "localIdentifier": "bucket",
+  },
+  Object {
+    "items": Array [
+      Object {
+        "attribute": Object {
+          "displayForm": Object {
+            "identifier": "label.owner.region",
+            "type": "displayForm",
+          },
+          "localIdentifier": "a_label.owner.region",
+        },
+      },
+      Object {
+        "attribute": Object {
+          "displayForm": Object {
+            "identifier": "label.product.id.name",
+            "type": "displayForm",
+          },
+          "localIdentifier": "a_label.product.id.name",
+        },
+      },
+    ],
+    "localIdentifier": "attribute",
+    "totals": Array [
+      Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "measureIdentifier": "m_acugFHNJgsBy",
+        "type": "sum",
+      },
+      Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "measureIdentifier": "m_acugFHNJgsBy",
+        "type": "max",
+      },
+    ],
+  },
+  Object {
+    "items": Array [
+      Object {
+        "attribute": Object {
+          "displayForm": Object {
+            "identifier": "label.account.id.name",
+            "type": "displayForm",
+          },
+          "localIdentifier": "a_label.account.id.name",
+        },
+      },
+      Object {
+        "attribute": Object {
+          "displayForm": Object {
+            "identifier": "label.owner.id.name",
+            "type": "displayForm",
+          },
+          "localIdentifier": "a_label.owner.id.name",
+        },
+      },
+    ],
+    "localIdentifier": "columns",
+    "totals": Array [
+      Object {
+        "attributeIdentifier": "a_label.owner.id.name",
+        "measureIdentifier": "m_acugFHNJgsBy",
+        "type": "sum",
+      },
+      Object {
+        "attributeIdentifier": "a_label.owner.id.name",
+        "measureIdentifier": "m_acugFHNJgsBy",
+        "type": "avg",
+      },
+    ],
+  },
+]
+`;
+
 exports[`Normalizer should normalize arithmetic measures 1`] = `
 Object {
   "attributes": Array [],

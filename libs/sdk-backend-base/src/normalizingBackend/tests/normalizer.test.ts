@@ -26,6 +26,7 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
     newRankingFilter,
+    newTotal,
 } from "@gooddata/sdk-model";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Denormalizer, Normalizer } from "../normalizer";
@@ -208,6 +209,36 @@ describe("Normalizer", () => {
 
         const result = Normalizer.normalize(def);
         expect(result.normalized.buckets).not.toEqual(result.original.buckets);
+    });
+
+    it("should also normalize col & row totals in buckets", () => {
+        const localIdChangedMeasure = modifyMeasure(ReferenceMd.Won, (m) => m.localId("mwon"));
+        const localIdChangedProduct = modifyAttribute(ReferenceMd.Product.Name, (a) => a.localId("aproduct"));
+        const localIdChangedSalesRep = modifyAttribute(ReferenceMd.SalesRep.OwnerName, (a) =>
+            a.localId("asalesrep"),
+        );
+        const buckets = [
+            newBucket("bucket", localIdChangedMeasure, ReferenceMd.Amount),
+            newBucket(
+                "attribute",
+                ReferenceMd.Region,
+                localIdChangedProduct,
+                newTotal("sum", localIdChangedMeasure, localIdChangedProduct),
+                newTotal("max", localIdChangedMeasure, localIdChangedProduct),
+            ),
+            newBucket(
+                "columns",
+                ReferenceMd.Account.Name,
+                localIdChangedSalesRep,
+                newTotal("sum", localIdChangedMeasure, localIdChangedSalesRep),
+                newTotal("avg", localIdChangedMeasure, localIdChangedSalesRep),
+            ),
+        ];
+
+        const def = newDefForBuckets("test", buckets);
+
+        const result = Normalizer.normalize(def);
+        expect(result.normalized.buckets).toMatchSnapshot();
     });
 
     it("should correctly assign localIds and not hit RAIL-2631", () => {

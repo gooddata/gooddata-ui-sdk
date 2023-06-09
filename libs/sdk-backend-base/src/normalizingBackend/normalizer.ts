@@ -41,6 +41,7 @@ import {
     isResultMeasureHeader,
     isMeasureDefinition,
     isPositiveAttributeFilter,
+    ITotal,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -342,6 +343,26 @@ export class Normalizer {
         });
     };
 
+    private normalizeTotal = (total: ITotal): ITotal => {
+        // safely normalize total, when not found in the converted
+        // attributes/measures, keep the original identifier
+        return {
+            ...total,
+            attributeIdentifier:
+                this.maybeNormalizedLocalId(total.attributeIdentifier) ?? total.attributeIdentifier,
+            measureIdentifier:
+                this.maybeNormalizedLocalId(total.measureIdentifier) ?? total.measureIdentifier,
+        };
+    };
+
+    private normalizeTotals = () => {
+        this.normalized.buckets.forEach((bucket) => {
+            if (bucket.totals) {
+                bucket.totals = bucket.totals.map(this.normalizeTotal);
+            }
+        });
+    };
+
     /**
      * Simple measure normalization will toss away noop filters. There is nothing else to do.
      */
@@ -508,6 +529,7 @@ export class Normalizer {
         this.normalizeFilters();
         this.normalizeSorts();
         this.normalizeDimensions();
+        this.normalizeTotals();
 
         return {
             normalized: this.normalized,
