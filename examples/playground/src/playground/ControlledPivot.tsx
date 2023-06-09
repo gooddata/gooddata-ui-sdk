@@ -1,5 +1,5 @@
 import React, { useState, CSSProperties, useMemo } from 'react';
-import { IMeasure, IAttribute, modifyAttribute, modifyMeasure } from '@gooddata/sdk-model';
+import { IMeasure, IAttribute, modifyAttribute, modifyMeasure, ISortItem, newMeasureSort, sortDirection, newAttributeLocator } from '@gooddata/sdk-model';
 import { IPivotTableConfig, PivotTable } from '@gooddata/sdk-ui-pivot';
 import * as Md from '../md/full';
 
@@ -7,15 +7,19 @@ const measures: IMeasure[] = [
     modifyMeasure(Md.Amount, (m) => m.localId("m1").alias("Amount")),
     modifyMeasure(Md.DaysToClose.Sum, (m) => m.localId("m2").alias("Days to close").format("#,##0.00")),
 ]
+const department = modifyAttribute(Md.DepartmentLongNameUsedToShowTooltip, (a) => a.localId("a1").alias("Department"));
+const closed = modifyAttribute(Md.IsClosed, (a) => a.localId("a2").alias("Is Closed?"));
 
 const rows: IAttribute[] =[
-    modifyAttribute(Md.DepartmentLongNameUsedToShowTooltip, (a) => a.localId("a1").alias("Department")),
-    modifyAttribute(Md.IsClosed, (a) => a.localId("a2").alias("Is Closed?"))
+    department,
+    closed
 ]
 
+const product = modifyAttribute(Md.Product.Default, (a) => a.localId("a3").alias("Product"));
+const region = modifyAttribute(Md.Region, (a) => a.localId("a4").alias("Region"));
+
 const columns: IAttribute[] = [
-    modifyAttribute(Md.Product.Default, (a) => a.localId("a3").alias("Product")),
-    modifyAttribute(Md.Region, (a) => a.localId("a4").alias("Region")),
+    product, region
 ];
 
 const pivotWrapper: CSSProperties = {
@@ -26,7 +30,10 @@ const pivotWrapper: CSSProperties = {
 const pivotConfig: IPivotTableConfig = {
     columnSizing: {
         defaultWidth: "autoresizeAll"
-    }
+    },menu: {
+        aggregations: true,
+        aggregationsSubMenuForRows: true,
+    },
 };
 
 interface Item {
@@ -49,12 +56,22 @@ const CheckboxItem: React.FC<{ item: Item; isChecked: boolean; onChange: () => v
     );
 };
 
+const firstDepartment = "/gdc/md/auiwj6pa2cs3twpjr98gtjfb34x3i0gv/obj/1026/elements?id=1226";
+const firstProduct = "/gdc/md/auiwj6pa2cs3twpjr98gtjfb34x3i0gv/obj/949/elements?id=168279";
+
+const firstElements = {
+    [department.attribute.localIdentifier]: firstDepartment,
+    [product.attribute.localIdentifier]: firstProduct,
+}
+
 export const ControlledPivot: React.FC = () => {
     const [selectedRows, setSelectedRows] = useState<string[]>(["a1"]);
     const [selectedColumns, setSelectedColumns] = useState<string[]>(["a3"]);
     const [selectedMeasures, setSelectedMeasures] = useState<string[]>(["m1", "m2"]);
     const [measuresDimension, setMeasuresDimension] = useState<"rows" | "columns">("rows");
     const [isTransposed, setTransposed] = useState<boolean>(false);
+
+    const [sorts, setSorts] = useState<Array<ISortItem>>([]);
 
     const handleCheckboxChange = (item: Item, listName: string) => {
         switch (listName) {
@@ -126,6 +143,25 @@ export const ControlledPivot: React.FC = () => {
     }), [pivotConfig, measuresDimension]);
 
     const onMeasureDimensionSwitch = () => setMeasuresDimension(measuresDimension === "rows" ? "columns" : "rows");
+
+    const onSortAdd = (sortType: string) => {
+        const direction = sorts[0] ? sortDirection(sorts[0]): "asc";
+        if(sortType === "rows") {
+            const elementId = firstElements[currentRows[0].attribute.localIdentifier];
+            if(elementId) {
+                setSorts([newMeasureSort(currentMeasures[0], direction === "asc" ? "desc" : "asc", [newAttributeLocator(currentRows[0], elementId)])]);
+            } else {
+                setSorts([]);
+            }
+        } else {
+            const elementId = firstElements[currentColumns[0].attribute.localIdentifier];
+            if(elementId) {
+                setSorts([newMeasureSort(currentMeasures[0], direction === "asc" ? "desc" : "asc", [newAttributeLocator(currentColumns[0], elementId)])]);
+            } else {
+                setSorts([]);
+            }
+        }
+    }
     return (
         <div>
             <div className="control-panel">
@@ -173,6 +209,14 @@ export const ControlledPivot: React.FC = () => {
                     <button type="button" onClick={onMeasureDimensionSwitch}>
                         Switch measures dimension
                     </button>
+                    {measuresDimension === "rows" ?
+                        (<button type="button" onClick={() => onSortAdd(measuresDimension)}>
+                            Add row sort
+                        </button>):(
+                        <button type="button" onClick={() => onSortAdd(measuresDimension)}>
+                            Add column sort
+                        </button>)
+                    }
                 </div>
             </div>
             <div style={pivotWrapper}>
@@ -181,6 +225,7 @@ export const ControlledPivot: React.FC = () => {
                     rows={isTransposed ? currentColumns : currentRows}
                     columns={isTransposed ? currentRows : currentColumns}
                     config={currentPivotConfig}
+                    sortBy={sorts}
                 />
             </div>
         </div>

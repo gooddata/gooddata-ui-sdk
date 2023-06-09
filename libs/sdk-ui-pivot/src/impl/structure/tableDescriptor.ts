@@ -176,6 +176,12 @@ export class TableDescriptor {
     }
 
     /**
+     *
+     */
+    public sliceMeasureColCount(): number {
+        return this.headers.sliceMeasureCols.length;
+    }
+    /**
      * Gets count of scoping attributes (columns).
      */
     public scopingColCount(): number {
@@ -394,7 +400,11 @@ export class TableDescriptor {
     public createSortItems(
         columns: Array<Column> | Array<ColDef>,
         originalSorts: ISortItem[] = [],
+        rowSorting = false,
     ): ISortItem[] {
+        if(rowSorting) {
+            return originalSorts;
+        }
         if (columns.length === 0) {
             return [];
         }

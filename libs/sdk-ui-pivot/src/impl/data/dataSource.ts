@@ -219,6 +219,7 @@ export class AgGridDatasource implements IDatasource {
         const desiredSorts = this.config.tableDescriptor.createSortItems(
             sortModel ?? [],
             result.definition.sortBy,
+            this.config.tableDescriptor.sliceMeasureColCount() > 0
         );
         const currentTotals = defTotals(definition, 0);
         const desiredTotals = this.config.getColumnTotals();
