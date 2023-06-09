@@ -15,6 +15,8 @@ import {
     SliceMeasureCol,
     AttributeMeasureHeadersCol,
     AttributeMeasureValuesCol,
+    isSliceMeasureCol,
+    isAttributeMeasureHeadersCol,
 } from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
@@ -181,6 +183,11 @@ export class TableDescriptor {
     public sliceMeasureColCount(): number {
         return this.headers.sliceMeasureCols.length;
     }
+
+    public attributeMeasureHeadersColsCount(): number {
+        return this.headers.attributeMeasureHeadersCols.length;
+    }
+
     /**
      * Gets count of scoping attributes (columns).
      */
@@ -289,7 +296,7 @@ export class TableDescriptor {
      * @param col - column to get absolute index of
      */
     public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol): number {
-        if (isSliceCol(col)) {
+        if (isSliceCol(col) || isSliceMeasureCol(col) || isAttributeMeasureHeadersCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
             // if this bombs, caller is not operating with the leaf columns correctly and sent over
@@ -299,9 +306,7 @@ export class TableDescriptor {
             return this.sliceColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
         }
 
-        // TODO INE check index for AttributeMeasureHeadersCol | AttributeMeasureValuesCol
-
-        return this.sliceColCount() + col.index;
+        return this.sliceColCount() + this.sliceMeasureColCount() + this.attributeMeasureHeadersColsCount() + col.index;
     }
 
     /**
@@ -336,7 +341,7 @@ export class TableDescriptor {
      * sum or have no rows whatsoever.
      */
     public canTableHaveRowTotals(): boolean {
-        return this.sliceColCount() > 0 && this.seriesColsCount() > 0;
+        return this.sliceColCount() > 0 && (this.seriesColsCount() > 0 || this.sliceMeasureColCount() > 0);
     }
 
     /**
