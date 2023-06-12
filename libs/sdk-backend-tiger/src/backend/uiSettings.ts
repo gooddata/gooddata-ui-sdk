@@ -85,6 +85,7 @@ export const DefaultUiSettings: ISettings = {
 
     enablePushpinGeoChart: true,
     ...DefaultFeatureFlags,
+    tableSortingCheckDisabled: true,
 };
 
 /**
