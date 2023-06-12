@@ -35,6 +35,10 @@ export class DashboardRecording implements IRecording {
         this.spec = spec;
     }
 
+    public alwaysRefresh(): boolean {
+        return false;
+    }
+
     public getRecordingType(): RecordingType {
         return RecordingType.Dashboards;
     }

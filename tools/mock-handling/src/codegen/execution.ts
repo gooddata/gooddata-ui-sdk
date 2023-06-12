@@ -43,13 +43,23 @@ type VisScenarioRecording = [string, string, ExecutionRecording, number];
 
 function generateScenarioForVis(entries: VisScenarioRecording[]): string {
     const entryRows = entries
-        .map(
-            ([_, entryName, entryRecording, scenarioIndex]) =>
-                `${createUniqueVariableName(
-                    entryName,
-                    {},
-                )}: { scenarioIndex: ${scenarioIndex}, execution: ${entryRecording.getRecordingName()}}`,
-        )
+        .map(([_, entryName, entryRecording, scenarioIndex]) => ({
+            value: `${createUniqueVariableName(
+                entryName,
+                {},
+            )}: { scenarioIndex: ${scenarioIndex}, execution: ${entryRecording.getRecordingName()}}`,
+            name: createUniqueVariableName(entryName, {}),
+        }))
+        .reduce((acc: { value: string; name: string }[], record: { value: string; name: string }) => {
+            const exists = acc.findIndex((v) => v.name === record.name);
+            if (exists >= 0) {
+                acc[exists] = record;
+            }
+
+            acc.push(record);
+            return acc;
+        }, [])
+        .map((a) => a.value)
         .join(",");
 
     return `{ ${entryRows} }`;
@@ -78,6 +88,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
 /**
  * Generate constants for the execution recordings. This function will return non-exported constant per recording
  * and then also an exported 'Scenarios' constant that is a map from vis ⇒ scenario ⇒ recording.
+ * When encounters duplicate entries, favors the newer ones and replace the older one.
  *
  * @param recordings - recordings to generate constants for
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
@@ -87,8 +98,15 @@ export function generateConstantsForExecutions(
     recordings: ExecutionRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
-    return [
-        ...recordings.map((r) => generateRecordingConst(r, targetDir)),
-        generateScenariosConst(recordings),
-    ];
+    const unique = recordings.reduce((acc: ExecutionRecording[], rec: ExecutionRecording) => {
+        const existsIndex = acc.findIndex((r) => r.getRecordingName() === rec.getRecordingName());
+        if (existsIndex >= 0) {
+            acc[existsIndex] = rec;
+        } else {
+            acc.push(rec);
+        }
+
+        return acc;
+    }, []);
+    return [...unique.map((r) => generateRecordingConst(r, targetDir)), generateScenariosConst(unique)];
 }

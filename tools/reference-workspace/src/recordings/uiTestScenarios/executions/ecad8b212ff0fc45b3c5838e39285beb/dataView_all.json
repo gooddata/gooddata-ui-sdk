@@ -1,14 +1,14 @@
 {
     "count": [1, 4],
-    "data": [["250000", "50000", "-35000", "-100000"]],
+    "data": [["5617913708.72", "31110", "452518", "175819.7"]],
     "headerItems": [
         [],
         [
             [
-                { "measureHeaderItem": { "name": "amount_sum", "order": 0 } },
-                { "measureHeaderItem": { "name": "duration_sum", "order": 1 } },
-                { "measureHeaderItem": { "name": "velocity_sum", "order": 2 } },
-                { "measureHeaderItem": { "name": "probability_sum", "order": 3 } }
+                { "measureHeaderItem": { "name": "m_fact.opportunitysnapshot.amount_sum", "order": 0 } },
+                { "measureHeaderItem": { "name": "m_fact.stagehistory.duration_sum", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_fact.stagehistory.velocity_sum", "order": 2 } },
+                { "measureHeaderItem": { "name": "m_fact.opportunitysnapshot.probability_sum", "order": 3 } }
             ]
         ]
     ],

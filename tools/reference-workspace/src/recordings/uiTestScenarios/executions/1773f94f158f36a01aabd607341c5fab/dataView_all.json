@@ -19,14 +19,14 @@
             "14730302.53",
             "5886516.41",
             "10970621.28",
+            "5271013.77",
+            "6800000",
             "63323855.22",
             "8209149.74",
             "17422601.2",
-            "5271013.77",
             "9400000",
             "6978070.44",
             "12696000",
-            "6800000",
             "8600000",
             "13379422.98",
             "5044487.8",
@@ -54,13 +54,13 @@
             "7420000",
             "7676000",
             "8396722.44",
-            "54513217.2",
             "19843200",
+            "54513217.2",
             "6166799.56",
-            "6993000",
             "11632800",
-            "15916337.08",
+            "6993000",
             "9700000",
+            "15916337.08",
             "5275876",
             "13969289.16",
             "8572496",
@@ -143,8 +143,8 @@
             "6381407.51",
             "5485964.8",
             "6564275.1",
-            "8131731.52",
             "16228470",
+            "8131731.52",
             "5091253.58",
             "7890996.96",
             "8299877.04",
@@ -1619,6 +1619,18 @@
                 },
                 {
                     "attributeHeaderItem": {
+                        "name": "C&I Engineering > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=11123"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "C&S Companies > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=11216"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
                         "name": "Cahill Gordon & Reindel > CompuSci",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=11339"
                     }
@@ -1637,12 +1649,6 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "C&I Engineering > CompuSci",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=11123"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
                         "name": "Compliance Implementation Services > CompuSci",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=14445"
                     }
@@ -1657,12 +1663,6 @@
                     "attributeHeaderItem": {
                         "name": "CPX Interactive > CompuSci",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=15694"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "C&S Companies > CompuSci",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=11216"
                     }
                 },
                 {
@@ -1829,14 +1829,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Allconnect > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55662"
+                        "name": "All Copy Products > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55617"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "All Copy Products > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55617"
+                        "name": "Allconnect > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55662"
                     }
                 },
                 {
@@ -1847,26 +1847,26 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Arrowhead Advertising > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=56964"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
                         "name": "Arrow Strategies > Educationly",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=56932"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Aspire Systems > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=57200"
+                        "name": "Arrowhead Advertising > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=56964"
                     }
                 },
                 {
                     "attributeHeaderItem": {
                         "name": "ASP Pool and Spa > Educationly",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=57131"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aspire Systems > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=57200"
                     }
                 },
                 {
@@ -2363,14 +2363,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Logical Choice Technologies > Explorer",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=130085"
+                        "name": "Logic Planet > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=129876"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Logic Planet > Explorer",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=129876"
+                        "name": "Logical Choice Technologies > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=130085"
                     }
                 },
                 {

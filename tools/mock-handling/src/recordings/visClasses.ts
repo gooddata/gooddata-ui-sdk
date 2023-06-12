@@ -26,6 +26,10 @@ export class VisClassesRecording implements IRecording {
         this.itemsFile = path.join(this.directory, VisClassesItems);
     }
 
+    public alwaysRefresh(): boolean {
+        return false;
+    }
+
     public getRecordingType(): RecordingType {
         return RecordingType.VisClasses;
     }

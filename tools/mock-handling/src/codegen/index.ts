@@ -69,6 +69,7 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
     const executionsInit = `executions: {${input
         .executions()
         .map((e) => e.getRecordingName())
+        .filter((value, index, array) => array.indexOf(value) === index)
         .join(",")}}`;
 
     const metadataInit = `

@@ -168,6 +168,10 @@ export class ExecutionRecording implements IRecording {
         return this.hasResult() && this.hasAllDataViewFiles();
     }
 
+    public alwaysRefresh(): boolean {
+        return true;
+    }
+
     public async makeRecording(
         backend: IAnalyticalBackend,
         workspace: string,
@@ -206,7 +210,7 @@ export class ExecutionRecording implements IRecording {
             },
         );
 
-        const missingFiles = Object.entries(this.getMissingDataViewFiles());
+        const missingFiles = Object.entries(this.getRequiredDataViewFiles());
 
         for (const [filename, requestType] of missingFiles) {
             let dataView;

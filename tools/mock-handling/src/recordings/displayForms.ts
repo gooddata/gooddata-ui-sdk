@@ -45,6 +45,10 @@ export class DisplayFormRecording implements IRecording {
         this.objFile = path.join(this.directory, DisplayFormObj);
     }
 
+    public alwaysRefresh(): boolean {
+        return false;
+    }
+
     public getRecordingType(): RecordingType {
         return RecordingType.DisplayForms;
     }

@@ -11,7 +11,7 @@
                                     "identifier": "aangOxLSeztu",
                                     "localIdentifier": "m_aangOxLSeztu",
                                     "name": "Amount",
-                                    "uri": "/gdc/md/referenceworkspace/obj/1285"
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
                                 }
                             }
                         ]
@@ -26,12 +26,12 @@
                         "formOf": {
                             "identifier": "attr.product.id",
                             "name": "Product",
-                            "uri": "/gdc/md/referenceworkspace/obj/1093"
+                            "uri": "/gdc/md/referenceworkspace/obj/1054"
                         },
                         "identifier": "label.product.id.name",
                         "localIdentifier": "a_label.product.id.name",
                         "name": "Product Name",
-                        "uri": "/gdc/md/referenceworkspace/obj/1094"
+                        "uri": "/gdc/md/referenceworkspace/obj/1055"
                     }
                 },
                 {
@@ -39,12 +39,12 @@
                         "formOf": {
                             "identifier": "attr.owner.region",
                             "name": "Region",
-                            "uri": "/gdc/md/referenceworkspace/obj/1125"
+                            "uri": "/gdc/md/referenceworkspace/obj/1086"
                         },
                         "identifier": "label.owner.region",
                         "localIdentifier": "a_label.owner.region",
                         "name": "Region",
-                        "uri": "/gdc/md/referenceworkspace/obj/1126"
+                        "uri": "/gdc/md/referenceworkspace/obj/1087"
                     }
                 }
             ]

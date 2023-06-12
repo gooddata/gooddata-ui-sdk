@@ -17,8 +17,8 @@
             "193850.26",
             "110483.19",
             "154823.03",
-            "281974.2",
             "190800",
+            "281974.2",
             "645147.38",
             "172872.4",
             "120000",
@@ -57,8 +57,8 @@
             "120982.2",
             "138000",
             "345816.59",
-            "257426.8",
             "111228.82",
+            "257426.8",
             "214255.44",
             "151259.58",
             "195929.2",
@@ -108,8 +108,8 @@
             "198741.2",
             "111258.9",
             "132768.16",
-            "191531.56",
             "284710",
+            "191531.56",
             "259164",
             "140910.66",
             "148212.09",
@@ -131,8 +131,8 @@
             "484894.76",
             "212940",
             "150288.48",
-            "289471.47",
             "100502",
+            "289471.47",
             "231454.01",
             "100152.92",
             "132730",
@@ -173,20 +173,20 @@
             "122168",
             "143914.4",
             "129384",
+            "211418.4",
             "322212.2",
             "204685.47",
             "192840",
             "147268.9",
-            "211418.4",
             "108607.76",
             "913059.74",
             "189959.6",
             "145393.72",
-            "122485.6",
             "174901.3",
             "124435.96",
             "120000",
             "204586",
+            "122485.6",
             "242170.76",
             "424512.4",
             "227956",
@@ -255,8 +255,8 @@
             "120982.2",
             null,
             null,
-            null,
             "111228.82",
+            null,
             null,
             "151259.58",
             null,
@@ -329,8 +329,8 @@
             null,
             null,
             null,
-            "289471.47",
             null,
+            "289471.47",
             "231454.01",
             null,
             null,
@@ -372,9 +372,9 @@
             "143914.4",
             null,
             null,
+            null,
             "204685.47",
             "192840",
-            null,
             null,
             null,
             null,
@@ -499,14 +499,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Allconnect > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55662"
+                        "name": "All Copy Products > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55617"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "All Copy Products > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55617"
+                        "name": "Allconnect > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55662"
                     }
                 },
                 {
@@ -739,14 +739,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "DataDirect Networks > Educationly",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=64352"
+                        "name": "Data Systems Analysts > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=113626"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Data Systems Analysts > Explorer",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=113626"
+                        "name": "DataDirect Networks > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=64352"
                     }
                 },
                 {
@@ -1045,14 +1045,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Logical Choice Technologies > Explorer",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=130085"
+                        "name": "Logic Planet > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=129876"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "Logic Planet > Explorer",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=129876"
+                        "name": "Logical Choice Technologies > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=130085"
                     }
                 },
                 {
@@ -1183,14 +1183,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "MyCEO > WonderKid",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=35525"
+                        "name": "My Wireless > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=134069"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "My Wireless > PhoenixSoft",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=134069"
+                        "name": "MyCEO > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=35525"
                     }
                 },
                 {
@@ -1435,6 +1435,12 @@
                 },
                 {
                     "attributeHeaderItem": {
+                        "name": "T-Cellular > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=47397"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
                         "name": "TalentBurst > Educationly",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=96051"
                     }
@@ -1455,12 +1461,6 @@
                     "attributeHeaderItem": {
                         "name": "TBJ > Explorer",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=145623"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "T-Cellular > PhoenixSoft",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=47397"
                     }
                 },
                 {
@@ -1489,12 +1489,6 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "The1stMovement > WonderKid",
-                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=164758"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
                         "name": "The Buckner Company > Explorer",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=146394"
                     }
@@ -1515,6 +1509,12 @@
                     "attributeHeaderItem": {
                         "name": "The Queensboro Shirt Company > Explorer",
                         "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=146978"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "The1stMovement > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=164758"
                     }
                 },
                 {

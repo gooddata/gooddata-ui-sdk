@@ -1,0 +1,39 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "PyramidChart.a4751a74b33ad8a23313bb9d7464dd73",
+        "properties": { "controls": { "legend": { "position": "left" } } },
+        "sorts": [],
+        "title": "PyramidChart - legend position - single measure and viewBy - legend on left",
+        "uri": "PyramidChart.a4751a74b33ad8a23313bb9d7464dd73",
+        "visualizationUrl": "local:pyramid"
+    }
+}
