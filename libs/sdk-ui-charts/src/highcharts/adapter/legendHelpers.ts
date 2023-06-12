@@ -4,9 +4,9 @@ import isEmpty from "lodash/isEmpty";
 import { IntlShape } from "react-intl";
 import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 import { IColorDescriptor } from "@gooddata/sdk-model";
+import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common";
-import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
 import { ISeriesItem, IChartOptions } from "../typings/unsafe";
 import { DEFAULT_WATERFALL_COLORS } from "../chartTypes/_util/color";

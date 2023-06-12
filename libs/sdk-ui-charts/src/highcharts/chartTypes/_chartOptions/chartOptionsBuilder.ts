@@ -410,6 +410,7 @@ export function getChartOptions(
         colorStrategy,
         emptyHeaderTitle,
         theme,
+        chartConfig.total,
     );
 
     const drillableSeries = getDrillableSeries(
@@ -645,7 +646,7 @@ export function getChartOptions(
             chartConfig,
             colorAssignments[0],
             colorPalette,
-            emptyHeaderTitle,
+            totalColumnTitle,
         );
         const waterfallCategories = getWaterfallChartCategories(
             categories,
@@ -674,8 +675,6 @@ export function getChartOptions(
             },
             xAxisProps,
             yAxisProps,
-            secondary_xAxisProps,
-            secondary_yAxisProps,
             colorAssignments: getColorAssignment(colorAssignments, chartConfig, waterfallChartSeries),
             colorPalette,
             isViewByTwoAttributes,

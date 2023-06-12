@@ -542,6 +542,7 @@ export interface ITooltipConfig {
 // @public (undocumented)
 export interface ITotalConfig {
     enabled?: boolean;
+    measures?: string[];
     name?: string;
 }
 

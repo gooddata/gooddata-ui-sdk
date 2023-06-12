@@ -2,6 +2,7 @@
 import React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
+import isEqual from "lodash/isEqual";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -28,6 +29,7 @@ import {
     getAttributeItems,
     getBucketItems,
     getMeasureItems,
+    getViewItems,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
@@ -169,6 +171,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
+        newReferencePoint = this.setPropertiesTotalMeasures(newReferencePoint);
         if (!this.featureFlags.enableChartsSorting) {
             newReferencePoint = removeSort(newReferencePoint);
         }
@@ -255,5 +258,21 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
                 configPanelElement,
             );
         }
+    }
+
+    private setPropertiesTotalMeasures(referencePoint: IExtendedReferencePoint) {
+        const { buckets, properties } = referencePoint;
+        const viewItems = getViewItems(buckets);
+        const listTotalMeasures = getMeasureItems(buckets)
+            .filter((item) => item.isTotalMeasure)
+            .map((item) => item.localIdentifier);
+        const existingTotalMeasures = properties?.controls?.total?.measures || [];
+
+        if (viewItems.length > 0 || isEqual(listTotalMeasures, existingTotalMeasures)) {
+            return referencePoint;
+        }
+
+        set(referencePoint, "properties.controls.total.measures", listTotalMeasures);
+        return referencePoint;
     }
 }

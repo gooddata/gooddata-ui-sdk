@@ -24,6 +24,7 @@ import { getTreemapStackedSeries } from "../treemap/treemapChartSeries";
 import { getBulletChartSeries } from "../bulletChart/bulletChartSeries";
 import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
 import { getWaterfallChartSeries } from "../warterfallChart/waterfallChartsSeries";
+import { ITotalConfig } from "../../../interfaces";
 
 export function getSeriesItemData(
     seriesItem: string[],
@@ -176,6 +177,7 @@ export function getSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     theme?: ITheme,
+    totalConfig?: ITotalConfig,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
@@ -206,9 +208,9 @@ export function getSeries(
             dv,
             measureGroup,
             viewByAttribute,
-            type,
             colorStrategy,
             emptyHeaderTitle,
+            totalConfig,
         );
     }
 

@@ -69,6 +69,7 @@ import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
 import { AxisLabelsFormatterCallbackFunction } from "highcharts";
 import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration";
+import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -852,6 +853,7 @@ function getDataConfiguration(chartOptions: IChartOptions): HighchartsOptions {
     switch (type) {
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.BUBBLE:
+        case VisualizationTypes.WATERFALL:
             return {
                 series,
             };
@@ -1420,6 +1422,7 @@ export function getCustomizedConfiguration(
         getZoomingAndPanningConfiguration,
         getReversedStacking,
         getContinuousLineConfiguration,
+        getWaterfallXAxisConfiguration,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

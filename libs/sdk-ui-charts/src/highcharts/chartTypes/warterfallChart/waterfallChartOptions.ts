@@ -12,6 +12,14 @@ import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-common
 import { IChartConfig } from "../../../interfaces";
 import { ISeriesItem } from "../../typings/unsafe";
 
+function isTotalColumnEnabled(chartConfig: IChartConfig): boolean {
+    return !hasTotalMeasure(chartConfig) && (chartConfig.total?.enabled ?? true);
+}
+
+function hasTotalMeasure(chartConfig: IChartConfig) {
+    return chartConfig?.total?.measures?.length > 0;
+}
+
 export function buildWaterfallChartSeries(
     series: ISeriesItem[],
     chartConfig: IChartConfig,
@@ -19,7 +27,8 @@ export function buildWaterfallChartSeries(
     colorPalette: IColorPalette,
     emptyHeaderTitle: string,
 ): ISeriesItem[] {
-    const isTotalSeriesEnabled = chartConfig.total?.enabled ?? true;
+    const isTotalSeriesEnabled = isTotalColumnEnabled(chartConfig);
+
     if (!isTotalSeriesEnabled || !series || series.length === 0) {
         return series;
     }
@@ -86,9 +95,9 @@ export function getColorAssignment(
     chartConfig: IChartConfig,
     series: ISeriesItem[],
 ) {
-    const isTotalEnabled = chartConfig.total?.enabled ?? true;
-    const hasPositiveValues = series[0].data.some((item) => item.y > 0);
-    const hasNegativeValues = series[0].data.some((item) => item.y < 0);
+    const isTotalEnabled = hasTotalMeasure(chartConfig) || isTotalColumnEnabled(chartConfig);
+    const hasPositiveValues = series[0].data.some((item) => item.y > 0 && item.legendIndex === 1);
+    const hasNegativeValues = series[0].data.some((item) => item.y < 0 && item.legendIndex === 2);
     const newColorAssignment = colorAssignments.filter((color) =>
         isColorHeaderItemVisible(color, isTotalEnabled, hasPositiveValues, hasNegativeValues),
     );
