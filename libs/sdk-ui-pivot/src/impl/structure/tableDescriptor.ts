@@ -184,6 +184,13 @@ export class TableDescriptor {
         return this.headers.sliceMeasureCols.length;
     }
 
+    /**
+     * whether metrics are moved to rows or not
+     */
+    public isTransposed(): boolean {
+        return this.sliceMeasureColCount() !== 0;
+    }
+
     public attributeMeasureHeadersColsCount(): number {
         return this.headers.attributeMeasureHeadersCols.length;
     }
@@ -303,7 +310,7 @@ export class TableDescriptor {
             // a col that is not a leaf
             invariant(isEmptyScopeCol(col));
 
-            return this.sliceColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
+            return this.sliceColCount() + this.sliceMeasureColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
         }
 
         return this.sliceColCount() + this.sliceMeasureColCount() + this.attributeMeasureHeadersColsCount() + col.index;

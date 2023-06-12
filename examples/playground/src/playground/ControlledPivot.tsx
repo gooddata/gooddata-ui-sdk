@@ -226,6 +226,10 @@ export const ControlledPivot: React.FC = () => {
                     columns={isTransposed ? currentRows : currentColumns}
                     config={currentPivotConfig}
                     sortBy={sorts}
+                    drillableItems={[
+                        () => true, // Type: IHeaderPredicate
+                    ]}
+                    onDrill={(event) => console.log(JSON.stringify(event))}
                 />
             </div>
         </div>

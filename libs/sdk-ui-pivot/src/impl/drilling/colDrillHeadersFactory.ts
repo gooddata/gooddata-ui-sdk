@@ -30,6 +30,19 @@ export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
     return mappingHeaders;
 }
 
+/**
+ * For transposed table add metric descriptor from row
+ */
+export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): IMappingHeader[] {
+    const mappingHeaders: IMappingHeader[] = createDataColGroupHeaders(col);
+
+    if(row.measureDescriptor){
+        mappingHeaders.push(row.measureDescriptor);
+    }
+
+    return mappingHeaders;
+}
+
 export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHeader[] {
     const result: IMappingHeader[] = [];
 

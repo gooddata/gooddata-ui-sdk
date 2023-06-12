@@ -5,7 +5,7 @@ import { CellEvent } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";
 import { isSomeTotal } from "../data/dataSourceUtils";
-import { isSeriesCol, isSliceCol, isSliceMeasureCol } from "../structure/tableDescriptorTypes";
+import { isScopeCol, isSeriesCol, isSliceCol, isSliceMeasureCol } from "../structure/tableDescriptorTypes";
 import {
     convertDrillableItemsToPredicates,
     IDrillEvent,
@@ -42,7 +42,7 @@ export function onCellClickedFactory(
 
         // cells belong to either slice column or leaf data column; if cells belong to column of a different
         // type then there must be either something messed up with table construction or a new type of cell
-        invariant(isSliceCol(col) || isSeriesCol(col));
+        invariant(isSliceCol(col) || isSeriesCol(col) || (table.tableDescriptor.isTransposed() && isScopeCol(col)));
 
         const { onDrill } = props;
         const dv = table.getDrillDataContext();
