@@ -62,7 +62,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
             fullscreenOnMobile={fullscreenOnMobile}
             renderButton={({ toggleDropdown, isOpen }) => (
                 <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
-                    {!!isInitializing && <LoadingComponent onClick={toggleDropdown} />}
+                    {!!isInitializing && <LoadingComponent onClick={toggleDropdown} isOpen={isOpen} />}
                     {!isInitializing && !!initError && (
                         <ErrorComponent message={initError.message} error={initError} />
                     )}

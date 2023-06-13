@@ -16,6 +16,13 @@ export interface IAttributeFilterLoadingProps {
      * @beta
      */
     onClick?: () => void;
+
+    /**
+     * If true, the AttributeFilter dropdown is open.
+     *
+     * @beta
+     */
+    isOpen?: boolean;
 }
 
 /**
