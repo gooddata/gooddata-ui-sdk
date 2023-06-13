@@ -209,21 +209,19 @@ $subtotal-odd-background-color: var(
             }
         }
 
-        .ag-header-container {
-            [aria-rowindex="2"] {
-                // stylelint-disable-next-line max-nesting-depth
-                .ag-header-group-cell:not(.ag-header-group-cell-no-group, .gd-column-total),
-                .ag-header-cell:not(.ag-header-group-cell-no-group, .gd-column-total) {
-                    // stylelint-disable-next-line declaration-no-important
-                    border-top: $cell-border !important; // Override ag-grid headers border
-                    // stylelint-disable-next-line declaration-no-important
-                    border-top-color: $cell-border-color !important; // Override ag-grid headers border
-                }
+        .ag-header-container .ag-header-row:nth-child(2) {
+            // stylelint-disable-next-line max-nesting-depth
+            .ag-header-group-cell:not(.ag-header-group-cell-no-group, .gd-column-total),
+            .ag-header-cell:not(.ag-header-group-cell-no-group, .gd-column-total) {
+                // stylelint-disable-next-line declaration-no-important
+                border-top: $cell-border !important; // Override ag-grid headers border
+                // stylelint-disable-next-line declaration-no-important
+                border-top-color: $cell-border-color !important; // Override ag-grid headers border
+            }
 
-                // stylelint-disable-next-line max-nesting-depth
-                .gd-column-total {
-                    border-top: 1px solid $cell-border-color;
-                }
+            // stylelint-disable-next-line max-nesting-depth
+            .gd-column-total {
+                border-top: 1px solid $cell-border-color;
             }
         }
 
