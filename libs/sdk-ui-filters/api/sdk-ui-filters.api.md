@@ -538,6 +538,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
 
 // @beta
 export interface IAttributeFilterLoadingProps {
+    isOpen?: boolean;
     onClick?: () => void;
 }
 
