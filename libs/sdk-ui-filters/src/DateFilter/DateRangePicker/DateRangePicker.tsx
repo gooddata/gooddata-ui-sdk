@@ -12,6 +12,7 @@ import {
 import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { WeekStart } from "@gooddata/sdk-model";
+import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { mergeDayPickerProps } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
@@ -32,6 +33,8 @@ const convertedLocales: Record<string, Locale> = {
     "zh-Hans": zhCN,
     "ru-RU": ru,
 };
+
+const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
 
 function convertLocale(locale: string): Locale {
     return convertedLocales[locale];
@@ -59,6 +62,7 @@ export interface IDateRangePickerProps {
     isMobile: boolean;
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
+    shouldOverlayDatePicker?: boolean;
 }
 
 type DateRangePickerProps = IDateRangePickerProps & WrappedComponentProps;
@@ -120,6 +124,7 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
             errors: { from: errorFrom, to: errorTo } = { from: undefined, to: undefined },
             isTimeEnabled,
             weekStart = "Sunday",
+            shouldOverlayDatePicker = false,
         } = this.props;
 
         const defaultDayPickerProps: DayPickerRangeProps = {
@@ -148,6 +153,18 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                     weekStartsOn={convertWeekStart(weekStart)}
                 />
             </div>
+        );
+
+        const OverlayDatePicker = (
+            <Overlay
+                alignTo={`.gd-date-range-picker-${isTimeEnabled ? this.state.selectedInput : "from"}`}
+                alignPoints={ALIGN_POINTS}
+                closeOnOutsideClick={true}
+                closeOnMouseDrag={true}
+                closeOnParentScroll={true}
+            >
+                {DatePicker}
+            </Overlay>
         );
 
         const FromField = (
@@ -183,6 +200,8 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
             />
         );
 
+        const DatePickerComponent = shouldOverlayDatePicker ? OverlayDatePicker : DatePicker;
+
         const isFromInputDatePickerOpen = this.state.selectedInput === "from" && this.state.isOpen;
         const isToInputDatePickerOpen = this.state.selectedInput === "to" && this.state.isOpen;
         return (
@@ -191,10 +210,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                     <div className="gd-date-range-picker datetime s-date-range-picker">
                         <label>{intl.formatMessage({ id: "filters.from" })}</label>
                         {FromField}
-                        {isFromInputDatePickerOpen ? DatePicker : null}
+                        {isFromInputDatePickerOpen ? DatePickerComponent : null}
                         <label>{intl.formatMessage({ id: "filters.to" })}</label>
                         {ToField}
-                        {isToInputDatePickerOpen ? DatePicker : null}
+                        {isToInputDatePickerOpen ? DatePickerComponent : null}
                     </div>
                 ) : (
                     <>

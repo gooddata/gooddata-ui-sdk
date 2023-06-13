@@ -19,6 +19,7 @@ export interface IAbsoluteDateFilterFormProps {
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
+    shouldOverlayDatePicker?: boolean;
 }
 
 const dayPickerProps: DayPickerRangeProps = {
@@ -31,7 +32,15 @@ const dayPickerProps: DayPickerRangeProps = {
  */
 export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterFormProps> {
     public render() {
-        const { dateFormat, isMobile, selectedFilterOption, errors, isTimeEnabled, weekStart } = this.props;
+        const {
+            dateFormat,
+            isMobile,
+            selectedFilterOption,
+            errors,
+            isTimeEnabled,
+            weekStart,
+            shouldOverlayDatePicker,
+        } = this.props;
         return (
             <DateRangePicker
                 dateFormat={dateFormat}
@@ -42,6 +51,7 @@ export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterF
                 dayPickerProps={dayPickerProps}
                 isTimeEnabled={isTimeEnabled}
                 weekStart={weekStart}
+                shouldOverlayDatePicker={shouldOverlayDatePicker}
             />
         );
     }
