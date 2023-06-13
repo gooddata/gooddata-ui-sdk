@@ -47,6 +47,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "yaxis",
     "yFormat",
     "yLabel",
+    "total",
 ]);
 
 export function chartConfigFromInsight(
