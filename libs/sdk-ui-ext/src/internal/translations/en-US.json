@@ -781,6 +781,11 @@
         "comment": "",
         "limit": 0
     },
+    "properties.total.measures.tooltip": {
+        "value": "Disable “is total” options in metric to add sum of all values as a column at the end.",
+        "comment": "The tooltip for the toggle total section when there is any metric set to total metric",
+        "limit": 0
+    },
     "properties.color.total": {
         "value": "Total",
         "comment": "",

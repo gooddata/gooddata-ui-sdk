@@ -189,6 +189,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     totalTitle: { id: "properties.total.title" },
     totalNameLabel: { id: "properties.total.name" },
     totalToggleTooltip: { id: "properties.total.tooltip" },
+    totalMeasuresTooltip: { id: "properties.total.measures.tooltip" },
     colorTotalLabel: { id: "properties.color.total" },
     colorPositiveLabel: { id: "properties.color.positive" },
     colorNegativeLabel: { id: "properties.color.negative" },
