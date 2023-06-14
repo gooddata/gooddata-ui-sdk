@@ -140,16 +140,11 @@ export function getRow(
 
         row[field] = value;
         row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
-    });
-
-    // TODO this must be refactored: there will always be just one slice measure column, yet above we are using forEach on array and here we counting just with one
-    if (tableDescriptor.headers.sliceMeasureCols.length > 0) {
-        const rowHeaderIndex = tableDescriptor.headers.sliceMeasureCols[0].index; // TODO yep, this is wrong
-        const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
+        // when metrics in rows store measureDescriptor as part of each row
         if (isResultMeasureHeader(rowHeaderDataItem)) {
             row.measureDescriptor = tableDescriptor.getMeasures()[rowHeaderDataItem.measureHeaderItem.order];
         }
-    }
+    });
 
     tableDescriptor.headers.attributeMeasureValuesCols.forEach((measureValueHeader, headerIndex) => {
         row[measureValueHeader.id] = cellData[headerIndex];
