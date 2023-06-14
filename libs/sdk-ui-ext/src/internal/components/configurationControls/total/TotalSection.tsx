@@ -11,7 +11,7 @@ import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import { getTranslation } from "../../../utils/translations";
 import { isTotalSectionEnabled } from "../../../utils/propertiesHelper";
 
-interface ITotalSectionProps {
+export interface ITotalSectionProps {
     controlsDisabled: boolean;
     properties: IVisualizationProperties;
     propertiesMeta: any;
@@ -22,10 +22,17 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
     props: ITotalSectionProps & WrappedComponentProps,
 ) => {
     const { intl, controlsDisabled, properties, propertiesMeta, pushData } = props;
+    const hasTotalMeasure = properties.controls?.total?.measures?.length > 0;
+    const isToggleDisabled = controlsDisabled || hasTotalMeasure;
     //always toggle to false when the control is disabled, otherwise depend on the properties config
-    const isTotalEnabled = controlsDisabled ? false : isTotalSectionEnabled(properties);
+    const isTotalEnabled = isToggleDisabled ? false : isTotalSectionEnabled(properties);
     const totalColumnName = properties?.controls?.total?.name;
     const defaultTotalColumnName = getTranslation(messages.totalTitle.id, intl);
+    const toggleMessageId = hasTotalMeasure
+        ? messages.totalMeasuresTooltip.id
+        : !controlsDisabled
+        ? messages.totalToggleTooltip.id
+        : undefined;
 
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {
@@ -44,11 +51,11 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
             properties={properties}
             pushData={pushData}
             canBeToggled={true}
-            toggleDisabled={controlsDisabled}
+            toggleDisabled={isToggleDisabled}
             toggledOn={isTotalEnabled}
             valuePath="total.enabled"
             showDisabledMessage={true}
-            toggleMessageId={!controlsDisabled ? messages.totalToggleTooltip.id : undefined}
+            toggleMessageId={toggleMessageId}
         >
             <InputControl
                 type="text"
