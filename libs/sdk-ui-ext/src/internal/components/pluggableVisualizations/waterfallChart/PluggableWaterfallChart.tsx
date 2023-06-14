@@ -263,10 +263,16 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
     private setPropertiesTotalMeasures(referencePoint: IExtendedReferencePoint) {
         const { buckets, properties } = referencePoint;
         const viewItems = getViewItems(buckets);
-        const listTotalMeasures = getMeasureItems(buckets)
+        const measureItems = getMeasureItems(buckets);
+        const listTotalMeasures = measureItems
             .filter((item) => item.isTotalMeasure)
             .map((item) => item.localIdentifier);
         const existingTotalMeasures = properties?.controls?.total?.measures || [];
+
+        if (measureItems.length <= 1 && existingTotalMeasures.length > 0) {
+            // In case one view item, we need to reset the total measures is empty
+            set(referencePoint, "properties.controls.total.measures", []);
+        }
 
         if (viewItems.length > 0 || isEqual(listTotalMeasures, existingTotalMeasures)) {
             return referencePoint;
