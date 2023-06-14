@@ -74,7 +74,9 @@ export function headerClassFactory(
                     : null,
                 noLeftBorder ? "gd-column-group-header--first" : null,
                 noBottomBorder ? "gd-column-group-header--subtotal" : null,
-                topBottomSolidTotal ? "gd-column-group-header-total--first" : null,
+                topBottomSolidTotal
+                    ? "gd-column-group-header-total--first s-column-group-header-total--first"
+                    : null,
                 !colDef.headerName && !noBottomBorder ? "gd-column-group-header--empty" : null,
                 isColumnTotal ? "gd-column-total" : null,
                 isColumnSubtotal ? "gd-column-subtotal" : null,

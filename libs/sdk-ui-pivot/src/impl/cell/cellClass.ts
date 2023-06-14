@@ -83,10 +83,16 @@ export function cellClassFactory(
             rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
             isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null,
             // All new totals combinations
-            isColAndRowSubtotal ? "gd-table-row-subtotal-column-subtotal" : null,
-            isRowTotalAndColSubtotal ? "gd-table-row-total-column-subtotal" : null,
-            isRowAndColumnTotal ? "gd-table-row-total-column-total" : null,
-            isRowSubtotalColumnTotal ? "gd-table-row-subtotal-column-total" : null,
+            isColAndRowSubtotal
+                ? "gd-table-row-subtotal-column-subtotal s-table-row-subtotal-column-subtotal"
+                : null,
+            isRowTotalAndColSubtotal
+                ? "gd-table-row-total-column-subtotal s-table-row-total-column-subtotal"
+                : null,
+            isRowAndColumnTotal ? "gd-table-row-total-column-total s-table-row-total-column-total" : null,
+            isRowSubtotalColumnTotal
+                ? "gd-table-row-subtotal-column-total s-table-row-subtotal-column-total"
+                : null,
         );
     };
 }
