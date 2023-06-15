@@ -76,7 +76,7 @@ import {
     getWaterfallChartCategories,
     buildWaterfallChartSeries,
     getColorAssignment,
-} from "../warterfallChart/waterfallChartOptions";
+} from "../waterfallChart/waterfallChartOptions";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -410,7 +410,6 @@ export function getChartOptions(
         colorStrategy,
         emptyHeaderTitle,
         theme,
-        chartConfig.total,
     );
 
     const drillableSeries = getDrillableSeries(
@@ -642,6 +641,7 @@ export function getChartOptions(
 
     if (isWaterfall(type)) {
         const waterfallChartSeries = buildWaterfallChartSeries(
+            measureGroup,
             series,
             chartConfig,
             colorAssignments[0],

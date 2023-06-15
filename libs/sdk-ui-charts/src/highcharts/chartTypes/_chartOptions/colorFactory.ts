@@ -20,7 +20,7 @@ import { TreemapColorStrategy } from "../treemap/treemapColoring";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring";
 import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring";
 import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring";
-import { WaterfallChartColorStrategy } from "../warterfallChart/waterfallChartColoring";
+import { WaterfallChartColorStrategy } from "../waterfallChart/waterfallChartColoring";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,
