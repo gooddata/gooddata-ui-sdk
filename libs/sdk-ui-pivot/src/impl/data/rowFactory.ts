@@ -119,8 +119,6 @@ export function getRow(
     cellData.forEach((cell: DataValue, cellIndex: number) => {
         const colId = tableDescriptor.headers.leafDataCols[cellIndex]?.id;
 
-        invariant(colId);
-
         row[colId] = cell;
     });
 
