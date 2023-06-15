@@ -175,6 +175,13 @@ function preprocessTotalHeaderItems(
     const measures = bucketsMeasures(buckets);
     const columns = bucketsFind(buckets, "columns")?.items || [];
     const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
+    const measuresIdentifiers = measures.map((m) => m.measure.localIdentifier);
+
+    columnTotals.sort(
+        (a, b) =>
+            measuresIdentifiers.indexOf(a.measureIdentifier) -
+            measuresIdentifiers.indexOf(b.measureIdentifier),
+    );
 
     const lookups = columnTotals
         .filter((total) => {
@@ -183,6 +190,8 @@ function preprocessTotalHeaderItems(
         .map((total) => {
             return measures.findIndex((m) => m.measure?.localIdentifier === total.measureIdentifier);
         });
+
+    const uniqueLookups = lookups.filter((lookup, index) => lookups.indexOf(lookup) === index);
 
     return headerItems.map((topHeaderItems) => {
         return topHeaderItems.map((items) => {
@@ -195,7 +204,7 @@ function preprocessTotalHeaderItems(
                             ...item,
                             totalHeaderItem: {
                                 ...item?.totalHeaderItem,
-                                measureIndex: lookups[count % lookups.length],
+                                measureIndex: uniqueLookups[count % uniqueLookups.length],
                             },
                         };
 
