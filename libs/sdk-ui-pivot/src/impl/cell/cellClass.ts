@@ -53,7 +53,9 @@ export function cellClassFactory(
         let hasDrillableHeader = false;
 
         const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
-        if (!isRowTotal && !isRowSubtotal && cellAllowsDrill) {
+        const cellIsNotTotalSubtotal = !isRowTotal && !isRowSubtotal && !isColumnTotal && !isColumnSubtotal;
+
+        if (cellIsNotTotalSubtotal && cellAllowsDrill) {
             hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
         }
 
