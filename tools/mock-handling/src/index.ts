@@ -176,7 +176,7 @@ async function run() {
         ...(await discoverDashboardRecordings(absoluteRecordingDir)),
     ];
 
-    const incompleteRecordings = recordings.filter((e) => !e.isComplete());
+    const incompleteRecordings = recordings.filter((e) => !e.isComplete() || e.alwaysRefresh());
 
     logInfo(
         `Discovered ${recordings.length} recordings; out of these ${incompleteRecordings.length} are missing recorded data.`,

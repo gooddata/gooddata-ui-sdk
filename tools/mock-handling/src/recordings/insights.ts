@@ -31,6 +31,10 @@ export class InsightRecording implements IRecording {
         this.objFile = path.join(this.directory, RecordingFiles.Insights.Object);
     }
 
+    public alwaysRefresh(): boolean {
+        return false;
+    }
+
     public getRecordingType(): RecordingType {
         return RecordingType.Insights;
     }

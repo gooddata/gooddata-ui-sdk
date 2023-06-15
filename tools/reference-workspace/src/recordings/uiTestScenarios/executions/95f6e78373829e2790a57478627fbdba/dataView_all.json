@@ -1,19 +1,19 @@
 {
     "count": [43, 1],
     "data": [
+        ["68000"],
+        [null],
+        ["7565.08"],
+        ["40000"],
         ["18000"],
         ["31200"],
         ["10800"],
         ["109941.82"],
-        [null],
-        ["7565.08"],
-        ["40000"],
-        ["68000"],
         ["20000"],
         ["13200"],
         ["16871.89"],
-        [null],
         ["53091.72"],
+        [null],
         ["16571.47"],
         ["443236.78"],
         ["11062"],
@@ -25,22 +25,22 @@
         ["27200"],
         [null],
         ["75600"],
-        ["41675.46"],
-        ["200978.12"],
         ["6000"],
         ["21269.2"],
+        ["200978.12"],
+        ["41675.46"],
         ["720"],
         ["54600"],
+        ["4000"],
+        ["10492"],
         ["3712.2"],
         ["26000"],
-        ["10492"],
-        ["4000"],
         ["32000"],
         ["4600"],
         ["0.4"],
+        ["26157.8"],
         ["2192.16"],
         ["38060.5"],
-        ["26157.8"],
         ["67680"],
         ["12000"],
         ["3641.2"]
@@ -48,6 +48,30 @@
     "headerItems": [
         [
             [
+                {
+                    "attributeHeaderItem": {
+                        "name": "1 Source Consulting",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2871"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1-800 Postcards",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1428"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1-800 We Answer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2874"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1-888-OhioComp",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2875"
+                    }
+                },
                 {
                     "attributeHeaderItem": {
                         "name": "1000Bulbs.com",
@@ -74,30 +98,6 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "1-800 Postcards",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1428"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "1-800 We Answer",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2874"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "1-888-OhioComp",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2875"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "1 Source Consulting",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2871"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
                         "name": "1Source International",
                         "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1429"
                     }
@@ -116,14 +116,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "2HB Software Designs",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1432"
+                        "name": "2 Wheel Bikes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1431"
                     }
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "2 Wheel Bikes",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1431"
+                        "name": "2HB Software Designs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1432"
                     }
                 },
                 {
@@ -194,8 +194,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "720 Strategies",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1439"
+                        "name": "7 Medical Systems",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=9"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "7 Simple Machines",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2882"
                     }
                 },
                 {
@@ -206,14 +212,8 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "7 Medical Systems",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=9"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "7 Simple Machines",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2882"
+                        "name": "720 Strategies",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1439"
                     }
                 },
                 {
@@ -230,14 +230,8 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "A10 Clinical Solutions",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4513"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "A10 Networks",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4514"
+                        "name": "A-1 Textiles",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=13"
                     }
                 },
                 {
@@ -248,8 +242,14 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "A-1 Textiles",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=13"
+                        "name": "A10 Clinical Solutions",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4513"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A10 Networks",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4514"
                     }
                 },
                 {
@@ -272,6 +272,12 @@
                 },
                 {
                     "attributeHeaderItem": {
+                        "name": "Aaron's Sales & Lease Ownership",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=15"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
                         "name": "Aaron's Sales and Lease",
                         "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=16"
                     }
@@ -280,12 +286,6 @@
                     "attributeHeaderItem": {
                         "name": "Aaron's Sales and Lease Ownership",
                         "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1446"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "Aaron's Sales & Lease Ownership",
-                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=15"
                     }
                 },
                 {

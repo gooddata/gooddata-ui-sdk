@@ -29,6 +29,10 @@ export class CatalogRecording implements IRecording {
         this.groupsFile = path.join(this.directory, CatalogGroups);
     }
 
+    public alwaysRefresh(): boolean {
+        return false;
+    }
+
     public getRecordingType(): RecordingType {
         return RecordingType.Catalog;
     }

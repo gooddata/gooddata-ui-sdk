@@ -5,6 +5,7 @@
                 "items": [
                     {
                         "measure": {
+                            "alias": "Sum Amount",
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
@@ -14,33 +15,39 @@
                                     }
                                 }
                             },
+                            "format": "$#,##0",
                             "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
                         }
                     },
                     {
                         "measure": {
+                            "alias": "Sum Duration",
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
                                     "item": { "identifier": "fact.stagehistory.duration", "type": "fact" }
                                 }
                             },
+                            "format": "$#,##0",
                             "localIdentifier": "m_fact.stagehistory.duration_sum"
                         }
                     },
                     {
                         "measure": {
+                            "alias": "Sum Velocity",
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
                                     "item": { "identifier": "fact.stagehistory.velocity", "type": "fact" }
                                 }
                             },
+                            "format": "$#,##0",
                             "localIdentifier": "m_fact.stagehistory.velocity_sum"
                         }
                     },
                     {
                         "measure": {
+                            "alias": "Sum Velocity",
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
@@ -50,6 +57,7 @@
                                     }
                                 }
                             },
+                            "format": "$#,##0",
                             "localIdentifier": "m_fact.opportunitysnapshot.probability_sum"
                         }
                     }

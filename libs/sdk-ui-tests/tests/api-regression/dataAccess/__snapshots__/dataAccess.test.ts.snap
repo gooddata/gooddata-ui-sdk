@@ -584,19 +584,19 @@ Object {
     "allSlices": 43,
     "attributes": 1,
     "sliceNames": Array [
+      "1 Source Consulting",
+      "1-800 Postcards",
+      "1-800 We Answer",
+      "1-888-OhioComp",
       "1000Bulbs.com",
       "101 Financial",
       "123 Exteriors",
       "14 West",
-      "1-800 Postcards",
-      "1-800 We Answer",
-      "1-888-OhioComp",
-      "1 Source Consulting",
       "1Source International",
       "1st Choice Staffing & Consulting",
       "1st in Video - Music World",
-      "2HB Software Designs",
       "2 Wheel Bikes",
+      "2HB Software Designs",
       "352 Media Group",
       "3balls.com",
       "3dCart Shopping Cart Software",
@@ -608,22 +608,22 @@ Object {
       "5LINX Enterprises",
       "614 Media Group",
       "6K Systems",
-      "720 Strategies",
-      "7-Eleven",
       "7 Medical Systems",
       "7 Simple Machines",
+      "7-Eleven",
+      "720 Strategies",
       "90octane",
       "919 Marketing",
+      "A-1 Textiles",
+      "A1 Pool Parts",
       "A10 Clinical Solutions",
       "A10 Networks",
-      "A1 Pool Parts",
-      "A-1 Textiles",
       "AAC Enterprises",
       "Aaron Oil Company",
       "Aaron's",
+      "Aaron's Sales & Lease Ownership",
       "Aaron's Sales and Lease",
       "Aaron's Sales and Lease Ownership",
-      "Aaron's Sales & Lease Ownership",
       "AArrow Advertising",
       "Aasent Mortgage Corporation",
       "Abacus 24-7",
@@ -1487,14 +1487,14 @@ Object {
       "CompuSci > Bronto Software > CompuSci",
       "CompuSci > Burstabit Technologies > CompuSci",
       "CompuSci > BusinessOnLine > CompuSci",
+      "CompuSci > C&I Engineering > CompuSci",
+      "CompuSci > C&S Companies > CompuSci",
       "CompuSci > Cahill Gordon & Reindel > CompuSci",
       "CompuSci > Canyon Manufacturing Services > CompuSci",
       "CompuSci > Cash Cycle Solutions > CompuSci",
-      "CompuSci > C&I Engineering > CompuSci",
       "CompuSci > Compliance Implementation Services > CompuSci",
       "CompuSci > Convergence Consulting Group > CompuSci",
       "CompuSci > CPX Interactive > CompuSci",
-      "CompuSci > C&S Companies > CompuSci",
       "CompuSci > CyberData Technologies > CompuSci",
       "CompuSci > Davis Polk & Wardwell > CompuSci",
       "CompuSci > DestinationWeddings.com > CompuSci",
@@ -1522,13 +1522,13 @@ Object {
       "Educationly > Advocate Radiology Billing > Educationly",
       "Educationly > AEEC > Educationly",
       "Educationly > AirSplat > Educationly",
-      "Educationly > Allconnect > Educationly",
       "Educationly > All Copy Products > Educationly",
+      "Educationly > Allconnect > Educationly",
       "Educationly > American Business Solutions > Educationly",
-      "Educationly > Arrowhead Advertising > Educationly",
       "Educationly > Arrow Strategies > Educationly",
-      "Educationly > Aspire Systems > Educationly",
+      "Educationly > Arrowhead Advertising > Educationly",
       "Educationly > ASP Pool and Spa > Educationly",
+      "Educationly > Aspire Systems > Educationly",
       "Educationly > Aware Web Solutions > Educationly",
       "Educationly > Baseball Rampage > Educationly",
       "Educationly > BeQuick Software > Educationly",
@@ -1611,8 +1611,8 @@ Object {
       "Explorer > Knowledge Mosaic > Explorer",
       "Explorer > Laser Technologies > Explorer",
       "Explorer > LawyerLink > Explorer",
-      "Explorer > Logical Choice Technologies > Explorer",
       "Explorer > Logic Planet > Explorer",
+      "Explorer > Logical Choice Technologies > Explorer",
       "Explorer > LogoSportswear.com > Explorer",
       "Explorer > Mansell Group > Explorer",
       "Explorer > Mantz Automation > Explorer",
@@ -4966,6 +4966,34 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 8,
+    "attributes": 1,
+    "sliceNames": Array [
+      "Interest",
+      "Discovery",
+      "Short List",
+      "Risk Assessment",
+      "Conviction",
+      "Negotiation",
+      "Closed Won",
+      "Closed Lost",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures 1`] = `
 Object {
   "seriesDigest": Object {
@@ -4977,6 +5005,72 @@ Object {
       " > m_fact.stagehistory.duration_sum",
       " > m_fact.stagehistory.velocity_sum",
       " > m_fact.opportunitysnapshot.probability_sum",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with a total measure 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": Array [
+      " > Total Balance",
+      " > Sum Duration",
+      " > Sum Velocity",
+      " > Sum Velocity",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with font 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": Array [
+      " > Sum Amount",
+      " > Sum Duration",
+      " > Sum Velocity",
+      " > Sum Velocity",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with themed 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 0,
+    "measures": 4,
+    "seriesNames": Array [
+      " > Sum Amount",
+      " > Sum Duration",
+      " > Sum Velocity",
+      " > Sum Velocity",
     ],
   },
   "slicesDigest": Object {
@@ -5008,6 +5102,34 @@ Object {
 `;
 
 exports[`DataAccess should correctly identify series and slices for: WaterfallChart - single measure with viewBy 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 8,
+    "attributes": 1,
+    "sliceNames": Array [
+      "Interest",
+      "Discovery",
+      "Short List",
+      "Risk Assessment",
+      "Conviction",
+      "Negotiation",
+      "Closed Won",
+      "Closed Lost",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: WaterfallChart - themed 1`] = `
 Object {
   "seriesDigest": Object {
     "allSeries": 1,

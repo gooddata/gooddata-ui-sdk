@@ -11357,17 +11357,17 @@ Object {
             "identifier": "attr.product.id",
             "name": "Product",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1093",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1094",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": Array [
@@ -11377,17 +11377,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -11399,17 +11399,17 @@ Object {
             "identifier": "attr.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1125",
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1126",
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
       "intersectionAttributes": Array [
@@ -11419,17 +11419,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -11438,17 +11438,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -11463,17 +11463,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -11482,17 +11482,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -11503,9 +11503,9 @@ Object {
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1285",
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1285",
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -11718,17 +11718,17 @@ Object {
             "identifier": "attr.product.id",
             "name": "Product",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1093",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1094",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": Array [
@@ -11738,17 +11738,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -11760,17 +11760,17 @@ Object {
             "identifier": "attr.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1125",
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1126",
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
       "intersectionAttributes": Array [
@@ -11780,17 +11780,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -11799,17 +11799,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -11824,17 +11824,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -11843,17 +11843,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -11864,9 +11864,9 @@ Object {
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1285",
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1285",
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -11884,17 +11884,17 @@ Object {
             "identifier": "attr.product.id",
             "name": "Product",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1093",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1094",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": Array [
@@ -11904,17 +11904,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -11926,17 +11926,17 @@ Object {
             "identifier": "attr.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1125",
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1126",
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
       "intersectionAttributes": Array [
@@ -11946,17 +11946,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -11965,17 +11965,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -11990,17 +11990,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -12009,17 +12009,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -12030,9 +12030,9 @@ Object {
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1285",
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1285",
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -16869,17 +16869,17 @@ Object {
             "identifier": "attr.product.id",
             "name": "Product",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1093",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1094",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": Array [
@@ -16889,17 +16889,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -16911,17 +16911,17 @@ Object {
             "identifier": "attr.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1125",
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1126",
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
       "intersectionAttributes": Array [
@@ -16931,17 +16931,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -16950,17 +16950,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -16975,17 +16975,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -16994,17 +16994,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -17015,9 +17015,9 @@ Object {
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1285",
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1285",
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -17230,17 +17230,17 @@ Object {
             "identifier": "attr.product.id",
             "name": "Product",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1093",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1094",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": Array [
@@ -17250,17 +17250,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -17272,17 +17272,17 @@ Object {
             "identifier": "attr.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1125",
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1126",
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
       "intersectionAttributes": Array [
@@ -17292,17 +17292,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -17311,17 +17311,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -17336,17 +17336,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -17355,17 +17355,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -17376,9 +17376,9 @@ Object {
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1285",
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1285",
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -17396,17 +17396,17 @@ Object {
             "identifier": "attr.product.id",
             "name": "Product",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1093",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1094",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": Array [
@@ -17416,17 +17416,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -17438,17 +17438,17 @@ Object {
             "identifier": "attr.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1125",
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "identifier": "label.owner.region",
           "localIdentifier": "a_label.owner.region",
           "name": "Region",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1126",
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
       },
       "intersectionAttributes": Array [
@@ -17458,17 +17458,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -17477,17 +17477,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -17502,17 +17502,17 @@ Object {
               "identifier": "attr.product.id",
               "name": "Product",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1093",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1093",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
             "identifier": "label.product.id.name",
             "localIdentifier": "a_label.product.id.name",
             "name": "Product Name",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1094",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1094",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
         Object {
@@ -17521,17 +17521,17 @@ Object {
               "identifier": "attr.owner.region",
               "name": "Region",
               "ref": Object {
-                "uri": "/gdc/md/referenceworkspace/obj/1125",
+                "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1125",
+              "uri": "/gdc/md/referenceworkspace/obj/1086",
             },
             "identifier": "label.owner.region",
             "localIdentifier": "a_label.owner.region",
             "name": "Region",
             "ref": Object {
-              "uri": "/gdc/md/referenceworkspace/obj/1126",
+              "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1126",
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
           },
         },
       ],
@@ -17542,9 +17542,9 @@ Object {
           "localIdentifier": "m_aangOxLSeztu",
           "name": "Amount",
           "ref": Object {
-            "uri": "/gdc/md/referenceworkspace/obj/1285",
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1285",
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
       },
     },
@@ -19729,6 +19729,92 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - font 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.stage.name",
+            "name": "Stage Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1091",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1091",
+          },
+          "identifier": "label.stage.name.stagename",
+          "localIdentifier": "a_label.stage.name.stagename",
+          "name": "Stage Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1092",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.stage.name",
+              "name": "Stage Name",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1091",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1091",
+            },
+            "identifier": "label.stage.name.stagename",
+            "localIdentifier": "a_label.stage.name.stagename",
+            "name": "Stage Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1092",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.stage.name",
+              "name": "Stage Name",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1091",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1091",
+            },
+            "identifier": "label.stage.name.stagename",
+            "localIdentifier": "a_label.stage.name.stagename",
+            "name": "Stage Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1092",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - multi measures 1`] = `
 Object {
   "attributes": Array [],
@@ -19781,6 +19867,162 @@ Object {
 }
 `;
 
+exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - multi measures with a total measure 1`] = `
+Object {
+  "attributes": Array [],
+  "measures": Array [
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+          "name": "Total Balance",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.stagehistory.duration_sum",
+          "name": "Sum Duration",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.stagehistory.velocity_sum",
+          "name": "Sum Velocity",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
+          "name": "Sum Velocity",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - multi measures with font 1`] = `
+Object {
+  "attributes": Array [],
+  "measures": Array [
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+          "name": "Sum Amount",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.stagehistory.duration_sum",
+          "name": "Sum Duration",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.stagehistory.velocity_sum",
+          "name": "Sum Velocity",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
+          "name": "Sum Velocity",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - multi measures with themed 1`] = `
+Object {
+  "attributes": Array [],
+  "measures": Array [
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+          "name": "Sum Amount",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.stagehistory.duration_sum",
+          "name": "Sum Duration",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.stagehistory.velocity_sum",
+          "name": "Sum Velocity",
+          "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
+          "name": "Sum Velocity",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - single measure 1`] = `
 Object {
   "attributes": Array [],
@@ -19805,6 +20047,92 @@ Object {
 `;
 
 exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - single measure with viewBy 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.stage.name",
+            "name": "Stage Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1091",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1091",
+          },
+          "identifier": "label.stage.name.stagename",
+          "localIdentifier": "a_label.stage.name.stagename",
+          "name": "Stage Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1092",
+        },
+      },
+      "intersectionAttributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.stage.name",
+              "name": "Stage Name",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1091",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1091",
+            },
+            "identifier": "label.stage.name.stagename",
+            "localIdentifier": "a_label.stage.name.stagename",
+            "name": "Stage Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1092",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.stage.name",
+              "name": "Stage Name",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1091",
+              },
+              "uri": "/gdc/md/referenceworkspace/obj/1091",
+            },
+            "identifier": "label.stage.name.stagename",
+            "localIdentifier": "a_label.stage.name.stagename",
+            "name": "Stage Name",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1092",
+            },
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+        },
+      ],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0.00",
+          "identifier": "aangOxLSeztu",
+          "localIdentifier": "m_aangOxLSeztu",
+          "name": "Amount",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1271",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1271",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`getAvailableDrillTargets should provide correct available drill targets for: WaterfallChart - themed 1`] = `
 Object {
   "attributes": Array [
     Object {

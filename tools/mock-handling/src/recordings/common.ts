@@ -37,6 +37,11 @@ export interface IRecording {
     getRecordingType(): RecordingType;
 
     /**
+     * Whether this recordings should always be refreshed
+     */
+    alwaysRefresh(): boolean;
+
+    /**
      * Returns unique name of this recording
      */
     getRecordingName(): string;

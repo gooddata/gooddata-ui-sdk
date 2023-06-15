@@ -1,0 +1,77 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Sum Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Duration",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.stagehistory.duration", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_fact.stagehistory.duration_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Velocity",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.stagehistory.velocity", "type": "fact" }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_fact.stagehistory.velocity_sum"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Sum Velocity",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.probability",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "format": "$#,##0",
+                            "localIdentifier": "m_fact.opportunitysnapshot.probability_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "WaterfallChart.e265dad62a3587264d85179b5e4adc4d",
+        "properties": { "controls": { "legend": { "enabled": true, "position": "left" } } },
+        "sorts": [],
+        "title": "WaterfallChart - legend position - legend on left",
+        "uri": "WaterfallChart.e265dad62a3587264d85179b5e4adc4d",
+        "visualizationUrl": "local:waterfall"
+    }
+}
