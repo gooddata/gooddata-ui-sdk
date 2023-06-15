@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { areTotalsChanged, getSubtotalStyles, isInvalidGetRowsRequest } from "../dataSourceUtils";
 import { IGridTotalsRow } from "../resultTypes";
 import { IDimension } from "@gooddata/sdk-model";
@@ -71,7 +71,7 @@ describe("getGridDataSourceUtils", () => {
                 expectedValue: boolean,
                 _passed: string,
                 _table: string,
-                passedTotals: any[],
+                passedTotals: any[] | null,
                 tableTotals: any[],
             ) => {
                 const gridApi = mockGridApi(tableTotals);

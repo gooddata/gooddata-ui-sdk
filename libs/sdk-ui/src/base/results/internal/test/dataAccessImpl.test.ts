@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -215,7 +215,7 @@ describe("DataAccessMethods", () => {
         it("should translate headers", () => {
             const customConfig: DataAccessConfig = {
                 ...DefaultDataAccessConfig,
-                headerTranslator: (value: string) => `__${value}`,
+                headerTranslator: (value: string | null) => `__${value}`,
             };
 
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices, customConfig);

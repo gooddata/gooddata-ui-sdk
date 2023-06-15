@@ -37,7 +37,7 @@ describe("tiger elements", () => {
             (el) => el.title === "Educationly",
         );
 
-        const testAttributeElementUri = testAttributeElement!.uri.replace(
+        const testAttributeElementUri = testAttributeElement!.uri!.replace(
             "referenceworkspace",
             testWorkspace(),
         );

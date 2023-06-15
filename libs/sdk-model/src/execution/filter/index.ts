@@ -18,7 +18,7 @@ import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGra
  * @public
  */
 export interface IAttributeElementsByRef {
-    uris: string[];
+    uris: Array<string | null>;
 }
 
 /**
@@ -27,7 +27,7 @@ export interface IAttributeElementsByRef {
  * @public
  */
 export interface IAttributeElementsByValue {
-    values: string[];
+    values: Array<string | null>;
 }
 
 /**
@@ -535,7 +535,7 @@ export function attributeElementsCount(attributeElements: IAttributeElements): n
  * @returns the array of items
  * @internal
  */
-export function getAttributeElementsItems(attributeElements: IAttributeElements): string[] {
+export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null> {
     invariant(attributeElements, "attribute elements must be specified");
 
     if (isAttributeElementsByRef(attributeElements)) {
@@ -555,7 +555,7 @@ export function getAttributeElementsItems(attributeElements: IAttributeElements)
  */
 export function updateAttributeElementsItems(
     attributeElements: IAttributeElements,
-    newItems: string[],
+    newItems: Array<string | null>,
 ): IAttributeElements {
     invariant(attributeElements, "attribute elements must be specified");
 

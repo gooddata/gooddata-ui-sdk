@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useState, useMemo } from "react";
 import { useAttributeFilterController } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -16,8 +16,8 @@ const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 
 interface IFilterValue {
-    value: string;
-    label: string;
+    value: string | null;
+    label: string | null;
 }
 
 interface ICustomFilterProps {

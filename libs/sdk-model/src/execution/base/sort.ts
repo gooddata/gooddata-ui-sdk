@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { Identifier } from "../../objRef/index";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureLocalId } from "../measure";
@@ -113,12 +113,8 @@ export interface IAttributeLocatorItemBody {
     attributeIdentifier: Identifier;
     /**
      * Value of the attribute element; TODO: make sure bear is ready for this
-     * @remarks
-     * Note that this can actually be null on some backends if your data contains NULL values.
-     * We will change the type of this to string | null in the next major (since it is a breaking change),
-     * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
-    element: string;
+    element: string | null;
 }
 
 /**
@@ -344,7 +340,7 @@ export function attributeLocatorIdentifier(locator: IAttributeLocatorItem): Iden
  * @returns attribute element
  * @public
  */
-export function attributeLocatorElement(locator: IAttributeLocatorItem): Identifier {
+export function attributeLocatorElement(locator: IAttributeLocatorItem): Identifier | null {
     return locator.attributeLocatorItem.element;
 }
 

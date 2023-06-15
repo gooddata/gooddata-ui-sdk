@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { useAttributeFilterHandler } from "@gooddata/sdk-ui-filters";
 import { IAttribute, IAttributeElementsByRef, newNegativeAttributeFilter } from "@gooddata/sdk-model";
@@ -40,7 +40,7 @@ export function CustomAttributeFilter(props: ICustomAttributeFilter) {
     const initStatus = handler.getInitStatus();
     const loadedElements = handler.getAllElements();
     const committedSelection = handler.getCommittedSelection();
-    const isElementSelected = (elementUri: string) => !committedSelection.keys.includes(elementUri);
+    const isElementSelected = (elementUri: string | null) => !committedSelection.keys.includes(elementUri);
 
     if (initStatus === "error") {
         return <div>{handler.getInitError()?.message}</div>;

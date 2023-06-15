@@ -22,7 +22,7 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                 <div className="library-component screenshot-target">
                     <h4>AttributeFilterStatusBar positive selection</h4>
                     <AttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={false}
@@ -32,7 +32,7 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterStatusBar negative selection</h4>
                     <AttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={true}
@@ -42,7 +42,7 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterStatusBar filtered by parent filters</h4>
                     <AttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={true}
@@ -52,7 +52,7 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterStatusBar reached selection limit</h4>
                     <AttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={true}
@@ -62,7 +62,7 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterStatusBar over selection limit</h4>
                     <AttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={true}
@@ -74,7 +74,7 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
                         AttributeFilterStatusBar reached selection limit and is filtered by parent filters
                     </h4>
                     <AttributeFilterStatusBar
-                        getItemTitle={(element) => element.title}
+                        getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
                         isInverted={true}

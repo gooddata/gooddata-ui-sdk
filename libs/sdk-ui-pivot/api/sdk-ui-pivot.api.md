@@ -73,7 +73,7 @@ export interface IAttributeColumnLocator {
 // @public
 export interface IAttributeColumnLocatorBody {
     attributeIdentifier: Identifier;
-    element?: string;
+    element?: string | null;
 }
 
 // @public (undocumented)

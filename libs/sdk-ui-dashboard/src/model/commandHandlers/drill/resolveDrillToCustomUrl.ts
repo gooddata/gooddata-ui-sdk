@@ -1,5 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
+import isNil from "lodash/isNil";
 import {
     IDrillEvent,
     IDrillEventIntersectionElement,
@@ -37,7 +38,7 @@ interface IDrillToUrlPlaceholderReplacement {
 
 interface IDrillToUrlElement {
     identifier: string;
-    elementTitle: string;
+    elementTitle: string | null;
 }
 
 export function* loadElementTitle(
@@ -161,8 +162,8 @@ export function* loadAttributeElementsForDrillIntersection(
     return [...mappedElements, ...loadedElement];
 }
 
-const encodeParameterIfSet = (parameter: string | undefined): string | undefined =>
-    parameter === undefined ? parameter : encodeURIComponent(parameter);
+const encodeParameterIfSet = (parameter: string | undefined | null): string | undefined | null =>
+    isNil(parameter) ? parameter : encodeURIComponent(parameter);
 
 export function getAttributeDisplayForms(
     projectId: string,

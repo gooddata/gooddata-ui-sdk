@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IAttribute,
     IMeasure,
@@ -108,14 +108,10 @@ export type DataSeriesDescriptorMethods = {
     measureFormat(): string;
 
     /**
-     * @remarks
-     * Note that the values can actually be null on some backends if your data contains NULL values.
-     * We will change the type of this to string | null in the next major (since it is a breaking change),
-     * but for now, if you expect NULLs in your data, treat this as string | null already.
      *
      * @returns - titles of attribute elements that are used to scope all data points in this series
      */
-    scopeTitles(): string[];
+    scopeTitles(): Array<string | null>;
 };
 
 /**
@@ -318,13 +314,8 @@ export type DataSliceHeaders = {
 export type DataSliceDescriptorMethods = {
     /**
      * @returns titles of attribute elements to which this data slice belongs
-     *
-     * @remarks
-     * Note that the values can actually be null on some backends if your data contains NULL values.
-     * We will change the type of this to string | null in the next major (since it is a breaking change),
-     * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
-    readonly sliceTitles: () => string[];
+    readonly sliceTitles: () => Array<string | null>;
 };
 
 /**

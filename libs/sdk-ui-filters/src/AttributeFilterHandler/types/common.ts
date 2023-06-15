@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 /* eslint-disable @typescript-eslint/ban-types */
 
 /**
@@ -6,7 +6,7 @@
  *
  * @public
  */
-export type AttributeElementKey = string;
+export type AttributeElementKey = string | null;
 
 /**
  * @public

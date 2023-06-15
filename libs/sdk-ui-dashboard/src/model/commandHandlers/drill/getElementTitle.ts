@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { IElementsQueryOptions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes";
@@ -8,7 +8,7 @@ export async function getElementTitle(
     dfRef: ObjRef,
     attrElementUriOrPrimaryLabel: string,
     ctx: DashboardContext,
-): Promise<string> {
+): Promise<string | null> {
     const queryOptions: IElementsQueryOptions = {
         elements: ctx.backend.capabilities.supportsElementUris
             ? {

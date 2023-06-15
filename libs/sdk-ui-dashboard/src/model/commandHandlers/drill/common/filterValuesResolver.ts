@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
@@ -150,7 +150,10 @@ async function resolveAttributeFilterValues(
         elementsPage = await elementsPage.next();
     }
     return elements.reduce((map, element) => {
-        map[element.uri] = element.title;
+        //Object keys in JavaScript are, always strings
+        //console.log(map["null"]===map[null]); // true
+        const key = element.uri === null ? "null" : element.uri;
+        map[key] = element.title;
         return map;
     }, result);
 }
@@ -177,6 +180,6 @@ function getResolvedFilterValues(
     return array[index];
 }
 
-function getLastTitle(items: IAttributeElement[]): string {
+function getLastTitle(items: IAttributeElement[]): string | null {
     return items[items.length - 1].title;
 }

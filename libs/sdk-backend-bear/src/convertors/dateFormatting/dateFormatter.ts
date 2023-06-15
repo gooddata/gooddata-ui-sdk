@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     IDimensionDescriptor,
     IAttributeDescriptor,
@@ -48,7 +48,7 @@ export function transformDateFormat(
         const dateValueFormatter = createDateValueFormatter(createDefaultDateFormatter(dateFormat));
         return {
             attributeHeaderItem: {
-                name: dateValueFormatter(resultHeader.attributeHeaderItem.name),
+                name: dateValueFormatter(resultHeader.attributeHeaderItem.name!),
                 uri: resultHeaderUri,
             },
         };

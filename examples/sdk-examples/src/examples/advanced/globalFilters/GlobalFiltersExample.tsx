@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { BarChart, Headline, PieChart } from "@gooddata/sdk-ui-charts";
 import {
@@ -31,8 +31,8 @@ const measures = [AvgDailyTotalSales];
 
 interface ISidebarProps {
     employees: IAttributeElement[];
-    selectedEmployeeUri: string;
-    onEmployeeClick: (employeeUrl: string) => void;
+    selectedEmployeeUri: string | null;
+    onEmployeeClick: (employeeUrl: string | null) => void;
 }
 
 const Sidebar = (props: ISidebarProps) => {
@@ -67,7 +67,7 @@ const Sidebar = (props: ISidebarProps) => {
 };
 
 export const GlobalFiltersExample = () => {
-    const [selectedEmployeeUri, setSelectedEmployeeUri] = useState<string>("");
+    const [selectedEmployeeUri, setSelectedEmployeeUri] = useState<string | null>("");
 
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
@@ -86,7 +86,7 @@ export const GlobalFiltersExample = () => {
             onSuccess: (elements) => {
                 const newDefaultEmployeeUri = elements[0].uri;
                 if (newDefaultEmployeeUri !== selectedEmployeeUri) {
-                    setSelectedEmployeeUri(newDefaultEmployeeUri);
+                    setSelectedEmployeeUri(newDefaultEmployeeUri!);
                 }
             },
         },
@@ -175,7 +175,7 @@ export const GlobalFiltersExample = () => {
                     <h2>Employee overview</h2>
                     <div className="details">
                         <div>
-                            <EmployeeCard name={employeeName} />
+                            <EmployeeCard name={employeeName!} />
                         </div>
                         <div className="kpis">
                             <KpiMetricBox title="Daily sales">

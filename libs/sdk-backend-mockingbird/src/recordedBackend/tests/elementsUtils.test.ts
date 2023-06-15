@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -150,8 +150,13 @@ describe("elementsUtils", () => {
             expect(actual).toBe(elements);
         });
 
+        it("should not touch the elements if null filter is provided", () => {
+            const actual = resolveStringFilter(null)(elements);
+            expect(actual).toBe(elements);
+        });
+
         it("should limit the elements if a string filter is provided", () => {
-            const actual = resolveStringFilter(elements[0].title)(elements);
+            const actual = resolveStringFilter(elements[0].title!)(elements);
             expect(actual).toEqual([elements[0]]);
         });
     });

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { LineChart, ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -73,7 +73,7 @@ export const DynamicMeasuresExample: React.FC = () => {
             });
     }, []);
 
-    const onMeasureChange = (measureIdentifier: string) => {
+    const onMeasureChange = (measureIdentifier: string | null) => {
         const updatedMeasure = measureList!.find((measure) => measure.identifier === measureIdentifier);
         const updatedMeasureIndex = measureList!.indexOf(updatedMeasure);
         const updatedMeasures = [...measureList!];

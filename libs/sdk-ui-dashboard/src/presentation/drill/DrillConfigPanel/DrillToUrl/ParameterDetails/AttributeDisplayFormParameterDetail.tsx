@@ -41,15 +41,17 @@ interface IAttributeDisplayFormParameterDetailProps {
     showValues: boolean;
 }
 
-const handleEmptyValues = (values: string[], intl: IntlShape) =>
-    values.map((value: string) => (value.length === 0 ? emptyHeaderTitleFromIntl(intl) : value));
+const handleEmptyValues = (values: Array<string | null>, intl: IntlShape) =>
+    values.map((value: null | string) =>
+        !value || value.length === 0 ? emptyHeaderTitleFromIntl(intl) : value,
+    );
 
 const prepareValues = (elements: IAttributeElement[], type?: AttributeDisplayFormType) => {
     if (type !== "GDC.link") {
         return elements.map(({ title }) => title);
     }
     return elements.map(({ title }) =>
-        title.length > MAX_URL_LENGTH ? `${title.substr(0, MAX_URL_LENGTH)}...` : title,
+        title && title.length > MAX_URL_LENGTH ? `${title.substr(0, MAX_URL_LENGTH)}...` : title,
     );
 };
 
@@ -112,7 +114,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
         return () => {
             isMounted = false;
         };
-    }, [displayFormRef, type, intl, projectId, showValues]);
+    }, [displayFormRef, type, intl, projectId, showValues, backend]);
 
     return (
         <ParameterDetail

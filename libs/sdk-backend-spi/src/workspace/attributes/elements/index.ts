@@ -19,7 +19,7 @@ export interface IElementsQueryOptionsElementsByValue {
     /**
      * The values to request.
      */
-    values: string[];
+    values: Array<string | null>;
 }
 
 /**
@@ -43,7 +43,7 @@ export interface IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
     /**
      * The values to request.
      */
-    primaryValues: string[];
+    primaryValues: Array<string | null>;
 }
 
 /**
@@ -83,7 +83,7 @@ export interface IElementsQueryOptionsElementsByUri {
     /**
      * The element URIs to request.
      */
-    uris: string[];
+    uris: Array<string | null>;
 }
 
 /**

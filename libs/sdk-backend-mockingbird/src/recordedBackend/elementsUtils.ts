@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import {
     NotImplemented,
@@ -108,7 +108,7 @@ export const resolveSelectedElements =
     };
 
 export const resolveStringFilter =
-    (filter: string | undefined) =>
+    (filter: string | undefined | null) =>
     (elements: IAttributeElement[]): IAttributeElement[] => {
         return filter
             ? elements.filter((item) => item.title?.toLowerCase().includes(filter.toLowerCase()))

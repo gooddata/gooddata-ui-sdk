@@ -140,7 +140,7 @@ export function getGeoData(
     }
 
     if (segmentIndex !== undefined) {
-        const { data, uris } = getSegmentDataAndUris(attributeHeaderItems, segmentIndex);
+        const { data, uris } = getSegmentDataAndUris(attributeHeaderItems, segmentIndex, nullHeaderString);
         geoData[BucketNames.SEGMENT]!.data = data;
         geoData[BucketNames.SEGMENT]!.uris = uris;
     }
@@ -167,13 +167,17 @@ export function getGeoData(
     return geoData as IGeoData;
 }
 
-function getSegmentDataAndUris(attributeHeaderItems: IResultHeader[][], dataIndex: number): ISegmentData {
+function getSegmentDataAndUris(
+    attributeHeaderItems: IResultHeader[][],
+    dataIndex: number,
+    nullHeaderString: string,
+): ISegmentData {
     const headerItems = attributeHeaderItems[dataIndex];
     return headerItems.reduce<ISegmentData>(
         (result: ISegmentData, headerItem: IResultHeader): ISegmentData => {
             if (headerItem && isResultAttributeHeader(headerItem)) {
                 const { uri, name } = headerItem.attributeHeaderItem;
-                return { uris: [...result.uris, uri], data: [...result.data, name] };
+                return { uris: [...result.uris, uri], data: [...result.data, name ?? nullHeaderString] };
             }
             return result;
         },

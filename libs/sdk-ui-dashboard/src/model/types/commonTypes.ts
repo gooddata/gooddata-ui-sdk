@@ -395,7 +395,7 @@ export interface IDashboardWidgetOverlay {
  * @alpha
  */
 export interface IResolvedAttributeFilterValues {
-    [elementRef: string]: string | undefined; // restricted elements values cant be resolved
+    [elementRef: string]: string | undefined | null; // restricted elements values cant be resolved
 }
 
 /**

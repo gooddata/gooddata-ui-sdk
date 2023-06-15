@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     IMeasureDescriptor,
     IAttributeDescriptor,
@@ -63,7 +63,7 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
 /**
  * @internal
  */
-export function getMappingHeaderName(header: IMappingHeader): string | undefined {
+export function getMappingHeaderName(header: IMappingHeader): string | undefined | null {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.formOf.name;
     } else if (isResultAttributeHeader(header)) {
@@ -82,7 +82,7 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
  *
  * @internal
  */
-export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined {
+export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined | null {
     if (isResultAttributeHeader(header)) {
         return getAttributeHeaderItemName(header.attributeHeaderItem);
     } else if (isTotalDescriptor(header)) {

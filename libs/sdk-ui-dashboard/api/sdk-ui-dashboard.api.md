@@ -2948,7 +2948,7 @@ export function getDefaultLegacyInsightMenuItems(intl: IntlShape, config: {
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string;
+export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string | null;
 
 // @internal (undocumented)
 export class HeadlessDashboard {
@@ -4097,7 +4097,7 @@ export interface IParentWithConnectingAttributes {
 // @alpha (undocumented)
 export interface IResolvedAttributeFilterValues {
     // (undocumented)
-    [elementRef: string]: string | undefined;
+    [elementRef: string]: string | undefined | null;
 }
 
 // @alpha (undocumented)
