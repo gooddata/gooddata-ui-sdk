@@ -296,8 +296,8 @@ export interface Telemetry {
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
-         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+         * @summary Invite User
          * @param {Invitation} invitation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -351,8 +351,8 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
-         *
-         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+         * @summary Invite User
          * @param {Invitation} invitation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -379,8 +379,8 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
-         *
-         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+         * @summary Invite User
          * @param {ActionsApiProcessInvitationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -403,8 +403,8 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
-     *
-     * @summary Puts a new invitation requirement into the invitation generator queue.
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
      * @param {ActionsApiProcessInvitationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -438,8 +438,8 @@ export interface ActionsApiProcessInvitationRequest {
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
-     *
-     * @summary Puts a new invitation requirement into the invitation generator queue.
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
      * @param {ActionsApiProcessInvitationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -462,7 +462,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 export const AuthenticationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -503,7 +504,8 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -539,7 +541,8 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
+         * Returns a Profile including Organization and Current User Information.
+         * @summary Get Profile
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -569,7 +572,8 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -605,7 +609,8 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -635,7 +640,8 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
          * @param {string} userEmail
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
@@ -696,7 +702,8 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthenticationApiAxiosParamCreator(configuration);
     return {
         /**
-         *
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -709,7 +716,8 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -722,7 +730,8 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Returns a Profile including Organization and Current User Information.
+         * @summary Get Profile
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -733,7 +742,8 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -746,7 +756,8 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -757,7 +768,8 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
          * @param {string} userEmail
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
@@ -790,7 +802,8 @@ export const AuthenticationApiFactory = function (
     const localVarFp = AuthenticationApiFp(configuration);
     return {
         /**
-         *
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
          * @param {AuthenticationApiCreateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -804,7 +817,8 @@ export const AuthenticationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
          * @param {AuthenticationApiDeleteUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -818,7 +832,8 @@ export const AuthenticationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Returns a Profile including Organization and Current User Information.
+         * @summary Get Profile
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -826,7 +841,8 @@ export const AuthenticationApiFactory = function (
             return localVarFp.getProfile(options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
          * @param {AuthenticationApiGetUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -840,7 +856,8 @@ export const AuthenticationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -848,7 +865,8 @@ export const AuthenticationApiFactory = function (
             return localVarFp.getUsers(options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
          * @param {AuthenticationApiUpdateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -871,7 +889,8 @@ export const AuthenticationApiFactory = function (
  */
 export interface AuthenticationApiInterface {
     /**
-     *
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
      * @param {AuthenticationApiCreateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -883,7 +902,8 @@ export interface AuthenticationApiInterface {
     ): AxiosPromise<AuthUser>;
 
     /**
-     *
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
      * @param {AuthenticationApiDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -895,7 +915,8 @@ export interface AuthenticationApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     *
+     * Returns a Profile including Organization and Current User Information.
+     * @summary Get Profile
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthenticationApiInterface
@@ -903,7 +924,8 @@ export interface AuthenticationApiInterface {
     getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile>;
 
     /**
-     *
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
      * @param {AuthenticationApiGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -915,7 +937,8 @@ export interface AuthenticationApiInterface {
     ): AxiosPromise<AuthUser>;
 
     /**
-     *
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthenticationApiInterface
@@ -923,7 +946,8 @@ export interface AuthenticationApiInterface {
     getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>>;
 
     /**
-     *
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
      * @param {AuthenticationApiUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1006,7 +1030,8 @@ export interface AuthenticationApiUpdateUserRequest {
  */
 export class AuthenticationApi extends BaseAPI implements AuthenticationApiInterface {
     /**
-     *
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
      * @param {AuthenticationApiCreateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1019,7 +1044,8 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
     }
 
     /**
-     *
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
      * @param {AuthenticationApiDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1032,7 +1058,8 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
     }
 
     /**
-     *
+     * Returns a Profile including Organization and Current User Information.
+     * @summary Get Profile
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthenticationApi
@@ -1044,7 +1071,8 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
     }
 
     /**
-     *
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
      * @param {AuthenticationApiGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1057,7 +1085,8 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
     }
 
     /**
-     *
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthenticationApi
@@ -1069,7 +1098,8 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
     }
 
     /**
-     *
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
      * @param {AuthenticationApiUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1089,7 +1119,8 @@ export class AuthenticationApi extends BaseAPI implements AuthenticationApiInter
 export const UserAuthorizationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1130,7 +1161,8 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1166,7 +1198,8 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * Returns a Profile including Organization and Current User Information.
+         * @summary Get Profile
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1196,7 +1229,8 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1232,7 +1266,8 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1262,8 +1297,8 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+         * @summary Invite User
          * @param {Invitation} invitation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1307,7 +1342,8 @@ export const UserAuthorizationApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
          * @param {string} userEmail
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
@@ -1368,7 +1404,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = UserAuthorizationApiAxiosParamCreator(configuration);
     return {
         /**
-         *
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1381,7 +1418,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1394,7 +1432,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Returns a Profile including Organization and Current User Information.
+         * @summary Get Profile
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1405,7 +1444,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
          * @param {string} userEmail
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1418,7 +1458,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1429,8 +1470,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
-         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+         * @summary Invite User
          * @param {Invitation} invitation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1443,7 +1484,8 @@ export const UserAuthorizationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
          * @param {string} userEmail
          * @param {AuthUser} authUser
          * @param {*} [options] Override http request option.
@@ -1476,7 +1518,8 @@ export const UserAuthorizationApiFactory = function (
     const localVarFp = UserAuthorizationApiFp(configuration);
     return {
         /**
-         *
+         * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Create a user
          * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1490,7 +1533,8 @@ export const UserAuthorizationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Delete a user
          * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1504,7 +1548,8 @@ export const UserAuthorizationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Returns a Profile including Organization and Current User Information.
+         * @summary Get Profile
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1512,7 +1557,8 @@ export const UserAuthorizationApiFactory = function (
             return localVarFp.getProfile(options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get a user
          * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1526,7 +1572,8 @@ export const UserAuthorizationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Get all users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1534,8 +1581,8 @@ export const UserAuthorizationApiFactory = function (
             return localVarFp.getUsers(options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @summary Puts a new invitation requirement into the invitation generator queue.
+         * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+         * @summary Invite User
          * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1549,7 +1596,8 @@ export const UserAuthorizationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         *
+         * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+         * @summary Update a user
          * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1572,7 +1620,8 @@ export const UserAuthorizationApiFactory = function (
  */
 export interface UserAuthorizationApiInterface {
     /**
-     *
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
      * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1584,7 +1633,8 @@ export interface UserAuthorizationApiInterface {
     ): AxiosPromise<AuthUser>;
 
     /**
-     *
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
      * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1596,7 +1646,8 @@ export interface UserAuthorizationApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     *
+     * Returns a Profile including Organization and Current User Information.
+     * @summary Get Profile
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserAuthorizationApiInterface
@@ -1604,7 +1655,8 @@ export interface UserAuthorizationApiInterface {
     getProfile(options?: AxiosRequestConfig): AxiosPromise<Profile>;
 
     /**
-     *
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
      * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1616,7 +1668,8 @@ export interface UserAuthorizationApiInterface {
     ): AxiosPromise<AuthUser>;
 
     /**
-     *
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserAuthorizationApiInterface
@@ -1624,8 +1677,8 @@ export interface UserAuthorizationApiInterface {
     getUsers(options?: AxiosRequestConfig): AxiosPromise<Array<AuthUser>>;
 
     /**
-     *
-     * @summary Puts a new invitation requirement into the invitation generator queue.
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
      * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1637,7 +1690,8 @@ export interface UserAuthorizationApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     *
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
      * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1734,7 +1788,8 @@ export interface UserAuthorizationApiUpdateUserRequest {
  */
 export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationApiInterface {
     /**
-     *
+     * Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Create a user
      * @param {UserAuthorizationApiCreateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1750,7 +1805,8 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     }
 
     /**
-     *
+     * Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Delete a user
      * @param {UserAuthorizationApiDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1766,7 +1822,8 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     }
 
     /**
-     *
+     * Returns a Profile including Organization and Current User Information.
+     * @summary Get Profile
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserAuthorizationApi
@@ -1778,7 +1835,8 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     }
 
     /**
-     *
+     * Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get a user
      * @param {UserAuthorizationApiGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1791,7 +1849,8 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     }
 
     /**
-     *
+     * Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Get all users
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserAuthorizationApi
@@ -1803,8 +1862,8 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     }
 
     /**
-     *
-     * @summary Puts a new invitation requirement into the invitation generator queue.
+     * Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.
+     * @summary Invite User
      * @param {UserAuthorizationApiProcessInvitationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1820,7 +1879,8 @@ export class UserAuthorizationApi extends BaseAPI implements UserAuthorizationAp
     }
 
     /**
-     *
+     * Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific
+     * @summary Update a user
      * @param {UserAuthorizationApiUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

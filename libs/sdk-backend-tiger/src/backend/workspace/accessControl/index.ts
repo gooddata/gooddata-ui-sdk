@@ -24,7 +24,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
         const permissions = await this.authCall((client) => {
             return client.actions
-                .permissions({ workspaceId: this.workspace, dashboardId: objectId })
+                .dashboardPermissions({ workspaceId: this.workspace, dashboardId: objectId })
                 .then((result) => result.data);
         });
 
@@ -63,7 +63,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
 
         await this.authCall((client) => {
             return client.actions
-                .managePermissions({
+                .manageDashboardPermissions({
                     workspaceId: this.workspace,
                     dashboardId: objectId,
                     permissionsForAssignee,
@@ -79,7 +79,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
         const availableGrantees = await this.authCall((client) => {
             return client.actions
-                .availableAssignes({
+                .availableAssignees({
                     workspaceId: this.workspace,
                     dashboardId: objectId,
                 })
