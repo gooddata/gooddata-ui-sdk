@@ -222,7 +222,7 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                             <span className="gd-date-range-picker-dash">&ndash;</span>
                             {ToField}
                         </div>
-                        {this.state.isOpen ? DatePicker : null}
+                        {this.state.isOpen ? DatePickerComponent : null}
                     </>
                 )}
                 {errorFrom || errorTo ? (
