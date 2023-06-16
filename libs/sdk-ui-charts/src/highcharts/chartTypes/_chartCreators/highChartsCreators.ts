@@ -29,7 +29,7 @@ import { IntlShape } from "react-intl";
 import { HighchartsOptions } from "../../lib";
 import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration";
 import { getDependencyWheelConfiguration } from "../dependencyWheelChart/dependencyWheelConfiguration";
-import { getWaterfallConfiguration } from "../warterfallChart/waterfallConfiguration";
+import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfiguration";
 
 type ChartConfigurationValueType = (
     ...args: any

@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`waterfallChartsSeries should render the series correctly when one metric 1`] = `
+Array [
+  Object {
+    "color": "rgb(229,77,66)",
+    "connectNulls": true,
+    "data": Array [
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Amount",
+        "y": 116625456.54,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Amount",
+    "seriesIndex": 0,
+    "upColor": "rgb(0,193,141)",
+  },
+]
+`;
+
+exports[`waterfallChartsSeries should render the series correctly when one metric and view by 1`] = `
+Array [
+  Object {
+    "color": "rgb(229,77,66)",
+    "connectNulls": true,
+    "data": Array [
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Interest",
+        "y": 18447266.14,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Discovery",
+        "y": 4249027.88,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Short List",
+        "y": 5612062.6,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Risk Assessment",
+        "y": 2606293.46,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Conviction",
+        "y": 3067466.12,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Negotiation",
+        "y": 1862015.73,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Closed Won",
+        "y": 38310753.45,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "$#,##0.00",
+        "legendIndex": 1,
+        "name": "Closed Lost",
+        "y": 42470571.16,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "Amount",
+    "seriesIndex": 0,
+    "upColor": "rgb(0,193,141)",
+  },
+]
+`;
+
+exports[`waterfallChartsSeries should render the series correctly when only metrics 1`] = `
+Array [
+  Object {
+    "color": "rgb(229,77,66)",
+    "connectNulls": true,
+    "data": Array [
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "#,##0.00",
+        "legendIndex": 1,
+        "name": "m_fact.opportunitysnapshot.amount_sum",
+        "y": 250000,
+      },
+      Object {
+        "borderColor": "rgb(0,193,141)",
+        "color": "rgb(0,193,141)",
+        "format": "#,##0.00",
+        "legendIndex": 1,
+        "name": "m_fact.stagehistory.duration_sum",
+        "y": 50000,
+      },
+      Object {
+        "borderColor": "rgb(229,77,66)",
+        "color": "rgb(229,77,66)",
+        "format": "#,##0.00",
+        "legendIndex": 2,
+        "name": "m_fact.stagehistory.velocity_sum",
+        "y": -35000,
+      },
+      Object {
+        "borderColor": "rgb(229,77,66)",
+        "color": "rgb(229,77,66)",
+        "format": "#,##0.00",
+        "legendIndex": 2,
+        "name": "m_fact.opportunitysnapshot.probability_sum",
+        "y": -100000,
+      },
+    ],
+    "legendIndex": 0,
+    "name": "m_fact.opportunitysnapshot.amount_sum, m_fact.stagehistory.duration_sum, m_fact.stagehistory.velocity_sum, m_fact.opportunitysnapshot.probability_sum",
+    "seriesIndex": 0,
+    "upColor": "rgb(0,193,141)",
+  },
+]
+`;
