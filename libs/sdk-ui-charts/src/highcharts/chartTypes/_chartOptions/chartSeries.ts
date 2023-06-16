@@ -23,8 +23,7 @@ import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries";
 import { getTreemapStackedSeries } from "../treemap/treemapChartSeries";
 import { getBulletChartSeries } from "../bulletChart/bulletChartSeries";
 import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions";
-import { getWaterfallChartSeries } from "../warterfallChart/waterfallChartsSeries";
-import { ITotalConfig } from "../../../interfaces";
+import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries";
 
 export function getSeriesItemData(
     seriesItem: string[],
@@ -177,7 +176,6 @@ export function getSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     theme?: ITheme,
-    totalConfig?: ITotalConfig,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
@@ -204,14 +202,7 @@ export function getSeries(
             emptyHeaderTitle,
         );
     } else if (isWaterfall(type)) {
-        return getWaterfallChartSeries(
-            dv,
-            measureGroup,
-            viewByAttribute,
-            colorStrategy,
-            emptyHeaderTitle,
-            totalConfig,
-        );
+        return getWaterfallChartSeries(dv, measureGroup, viewByAttribute, colorStrategy, emptyHeaderTitle);
     }
 
     return getDefaultSeries(
