@@ -21,7 +21,7 @@ import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-mod
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import ColumnTotalGroupHeader from "./headers/ColumnTotalGroupHeader";
+import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader";
 import { messages } from "../../locales";
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "./../base/constants";
 
