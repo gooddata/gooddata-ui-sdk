@@ -1,0 +1,124 @@
+[
+    {
+        "n2oMap": {
+            "a_label.opportunitysnapshot.forecastcategory": "a_label.opportunitysnapshot.forecastcategory",
+            "a_label.owner.id": "a_label.owner.id",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.id", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.opportunitysnapshot.forecastcategory",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "label.owner.id", "type": "displayForm" },
+                                "localIdentifier": "a_label.owner.id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute",
+                    "totals": [
+                        {
+                            "attributeIdentifier": "a_label.owner.id",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.opportunitysnapshot.forecastcategory",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "columns",
+                    "totals": [
+                        {
+                            "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        }
+                    ]
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["a_label.owner.id"],
+                    "totals": [
+                        {
+                            "attributeIdentifier": "a_label.owner.id",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        }
+                    ]
+                },
+                {
+                    "itemIdentifiers": ["a_label.opportunitysnapshot.forecastcategory", "measureGroup"],
+                    "totals": [
+                        {
+                            "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        }
+                    ]
+                }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure and single column/row grand total",
+        "vis": "PivotTable"
+    }
+]

@@ -35,6 +35,7 @@ const DataViewPropsToSerialize: Array<keyof IDataView> = [
     "data",
     "headerItems",
     "totals",
+    "totalTotals",
     "count",
     "offset",
     "totalCount",

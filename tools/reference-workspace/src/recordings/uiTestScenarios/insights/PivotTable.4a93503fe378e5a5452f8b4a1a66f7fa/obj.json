@@ -1,0 +1,103 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_abEgMnq5hyJQ"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.id", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.id"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunitysnapshot.forecastcategory",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    }
+                ]
+            }
+        ],
+        "filters": [
+            {
+                "negativeAttributeFilter": {
+                    "displayForm": {
+                        "identifier": "label.opportunitysnapshot.forecastcategory",
+                        "type": "displayForm"
+                    },
+                    "notIn": { "values": ["Include"] }
+                }
+            }
+        ],
+        "identifier": "PivotTable.4a93503fe378e5a5452f8b4a1a66f7fa",
+        "properties": {
+            "controls": {
+                "columnWidths": [
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_abEgMnq5hyJQ" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_acugFHNJgsBy" } },
+                            "width": { "value": 100 }
+                        }
+                    }
+                ]
+            }
+        },
+        "sorts": [],
+        "title": "PivotTable - two measures and single column grand total for one",
+        "uri": "PivotTable.4a93503fe378e5a5452f8b4a1a66f7fa",
+        "visualizationUrl": "local:table"
+    }
+}

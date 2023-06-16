@@ -16,6 +16,18 @@ export const PivotTableWithTwoMeasuresAndSingleRowAttr = {
     rows: [ReferenceMd.Product.Name],
 };
 
+export const PivotTableWighSingleMeasureAndSingleRowColAttr = {
+    measures: [ReferenceMd.Amount],
+    rows: [ReferenceMd.SalesRep.Owner],
+    columns: [ReferenceMd.ForecastCategory],
+};
+
+export const PivotTableWighTwoMeasureAndSingleRowColAttr = {
+    measures: [ReferenceMd.Amount, ReferenceMd.Probability],
+    rows: [ReferenceMd.SalesRep.Owner],
+    columns: [ReferenceMd.ForecastCategory],
+};
+
 export const PivotTableWithSingleMeasureAndTwoRowsAndCols = {
     measures: [ReferenceMd.Amount],
     rows: [ReferenceMd.Product.Name, ReferenceMd.Department],

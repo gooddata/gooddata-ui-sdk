@@ -1,0 +1,139 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunitysnapshot.forecastcategory",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "nat"
+                    }
+                ]
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                    "in": { "values": ["West Coast"] }
+                }
+            }
+        ],
+        "identifier": "PivotTable.0d0476e6234645bbb48e5e2867cc50fd",
+        "properties": {
+            "controls": {
+                "columnWidths": [
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_abEgMnq5hyJQ" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_acugFHNJgsBy" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "attributeColumnWidthItem": {
+                            "attributeIdentifier": "a_label.product.id.name",
+                            "width": { "value": 120 }
+                        }
+                    },
+                    {
+                        "attributeColumnWidthItem": {
+                            "attributeIdentifier": "a_label.owner.department",
+                            "width": { "value": 120 }
+                        }
+                    }
+                ]
+            }
+        },
+        "sorts": [],
+        "title": "PivotTable - two measures and multiple column subtotals",
+        "uri": "PivotTable.0d0476e6234645bbb48e5e2867cc50fd",
+        "visualizationUrl": "local:table"
+    }
+}

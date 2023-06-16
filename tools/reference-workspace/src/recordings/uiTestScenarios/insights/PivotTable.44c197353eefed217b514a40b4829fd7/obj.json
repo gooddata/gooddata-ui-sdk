@@ -1,0 +1,90 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.id", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.id"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.owner.id",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    }
+                ]
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunitysnapshot.forecastcategory",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.44c197353eefed217b514a40b4829fd7",
+        "properties": {
+            "controls": {
+                "columnWidths": [
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_abEgMnq5hyJQ" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_acugFHNJgsBy" } },
+                            "width": { "value": 100 }
+                        }
+                    }
+                ]
+            }
+        },
+        "sorts": [],
+        "title": "PivotTable - single measure and single column/row grand total",
+        "uri": "PivotTable.44c197353eefed217b514a40b4829fd7",
+        "visualizationUrl": "local:table"
+    }
+}

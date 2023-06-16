@@ -17,7 +17,7 @@ export default [
     ...manualSizing,
     customization,
     sorting,
-    totals,
+    ...totals,
     drilling,
     grouping,
     experimental,
