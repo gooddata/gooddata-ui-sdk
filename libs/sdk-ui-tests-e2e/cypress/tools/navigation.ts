@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-model";
-import { getHost } from "../support/constants";
+import { getHost, getBackend, getUserName, getPassword } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
 import { DashboardMenu } from "./dashboardMenu";
 
@@ -12,6 +12,7 @@ declare global {
 
 const VISIT_TIMEOUT = 40000;
 const CONFIRM_BUTTON = ".s-create_dashboard";
+const boilerAppHost = "https://127.0.0.1:8080";
 
 function getDashboardUrl() {
     return `${getHost()}`;
@@ -31,6 +32,19 @@ export function visit(componentName: string, workspaceSettings?: ISettings): voi
             win["customWorkspaceSettings"] = workspaceSettings;
         },
     });
+}
+
+export function visitBoilerApp(workspaceSettings?: ISettings): void {
+    visitUrl(`${boilerAppHost}`, {
+        onBeforeLoad(win: Cypress.AUTWindow) {
+            win["customWorkspaceSettings"] = workspaceSettings;
+        },
+    });
+    if (getBackend() === "BEAR") {
+        cy.get(".s-login-login").type(getUserName());
+        cy.get(".s-login-password").type(getPassword());
+        cy.get(".s-login-button").click();
+    }
 }
 
 export function visitCopyOf(componentName: string) {

@@ -31,3 +31,21 @@ function get_release_commit_hash {
 
   echo $(git log --grep "^Release $version\$" | sed 's/commit //g' | head -1)
 }
+
+log() {
+  local now;
+  now=$(date '+%Y-%m-%d %H:%M:%S')
+  echo "$now $*" 1>&2
+}
+
+health_check() {
+  for ((i = 1; i <= 50; i++)); do
+    log "Check $1 is up, try $i"
+    if curl -k "$1" ; then
+      return 0
+    else
+      sleep 3
+    fi
+  done
+  return 1
+}
