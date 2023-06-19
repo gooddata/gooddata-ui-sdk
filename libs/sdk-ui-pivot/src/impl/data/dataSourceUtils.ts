@@ -1,9 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
-import { GridApi } from "@ag-grid-community/all-modules";
+import { ColDef, GridApi } from "@ag-grid-community/all-modules";
 import ApiWrapper from "../base/agApiWrapper";
 import isEqual from "lodash/isEqual";
 import { IGridTotalsRow } from "./resultTypes";
-import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
+import { ROW_SUBTOTAL, ROW_TOTAL, COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants";
 import { IDimension } from "@gooddata/sdk-model";
 
 export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridTotalsRow[] | null): boolean {
@@ -37,6 +37,22 @@ export function isSomeTotal(rowType: string | undefined): boolean {
     const isRowTotal = rowType === ROW_TOTAL;
     const isRowSubtotal = rowType === ROW_SUBTOTAL;
     return isRowTotal || isRowSubtotal;
+}
+
+export function isSomeColumnTotal(colDef: ColDef): boolean {
+    return isColumnTotal(colDef) || isColumnSubtotal(colDef);
+}
+
+export function isColumnTotal(colDef: ColDef): boolean {
+    const { type } = colDef;
+
+    return type === COLUMN_TOTAL;
+}
+
+export function isColumnSubtotal(colDef: ColDef): boolean {
+    const { type } = colDef;
+
+    return type === COLUMN_SUBTOTAL;
 }
 
 export function getSubtotalStyles(dimension: IDimension | undefined): (string | null)[] {

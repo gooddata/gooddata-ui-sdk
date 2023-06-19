@@ -465,6 +465,7 @@ export class TableFacade {
                 padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
                 separators: resizingConfig.separators,
             },
+            this.getGroupingProvider(),
         );
     };
 

@@ -5,6 +5,7 @@ import omitBy from "lodash/omitBy";
 import chunk from "lodash/chunk";
 import { isMeasureColumn } from "../base/agUtils";
 import {
+    COLUMN_SUBTOTAL_CLASS,
     DEFAULT_HEADER_FONT,
     DEFAULT_ROW_FONT,
     DEFAULT_SUBTOTAL_FONT,
@@ -13,6 +14,7 @@ import {
     ROW_SUBTOTAL_CLASS,
     ROW_TOTAL_CLASS,
     VALUE_CLASS,
+    COLUMN_TOTAL_CLASS,
 } from "../base/constants";
 
 import { ColDef, Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
@@ -49,10 +51,11 @@ import {
 import { createColumnLocator } from "../structure/colLocatorFactory";
 import { colMeasureLocalId } from "../structure/colAccessors";
 import { IGridRow } from "../data/resultTypes";
-import { isSomeTotal } from "../data/dataSourceUtils";
+import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { ColumnResizingConfig } from "../privateTypes";
 import { DefaultColumnWidth } from "../../publicTypes";
+import { IGroupingProvider } from "../data/rowGroupingProvider";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -685,12 +688,15 @@ interface CalculateColumnWidthsConfig {
     headerFont: string;
     subtotalFont: string;
     totalFont: string;
+    subtotalColumnFont: string;
+    totalColumnFont: string;
     rowFont: string;
     padding: number;
     separators: any;
     cache: Map<string, number>;
     columnAutoresizeOption: DefaultColumnWidth;
     clientWidth?: number;
+    groupingProvider?: IGroupingProvider;
 }
 
 export function getMaxWidth(
@@ -698,11 +704,13 @@ export function getMaxWidth(
     text: string | undefined,
     hasSort: boolean,
     maxWidth: number | undefined,
+    font: string,
 ): number | undefined {
     if (!text) {
         return;
     }
 
+    context.font = font;
     const width = hasSort
         ? context.measureText(text).width + SORT_ICON_WIDTH
         : context.measureText(text).width;
@@ -715,13 +723,17 @@ export function getMaxWidthCached(
     text: string,
     maxWidth: number | undefined,
     widthsCache: Map<string, number>,
+    font: string,
 ): number | undefined {
-    const cachedWidth = widthsCache.get(text);
+    const cacheKey = font ? `${font}:${text}` : text;
+    const cachedWidth = widthsCache.get(cacheKey);
     let width;
 
     if (cachedWidth === undefined) {
+        context.font = font;
         width = context.measureText(text).width;
-        widthsCache.set(text, width);
+
+        widthsCache.set(cacheKey, width);
     } else {
         width = cachedWidth;
     }
@@ -740,6 +752,8 @@ function collectWidths(
     row: IGridRow,
     column: Column,
     maxWidths: Map<string, number>,
+    font: string,
+    rowIndex: number,
 ): void {
     const { context } = config;
 
@@ -753,9 +767,20 @@ function collectWidths(
         let possibleMaxWidth;
 
         if (config.cache) {
-            possibleMaxWidth = getMaxWidthCached(context, textForCalculation, maxWidth, config.cache);
+            // skip repeated (hidden values) from calculation, such can appear in the
+            // subtotal row and we don't want to treat/measure them stylled as subtotals
+            const isRepeated = config.groupingProvider?.isRepeatedValue(col.id, rowIndex);
+            if (!isRepeated) {
+                possibleMaxWidth = getMaxWidthCached(
+                    context,
+                    textForCalculation,
+                    maxWidth,
+                    config.cache,
+                    font,
+                );
+            }
         } else {
-            possibleMaxWidth = getMaxWidth(context, textForCalculation, false, maxWidth);
+            possibleMaxWidth = getMaxWidth(context, textForCalculation, false, maxWidth, font);
         }
 
         if (possibleMaxWidth) {
@@ -814,21 +839,26 @@ function calculateColumnWidths(
                 break;
             }
             if (config.measureHeaders) {
-                context.font = config.headerFont;
-                const possibleMaxWidth = getMaxWidth(context, colDef.headerName, !!colDef.sort, maxWidth);
+                const font = getMeasureHeadersFont(colDef, config);
+                const possibleMaxWidth = getMaxWidth(
+                    context,
+                    colDef.headerName,
+                    !!colDef.sort,
+                    maxWidth,
+                    font,
+                );
 
                 if (colId && possibleMaxWidth) {
                     maxWidths.set(colId, possibleMaxWidth);
                 }
             }
-            config.rowData.forEach((row: IGridRow) => {
-                context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
-                collectWidths(config, row, column, maxWidths);
+            config.rowData.forEach((row: IGridRow, index: number) => {
+                const font = getRowDataFont(colDef, row, config);
+                collectWidths(config, row, column, maxWidths, font, index);
             });
 
-            config.totalData.forEach((row: IGridRow) => {
-                context.font = config.totalFont;
-                collectWidths(config, row, column, maxWidths);
+            config.totalData.forEach((row: IGridRow, index: number) => {
+                collectWidths(config, row, column, maxWidths, config.totalFont, index);
             });
             if (config.columnAutoresizeOption === "viewport") {
                 const finalMaxWidth = colId ? maxWidths.get(colId) : undefined;
@@ -884,6 +914,8 @@ function getTableFonts(containerRef: HTMLDivElement): {
     rowFont: string;
     subtotalFont: string;
     totalFont: string;
+    subtotalColumnFont: string;
+    totalColumnFont: string;
 } {
     /**
      * All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
@@ -892,7 +924,31 @@ function getTableFonts(containerRef: HTMLDivElement): {
     const rowFont = getTableFont(containerRef, VALUE_CLASS, DEFAULT_ROW_FONT);
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
     const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
-    return { headerFont, rowFont, subtotalFont, totalFont };
+    const subtotalColumnFont = getTableFont(containerRef, COLUMN_SUBTOTAL_CLASS, DEFAULT_HEADER_FONT);
+    const totalColumnFont = getTableFont(containerRef, COLUMN_TOTAL_CLASS, DEFAULT_HEADER_FONT);
+    return { headerFont, rowFont, subtotalFont, totalFont, subtotalColumnFont, totalColumnFont };
+}
+
+function getMeasureHeadersFont(colDef: ColDef, config: CalculateColumnWidthsConfig): string {
+    if (isColumnTotal(colDef)) {
+        return config.totalColumnFont;
+    } else if (isColumnSubtotal(colDef)) {
+        return config.subtotalColumnFont;
+    } else {
+        return config.headerFont;
+    }
+}
+
+function getRowDataFont(colDef: ColDef, row: IGridRow, config: CalculateColumnWidthsConfig): string {
+    if (isColumnTotal(colDef)) {
+        return config.totalColumnFont;
+    } else if (isColumnSubtotal(colDef)) {
+        return config.subtotalColumnFont;
+    } else if (isSomeTotal(row.type)) {
+        return config.subtotalFont;
+    } else {
+        return config.rowFont;
+    }
 }
 
 /**
@@ -948,11 +1004,13 @@ export function getAutoResizedColumns(
         padding: number;
         separators: any;
     },
+    groupingProvider: IGroupingProvider,
 ): IResizedColumns {
     const { containerRef, columnAutoresizeOption, clientWidth } = resizingConfig;
     if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
         const columns = columnApi.getPrimaryColumns() ?? [];
-        const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
+        const { headerFont, rowFont, subtotalFont, totalFont, subtotalColumnFont, totalColumnFont } =
+            getTableFonts(containerRef);
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         const rowData = getDisplayedRowData(gridApi);
@@ -969,12 +1027,15 @@ export function getAutoResizedColumns(
                 headerFont,
                 subtotalFont,
                 totalFont,
+                subtotalColumnFont,
+                totalColumnFont,
                 rowFont,
                 padding: options.padding,
                 separators: options.separators,
                 cache: new Map(),
                 columnAutoresizeOption,
                 clientWidth,
+                groupingProvider,
             },
             resizedColumnsStore,
         );
