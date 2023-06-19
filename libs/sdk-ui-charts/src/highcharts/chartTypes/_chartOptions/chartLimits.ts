@@ -11,6 +11,7 @@ import {
     PIE_CHART_LIMIT,
     SANKEY_CHART_DATA_POINT_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
+    WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits";
 import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
 import { isOneOfTypes, isTreemap } from "../_util/common";
@@ -64,6 +65,12 @@ function getChartLimits(type: string): IChartLimits {
                 series: 1,
                 nodes: SANKEY_CHART_NODE_LIMIT,
                 dataPoints: SANKEY_CHART_DATA_POINT_LIMIT,
+            };
+        case VisualizationTypes.WATERFALL:
+            return {
+                series: 1,
+                categories: WATERFALL_CHART_DATA_POINT_LIMIT,
+                dataPoints: WATERFALL_CHART_DATA_POINT_LIMIT,
             };
         default:
             return {
