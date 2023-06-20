@@ -1,0 +1,64 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.id",
+                            "name": "Sales Rep",
+                            "uri": "/gdc/md/referenceworkspace/obj/1083"
+                        },
+                        "identifier": "label.owner.id",
+                        "localIdentifier": "a_label.owner.id",
+                        "name": "Owner",
+                        "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
+                        "uri": "/gdc/md/referenceworkspace/obj/1085"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.opportunitysnapshot.forecastcategory",
+                            "name": "Forecast Category",
+                            "uri": "/gdc/md/referenceworkspace/obj/1062"
+                        },
+                        "identifier": "label.opportunitysnapshot.forecastcategory",
+                        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                        "name": "Forecast Category",
+                        "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
+                        "uri": "/gdc/md/referenceworkspace/obj/1063"
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "abEgMnq5hyJQ",
+                                    "localIdentifier": "m_abEgMnq5hyJQ",
+                                    "name": "Probability",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1273"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

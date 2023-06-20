@@ -39408,6 +39408,114 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and multiple column grand totals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"nat\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and multiple column/row grand totals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and multiple grand totals 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -39457,7 +39565,213 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and multiple grand totals 2`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"max\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"nat\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and single column grand total 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.owner.id\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and single column/row grand total 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and single grand total 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and single grand total 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
@@ -40316,6 +40630,208 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and column grand totals and multiple subtotals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ITotal, newAttribute, newMeasure, newPositiveAttributeFilter, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef(\\"label.owner.region\\", \\"displayForm\\"), {values: [\\"West Coast\\"]})
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and column single grand total sorted by second attribute 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef(\\"label.owner.region\\", \\"displayForm\\"), {values: [\\"West Coast\\"]})
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and column/row grand totals and multiple subtotals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and grand totals and multiple subtotals 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -40370,7 +40886,362 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and grand totals and multiple subtotals 2`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple column grand totals for each 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"nat\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.owner.id\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple column subtotals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ITotal, newAttribute, newMeasure, newPositiveAttributeFilter, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef(\\"label.owner.region\\", \\"displayForm\\"), {values: [\\"West Coast\\"]})
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple column/row grand totals for each 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"max\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.owner.id\\"),
+    newTotal(\\"nat\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.owner.id\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"nat\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.owner.id\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple column/row subtotals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple grand totals for each 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple grand totals for each 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
@@ -40470,6 +41341,169 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple subtotals 2`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and one column subtotal 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and one column/row subtotal 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and one subtotal 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -40492,6 +41526,335 @@ const totals: ITotal[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and one subtotal 2`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single column grand total and single subtotal sorted by second attribute 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef(\\"label.owner.region\\", \\"displayForm\\"), {values: [\\"West Coast\\"]})
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single column grand total for each 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single column grand total for one 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ITotal, newAttribute, newMeasure, newNegativeAttributeFilter, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const filters: IFilter[] = [
+    newNegativeAttributeFilter(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), {values: [\\"Include\\"]})
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single column/row grand total for each 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"max\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.owner.id\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\"),
+    newTotal(\\"max\\", \\"m_abEgMnq5hyJQ\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single column/row grand total for one 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"abEgMnq5hyJQ\\", \\"measure\\"), m => m.localId(\\"m_abEgMnq5hyJQ\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.id\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.id\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.id\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.opportunitysnapshot.forecastcategory\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
+        ]
+    },
     menu: {
         aggregations: true,
         aggregationsSubMenu: true,
@@ -40569,7 +41932,115 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total and single subtotal sorted by second attribute 2`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for each 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"sum\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for each 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
@@ -40664,7 +42135,105 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for one 2`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total sorted by second attribute 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total sorted by second attribute 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";

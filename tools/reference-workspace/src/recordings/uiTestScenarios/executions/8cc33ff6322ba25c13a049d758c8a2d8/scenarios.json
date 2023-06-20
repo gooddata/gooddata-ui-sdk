@@ -1,0 +1,189 @@
+[
+    {
+        "n2oMap": {
+            "a_label.opportunitysnapshot.forecastcategory": "a_label.opportunitysnapshot.forecastcategory",
+            "a_label.owner.department": "a_label.owner.department",
+            "a_label.owner.region": "a_label.owner.region",
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.department"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.opportunitysnapshot.forecastcategory",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_acugFHNJgsBy"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.owner.department",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.owner.department"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.opportunitysnapshot.forecastcategory",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                                "localIdentifier": "a_label.owner.region"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "columns",
+                    "totals": [
+                        {
+                            "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        },
+                        {
+                            "attributeIdentifier": "a_label.owner.region",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        }
+                    ]
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_label.product.id.name", "a_label.owner.department"] },
+                {
+                    "itemIdentifiers": [
+                        "a_label.opportunitysnapshot.forecastcategory",
+                        "a_label.owner.region",
+                        "measureGroup"
+                    ],
+                    "totals": [
+                        {
+                            "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        },
+                        {
+                            "attributeIdentifier": "a_label.owner.region",
+                            "measureIdentifier": "m_aangOxLSeztu",
+                            "type": "sum"
+                        }
+                    ]
+                }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                        "in": { "values": ["West Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [
+                {
+                    "attributeSortItem": {
+                        "attributeIdentifier": "a_label.owner.department",
+                        "direction": "desc"
+                    }
+                }
+            ],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "two measures and single column grand total and single subtotal sorted by second attribute",
+        "vis": "PivotTable"
+    }
+]

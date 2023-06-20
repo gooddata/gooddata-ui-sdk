@@ -1,0 +1,69 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.owner.id", "type": "displayForm" },
+                "localIdentifier": "a_label.owner.id"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.opportunitysnapshot.forecastcategory",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["a_label.owner.id"] },
+        {
+            "itemIdentifiers": ["a_label.opportunitysnapshot.forecastcategory", "measureGroup"],
+            "totals": [
+                {
+                    "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                    "measureIdentifier": "m_aangOxLSeztu",
+                    "type": "sum"
+                },
+                {
+                    "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                    "measureIdentifier": "m_aangOxLSeztu",
+                    "type": "min"
+                },
+                {
+                    "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                    "measureIdentifier": "m_abEgMnq5hyJQ",
+                    "type": "max"
+                },
+                {
+                    "attributeIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                    "measureIdentifier": "m_abEgMnq5hyJQ",
+                    "type": "nat"
+                }
+            ]
+        }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" } }
+                },
+                "localIdentifier": "m_abEgMnq5hyJQ"
+            }
+        }
+    ],
+    "sortBy": [{ "attributeSortItem": { "attributeIdentifier": "a_label.owner.id", "direction": "asc" } }],
+    "workspace": "reference-workspace"
+}

@@ -34,6 +34,11 @@ import {
     IMeasureGroupDescriptor,
     IResultHeader,
     isAttributeDescriptor,
+    isResultMeasureHeader,
+    bucketsMeasures,
+    bucketsFind,
+    isAttribute,
+    isTotalDescriptor,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
@@ -300,6 +305,7 @@ class RecordedDataView implements IDataView {
     public readonly offset: number[];
     public readonly totalCount: number[];
     public readonly totals: DataValue[][][];
+    public readonly totalTotals: DataValue[][][];
 
     private readonly _fp: string;
 
@@ -313,10 +319,13 @@ class RecordedDataView implements IDataView {
         this.headerItems = denormalizer
             ? denormalizer.denormalizeHeaders(recordedDataView.headerItems)
             : recordedDataView.headerItems;
+        this.headerItems = preprocessTotalHeaderItems(this.headerItems, this.definition);
         this.totals = recordedDataView.totals;
+        this.totalTotals = recordedDataView.totalTotals;
         this.count = recordedDataView.count;
         this.offset = recordedDataView.offset;
         this.totalCount = recordedDataView.totalCount;
+        this.totalTotals = recordedDataView.totalTotals;
 
         this._fp = `${defFingerprint(this.definition)}/dataView/${this.offset.join(",")}_${this.count.join(
             ",",
@@ -341,6 +350,66 @@ function adHocExecIndex(key: string, execution: ExecutionRecording): RecordingIn
     adHocIndex.executions![key] = execution;
 
     return adHocIndex;
+}
+
+function preprocessTotalHeaderItems(
+    headerItems: IResultHeader[][][],
+    definition: IExecutionDefinition,
+): IResultHeader[][][] {
+    const columnTotals = definition?.dimensions[1]?.totals;
+    if (!columnTotals?.length) {
+        // noop when no column totals are present
+        return headerItems;
+    }
+
+    const buckets = definition.buckets;
+    const measures = bucketsMeasures(buckets);
+    const columns = bucketsFind(buckets, "columns")?.items || [];
+    const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
+    const measuresIdentifiers = measures.map((m) => m.measure.localIdentifier);
+
+    columnTotals.sort(
+        (a, b) =>
+            measuresIdentifiers.indexOf(a.measureIdentifier) -
+            measuresIdentifiers.indexOf(b.measureIdentifier),
+    );
+
+    const lookups = columnTotals
+        .filter((total) => {
+            return columnIdentifiers.includes(total.attributeIdentifier);
+        })
+        .map((total) => {
+            return measures.findIndex((m) => m.measure?.localIdentifier === total.measureIdentifier);
+        });
+
+    const uniqueLookups = lookups.filter((lookup, index) => lookups.indexOf(lookup) === index);
+
+    return headerItems.map((topHeaderItems) => {
+        return topHeaderItems.map((items) => {
+            // process only header items with measures
+            let count = 0;
+            if (items.find(isResultMeasureHeader)) {
+                return items.map((item) => {
+                    if (isTotalDescriptor(item)) {
+                        const result = {
+                            ...item,
+                            totalHeaderItem: {
+                                ...item?.totalHeaderItem,
+                                measureIndex: uniqueLookups[count % uniqueLookups.length],
+                            },
+                        };
+
+                        count++;
+                        return result;
+                    }
+
+                    return item;
+                });
+            }
+
+            return items;
+        });
+    });
 }
 
 /**
