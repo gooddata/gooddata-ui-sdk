@@ -2453,6 +2453,11 @@
     "FunnelChart.429a6b3ac217e2bff72c16ea39413586": {
         "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - legend on right."
     },
+    "FunnelChart.4a58103625be1e35b9f522cb55b0dd3c": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy sorted by measure.",
+        "scenarioName": "single measure with viewBy sorted by measure",
+        "visName": "FunnelChart"
+    },
     "FunnelChart.4cbbd4abd333238d01da356a08f22525": {
         "comment": "Auto-generated insight for test scenario FunnelChart - 610x154 - Force position RIGHT - legend on left."
     },
@@ -3797,6 +3802,11 @@
     "PyramidChart.6bff428344dca9ab143adbed602c5c83": {
         "comment": "Auto-generated insight for test scenario PyramidChart - single measure with viewBy sorted by attribute.",
         "scenarioName": "single measure with viewBy sorted by attribute",
+        "visName": "PyramidChart"
+    },
+    "PyramidChart.6d6d3c07306bf56df46a5789cabcd819": {
+        "comment": "Auto-generated insight for test scenario PyramidChart - single measure with viewBy sorted by measure.",
+        "scenarioName": "single measure with viewBy sorted by measure",
         "visName": "PyramidChart"
     },
     "PyramidChart.6de6e6a15eb3ad4acd639b3f90ba5ab0": {

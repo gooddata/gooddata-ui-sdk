@@ -29,13 +29,18 @@
             }
         ],
         "filters": [],
-        "identifier": "FunnelChart.fa2e577f1efafd0722d957e1ad78d955",
+        "identifier": "FunnelChart.4a58103625be1e35b9f522cb55b0dd3c",
         "properties": { "controls": { "enableChartSorting": true } },
         "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+            {
+                "measureSortItem": {
+                    "direction": "asc",
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                }
+            }
         ],
-        "title": "FunnelChart - single measure with viewBy sorted by attribute",
-        "uri": "FunnelChart.fa2e577f1efafd0722d957e1ad78d955",
+        "title": "FunnelChart - single measure with viewBy sorted by measure",
+        "uri": "FunnelChart.4a58103625be1e35b9f522cb55b0dd3c",
         "visualizationUrl": "local:funnel"
     }
 }

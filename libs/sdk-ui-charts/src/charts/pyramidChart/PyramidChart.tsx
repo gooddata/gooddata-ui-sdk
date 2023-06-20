@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
     useResolveValuesWithPlaceholders,
@@ -31,11 +31,14 @@ const pyramidChartDefinition: IChartDefinition<IPyramidChartBucketProps, IPyrami
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
+        const sortBy = (props.sortBy as ISortItem[]) ?? [];
+
         return backend
             .withTelemetry("PyramidChart", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
+            .withSorting(...sortBy)
             .withDimensions(roundChartDimensions)
             .withExecConfig(execConfig);
     },
