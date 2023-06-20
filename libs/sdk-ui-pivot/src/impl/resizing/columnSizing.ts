@@ -48,9 +48,9 @@ import {
     LeafDataCol,
     SliceMeasureCol,
     isSliceMeasureCol,
-    AttributeMeasureHeadersCol,
-    AttributeMeasureValuesCol,
-    isAttributeMeasureValuesCol,
+    MixedHeadersCol,
+    MixedValuesCol,
+    isMixedValuesCol,
 } from "../structure/tableDescriptorTypes";
 import { createColumnLocator } from "../structure/colLocatorFactory";
 import { colMeasureLocalId } from "../structure/colAccessors";
@@ -555,7 +555,7 @@ export function updateColumnDefinitionsWithWidths(
     const sliceCols = tableDescriptor.zippedSliceCols;
     const leaves = tableDescriptor.zippedLeaves;
 
-    const allSizableCols: Array<[SliceCol | SliceMeasureCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol | SeriesCol | ScopeCol, ColDef]> = [];
+    const allSizableCols: Array<[SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol | SeriesCol | ScopeCol, ColDef]> = [];
     allSizableCols.push(...sliceCols);
     allSizableCols.push(...leaves);
 
@@ -751,7 +751,7 @@ export function getMaxWidthCached(
 const shouldApplyFormatting = (col: AnyCol, transposed: boolean) => {
     return isSeriesCol(col) ||
     (transposed && isScopeCol(col)) ||
-    isAttributeMeasureValuesCol(col)
+    isMixedValuesCol(col)
 }
 
 function collectWidths(

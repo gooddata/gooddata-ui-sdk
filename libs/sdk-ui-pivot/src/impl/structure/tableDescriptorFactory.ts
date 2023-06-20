@@ -21,8 +21,8 @@ import {
     TableCols,
     LeafDataCol,
     SliceMeasureCol,
-    AttributeMeasureHeadersCol,
-    AttributeMeasureValuesCol,
+    MixedHeadersCol,
+    MixedValuesCol,
 } from "./tableDescriptorTypes";
 import { createColDefsFromTableDescriptor } from "./colDefFactory";
 import { IPivotTableConfig } from '../../publicTypes';
@@ -355,35 +355,35 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
     }];
 }
 
-function createAttributeMeasureHeadersColumnDescriptors(): AttributeMeasureHeadersCol[] {
+function createAttributeMeasureHeadersColumnDescriptors(): MixedHeadersCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
     return [{
-        type: "attributeMeasureHeadersCol",
+        type: "mixedHeadersCol",
         id: `amh_${idx}`,
         index: idx,
         fullIndexPathToHere: [idx],
     }];
 }
 
-function createAttributeMeasureValuesColumnDescriptors(dv: DataViewFacade): AttributeMeasureValuesCol[] {
+function createAttributeMeasureValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
     return dv
         .data()
         .slices()
         .toArray()
         .map((_slice, idx) => ({
-            type: "attributeMeasureValuesCol",
+            type: "mixedValuesCol",
             id: `amv_${idx}`,
             index: idx,
             fullIndexPathToHere: [idx],
         }));
 }
 
-function createMeasureValuesColumnDescriptors(): AttributeMeasureValuesCol[] {
+function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
     return [{
-        type: "attributeMeasureValuesCol",
+        type: "mixedValuesCol",
         id: `amv_${idx}`,
         index: idx,
         fullIndexPathToHere: [idx],
@@ -394,12 +394,12 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
     const idToDescriptor: Record<string, AnyCol> = {};
 
     if (config?.headersPosition === "left") {
-        const attributeMeasureHeadersCols = createAttributeMeasureHeadersColumnDescriptors();
-        const attributeMeasureValuesCols = createAttributeMeasureValuesColumnDescriptors(dv);
+        const mixedHeadersCols = createAttributeMeasureHeadersColumnDescriptors();
+        const mixedValuesCols = createAttributeMeasureValuesColumnDescriptors(dv);
 
         // TODO DRY
-        attributeMeasureHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
-        attributeMeasureValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
+        mixedHeadersCols.forEach((header) => (idToDescriptor[header.id] = header));
+        mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
 
         return {
             sliceCols: [],
@@ -408,8 +408,8 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
             leafDataCols: [],
             idToDescriptor,
             scopingAttributes: [],
-            attributeMeasureHeadersCols,
-            attributeMeasureValuesCols,
+            mixedHeadersCols,
+            mixedValuesCols,
         };
     } else {
         const rows: SliceCol[] = createRowDescriptors(dv);
@@ -421,8 +421,8 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
         measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
         const addMetricValueColumn = measureColumns.length > 0 && groupingAttributes.length === 0;
-        const attributeMeasureValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
-        attributeMeasureValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
+        const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
+        mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
 
         allColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
@@ -433,8 +433,8 @@ function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): Tab
             leafDataCols: leafColumns,
             idToDescriptor,
             scopingAttributes: groupingAttributes,
-            attributeMeasureHeadersCols: [],
-            attributeMeasureValuesCols,
+            mixedHeadersCols: [],
+            mixedValuesCols,
         };
     }
 }

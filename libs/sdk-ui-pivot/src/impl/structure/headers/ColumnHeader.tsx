@@ -8,8 +8,8 @@ import {
     isEmptyScopeCol,
     isSliceCol,
     isSliceMeasureCol,
-    isAttributeMeasureValuesCol,
-    isAttributeMeasureHeadersCol
+    isMixedValuesCol,
+    isMixedHeadersCol
 } from "../tableDescriptorTypes";
 import { SortDirection } from "@gooddata/sdk-model";
 
@@ -63,9 +63,9 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     public render() {
         const { displayName, enableSorting, menu, column } = this.props;
         const col = this.getColDescriptor();
-        const textAlign = isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) || isAttributeMeasureValuesCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
+        const textAlign = isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) || isMixedValuesCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
-        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && !isAttributeMeasureHeadersCol(col) && !isAttributeMeasureValuesCol(col) && enableSorting
+        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && !isMixedHeadersCol(col) && !isMixedValuesCol(col) && enableSorting
 
         return (
             <HeaderCell

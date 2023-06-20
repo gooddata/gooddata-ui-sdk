@@ -13,10 +13,10 @@ import {
     isEmptyScopeCol,
     LeafDataCol,
     SliceMeasureCol,
-    AttributeMeasureHeadersCol,
-    AttributeMeasureValuesCol,
+    MixedHeadersCol,
+    MixedValuesCol,
     isSliceMeasureCol,
-    isAttributeMeasureHeadersCol,
+    isMixedHeadersCol,
 } from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
@@ -192,7 +192,7 @@ export class TableDescriptor {
     }
 
     public attributeMeasureHeadersColsCount(): number {
-        return this.headers.attributeMeasureHeadersCols.length;
+        return this.headers.mixedHeadersCols.length;
     }
 
     /**
@@ -291,7 +291,7 @@ export class TableDescriptor {
      * Tests whether the table has column headers moved to the
      */
     public hasHeadersOnLeft(): boolean {
-        return this.headers.attributeMeasureHeadersCols.length > 0;
+        return this.headers.mixedHeadersCols.length > 0;
     }
 
     /**
@@ -302,8 +302,8 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol): number {
-        if (isSliceCol(col) || isSliceMeasureCol(col) || isAttributeMeasureHeadersCol(col)) {
+    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | MixedHeadersCol | MixedValuesCol): number {
+        if (isSliceCol(col) || isSliceMeasureCol(col) || isMixedHeadersCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
             // if this bombs, caller is not operating with the leaf columns correctly and sent over

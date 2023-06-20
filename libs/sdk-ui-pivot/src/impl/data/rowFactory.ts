@@ -21,8 +21,8 @@ import {
     isSeriesCol,
     SliceCol,
     SliceMeasureCol,
-    AttributeMeasureHeadersCol,
-    AttributeMeasureValuesCol
+    MixedHeadersCol,
+    MixedValuesCol
 } from "../structure/tableDescriptorTypes";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
@@ -50,7 +50,7 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
 function getCell(
     rowHeaderData: IResultHeader[][],
     rowIndex: number,
-    rowHeader: SliceCol | SliceMeasureCol | AttributeMeasureHeadersCol | AttributeMeasureValuesCol,
+    rowHeader: SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol,
     rowHeaderIndex: number,
     intl: IntlShape,
 ): {
@@ -146,7 +146,7 @@ export function getRow(
         }
     });
 
-    tableDescriptor.headers.attributeMeasureValuesCols.forEach((measureValueHeader, headerIndex) => {
+    tableDescriptor.headers.mixedValuesCols.forEach((measureValueHeader, headerIndex) => {
         row[measureValueHeader.id] = cellData[headerIndex];
     })
 
@@ -261,12 +261,12 @@ export function createAgGridPage(
 
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
-    if (tableDescriptor.headers.attributeMeasureHeadersCols.length > 0) {
+    if (tableDescriptor.headers.mixedHeadersCols.length > 0) {
         const rowData: IGridRow[] = [];
 
         // rows with attribute values
         headerItems[1].forEach((attributes, rowIndex) => {
-            const headerColumn = tableDescriptor.headers.attributeMeasureHeadersCols[0];
+            const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
             const attributeName = dv.data().slices().toArray()[0].descriptor.descriptors[rowIndex].attributeHeader.name;
 
             const row: IGridRow = {
@@ -274,7 +274,7 @@ export function createAgGridPage(
                 headerItemMap: {},
             };
 
-            tableDescriptor.headers.attributeMeasureValuesCols.forEach((column, columnIndex) => {
+            tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
                 const header = attributes[columnIndex];
                 if (isResultAttributeHeader(header)) {
                     row[column.id] = header.attributeHeaderItem.name; // TODO what about formattedName?
@@ -286,7 +286,7 @@ export function createAgGridPage(
 
         // rows with measure values
         headerItems[0][0].filter(isResultMeasureHeader).map((measureHeader, measureRowIndex) => {
-            const headerColumn = tableDescriptor.headers.attributeMeasureHeadersCols[0];
+            const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
 
             const measureHeaderItem = measureHeader.measureHeaderItem;
             const row: IGridRow = {
@@ -294,7 +294,7 @@ export function createAgGridPage(
                 measureDescriptor: tableDescriptor.getMeasures()[measureHeaderItem.order],
                 headerItemMap: {},
             };
-            tableDescriptor.headers.attributeMeasureValuesCols.forEach((column, columnIndex) => {
+            tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
                 row[column.id] = minimalRowData[measureRowIndex][columnIndex];
             });
 

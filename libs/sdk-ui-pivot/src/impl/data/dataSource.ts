@@ -99,7 +99,7 @@ export class AgGridDatasource implements IDatasource {
 
         // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
         // TODO the length should be detected in better way than from descriptor this way
-        const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : (this.config.tableDescriptor.headers.attributeMeasureHeadersCols.length > 0 ? rowData.length : totalCount[0]);
+        const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : (this.config.tableDescriptor.headers.mixedHeadersCols.length > 0 ? rowData.length : totalCount[0]);
 
         this.config.onPageLoaded(dv);
         successCallback(rowData, lastRow);

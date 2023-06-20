@@ -7,8 +7,8 @@ import {
     isSeriesCol,
     isSliceCol,
     SliceCol,
-    isAttributeMeasureValuesCol,
-    AttributeMeasureValuesCol,
+    isMixedValuesCol,
+    MixedValuesCol,
 } from "../structure/tableDescriptorTypes";
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
@@ -45,7 +45,7 @@ export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): I
     return mappingHeaders;
 }
 
-function createAttributeMeasureValuesColHeaders(_col: AttributeMeasureValuesCol, row: IGridRow): IMappingHeader[] {
+function createAttributeMeasureValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if(row.measureDescriptor){
@@ -105,7 +105,7 @@ export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[
         invariant(row);
 
         return createSliceColHeaders(col, row);
-    } else if (isAttributeMeasureValuesCol(col)) {
+    } else if (isMixedValuesCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order
         // to construct drilling headers for a metrics in rows, both the column & the row data must be
         // available because the metric descriptor is only available in the data itself

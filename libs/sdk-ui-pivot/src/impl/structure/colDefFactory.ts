@@ -20,8 +20,8 @@ import {
     TableCols,
     ScopeCol,
     SliceMeasureCol,
-    AttributeMeasureHeadersCol,
-    AttributeMeasureValuesCol,
+    MixedHeadersCol,
+    MixedValuesCol,
 } from "./tableDescriptorTypes";
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
@@ -103,8 +103,8 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
     }
 }
 
-function createAndAddAttributeMeasureHeadersColDefs(attributeMeasureHeadersCol: AttributeMeasureHeadersCol[], state: TransformState) {
-    for (const col of attributeMeasureHeadersCol) {
+function createAndAddAttributeMeasureHeadersColDefs(mixedHeadersCol: MixedHeadersCol[], state: TransformState) {
+    for (const col of mixedHeadersCol) {
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
 
         const colDef: ColDef = {
@@ -125,8 +125,8 @@ function createAndAddAttributeMeasureHeadersColDefs(attributeMeasureHeadersCol: 
     }
 }
 
-function createAndAddAttributeMeasureValuesColDefs(attributeMeasureValuesCol: AttributeMeasureValuesCol[], state: TransformState) {
-    for (const col of attributeMeasureValuesCol) {
+function createAndAddAttributeMeasureValuesColDefs(mixedValuesCol: MixedValuesCol[], state: TransformState) {
+    for (const col of mixedValuesCol) {
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
 
         const colDef: ColDef = {
@@ -301,13 +301,13 @@ export function createColDefsFromTableDescriptor(
     };
 
     if (config?.headersPosition === "left") {
-        createAndAddAttributeMeasureHeadersColDefs(table.attributeMeasureHeadersCols, state);
-        createAndAddAttributeMeasureValuesColDefs(table.attributeMeasureValuesCols, state);
+        createAndAddAttributeMeasureHeadersColDefs(table.mixedHeadersCols, state);
+        createAndAddAttributeMeasureValuesColDefs(table.mixedValuesCols, state);
     } else {
         createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
         createAndAddDataColDefs(table, state, intl);
         // handle metrics in rows and no column attribute case
-        createAndAddAttributeMeasureValuesColDefs(table.attributeMeasureValuesCols, state);
+        createAndAddAttributeMeasureValuesColDefs(table.mixedValuesCols, state);
     }
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
