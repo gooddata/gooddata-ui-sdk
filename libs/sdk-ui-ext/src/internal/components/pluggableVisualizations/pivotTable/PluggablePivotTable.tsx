@@ -234,9 +234,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             ? {
                   controls: {
                       columnWidths,
+                      measureGroupDimension: "rows",
                   },
               }
-            : {};
+            : {
+                controls: {
+                    measureGroupDimension: "rows",
+                }
+            };
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(

@@ -290,6 +290,12 @@ export function getColumnWidthsFromProperties(
     return visualizationProperties?.controls?.columnWidths;
 }
 
+export function getMeasureGroupDimensionFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): string {
+    return visualizationProperties?.controls?.measureGroupDimension;
+}
+
 export function getLegendConfiguration(
     controlProperties: IVisualizationProperties,
     insight: IInsightDefinition,

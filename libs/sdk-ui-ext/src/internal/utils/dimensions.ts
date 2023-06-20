@@ -14,8 +14,10 @@ import {
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
+    insightProperties,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper";
 
 function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | BucketPredicate): IAttribute[] {
     const matchingBucket = insightBucket(insight, idOrFun);
@@ -37,9 +39,16 @@ export function getPivotTableDimensions(insight: IInsightDefinition): IDimension
     const rowTotals = safeBucketTotals(insight, BucketNames.ATTRIBUTE);
     const colTotals = safeBucketTotals(insight, BucketNames.COLUMNS);
 
+    const measureGroupDimension: string = getMeasureGroupDimensionFromProperties(
+        insightProperties(insight),
+    ) ?? "columns";
+
+    const rowMeasureItemIdentifiers = measureGroupDimension === "rows" ? measuresItemIdentifiers : [];
+    const columnMeasureItemIdentifiers = measureGroupDimension === "columns" ? measuresItemIdentifiers : [];
+
     return newTwoDimensional(
-        [...rowAttributes, ...rowTotals],
-        [...columnAttributes, ...colTotals, ...measuresItemIdentifiers],
+        [...rowAttributes, ...rowMeasureItemIdentifiers, ...rowTotals],
+        [...columnAttributes, ...colTotals, ...columnMeasureItemIdentifiers],
     );
 }
 
@@ -127,6 +136,7 @@ function getSankeyDimensions(insight: IInsightDefinition): IDimension[] {
 export function generateDimensions(insight: IInsightDefinition, type: VisType): IDimension[] {
     switch (type) {
         case VisualizationTypes.TABLE:
+            console.log(insight);
             return getPivotTableDimensions(insight);
 
         case VisualizationTypes.PIE:
