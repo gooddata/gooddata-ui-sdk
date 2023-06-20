@@ -177,13 +177,14 @@ function preprocessTotalHeaderItems(
     const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
     const measuresIdentifiers = measures.map((m) => m.measure.localIdentifier);
 
-    columnTotals.sort(
+    const newColumnTotals = [...columnTotals];
+    newColumnTotals.sort(
         (a, b) =>
             measuresIdentifiers.indexOf(a.measureIdentifier) -
             measuresIdentifiers.indexOf(b.measureIdentifier),
     );
 
-    const lookups = columnTotals
+    const lookups = newColumnTotals
         .filter((total) => {
             return columnIdentifiers.includes(total.attributeIdentifier);
         })

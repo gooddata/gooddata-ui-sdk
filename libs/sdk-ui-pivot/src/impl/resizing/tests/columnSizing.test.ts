@@ -732,6 +732,7 @@ describe("ResizedColumnStore", () => {
 
     describe("getMaxWidth", () => {
         const width = 20;
+        const font = "15px Arial";
         const measureTextMock = jest.fn();
         const context: any = {
             measureText: measureTextMock.mockReturnValue({ width }),
@@ -739,22 +740,23 @@ describe("ResizedColumnStore", () => {
 
         it("should return correct new max width when sort is set to true", () => {
             const correctWidth = width + SORT_ICON_WIDTH;
-            expect(getMaxWidth(context, "text", true, 15)).toBe(correctWidth);
+            expect(getMaxWidth(context, "text", true, 15, font)).toBe(correctWidth);
         });
 
         it("should return correct new max width when sort is set to false", () => {
             const correctWidth = width;
-            expect(getMaxWidth(context, "text", false, 15)).toBe(correctWidth);
+            expect(getMaxWidth(context, "text", false, 15, font)).toBe(correctWidth);
         });
 
         it("should return undefined when maxWidth is bigger than the measured width", () => {
             const maxWidth = 100;
-            expect(getMaxWidth(context, "text", true, maxWidth)).toBeUndefined();
+            expect(getMaxWidth(context, "text", true, maxWidth, font)).toBeUndefined();
         });
     });
 
     describe("getMaxWidthCached", () => {
         const width = 20;
+        const font = "15px Arial";
         const measureTextMock = jest.fn();
         const context: any = {
             measureText: measureTextMock.mockReturnValue({ width }),
@@ -764,19 +766,19 @@ describe("ResizedColumnStore", () => {
         it("should return correct width from cache", () => {
             const correctWidth = width;
             widthsCache.set("text", correctWidth);
-            expect(getMaxWidthCached(context, "text", 15, widthsCache)).toBe(correctWidth);
+            expect(getMaxWidthCached(context, "text", 15, widthsCache, font)).toBe(correctWidth);
         });
 
         it("should return correct width when string is not in cache", () => {
             const correctWidth = width;
             widthsCache.set("text", 100);
-            expect(getMaxWidthCached(context, "new_text", 15, widthsCache)).toBe(correctWidth);
+            expect(getMaxWidthCached(context, "new_text", 15, widthsCache, font)).toBe(correctWidth);
         });
 
         it("should return undefined when maxWidth is bigger than the measured width", () => {
             const maxWidth = 100;
             widthsCache.set("text", 20);
-            expect(getMaxWidthCached(context, "text", maxWidth, widthsCache)).toBeUndefined();
+            expect(getMaxWidthCached(context, "text", maxWidth, widthsCache, font)).toBeUndefined();
         });
     });
 
