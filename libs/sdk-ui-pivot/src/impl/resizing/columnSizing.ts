@@ -924,8 +924,8 @@ function getTableFonts(containerRef: HTMLDivElement): {
     const rowFont = getTableFont(containerRef, VALUE_CLASS, DEFAULT_ROW_FONT);
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
     const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
-    const subtotalColumnFont = getTableFont(containerRef, COLUMN_SUBTOTAL_CLASS, DEFAULT_HEADER_FONT);
-    const totalColumnFont = getTableFont(containerRef, COLUMN_TOTAL_CLASS, DEFAULT_HEADER_FONT);
+    const subtotalColumnFont = getTableFont(containerRef, COLUMN_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
+    const totalColumnFont = getTableFont(containerRef, COLUMN_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
     return { headerFont, rowFont, subtotalFont, totalFont, subtotalColumnFont, totalColumnFont };
 }
 
