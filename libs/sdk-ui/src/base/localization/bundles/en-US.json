@@ -327,7 +327,12 @@
         "limit": 0
     },
     "gs.filter.error": {
-        "value": "Error loading filter",
+        "value": "Error when loading filter.",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.filter.error.tooltip": {
+        "value": "Error. Values cannot be loaded.",
         "comment": "",
         "limit": 0
     },

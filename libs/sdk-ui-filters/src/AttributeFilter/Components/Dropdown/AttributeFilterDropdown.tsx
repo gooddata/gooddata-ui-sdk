@@ -6,6 +6,7 @@ import cx from "classnames";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
+import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -63,21 +64,24 @@ export const AttributeFilterDropdown: React.VFC = () => {
             renderButton={({ toggleDropdown, isOpen }) => (
                 <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
                     {!!isInitializing && <LoadingComponent onClick={toggleDropdown} isOpen={isOpen} />}
-                    {!isInitializing && !!initError && (
+                    {!isInitializing && !!initError && !title && (
                         <ErrorComponent message={initError.message} error={initError} />
                     )}
-                    {!isInitializing && !initError && (
-                        <DropdownButtonComponent
-                            title={title}
-                            subtitle={subtitle}
-                            isFiltering={isFiltering}
-                            isLoaded={!isInitializing && !initError}
-                            isLoading={isInitializing}
-                            isOpen={isOpen}
-                            selectedItemsCount={committedSelectionElements.length}
-                            showSelectionCount={showSelectionCount}
-                            onClick={toggleDropdown}
-                        />
+                    {!isInitializing && !!title && (
+                        <AttributeFilterButtonErrorTooltip errorMessage={initError?.message}>
+                            <DropdownButtonComponent
+                                title={title}
+                                subtitle={subtitle}
+                                isFiltering={isFiltering}
+                                isLoaded={!isInitializing}
+                                isLoading={isInitializing}
+                                isOpen={isOpen}
+                                selectedItemsCount={committedSelectionElements.length}
+                                showSelectionCount={showSelectionCount}
+                                onClick={toggleDropdown}
+                                isError={!!initError}
+                            />
+                        </AttributeFilterButtonErrorTooltip>
                     )}
                 </div>
             )}

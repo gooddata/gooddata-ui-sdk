@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 /**
@@ -17,6 +18,14 @@ export interface IAttributeFilterErrorProps {
      * Error object
      */
     error?: any;
+    /**
+     * Is active state or not
+     */
+    isOpen?: boolean;
+    /**
+     * Allow draggable
+     */
+    isDraggable?: boolean;
 }
 
 /**
@@ -25,10 +34,21 @@ export interface IAttributeFilterErrorProps {
  * @beta
  */
 export const AttributeFilterError: React.VFC<IAttributeFilterErrorProps> = (
-    _props: IAttributeFilterErrorProps,
+    props: IAttributeFilterErrorProps,
 ) => {
+    const { isOpen, isDraggable } = props;
     return (
-        <div className="gd-message error s-button-error">
+        <div
+            className={cx(
+                "gd-attribute-filter-dropdown-button__next",
+                "s-attribute-filter",
+                "gd-message error s-button-error",
+                {
+                    "gd-is-active": isOpen,
+                    "gd-is-draggable": isDraggable,
+                },
+            )}
+        >
             <FormattedMessage id="gs.filter.error" />
         </div>
     );
