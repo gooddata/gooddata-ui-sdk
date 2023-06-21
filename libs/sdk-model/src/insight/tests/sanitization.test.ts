@@ -52,22 +52,25 @@ describe("insightSanitize", () => {
         expect(resultTotals).toEqual(expected);
     });
 
-    it("should handle all buckets", () => {
+    it("should handle all buckets except columns bucket", () => {
         const insight = newInsightDefinition("foo", (m) =>
             m
                 .buckets([
                     newBucket("measures", m1, m2),
                     newBucket("attributes", a1, a2, a3, grandTotal, a2m1SubtotalSum, a3SubtotalSum),
                     newBucket("attributes2", a1, a2, a3, grandTotal, a2m1SubtotalSum, a3SubtotalSum),
+                    newBucket("columns", a1, a2, a3, grandTotal, a2m1SubtotalSum, a3SubtotalSum),
                 ])
                 .sorts([a2SortItem]),
         );
 
         const sanitized = insightSanitize(insight);
-        const resultTotals1 = bucketTotals(insightBucket(sanitized, "attributes")!);
-        const resultTotals2 = bucketTotals(insightBucket(sanitized, "attributes2")!);
+        const attributesTotals = bucketTotals(insightBucket(sanitized, "attributes")!);
+        const attributes2Totals = bucketTotals(insightBucket(sanitized, "attributes2")!);
+        const columnsTotals = bucketTotals(insightBucket(sanitized, "columns")!);
 
-        expect(resultTotals1).toEqual([grandTotal]);
-        expect(resultTotals2).toEqual([grandTotal]);
+        expect(attributesTotals).toEqual([grandTotal]);
+        expect(attributes2Totals).toEqual([grandTotal]);
+        expect(columnsTotals).toEqual([grandTotal, a2m1SubtotalSum, a3SubtotalSum]);
     });
 });

@@ -7,6 +7,7 @@ import { isAttributeSort, isMeasureSort, ISortItem, sortEntityIds } from "../exe
 import { ITotal } from "../execution/base/totals";
 import { attributeLocalId } from "../execution/attribute";
 
+const COLUMNS_BUCKET_ID = "columns";
 /**
  * Makes sure the insight does not have any nonsensical data (like totals that no longer make sense, etc.), before it is saved.
  *
@@ -38,6 +39,7 @@ function removeInvalidTotalsFromInsight<T extends IInsightDefinition>(insight: T
 
 /**
  * Takes totals from a bucket and removes all subtotals if the bucket is sorted on other than the first attribute.
+ * This does not apply to columns bucket, as totals set with columns bucket are valid with sorts.
  *
  * @param bucket - a grouping of attributes, measures and totals to sanitize
  * @param sortItems - a specification of the sort
@@ -47,7 +49,8 @@ function removeInvalidTotalsFromInsight<T extends IInsightDefinition>(insight: T
  */
 export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], totals?: ITotal[]): ITotal[] {
     const originalTotals = totals ?? bucketTotals(bucket);
-    if (isSortedOnDifferentThanFirstAttributeInBucket(bucket, sortItems)) {
+    const shouldSanitizeBucket = bucket.localIdentifier !== COLUMNS_BUCKET_ID;
+    if (shouldSanitizeBucket && isSortedOnDifferentThanFirstAttributeInBucket(bucket, sortItems)) {
         return getTotalsWithoutSubtotals(originalTotals, bucket);
     } else {
         return originalTotals;
