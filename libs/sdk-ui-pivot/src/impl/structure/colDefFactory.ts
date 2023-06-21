@@ -300,7 +300,7 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
-    if (config?.headersPosition === "left") {
+    if (config?.columnHeadersPosition === "left") {
         createAndAddAttributeMeasureHeadersColDefs(table.mixedHeadersCols, state);
         createAndAddAttributeMeasureValuesColDefs(table.mixedValuesCols, state);
     } else {

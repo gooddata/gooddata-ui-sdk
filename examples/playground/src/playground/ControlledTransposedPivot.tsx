@@ -104,7 +104,7 @@ export const ControlledTransposedPivot: React.FC = () => {
 
     const currentPivotConfig = useMemo(() => ({
         ...pivotConfig,
-        headersPosition: isTransposed ? "left" as const : "top" as const,
+        columnHeadersPosition: isTransposed ? "left" as const : "top" as const,
         measureGroupDimension: isTransposed ? "rows" as const : "columns" as const,
     }), [pivotConfig, isTransposed]);
 

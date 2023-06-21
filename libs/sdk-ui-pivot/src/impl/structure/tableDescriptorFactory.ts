@@ -393,7 +393,7 @@ function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
 function createTableHeaders(dv: DataViewFacade, config?: IPivotTableConfig): TableCols {
     const idToDescriptor: Record<string, AnyCol> = {};
 
-    if (config?.headersPosition === "left") {
+    if (config?.columnHeadersPosition === "left") {
         const mixedHeadersCols = createAttributeMeasureHeadersColumnDescriptors();
         const mixedValuesCols = createAttributeMeasureValuesColumnDescriptors(dv);
 
