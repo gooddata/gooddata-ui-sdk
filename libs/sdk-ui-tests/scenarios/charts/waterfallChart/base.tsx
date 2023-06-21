@@ -12,19 +12,21 @@ export const WaterfallChartWithSingleMeasureAndViewBy = {
 
 export const WaterfallChartWithMultiMeasures = {
     measures: [
-        modifyMeasure(ReferenceMd.Amount_1.Sum, (m) => m.alias("Sum Amount").format("$#,##0")),
-        modifyMeasure(ReferenceMd.Duration.Sum, (m) => m.alias("Sum Duration").format("$#,##0")),
         modifyMeasure(ReferenceMd.Velocity.Sum, (m) => m.alias("Sum Velocity").format("$#,##0")),
-        modifyMeasure(ReferenceMd.Probability_1.Sum, (m) => m.alias("Sum Velocity").format("$#,##0")),
+        modifyMeasure(ReferenceMd.Values.Sum, (m) => m.alias("Sum Values").format("$#,##0")),
+        modifyMeasure(ReferenceMd.NegativeSumProbability, (m) => m.alias("Negative Sum Probability").format("$#,##0")),
+        modifyMeasure(ReferenceMd.NegativeSumDuration, (m) => m.alias("Negative Sum Duration").format("$#,##0")),
     ],
 };
 
 export const WaterfallChartWithMultiMeasuresAndTotalMetric = {
     measures: [
-        modifyMeasure(ReferenceMd.Amount_1.Sum, (m) => m.alias("Total Balance").format("$#,##0")),
-        modifyMeasure(ReferenceMd.Duration.Sum, (m) => m.alias("Sum Duration").format("$#,##0")),
         modifyMeasure(ReferenceMd.Velocity.Sum, (m) => m.alias("Sum Velocity").format("$#,##0")),
-        modifyMeasure(ReferenceMd.Probability_1.Sum, (m) => m.alias("Sum Velocity").format("$#,##0")),
+        modifyMeasure(ReferenceMd.Values.Sum, (m) => m.alias("Sum Values").format("$#,##0")),
+        modifyMeasure(ReferenceMd.IntermediateSumVelocityAndValue, (m) => m.alias("Total of velocity and values").format("$#,##0")),
+        modifyMeasure(ReferenceMd.NegativeSumProbability, (m) => m.alias("Negative Sum Probability").format("$#,##0")),
+        modifyMeasure(ReferenceMd.NegativeSumDuration, (m) => m.alias("Negative Sum Duration").format("$#,##0")),
+        modifyMeasure(ReferenceMd.TotalSum, (m) => m.alias("Total balance").format("$#,##0")),
     ],
 };
 
@@ -40,7 +42,7 @@ export default scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallCha
         ...WaterfallChartWithMultiMeasuresAndTotalMetric,
         config: {
             total: {
-                measures: ["m_fact.opportunitysnapshot.amount_sum"]
+                measures: ["m_ab8s8km1dcwm", "m_aaKtfN0bAQyc"]
             }
         }
     });

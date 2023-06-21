@@ -52188,10 +52188,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     colorMapping: [
@@ -52227,10 +52227,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     total: {enabled: true, name: \\"Balance\\"},
@@ -52289,10 +52289,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {totalsVisible: \\"auto\\", visible: \\"auto\\"},
@@ -52321,10 +52321,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {visible: \\"auto\\"},
@@ -52353,10 +52353,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {visible: false},
@@ -52385,10 +52385,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {totalsVisible: false, visible: false},
@@ -52417,10 +52417,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {totalsVisible: true, visible: false},
@@ -52449,10 +52449,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {visible: true},
@@ -52481,10 +52481,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -52512,10 +52512,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {visible: true},
@@ -52544,10 +52544,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     dataLabels: {totalsVisible: \\"auto\\", visible: false},
@@ -52576,10 +52576,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     total: {enabled: false},
@@ -52638,10 +52638,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"auto\\"},
@@ -52669,10 +52669,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {position: \\"auto\\"},
@@ -52700,10 +52700,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"auto\\"},
@@ -52731,10 +52731,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"bottom\\"},
@@ -52762,10 +52762,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"left\\"},
@@ -52793,10 +52793,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"right\\"},
@@ -52824,10 +52824,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     legend: {enabled: true, position: \\"top\\"},
@@ -52855,10 +52855,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -52886,15 +52886,15 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Total Balance\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"ab8s8km1dcwm\\", \\"measure\\"), m => m.alias(\\"Total of velocity and values\\").format(\\"$#,##0\\").localId(\\"m_ab8s8km1dcwm\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\")),
+    newMeasure(idRef(\\"aaKtfN0bAQyc\\", \\"measure\\"), m => m.alias(\\"Total balance\\").format(\\"$#,##0\\").localId(\\"m_aaKtfN0bAQyc\\"))
 ];
 const config: IChartConfig = {
-    total: {
-        measures: [\\"m_fact.opportunitysnapshot.amount_sum\\"]
-    },
+    total: {measures: [\\"m_ab8s8km1dcwm\\", \\"m_aaKtfN0bAQyc\\"]},
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
     dataPoints: {visible: \\"auto\\"}
@@ -52920,10 +52920,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -52951,10 +52951,10 @@ import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\"
 import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"fact.opportunitysnapshot.amount\\", \\"fact\\"), m => m.alias(\\"Sum Amount\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.amount_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.stagehistory.duration\\", \\"fact\\"), m => m.alias(\\"Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.duration_sum\\").aggregation(\\"sum\\")),
     newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
-    newMeasure(idRef(\\"fact.opportunitysnapshot.probability\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.opportunitysnapshot.probability_sum\\").aggregation(\\"sum\\"))
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
 ];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},

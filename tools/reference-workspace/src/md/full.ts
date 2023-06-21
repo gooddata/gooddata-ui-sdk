@@ -1,7 +1,5 @@
-// (C) 2022 GoodData Corporation
-
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-05-03T12:59:12.744Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-21T08:16:48.984Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -214,6 +212,28 @@ export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure(
  */
 export const Amount: IMeasure<IMeasureDefinition> = newMeasure(idRef("aangOxLSeztu", "measure"));
 /**
+ * Metric Title: Intermediate Sum Velocity and Value
+ * Metric ID: ab8s8km1dcwm
+ * Metric Type: MAQL Metric
+ */
+export const IntermediateSumVelocityAndValue: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("ab8s8km1dcwm", "measure"),
+);
+/**
+ * Metric Title: Negative Sum Duration
+ * Metric ID: abTsUy7k6OIl
+ * Metric Type: MAQL Metric
+ */
+export const NegativeSumDuration: IMeasure<IMeasureDefinition> = newMeasure(idRef("abTsUy7k6OIl", "measure"));
+/**
+ * Metric Title: Negative Sum Probability
+ * Metric ID: acEsTPZKdqzb
+ * Metric Type: MAQL Metric
+ */
+export const NegativeSumProbability: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("acEsTPZKdqzb", "measure"),
+);
+/**
  * Metric Title: Probability
  * Metric ID: abEgMnq5hyJQ
  * Metric Type: MAQL Metric
@@ -225,6 +245,12 @@ export const Probability: IMeasure<IMeasureDefinition> = newMeasure(idRef("abEgM
  * Metric Type: MAQL Metric
  */
 export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure(idRef("aadpHDMBecIy", "measure"));
+/**
+ * Metric Title: Total Sum
+ * Metric ID: aaKtfN0bAQyc
+ * Metric Type: MAQL Metric
+ */
+export const TotalSum: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaKtfN0bAQyc", "measure"));
 /**
  * Metric Title: Win Rate
  * Metric ID: abZgFKGPaGYM
@@ -2262,10 +2288,6 @@ export const Dashboards = {
      * Dashboard Title: Locked dashboard
      * Dashboard ID: aaI2dN741uaa
      */ LockedDashboard: "aaI2dN741uaa",
-    /**
-     * Dashboard Title: Plugins API
-     * Dashboard ID: abvsb0SnkmMI
-     */ PluginsAPI: "abvsb0SnkmMI",
     /**
      * Dashboard Title: JSC test
      * Dashboard ID: aaSe33fywlFz

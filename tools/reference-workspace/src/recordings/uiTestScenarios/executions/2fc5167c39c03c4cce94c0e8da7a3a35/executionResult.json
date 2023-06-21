@@ -1,0 +1,65 @@
+{
+    "dimensions": [
+        { "headers": [] },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.stagehistory.velocity_sum",
+                                    "name": "m_fact.stagehistory.velocity_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.hardwaretest.values_sum",
+                                    "name": "m_fact.hardwaretest.values_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "ab8s8km1dcwm",
+                                    "localIdentifier": "m_ab8s8km1dcwm",
+                                    "name": "Intermediate Sum Velocity and Value",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1585"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "acEsTPZKdqzb",
+                                    "localIdentifier": "m_acEsTPZKdqzb",
+                                    "name": "Negative Sum Probability",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1583"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "abTsUy7k6OIl",
+                                    "localIdentifier": "m_abTsUy7k6OIl",
+                                    "name": "Negative Sum Duration",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1584"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "aaKtfN0bAQyc",
+                                    "localIdentifier": "m_aaKtfN0bAQyc",
+                                    "name": "Total Sum",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1586"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

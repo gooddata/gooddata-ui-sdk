@@ -122,7 +122,7 @@ describe("waterfallChartOptions", () => {
         it("should add the shadow colum for the metric is total", () => {
             const waterfallSeries = renderChartOptions(
                 ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
-                { measures: ["m_fact.stagehistory.duration_sum"] },
+                { measures: ["m_fact.hardwaretest.values_sum"] },
             );
             const seriesData = waterfallSeries[0].data;
             const itemIndex = seriesData.findIndex((item) => item.visible === false);
@@ -139,13 +139,11 @@ describe("waterfallChartOptions", () => {
         it("should include the drill config", () => {
             const waterfallSeries = renderChartOptions(
                 ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures,
-                { measures: ["m_fact.stagehistory.duration_sum"] },
-                "m_fact.stagehistory.duration_sum",
+                { measures: ["m_fact.hardwaretest.values_sum"] },
+                "m_fact.hardwaretest.values_sum",
             );
 
-            const drillableItem = waterfallSeries[0].data.find(
-                (item) => item.name === "m_fact.stagehistory.duration_sum",
-            );
+            const drillableItem = waterfallSeries[0].data.find((item) => item.name === "Sum Values");
 
             expect(waterfallSeries[0].isDrillable).toBeTruthy();
             expect((drillableItem as any).drilldown).toBeTruthy();
@@ -164,7 +162,7 @@ describe("waterfallChartOptions", () => {
                 waterfallSeries,
             );
 
-            expect(colorAssignment.length).toBe(2);
+            expect(colorAssignment.length).toBe(3);
         });
 
         it("should not render the total color assignment", () => {
@@ -190,7 +188,7 @@ describe("waterfallChartOptions", () => {
             );
             const colorAssignment = getColorAssignment(
                 waterfallColorAssignments,
-                { ...chartConfig, total: { enabled: false, measures: ["m_fact.stagehistory.duration_sum"] } },
+                { ...chartConfig, total: { enabled: false, measures: ["m_fact.hardwaretest.values_sum"] } },
                 waterfallSeries,
             );
 

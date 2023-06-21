@@ -5001,10 +5001,10 @@ Object {
     "attributes": 0,
     "measures": 4,
     "seriesNames": Array [
-      " > m_fact.opportunitysnapshot.amount_sum",
-      " > m_fact.stagehistory.duration_sum",
-      " > m_fact.stagehistory.velocity_sum",
-      " > m_fact.opportunitysnapshot.probability_sum",
+      " > Sum Velocity",
+      " > Sum Values",
+      " > Negative Sum Probability",
+      " > Negative Sum Duration",
     ],
   },
   "slicesDigest": Object {
@@ -5019,14 +5019,16 @@ Object {
 exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with a total measure 1`] = `
 Object {
   "seriesDigest": Object {
-    "allSeries": 4,
+    "allSeries": 6,
     "attributes": 0,
-    "measures": 4,
+    "measures": 6,
     "seriesNames": Array [
-      " > Total Balance",
-      " > Sum Duration",
       " > Sum Velocity",
-      " > Sum Velocity",
+      " > Sum Values",
+      " > Total of velocity and values",
+      " > Negative Sum Probability",
+      " > Negative Sum Duration",
+      " > Total balance",
     ],
   },
   "slicesDigest": Object {
@@ -5045,10 +5047,10 @@ Object {
     "attributes": 0,
     "measures": 4,
     "seriesNames": Array [
-      " > Sum Amount",
-      " > Sum Duration",
       " > Sum Velocity",
-      " > Sum Velocity",
+      " > Sum Values",
+      " > Negative Sum Probability",
+      " > Negative Sum Duration",
     ],
   },
   "slicesDigest": Object {
@@ -5067,10 +5069,10 @@ Object {
     "attributes": 0,
     "measures": 4,
     "seriesNames": Array [
-      " > Sum Amount",
-      " > Sum Duration",
       " > Sum Velocity",
-      " > Sum Velocity",
+      " > Sum Values",
+      " > Negative Sum Probability",
+      " > Negative Sum Duration",
     ],
   },
   "slicesDigest": Object {

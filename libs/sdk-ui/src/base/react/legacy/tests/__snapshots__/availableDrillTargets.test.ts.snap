@@ -19823,31 +19823,9 @@ Object {
       "attributes": Array [],
       "measure": Object {
         "measureHeaderItem": Object {
-          "format": "#,##0.00",
-          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
-          "name": "m_fact.opportunitysnapshot.amount_sum",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "#,##0.00",
-          "localIdentifier": "m_fact.stagehistory.duration_sum",
-          "name": "m_fact.stagehistory.duration_sum",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "#,##0.00",
+          "format": "$#,##0",
           "localIdentifier": "m_fact.stagehistory.velocity_sum",
-          "name": "m_fact.stagehistory.velocity_sum",
+          "name": "Sum Velocity",
           "ref": undefined,
         },
       },
@@ -19856,10 +19834,40 @@ Object {
       "attributes": Array [],
       "measure": Object {
         "measureHeaderItem": Object {
-          "format": "#,##0.00",
-          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
-          "name": "m_fact.opportunitysnapshot.probability_sum",
+          "format": "$#,##0",
+          "localIdentifier": "m_fact.hardwaretest.values_sum",
+          "name": "Sum Values",
           "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "acEsTPZKdqzb",
+          "localIdentifier": "m_acEsTPZKdqzb",
+          "name": "Negative Sum Probability",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1583",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1583",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "abTsUy7k6OIl",
+          "localIdentifier": "m_abTsUy7k6OIl",
+          "name": "Negative Sum Duration",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1584",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1584",
         },
       },
     },
@@ -19876,28 +19884,6 @@ Object {
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0",
-          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
-          "name": "Total Balance",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "$#,##0",
-          "localIdentifier": "m_fact.stagehistory.duration_sum",
-          "name": "Sum Duration",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "$#,##0",
           "localIdentifier": "m_fact.stagehistory.velocity_sum",
           "name": "Sum Velocity",
           "ref": undefined,
@@ -19909,9 +19895,69 @@ Object {
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0",
-          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
-          "name": "Sum Velocity",
+          "localIdentifier": "m_fact.hardwaretest.values_sum",
+          "name": "Sum Values",
           "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "ab8s8km1dcwm",
+          "localIdentifier": "m_ab8s8km1dcwm",
+          "name": "Total of velocity and values",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1585",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1585",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "acEsTPZKdqzb",
+          "localIdentifier": "m_acEsTPZKdqzb",
+          "name": "Negative Sum Probability",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1583",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1583",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "abTsUy7k6OIl",
+          "localIdentifier": "m_abTsUy7k6OIl",
+          "name": "Negative Sum Duration",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1584",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1584",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "aaKtfN0bAQyc",
+          "localIdentifier": "m_aaKtfN0bAQyc",
+          "name": "Total balance",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1586",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1586",
         },
       },
     },
@@ -19928,28 +19974,6 @@ Object {
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0",
-          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
-          "name": "Sum Amount",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "$#,##0",
-          "localIdentifier": "m_fact.stagehistory.duration_sum",
-          "name": "Sum Duration",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "$#,##0",
           "localIdentifier": "m_fact.stagehistory.velocity_sum",
           "name": "Sum Velocity",
           "ref": undefined,
@@ -19961,9 +19985,39 @@ Object {
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0",
-          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
-          "name": "Sum Velocity",
+          "localIdentifier": "m_fact.hardwaretest.values_sum",
+          "name": "Sum Values",
           "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "acEsTPZKdqzb",
+          "localIdentifier": "m_acEsTPZKdqzb",
+          "name": "Negative Sum Probability",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1583",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1583",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "abTsUy7k6OIl",
+          "localIdentifier": "m_abTsUy7k6OIl",
+          "name": "Negative Sum Duration",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1584",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1584",
         },
       },
     },
@@ -19980,28 +20034,6 @@ Object {
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0",
-          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
-          "name": "Sum Amount",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "$#,##0",
-          "localIdentifier": "m_fact.stagehistory.duration_sum",
-          "name": "Sum Duration",
-          "ref": undefined,
-        },
-      },
-    },
-    Object {
-      "attributes": Array [],
-      "measure": Object {
-        "measureHeaderItem": Object {
-          "format": "$#,##0",
           "localIdentifier": "m_fact.stagehistory.velocity_sum",
           "name": "Sum Velocity",
           "ref": undefined,
@@ -20013,9 +20045,39 @@ Object {
       "measure": Object {
         "measureHeaderItem": Object {
           "format": "$#,##0",
-          "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
-          "name": "Sum Velocity",
+          "localIdentifier": "m_fact.hardwaretest.values_sum",
+          "name": "Sum Values",
           "ref": undefined,
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "acEsTPZKdqzb",
+          "localIdentifier": "m_acEsTPZKdqzb",
+          "name": "Negative Sum Probability",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1583",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1583",
+        },
+      },
+    },
+    Object {
+      "attributes": Array [],
+      "measure": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,##0",
+          "identifier": "abTsUy7k6OIl",
+          "localIdentifier": "m_abTsUy7k6OIl",
+          "name": "Negative Sum Duration",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1584",
+          },
+          "uri": "/gdc/md/referenceworkspace/obj/1584",
         },
       },
     },
