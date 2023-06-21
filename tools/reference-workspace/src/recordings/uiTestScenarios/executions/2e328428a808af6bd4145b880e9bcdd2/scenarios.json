@@ -84,6 +84,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },

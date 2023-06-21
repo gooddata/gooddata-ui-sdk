@@ -43,20 +43,22 @@ type VisScenarioRecording = [string, string, ExecutionRecording, number];
 
 function generateScenarioForVis(entries: VisScenarioRecording[]): string {
     const entryRows = entries
-        .map(([_, entryName, entryRecording, scenarioIndex]) => ({
-            value: `${createUniqueVariableName(
-                entryName,
-                {},
-            )}: { scenarioIndex: ${scenarioIndex}, execution: ${entryRecording.getRecordingName()}}`,
-            name: createUniqueVariableName(entryName, {}),
-        }))
+        .map(([_, entryName, entryRecording, scenarioIndex]) => {
+            const name = createUniqueVariableName(entryName, {});
+
+            return {
+                value: `${name}: { scenarioIndex: ${scenarioIndex}, execution: ${entryRecording.getRecordingName()}}`,
+                name,
+            };
+        })
         .reduce((acc: { value: string; name: string }[], record: { value: string; name: string }) => {
             const exists = acc.findIndex((v) => v.name === record.name);
             if (exists >= 0) {
                 acc[exists] = record;
+            } else {
+                acc.push(record);
             }
 
-            acc.push(record);
             return acc;
         }, [])
         .map((a) => a.value)
