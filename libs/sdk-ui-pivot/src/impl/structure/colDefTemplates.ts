@@ -105,7 +105,7 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
 
 // TODO remove sonar warning, update template implementation
 // eslint-disable-next-line sonarjs/no-identical-functions
-export function columnAttributeAndMeasuresHeadersTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+export function mixedHeadersTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
 
     return {
@@ -130,7 +130,7 @@ export function columnAttributeAndMeasuresHeadersTemplate(table: TableFacade, pr
 
 // TODO remove sonar warning, update template implementation
 // eslint-disable-next-line sonarjs/no-identical-functions
-export function columnAttributeAndMeasuresValuesTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+export function mixedValuesTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const separators = props.config?.separators;
     const cellRenderer = createCellRenderer();
 

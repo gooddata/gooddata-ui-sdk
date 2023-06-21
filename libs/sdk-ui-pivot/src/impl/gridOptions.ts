@@ -21,16 +21,16 @@ import {
     COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
-    ATTRIBUTE_AND_MEASURE_HEADERS_COLUMN,
-    ATTRIBUTE_AND_MEASURE_VALUES_COLUMN,
+    MIXED_HEADERS_COLUMN,
+    MIXED_VALUES_COLUMN,
 } from "./base/constants";
 import {
     columnAttributeTemplate,
     measureColumnTemplate,
     rowAttributeTemplate,
     rowMeasureTemplate,
-    columnAttributeAndMeasuresHeadersTemplate,
-    columnAttributeAndMeasuresValuesTemplate,
+    mixedHeadersTemplate,
+    mixedValuesTemplate,
 	totalSubTotalColumnTemplate,
 } from "./structure/colDefTemplates";
 import { TableFacade } from "./tableFacade";
@@ -130,8 +130,8 @@ export function createGridOptions(
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
             [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
-            [ATTRIBUTE_AND_MEASURE_HEADERS_COLUMN]: columnAttributeAndMeasuresHeadersTemplate(table, props),
-            [ATTRIBUTE_AND_MEASURE_VALUES_COLUMN]: columnAttributeAndMeasuresValuesTemplate(table, props),
+            [MIXED_HEADERS_COLUMN]: mixedHeadersTemplate(table, props),
+            [MIXED_VALUES_COLUMN]: mixedValuesTemplate(table, props),
 			[COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },

@@ -8,8 +8,8 @@ import {
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
-    ATTRIBUTE_AND_MEASURE_HEADERS_COLUMN,
-    ATTRIBUTE_AND_MEASURE_VALUES_COLUMN,
+    MIXED_HEADERS_COLUMN,
+    MIXED_VALUES_COLUMN,
 } from "../base/constants";
 import {
     agColId,
@@ -108,7 +108,7 @@ function createAndAddAttributeMeasureHeadersColDefs(mixedHeadersCol: MixedHeader
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
 
         const colDef: ColDef = {
-            type: ATTRIBUTE_AND_MEASURE_HEADERS_COLUMN,
+            type: MIXED_HEADERS_COLUMN,
             colId: col.id,
             field: col.id,
             headerName: " ", // do not render header, yet leave ability to resize it
@@ -130,7 +130,7 @@ function createAndAddAttributeMeasureValuesColDefs(mixedValuesCol: MixedValuesCo
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
 
         const colDef: ColDef = {
-            type: ATTRIBUTE_AND_MEASURE_VALUES_COLUMN,
+            type: MIXED_VALUES_COLUMN,
             colId: col.id,
             field: col.id,
             headerName: " ", // do not render header, yet leave ability to resize it
