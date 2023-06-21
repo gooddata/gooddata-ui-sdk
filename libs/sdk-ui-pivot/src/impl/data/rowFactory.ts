@@ -265,8 +265,9 @@ export function createAgGridPage(
         const rowData: IGridRow[] = [];
 
         // rows with attribute values
-        headerItems[1].forEach((attributes, rowIndex) => {
+        headerItems[1].forEach((attributeElements, rowIndex) => {
             const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
+            // TODO INE this works only if there are some metrics
             const attributeName = dv.data().slices().toArray()[0].descriptor.descriptors[rowIndex].attributeHeader.name;
 
             const row: IGridRow = {
@@ -275,7 +276,7 @@ export function createAgGridPage(
             };
 
             tableDescriptor.headers.mixedValuesCols.forEach((column, columnIndex) => {
-                const header = attributes[columnIndex];
+                const header = attributeElements[columnIndex];
                 if (isResultAttributeHeader(header)) {
                     row[column.id] = header.attributeHeaderItem.name; // TODO what about formattedName?
                 }
