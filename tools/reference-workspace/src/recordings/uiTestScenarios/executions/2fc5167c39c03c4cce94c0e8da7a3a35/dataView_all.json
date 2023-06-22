@@ -1,0 +1,19 @@
+{
+    "count": [1, 6],
+    "data": [["452518", "257403", "709921", "-175819.7", "-31110", "502991.3"]],
+    "headerItems": [
+        [],
+        [
+            [
+                { "measureHeaderItem": { "name": "m_fact.stagehistory.velocity_sum", "order": 0 } },
+                { "measureHeaderItem": { "name": "m_fact.hardwaretest.values_sum", "order": 1 } },
+                { "measureHeaderItem": { "name": "Intermediate Sum Velocity and Value", "order": 2 } },
+                { "measureHeaderItem": { "name": "Negative Sum Probability", "order": 3 } },
+                { "measureHeaderItem": { "name": "Negative Sum Duration", "order": 4 } },
+                { "measureHeaderItem": { "name": "Total Sum", "order": 5 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 6]
+}

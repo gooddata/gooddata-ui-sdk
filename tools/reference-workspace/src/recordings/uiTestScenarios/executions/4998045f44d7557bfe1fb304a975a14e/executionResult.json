@@ -9,20 +9,6 @@
                             {
                                 "measureHeaderItem": {
                                     "format": "#,##0.00",
-                                    "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
-                                    "name": "m_fact.opportunitysnapshot.amount_sum"
-                                }
-                            },
-                            {
-                                "measureHeaderItem": {
-                                    "format": "#,##0.00",
-                                    "localIdentifier": "m_fact.stagehistory.duration_sum",
-                                    "name": "m_fact.stagehistory.duration_sum"
-                                }
-                            },
-                            {
-                                "measureHeaderItem": {
-                                    "format": "#,##0.00",
                                     "localIdentifier": "m_fact.stagehistory.velocity_sum",
                                     "name": "m_fact.stagehistory.velocity_sum"
                                 }
@@ -30,8 +16,26 @@
                             {
                                 "measureHeaderItem": {
                                     "format": "#,##0.00",
-                                    "localIdentifier": "m_fact.opportunitysnapshot.probability_sum",
-                                    "name": "m_fact.opportunitysnapshot.probability_sum"
+                                    "localIdentifier": "m_fact.hardwaretest.values_sum",
+                                    "name": "m_fact.hardwaretest.values_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "acEsTPZKdqzb",
+                                    "localIdentifier": "m_acEsTPZKdqzb",
+                                    "name": "Negative Sum Probability",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1583"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "abTsUy7k6OIl",
+                                    "localIdentifier": "m_abTsUy7k6OIl",
+                                    "name": "Negative Sum Duration",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1584"
                                 }
                             }
                         ]
