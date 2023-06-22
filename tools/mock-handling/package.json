@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "9.0.0-alpha.14.fix.1",
+    "version": "9.0.0-alpha.14.fix.2",
     "author": "GoodData",
     "description": "GoodData SDK Mock data capture and management tool",
     "repository": {
