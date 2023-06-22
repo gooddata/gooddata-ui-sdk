@@ -299,8 +299,42 @@
                     }
                 ]
             },
+            "MatomoService": {
+                "required": ["host", "siteId"],
+                "type": "object",
+                "properties": {
+                    "host": {
+                        "type": "string",
+                        "description": "Telemetry host to send events to."
+                    },
+                    "siteId": {
+                        "type": "integer",
+                        "description": "Site ID on telemetry server.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Matomo service."
+            },
+            "OpenTelemetryService": {
+                "required": ["host"],
+                "type": "object",
+                "properties": {
+                    "host": {
+                        "type": "string",
+                        "description": "Telemetry host to send events to."
+                    }
+                },
+                "description": "OpenTelemetry service."
+            },
             "Profile": {
-                "required": ["features", "links", "organizationId", "organizationName", "userId"],
+                "required": [
+                    "features",
+                    "links",
+                    "organizationId",
+                    "organizationName",
+                    "telemetryConfig",
+                    "userId"
+                ],
                 "type": "object",
                 "properties": {
                     "organizationId": {
@@ -317,6 +351,9 @@
                     },
                     "telemetry": {
                         "$ref": "#/components/schemas/Telemetry"
+                    },
+                    "telemetryConfig": {
+                        "$ref": "#/components/schemas/TelemetryConfig"
                     },
                     "links": {
                         "$ref": "#/components/schemas/ProfileLinks"
@@ -374,22 +411,73 @@
                 "type": "object",
                 "properties": {
                     "host": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Telemetry host to send events to."
                     },
                     "siteId": {
                         "type": "integer",
+                        "description": "Site ID on telemetry server.",
                         "format": "int32"
                     },
                     "deploymentId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Identification of the deployment to be sent to telemetry server."
                     },
                     "organizationHash": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Organization hash to be sent to telemetry server."
                     },
                     "userHash": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "User hash to be sent to telemetry server."
                     }
-                }
+                },
+                "description": "Telemetry configuration to be used by client.",
+                "deprecated": true
+            },
+            "TelemetryConfig": {
+                "required": ["context", "services"],
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/TelemetryContext"
+                    },
+                    "services": {
+                        "$ref": "#/components/schemas/TelemetryServices"
+                    }
+                },
+                "description": "Telemetry-related configuration."
+            },
+            "TelemetryContext": {
+                "required": ["deploymentId", "organizationHash", "userHash"],
+                "type": "object",
+                "properties": {
+                    "deploymentId": {
+                        "type": "string",
+                        "description": "Identification of the deployment."
+                    },
+                    "organizationHash": {
+                        "type": "string",
+                        "description": "Organization hash."
+                    },
+                    "userHash": {
+                        "type": "string",
+                        "description": "User hash."
+                    }
+                },
+                "description": "The telemetry context."
+            },
+            "TelemetryServices": {
+                "type": "object",
+                "properties": {
+                    "matomo": {
+                        "$ref": "#/components/schemas/MatomoService"
+                    },
+                    "openTelemetry": {
+                        "$ref": "#/components/schemas/OpenTelemetryService"
+                    }
+                },
+                "description": "Available telemetry services."
             }
         }
     }

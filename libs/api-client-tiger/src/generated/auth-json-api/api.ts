@@ -146,6 +146,38 @@ export interface LiveFeaturesAllOf {
     configuration?: LiveFeatureFlagConfiguration;
 }
 /**
+ * Matomo service.
+ * @export
+ * @interface MatomoService
+ */
+export interface MatomoService {
+    /**
+     * Telemetry host to send events to.
+     * @type {string}
+     * @memberof MatomoService
+     */
+    host: string;
+    /**
+     * Site ID on telemetry server.
+     * @type {number}
+     * @memberof MatomoService
+     */
+    siteId: number;
+}
+/**
+ * OpenTelemetry service.
+ * @export
+ * @interface OpenTelemetryService
+ */
+export interface OpenTelemetryService {
+    /**
+     * Telemetry host to send events to.
+     * @type {string}
+     * @memberof OpenTelemetryService
+     */
+    host: string;
+}
+/**
  *
  * @export
  * @interface Profile
@@ -179,8 +211,15 @@ export interface Profile {
      *
      * @type {Telemetry}
      * @memberof Profile
+     * @deprecated
      */
     telemetry?: Telemetry;
+    /**
+     *
+     * @type {TelemetryConfig}
+     * @memberof Profile
+     */
+    telemetryConfig: TelemetryConfig;
     /**
      *
      * @type {ProfileLinks}
@@ -252,41 +291,104 @@ export interface StaticFeaturesAllOf {
     items?: { [key: string]: string };
 }
 /**
- *
+ * Telemetry configuration to be used by client.
  * @export
  * @interface Telemetry
  */
 export interface Telemetry {
     /**
-     *
+     * Telemetry host to send events to.
      * @type {string}
      * @memberof Telemetry
      */
     host: string;
     /**
-     *
+     * Site ID on telemetry server.
      * @type {number}
      * @memberof Telemetry
      */
     siteId: number;
     /**
-     *
+     * Identification of the deployment to be sent to telemetry server.
      * @type {string}
      * @memberof Telemetry
      */
     deploymentId: string;
     /**
-     *
+     * Organization hash to be sent to telemetry server.
      * @type {string}
      * @memberof Telemetry
      */
     organizationHash: string;
     /**
-     *
+     * User hash to be sent to telemetry server.
      * @type {string}
      * @memberof Telemetry
      */
     userHash: string;
+}
+/**
+ * Telemetry-related configuration.
+ * @export
+ * @interface TelemetryConfig
+ */
+export interface TelemetryConfig {
+    /**
+     *
+     * @type {TelemetryContext}
+     * @memberof TelemetryConfig
+     */
+    context: TelemetryContext;
+    /**
+     *
+     * @type {TelemetryServices}
+     * @memberof TelemetryConfig
+     */
+    services: TelemetryServices;
+}
+/**
+ * The telemetry context.
+ * @export
+ * @interface TelemetryContext
+ */
+export interface TelemetryContext {
+    /**
+     * Identification of the deployment.
+     * @type {string}
+     * @memberof TelemetryContext
+     */
+    deploymentId: string;
+    /**
+     * Organization hash.
+     * @type {string}
+     * @memberof TelemetryContext
+     */
+    organizationHash: string;
+    /**
+     * User hash.
+     * @type {string}
+     * @memberof TelemetryContext
+     */
+    userHash: string;
+}
+/**
+ * Available telemetry services.
+ * @export
+ * @interface TelemetryServices
+ */
+export interface TelemetryServices {
+    /**
+     *
+     * @type {MatomoService}
+     * @memberof TelemetryServices
+     */
+    matomo?: MatomoService;
+    /**
+     *
+     * @type {OpenTelemetryService}
+     * @memberof TelemetryServices
+     */
+    openTelemetry?: OpenTelemetryService;
 }
 
 /**
