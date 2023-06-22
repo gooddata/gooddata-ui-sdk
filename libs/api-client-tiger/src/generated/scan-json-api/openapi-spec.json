@@ -578,7 +578,7 @@
                     "type": {
                         "type": "string",
                         "description": "Table type: TABLE or VIEW.",
-                        "example": "VIEW"
+                        "example": "TABLE"
                     },
                     "namePrefix": {
                         "maxLength": 255,
