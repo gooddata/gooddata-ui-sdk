@@ -96,6 +96,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },
@@ -199,6 +200,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "reference-workspace"
         },

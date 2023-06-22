@@ -128,8 +128,14 @@ Recording definitions and the recordings are accumulated in the reference-worksp
 single source of all recordings done on top of the UI Reference Workspace.
 
 Execution definitions and insight definitions for test scenarios included in this project can be captured and stored
-in reference-workspace using the specialized 'smoke-and-capture test suite. This test suite takes all scenarios and
-renders the components using a backend instrumented to capture the definitions.
+in reference-workspace using the specialized smoke-and-capture test suite. This test suite takes all scenarios and
+renders the components using backend instrumented to capture the definitions.
+
+Build the project using `rush build` command to avoid errors.
+
+It is recommended to clear old execution and insight definitions before recording new ones.
+To do so execute `npm run clear-recordings` in the folder `tools/reference-workspace`.
+In some cases it is not needed, but it will be a safer option.
 
 This test suite is intentionally excluded from the main test runs and has to be triggered manually:
 `npm run populate-ref` or using `rush populate-ref` (this works from anywhere)
@@ -137,7 +143,7 @@ This test suite is intentionally excluded from the main test runs and has to be 
 This command will execute the 'smoke-and-capture' suite that will store execution definitions in the reference-workspace
 project.
 
-After this, you can navigate to the **reference-workspace** project and execute: `npm run refresh-recordings`
+After this, you can navigate to the `tools/reference-workspace` project and execute: `npm run refresh-recordings`
 
 NOTE: If `refresh-recordings` causes duplicated keys in **tools/XXX-workspace/src/recordings/index.ts** then you need to manually remove old execution definitions before generating new ones by `populate-ref` command. Related to https://gooddata.atlassian.net/browse/RAIL-4781
 
@@ -145,17 +151,15 @@ NOTE: If `refresh-recordings` causes duplicated keys in **tools/XXX-workspace/sr
 
 When creating new test scenarios, proceed as follows:
 
--   Open terminal in `tools/reference-workspace` project
 -   Add new scenarios in sdk-ui-tests, make sure new scenarios are included in barrel exports all the way to the root
     scenarios index
--   Execute `rush populate-ref` in terminal => writes new execution defs
+-   Open terminal in `tools/reference-workspace` project
+-   Execute `rush build` => to build the project
+-   Execute `rushx clear-recordings` => removes old execution defs
+-   Execute `rush populate-ref` => writes new execution defs
 -   Execute `rushx refresh-recordings` => captures execution recordings (if needed) and builds
     the recording index
 -   Commit
-
-Note: if at any point you realize that the recordings need to be completely re-done, then it is safe to delete
-`tools/reference-workspace/src/recordings/uiTestScenarios`; following the above steps will then lead to a
-complete refresh.
 
 ## Visual Regression with Storybook and BackstopJS
 

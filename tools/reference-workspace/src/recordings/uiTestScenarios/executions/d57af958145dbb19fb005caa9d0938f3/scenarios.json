@@ -79,6 +79,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [
                 {
                     "attributeSortItem": {

@@ -83,6 +83,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [
                 {
                     "measureSortItem": {
@@ -180,6 +181,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [
                 {
                     "measureSortItem": {
@@ -277,6 +279,7 @@
                     }
                 }
             ],
+            "postProcessing": {},
             "sortBy": [
                 {
                     "measureSortItem": {

@@ -7183,42 +7183,6 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - auto visibility 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
-const config: IChartConfig = {
-    dataLabels: {visible: \\"auto\\"},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <BarChart
-                measures={measures}
-                viewBy={viewBy}
-                sortBy={sortBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - data labels and totals with auto visibility 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
@@ -7529,114 +7493,6 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
-                sortBy={sortBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - forced hidden 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
-const config: IChartConfig = {
-    dataLabels: {visible: false},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <BarChart
-                measures={measures}
-                viewBy={viewBy}
-                sortBy={sortBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - forced visible 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
-const config: IChartConfig = {
-    dataLabels: {visible: true},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <BarChart
-                measures={measures}
-                viewBy={viewBy}
-                sortBy={sortBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - forced visible and german separators 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
-const config: IChartConfig = {
-    dataLabels: {visible: true},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <BarChart
-                measures={measures}
-                viewBy={viewBy}
                 sortBy={sortBy}
                 config={config}
             />
@@ -16972,40 +16828,6 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - auto visibility 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const config: IChartConfig = {
-    dataLabels: {visible: \\"auto\\"},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <ColumnChart
-                measures={measures}
-                viewBy={viewBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
 exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - data labels and totals with auto visibility 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
@@ -17277,108 +17099,6 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - forced hidden 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const config: IChartConfig = {
-    dataLabels: {visible: false},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <ColumnChart
-                measures={measures}
-                viewBy={viewBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - forced visible 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const config: IChartConfig = {
-    dataLabels: {visible: true},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <ColumnChart
-                measures={measures}
-                viewBy={viewBy}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - forced visible and german separators 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const viewBy: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
-];
-const config: IChartConfig = {
-    dataLabels: {visible: true},
-    separators: {decimal: \\".\\", thousand: \\",\\"},
-    legend: {position: \\"auto\\"},
-    dataPoints: {visible: \\"auto\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <ColumnChart
-                measures={measures}
-                viewBy={viewBy}
                 config={config}
             />
         </div>
@@ -39565,55 +39285,6 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and multiple grand totals 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"max\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"nat\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
 exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and single column grand total 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -39746,52 +39417,6 @@ const config: IPivotTableConfig = {
             newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100)
         ]
     },
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for PivotTable - single measure and single grand total 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
         aggregationsSubMenu: true,
@@ -40835,60 +40460,6 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and grand totals and multiple subtotals 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
-    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
-    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
-    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and grand totals and multiple subtotals 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -41241,107 +40812,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple grand totals for each 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"min\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple subtotals 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
-    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
-    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
-    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and multiple subtotals 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
@@ -41505,53 +40976,6 @@ export function MyComponent() {
 `;
 
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and one subtotal 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and one subtotal 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
@@ -41932,58 +41356,6 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total and single subtotal sorted by second attribute 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const sortBy: ISortItem[] = [
-    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                sortBy={sortBy}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for each 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -42015,54 +41387,6 @@ const config: IPivotTableConfig = {
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120)
         ]
     },
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for each 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
-    newTotal(\\"sum\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {
         aggregations: true,
         aggregationsSubMenu: true,
@@ -42135,105 +41459,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for one 2`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total sorted by second attribute 1`] = `
-"import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
-
-const measures: IAttributeOrMeasure[] = [
-    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
-    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
-];
-const rows: IAttribute[] = [
-    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
-    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
-];
-const columns: IAttribute[] = [
-    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
-    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
-];
-const sortBy: ISortItem[] = [
-    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
-];
-const totals: ITotal[] = [
-    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
-];
-const config: IPivotTableConfig = {
-    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
-    menu: {
-        aggregations: true,
-        aggregationsSubMenu: true,
-        aggregationsSubMenuForRows: true
-    },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <PivotTable
-                measures={measures}
-                rows={rows}
-                columns={columns}
-                sortBy={sortBy}
-                totals={totals}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total sorted by second attribute 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
 import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
