@@ -112,3 +112,8 @@ export const yAxisPositionDropdownItems: IDropdownItem[] = [
         icon: "gd-dropdown-icon-axis-name-position-bottom",
     },
 ];
+
+export const metricsPositionDropdownItems: IDropdownItem[] = [
+    { title: messages.metricsPositionColumns.id, value: "columns" },
+    { title: messages.metricsPositionRows.id, value: "rows" },
+];

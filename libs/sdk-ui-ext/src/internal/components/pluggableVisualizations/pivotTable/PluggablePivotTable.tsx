@@ -74,6 +74,7 @@ import {
     getPivotTableDefaultUiConfig,
     setPivotTableUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
+//@ts-ignore
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -87,6 +88,7 @@ import {
     sanitizePivotTableSorts,
 } from "./sortItemsHelpers";
 import { removeInvalidTotals } from "./totalsHelpers";
+import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -358,6 +360,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             insightProperties(insight),
         );
 
+        // TODO:
+        const pinned: boolean = insight?.insight?.properties?.controls?.pinned?.enabled;
         const tableConfig: IPivotTableConfig = {
             ...createPivotTableConfig(
                 config,
@@ -369,6 +373,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             ...customVisualizationConfig,
             maxHeight,
             maxWidth,
+            pinned,
         };
 
         const pivotTableProps: ICorePivotTableProps = {
@@ -421,10 +426,12 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
         const configPanelElement = this.getConfigPanelElement();
 
+        // TODO:
         if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
             // we need to handle cases when attribute previously bearing the default sort is no longer available
+            //@ts-ignore
             const sanitizedProperties = properties.sortItems
                 ? {
                       ...properties,
@@ -433,10 +440,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 : properties;
 
             this.renderFun(
-                <UnsupportedConfigurationPanel
+                <PivotTableConfigurationPanel
                     locale={this.locale}
-                    pushData={this.pushData}
-                    properties={sanitizedProperties}
+                    properties={this.visualizationProperties}
+                    propertiesMeta={this.propertiesMeta}
+                    insight={insight}
+                    pushData={this.handlePushData}
+                    isError={this.getIsError()}
+                    isLoading={this.isLoading}
                 />,
                 configPanelElement,
             );
@@ -498,6 +509,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             this.pushData({
                 properties: {
                     sortItems: data.properties.sortItems,
+                    controls: data.properties.controls,
                     ...addTotals,
                 },
             });
