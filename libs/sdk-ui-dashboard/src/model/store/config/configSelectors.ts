@@ -122,6 +122,12 @@ export const selectMapboxToken: DashboardSelector<string | undefined> = createSe
  * @internal
  */
 export const selectWeekStart: DashboardSelector<WeekStart> = createSelector(selectConfig, (state) => {
+    if (state.settings == null) {
+        return "Sunday" as const;
+    }
+    if (state.settings.enableNewUIWeekStartChange && state.settings.weekStartOnMondayEnabled) {
+        return "Monday" as const;
+    }
     return state.settings?.weekStart ?? ("Sunday" as const);
 });
 

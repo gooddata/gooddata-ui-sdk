@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { useCallback } from "react";
 import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
 import {
@@ -6,6 +6,7 @@ import {
     UriRef,
     IUser,
     FilterContextItem,
+    WeekStart,
     isInsightWidget,
     IScheduledMail,
     IScheduledMailDefinition,
@@ -22,6 +23,7 @@ import {
     selectLocale,
     selectFilterContextFilters,
     selectDateFormat,
+    selectWeekStart,
     selectEnableKPIDashboardScheduleRecipients,
     selectCanListUsersInWorkspace,
     selectEnableKPIDashboardSchedule,
@@ -97,6 +99,11 @@ interface UseScheduledEmailResult {
      * Date format user for the date select and default scheduled email subject.
      */
     dateFormat?: string;
+
+    /**
+     * Define start day of the week. This value will be used for datepicker. Sunday will be used as a default.
+     */
+    weekStart?: WeekStart;
 
     /**
      * Currently logged in user. Current user has to be one of the recipients of the scheduled email.
@@ -199,6 +206,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
     const filters = useDashboardSelector(selectFilterContextFilters);
     const originalFilters = useDashboardSelector(selectOriginalFilterContextFilters);
     const dateFormat = useDashboardSelector(selectDateFormat);
+    const weekStart = useDashboardSelector(selectWeekStart);
     const enableKPIDashboardScheduleRecipients = useDashboardSelector(
         selectEnableKPIDashboardScheduleRecipients,
     );
@@ -257,6 +265,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         enableKPIDashboardScheduleRecipients,
         enableWidgetExportScheduling,
         dateFormat,
+        weekStart,
         currentUser,
         locale,
         defaultAttachment,
