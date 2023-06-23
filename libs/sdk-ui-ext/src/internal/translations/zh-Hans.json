@@ -135,6 +135,7 @@
     "properties.total.title": "总计",
     "properties.total.name": "名称",
     "properties.total.tooltip": "将所有数值的总和作为一列添加在末尾。",
+    "properties.total.measures.tooltip": "禁用指标中的“总计”选项，以在末尾添加所有值的总和作为一列。",
     "properties.color.total": "总计",
     "properties.color.positive": "正数",
     "properties.color.negative": "负数",

@@ -135,6 +135,7 @@
     "properties.total.title": "合計",
     "properties.total.name": "名前",
     "properties.total.tooltip": "列の最後にすべての値の和を追加します。",
+    "properties.total.measures.tooltip": "メトリックの「合計」オプションを無効にして、すべての値の合計を列として最後に追加します。",
     "properties.color.total": "合計",
     "properties.color.positive": "正",
     "properties.color.negative": "負",
