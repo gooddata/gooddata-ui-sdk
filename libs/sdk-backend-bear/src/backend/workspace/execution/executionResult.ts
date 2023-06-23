@@ -24,6 +24,8 @@ import {
     isAttribute,
     isResultMeasureHeader,
     isTotalDescriptor,
+    ITotal,
+    TotalType,
 } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
@@ -32,6 +34,16 @@ import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConve
 import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
 import { createResultHeaderTransformer } from "../../../convertors/fromBackend/afm/result";
 import { findDateAttributeUris } from "../../../convertors/dateFormatting/dateFormatter";
+
+interface IIndexedTotals {
+    [key: string]: ITotal[];
+}
+
+interface IIndexedTotalIterator {
+    [key: string]: number;
+}
+
+const TOTAL_ORDER: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -161,6 +173,55 @@ function sanitizeSize(size: number[]): number[] {
 
 type DataViewFactory = (promisedRes: Promise<GdcExecution.IExecutionResult | null>) => Promise<IDataView>;
 
+// for each level (column attribute), prepare a set of totals corresponding for that level
+function separateTotalsByLevels(columnTotals: ITotal[], columnIdentifiers: string[]): IIndexedTotals {
+    return columnTotals.reduce((acc: IIndexedTotals, total: ITotal) => {
+        const index = columnIdentifiers.indexOf(total.attributeIdentifier);
+        if (index !== -1) {
+            return {
+                ...acc,
+                [index]: [...(acc[index] ?? []), total],
+            };
+        }
+
+        return acc;
+    }, {});
+}
+
+// for each of the indexed totals levels, initiate iterator at 0 for measure iteration
+function initiateTotalsIterators(indexedTotals: IIndexedTotals): IIndexedTotalIterator {
+    return Object.keys(indexedTotals).reduce((acc, key) => {
+        return {
+            ...acc,
+            [key]: 0,
+        };
+    }, {});
+}
+
+// sometimes the order inside dimensions is not guaranteed so we need to sort the totals on each level by measure order
+// (happens during adding measure, removing measure, changing measures order)
+function fixTotalOrderByMeasuresOrder(
+    indexedTotals: { [key: string]: ITotal[] },
+    measuresIdentifiers: string[],
+): { [key: string]: ITotal[] } {
+    return Object.keys(indexedTotals).reduce((acc, key) => {
+        const current: ITotal[] = [...indexedTotals[key]];
+        current.sort((a: ITotal, b: ITotal) => {
+            const totComparison = TOTAL_ORDER.indexOf(a.type) - TOTAL_ORDER.indexOf(b.type);
+            if (totComparison !== 0) return totComparison;
+
+            return (
+                measuresIdentifiers.indexOf(a.measureIdentifier) -
+                measuresIdentifiers.indexOf(b.measureIdentifier)
+            );
+        });
+        return {
+            ...acc,
+            [key]: current,
+        };
+    }, {});
+}
+
 function preprocessTotalHeaderItems(
     headerItems: IResultHeader[][][],
     definition: IExecutionDefinition,
@@ -174,48 +235,55 @@ function preprocessTotalHeaderItems(
     const buckets = definition.buckets;
     const measures = bucketsMeasures(buckets);
     const columns = bucketsFind(buckets, "columns")?.items || [];
-    const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
+    const columnIdentifiers = columns.filter(isAttribute).map((item) => item.attribute?.localIdentifier);
     const measuresIdentifiers = measures.map((m) => m.measure.localIdentifier);
 
-    const newColumnTotals = [...columnTotals];
-    newColumnTotals.sort(
-        (a, b) =>
-            measuresIdentifiers.indexOf(a.measureIdentifier) -
-            measuresIdentifiers.indexOf(b.measureIdentifier),
-    );
-
-    const lookups = newColumnTotals
-        .filter((total) => {
-            return columnIdentifiers.includes(total.attributeIdentifier);
-        })
-        .map((total) => {
-            return measures.findIndex((m) => m.measure?.localIdentifier === total.measureIdentifier);
-        });
-
-    const uniqueLookups = lookups.filter((lookup, index) => lookups.indexOf(lookup) === index);
+    // separate totals for each level and initiate iterators for them
+    const indexedTotalsUnordered = separateTotalsByLevels(columnTotals, columnIdentifiers);
+    const indexedTotals = fixTotalOrderByMeasuresOrder(indexedTotalsUnordered, measuresIdentifiers);
+    const indexedTotalsIterators = initiateTotalsIterators(indexedTotals);
 
     return headerItems.map((topHeaderItems) => {
+        // nesting level of the total; used to determine level of totals to use.
+        const nesting: number[] = [];
         return topHeaderItems.map((items) => {
             // process only header items with measures
-            let count = 0;
+            // now, nesting info should already be up-to-date as measures are processed last
             if (items.find(isResultMeasureHeader)) {
-                return items.map((item) => {
+                return items.map((item, itemIdx) => {
                     if (isTotalDescriptor(item)) {
+                        // for each total item, we need to determine on which level the total is defined
+                        // (use nesting info built previously when iterating other levels) and
+                        // use measure lookups for totals defined on correct levels.
+                        const itemLevel = Math.max(0, columnIdentifiers.length - nesting[itemIdx]);
+                        const currentIteratorValue = indexedTotalsIterators[itemLevel];
+                        const correspondingTotal = indexedTotals[itemLevel][currentIteratorValue];
+                        const totalMeasure = correspondingTotal?.measureIdentifier;
+                        const totalMeasureIndex = measuresIdentifiers.indexOf(totalMeasure);
+                        const measureIndex = Math.max(totalMeasureIndex, 0);
                         const result = {
                             ...item,
                             totalHeaderItem: {
                                 ...item?.totalHeaderItem,
-                                measureIndex: uniqueLookups[count % uniqueLookups.length],
+                                measureIndex,
                             },
                         };
 
-                        count++;
+                        indexedTotalsIterators[itemLevel] =
+                            (currentIteratorValue + 1) % indexedTotals[itemLevel].length;
                         return result;
                     }
 
                     return item;
                 });
             }
+
+            items.forEach((item, index) => {
+                nesting[index] = nesting[index] ?? 0;
+                if (isTotalDescriptor(item)) {
+                    nesting[index] = nesting[index] + 1;
+                }
+            });
 
             return items;
         });
