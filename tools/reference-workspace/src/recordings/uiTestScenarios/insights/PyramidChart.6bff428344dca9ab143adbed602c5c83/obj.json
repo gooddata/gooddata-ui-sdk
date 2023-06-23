@@ -30,8 +30,10 @@
         ],
         "filters": [],
         "identifier": "PyramidChart.6bff428344dca9ab143adbed602c5c83",
-        "properties": { "controls": {} },
-        "sorts": [],
+        "properties": { "controls": { "enableChartSorting": true } },
+        "sorts": [
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+        ],
         "title": "PyramidChart - single measure with viewBy sorted by attribute",
         "uri": "PyramidChart.6bff428344dca9ab143adbed602c5c83",
         "visualizationUrl": "local:pyramid"

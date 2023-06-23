@@ -30920,14 +30920,18 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for FunnelChart - single measure with viewBy sorted by attribute 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { FunnelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
 const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.product.id.name\\", \\"desc\\")
+];
 const config: IChartConfig = {
+    enableChartSorting: true,
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
     dataPoints: {visible: \\"auto\\"}
@@ -30940,6 +30944,40 @@ export function MyComponent() {
             <FunnelChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for FunnelChart - single measure with viewBy sorted by measure 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
+import { FunnelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"asc\\")];
+const config: IChartConfig = {
+    enableChartSorting: true,
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <FunnelChart
+                measures={measures}
+                viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -44339,14 +44377,18 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for PyramidChart - single measure with viewBy sorted by attribute 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
 const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.product.id.name\\", \\"desc\\")
+];
 const config: IChartConfig = {
+    enableChartSorting: true,
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
     dataPoints: {visible: \\"auto\\"}
@@ -44359,6 +44401,40 @@ export function MyComponent() {
             <PyramidChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PyramidChart - single measure with viewBy sorted by measure 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, PyramidChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"asc\\")];
+const config: IChartConfig = {
+    enableChartSorting: true,
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PyramidChart
+                measures={measures}
+                viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>

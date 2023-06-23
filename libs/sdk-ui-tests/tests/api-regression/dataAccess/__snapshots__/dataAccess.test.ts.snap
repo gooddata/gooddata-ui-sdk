@@ -2950,12 +2950,38 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
       "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by measure 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
     ],
     "totals": 0,
   },
@@ -4105,12 +4131,38 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
+      "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
       "Explorer",
+      "Educationly",
+      "CompuSci",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by measure 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
+      "Educationly",
+      "CompuSci",
+      "Explorer",
     ],
     "totals": 0,
   },
