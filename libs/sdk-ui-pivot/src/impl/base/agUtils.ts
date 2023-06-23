@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import { ColDef, Column, ColumnResizedEvent } from "@ag-grid-community/all-modules";
-import { MEASURE_COLUMN } from "./constants";
+import { MEASURE_COLUMN, COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./constants";
 import { agColId } from "../structure/tableDescriptorTypes";
 import { ColumnEventSourceType } from "../../columnWidths";
 
@@ -21,6 +21,12 @@ export function isMeasureColumn(item: Column | ColDef): boolean {
         return item.getColDef().type === MEASURE_COLUMN;
     }
     return item.type === MEASURE_COLUMN;
+}
+
+export function isMeasureOrAnyColumnTotal(item: Column): boolean {
+    const type = item.getColDef().type;
+
+    return type === MEASURE_COLUMN || type === COLUMN_TOTAL || type === COLUMN_SUBTOTAL;
 }
 
 export function agColIds(columns: Column[]): string[] {

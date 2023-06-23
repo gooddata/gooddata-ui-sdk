@@ -29,7 +29,7 @@ import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper";
-import { agColIds, isMeasureColumn } from "./base/agUtils";
+import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils";
 import { agColId } from "./structure/tableDescriptorTypes";
 import { sleep } from "./utils";
 import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants";
@@ -559,9 +559,9 @@ export class TableFacade {
 
         let columnsToReset = columns;
 
-        if (this.isAllMeasureResizeOperation(resizingConfig, columns)) {
+        if (this.isAllMeasureOrAnyColumnTotalResizeOperation(resizingConfig, columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
-            columnsToReset = this.getAllMeasureColumns();
+            columnsToReset = this.getAllMeasureOrAnyTotalColumns();
         }
 
         if (this.isWeakMeasureResizeOperation(resizingConfig, columns)) {
@@ -579,6 +579,13 @@ export class TableFacade {
         this.afterOnResizeColumns(resizingConfig);
     };
 
+    private getAllMeasureOrAnyTotalColumns = () => {
+        invariant(this.columnApi);
+        const columns = this.columnApi.getAllColumns();
+        invariant(columns);
+        return columns.filter((col) => isMeasureOrAnyColumnTotal(col));
+    };
+
     private getAllMeasureColumns = () => {
         invariant(this.columnApi);
         const columns = this.columnApi.getAllColumns();
@@ -586,8 +593,15 @@ export class TableFacade {
         return columns.filter((col) => isMeasureColumn(col));
     };
 
-    private isAllMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
-        return resizingConfig.isMetaOrCtrlKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
+    private isAllMeasureOrAnyColumnTotalResizeOperation(
+        resizingConfig: ColumnResizingConfig,
+        columns: Column[],
+    ): boolean {
+        return (
+            resizingConfig.isMetaOrCtrlKeyPressed &&
+            columns.length === 1 &&
+            isMeasureOrAnyColumnTotal(columns[0])
+        );
     }
 
     private isWeakMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
@@ -680,7 +694,7 @@ export class TableFacade {
     }
 
     public onColumnsManualResized = (resizingConfig: ColumnResizingConfig, columns: Column[]): void => {
-        if (this.isAllMeasureResizeOperation(resizingConfig, columns)) {
+        if (this.isAllMeasureOrAnyColumnTotalResizeOperation(resizingConfig, columns)) {
             resizeAllMeasuresColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
         } else if (this.isWeakMeasureResizeOperation(resizingConfig, columns)) {
             resizeWeakMeasureColumns(
