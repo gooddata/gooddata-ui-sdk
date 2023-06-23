@@ -3,7 +3,7 @@ import invariant, { InvariantError } from "ts-invariant";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
 import chunk from "lodash/chunk";
-import { isMeasureColumn } from "../base/agUtils";
+import { isMeasureColumn, isMeasureOrAnyColumnTotal } from "../base/agUtils";
 import {
     COLUMN_SUBTOTAL_CLASS,
     DEFAULT_HEADER_FONT,
@@ -639,7 +639,7 @@ export function resizeAllMeasuresColumns(
     const columnWidth = column.getActualWidth();
     const allColumns = columnApi.getAllColumns();
 
-    const resizeData = allColumns?.filter(isMeasureColumn).map((col): ColumnsResizeSpec => {
+    const resizeData = allColumns?.filter(isMeasureOrAnyColumnTotal).map((col): ColumnsResizeSpec => {
         return {
             key: col,
             newWidth: columnWidth,
