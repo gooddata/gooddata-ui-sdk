@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
 
@@ -36,6 +36,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         canListUsersInWorkspace,
         canExportTabular,
         dateFormat,
+        weekStart,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
         enableWidgetExportScheduling,
@@ -81,6 +82,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
             onError={onError}
             defaultAttachment={defaultAttachment}
             users={users}
+            weekStart={weekStart}
         />
     );
 };

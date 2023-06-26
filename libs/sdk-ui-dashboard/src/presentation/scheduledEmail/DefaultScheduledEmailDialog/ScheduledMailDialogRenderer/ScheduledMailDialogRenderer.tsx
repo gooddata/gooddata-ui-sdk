@@ -21,6 +21,7 @@ import {
     ScheduledMailAttachment,
     IWorkspaceUser,
     UriRef,
+    WeekStart,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError, withContexts } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
@@ -112,6 +113,11 @@ export interface IScheduledMailDialogRendererOwnProps {
      * Locale to use for localization of texts appearing in the scheduled email dialog.
      */
     locale?: string;
+
+    /**
+     * Define start day of the week. This value will be used for datepicker. Sunday will be used as a default.
+     */
+    weekStart?: WeekStart;
 
     /**
      * Has user canListUsersInProject permission?
@@ -447,7 +453,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private renderDateTime = (): React.ReactNode => {
-        const { dateFormat, intl, locale } = this.props;
+        const { dateFormat, intl, locale, weekStart } = this.props;
 
         const {
             repeat: { time },
@@ -470,6 +476,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 timezone={this.state.userTimezone.title}
                 onDateChange={this.onDateChange}
                 onTimeChange={this.onTimeChange}
+                weekStart={weekStart}
             />
         );
     };
