@@ -88,7 +88,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDependencyWheelChart: false,
     enableWaterfallChart: false,
     enableCompositeGrain: false,
-    enableTableTotalRows: false,
+    enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
 };
 
