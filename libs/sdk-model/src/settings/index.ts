@@ -274,6 +274,11 @@ export interface ISettings {
      */
     weekStart?: WeekStart;
 
+    /**
+     * Enable table transposition (metrics in rows)
+     */
+    enablePivotTableTransposition?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
