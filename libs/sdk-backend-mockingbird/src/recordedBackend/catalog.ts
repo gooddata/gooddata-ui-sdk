@@ -90,9 +90,24 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
         }
 
         const typeFilteredItems = catalog.items.filter((item) => this.options.types.includes(item.type));
+        const catalogItems = typeFilteredItems.map(this.convertToCatalogItem.bind(this));
 
-        return new RecordedCatalog(this.workspace, this.config, catalog.groups, typeFilteredItems);
+        return new RecordedCatalog(this.workspace, this.config, catalog.groups, catalogItems);
     };
+
+    private convertToCatalogItem(catalogItem: CatalogItem) {
+        if (isCatalogAttribute(catalogItem)) {
+            return {
+                ...catalogItem,
+                attribute: {
+                    ...catalogItem.attribute,
+                    displayForms: catalogItem.displayForms,
+                },
+            };
+        }
+
+        return catalogItem;
+    }
 }
 
 class RecordedCatalogBase {
