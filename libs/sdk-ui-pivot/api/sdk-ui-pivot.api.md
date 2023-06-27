@@ -168,6 +168,8 @@ export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
     groupRows?: boolean;
     maxHeight?: number;
+    // (undocumented)
+    measureGroupDimension?: "columns" | "rows";
     menu?: IMenu;
     separators?: ISeparators;
 }

@@ -64,6 +64,7 @@ export function cellClassFactory(
         const hiddenCell = !isPinnedRow && table.getGroupingProvider().isRepeatedValue(col.id, rowIndex);
         const rowSeparator = !hiddenCell && table.getGroupingProvider().isGroupBoundary(rowIndex);
         const subtotalStyle = row?.subtotalStyle;
+        const belongsToRowMetric = !!row?.measureDescriptor;
 
         // All new totals combinations
         const isColAndRowSubtotal = subtotalStyle && isColumnSubtotal;
@@ -94,6 +95,7 @@ export function cellClassFactory(
             isRowSubtotalColumnTotal
                 ? "gd-table-row-subtotal-column-total s-table-row-subtotal-column-total"
                 : null,
+            belongsToRowMetric ? "gd-table-row-metric-cell" : null,
         );
     };
 }

@@ -20,11 +20,13 @@ import {
     COLUMN_TOTAL,
     COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
+    ROW_MEASURE_COLUMN,
 } from "./base/constants.js";
 import {
     columnAttributeTemplate,
     measureColumnTemplate,
     rowAttributeTemplate,
+	rowMeasureTemplate,
     totalSubTotalColumnTemplate,
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";
@@ -123,7 +125,8 @@ export function createGridOptions(
             [ROW_ATTRIBUTE_COLUMN]: rowAttributeTemplate(table, props),
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
-            [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
+            [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
+			[COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },
 

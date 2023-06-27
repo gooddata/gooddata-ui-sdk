@@ -12,7 +12,9 @@ import {
     agColId,
     isEmptyScopeCol,
     LeafDataCol,
-} from "./tableDescriptorTypes.js";
+    SliceMeasureCol,
+    AnySliceCol,
+} from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
 import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../columnWidths.js";
@@ -52,7 +54,7 @@ export class TableDescriptor {
      * This field contains slice column descriptors zipped with their respective ColDef that should
      * be used for ag-grid.
      */
-    public readonly zippedSliceCols: Array<[SliceCol, ColDef]> = [];
+    public readonly zippedSliceCols: Array<[SliceCol | SliceMeasureCol, ColDef]> = [];
 
     /**
      * This field contains descriptors of leaf columns zipped with their respective ColDef that should
@@ -91,9 +93,20 @@ export class TableDescriptor {
         });
     }
 
+    private _zipOneCol(col: AnySliceCol): [AnySliceCol, ColDef] {
+        const colDef = this.colDefs.sliceColDefs.find((def)=> def.colId === col.id);
+        if (colDef === undefined) {
+            throw Error(`No definition for column ${col.id}`);
+        }
+        return [col, colDef];
+    }
+
     private _initializeZippedSliceCols() {
-        this.headers.sliceCols.forEach((col, idx) => {
-            this.zippedSliceCols.push([col, this.colDefs.sliceColDefs[idx]]);
+        this.headers.sliceCols.forEach((col) => {
+            this.zippedSliceCols.push(this._zipOneCol(col));
+        });
+        this.headers.sliceMeasureCols.forEach((col) => {
+            this.zippedSliceCols.push(this._zipOneCol(col));
         });
     }
 
@@ -256,7 +269,7 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | LeafDataCol): number {
+    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol): number {
         if (isSliceCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
