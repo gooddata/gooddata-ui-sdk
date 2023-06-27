@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
 import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
@@ -22,6 +23,7 @@ import {
     NoDataSdkError,
     OnError,
 } from "@gooddata/sdk-ui";
+import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
 import {
@@ -49,7 +51,6 @@ import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
-import { invariant } from "ts-invariant";
 import {
     dashboardFilterToFilterContextItem,
     getAlertThresholdInfo,
@@ -59,6 +60,7 @@ import {
     stripDateDatasets,
     useKpiExecutionDataView,
 } from "../common";
+import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../constants";
 
 interface IKpiExecutorProps {
     dashboardRef?: ObjRef;
@@ -85,6 +87,8 @@ interface IKpiExecutorProps {
     isReadOnly?: boolean;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
+
+const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
 const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     const {
@@ -243,159 +247,161 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     const onDrillHandler = onDrill && handleOnDrill;
 
     return (
-        <DashboardItemWithKpiAlert
-            kpi={kpiWidget}
-            alert={alert}
-            filters={effectiveFilters}
-            userWorkspaceSettings={settings as IUserWorkspaceSettings}
-            kpiResult={kpiResult}
-            renderHeadline={(clientHeight) => (
-                <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
-            )}
-            kpiAlertResult={kpiAlertResult}
-            canSetAlert={canSetAlert}
-            isReadOnlyMode={isReadOnly}
-            alertExecutionError={
-                alertExecutionError ??
-                /*
-                 * if alert is broken, behave as if its execution yielded no data (which is true, we do not execute it)
-                 * context: the problem is alerts on KPIs without dateDataset, their date filters are invalid
-                 * and we have no idea what date dataset to put there hence it is sometimes impossible
-                 * to execute them (unlike KPI Dashboards, we do not have the guarantee that there is a date
-                 * filter in the filters)
-                 */
-                (isAlertBroken ? new NoDataSdkError() : undefined)
-            }
-            isLoading={isLoading}
-            isAlertLoading={false /* alerts are always loaded at this point */}
-            isAlertExecutionLoading={isAlertExecutionLoading}
-            isAlertBroken={isAlertBroken}
-            isAlertDialogOpen={isAlertDialogOpen}
-            isAlertHighlighted={isAlertHighlighted}
-            onAlertDialogOpenClick={() => {
-                kpiAlertDialogOpened(!!alert);
-                openAlertDialog();
-            }}
-            renderAlertDialog={() => (
-                <KpiAlertDialogWrapper
-                    alert={alert}
-                    dateFormat={dateFormat!}
-                    userEmail={currentUser.email!}
-                    onAlertDialogCloseClick={() => {
-                        kpiAlertDialogClosed();
-                        closeAlertDialog();
-                    }}
-                    onAlertDialogDeleteClick={() => {
-                        kpiAlertOperations.onRemoveAlert(alert!);
-                    }}
-                    onAlertDialogSaveClick={(threshold, whenTriggered) => {
-                        if (alert) {
-                            return kpiAlertOperations.onUpdateAlert({
-                                ...alert,
+        <OverlayControllerProvider overlayController={overlayController}>
+            <DashboardItemWithKpiAlert
+                kpi={kpiWidget}
+                alert={alert}
+                filters={effectiveFilters}
+                userWorkspaceSettings={settings as IUserWorkspaceSettings}
+                kpiResult={kpiResult}
+                renderHeadline={(clientHeight) => (
+                    <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
+                )}
+                kpiAlertResult={kpiAlertResult}
+                canSetAlert={canSetAlert}
+                isReadOnlyMode={isReadOnly}
+                alertExecutionError={
+                    alertExecutionError ??
+                    /*
+                     * if alert is broken, behave as if its execution yielded no data (which is true, we do not execute it)
+                     * context: the problem is alerts on KPIs without dateDataset, their date filters are invalid
+                     * and we have no idea what date dataset to put there hence it is sometimes impossible
+                     * to execute them (unlike KPI Dashboards, we do not have the guarantee that there is a date
+                     * filter in the filters)
+                     */
+                    (isAlertBroken ? new NoDataSdkError() : undefined)
+                }
+                isLoading={isLoading}
+                isAlertLoading={false /* alerts are always loaded at this point */}
+                isAlertExecutionLoading={isAlertExecutionLoading}
+                isAlertBroken={isAlertBroken}
+                isAlertDialogOpen={isAlertDialogOpen}
+                isAlertHighlighted={isAlertHighlighted}
+                onAlertDialogOpenClick={() => {
+                    kpiAlertDialogOpened(!!alert);
+                    openAlertDialog();
+                }}
+                renderAlertDialog={() => (
+                    <KpiAlertDialogWrapper
+                        alert={alert}
+                        dateFormat={dateFormat!}
+                        userEmail={currentUser.email!}
+                        onAlertDialogCloseClick={() => {
+                            kpiAlertDialogClosed();
+                            closeAlertDialog();
+                        }}
+                        onAlertDialogDeleteClick={() => {
+                            kpiAlertOperations.onRemoveAlert(alert!);
+                        }}
+                        onAlertDialogSaveClick={(threshold, whenTriggered) => {
+                            if (alert) {
+                                return kpiAlertOperations.onUpdateAlert({
+                                    ...alert,
+                                    threshold,
+                                    whenTriggered,
+                                    isTriggered: evaluateAlertTriggered(
+                                        kpiAlertResult!.measureResult,
+                                        threshold,
+                                        whenTriggered,
+                                    ),
+                                });
+                            }
+
+                            // alerts are not possible when the dashboard is not yet persisted. if the code bombs here
+                            // then it means we use view-mode KPI widget in edit-mode dashboard - there is a configuration
+                            // customization error somewhere.
+                            invariant(dashboardRef, "attempting to create alert of an unsaved dashboard");
+
+                            return kpiAlertOperations.onCreateAlert({
+                                dashboard: dashboardRef,
+                                widget: kpiWidgetRef,
                                 threshold,
                                 whenTriggered,
                                 isTriggered: evaluateAlertTriggered(
-                                    kpiAlertResult!.measureResult,
+                                    kpiResult?.measureResult ?? 0,
                                     threshold,
                                     whenTriggered,
                                 ),
-                            });
-                        }
-
-                        // alerts are not possible when the dashboard is not yet persisted. if the code bombs here
-                        // then it means we use view-mode KPI widget in edit-mode dashboard - there is a configuration
-                        // customization error somewhere.
-                        invariant(dashboardRef, "attempting to create alert of an unsaved dashboard");
-
-                        return kpiAlertOperations.onCreateAlert({
-                            dashboard: dashboardRef,
-                            widget: kpiWidgetRef,
-                            threshold,
-                            whenTriggered,
-                            isTriggered: evaluateAlertTriggered(
-                                kpiResult?.measureResult ?? 0,
-                                threshold,
-                                whenTriggered,
-                            ),
-                            filterContext: {
-                                title: "filterContext",
+                                filterContext: {
+                                    title: "filterContext",
+                                    description: "",
+                                    filters:
+                                        effectiveFilters
+                                            ?.map(dashboardFilterToFilterContextItem)
+                                            .map(stripDateDatasets) ?? [],
+                                },
                                 description: "",
-                                filters:
-                                    effectiveFilters
-                                        ?.map(dashboardFilterToFilterContextItem)
-                                        .map(stripDateDatasets) ?? [],
-                            },
-                            description: "",
-                            title: "",
-                        });
-                    }}
-                    onAlertDialogUpdateClick={() => {
-                        return kpiAlertOperations.onUpdateAlert({
-                            ...alert!,
-                            // evaluate triggered as if the alert already used the correct filters (i.e. use the KPI execution itself)
-                            isTriggered: evaluateAlertTriggered(
-                                kpiResult?.measureResult ?? 0,
-                                alert!.threshold,
-                                alert!.whenTriggered,
-                            ),
-                            // change the filters to the filters currently used by the KPI
-                            filterContext: {
-                                ...alert!.filterContext!,
-                                filters:
-                                    effectiveFilters
-                                        ?.map(dashboardFilterToFilterContextItem)
-                                        .map(stripDateDatasets) ?? [],
-                            },
-                        });
-                    }}
-                    onApplyAlertFiltersClick={
-                        onFiltersChange
-                            ? () =>
-                                  onFiltersChange(
-                                      filterContextItemsToDashboardFiltersByWidget(
-                                          alert?.filterContext?.filters ?? [],
-                                          kpiWidget,
-                                      ),
-                                      true,
-                                  )
-                            : undefined
-                    }
-                    isAlertLoading={isAlertExecutionLoading}
-                    alertDeletingStatus={kpiAlertOperations.removingStatus}
-                    alertSavingStatus={alertSavingStatus}
-                    alertUpdatingStatus={alertSavingStatus}
-                    filters={effectiveFilters}
-                    isThresholdRepresentingPercent={isThresholdRepresentingPercent}
-                    thresholdPlaceholder={thresholdPlaceholder}
-                    brokenAlertFiltersBasicInfo={brokenAlertsBasicInfo!}
-                    backend={backend}
-                    workspace={workspace}
-                />
-            )}
-            alertDeletingStatus={kpiAlertOperations.removingStatus}
-            alertSavingStatus={alertSavingStatus}
-            isSelectable={isSelectable}
-            isSelected={isSelected}
-            onSelected={onSelected}
-        >
-            {() => {
-                return (
-                    <KpiRenderer
-                        kpi={kpiWidget}
-                        kpiResult={kpiResult}
-                        filters={effectiveFilters ?? []}
-                        disableDrillUnderline={disableDrillUnderline}
-                        isDrillable={isDrillable}
-                        onDrill={onDrillHandler}
-                        separators={separators}
-                        enableCompactSize={enableCompactSize}
-                        error={error}
-                        errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
-                        isLoading={isLoading}
+                                title: "",
+                            });
+                        }}
+                        onAlertDialogUpdateClick={() => {
+                            return kpiAlertOperations.onUpdateAlert({
+                                ...alert!,
+                                // evaluate triggered as if the alert already used the correct filters (i.e. use the KPI execution itself)
+                                isTriggered: evaluateAlertTriggered(
+                                    kpiResult?.measureResult ?? 0,
+                                    alert!.threshold,
+                                    alert!.whenTriggered,
+                                ),
+                                // change the filters to the filters currently used by the KPI
+                                filterContext: {
+                                    ...alert!.filterContext!,
+                                    filters:
+                                        effectiveFilters
+                                            ?.map(dashboardFilterToFilterContextItem)
+                                            .map(stripDateDatasets) ?? [],
+                                },
+                            });
+                        }}
+                        onApplyAlertFiltersClick={
+                            onFiltersChange
+                                ? () =>
+                                      onFiltersChange(
+                                          filterContextItemsToDashboardFiltersByWidget(
+                                              alert?.filterContext?.filters ?? [],
+                                              kpiWidget,
+                                          ),
+                                          true,
+                                      )
+                                : undefined
+                        }
+                        isAlertLoading={isAlertExecutionLoading}
+                        alertDeletingStatus={kpiAlertOperations.removingStatus}
+                        alertSavingStatus={alertSavingStatus}
+                        alertUpdatingStatus={alertSavingStatus}
+                        filters={effectiveFilters}
+                        isThresholdRepresentingPercent={isThresholdRepresentingPercent}
+                        thresholdPlaceholder={thresholdPlaceholder}
+                        brokenAlertFiltersBasicInfo={brokenAlertsBasicInfo!}
+                        backend={backend}
+                        workspace={workspace}
                     />
-                );
-            }}
-        </DashboardItemWithKpiAlert>
+                )}
+                alertDeletingStatus={kpiAlertOperations.removingStatus}
+                alertSavingStatus={alertSavingStatus}
+                isSelectable={isSelectable}
+                isSelected={isSelected}
+                onSelected={onSelected}
+            >
+                {() => {
+                    return (
+                        <KpiRenderer
+                            kpi={kpiWidget}
+                            kpiResult={kpiResult}
+                            filters={effectiveFilters ?? []}
+                            disableDrillUnderline={disableDrillUnderline}
+                            isDrillable={isDrillable}
+                            onDrill={onDrillHandler}
+                            separators={separators}
+                            enableCompactSize={enableCompactSize}
+                            error={error}
+                            errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
+                            isLoading={isLoading}
+                        />
+                    );
+                }}
+            </DashboardItemWithKpiAlert>
+        </OverlayControllerProvider>
     );
 };
 
