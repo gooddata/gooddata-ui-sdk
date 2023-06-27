@@ -171,6 +171,20 @@ export class TableDescriptor {
     }
 
     /**
+     *
+     */
+    public sliceMeasureColCount(): number {
+        return this.headers.sliceMeasureCols.length;
+    }
+
+    /**
+     * whether metrics are moved to rows or not
+     */
+    public isTransposed(): boolean {
+        return this.sliceMeasureColCount() !== 0;
+    }
+
+    /**
      * Gets count of scoping attributes (columns).
      */
     public scopingColCount(): number {
@@ -278,7 +292,7 @@ export class TableDescriptor {
             // a col that is not a leaf
             invariant(isEmptyScopeCol(col));
 
-            return this.sliceColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
+            return this.sliceColCount() + this.sliceMeasureColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
         }
 
         return this.sliceColCount() + col.index;

@@ -8,10 +8,11 @@ import cx from "classnames";
 import { invariant } from "ts-invariant";
 import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
-import { COLUMN_TOTAL, COLUMN_SUBTOTAL, ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN } from "../base/constants.js";
-import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
-import last from "lodash/last.js";
-import { getCellClassNames } from "./cellUtils.js";
+import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN, ROW_MEASURE_COLUMN } from "../base/constants";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
+import last from "lodash/last";
+import { getCellClassNames } from "./cellUtils";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./../base/constants";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 
@@ -49,12 +50,13 @@ export function cellClassFactory(
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
         const isColumnTotal = colDef.type === COLUMN_TOTAL;
         const isColumnSubtotal = colDef.type === COLUMN_SUBTOTAL;
+        const isRowMetric = colDef.type === ROW_MEASURE_COLUMN;
         let hasDrillableHeader = false;
 
         const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
         const cellIsNotTotalSubtotal = !isRowTotal && !isRowSubtotal && !isColumnTotal && !isColumnSubtotal;
 
-        if (cellIsNotTotalSubtotal && cellAllowsDrill) {
+        if (cellIsNotTotalSubtotal && !isRowMetric && cellAllowsDrill) {
             hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
         }
 
