@@ -6,6 +6,7 @@ export const ROW_ATTRIBUTE_COLUMN = "ROW_ATTRIBUTE_COLUMN";
 export const COLUMN_ATTRIBUTE_COLUMN = "COLUMN_ATTRIBUTE_COLUMN";
 export const MEASURE_COLUMN = "MEASURE_COLUMN";
 export const ROW_MEASURE_COLUMN = "ROW_MEASURE_COLUMN";
+export const MIXED_VALUES_COLUMN = "MIXED_VALUES_COLUMN";
 export const ROW_TOTAL = "rowTotal";
 export const ROW_SUBTOTAL = "rowSubtotal";
 export const COLUMN_TOTAL = "COLUMN_TOTAL";

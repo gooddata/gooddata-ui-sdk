@@ -21,6 +21,7 @@ import {
     TableCols,
     LeafDataCol,
 	SliceMeasureCol,
+	MixedValuesCol,
 } from "./tableDescriptorTypes.js";
 import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 
@@ -178,7 +179,7 @@ function groupColumns(
  * This function creates bottom-most column descriptors from column attributes. It essentially creates the bottom-most
  * {@link ScopeCol} which would normally host the measure columns.
  */
-function createColumnDescriptorsWhenNoMeasures(dv: DataViewFacade): GroupingOperationResult {
+function createColumnDescriptorsWhenNoMeasuresInColumns(dv: DataViewFacade): GroupingOperationResult {
     const descriptors = dv.meta().attributeDescriptorsForDim(1);
     const headers = dv.meta().attributeHeadersForDim(1);
     const numberOfColumns = headers[0]?.length ?? 0;
@@ -246,43 +247,6 @@ function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOper
     return groupColumns(leafColumns, scopingAttributes);
 }
 
-function createColumnDescriptorsForMeasureRows(dv: DataViewFacade): GroupingOperationResult {
-    const descriptors = dv.meta().attributeDescriptorsForDim(1);
-    const headers = dv.meta().attributeHeadersForDim(1);
-    const numberOfColumns = headers[0]?.length ?? 0;
-    const numberOfAttributes = descriptors.length;
-
-    if (numberOfAttributes === 0) {
-        return {
-            groupingAttributes: [],
-            leafColumns: [],
-            rootColumns: [],
-            allColumns: [],
-        };
-    }
-
-    // for each attribute descriptor, there must be one array in the headers.
-    invariant(descriptors.length === headers.length);
-
-    const bottom: ScopeCol[] = [];
-    for (let colIdx = 0; colIdx < numberOfColumns; colIdx++) {
-        bottom.push({
-            type: "scopeCol",
-            id: `cg_${colIdx}`,
-            children: [],
-            fullIndexPathToHere: [colIdx],
-            header: headers[numberOfAttributes - 1][colIdx],
-            headersToHere: headers.slice(0, numberOfAttributes - 1).map((attrHeaders) => attrHeaders[colIdx]),
-            attributeDescriptor: descriptors[numberOfAttributes - 1],
-            descriptorsToHere: descriptors.slice(0, numberOfAttributes - 1),
-        });
-    }
-
-    // do the usual grouping logic with one tweak: do not process the last grouping level because code above
-    // just created that.
-    return groupColumns(bottom, descriptors, numberOfAttributes - 1);
-}
-
 function createRowDescriptor(index: number, attributeDescriptor: IAttributeDescriptor): SliceCol {
     return {
         type: "sliceCol",
@@ -322,11 +286,11 @@ function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
          *
          * The table descriptor factory handles this case by extracting info from the second dimension on its own.
          */
-        return createColumnDescriptorsWhenNoMeasures(dv);
+        return createColumnDescriptorsWhenNoMeasuresInColumns(dv);
     }
 
     if (getMeasureGroupDimensionIndex(dv) === 0) {
-        return createColumnDescriptorsForMeasureRows(dv);
+        return createColumnDescriptorsWhenNoMeasuresInColumns(dv);
     }
 
     return createColumnDescriptorsFromDataSeries(dv);
@@ -350,15 +314,31 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
     }];
 }
 
+function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
+    const idx = 0;
+    // always just one column with mixed attribute and measure headers
+    return [{
+        type: "mixedValuesCol",
+        id: `amv_${idx}`,
+        index: idx,
+        fullIndexPathToHere: [idx],
+    }]
+}
+
 function createTableHeaders(dv: DataViewFacade): TableCols {
+    const idToDescriptor: Record<string, AnyCol> = {};
+
     const rows: SliceCol[] = createRowDescriptors(dv);
     const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
     const measureColumns = createMeasureColumnDescriptors(dv, rows);
 
-    const idToDescriptor: Record<string, AnyCol> = {};
-
     rows.forEach((header) => (idToDescriptor[header.id] = header));
     measureColumns.forEach((header) => (idToDescriptor[header.id] = header));
+
+    const addMetricValueColumn = measureColumns.length > 0 && groupingAttributes.length === 0;
+    const mixedValuesCols = addMetricValueColumn ? createMeasureValuesColumnDescriptors() : [];
+    mixedValuesCols.forEach((header) => (idToDescriptor[header.id] = header));
+
     allColumns.forEach((header) => (idToDescriptor[header.id] = header));
 
     return {
@@ -368,6 +348,7 @@ function createTableHeaders(dv: DataViewFacade): TableCols {
         leafDataCols: leafColumns,
         idToDescriptor,
         scopingAttributes: groupingAttributes,
+        mixedValuesCols,
     };
 }
 

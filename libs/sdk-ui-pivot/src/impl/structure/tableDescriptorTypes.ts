@@ -13,7 +13,7 @@ export const ColumnGroupingDescriptorId = "root";
  * @remarks see {@link ScopeCol}
  * @remarks see {@link RootCol}
  */
-export type TableColType = "sliceCol" | "sliceMeasureCol" | "seriesCol" | "scopeCol" | "rootCol";
+export type TableColType = "sliceCol" | "sliceMeasureCol" | "mixedValuesCol" | "seriesCol" | "scopeCol" | "rootCol";
 
 /**
  * Base interface for all col types.
@@ -103,6 +103,24 @@ export interface SliceMeasureCol extends TableCol {
 
 export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {
     return (obj as SliceMeasureCol)?.type === "sliceMeasureCol";
+}
+
+export interface MixedValuesCol extends TableCol {
+    readonly type: "mixedValuesCol";
+
+    /**
+     * Column index among all slice columns
+     */
+    index: number;
+
+    /**
+     * Path of indexes to follow from root, through children in order to get to this node.
+     */
+    readonly fullIndexPathToHere: number[];
+}
+
+export function isMixedValuesCol(obj: unknown): obj is MixedValuesCol {
+    return (obj as MixedValuesCol)?.type === "mixedValuesCol";
 }
 
 
@@ -264,7 +282,7 @@ export type AnySliceCol = SliceCol | SliceMeasureCol;
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
  */
-export type AnyCol = SliceCol | SliceMeasureCol | DataCol | ScopeCol;
+export type AnyCol = SliceCol | SliceMeasureCol | MixedValuesCol | DataCol | ScopeCol;
 
 /**
  * Descriptors of all table columns. The table columns are divided into two groups:
@@ -296,7 +314,15 @@ export type TableCols = {
      */
     readonly sliceCols: SliceCol[];
 
+    /**
+     * Column used for metric names when table is transposed (metrics are in rows)
+     */
     readonly sliceMeasureCols: SliceMeasureCol[];
+
+    /**
+     * Column with values of either elements or metrics or both mixed together
+     */
+    readonly mixedValuesCols: MixedValuesCol[];
 
     /**
      * Root table cols.

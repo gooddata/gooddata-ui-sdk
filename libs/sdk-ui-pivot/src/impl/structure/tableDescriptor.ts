@@ -14,6 +14,7 @@ import {
     LeafDataCol,
     SliceMeasureCol,
     AnySliceCol,
+    MixedValuesCol,
 } from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
@@ -269,7 +270,7 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol): number {
+    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | MixedValuesCol): number {
         if (isSliceCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {

@@ -8,6 +8,7 @@ import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,
     MEASURE_COLUMN,
+    MIXED_VALUES_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
 } from "../base/constants.js";
@@ -20,6 +21,7 @@ import {
     TableCols,
     ScopeCol,
     SliceMeasureCol,
+    MixedValuesCol,
 } from "./tableDescriptorTypes.js";
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
@@ -91,6 +93,28 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
         };
 
         state.rowColDefs.push(colDef);
+        state.allColDefs.push(colDef);
+
+        if (!state.cellRendererPlaced) {
+            state.cellRendererPlaced = colDef;
+        }
+    }
+}
+
+function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state: TransformState) {
+    for (const col of mixedValuesCol) {
+        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+
+        const colDef: ColDef = {
+            type: MIXED_VALUES_COLUMN,
+            colId: col.id,
+            field: col.id,
+            headerName: " ", // do not render header, yet leave ability to resize it
+            headerTooltip: undefined,
+            ...cellRendererProp,
+        };
+
+        state.rowColDefs.push(colDef); // TODO maybe add to a new collection
         state.allColDefs.push(colDef);
 
         if (!state.cellRendererPlaced) {
@@ -250,8 +274,12 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
+
     createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
     createAndAddDataColDefs(table, state, intl);
+    // handle metrics in rows and no column attribute case
+    createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
+
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 
