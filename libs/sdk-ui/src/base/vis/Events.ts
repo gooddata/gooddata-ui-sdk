@@ -86,6 +86,14 @@ export interface IAvailableDrillTargetAttribute {
     intersectionAttributes: IAttributeDescriptor[];
 }
 
+/**
+ * @internal
+ */
+export interface IOpenAsReportUiConfig {
+    supported?: boolean;
+    warningMessage?: string;
+}
+
 /*
  * Push data is a 'catch-all' type of callback that is used to transfer 'misc' information from visualization
  * up to the consumer (say AD or KD). The existence of push data indicates insufficient first-class callbacks
@@ -117,4 +125,6 @@ export interface IPushData {
     colors?: IColorsData;
     initialProperties?: any;
     availableDrillTargets?: IAvailableDrillTargets;
+    openAsReport?: IOpenAsReportUiConfig;
+    ignoreUndoRedo?: boolean;
 }

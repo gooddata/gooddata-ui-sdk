@@ -1042,6 +1042,14 @@ export const IntlTranslationsProvider: React_2.FC<WithIntlProps<ITranslationsPro
 // @internal (undocumented)
 export const IntlWrapper: React_2.FC<IIntlWrapperProps>;
 
+// @internal (undocumented)
+export interface IOpenAsReportUiConfig {
+    // (undocumented)
+    supported?: boolean;
+    // (undocumented)
+    warningMessage?: string;
+}
+
 // @public
 export type IPlaceholder<T> = {
     type: "IPlaceholder";
@@ -1075,7 +1083,11 @@ export interface IPushData {
     // (undocumented)
     dataView?: IDataView;
     // (undocumented)
+    ignoreUndoRedo?: boolean;
+    // (undocumented)
     initialProperties?: any;
+    // (undocumented)
+    openAsReport?: IOpenAsReportUiConfig;
     // (undocumented)
     properties?: {
         sortItems?: ISortItem[];
