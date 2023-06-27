@@ -76,6 +76,7 @@ import {
     setPivotTableUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
@@ -93,6 +94,7 @@ import { removeInvalidTotals } from "./totalsHelpers.js";
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const ReactMeasure = defaultImport(Measure);
+
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -237,7 +239,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             filters,
         );
 
-        const measureGroupDimensionProp = tableTranspositionEnabled(this.settings) ? {
+        const measureGroupDimensionProp = tableTranspositionEnabled(this.settings) && originalMeasureGroupDimension ? {
             measureGroupDimension: originalMeasureGroupDimension,
         } : {}
 
@@ -443,14 +445,29 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            this.renderFun(
-                <UnsupportedConfigurationPanel
-                    locale={this.locale}
+            if(tableTranspositionEnabled(this.settings)) {
+                this.renderFun(
+                    <PivotTableConfigurationPanel
+                        locale={this.locale}
+                        properties={sanitizedProperties}
+                        propertiesMeta={this.propertiesMeta}
+                        insight={insight}
+                        pushData={this.handlePushData}
+                        isError={this.getIsError()}
+                        isLoading={this.isLoading}
+                    />,
+                    configPanelElement,
+                );
+            } else {
+                this.renderFun(
+                    <UnsupportedConfigurationPanel
                     pushData={this.pushData}
                     properties={sanitizedProperties}
-                />,
-                configPanelElement,
-            );
+                    />,
+                    configPanelElement,
+                )
+            }
+
         }
     }
 
@@ -509,6 +526,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             this.pushData({
                 properties: {
                     sortItems: data.properties.sortItems,
+                    ... (data.properties.controls ? {controls: data.properties.controls} : {}),
                     ...addTotals,
                 },
             });

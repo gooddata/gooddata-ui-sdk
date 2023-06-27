@@ -193,4 +193,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     colorTotalLabel: { id: "properties.color.total" },
     colorPositiveLabel: { id: "properties.color.positive" },
     colorNegativeLabel: { id: "properties.color.negative" },
+    metricsPositionTitle: { id: "properties.metrics.title" },
+    metricsPositionLabel: { id: "properties.metrics.position" },
+    metricsPositionColumns: { id: "properties.metrics.position.columns" },
+    metricsPositionRows: { id: "properties.metrics.position.rows" },
 });

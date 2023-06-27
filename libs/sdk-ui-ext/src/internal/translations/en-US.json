@@ -1292,5 +1292,30 @@
         "comment": "Explains why sort button is disabled. Shown as tooltip",
         "limit": 0,
         "translate": false
+    },
+    "properties.metrics.title._measure": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.metrics.title._metric": {
+        "value": "Metrics",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.metrics.position": {
+        "value": "Position",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.metrics.position.columns": {
+        "value": "columns (default)",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.metrics.position.rows": {
+        "value": "rows",
+        "comment": "",
+        "limit": 0
     }
 }
