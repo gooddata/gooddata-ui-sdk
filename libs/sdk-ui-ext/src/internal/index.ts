@@ -32,7 +32,6 @@ export {
     IExtendedReferencePoint,
     IBucketItem,
     IReferencePoint,
-    IOpenAsReportUiConfig,
     IFilters,
     IFiltersBucketItem,
     IMeasureValueFilter,

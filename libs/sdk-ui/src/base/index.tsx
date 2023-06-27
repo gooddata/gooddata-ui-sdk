@@ -257,6 +257,7 @@ export {
 } from "./vis/VisualizationProps";
 export {
     IPushData,
+    IOpenAsReportUiConfig,
     OnError,
     OnExportReady,
     OnLoadingChanged,

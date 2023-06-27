@@ -27,6 +27,7 @@ import {
     OverTimeComparisonType,
     SdkErrorType,
     VisualizationEnvironment,
+    IOpenAsReportUiConfig,
 } from "@gooddata/sdk-ui";
 import { IAvailableSortsGroup, ISortConfig } from "./SortConfig";
 
@@ -271,11 +272,6 @@ export interface IExportUiConfig {
 
 export interface INoMetricUiConfig {
     supported?: boolean;
-}
-
-export interface IOpenAsReportUiConfig {
-    supported?: boolean;
-    warningMessage?: string;
 }
 
 export interface ICustomError {

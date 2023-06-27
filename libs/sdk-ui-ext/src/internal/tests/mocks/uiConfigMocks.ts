@@ -8,8 +8,8 @@ import {
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "../../constants/bucket";
 
-import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../../interfaces/Visualization";
-import { OverTimeComparisonType } from "@gooddata/sdk-ui";
+import { IExportUiConfig, IUiConfig } from "../../interfaces/Visualization";
+import { OverTimeComparisonType, IOpenAsReportUiConfig } from "@gooddata/sdk-ui";
 
 const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],
