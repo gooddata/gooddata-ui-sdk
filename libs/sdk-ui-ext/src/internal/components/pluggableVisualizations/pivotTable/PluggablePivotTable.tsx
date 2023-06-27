@@ -225,6 +225,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         const originalSortItems: ISortItem[] = newReferencePoint.properties?.sortItems ?? [];
         const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
+        const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
@@ -236,13 +237,22 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             filters,
         );
 
+        const measureGroupDimensionProp = tableTranspositionEnabled(this.settings) ? {
+            measureGroupDimension: originalMeasureGroupDimension,
+        } : {}
+
         const controlsObj = columnWidths
             ? {
                   controls: {
                       columnWidths,
+                      ...measureGroupDimensionProp
                   },
               }
-            : {};
+            : {
+                controls: {
+                    ...measureGroupDimensionProp
+                }
+            };
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(
@@ -519,6 +529,11 @@ function multipleDatesEnabled(settings: ISettings): boolean {
 function tableSortingCheckDisabled(settings: ISettings): boolean {
     return settings.tableSortingCheckDisabled === true;
 }
+
+function tableTranspositionEnabled(settings: ISettings): boolean {
+    return settings.enablePivotTableTransposition === true;
+}
+
 
 /**
  * Given plug viz GDC config, current environment and platform settings, this creates pivot table config.
