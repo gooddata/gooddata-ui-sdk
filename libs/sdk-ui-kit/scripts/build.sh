@@ -2,6 +2,7 @@
 
 _build_styles() {
     sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist --load-path=node_modules/codemirror/lib styles/scss:styles/css
+    postcss --config postcss.config.js -d styles/css-inlined styles/css/*.css
 }
 
 _clean() {
@@ -42,8 +43,9 @@ build-dev-watch() {
 }
 
 build-styles() {
-  rm -rf styles/css
-  _build_styles
+    rm -rf styles/css
+    rm -rf styles/css-inlined
+    _build_styles
 }
 
 FLAG=$1

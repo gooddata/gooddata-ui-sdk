@@ -2,6 +2,7 @@
 
 _build_styles() {
     sass --load-path=node_modules styles/scss:styles/css
+    postcss --config postcss.config.js -d styles/css-inlined styles/css/*.css
 }
 
 _clean() {
@@ -54,6 +55,7 @@ build-dev-watch() {
 
 build-styles() {
     rm -rf styles/css
+    rm -rf styles/css-inlined
     _build_styles
 }
 

@@ -855,6 +855,18 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "postcss",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "postcss-cli",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "postcss-url",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
       "name": "prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
