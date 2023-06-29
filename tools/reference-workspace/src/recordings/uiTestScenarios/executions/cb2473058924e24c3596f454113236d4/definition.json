@@ -13,7 +13,42 @@
             }
         }
     ],
-    "buckets": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        { "items": [], "localIdentifier": "secondary_measures" },
+        { "items": [], "localIdentifier": "tertiary_measures" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q_1"
+                    }
+                }
+            ],
+            "localIdentifier": "view"
+        }
+    ],
     "dimensions": [
         { "itemIdentifiers": ["measureGroup"] },
         { "itemIdentifiers": ["a_closed.aag81lMifn6q", "a_closed.aag81lMifn6q_1"] }

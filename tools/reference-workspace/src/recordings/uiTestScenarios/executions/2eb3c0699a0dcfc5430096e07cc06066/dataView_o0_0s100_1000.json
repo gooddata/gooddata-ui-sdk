@@ -225,7 +225,7 @@
                 { "measureHeaderItem": { "name": "Won", "order": 1 } },
                 { "measureHeaderItem": { "name": "Amount", "order": 0 } },
                 { "measureHeaderItem": { "name": "Won", "order": 1 } },
-                { "totalHeaderItem": { "name": "sum", "type": "sum" } }
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } }
             ]
         ]
     ],

@@ -169,10 +169,10 @@
             [
                 { "measureHeaderItem": { "name": "Amount", "order": 0 } },
                 { "measureHeaderItem": { "name": "Amount", "order": 0 } },
-                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
-                { "totalHeaderItem": { "name": "max", "type": "max" } },
-                { "totalHeaderItem": { "name": "min", "type": "min" } },
-                { "totalHeaderItem": { "name": "nat", "type": "nat" } }
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "max", "type": "max" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "min", "type": "min" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "nat", "type": "nat" } }
             ]
         ]
     ],

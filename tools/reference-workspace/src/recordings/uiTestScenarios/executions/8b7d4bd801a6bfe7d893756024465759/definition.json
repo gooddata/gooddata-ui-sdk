@@ -7,7 +7,64 @@
             }
         }
     ],
-    "buckets": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_abZgFKGPaGYM"
+                    }
+                }
+            ],
+            "localIdentifier": "secondary_measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_abEgMnq5hyJQ"
+                    }
+                }
+            ],
+            "localIdentifier": "tertiary_measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                }
+            ],
+            "localIdentifier": "view"
+        }
+    ],
     "dimensions": [{ "itemIdentifiers": ["a_closed.aag81lMifn6q"] }, { "itemIdentifiers": ["measureGroup"] }],
     "filters": [],
     "measures": [

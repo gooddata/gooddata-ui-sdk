@@ -7,7 +7,49 @@
             }
         }
     ],
-    "buckets": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_abZgFKGPaGYM"
+                    }
+                }
+            ],
+            "localIdentifier": "secondary_measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "localIdentifier": "attribute"
+        }
+    ],
     "dimensions": [
         { "itemIdentifiers": ["a_label.product.id.name"] },
         { "itemIdentifiers": ["measureGroup"] }

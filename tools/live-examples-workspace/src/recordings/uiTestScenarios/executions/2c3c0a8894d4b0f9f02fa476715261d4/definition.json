@@ -19,7 +19,50 @@
             }
         }
     ],
-    "buckets": [],
+    "buckets": [
+        { "items": [], "localIdentifier": "size" },
+        { "items": [], "localIdentifier": "color" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location"
+                    }
+                }
+            ],
+            "localIdentifier": "latitude"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location_1"
+                    }
+                }
+            ],
+            "localIdentifier": "longitude"
+        },
+        { "items": [], "localIdentifier": "segment" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
+                        "localIdentifier": "a_label.uscities.city"
+                    }
+                }
+            ],
+            "localIdentifier": "tooltipText"
+        }
+    ],
     "dimensions": [
         {
             "itemIdentifiers": [
