@@ -2,13 +2,13 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
-import capitalize from "lodash/capitalize";
+import capitalize from "lodash/capitalize.js";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import OperatorDropdownBody from "./OperatorDropdownBody";
-import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
-import { MeasureValueFilterOperator } from "./types";
+import OperatorDropdownBody from "./OperatorDropdownBody.js";
+import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator.js";
+import { MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownOwnProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;

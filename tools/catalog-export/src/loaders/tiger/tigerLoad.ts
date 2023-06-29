@@ -1,12 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
-import { CatalogExportError, WorkspaceMetadata } from "../../base/types";
+import { CatalogExportError, WorkspaceMetadata } from "../../base/types.js";
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import ora from "ora";
-import { logError } from "../../cli/loggers";
-import { loadCatalog } from "./tigerCatalog";
-import { loadInsights } from "./tigerInsights";
-import { loadDateDataSets } from "./tigerDateDatasets";
-import { loadAnalyticalDashboards } from "./tigerAnalyticalDashboards";
+import { logError } from "../../cli/loggers.js";
+import { loadCatalog } from "./tigerCatalog.js";
+import { loadInsights } from "./tigerInsights.js";
+import { loadDateDataSets } from "./tigerDateDatasets.js";
+import { loadAnalyticalDashboards } from "./tigerAnalyticalDashboards.js";
 
 export async function tigerLoad(client: ITigerClient, workspaceId: string): Promise<WorkspaceMetadata> {
     const spinner = ora();

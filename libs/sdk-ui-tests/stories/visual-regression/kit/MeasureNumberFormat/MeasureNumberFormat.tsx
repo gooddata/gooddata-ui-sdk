@@ -6,10 +6,10 @@ import {
     MeasureNumberFormat,
 } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { ISeparators } from "@gooddata/sdk-ui";

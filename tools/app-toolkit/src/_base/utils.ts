@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import path from "path";
 import fse from "fs-extra";
-import { isInputValidationError } from "./types";
-import { logError } from "./terminal/loggers";
+import { isInputValidationError } from "./types.js";
+import { logError } from "./terminal/loggers.js";
 import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 export function toJsonString(obj: any): string {

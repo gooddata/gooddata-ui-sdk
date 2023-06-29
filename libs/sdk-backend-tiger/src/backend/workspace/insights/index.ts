@@ -26,7 +26,7 @@ import {
     insightTags,
     insightSummary,
 } from "@gooddata/sdk-model";
-import sortBy from "lodash/sortBy";
+import sortBy from "lodash/sortBy.js";
 import {
     jsonApiHeaders,
     MetadataUtilities,
@@ -38,17 +38,17 @@ import {
 import {
     insightFromInsightDefinition,
     visualizationObjectsItemToInsight,
-} from "../../../convertors/fromBackend/InsightConverter";
+} from "../../../convertors/fromBackend/InsightConverter.js";
 
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
-import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter";
-import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter";
-import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToUri, objRefToIdentifier } from "../../../utils/api.js";
+import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
+import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter.js";
+import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 
-import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
+import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance";
+import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}

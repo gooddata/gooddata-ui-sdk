@@ -10,9 +10,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 
-import { SecuritySettingsService } from "./securitySettings";
-import { BearAuthenticatedCallGuard } from "../../types/auth";
-import { OrganizationStylingService } from "./styling";
+import { SecuritySettingsService } from "./securitySettings.js";
+import { BearAuthenticatedCallGuard } from "../../types/auth.js";
+import { OrganizationStylingService } from "./styling.js";
 
 export class BearOrganization implements IOrganization {
     constructor(

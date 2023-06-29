@@ -2,10 +2,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
-import isEqual from "lodash/fp/isEqual";
-import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/fp/isEqual.js";
+import isEmpty from "lodash/isEmpty.js";
 
-import { useDashboardDrag } from "../useDashboardDrag";
+import { useDashboardDrag } from "../useDashboardDrag.js";
 import {
     isCustomWidgetBase,
     resizeHeight,
@@ -13,18 +13,18 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
-import { calculateWidgetMinHeight, getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
+} from "../../../model/index.js";
+import { calculateWidgetMinHeight, getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { HeightResizer } from "./HeightResizer";
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { HeightResizer } from "./HeightResizer.js";
 
-import { useResizeContext } from "../LayoutResizeContext";
-import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../layout/constants";
-import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
+import { useResizeContext } from "../LayoutResizeContext.js";
+import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../layout/constants.js";
+import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<unknown>;

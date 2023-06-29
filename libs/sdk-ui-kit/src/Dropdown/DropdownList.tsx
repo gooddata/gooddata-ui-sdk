@@ -2,13 +2,13 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { Input } from "../Form";
-import { DropdownTabs } from "./DropdownTabs";
-import { IListProps, List } from "../List";
-import { LoadingMask } from "../LoadingMask";
-import { NoData } from "../NoData";
-import { AutoSize } from "../AutoSize";
-import { ITab } from "../Tabs";
+import { Input } from "../Form/index.js";
+import { DropdownTabs } from "./DropdownTabs.js";
+import { IListProps, List } from "../List/index.js";
+import { LoadingMask } from "../LoadingMask/index.js";
+import { NoData } from "../NoData/index.js";
+import { AutoSize } from "../AutoSize/index.js";
+import { ITab } from "../Tabs/index.js";
 
 /**
  * @internal

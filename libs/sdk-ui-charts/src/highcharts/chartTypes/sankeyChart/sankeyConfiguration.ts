@@ -1,7 +1,7 @@
 // (C) 2023 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
-import { HighchartsOptions } from "../../lib";
+import cloneDeep from "lodash/cloneDeep.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
+import { HighchartsOptions } from "../../lib/index.js";
 
 const SANKEY_TEMPLATE = {
     chart: {

@@ -2,9 +2,9 @@
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import invariant from "ts-invariant";
-import partition from "lodash/partition";
-import { FilterContextState } from "./filterContextState";
+import { invariant } from "ts-invariant";
+import partition from "lodash/partition.js";
+import { FilterContextState } from "./filterContextState.js";
 import {
     areObjRefsEqual,
     attributeElementsIsEmpty,
@@ -24,7 +24,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
-import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes";
+import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 

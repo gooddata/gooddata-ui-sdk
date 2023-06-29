@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { IMessageProps } from "./typings";
+import { IMessageProps } from "./typings.js";
 
 /**
  * @internal

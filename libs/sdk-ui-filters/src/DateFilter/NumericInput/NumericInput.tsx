@@ -1,11 +1,11 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import isNumber from "lodash/isNumber";
-import defaultTo from "lodash/defaultTo";
-import clamp from "lodash/clamp";
+import isNumber from "lodash/isNumber.js";
+import defaultTo from "lodash/defaultTo.js";
+import clamp from "lodash/clamp.js";
 
-import { ArrowButton } from "./ArrowButton";
-import { unless } from "./utils";
+import { ArrowButton } from "./ArrowButton.js";
+import { unless } from "./utils.js";
 
 type NumericInputValue = number | "" | "-";
 

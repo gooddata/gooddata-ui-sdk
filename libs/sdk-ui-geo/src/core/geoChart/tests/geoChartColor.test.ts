@@ -4,12 +4,13 @@ import {
     getColorIndexInPalette,
     getColorPaletteMapping,
     getPushpinColors,
-} from "../geoChartColor";
+} from "../geoChartColor.js";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { DEFAULT_COLORS } from "../constants/geoChart";
-import { RecShortcuts } from "../../../../__mocks__/recordings";
-import { getColorStrategy } from "../colorStrategy/geoChart";
+import { DEFAULT_COLORS } from "../constants/geoChart.js";
+import { RecShortcuts } from "../../../../__mocks__/recordings.js";
+import { getColorStrategy } from "../colorStrategy/geoChart.js";
+import { describe, it, expect } from "vitest";
 
 describe("getPushpinColors", () => {
     it("should return pushpin RGB colors", () => {
@@ -38,7 +39,7 @@ describe("getPushpinColors", () => {
         const { dv, geoData } = RecShortcuts.LocationAndColor_Small;
         const colorStrategy: IColorStrategy = getColorStrategy(DefaultColorPalette, [], geoData, dv);
 
-        const sameColorValues = geoData.color!.data.map((_) => 10);
+        const sameColorValues = geoData.color!.data.map((_: any) => 10);
 
         expect(getPushpinColors(sameColorValues, undefined, colorStrategy)).toEqual([
             { background: "rgba(20,178,226,0.7)", border: "rgb(233,237,241)" },

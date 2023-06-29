@@ -1,15 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
     DashboardLayoutSectionHeaderChanged,
-} from "../../../events";
-import { ChangeLayoutSectionHeader, changeLayoutSectionHeader, undoLayoutChanges } from "../../../commands";
-import { selectLayout } from "../../../store/layout/layoutSelectors";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../events/index.js";
+import {
+    ChangeLayoutSectionHeader,
+    changeLayoutSectionHeader,
+    undoLayoutChanges,
+} from "../../../commands/index.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 const FullHeader = { title: "My Section", description: "My Section Description" };
 const HeaderWithJustTitle = { title: "My Section" };
@@ -19,11 +23,12 @@ describe("change layout section header handler", () => {
     // Note: the simple dashboard has one section and this section does not have any header specified
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should replace header with a new one", async () => {
             const event: DashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(

@@ -2,13 +2,14 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import ColumnHeader from "../ColumnHeader";
-import HeaderCell from "../HeaderCell";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { TableDescriptor } from "../../tableDescriptor";
+import ColumnHeader from "../ColumnHeader.js";
+import HeaderCell from "../HeaderCell.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { TableDescriptor } from "../../tableDescriptor.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
-import { SingleColumn } from "../../tests/table.fixture";
+import { SingleColumn } from "../../tests/table.fixture.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
@@ -24,10 +25,10 @@ const getColumnHeader = (
     const extendedProps: any = {
         getTableDescriptor: () => table,
         column: {
-            addEventListener: jest.fn(),
-            removeEventListener: jest.fn(),
-            getSort: jest.fn(),
-            getColDef: jest.fn(() => ({
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+            getSort: vi.fn(),
+            getColDef: vi.fn(() => ({
                 type,
                 colId: colGroupId,
                 groupId: colGroupId,
@@ -35,17 +36,17 @@ const getColumnHeader = (
             })),
         },
         columnGroup: {
-            getColGroupDef: jest.fn(() => ({ displayName: "colGroupDisplayName" })),
-            getParent: jest.fn(() => ({})),
+            getColGroupDef: vi.fn(() => ({ displayName: "colGroupDisplayName" })),
+            getParent: vi.fn(() => ({})),
         },
         gridOptionsWrapper: {},
         enableMenu: true,
         enableSorting: true,
         displayName: "test",
         reactContainer: null,
-        showColumnMenu: jest.fn(),
-        setSort: jest.fn(),
-        menu: jest.fn(),
+        showColumnMenu: vi.fn(),
+        setSort: vi.fn(),
+        menu: vi.fn(),
         ...props,
     };
 
@@ -55,15 +56,14 @@ const getColumnHeader = (
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../HeaderCell", () => ({
-    __esModule: true,
-    ...jest.requireActual("../HeaderCell"),
-    default: jest.fn(() => null),
+vi.mock("../HeaderCell", async () => ({
+    ...((await vi.importActual("../HeaderCell")) as object),
+    default: vi.fn(() => null),
 }));
 
 describe("ColumnHeader renderer", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render HeaderCell", () => {

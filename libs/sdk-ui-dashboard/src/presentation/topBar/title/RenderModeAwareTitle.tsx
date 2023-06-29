@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 
-import { DefaultTitle } from "./DefaultTitle";
-import { EditableTitle } from "./EditableTitle";
-import { renderModeAware } from "../../componentDefinition";
+import { DefaultTitle } from "./DefaultTitle.js";
+import { EditableTitle } from "./EditableTitle.js";
+import { renderModeAware } from "../../componentDefinition/index.js";
 
 /**
  * @internal

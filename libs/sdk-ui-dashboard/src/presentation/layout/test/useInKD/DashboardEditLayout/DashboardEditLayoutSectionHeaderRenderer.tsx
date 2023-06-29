@@ -5,9 +5,9 @@ import {
     DashboardLayoutItemViewRenderer,
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionHeaderRenderProps,
-} from "../../../DefaultDashboardLayoutRenderer";
-import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes";
+} from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 type IDashboardLayoutSectionHeaderRendererOwnProps =
     IDashboardLayoutSectionHeaderRenderProps<IDashboardEditLayoutContent>;

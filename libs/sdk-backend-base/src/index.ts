@@ -9,7 +9,12 @@
  *
  * @packageDocumentation
  */
-export { dummyBackend, dummyBackendEmptyData, dummyDataView, DummyBackendConfig } from "./dummyBackend";
+export {
+    dummyBackend,
+    dummyBackendEmptyData,
+    dummyDataView,
+    DummyBackendConfig,
+} from "./dummyBackend/index.js";
 
 export {
     decoratedBackend,
@@ -20,49 +25,53 @@ export {
     WorkspaceSettingsDecoratorFactory,
     AttributesDecoratorFactory,
     DashboardsDecoratorFactory,
-} from "./decoratedBackend";
+} from "./decoratedBackend/index.js";
 
 export {
     DecoratedExecutionFactory,
     PreparedExecutionWrapper,
     DecoratedPreparedExecution,
     DecoratedExecutionResult,
-} from "./decoratedBackend/execution";
+} from "./decoratedBackend/execution.js";
 
-export { DecoratedWorkspaceDashboardsService } from "./decoratedBackend/dashboards";
+export { DecoratedWorkspaceDashboardsService } from "./decoratedBackend/dashboards.js";
 
 export {
     DecoratedWorkspaceCatalogFactory,
     DecoratedWorkspaceCatalog,
     WorkspaceCatalogWrapper,
-} from "./decoratedBackend/catalog";
+} from "./decoratedBackend/catalog.js";
 
-export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySettings";
+export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySettings.js";
 
-export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings";
+export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings.js";
 
-export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
+export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend/index.js";
 export {
     withCaching,
     CachingConfiguration,
     RecommendedCachingConfiguration,
     CacheControl,
-} from "./cachingBackend";
+} from "./cachingBackend/index.js";
 export {
     withCustomWorkspaceSettings,
     WorkspaceSettingsConfiguration,
     SettingsWrapper,
     CurrentUserSettingsWrapper,
     CommonSettingsWrapper,
-} from "./workspaceSettingsBackend";
-export { withNormalization, NormalizationConfig, NormalizationWhenExecuteByRef } from "./normalizingBackend";
+} from "./workspaceSettingsBackend/index.js";
+export {
+    withNormalization,
+    NormalizationConfig,
+    NormalizationWhenExecuteByRef,
+} from "./normalizingBackend/index.js";
 export {
     Normalizer,
     Denormalizer,
     NormalizationState,
     LocalIdMap,
     INormalizerOptions,
-} from "./normalizingBackend/normalizer";
+} from "./normalizingBackend/normalizer.js";
 
 export {
     AuthenticatedAsyncCall,
@@ -72,20 +81,20 @@ export {
     IAuthProviderCallGuard,
     NoopAuthProvider,
     AnonymousAuthProvider,
-} from "./toolkit/auth";
+} from "./toolkit/auth.js";
 
-export { TelemetryData } from "./toolkit/backend";
+export { TelemetryData } from "./toolkit/backend.js";
 
 export {
     AbstractExecutionFactory,
     ExecutionFactoryWithFixedFilters,
     ExecutionFactoryUpgradingToExecByReference,
-} from "./toolkit/execution";
+} from "./toolkit/execution.js";
 
-export { InMemoryPaging, ServerPaging, IServerPagingResult, IServerPagingParams } from "./toolkit/paging";
-export { validatePluginUrlIsSane } from "./toolkit/pluginUrlValidation";
+export { InMemoryPaging, ServerPaging, IServerPagingResult, IServerPagingParams } from "./toolkit/paging.js";
+export { validatePluginUrlIsSane } from "./toolkit/pluginUrlValidation.js";
 
-export { customBackend } from "./customBackend";
+export { customBackend } from "./customBackend/index.js";
 
 export {
     ResultProvider,
@@ -97,7 +106,7 @@ export {
     CustomCallContext,
     ResultFactory,
     CustomBackendState,
-} from "./customBackend/config";
+} from "./customBackend/config.js";
 
 export {
     Builder,
@@ -108,55 +117,59 @@ export {
     IBuilder,
     ValueOrUpdateCallback,
     resolveValueOrUpdateCallback,
-} from "./ldmFactories/builder";
+} from "./ldmFactories/builder.js";
 export {
     InsightWidgetBuilder,
     newInsightWidget,
     IInsightWidgetBuilder,
-} from "./ldmFactories/dashboard/insightWidgetFactory";
-export { KpiWidgetBuilder, newKpiWidget, IKpiWidgetBuilder } from "./ldmFactories/dashboard/kpiWidgetFactory";
-export { IWidgetBaseBuilder, WidgetBaseBuilder } from "./ldmFactories/dashboard/widgetFactory";
-export { CatalogAttributeBuilder, newCatalogAttribute } from "./ldmFactories/catalog/attributeFactory";
+} from "./ldmFactories/dashboard/insightWidgetFactory.js";
+export {
+    KpiWidgetBuilder,
+    newKpiWidget,
+    IKpiWidgetBuilder,
+} from "./ldmFactories/dashboard/kpiWidgetFactory.js";
+export { IWidgetBaseBuilder, WidgetBaseBuilder } from "./ldmFactories/dashboard/widgetFactory.js";
+export { CatalogAttributeBuilder, newCatalogAttribute } from "./ldmFactories/catalog/attributeFactory.js";
 export {
     CatalogDateAttributeBuilder,
     CatalogDateDatasetBuilder,
     newCatalogDateAttribute,
     newCatalogDateDataset,
-} from "./ldmFactories/catalog/dateDatasetFactory";
-export { CatalogFactBuilder, newCatalogFact } from "./ldmFactories/catalog/factFactory";
+} from "./ldmFactories/catalog/dateDatasetFactory.js";
+export { CatalogFactBuilder, newCatalogFact } from "./ldmFactories/catalog/factFactory.js";
 export {
     CatalogGroupBuilder,
     GroupableCatalogItemBuilder,
     IGroupableCatalogItemBuilder,
     newCatalogGroup,
-} from "./ldmFactories/catalog/groupFactory";
-export { CatalogMeasureBuilder, newCatalogMeasure } from "./ldmFactories/catalog/measureFactory";
+} from "./ldmFactories/catalog/groupFactory.js";
+export { CatalogMeasureBuilder, newCatalogMeasure } from "./ldmFactories/catalog/measureFactory.js";
 
 export {
     AttributeMetadataObjectBuilder,
     newAttributeMetadataObject,
-} from "./ldmFactories/metadata/attributeFactory";
+} from "./ldmFactories/metadata/attributeFactory.js";
 export {
     DataSetMetadataObjectBuilder,
     newDataSetMetadataObject,
-} from "./ldmFactories/metadata/dataSetFactory";
+} from "./ldmFactories/metadata/dataSetFactory.js";
 export {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
-} from "./ldmFactories/metadata/displayFormFactory";
-export { IMetadataObjectBuilder, MetadataObjectBuilder } from "./ldmFactories/metadata/factory";
-export { newFactMetadataObject, FactMetadataObjectBuilder } from "./ldmFactories/metadata/factFactory";
+} from "./ldmFactories/metadata/displayFormFactory.js";
+export { IMetadataObjectBuilder, MetadataObjectBuilder } from "./ldmFactories/metadata/factory.js";
+export { newFactMetadataObject, FactMetadataObjectBuilder } from "./ldmFactories/metadata/factFactory.js";
 export {
     MeasureMetadataObjectBuilder,
     newMeasureMetadataObject,
-} from "./ldmFactories/metadata/measureFactory";
+} from "./ldmFactories/metadata/measureFactory.js";
 export {
     newVariableMetadataObject,
     VariableMetadataObjectBuilder,
-} from "./ldmFactories/metadata/variableFactory";
+} from "./ldmFactories/metadata/variableFactory.js";
 export {
     newDashboardMetadataObject,
     DashboardMetadataObjectBuilder,
-} from "./ldmFactories/metadata/dashboardFactory";
+} from "./ldmFactories/metadata/dashboardFactory.js";
 
-export { ResultHeaderTransformer, transformResultHeaders } from "./convertors/fromBackend/afm/result";
+export { ResultHeaderTransformer, transformResultHeaders } from "./convertors/fromBackend/afm/result.js";

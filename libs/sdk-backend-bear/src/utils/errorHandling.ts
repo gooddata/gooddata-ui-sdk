@@ -11,8 +11,8 @@ import {
     isAnalyticalBackendError,
     NotAuthenticatedReason,
 } from "@gooddata/sdk-backend-spi";
-import includes from "lodash/includes";
-import isString from "lodash/isString";
+import includes from "lodash/includes.js";
+import isString from "lodash/isString.js";
 import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 
 export function isApiResponseError(error: unknown): error is ApiResponseError {

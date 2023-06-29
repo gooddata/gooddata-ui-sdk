@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import identity from "lodash/identity";
-import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCancelablePromise";
-import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
+import identity from "lodash/identity.js";
+import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCancelablePromise.js";
+import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
 
 /**
  * Resolve status of multiple {@link useCancelablePromise} hooks.

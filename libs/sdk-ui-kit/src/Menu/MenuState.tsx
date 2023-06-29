@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 
-import { OnOpenedChange, IOnOpenedChangeParams } from "./MenuSharedTypes";
+import { OnOpenedChange, IOnOpenedChangeParams } from "./MenuSharedTypes.js";
 
 /**
  * @internal

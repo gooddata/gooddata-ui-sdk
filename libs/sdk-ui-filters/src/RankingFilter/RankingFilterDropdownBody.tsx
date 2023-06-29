@@ -3,16 +3,16 @@ import React, { useState, useCallback } from "react";
 import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
-import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
-import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown";
-import { ValueDropdown } from "./ValueDropdown/ValueDropdown";
-import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
-import { MeasureDropdown } from "./MeasureDropdown/MeasureDropdown";
-import isEqual from "lodash/isEqual";
-import xorWith from "lodash/xorWith";
-import isEmpty from "lodash/isEmpty";
-import noop from "lodash/noop";
-import { Preview } from "./Preview";
+import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types.js";
+import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown.js";
+import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
+import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
+import { MeasureDropdown } from "./MeasureDropdown/MeasureDropdown.js";
+import isEqual from "lodash/isEqual.js";
+import xorWith from "lodash/xorWith.js";
+import isEmpty from "lodash/isEmpty.js";
+import noop from "lodash/noop.js";
+import { Preview } from "./Preview.js";
 
 const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilter) => {
     const rankingFilter = filter.rankingFilter;

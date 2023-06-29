@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`safeSerialize should serialize array 1`] = `"[1,2,3]"`;
+exports[`safeSerialize > should serialize array 1`] = `"[1,2,3]"`;
 
-exports[`safeSerialize should serialize null 1`] = `"null"`;
+exports[`safeSerialize > should serialize null 1`] = `"null"`;
 
-exports[`safeSerialize should serialize number 1`] = `"42"`;
+exports[`safeSerialize > should serialize number 1`] = `"42"`;
 
-exports[`safeSerialize should serialize object 1`] = `"{\\"a\\":42}"`;
+exports[`safeSerialize > should serialize object 1`] = `"{\\"a\\":42}"`;
 
-exports[`safeSerialize should serialize string 1`] = `"\\"hello\\""`;
+exports[`safeSerialize > should serialize string 1`] = `"\\"hello\\""`;
 
-exports[`safeSerialize should serialize undefined 1`] = `undefined`;
+exports[`safeSerialize > should serialize undefined 1`] = `undefined`;

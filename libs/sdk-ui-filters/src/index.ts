@@ -37,29 +37,29 @@ export {
     IDateTranslator,
     IMessageTranslator,
     getLocalizedIcuDateFormatPattern,
-} from "./DateFilter";
+} from "./DateFilter/index.js";
 export {
     MeasureValueFilter,
     IMeasureValueFilterProps,
     IMeasureValueFilterState,
-} from "./MeasureValueFilter/MeasureValueFilter";
+} from "./MeasureValueFilter/MeasureValueFilter.js";
 export {
     MeasureValueFilterDropdown,
     IMeasureValueFilterDropdownProps,
-} from "./MeasureValueFilter/MeasureValueFilterDropdown";
+} from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
 export {
     IMeasureValueFilterCommonProps,
     WarningMessage,
     IWarningMessage,
     isWarningMessage,
-} from "./MeasureValueFilter/typings";
-export { RankingFilter, IRankingFilterProps } from "./RankingFilter/RankingFilter";
-export { RankingFilterDropdown, IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown";
+} from "./MeasureValueFilter/typings.js";
+export { RankingFilter, IRankingFilterProps } from "./RankingFilter/RankingFilter.js";
+export { RankingFilterDropdown, IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown.js";
 export {
     IMeasureDropdownItem,
     IAttributeDropdownItem,
     ICustomGranularitySelection,
-} from "./RankingFilter/types";
+} from "./RankingFilter/types.js";
 
 export {
     newAttributeFilterHandler,
@@ -117,7 +117,7 @@ export {
     IAttributeFilterHandler,
     ISingleSelectAttributeFilterHandler,
     IMultiSelectAttributeFilterHandler,
-} from "./AttributeFilterHandler";
+} from "./AttributeFilterHandler/index.js";
 
 export {
     AttributeFilter,
@@ -190,4 +190,4 @@ export {
     AttributeFilterController,
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
-} from "./AttributeFilter";
+} from "./AttributeFilter/index.js";

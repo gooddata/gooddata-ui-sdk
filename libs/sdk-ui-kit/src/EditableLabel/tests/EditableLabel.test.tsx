@@ -1,10 +1,16 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { EditableLabel } from "../EditableLabel";
-import { IEditableLabelProps } from "../typings";
-import Mock = jest.Mock;
+import { EditableLabel } from "../EditableLabel.js";
+import defaultUserEvent from "@testing-library/user-event";
+import { IEditableLabelProps } from "../typings.js";
+import { describe, it, expect, vi, Mock } from "vitest";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 function renderEditableLabel(options: IEditableLabelProps) {
     return render(<EditableLabel {...options} />);
@@ -20,7 +26,7 @@ describe("EditableLabel", () => {
             renderEditableLabel({
                 value: "",
                 textareaInOverlay: true,
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             expect(screen.queryByRole("textarea-wrapper")).not.toBeInTheDocument();
@@ -31,7 +37,7 @@ describe("EditableLabel", () => {
         it("should have editing class", async () => {
             const { unmount } = renderEditableLabel({
                 value: "",
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             await clickToEnableEditing();
@@ -44,7 +50,7 @@ describe("EditableLabel", () => {
         it("should be one row high", async () => {
             renderEditableLabel({
                 value: "",
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             await clickToEnableEditing();
@@ -57,7 +63,7 @@ describe("EditableLabel", () => {
             renderEditableLabel({
                 value: "",
                 maxLength: 10,
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             await clickToEnableEditing();
@@ -69,7 +75,7 @@ describe("EditableLabel", () => {
         it("should change value when received", async () => {
             renderEditableLabel({
                 value: "aaa",
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             await clickToEnableEditing();
@@ -81,9 +87,9 @@ describe("EditableLabel", () => {
 
     describe("saving and canceling and change value", () => {
         const renderEditableLabelAndClickIn = async ({
-            onCancel = jest.fn(),
-            onSubmit = jest.fn(),
-            onChange = jest.fn(),
+            onCancel = vi.fn(),
+            onSubmit = vi.fn(),
+            onChange = vi.fn(),
         }: {
             onCancel?: Mock;
             onSubmit?: Mock;
@@ -100,7 +106,7 @@ describe("EditableLabel", () => {
         };
 
         it("should not call onSubmit callback after user leaves the input without changes", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             await renderEditableLabelAndClickIn({ onSubmit });
 
             fireEvent.blur(screen.getByRole("textbox"));
@@ -110,11 +116,14 @@ describe("EditableLabel", () => {
         });
 
         it("should call onSubmit when user press the enter key", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             const value = "This is new text";
             await renderEditableLabelAndClickIn({ onSubmit });
 
-            await userEvent.clear(screen.getByRole("textbox"));
+            const textbox = screen.getByRole("textbox");
+            await userEvent.clear(textbox);
+            textbox.focus();
+
             await userEvent.paste(value);
             await userEvent.click(document.body);
             await waitFor(() => {
@@ -126,7 +135,7 @@ describe("EditableLabel", () => {
         });
 
         it("should call onCancel callback and discard temporary value when user press the escape key", async () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             await renderEditableLabelAndClickIn({ onCancel });
 
             fireEvent.keyDown(screen.getByRole("textbox"), {
@@ -143,7 +152,7 @@ describe("EditableLabel", () => {
         });
 
         it("should trim value when user enters only spaces", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             await renderEditableLabelAndClickIn({ onSubmit });
 
             await userEvent.clear(screen.getByRole("textbox"));
@@ -160,7 +169,7 @@ describe("EditableLabel", () => {
         });
 
         it("should call onChange when user change value", async () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             const value = "This is new text";
             await renderEditableLabelAndClickIn({ onChange });
 

@@ -1,11 +1,11 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import isEmpty from "lodash/isEmpty";
-import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
 
-import { selectState } from "../common/selectors";
-import { InvertableAttributeElementSelection } from "../../../types";
-import { FilterSelector } from "../common/types";
+import { selectState } from "../common/selectors.js";
+import { InvertableAttributeElementSelection } from "../../../types/index.js";
+import { FilterSelector } from "../common/types.js";
 
 /**
  * @internal

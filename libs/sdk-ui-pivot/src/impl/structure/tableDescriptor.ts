@@ -12,18 +12,18 @@ import {
     agColId,
     isEmptyScopeCol,
     LeafDataCol,
-} from "./tableDescriptorTypes";
+} from "./tableDescriptorTypes.js";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
-import invariant from "ts-invariant";
-import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../columnWidths";
-import { searchForLocatorMatch } from "./colLocatorMatching";
+import { invariant } from "ts-invariant";
+import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../columnWidths.js";
+import { searchForLocatorMatch } from "./colLocatorMatching.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { createHeadersAndColDefs } from "./tableDescriptorFactory";
+import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
 import { ISortItem, IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
-import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting";
-import { createSortItemForCol } from "./colSortItemFactory";
-import keyBy from "lodash/keyBy";
-import findIndex from "lodash/findIndex";
+import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting.js";
+import { createSortItemForCol } from "./colSortItemFactory.js";
+import keyBy from "lodash/keyBy.js";
+import findIndex from "lodash/findIndex.js";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information

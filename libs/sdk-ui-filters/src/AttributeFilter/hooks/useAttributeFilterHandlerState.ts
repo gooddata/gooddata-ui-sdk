@@ -1,5 +1,8 @@
 // (C) 2022 GoodData Corporation
-import { IMultiSelectAttributeFilterHandler, AsyncOperationStatus } from "../../AttributeFilterHandler";
+import {
+    IMultiSelectAttributeFilterHandler,
+    AsyncOperationStatus,
+} from "../../AttributeFilterHandler/index.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeDisplayFormMetadataObject,

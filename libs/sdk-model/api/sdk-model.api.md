@@ -4,6 +4,10 @@
 
 ```ts
 
+import { ComparatorDirection as ComparatorDirection_2 } from '../base/comparators.js';
+import { IComparator as IComparator_2 } from '../base/comparators.js';
+import { IInsightDefinition as IInsightDefinition_2 } from './index.js';
+
 // @public
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
@@ -1660,10 +1664,10 @@ export function insightCreated(insight: IInsight): string | undefined;
 export function insightCreatedBy(insight: IInsight): IUser | undefined;
 
 // @beta (undocumented)
-export const insightCreatedByComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+export const insightCreatedByComparator: (direction: ComparatorDirection_2) => IComparator_2<IInsight>;
 
 // @beta (undocumented)
-export const insightCreatedComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+export const insightCreatedComparator: (direction: ComparatorDirection_2) => IComparator_2<IInsight>;
 
 // @internal
 export class InsightDefinitionBuilder {
@@ -1762,7 +1766,7 @@ export function insightTags(insight: IInsightDefinition): string[];
 export function insightTitle(insight: IInsightDefinition): string;
 
 // @beta (undocumented)
-export const insightTitleComparator: (direction: ComparatorDirection) => IComparator<IInsightDefinition>;
+export const insightTitleComparator: (direction: ComparatorDirection_2) => IComparator_2<IInsightDefinition_2>;
 
 // @public
 export function insightTotals(insight: IInsightDefinition): ITotal[];
@@ -1774,10 +1778,10 @@ export function insightUpdated(insight: IInsight): string | undefined;
 export function insightUpdatedBy(insight: IInsight): IUser | undefined;
 
 // @beta (undocumented)
-export const insightUpdatedByComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+export const insightUpdatedByComparator: (direction: ComparatorDirection_2) => IComparator_2<IInsight>;
 
 // @beta (undocumented)
-export const insightUpdatedComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
+export const insightUpdatedComparator: (direction: ComparatorDirection_2) => IComparator_2<IInsight>;
 
 // @public
 export function insightUri(insight: IInsight): string;

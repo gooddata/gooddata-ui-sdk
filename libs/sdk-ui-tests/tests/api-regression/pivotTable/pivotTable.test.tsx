@@ -1,26 +1,34 @@
 // (C) 2007-2019 GoodData Corporation
 
-// These imports and actions need to be done first because of mocks
-const Original = jest.requireActual("@gooddata/sdk-ui-pivot/dist/CorePivotTable");
-import { withPropsExtractor } from "../../_infra/withProps";
-const { extractProps, wrap } = withPropsExtractor();
-
-import pivotTableScenarios from "../../../scenarios/pivotTable";
-import { ScenarioAndDescription } from "../../../src";
-import { mountChartAndCapture } from "../../_infra/render";
-import { cleanupCorePivotTableProps } from "../../_infra/utils";
+import { describe, it, expect, vi } from "vitest";
+import { withPropsExtractor } from "../../_infra/withProps.js";
+import pivotTableScenarios from "../../../scenarios/pivotTable/index.js";
+import { ScenarioAndDescription } from "../../../src/index.js";
+import { mountChartAndCapture } from "../../_infra/render.js";
+import { cleanupCorePivotTableProps } from "../../_infra/utils.js";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
-import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
-import { mountInsight } from "../../_infra/renderPlugVis";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
+import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { defSetSorts } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 
 const Vis = "PivotTable";
 
-jest.mock("@gooddata/sdk-ui-pivot/dist/CorePivotTable", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui-pivot/dist/CorePivotTable"),
-    CorePivotTableAgImpl: wrap(Original.CorePivotTableAgImpl),
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
 }));
+
+vi.mock("@gooddata/sdk-ui-pivot/internal-tests/CorePivotTableAgImpl", async () => {
+    const Original = await vi.importActual<any>("@gooddata/sdk-ui-pivot/internal-tests/CorePivotTableAgImpl");
+    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
+    extractProps = originalExtractProps;
+
+    return {
+        ...Original,
+        CorePivotTableAgImpl: wrap(Original.CorePivotTableAgImpl),
+    };
+});
 
 describe(Vis, () => {
     const Scenarios: Array<ScenarioAndDescription<IPivotTableProps>> = flatMap(pivotTableScenarios, (group) =>

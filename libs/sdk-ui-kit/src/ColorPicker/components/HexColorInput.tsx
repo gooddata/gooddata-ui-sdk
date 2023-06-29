@@ -2,8 +2,8 @@
 import React, { PureComponent, Fragment, ReactNode } from "react";
 import { ColorFormats } from "tinycolor2";
 
-import { getHslFromHexColor, getHexFromHslColor, isHexColorValid } from "../utils";
-import { Input } from "../../Form";
+import { getHslFromHexColor, getHexFromHslColor, isHexColorValid } from "../utils.js";
+import { Input } from "../../Form/index.js";
 
 export interface IHexColorInputProps {
     initColor: ColorFormats.HSL;

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getReactEmbeddingCodeGenerator height test should generate embedding code with height as number 1`] = `
+exports[`getReactEmbeddingCodeGenerator > height test > should generate embedding code with height as number 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -25,7 +25,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator height test should generate embedding code with height as string 1`] = `
+exports[`getReactEmbeddingCodeGenerator > height test > should generate embedding code with height as string 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -50,7 +50,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator height test should generate embedding code without height 1`] = `
+exports[`getReactEmbeddingCodeGenerator > height test > should generate embedding code without height 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -75,7 +75,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code no props to omit defined as undefined 1`] = `
+exports[`getReactEmbeddingCodeGenerator > omitChartProps > should generate embedding code no props to omit defined as undefined 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -100,7 +100,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code no props to omit defined in empty array 1`] = `
+exports[`getReactEmbeddingCodeGenerator > omitChartProps > should generate embedding code no props to omit defined in empty array 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -125,7 +125,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code omit all props 1`] = `
+exports[`getReactEmbeddingCodeGenerator > omitChartProps > should generate embedding code omit all props 1`] = `
 "import React from \\"react\\";
 import { Foo } from \\"@gooddata/foo\\";
 
@@ -144,7 +144,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code omit one prop 1`] = `
+exports[`getReactEmbeddingCodeGenerator > omitChartProps > should generate embedding code omit one prop 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";

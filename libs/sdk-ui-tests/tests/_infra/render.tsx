@@ -4,9 +4,9 @@ import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { render } from "@testing-library/react";
 import React from "react";
-import { IScenario, VisProps } from "../../src";
-import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
-import omit from "lodash/omit";
+import { IScenario, VisProps } from "../../src/index.js";
+import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.js";
+import omit from "lodash/omit.js";
 
 function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {

@@ -1,12 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { ColorPicker } from "../ColorPicker";
+import { ColorPicker } from "../ColorPicker.js";
 import { ColorFormats } from "tinycolor2";
-import { IColorPickerProps } from "../typings";
+import { IColorPickerProps } from "../typings.js";
+import { describe, it, expect, vi } from "vitest";
 
 const initialRgbColor: ColorFormats.RGB = {
     r: 255,
@@ -48,10 +48,10 @@ describe("ColorPicker", () => {
         expect(screen.getByRole("textbox")).toHaveValue("#ff0000");
     });
 
-    it("Should select color from picker and change and set proper values", async () => {
+    it("Should select color from picker and change and set proper values", () => {
         renderComponent();
 
-        await userEvent.click(document.querySelector(".s-color-120"));
+        fireEvent.click(document.querySelector(".s-color-120"));
 
         expect(screen.getByLabelText("current-color")).toHaveStyle(defaultStyle);
         expect(screen.getByLabelText("new-color")).toHaveStyle({ backgroundColor: "hsl(0, 50%, 70%)" });
@@ -59,9 +59,9 @@ describe("ColorPicker", () => {
         expect(screen.getByRole("textbox")).toHaveValue("#d98c8c");
     });
 
-    it("Should return rgb color on OK button click and call cancel event on Cancel button click", async () => {
-        const submitMock = jest.fn();
-        const cancelMock = jest.fn();
+    it("Should return rgb color on OK button click and call cancel event on Cancel button click", () => {
+        const submitMock = vi.fn();
+        const cancelMock = vi.fn();
 
         renderComponent({
             onSubmit: submitMock,
@@ -73,9 +73,9 @@ describe("ColorPicker", () => {
             g: 140,
             b: 140,
         };
-        await userEvent.click(document.querySelector(".s-color-120"));
-        await userEvent.click(screen.getByRole("button", { name: "ok" }));
-        await userEvent.click(screen.getByRole("button", { name: "cancel" }));
+        fireEvent.click(document.querySelector(".s-color-120"));
+        fireEvent.click(screen.getByRole("button", { name: "ok" }));
+        fireEvent.click(screen.getByRole("button", { name: "cancel" }));
 
         expect(submitMock).toHaveBeenCalledTimes(1);
         expect(cancelMock).toHaveBeenCalledTimes(1);

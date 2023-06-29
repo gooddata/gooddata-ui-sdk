@@ -1,7 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import Headline, { IHeadlineVisualizationProps } from "../Headline";
+import Headline, { IHeadlineVisualizationProps } from "../Headline.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("Headline", () => {
     function createComponent(props: IHeadlineVisualizationProps) {
@@ -9,7 +10,7 @@ describe("Headline", () => {
     }
 
     it("should call after render callback on componentDidMount", () => {
-        const onAfterRender = jest.fn();
+        const onAfterRender = vi.fn();
         createComponent({
             onAfterRender,
             data: {
@@ -26,7 +27,7 @@ describe("Headline", () => {
 
     describe("with primary value", () => {
         it("should not produce any event upon click when fire handler but primary value is not drillable", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -44,7 +45,7 @@ describe("Headline", () => {
         });
 
         it("should produce correct event upon click when fire handler is set and primary value is drillable", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -102,7 +103,7 @@ describe("Headline", () => {
         });
 
         it("should have primary value written out as link even when the drillable value is invalid", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -251,7 +252,7 @@ describe("Headline", () => {
 
     describe("with secondary value", () => {
         it("should not produce any event upon click when fire handler but secondary value is not drillable", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -282,7 +283,7 @@ describe("Headline", () => {
         });
 
         it("should produce correct event upon click when fire handler is set and secondary value is drillable", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -321,7 +322,7 @@ describe("Headline", () => {
         });
 
         it("should render headline item link with underline style when is drillable", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -351,7 +352,7 @@ describe("Headline", () => {
         });
 
         it("should not render headline item link with underline style when is drillable and disableDrillUnderline is true", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -382,7 +383,7 @@ describe("Headline", () => {
         });
 
         it("should have secondary value written out as link even when the drillable value is invalid", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -635,7 +636,7 @@ describe("Headline", () => {
 
     describe("with tertiary value", () => {
         it("should have written out as formatted value when correct value is provided", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {
@@ -664,7 +665,7 @@ describe("Headline", () => {
         });
 
         it("should have written out as dash when undefined value is provided", () => {
-            const onDrill = jest.fn();
+            const onDrill = vi.fn();
             createComponent({
                 onDrill,
                 data: {

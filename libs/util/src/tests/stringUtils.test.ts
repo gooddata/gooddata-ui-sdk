@@ -1,5 +1,13 @@
 // (C) 2007-2022 GoodData Corporation
-import { randomString, shortenText, simplifyText, parseStringToArray, hashCodeString } from "../stringUtils";
+import { expect, describe, it } from "vitest";
+
+import {
+    randomString,
+    shortenText,
+    simplifyText,
+    parseStringToArray,
+    hashCodeString,
+} from "../stringUtils.js";
 
 describe("randomString", () => {
     it("should generate alphanumeric string with correct length", () => {

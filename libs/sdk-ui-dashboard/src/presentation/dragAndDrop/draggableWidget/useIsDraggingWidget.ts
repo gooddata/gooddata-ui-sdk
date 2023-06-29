@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { useDashboardDrop } from "../useDashboardDrop";
+import { useDashboardDrop } from "../useDashboardDrop.js";
 
 export function useIsDraggingWidget() {
     const [{ canDrop: isDraggingWidget }] = useDashboardDrop(

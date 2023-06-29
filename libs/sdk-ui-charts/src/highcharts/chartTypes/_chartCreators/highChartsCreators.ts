@@ -1,35 +1,35 @@
 // (C) 2007-2023 GoodData Corporation
-import merge from "lodash/merge";
-import invariant from "ts-invariant";
+import merge from "lodash/merge.js";
+import { invariant } from "ts-invariant";
 import { VisualizationTypes, IDrillConfig, VisType } from "@gooddata/sdk-ui";
-import { getCommonConfiguration } from "./commonConfiguration";
+import { getCommonConfiguration } from "./commonConfiguration.js";
 
-import { stringifyChartTypes } from "../_util/common";
+import { stringifyChartTypes } from "../_util/common.js";
 
-import { IChartLimits, IChartConfig } from "../../../interfaces";
+import { IChartLimits, IChartConfig } from "../../../interfaces/index.js";
 
-import { getLineConfiguration } from "../lineChart/lineConfiguration";
-import { getBarConfiguration } from "../barChart/barConfiguration";
-import { getBulletConfiguration } from "../bulletChart/bulletConfiguration";
-import { getColumnConfiguration } from "../columnChart/columnConfiguration";
-import { getCustomizedConfiguration } from "./customConfiguration";
-import { getPieConfiguration } from "../pieChart/pieConfiguration";
-import { getDonutConfiguration } from "../donutChart/donutConfiguration";
-import { getAreaConfiguration } from "../areaChart/areaConfiguration";
-import { getScatterConfiguration } from "../scatterPlot/scatterConfiguration";
-import { getComboConfiguration } from "../comboChart/comboConfiguration";
-import { getTreemapConfiguration } from "../treemap/treemapConfiguration";
-import { getFunnelConfiguration } from "../funnelChart/funnelConfiguration";
-import { getPyramidConfiguration } from "../pyramidChart/pyramidConfiguration";
-import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration";
-import { getBubbleConfiguration } from "../bubbleChart/bubbleConfiguration";
+import { getLineConfiguration } from "../lineChart/lineConfiguration.js";
+import { getBarConfiguration } from "../barChart/barConfiguration.js";
+import { getBulletConfiguration } from "../bulletChart/bulletConfiguration.js";
+import { getColumnConfiguration } from "../columnChart/columnConfiguration.js";
+import { getCustomizedConfiguration } from "./customConfiguration.js";
+import { getPieConfiguration } from "../pieChart/pieConfiguration.js";
+import { getDonutConfiguration } from "../donutChart/donutConfiguration.js";
+import { getAreaConfiguration } from "../areaChart/areaConfiguration.js";
+import { getScatterConfiguration } from "../scatterPlot/scatterConfiguration.js";
+import { getComboConfiguration } from "../comboChart/comboConfiguration.js";
+import { getTreemapConfiguration } from "../treemap/treemapConfiguration.js";
+import { getFunnelConfiguration } from "../funnelChart/funnelConfiguration.js";
+import { getPyramidConfiguration } from "../pyramidChart/pyramidConfiguration.js";
+import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration.js";
+import { getBubbleConfiguration } from "../bubbleChart/bubbleConfiguration.js";
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { IChartOptions, ISeriesItem } from "../../typings/unsafe";
+import { IChartOptions, ISeriesItem } from "../../typings/unsafe.js";
 import { IntlShape } from "react-intl";
-import { HighchartsOptions } from "../../lib";
-import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration";
-import { getDependencyWheelConfiguration } from "../dependencyWheelChart/dependencyWheelConfiguration";
-import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfiguration";
+import { HighchartsOptions } from "../../lib/index.js";
+import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration.js";
+import { getDependencyWheelConfiguration } from "../dependencyWheelChart/dependencyWheelConfiguration.js";
+import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfiguration.js";
 
 type ChartConfigurationValueType = (
     ...args: any

@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { DashboardContext } from "../types/commonTypes";
+import isEmpty from "lodash/isEmpty.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 /**
  * A union of all available built-in dashboard event type names.

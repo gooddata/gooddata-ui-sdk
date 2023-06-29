@@ -12,17 +12,107 @@ import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
+import { CommandProcessingStatus as CommandProcessingStatus_2 } from '../../../model/index.js';
 import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
+import { CreateInsightRequested as CreateInsightRequested_2 } from '../events/lab.js';
 import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
+import { DashboardAlertCreated as DashboardAlertCreated_2 } from '../events/alerts.js';
+import { DashboardAlertsRemoved as DashboardAlertsRemoved_2 } from '../events/alerts.js';
+import { DashboardAlertUpdated as DashboardAlertUpdated_2 } from '../events/alerts.js';
+import { DashboardAsyncRenderRequested as DashboardAsyncRenderRequested_2 } from '../events/render.js';
+import { DashboardAsyncRenderResolved as DashboardAsyncRenderResolved_2 } from '../events/render.js';
+import { DashboardAttributeFilterAdded as DashboardAttributeFilterAdded_2 } from '../events/filters.js';
+import { DashboardAttributeFilterMoved as DashboardAttributeFilterMoved_2 } from '../events/filters.js';
+import { DashboardAttributeFilterParentChanged as DashboardAttributeFilterParentChanged_2 } from '../events/filters.js';
+import { DashboardAttributeFilterRemoved as DashboardAttributeFilterRemoved_2 } from '../events/filters.js';
+import { DashboardAttributeFilterSelectionChanged as DashboardAttributeFilterSelectionChanged_2 } from '../events/filters.js';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
+import { DashboardAttributeSelectionModeChanged as DashboardAttributeSelectionModeChanged_2 } from '../events/filters.js';
+import { DashboardAttributeTitleChanged as DashboardAttributeTitleChanged_2 } from '../events/filters.js';
+import { DashboardCommandFailed as DashboardCommandFailed_2 } from '../events/general.js';
+import { DashboardCommandRejected as DashboardCommandRejected_2 } from '../events/general.js';
+import { DashboardCommandStarted as DashboardCommandStarted_2 } from '../events/general.js';
+import { DashboardCopySaved as DashboardCopySaved_2 } from '../events/dashboard.js';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
+import { DashboardDateFilterSelectionChanged as DashboardDateFilterSelectionChanged_2 } from '../events/filters.js';
+import { DashboardDeinitialized as DashboardDeinitialized_2 } from '../events/dashboard.js';
+import { DashboardDrillableItemsChanged as DashboardDrillableItemsChanged_2 } from '../events/drill.js';
+import { DashboardDrillContext as DashboardDrillContext_2 } from '../../../types.js';
+import { DashboardDrillDownRequested as DashboardDrillDownRequested_2 } from '../events/drill.js';
+import { DashboardDrillDownResolved as DashboardDrillDownResolved_2 } from '../events/drill.js';
+import { DashboardDrillRequested as DashboardDrillRequested_2 } from '../events/drill.js';
+import { DashboardDrillResolved as DashboardDrillResolved_2 } from '../events/drill.js';
+import { DashboardDrillToAttributeUrlRequested as DashboardDrillToAttributeUrlRequested_2 } from '../events/drill.js';
+import { DashboardDrillToAttributeUrlResolved as DashboardDrillToAttributeUrlResolved_2 } from '../events/drill.js';
+import { DashboardDrillToCustomUrlRequested as DashboardDrillToCustomUrlRequested_2 } from '../events/drill.js';
+import { DashboardDrillToCustomUrlResolved as DashboardDrillToCustomUrlResolved_2 } from '../events/drill.js';
+import { DashboardDrillToDashboardRequested as DashboardDrillToDashboardRequested_2 } from '../events/drill.js';
+import { DashboardDrillToDashboardResolved as DashboardDrillToDashboardResolved_2 } from '../events/drill.js';
+import { DashboardDrillToInsightRequested as DashboardDrillToInsightRequested_2 } from '../events/drill.js';
+import { DashboardDrillToInsightResolved as DashboardDrillToInsightResolved_2 } from '../events/drill.js';
+import { DashboardDrillToLegacyDashboardRequested as DashboardDrillToLegacyDashboardRequested_2 } from '../events/drill.js';
+import { DashboardDrillToLegacyDashboardResolved as DashboardDrillToLegacyDashboardResolved_2 } from '../events/drill.js';
+import { DashboardExportToPdfRequested as DashboardExportToPdfRequested_2 } from '../events/dashboard.js';
+import { DashboardExportToPdfResolved as DashboardExportToPdfResolved_2 } from '../events/dashboard.js';
+import { DashboardFilterContextChanged as DashboardFilterContextChanged_2 } from '../events/filters.js';
+import { DashboardInitialized as DashboardInitialized_2 } from '../events/dashboard.js';
+import { DashboardInsightWidgetChanged as DashboardInsightWidgetChanged_2 } from '../events/insight.js';
+import { DashboardInsightWidgetDescriptionChanged as DashboardInsightWidgetDescriptionChanged_2 } from '../events/insight.js';
+import { DashboardInsightWidgetDrillsModified as DashboardInsightWidgetDrillsModified_2 } from '../events/insight.js';
+import { DashboardInsightWidgetDrillsRemoved as DashboardInsightWidgetDrillsRemoved_2 } from '../events/insight.js';
+import { DashboardInsightWidgetExportRequested as DashboardInsightWidgetExportRequested_2 } from '../events/insight.js';
+import { DashboardInsightWidgetExportResolved as DashboardInsightWidgetExportResolved_2 } from '../events/insight.js';
+import { DashboardInsightWidgetFilterSettingsChanged as DashboardInsightWidgetFilterSettingsChanged_2 } from '../events/insight.js';
+import { DashboardInsightWidgetHeaderChanged as DashboardInsightWidgetHeaderChanged_2 } from '../events/insight.js';
+import { DashboardInsightWidgetInsightSwitched as DashboardInsightWidgetInsightSwitched_2 } from '../events/insight.js';
+import { DashboardInsightWidgetRefreshed as DashboardInsightWidgetRefreshed_2 } from '../events/insight.js';
+import { DashboardInsightWidgetVisConfigurationChanged as DashboardInsightWidgetVisConfigurationChanged_2 } from '../events/insight.js';
+import { DashboardInsightWidgetVisPropertiesChanged as DashboardInsightWidgetVisPropertiesChanged_2 } from '../events/insight.js';
+import { DashboardKpiWidgetChanged as DashboardKpiWidgetChanged_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetComparisonChanged as DashboardKpiWidgetComparisonChanged_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetConfigurationChanged as DashboardKpiWidgetConfigurationChanged_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetDescriptionChanged as DashboardKpiWidgetDescriptionChanged_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetDrillRemoved as DashboardKpiWidgetDrillRemoved_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetDrillSet as DashboardKpiWidgetDrillSet_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetFilterSettingsChanged as DashboardKpiWidgetFilterSettingsChanged_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetHeaderChanged as DashboardKpiWidgetHeaderChanged_2 } from '../events/kpi.js';
+import { DashboardKpiWidgetMeasureChanged as DashboardKpiWidgetMeasureChanged_2 } from '../events/kpi.js';
+import { DashboardLayoutChanged as DashboardLayoutChanged_2 } from '../events/layout.js';
+import { DashboardLayoutSectionAdded as DashboardLayoutSectionAdded_2 } from '../events/layout.js';
+import { DashboardLayoutSectionHeaderChanged as DashboardLayoutSectionHeaderChanged_2 } from '../events/layout.js';
+import { DashboardLayoutSectionItemMoved as DashboardLayoutSectionItemMoved_2 } from '../events/layout.js';
+import { DashboardLayoutSectionItemRemoved as DashboardLayoutSectionItemRemoved_2 } from '../events/layout.js';
+import { DashboardLayoutSectionItemReplaced as DashboardLayoutSectionItemReplaced_2 } from '../events/layout.js';
+import { DashboardLayoutSectionItemsAdded as DashboardLayoutSectionItemsAdded_2 } from '../events/layout.js';
+import { DashboardLayoutSectionMoved as DashboardLayoutSectionMoved_2 } from '../events/layout.js';
+import { DashboardLayoutSectionRemoved as DashboardLayoutSectionRemoved_2 } from '../events/layout.js';
+import { DashboardQueryCompleted as DashboardQueryCompleted_2 } from '../events/general.js';
+import { DashboardQueryFailed as DashboardQueryFailed_2 } from '../events/general.js';
+import { DashboardQueryRejected as DashboardQueryRejected_2 } from '../events/general.js';
+import { DashboardQueryStarted as DashboardQueryStarted_2 } from '../events/general.js';
+import { DashboardRenamed as DashboardRenamed_2 } from '../events/dashboard.js';
+import { DashboardRenderModeChanged as DashboardRenderModeChanged_2 } from '../events/renderMode.js';
+import { DashboardRenderRequested as DashboardRenderRequested_2 } from '../events/render.js';
+import { DashboardRenderResolved as DashboardRenderResolved_2 } from '../events/render.js';
+import { DashboardSaved as DashboardSaved_2 } from '../events/dashboard.js';
+import { DashboardScheduledEmailCreated as DashboardScheduledEmailCreated_2 } from '../events/scheduledEmail.js';
+import { DashboardScheduledEmailSaved as DashboardScheduledEmailSaved_2 } from '../events/scheduledEmail.js';
+import { DashboardSharingChanged as DashboardSharingChanged_2 } from '../events/dashboard.js';
+import { DashboardState as DashboardState_2 } from '../index.js';
+import { DashboardUserInteractionTriggered as DashboardUserInteractionTriggered_2 } from '../events/userInteraction.js';
+import { DashboardWasReset as DashboardWasReset_2 } from '../events/dashboard.js';
+import { DashboardWidgetExecutionFailed as DashboardWidgetExecutionFailed_2 } from '../events/widget.js';
+import { DashboardWidgetExecutionStarted as DashboardWidgetExecutionStarted_2 } from '../events/widget.js';
+import { DashboardWidgetExecutionSucceeded as DashboardWidgetExecutionSucceeded_2 } from '../events/widget.js';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
+import { DateFilterValidationFailed as DateFilterValidationFailed_2 } from '../events/dashboard.js';
 import { DateString } from '@gooddata/sdk-model';
 import { Dispatch } from '@reduxjs/toolkit';
+import { DraggableLayoutItem as DraggableLayoutItem_2 } from '../../../index.js';
 import { DrillDefinition } from '@gooddata/sdk-model';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
@@ -54,7 +144,12 @@ import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.js';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardInsightMenuButtonProps as IDashboardInsightMenuButtonProps_2 } from '../types.js';
+import { IDashboardInsightMenuProps as IDashboardInsightMenuProps_2 } from '../types.js';
+import { IDashboardInsightProps as IDashboardInsightProps_2 } from './types.js';
+import { IDashboardKpiProps as IDashboardKpiProps_2 } from './types.js';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
@@ -63,12 +158,14 @@ import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
+import { IDashboardWidgetOverlay as IDashboardWidgetOverlay_2 } from '../../index.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
+import { IDrillDownDefinition as IDrillDownDefinition_2 } from '../../../types.js';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
 import { IDrillToCustomUrl } from '@gooddata/sdk-model';
@@ -98,10 +195,12 @@ import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
 import { IKpiWidget } from '@gooddata/sdk-model';
 import { IKpiWidgetConfiguration } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { ILayoutCoordinates as ILayoutCoordinates_2 } from '../../../types.js';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
+import { IMenuButtonItemsVisibility as IMenuButtonItemsVisibility_2 } from '../../../types.js';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
@@ -120,6 +219,7 @@ import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
+import { ITitleProps as ITitleProps_2 } from './types.js';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -144,22 +244,26 @@ import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
+import { QueryCacheEntryResult as QueryCacheEntryResult_2 } from '../store/_infra/queryService.js';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { RefAttributes } from 'react';
+import { RenderMode as RenderMode_2 } from '../../../types.js';
+import { RenderModeState as RenderModeState_2 } from './renderModeState.js';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
+import { UiState as UiState_2 } from './uiState.js';
 import { Uri } from '@gooddata/sdk-model';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
-import { WritableDraft } from 'immer/dist/internal';
+import { WritableDraft } from 'immer/dist/internal.js';
 
 // @beta (undocumented)
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
@@ -2406,7 +2510,7 @@ export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilt
 export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
 
 // @public
-export const DefaultDashboardInsight: ComponentType<IDashboardInsightProps>;
+export const DefaultDashboardInsight: ComponentType<IDashboardInsightProps_2>;
 
 // @internal (undocumented)
 export function DefaultDashboardInsightComponentSetFactory(insightProvider: InsightComponentProvider): InsightWidgetComponentSet;
@@ -2421,7 +2525,7 @@ export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuBut
 export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleComponent;
 
 // @internal (undocumented)
-export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps>;
+export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps_2>;
 
 // @internal (undocumented)
 export function DefaultDashboardKpiComponentSetFactory(kpiProvider: KpiComponentProvider): KpiWidgetComponentSet;
@@ -4746,10 +4850,10 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
 }
 
 // @internal (undocumented)
-export const LegacyDashboardInsightMenu: ComponentType<IDashboardInsightMenuProps | (IDashboardInsightMenuProps & RefAttributes<Component<IDashboardInsightMenuProps, any, any>>)>;
+export const LegacyDashboardInsightMenu: ComponentType<IDashboardInsightMenuProps_2 | (IDashboardInsightMenuProps_2 & RefAttributes<Component<IDashboardInsightMenuProps_2, any, any>>)>;
 
 // @internal (undocumented)
-export const LegacyDashboardInsightMenuButton: ComponentType<IDashboardInsightMenuButtonProps | (IDashboardInsightMenuButtonProps & RefAttributes<Component<IDashboardInsightMenuButtonProps, any, any>>)>;
+export const LegacyDashboardInsightMenuButton: ComponentType<IDashboardInsightMenuButtonProps_2 | (IDashboardInsightMenuButtonProps_2 & RefAttributes<Component<IDashboardInsightMenuButtonProps_2, any, any>>)>;
 
 // @public (undocumented)
 export interface LegacyDashboardsState {
@@ -5476,12 +5580,12 @@ export type RenderMode = "view" | "edit";
 
 // @internal
 export const renderModeActions: CaseReducerActions<    {
-setRenderMode: (state: WritableDraft<RenderModeState>, action: {
-payload: RenderMode;
+setRenderMode: (state: WritableDraft<RenderModeState_2>, action: {
+payload: RenderMode_2;
 type: string;
-}) => void | RenderModeState | WritableDraft<RenderModeState>;
-setEditRenderMode: (state: WritableDraft<RenderModeState>, action: AnyAction) => void | RenderModeState | WritableDraft<RenderModeState>;
-setViewRenderMode: (state: WritableDraft<RenderModeState>, action: AnyAction) => void | RenderModeState | WritableDraft<RenderModeState>;
+}) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+setEditRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+setViewRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
 }, "renderModeSlice">;
 
 // @internal
@@ -5490,7 +5594,7 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
-export const RenderModeAwareTitle: ComponentType<ITitleProps | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
+export const RenderModeAwareTitle: ComponentType<ITitleProps_2 | (ITitleProps_2 & RefAttributes<Component<ITitleProps_2, any, any>>)>;
 
 // @beta (undocumented)
 export interface RenderModeChangeOptions {
@@ -5936,10 +6040,10 @@ export const selectDashboardUriRef: DashboardSelector<UriRef | undefined>;
 export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefinition<IDashboardWidget>>;
 
 // @internal
-export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightDateDatasets> | undefined;
+export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => (state: DashboardState_2, ...params: any[]) => QueryCacheEntryResult_2<InsightDateDatasets> | undefined;
 
 // @internal
-export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<MeasureDateDatasets> | undefined;
+export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => (state: DashboardState_2, ...params: any[]) => QueryCacheEntryResult_2<MeasureDateDatasets> | undefined;
 
 // @public
 export const selectDateFilterConfig: DashboardSelector<IDateFilterConfig>;
@@ -6107,7 +6211,7 @@ export const selectInaccessibleDashboards: (state: DashboardState) => IInaccessi
 export const selectInaccessibleDashboardsMap: DashboardSelector<ObjRefMap<IInaccessibleDashboard>>;
 
 // @internal
-export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightAttributesMeta> | undefined;
+export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => (state: DashboardState_2, ...params: any[]) => QueryCacheEntryResult_2<InsightAttributesMeta> | undefined;
 
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined>;
@@ -6574,131 +6678,131 @@ export interface TriggerEventPayload {
 
 // @internal
 export const uiActions: CaseReducerActions<    {
-openScheduleEmailDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-closeScheduleEmailDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-setScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState>, action: {
+openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-openScheduleEmailManagementDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-closeScheduleEmailManagementDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-openSaveAsDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-closeSaveAsDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-setFilterBarExpanded: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setFilterBarExpanded: (state: WritableDraft<UiState_2>, action: {
 payload: boolean;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-closeKpiAlertDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-openKpiAlertDialog: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+closeKpiAlertDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openKpiAlertDialog: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-highlightKpiAlert: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+highlightKpiAlert: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-openShareDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-closeShareDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-openDeleteDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-closeDeleteDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-openKpiDeleteDialog: (state: WritableDraft<UiState>, action: {
-payload: ILayoutCoordinates;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+openShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: {
+payload: ILayoutCoordinates_2;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-closeKpiDeleteDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-setMenuButtonItemsVisibility: (state: WritableDraft<UiState>, action: {
-payload: IMenuButtonItemsVisibility;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+closeKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setMenuButtonItemsVisibility: (state: WritableDraft<UiState_2>, action: {
+payload: IMenuButtonItemsVisibility_2;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-selectWidget: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+selectWidget: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-clearWidgetSelection: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-setConfigurationPanelOpened: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+clearWidgetSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setConfigurationPanelOpened: (state: WritableDraft<UiState_2>, action: {
 payload: boolean;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setWidgetDateDatasetAutoSelect: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setWidgetDateDatasetAutoSelect: (state: WritableDraft<UiState_2>, action: {
 payload: boolean;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-requestInsightListUpdate: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-setWidgetLoadingAdditionalDataStarted: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+requestInsightListUpdate: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setWidgetLoadingAdditionalDataStarted: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setWidgetLoadingAdditionalDataStopped: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setWidgetLoadingAdditionalDataStopped: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setFilterAttributeSelectionOpen: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setFilterAttributeSelectionOpen: (state: WritableDraft<UiState_2>, action: {
 payload: boolean;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-selectFilterIndex: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+selectFilterIndex: (state: WritableDraft<UiState_2>, action: {
 payload: number;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-clearFilterIndexSelection: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-setActiveSectionIndex: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+clearFilterIndexSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setActiveSectionIndex: (state: WritableDraft<UiState_2>, action: {
 payload: number;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-clearActiveSectionIndex: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-openCancelEditModeDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-closeCancelEditModeDialog: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-resetInvalidDrillWidgetRefs: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-resetAllInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
-addInvalidDrillWidgetRefs: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+clearActiveSectionIndex: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+resetInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+resetAllInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+addInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef[];
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: {
 payload: {
 widget: IInsightWidget;
 invalidDrills: IDrillToCustomUrl[];
 }[];
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-removeInvalidDrillWidgetRefs: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+removeInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef[];
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-resetInvalidCustomUrlDrillParameterWidget: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+resetInvalidCustomUrlDrillParameterWidget: (state: WritableDraft<UiState_2>, action: {
 payload: IInsightWidget[];
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setDraggingWidgetSource: (state: WritableDraft<UiState>, action: {
-payload: DraggableLayoutItem;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
+payload: DraggableLayoutItem_2;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-clearDraggingWidgetSource: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+clearDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
 payload: void;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setDraggingWidgetTarget: (state: WritableDraft<UiState>, action: {
-payload: ILayoutCoordinates;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
+payload: ILayoutCoordinates_2;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-clearDraggingWidgetTarget: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+clearDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
 payload: void;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-toggleWidgetsOverlay: (state: WritableDraft<UiState>, action: {
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+toggleWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
 payload: {
 refs: (ObjRef | undefined)[];
 visible: boolean;
 };
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-setWidgetsOverlay: (state: WritableDraft<UiState>, action: {
-payload: Record<string, IDashboardWidgetOverlay>;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+setWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
+payload: Record<string, IDashboardWidgetOverlay_2>;
 type: string;
-}) => void | UiState | WritableDraft<UiState>;
-hideAllWidgetsOverlay: (state: WritableDraft<UiState>, action: AnyAction) => void | UiState | WritableDraft<UiState>;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -6877,350 +6981,350 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess?: ((event: Extract<DashboardDrillResolved, {
+    onSuccess?: ((event: Extract<DashboardCommandStarted_2<any>, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillDownResolved, {
+    }> | Extract<DashboardCommandFailed_2<any>, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToInsightResolved, {
+    }> | Extract<DashboardCommandRejected_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToDashboardResolved, {
+    }> | Extract<DashboardQueryRejected_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToAttributeUrlResolved, {
+    }> | Extract<DashboardQueryFailed_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToCustomUrlResolved, {
+    }> | Extract<DashboardQueryStarted_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToLegacyDashboardResolved, {
+    }> | Extract<DashboardQueryCompleted_2<any, any>, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInitialized, {
+    }> | Extract<DashboardInitialized_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDeinitialized, {
+    }> | Extract<DashboardDeinitialized_2, {
         type: TSuccessEventType;
-    }> | Extract<DateFilterValidationFailed, {
+    }> | Extract<DashboardSaved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardSaved, {
+    }> | Extract<DashboardCopySaved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardCopySaved, {
+    }> | Extract<DashboardRenamed_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardRenderRequested, {
+    }> | Extract<DashboardWasReset_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAsyncRenderRequested, {
+    }> | Extract<DateFilterValidationFailed_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAsyncRenderResolved, {
+    }> | Extract<DashboardExportToPdfRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardRenderResolved, {
+    }> | Extract<DashboardExportToPdfResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardSharingChanged, {
+    }> | Extract<DashboardSharingChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardRenderModeChanged, {
+    }> | Extract<DashboardDateFilterSelectionChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardCommandStarted<any>, {
+    }> | Extract<DashboardAttributeFilterAdded_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardCommandFailed<any>, {
+    }> | Extract<DashboardAttributeFilterRemoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardCommandRejected, {
+    }> | Extract<DashboardAttributeFilterMoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardQueryFailed, {
+    }> | Extract<DashboardAttributeFilterSelectionChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardQueryRejected, {
+    }> | Extract<DashboardAttributeFilterParentChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardQueryStarted, {
+    }> | Extract<DashboardAttributeTitleChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardQueryCompleted<any, any>, {
+    }> | Extract<DashboardAttributeSelectionModeChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardRenamed, {
+    }> | Extract<DashboardFilterContextChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardWasReset, {
+    }> | Extract<DashboardLayoutSectionAdded_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardExportToPdfRequested, {
+    }> | Extract<DashboardLayoutSectionMoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardExportToPdfResolved, {
+    }> | Extract<DashboardLayoutSectionRemoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardUserInteractionTriggered, {
+    }> | Extract<DashboardLayoutSectionHeaderChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDateFilterSelectionChanged, {
+    }> | Extract<DashboardLayoutSectionItemsAdded_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterAdded, {
+    }> | Extract<DashboardLayoutSectionItemReplaced_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterRemoved, {
+    }> | Extract<DashboardLayoutSectionItemMoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterMoved, {
+    }> | Extract<DashboardLayoutSectionItemRemoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterSelectionChanged, {
+    }> | Extract<DashboardLayoutChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeTitleChanged, {
+    }> | Extract<DashboardKpiWidgetHeaderChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeSelectionModeChanged, {
+    }> | Extract<DashboardKpiWidgetDescriptionChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAttributeFilterParentChanged, {
+    }> | Extract<DashboardKpiWidgetConfigurationChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardFilterContextChanged, {
+    }> | Extract<DashboardKpiWidgetMeasureChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionAdded, {
+    }> | Extract<DashboardKpiWidgetFilterSettingsChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionMoved, {
+    }> | Extract<DashboardKpiWidgetComparisonChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionRemoved, {
+    }> | Extract<DashboardKpiWidgetDrillRemoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionHeaderChanged, {
+    }> | Extract<DashboardKpiWidgetDrillSet_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionItemsAdded, {
+    }> | Extract<DashboardKpiWidgetChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionItemReplaced, {
+    }> | Extract<DashboardInsightWidgetHeaderChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionItemMoved, {
+    }> | Extract<DashboardInsightWidgetDescriptionChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutSectionItemRemoved, {
+    }> | Extract<DashboardInsightWidgetFilterSettingsChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardLayoutChanged, {
+    }> | Extract<DashboardInsightWidgetVisPropertiesChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetHeaderChanged, {
+    }> | Extract<DashboardInsightWidgetVisConfigurationChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetDescriptionChanged, {
+    }> | Extract<DashboardInsightWidgetInsightSwitched_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetConfigurationChanged, {
+    }> | Extract<DashboardInsightWidgetDrillsModified_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetMeasureChanged, {
+    }> | Extract<DashboardInsightWidgetDrillsRemoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardInsightWidgetChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetComparisonChanged, {
+    }> | Extract<DashboardInsightWidgetExportRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetDrillRemoved, {
+    }> | Extract<DashboardInsightWidgetExportResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetDrillSet, {
+    }> | Extract<DashboardInsightWidgetRefreshed_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetChanged, {
+    }> | Extract<DashboardWidgetExecutionStarted_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetHeaderChanged, {
+    }> | Extract<DashboardWidgetExecutionFailed_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetDescriptionChanged, {
+    }> | Extract<DashboardWidgetExecutionSucceeded_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardAlertCreated_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
+    }> | Extract<DashboardAlertsRemoved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetVisConfigurationChanged, {
+    }> | Extract<DashboardAlertUpdated_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetInsightSwitched, {
+    }> | Extract<DashboardScheduledEmailCreated_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetDrillsModified, {
+    }> | Extract<DashboardScheduledEmailSaved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
+    }> | Extract<DashboardUserInteractionTriggered_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetChanged, {
+    }> | Extract<DashboardRenderRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetExportRequested, {
+    }> | Extract<DashboardAsyncRenderRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetExportResolved, {
+    }> | Extract<DashboardAsyncRenderResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetRefreshed, {
+    }> | Extract<DashboardRenderResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardWidgetExecutionStarted, {
+    }> | Extract<DashboardDrillRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardWidgetExecutionSucceeded, {
+    }> | Extract<DashboardDrillResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardWidgetExecutionFailed, {
+    }> | Extract<DashboardDrillDownRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAlertCreated, {
+    }> | Extract<DashboardDrillDownResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAlertsRemoved, {
+    }> | Extract<DashboardDrillToInsightRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardAlertUpdated, {
+    }> | Extract<DashboardDrillToInsightResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardScheduledEmailCreated, {
+    }> | Extract<DashboardDrillToDashboardRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardScheduledEmailSaved, {
+    }> | Extract<DashboardDrillToDashboardResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillDownRequested, {
+    }> | Extract<DashboardDrillToCustomUrlRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToAttributeUrlRequested, {
+    }> | Extract<DashboardDrillToCustomUrlResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToCustomUrlRequested, {
+    }> | Extract<DashboardDrillToAttributeUrlRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToDashboardRequested, {
+    }> | Extract<DashboardDrillToAttributeUrlResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToInsightRequested, {
+    }> | Extract<DashboardDrillToLegacyDashboardRequested_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillToLegacyDashboardRequested, {
+    }> | Extract<DashboardDrillToLegacyDashboardResolved_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillRequested, {
+    }> | Extract<DashboardDrillableItemsChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<DashboardDrillableItemsChanged, {
+    }> | Extract<DashboardRenderModeChanged_2, {
         type: TSuccessEventType;
-    }> | Extract<CreateInsightRequested, {
+    }> | Extract<CreateInsightRequested_2, {
         type: TSuccessEventType;
     }>) => void) | undefined;
-    onError?: ((event: Extract<DashboardDrillResolved, {
+    onError?: ((event: Extract<DashboardCommandStarted_2<any>, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillDownResolved, {
+    }> | Extract<DashboardCommandFailed_2<any>, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToInsightResolved, {
+    }> | Extract<DashboardCommandRejected_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToDashboardResolved, {
+    }> | Extract<DashboardQueryRejected_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToAttributeUrlResolved, {
+    }> | Extract<DashboardQueryFailed_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToCustomUrlResolved, {
+    }> | Extract<DashboardQueryStarted_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToLegacyDashboardResolved, {
+    }> | Extract<DashboardQueryCompleted_2<any, any>, {
         type: TErrorEventType;
-    }> | Extract<DashboardInitialized, {
+    }> | Extract<DashboardInitialized_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDeinitialized, {
+    }> | Extract<DashboardDeinitialized_2, {
         type: TErrorEventType;
-    }> | Extract<DateFilterValidationFailed, {
+    }> | Extract<DashboardSaved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardSaved, {
+    }> | Extract<DashboardCopySaved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardCopySaved, {
+    }> | Extract<DashboardRenamed_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardRenderRequested, {
+    }> | Extract<DashboardWasReset_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAsyncRenderRequested, {
+    }> | Extract<DateFilterValidationFailed_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAsyncRenderResolved, {
+    }> | Extract<DashboardExportToPdfRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardRenderResolved, {
+    }> | Extract<DashboardExportToPdfResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardSharingChanged, {
+    }> | Extract<DashboardSharingChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardRenderModeChanged, {
+    }> | Extract<DashboardDateFilterSelectionChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardCommandStarted<any>, {
+    }> | Extract<DashboardAttributeFilterAdded_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardCommandFailed<any>, {
+    }> | Extract<DashboardAttributeFilterRemoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardCommandRejected, {
+    }> | Extract<DashboardAttributeFilterMoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardQueryFailed, {
+    }> | Extract<DashboardAttributeFilterSelectionChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardQueryRejected, {
+    }> | Extract<DashboardAttributeFilterParentChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardQueryStarted, {
+    }> | Extract<DashboardAttributeTitleChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardQueryCompleted<any, any>, {
+    }> | Extract<DashboardAttributeSelectionModeChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardRenamed, {
+    }> | Extract<DashboardFilterContextChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardWasReset, {
+    }> | Extract<DashboardLayoutSectionAdded_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardExportToPdfRequested, {
+    }> | Extract<DashboardLayoutSectionMoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardExportToPdfResolved, {
+    }> | Extract<DashboardLayoutSectionRemoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardUserInteractionTriggered, {
+    }> | Extract<DashboardLayoutSectionHeaderChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDateFilterSelectionChanged, {
+    }> | Extract<DashboardLayoutSectionItemsAdded_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterAdded, {
+    }> | Extract<DashboardLayoutSectionItemReplaced_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterRemoved, {
+    }> | Extract<DashboardLayoutSectionItemMoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterMoved, {
+    }> | Extract<DashboardLayoutSectionItemRemoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterSelectionChanged, {
+    }> | Extract<DashboardLayoutChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeTitleChanged, {
+    }> | Extract<DashboardKpiWidgetHeaderChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeSelectionModeChanged, {
+    }> | Extract<DashboardKpiWidgetDescriptionChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAttributeFilterParentChanged, {
+    }> | Extract<DashboardKpiWidgetConfigurationChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardFilterContextChanged, {
+    }> | Extract<DashboardKpiWidgetMeasureChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionAdded, {
+    }> | Extract<DashboardKpiWidgetFilterSettingsChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionMoved, {
+    }> | Extract<DashboardKpiWidgetComparisonChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionRemoved, {
+    }> | Extract<DashboardKpiWidgetDrillRemoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionHeaderChanged, {
+    }> | Extract<DashboardKpiWidgetDrillSet_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionItemsAdded, {
+    }> | Extract<DashboardKpiWidgetChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionItemReplaced, {
+    }> | Extract<DashboardInsightWidgetHeaderChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionItemMoved, {
+    }> | Extract<DashboardInsightWidgetDescriptionChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutSectionItemRemoved, {
+    }> | Extract<DashboardInsightWidgetFilterSettingsChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardLayoutChanged, {
+    }> | Extract<DashboardInsightWidgetVisPropertiesChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetHeaderChanged, {
+    }> | Extract<DashboardInsightWidgetVisConfigurationChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetDescriptionChanged, {
+    }> | Extract<DashboardInsightWidgetInsightSwitched_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetConfigurationChanged, {
+    }> | Extract<DashboardInsightWidgetDrillsModified_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetMeasureChanged, {
+    }> | Extract<DashboardInsightWidgetDrillsRemoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardInsightWidgetChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetComparisonChanged, {
+    }> | Extract<DashboardInsightWidgetExportRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetDrillRemoved, {
+    }> | Extract<DashboardInsightWidgetExportResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetDrillSet, {
+    }> | Extract<DashboardInsightWidgetRefreshed_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetChanged, {
+    }> | Extract<DashboardWidgetExecutionStarted_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetHeaderChanged, {
+    }> | Extract<DashboardWidgetExecutionFailed_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetDescriptionChanged, {
+    }> | Extract<DashboardWidgetExecutionSucceeded_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
+    }> | Extract<DashboardAlertCreated_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
+    }> | Extract<DashboardAlertsRemoved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetVisConfigurationChanged, {
+    }> | Extract<DashboardAlertUpdated_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetInsightSwitched, {
+    }> | Extract<DashboardScheduledEmailCreated_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetDrillsModified, {
+    }> | Extract<DashboardScheduledEmailSaved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
+    }> | Extract<DashboardUserInteractionTriggered_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetChanged, {
+    }> | Extract<DashboardRenderRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetExportRequested, {
+    }> | Extract<DashboardAsyncRenderRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetExportResolved, {
+    }> | Extract<DashboardAsyncRenderResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetRefreshed, {
+    }> | Extract<DashboardRenderResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardWidgetExecutionStarted, {
+    }> | Extract<DashboardDrillRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardWidgetExecutionSucceeded, {
+    }> | Extract<DashboardDrillResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardWidgetExecutionFailed, {
+    }> | Extract<DashboardDrillDownRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAlertCreated, {
+    }> | Extract<DashboardDrillDownResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAlertsRemoved, {
+    }> | Extract<DashboardDrillToInsightRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardAlertUpdated, {
+    }> | Extract<DashboardDrillToInsightResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardScheduledEmailCreated, {
+    }> | Extract<DashboardDrillToDashboardRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardScheduledEmailSaved, {
+    }> | Extract<DashboardDrillToDashboardResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillDownRequested, {
+    }> | Extract<DashboardDrillToCustomUrlRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToAttributeUrlRequested, {
+    }> | Extract<DashboardDrillToCustomUrlResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToCustomUrlRequested, {
+    }> | Extract<DashboardDrillToAttributeUrlRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToDashboardRequested, {
+    }> | Extract<DashboardDrillToAttributeUrlResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToInsightRequested, {
+    }> | Extract<DashboardDrillToLegacyDashboardRequested_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillToLegacyDashboardRequested, {
+    }> | Extract<DashboardDrillToLegacyDashboardResolved_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillRequested, {
+    }> | Extract<DashboardDrillableItemsChanged_2, {
         type: TErrorEventType;
-    }> | Extract<DashboardDrillableItemsChanged, {
+    }> | Extract<DashboardRenderModeChanged_2, {
         type: TErrorEventType;
-    }> | Extract<CreateInsightRequested, {
+    }> | Extract<CreateInsightRequested_2, {
         type: TErrorEventType;
     }>) => void) | undefined;
     onBeforeRun?: ((command: TCommand) => void) | undefined;
@@ -7296,14 +7400,14 @@ export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, T
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
-    run: (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (drillEvent: IDashboardDrillEvent_2, drillContext: DashboardDrillContext_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: UseDrillDownProps) => {
-    run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (insight: IInsight, drillDefinition: IDrillDownDefinition_2, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)
@@ -7328,8 +7432,8 @@ export interface UseDrillProps {
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToAttributeUrlProps) => {
-    run: (drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)
@@ -7344,8 +7448,8 @@ export interface UseDrillToAttributeUrlProps {
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: UseDrillToCustomUrlProps) => {
-    run: (drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)
@@ -7360,8 +7464,8 @@ export interface UseDrillToCustomUrlProps {
 
 // @internal (undocumented)
 export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: UseDrillToDashboardProps) => {
-    run: (drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)
@@ -7376,8 +7480,8 @@ export interface UseDrillToDashboardProps {
 
 // @internal (undocumented)
 export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: UseDrillToInsightProps) => {
-    run: (drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)
@@ -7392,8 +7496,8 @@ export interface UseDrillToInsightProps {
 
 // @internal (undocumented)
 export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToLegacyDashboardProps) => {
-    run: (drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus | undefined;
+    run: (drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus_2 | undefined;
 };
 
 // @internal (undocumented)

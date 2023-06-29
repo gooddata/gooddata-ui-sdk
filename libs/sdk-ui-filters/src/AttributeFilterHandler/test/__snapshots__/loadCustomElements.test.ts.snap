@@ -1,65 +1,65 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AttributeFilterHandler loadCustomElements() should trigger onLoadCustomElementsStart() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadCustomElements() should trigger onLoadCustomElementsStart() callback > with parameters 1`] = `
+[
+  {
     "correlation": "start",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadCustomElements() that failed should trigger onLoadCustomElementsError() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadCustomElements() that failed should trigger onLoadCustomElementsError() callback > with parameters 1`] = `
+[
+  {
     "correlation": "error",
     "error": [Error: Elements error],
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadCustomElements() that was canceled by cancelCustomElementsLoad() call should trigger onLoadCustomElementsCancel() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadCustomElements() that was canceled by cancelCustomElementsLoad() call should trigger onLoadCustomElementsCancel() callback > with parameters 1`] = `
+[
+  {
     "correlation": "cancel",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadCustomElements() that was successful should trigger onLoadCustomElementsSuccess() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadCustomElements() that was successful should trigger onLoadCustomElementsSuccess() callback > with parameters 1`] = `
+[
+  {
     "correlation": "success",
-    "elements": Array [
-      Object {
+    "elements": [
+      {
         "title": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
-      Object {
+      {
         "title": "Educationly",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
       },
-      Object {
+      {
         "title": "Explorer",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
       },
-      Object {
+      {
         "title": "Grammar Plus",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
       },
-      Object {
+      {
         "title": "PhoenixSoft",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
       },
-      Object {
+      {
         "title": "TouchAll",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
       },
-      Object {
+      {
         "title": "WonderKid",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
       },
     ],
-    "options": Object {},
+    "options": {},
     "totalCount": 7,
   },
 ]

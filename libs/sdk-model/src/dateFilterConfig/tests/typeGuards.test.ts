@@ -1,20 +1,20 @@
 // (C) 2019-2020 GoodData Corporation
-
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { describe, expect, it } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import {
     isAllTimeDateFilterOption,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-} from "../index";
+} from "../index.js";
 import {
     allTimeDateFilter,
     absoluteDateFilterForm,
     absoluteDateFilterPreset,
     relativeDateFilterForm,
     relativeDateFilterPreset,
-} from "./typeGuards.fixtures";
+} from "./typeGuards.fixtures.js";
 
 describe("dashboard extended date filters type guards", () => {
     describe("isAllTimeDateFilterOption", () => {

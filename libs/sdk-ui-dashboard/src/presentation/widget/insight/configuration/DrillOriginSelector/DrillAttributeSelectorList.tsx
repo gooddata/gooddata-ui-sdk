@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
 import React from "react";
-import { DrillAttributeSelectorItem } from "./DrillAttributeSelectorItem";
+import { DrillAttributeSelectorItem } from "./DrillAttributeSelectorItem.js";
 
 export interface IDrillAttributeSelectorListProps {
     supportedItems: IAvailableDrillTargetAttribute[];

@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 import {
     bucketAttribute,
     bucketAttributes,

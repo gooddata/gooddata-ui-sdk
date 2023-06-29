@@ -7,7 +7,7 @@ import {
     useCancelablePromise,
     UseCancelablePromiseState,
     GoodDataSdkError,
-} from "../base";
+} from "../base/index.js";
 
 /**
  * @internal

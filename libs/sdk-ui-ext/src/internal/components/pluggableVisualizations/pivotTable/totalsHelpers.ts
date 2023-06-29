@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 
 import { ITotal, totalIsNative } from "@gooddata/sdk-model";
-import { isRankingFilter, isActiveMeasureValueFilter } from "../../../utils/bucketHelper";
-import { IBucketFilter } from "../../../interfaces/Visualization";
+import { isRankingFilter, isActiveMeasureValueFilter } from "../../../utils/bucketHelper.js";
+import { IBucketFilter } from "../../../interfaces/Visualization.js";
 
 function isNativeTotalInvalid(total: ITotal, hasRankingFilter: boolean, hasMeasureValueFilter: boolean) {
     return totalIsNative(total) && (hasRankingFilter || hasMeasureValueFilter);

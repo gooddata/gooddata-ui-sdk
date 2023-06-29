@@ -1,24 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
 
-export * from "./componentDefinition";
-export * from "./dashboard";
+export * from "./componentDefinition/index.js";
+export * from "./dashboard/index.js";
 // only export the types for this, not the actual code
-export * from "./dashboardContexts/types";
-export * from "./dragAndDrop/types";
+export * from "./dashboardContexts/types.js";
+export * from "./dragAndDrop/types.js";
 export {
     DraggableCreatePanelItem,
     IDraggableCreatePanelItemProps,
     useWidgetDragEndHandler,
-} from "./dragAndDrop";
-export * from "./drill";
-export * from "./filterBar";
-export * from "./layout";
-export * from "./scheduledEmail";
-export * from "./saveAs";
-export * from "./topBar";
-export * from "./toolbar";
-export * from "./widget";
-export * from "./shareDialog";
-export * from "./insightList";
-export * from "./cancelEditDialog";
-export { translations } from "./localization";
+} from "./dragAndDrop/index.js";
+export * from "./drill/index.js";
+export * from "./filterBar/index.js";
+export * from "./layout/index.js";
+export * from "./scheduledEmail/index.js";
+export * from "./saveAs/index.js";
+export * from "./topBar/index.js";
+export * from "./toolbar/index.js";
+export * from "./widget/index.js";
+export * from "./shareDialog/index.js";
+export * from "./insightList/index.js";
+export * from "./cancelEditDialog/index.js";
+export { translations } from "./localization/index.js";

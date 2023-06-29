@@ -6,7 +6,7 @@ import {
     ISaveButtonProps,
     ISaveAsNewButtonProps,
     IShareButtonProps,
-} from "./button/types";
+} from "./button/types.js";
 
 /**
  * @beta

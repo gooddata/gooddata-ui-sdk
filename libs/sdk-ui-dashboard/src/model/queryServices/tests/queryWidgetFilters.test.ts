@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
-import { queryWidgetFilters } from "../../queries";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { queryWidgetFilters } from "../../queries/index.js";
 import { idRef, IFilter, IWidget } from "@gooddata/sdk-model";
 import {
     AdvancedFilterTestingDashboardIdentifier,
@@ -12,11 +13,12 @@ import {
 describe("query widget filters", () => {
     describe("basic scenarios", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, FilterTestingDashboardIdentifier),
-        );
+            }, FilterTestingDashboardIdentifier);
+        });
 
         it("should fail in case the widget does not exist", async () => {
             await expect(
@@ -44,11 +46,12 @@ describe("query widget filters", () => {
 
     describe("advanced scenarios", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, AdvancedFilterTestingDashboardIdentifier),
-        );
+            }, AdvancedFilterTestingDashboardIdentifier);
+        });
 
         it.each<[string, IWidget]>([
             [

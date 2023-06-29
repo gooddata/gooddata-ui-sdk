@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { DashboardContext } from "../types/commonTypes";
-import { IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import { DashboardContext } from "../types/commonTypes.js";
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DrillTargetsAdded} event.

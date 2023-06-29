@@ -1,12 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "@storybook/addon-actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
-import { itemsMock as items } from "./itemsMock";
+import { itemsMock as items } from "./itemsMock.js";
 
 const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
     const { children } = props;

@@ -1,8 +1,8 @@
 // (C) 2022-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { IDashboardPermissions } from "@gooddata/sdk-model";
-import { DashboardSelector, DashboardState } from "../types";
-import invariant from "ts-invariant";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { invariant } from "ts-invariant";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

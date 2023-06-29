@@ -1,56 +1,56 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transformGrandTotalData should correctly transform grand total data 1`] = `
-Array [
-  Array [
-    Array [
+exports[`transformGrandTotalData > should correctly transform grand total data 1`] = `
+[
+  [
+    [
       6,
       3,
       15,
       6,
     ],
-    Array [
+    [
       null,
       1,
       null,
       2,
     ],
   ],
-  Array [],
+  [],
 ]
 `;
 
-exports[`transformGrandTotalData should correctly transform grand total data with row and column grand totals 1`] = `
-Array [
-  Array [
-    Array [
+exports[`transformGrandTotalData > should correctly transform grand total data with row and column grand totals 1`] = `
+[
+  [
+    [
       6,
       null,
       10,
       null,
     ],
   ],
-  Array [
-    Array [
+  [
+    [
       4,
     ],
-    Array [
+    [
       12,
     ],
   ],
 ]
 `;
 
-exports[`transformGrandTotalData should correctly transform grand total data with two header groups 1`] = `
-Array [
-  Array [
-    Array [
+exports[`transformGrandTotalData > should correctly transform grand total data with two header groups 1`] = `
+[
+  [
+    [
       7232,
       3914.259799423051,
       null,
       null,
     ],
   ],
-  Array [],
+  [],
 ]
 `;

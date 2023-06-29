@@ -15,28 +15,28 @@ import {
     components as ReactSelectComponents,
     GroupBase,
 } from "react-select";
-import debounce from "lodash/debounce";
-import isEmpty from "lodash/isEmpty";
-import isEqual from "lodash/isEqual";
-import includes from "lodash/includes";
+import debounce from "lodash/debounce.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import includes from "lodash/includes.js";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import { Bubble, BubbleHoverTrigger, Message, LoadingMask, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { isEmail } from "../../utils/validate";
+import { isEmail } from "../../utils/validate.js";
 import {
     IScheduleEmailExternalRecipient,
     IScheduleEmailRecipient,
     isScheduleEmailExistingRecipient,
     isScheduleEmailExternalRecipient,
-} from "../../interfaces";
+} from "../../interfaces.js";
 import {
     getScheduledEmailRecipientDisplayName,
     getScheduledEmailRecipientEmail,
     getScheduledEmailRecipientUniqueIdentifier,
     splitScheduledEmailRecipients,
     uniqueScheduledEmailRecipients,
-} from "../../utils/scheduledMailRecipients";
-import { messages } from "../../../../../locales";
+} from "../../utils/scheduledMailRecipients.js";
+import { messages } from "../../../../../locales.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;

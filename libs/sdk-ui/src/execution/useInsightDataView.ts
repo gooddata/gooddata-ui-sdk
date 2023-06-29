@@ -10,10 +10,10 @@ import {
     DataViewFacade,
     GoodDataSdkError,
     UseCancelablePromiseCallbacks,
-} from "../base";
-import { useExecutionDataView } from "./useExecutionDataView";
-import { DataViewWindow } from "./withExecutionLoading";
-import { useInsight } from "./useInsight";
+} from "../base/index.js";
+import { useExecutionDataView } from "./useExecutionDataView.js";
+import { DataViewWindow } from "./withExecutionLoading.js";
+import { useInsight } from "./useInsight.js";
 
 /**
  * Configuration for {@link useInsightDataView} hook.

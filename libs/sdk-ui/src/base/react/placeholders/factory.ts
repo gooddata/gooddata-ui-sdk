@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import {
     IPlaceholder,
     IComposedPlaceholder,
@@ -8,8 +8,8 @@ import {
     ComposedPlaceholderResolutionContext,
     Flatten,
     UnionToIntersection,
-} from "./base";
-import { useComposedPlaceholder, usePlaceholder } from "./hooks";
+} from "./base.js";
+import { useComposedPlaceholder, usePlaceholder } from "./hooks.js";
 /**
  * Common placeholder options.
  * @public

@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`query insight attributes meta should return metadata for insight with attribute filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
+exports[`query insight attributes meta > should return metadata for insight with attribute filter 1`] = `
+{
+  "attributes": [
+    {
       "deprecated": false,
       "description": "",
       "id": "attr.product.id",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1054",
       },
       "title": "Product",
@@ -17,16 +17,16 @@ Object {
       "uri": "/gdc/md/referenceworkspace/obj/1054",
     },
   ],
-  "displayForms": Array [
-    Object {
-      "attribute": Object {
+  "displayForms": [
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/1054",
       },
       "deprecated": false,
       "description": "",
       "id": "label.product.id.name",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
       "title": "Product Name",
@@ -35,40 +35,40 @@ Object {
       "uri": "/gdc/md/referenceworkspace/obj/1055",
     },
   ],
-  "usage": Object {
-    "inAttributes": Array [
-      Object {
+  "usage": {
+    "inAttributes": [
+      {
         "identifier": "label.product.id.name",
         "type": "displayForm",
       },
     ],
-    "inFilters": Array [
-      Object {
+    "inFilters": [
+      {
         "identifier": "label.product.id.name",
         "type": "displayForm",
       },
     ],
-    "inMeasureFilters": Array [],
+    "inMeasureFilters": [],
   },
 }
 `;
 
-exports[`query insight attributes meta should return metadata for insight with date attributes in buckets 1`] = `
-Object {
-  "attributes": Array [
-    Object {
+exports[`query insight attributes meta > should return metadata for insight with date attributes in buckets 1`] = `
+{
+  "attributes": [
+    {
       "deprecated": false,
       "description": "Year",
-      "displayForms": Array [
-        Object {
-          "attribute": Object {
+      "displayForms": [
+        {
+          "attribute": {
             "uri": "/gdc/md/referenceworkspace/obj/497",
           },
           "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "closed.aag81lMifn6q",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/515",
           },
           "title": "Year (Closed)",
@@ -77,12 +77,12 @@ Object {
           "uri": "/gdc/md/referenceworkspace/obj/515",
         },
       ],
-      "drillDownStep": Object {
+      "drillDownStep": {
         "uri": "/gdc/md/referenceworkspace/obj/547",
       },
       "id": "closed.year",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/497",
       },
       "title": "Year (Closed)",
@@ -90,19 +90,19 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/497",
     },
-    Object {
+    {
       "deprecated": false,
       "description": "Year",
-      "displayForms": Array [
-        Object {
-          "attribute": Object {
+      "displayForms": [
+        {
+          "attribute": {
             "uri": "/gdc/md/referenceworkspace/obj/332",
           },
           "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "created.aag81lMifn6q",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/350",
           },
           "title": "Year (Created)",
@@ -111,12 +111,12 @@ Object {
           "uri": "/gdc/md/referenceworkspace/obj/350",
         },
       ],
-      "drillDownStep": Object {
+      "drillDownStep": {
         "uri": "/gdc/md/referenceworkspace/obj/382",
       },
       "id": "created.year",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/332",
       },
       "title": "Year (Created)",
@@ -125,16 +125,16 @@ Object {
       "uri": "/gdc/md/referenceworkspace/obj/332",
     },
   ],
-  "displayForms": Array [
-    Object {
-      "attribute": Object {
+  "displayForms": [
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/497",
       },
       "deprecated": false,
       "description": "DisplayForm Year.",
       "id": "closed.aag81lMifn6q",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/515",
       },
       "title": "Year (Closed)",
@@ -142,15 +142,15 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/515",
     },
-    Object {
-      "attribute": Object {
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/332",
       },
       "deprecated": false,
       "description": "DisplayForm Year.",
       "id": "created.aag81lMifn6q",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/350",
       },
       "title": "Year (Created)",
@@ -159,32 +159,32 @@ Object {
       "uri": "/gdc/md/referenceworkspace/obj/350",
     },
   ],
-  "usage": Object {
-    "inAttributes": Array [
-      Object {
+  "usage": {
+    "inAttributes": [
+      {
         "identifier": "closed.aag81lMifn6q",
         "type": "displayForm",
       },
-      Object {
+      {
         "identifier": "created.aag81lMifn6q",
         "type": "displayForm",
       },
     ],
-    "inFilters": Array [],
-    "inMeasureFilters": Array [],
+    "inFilters": [],
+    "inMeasureFilters": [],
   },
 }
 `;
 
-exports[`query insight attributes meta should return metadata for insight with multiple attributes in buckets 1`] = `
-Object {
-  "attributes": Array [
-    Object {
+exports[`query insight attributes meta > should return metadata for insight with multiple attributes in buckets 1`] = `
+{
+  "attributes": [
+    {
       "deprecated": false,
       "description": "",
       "id": "attr.product.id",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1054",
       },
       "title": "Product",
@@ -192,12 +192,12 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/1054",
     },
-    Object {
+    {
       "deprecated": false,
       "description": "",
       "id": "attr.owner.department",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1088",
       },
       "title": "Department",
@@ -205,12 +205,12 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/1088",
     },
-    Object {
+    {
       "deprecated": false,
       "description": "",
       "id": "attr.stage.name",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1091",
       },
       "title": "Stage Name",
@@ -218,12 +218,12 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/1091",
     },
-    Object {
+    {
       "deprecated": false,
       "description": "",
       "id": "attr.owner.region",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1086",
       },
       "title": "Region",
@@ -232,16 +232,16 @@ Object {
       "uri": "/gdc/md/referenceworkspace/obj/1086",
     },
   ],
-  "displayForms": Array [
-    Object {
-      "attribute": Object {
+  "displayForms": [
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/1054",
       },
       "deprecated": false,
       "description": "",
       "id": "label.product.id.name",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
       "title": "Product Name",
@@ -249,15 +249,15 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/1055",
     },
-    Object {
-      "attribute": Object {
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/1088",
       },
       "deprecated": false,
       "description": "",
       "id": "label.owner.department",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1089",
       },
       "title": "Department",
@@ -265,15 +265,15 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/1089",
     },
-    Object {
-      "attribute": Object {
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/1091",
       },
       "deprecated": false,
       "description": "",
       "id": "label.stage.name.stagename",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1092",
       },
       "title": "Stage Name",
@@ -281,15 +281,15 @@ Object {
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/1092",
     },
-    Object {
-      "attribute": Object {
+    {
+      "attribute": {
         "uri": "/gdc/md/referenceworkspace/obj/1086",
       },
       "deprecated": false,
       "description": "",
       "id": "label.owner.region",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
       "title": "Region",
@@ -298,27 +298,27 @@ Object {
       "uri": "/gdc/md/referenceworkspace/obj/1087",
     },
   ],
-  "usage": Object {
-    "inAttributes": Array [
-      Object {
+  "usage": {
+    "inAttributes": [
+      {
         "identifier": "label.product.id.name",
         "type": "displayForm",
       },
-      Object {
+      {
         "identifier": "label.owner.department",
         "type": "displayForm",
       },
-      Object {
+      {
         "identifier": "label.stage.name.stagename",
         "type": "displayForm",
       },
-      Object {
+      {
         "identifier": "label.owner.region",
         "type": "displayForm",
       },
     ],
-    "inFilters": Array [],
-    "inMeasureFilters": Array [],
+    "inFilters": [],
+    "inMeasureFilters": [],
   },
 }
 `;

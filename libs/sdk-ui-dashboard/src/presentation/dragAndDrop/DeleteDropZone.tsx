@@ -2,9 +2,9 @@
 import cx from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { removeAttributeFilter, useDashboardDispatch } from "../../model";
-import { getDropZoneDebugStyle } from "./debug";
-import { useDashboardDrop } from "./useDashboardDrop";
+import { removeAttributeFilter, useDashboardDispatch } from "../../model/index.js";
+import { getDropZoneDebugStyle } from "./debug.js";
+import { useDashboardDrop } from "./useDashboardDrop.js";
 
 export function DeleteDropZone() {
     const dispatch = useDashboardDispatch();

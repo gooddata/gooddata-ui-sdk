@@ -1,9 +1,0 @@
-{
-    "extends": "./tsconfig.build.json",
-    "include": ["src/index.ts", "src/typings.d.ts"],
-    "compilerOptions": {
-        "module": "ESNext",
-        "outDir": "esm",
-        "incremental": true
-    }
-}

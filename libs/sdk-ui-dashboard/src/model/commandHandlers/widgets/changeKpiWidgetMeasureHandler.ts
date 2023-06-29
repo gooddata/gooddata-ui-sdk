@@ -1,23 +1,23 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeKpiWidgetMeasure } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeKpiWidgetMeasure } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardKpiWidgetMeasureChanged } from "../../events";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { DashboardKpiWidgetMeasureChanged } from "../../events/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingKpiWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../store/layout";
-import { kpiWidgetMeasureChanged } from "../../events/kpi";
-import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors";
-import { invalidArgumentsProvided } from "../../events/general";
+import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
+import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import { objRefToString, IKpiWidget, ICatalogMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
 import { batchActions } from "redux-batched-actions";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { isWidgetHeader, WidgetHeader } from "../../types/widgetTypes";
-import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries";
-import { query } from "../../store/_infra/queryCall";
-import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap";
-import isEmpty from "lodash/isEmpty";
+import { isWidgetHeader, WidgetHeader } from "../../types/widgetTypes.js";
+import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
+import { query } from "../../store/_infra/queryCall.js";
+import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
+import isEmpty from "lodash/isEmpty.js";
 
 function* validateMeasure(ctx: DashboardContext, cmd: ChangeKpiWidgetMeasure): SagaIterator<ICatalogMeasure> {
     const {

@@ -6,10 +6,11 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ITheme } from "@gooddata/sdk-model";
 import { WorkspaceProvider, BackendProvider } from "@gooddata/sdk-ui";
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 
-import { isDarkTheme, ThemeModifier, ThemeProvider } from "../ThemeProvider";
-import { withTheme } from "../Context";
+import { isDarkTheme, ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
+import { withTheme } from "../Context.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
     let wrappedComponent;
@@ -123,7 +124,7 @@ describe("ThemeProvider", () => {
     });
 
     it("should pass theme object and themeIsLoading flag to context", async () => {
-        const TestComponent = jest.fn(() => null);
+        const TestComponent = vi.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
         await renderComponent(
             <ThemeProvider backend={backend} workspace={workspace}>
@@ -135,7 +136,7 @@ describe("ThemeProvider", () => {
     });
 
     it("should pass themeIsLoading flag set to false if backend is missing", async () => {
-        const TestComponent = jest.fn(() => null);
+        const TestComponent = vi.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
         await renderComponent(
             <ThemeProvider workspace={workspace}>
@@ -147,7 +148,7 @@ describe("ThemeProvider", () => {
     });
 
     it("should pass themeIsLoading flag set to false if workspace is missing", async () => {
-        const TestComponent = jest.fn(() => null);
+        const TestComponent = vi.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
         await renderComponent(
             <ThemeProvider backend={backend}>
@@ -210,7 +211,7 @@ describe("ThemeProvider", () => {
             },
         };
 
-        const TestComponent = jest.fn(() => null);
+        const TestComponent = vi.fn(() => null);
         const TestComponentWithTheme = withTheme(TestComponent);
         await renderComponent(
             <ThemeProvider theme={theme}>

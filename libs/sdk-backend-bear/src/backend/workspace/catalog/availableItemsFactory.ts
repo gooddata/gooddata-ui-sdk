@@ -37,13 +37,13 @@ import {
     convertItemType,
     convertDateDataset,
     isCompatibleCatalogItemType,
-} from "../../../convertors/fromBackend/CatalogConverter";
-import { convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
+} from "../../../convertors/fromBackend/CatalogConverter.js";
+import { convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter.js";
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
-import { IUriMappings } from "../../../types/catalog";
-import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api";
+import { IUriMappings } from "../../../types/catalog.js";
+import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
 import { InvariantError } from "ts-invariant";
 
 const catalogItemUri = (catalogItem: CatalogItem): string => {

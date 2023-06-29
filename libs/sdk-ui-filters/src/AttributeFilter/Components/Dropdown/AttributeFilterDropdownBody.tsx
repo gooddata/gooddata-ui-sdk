@@ -1,10 +1,10 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
-import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
-import { IAttributeFilterDropdownBodyProps } from "./types";
-import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
+import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
+import { IAttributeFilterDropdownBodyProps } from "./types.js";
+import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
 import { IAttributeElement } from "@gooddata/sdk-model";
 
 /**

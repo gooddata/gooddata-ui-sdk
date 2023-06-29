@@ -7,11 +7,11 @@ import {
     isSeriesCol,
     isSliceCol,
     SliceCol,
-} from "../structure/tableDescriptorTypes";
+} from "../structure/tableDescriptorTypes.js";
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
-import invariant, { InvariantError } from "ts-invariant";
-import { IGridRow } from "../data/resultTypes";
+import { invariant, InvariantError } from "ts-invariant";
+import { IGridRow } from "../data/resultTypes.js";
 
 export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];

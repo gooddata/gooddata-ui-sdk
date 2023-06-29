@@ -1,11 +1,11 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { DialogBase } from "./DialogBase";
-import noop from "lodash/noop";
-import { IExportDialogBaseProps, IExportDialogBaseState } from "./typings";
-import { Checkbox } from "../Form";
-import { ConfirmDialogBase } from "./ConfirmDialogBase";
+import { DialogBase } from "./DialogBase.js";
+import noop from "lodash/noop.js";
+import { IExportDialogBaseProps, IExportDialogBaseState } from "./typings.js";
+import { Checkbox } from "../Form/index.js";
+import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 
 /**
  * @internal

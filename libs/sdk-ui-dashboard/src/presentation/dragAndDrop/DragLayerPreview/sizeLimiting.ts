@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
-import clamp from "lodash/clamp";
-import { ReachedResizingLimit } from "./types";
+import clamp from "lodash/clamp.js";
+import { ReachedResizingLimit } from "./types.js";
 
 export function getLimitedSize(
     minimumSize: number,

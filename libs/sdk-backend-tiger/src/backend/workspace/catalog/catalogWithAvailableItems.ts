@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     IWorkspaceCatalogWithAvailableItems,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,

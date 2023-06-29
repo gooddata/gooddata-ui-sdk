@@ -1,6 +1,31 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { describe, it, expect } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import {
+    isAbsoluteDateFilter,
+    isArithmeticMeasureDefinition,
+    isAttributeElementsArray,
+    isAttributeElementsByRef,
+    isAttributeElementsByValue,
+    isAttributeFilter,
+    isAttributeLocatorItem,
+    isAttributeSortItem,
+    isDateFilter,
+    isExpressionFilter,
+    isLocalIdentifierQualifier,
+    isMeasureLocatorItem,
+    isMeasureSortItem,
+    isMeasureValueFilter,
+    isNegativeAttributeFilter,
+    isObjIdentifierQualifier,
+    isObjectUriQualifier,
+    isPopMeasureDefinition,
+    isPositiveAttributeFilter,
+    isPreviousPeriodMeasureDefinition,
+    isRankingFilter,
+    isRelativeDateFilter,
+    isSimpleMeasureDefinition,
+} from "../GdcExecuteAFM.js";
 import {
     relativeDateFilter,
     absoluteDateFilter,
@@ -20,7 +45,7 @@ import {
     measureLocatorItem,
     rankingFilter,
     localIdentifierQualifier,
-} from "./GdcExecuteAFM.fixtures";
+} from "./GdcExecuteAFM.fixtures.js";
 
 describe("GdcExecuteAFM", () => {
     describe("isDateFilter", () => {
@@ -35,7 +60,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isDateFilter(input)).toBe(expectedResult);
+            expect(isDateFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -51,7 +76,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isRelativeDateFilter(input)).toBe(expectedResult);
+            expect(isRelativeDateFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -68,7 +93,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAbsoluteDateFilter(input)).toBe(expectedResult);
+            expect(isAbsoluteDateFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -85,7 +110,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAttributeFilter(input)).toBe(expectedResult);
+            expect(isAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -102,7 +127,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isPositiveAttributeFilter(input)).toBe(expectedResult);
+            expect(isPositiveAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -119,7 +144,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isNegativeAttributeFilter(input)).toBe(expectedResult);
+            expect(isNegativeAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -136,7 +161,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isMeasureValueFilter(input)).toBe(expectedResult);
+            expect(isMeasureValueFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -153,7 +178,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isRankingFilter(input)).toBe(expectedResult);
+            expect(isRankingFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -169,7 +194,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isExpressionFilter(input)).toBe(expectedResult);
+            expect(isExpressionFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -191,7 +216,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAttributeElementsArray(input)).toBe(expectedResult);
+            expect(isAttributeElementsArray(input)).toBe(expectedResult);
         });
     });
 
@@ -204,7 +229,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAttributeElementsByRef(input)).toBe(expectedResult);
+            expect(isAttributeElementsByRef(input)).toBe(expectedResult);
         });
     });
 
@@ -217,7 +242,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAttributeElementsByValue(input)).toBe(expectedResult);
+            expect(isAttributeElementsByValue(input)).toBe(expectedResult);
         });
     });
 
@@ -229,7 +254,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isObjectUriQualifier(input)).toBe(expectedResult);
+            expect(isObjectUriQualifier(input)).toBe(expectedResult);
         });
     });
 
@@ -241,7 +266,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isObjIdentifierQualifier(input)).toBe(expectedResult);
+            expect(isObjIdentifierQualifier(input)).toBe(expectedResult);
         });
     });
 
@@ -255,7 +280,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isSimpleMeasureDefinition(input)).toBe(expectedResult);
+            expect(isSimpleMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -268,7 +293,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isLocalIdentifierQualifier(input)).toBe(expectedResult);
+            expect(isLocalIdentifierQualifier(input)).toBe(expectedResult);
         });
     });
 
@@ -282,7 +307,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isArithmeticMeasureDefinition(input)).toBe(expectedResult);
+            expect(isArithmeticMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -296,7 +321,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isPopMeasureDefinition(input)).toBe(expectedResult);
+            expect(isPopMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -310,7 +335,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isPreviousPeriodMeasureDefinition(input)).toBe(expectedResult);
+            expect(isPreviousPeriodMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
@@ -322,7 +347,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAttributeSortItem(input)).toBe(expectedResult);
+            expect(isAttributeSortItem(input)).toBe(expectedResult);
         });
     });
 
@@ -334,7 +359,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isMeasureSortItem(input)).toBe(expectedResult);
+            expect(isMeasureSortItem(input)).toBe(expectedResult);
         });
     });
 
@@ -346,7 +371,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isAttributeLocatorItem(input)).toBe(expectedResult);
+            expect(isAttributeLocatorItem(input)).toBe(expectedResult);
         });
     });
 
@@ -358,7 +383,7 @@ describe("GdcExecuteAFM", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(AFM.isMeasureLocatorItem(input)).toBe(expectedResult);
+            expect(isMeasureLocatorItem(input)).toBe(expectedResult);
         });
     });
 });

@@ -1,13 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import { PieChart, IPieChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
-import { legendCustomizer } from "../_infra/legendVariants";
-import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base";
-import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+import { scenariosFor } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
+import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
 
 const legendScenarios = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

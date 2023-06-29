@@ -1,10 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
+import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { StackingType } from "../../../constants/stacking";
-import { ISeriesItem } from "../../../typings/unsafe";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { StackingType } from "../../../constants/stacking.js";
+import { ISeriesItem } from "../../../typings/unsafe.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { describe, it, expect } from "vitest";
 
 const { COLUMN, LINE, AREA, BAR } = VisualizationTypes;
 

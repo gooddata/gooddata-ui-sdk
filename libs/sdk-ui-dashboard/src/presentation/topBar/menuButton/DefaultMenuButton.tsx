@@ -11,7 +11,7 @@ import {
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 
-import { IMenuButtonProps } from "./types";
+import { IMenuButtonProps } from "./types.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];

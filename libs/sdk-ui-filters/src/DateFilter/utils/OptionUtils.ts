@@ -1,11 +1,11 @@
 // (C) 2019-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     DateFilterOption,
     DateFilterRelativeOptionGroup,
     IDateFilterOptionsByType,
     isUiRelativeDateFilterForm,
-} from "../interfaces";
+} from "../interfaces/index.js";
 import {
     DateFilterGranularity,
     IDateFilterOption,

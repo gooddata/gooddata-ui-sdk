@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable sonarjs/no-identical-functions */
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import React from "react";
 import {
     PivotTable,
@@ -11,16 +11,19 @@ import {
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-} from "../../../../scenarios/pivotTable/base";
-import { CustomStories } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+} from "../../../../scenarios/pivotTable/base.js";
+import { CustomStories } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
-import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
+import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
 import { action } from "@storybook/addon-actions";
-import { createElementCountResolver, ScreenshotReadyWrapper } from "../../../_infra/ScreenshotReadyWrapper";
-import { AmountMeasurePredicate } from "../../../../scenarios/_infra/predicates";
+import {
+    createElementCountResolver,
+    ScreenshotReadyWrapper,
+} from "../../../_infra/ScreenshotReadyWrapper.js";
+import { AmountMeasurePredicate } from "../../../../scenarios/_infra/predicates.js";
 
 const backend = StorybookBackend();
 const tableConfig: IPivotTableProps["config"] = {

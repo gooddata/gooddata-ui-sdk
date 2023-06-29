@@ -1,35 +1,35 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`insight customizer should fallback to rendering default component 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`insight customizer > should fallback to rendering default component 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`insight customizer withCustomDecorator should decorate custom component registered for an insight 1`] = `"<div id=\\"decorator1\\"><div id=\\"forTag1\\"></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should decorate custom component registered for an insight 1`] = `"<div id=\\"decorator1\\"><div id=\\"forTag1\\"></div></div>"`;
 
-exports[`insight customizer withCustomDecorator should decorate default component if insight does not match custom component criteria  1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should decorate default component if insight does not match custom component criteria  1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
 
-exports[`insight customizer withCustomDecorator should decorate default component if no other providers are registered 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should decorate default component if no other providers are registered 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
 
-exports[`insight customizer withCustomDecorator should decorate if insight matches criteria 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should decorate if insight matches criteria 1`] = `"<div id=\\"decorator1\\"><div id=\\"default\\"></div></div>"`;
 
-exports[`insight customizer withCustomDecorator should not decorate if insight does not match criteria 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`insight customizer > withCustomDecorator > should not decorate if insight does not match criteria 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`insight customizer withCustomDecorator should only use only those decorators that match criteria and then use custom component 1`] = `"<div id=\\"decorator1\\"><div id=\\"forTag1\\"></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should only use only those decorators that match criteria and then use custom component 1`] = `"<div id=\\"decorator1\\"><div id=\\"forTag1\\"></div></div>"`;
 
-exports[`insight customizer withCustomDecorator should use multiple decorators and custom component if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"customProvider1\\"></div></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should use multiple decorators and custom component if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"customProvider1\\"></div></div></div>"`;
 
-exports[`insight customizer withCustomDecorator should use multiple decorators if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"default\\"></div></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should use multiple decorators if insight matches criteria 1`] = `"<div id=\\"decorator2\\"><div id=\\"decorator1\\"><div id=\\"default\\"></div></div></div>"`;
 
-exports[`insight customizer withCustomProvider should fallback to default component if insight does not match provider criteria 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`insight customizer > withCustomProvider > should fallback to default component if insight does not match provider criteria 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`insight customizer withCustomProvider should use component from latest registered provider that matches the insight 1`] = `"<div id=\\"fromCustomProvider3\\"></div>"`;
+exports[`insight customizer > withCustomProvider > should use component from latest registered provider that matches the insight 1`] = `"<div id=\\"fromCustomProvider3\\"></div>"`;
 
-exports[`insight customizer withCustomProvider should work for insight that matches predicate 1`] = `"<div id=\\"fromCustomProvider\\"></div>"`;
+exports[`insight customizer > withCustomProvider > should work for insight that matches predicate 1`] = `"<div id=\\"fromCustomProvider\\"></div>"`;
 
-exports[`insight customizer withTag should fallback to default component if insight does not have tag 1`] = `"<div id=\\"default\\"></div>"`;
+exports[`insight customizer > withTag > should fallback to default component if insight does not have tag 1`] = `"<div id=\\"default\\"></div>"`;
 
-exports[`insight customizer withTag should override already registered component for a tag 1`] = `"<div id=\\"forTag1c\\"></div>"`;
+exports[`insight customizer > withTag > should override already registered component for a tag 1`] = `"<div id=\\"forTag1c\\"></div>"`;
 
-exports[`insight customizer withTag should use last registered component if insight has both tags 1`] = `"<div id=\\"forTag1\\"></div>"`;
+exports[`insight customizer > withTag > should use last registered component if insight has both tags 1`] = `"<div id=\\"forTag1\\"></div>"`;
 
-exports[`insight customizer withTag should work for insights that includes tag 1`] = `"<div id=\\"forTag1\\"></div>"`;
+exports[`insight customizer > withTag > should work for insights that includes tag 1`] = `"<div id=\\"forTag1\\"></div>"`;
 
-exports[`insight customizer withTag should work for insights that includes tag 2`] = `"<div id=\\"forTag1\\"></div>"`;
+exports[`insight customizer > withTag > should work for insights that includes tag 2`] = `"<div id=\\"forTag1\\"></div>"`;

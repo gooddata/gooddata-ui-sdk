@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
-import { IInsightMenuItemButton } from "../../types";
+import { IInsightMenuItemButton } from "../../types.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 

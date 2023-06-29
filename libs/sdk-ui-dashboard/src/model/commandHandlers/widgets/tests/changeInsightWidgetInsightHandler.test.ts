@@ -1,25 +1,26 @@
 // (C) 2022 GoodData Corporation
-
-import { ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands";
-import { DashboardCommandFailed, DashboardInsightWidgetInsightSwitched } from "../../../events";
-import { PivotTableWithRowAndColumnAttributes } from "../../../tests/fixtures/Insights.fixtures";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { beforeEach, describe, it, expect } from "vitest";
+import { ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
+import { DashboardCommandFailed, DashboardInsightWidgetInsightSwitched } from "../../../events/index.js";
+import { PivotTableWithRowAndColumnAttributes } from "../../../tests/fixtures/Insights.fixtures.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
 import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
     KpiWidgetRef,
-} from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
 
 describe("change insight widget vis properties handler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     it("should change the insight for existing insight widget", async () => {
         const ref = SimpleSortedTableWidgetRef;

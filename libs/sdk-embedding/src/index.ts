@@ -9,9 +9,11 @@
  * @packageDocumentation
  */
 export {
+    EmbeddedGdc,
+    EmbeddedAnalyticalDesigner,
+    EmbeddedKpiDashboard,
     IObjectMeta,
     IPostMessageContextPayload,
-    EmbeddedGdc,
     GdcErrorType,
     GdcEventType,
     GdcMessageEventListener,
@@ -27,8 +29,4 @@ export {
     ISimpleDrillableItemsCommandBody,
     isCommandFailedData,
     getEventType,
-} from "./iframe/common";
-
-export { EmbeddedAnalyticalDesigner } from "./iframe/ad";
-
-export { EmbeddedKpiDashboard } from "./iframe/kd";
+} from "./iframe/index.js";

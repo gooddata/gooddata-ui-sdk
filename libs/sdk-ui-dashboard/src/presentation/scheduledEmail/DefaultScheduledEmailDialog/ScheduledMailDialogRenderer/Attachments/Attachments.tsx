@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import { objRefToString } from "@gooddata/sdk-model";
 
-import { AttachmentsSelectionDropdown } from "./AttachmentsSelectionDropdown";
-import { FormatOptionsDropdown } from "./FormatOptionsDropdown";
-import { IWidgetExportConfiguration, IWidgetsSelection } from "../../interfaces";
-import { IInsightWidgetExtended } from "../../useScheduledEmail";
+import { AttachmentsSelectionDropdown } from "./AttachmentsSelectionDropdown.js";
+import { FormatOptionsDropdown } from "./FormatOptionsDropdown.js";
+import { IWidgetExportConfiguration, IWidgetsSelection } from "../../interfaces.js";
+import { IInsightWidgetExtended } from "../../useScheduledEmail.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;

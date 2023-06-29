@@ -3,10 +3,10 @@ import { SagaIterator } from "redux-saga";
 import { put, call, select, takeLatest, SagaReturnType, cancelled } from "redux-saga/effects";
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 
-import { actions } from "../store/slice";
-import { getAttributeFilterContext, PromiseFnReturnType } from "../common/sagas";
-import { selectAttributeFilterDisplayForm } from "../filter/filterSelectors";
-import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm";
+import { actions } from "../store/slice.js";
+import { getAttributeFilterContext, PromiseFnReturnType } from "../common/sagas.js";
+import { selectAttributeFilterDisplayForm } from "../filter/filterSelectors.js";
+import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
 
 /**
  * @internal

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes";
-import { IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import { DashboardContext } from "../types/commonTypes.js";
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * This event is emitted as soon as the dashboard component is mounted,

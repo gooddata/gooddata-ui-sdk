@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { IFilterBarProps } from "./types";
+import { IFilterBarProps } from "./types.js";
 
 /**
  * This implementation of Filter Bar will ensure that all the filter controls are out of sight. All the dashboard

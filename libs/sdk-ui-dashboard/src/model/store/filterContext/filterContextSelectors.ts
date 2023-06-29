@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardSelector, DashboardState } from "../types";
-import invariant from "ts-invariant";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { invariant } from "ts-invariant";
 import {
     areObjRefsEqual,
     ObjRef,
@@ -16,9 +16,9 @@ import {
     IFilterContextDefinition,
     IDashboardObjectIdentity,
 } from "@gooddata/sdk-model";
-import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
-import { createMemoizedSelector } from "../_infra/selectors";
-import compact from "lodash/compact";
+import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import compact from "lodash/compact.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

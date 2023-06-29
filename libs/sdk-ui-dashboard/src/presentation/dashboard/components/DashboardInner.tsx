@@ -1,23 +1,23 @@
 // (C) 2022 GoodData Corporation
 import React, { useRef } from "react";
 import cx from "classnames";
-import { IntlWrapper } from "../../localization";
-import { useDashboardSelector, selectLocale, selectIsInEditMode } from "../../../model";
-import { DashboardHeader } from "../DashboardHeader/DashboardHeader";
-import { IDashboardProps } from "../types";
-import { DashboardMainContent } from "./DashboardMainContent";
-import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar";
-import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
+import { IntlWrapper } from "../../localization/index.js";
+import { useDashboardSelector, selectLocale, selectIsInEditMode } from "../../../model/index.js";
+import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
+import { IDashboardProps } from "../types.js";
+import { DashboardMainContent } from "./DashboardMainContent.js";
+import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
+import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import {
     DragLayerComponent,
     useDashboardDragScroll,
     DeleteDropZone,
     WrapCreatePanelItemWithDrag,
     WrapInsightListItemWithDrag,
-} from "../../dragAndDrop";
-import { Toolbar } from "../../toolbar";
+} from "../../dragAndDrop/index.js";
+import { Toolbar } from "../../toolbar/index.js";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

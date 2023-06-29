@@ -1,5 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { IWorkspaceInsightsService, IWorkspaceDashboardsService } from "@gooddata/sdk-backend-spi";
 
 export const noopWorkspaceInsightsService: IWorkspaceInsightsService = {

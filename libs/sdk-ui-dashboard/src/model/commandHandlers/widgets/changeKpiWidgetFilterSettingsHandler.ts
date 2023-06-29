@@ -1,20 +1,20 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeKpiWidgetFilterSettings } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeKpiWidgetFilterSettings } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardKpiWidgetFilterSettingsChanged } from "../../events";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { DashboardKpiWidgetFilterSettingsChanged } from "../../events/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingKpiWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../store/layout";
+import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
+import { layoutActions } from "../../store/layout/index.js";
 import { IDashboardAttributeFilterReference, IAnalyticalWidget, IKpiWidget } from "@gooddata/sdk-model";
-import { FilterValidators, processFilterOp } from "./common/filterOperations";
+import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForKpiWidgetDateFilter,
-} from "./validation/filterValidation";
-import { kpiWidgetFilterSettingsChanged } from "../../events/kpi";
+} from "./validation/filterValidation.js";
+import { kpiWidgetFilterSettingsChanged } from "../../events/kpi.js";
 
 const KpiWidgetFilterValidations: FilterValidators<IKpiWidget> = {
     dateDatasetValidator: validateDatasetForKpiWidgetDateFilter,

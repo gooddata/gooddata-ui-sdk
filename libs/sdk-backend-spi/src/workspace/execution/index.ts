@@ -15,7 +15,7 @@ import {
     IResultHeader,
     IResultWarning,
 } from "@gooddata/sdk-model";
-import { IExportConfig, IExportResult, IExportBlobResult } from "./export";
+import { IExportConfig, IExportResult, IExportBlobResult } from "./export.js";
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types

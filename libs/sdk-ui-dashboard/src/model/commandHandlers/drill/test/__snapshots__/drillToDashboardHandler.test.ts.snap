@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`drill to dashboard handler should emit the appropriate events for drill to dashboard 1`] = `
-Array [
-  Object {
+exports[`drill to dashboard handler > should emit the appropriate events for drill to dashboard 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
   },

@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transformResultDimensions should fill in totals 1`] = `
-Array [
-  Object {
-    "headers": Array [
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+exports[`transformResultDimensions > should fill in totals 1`] = `
+[
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -20,13 +20,13 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr1",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [
-            Object {
-              "totalHeaderItem": Object {
+          "totalItems": [
+            {
+              "totalHeaderItem": {
                 "name": "sum",
               },
             },
@@ -34,12 +34,12 @@ Array [
           "uri": "",
         },
       },
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -50,13 +50,13 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr2",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [
-            Object {
-              "totalHeaderItem": Object {
+          "totalItems": [
+            {
+              "totalHeaderItem": {
                 "name": "sum",
               },
             },
@@ -66,13 +66,13 @@ Array [
       },
     ],
   },
-  Object {
-    "headers": Array [
-      Object {
-        "measureGroupHeader": Object {
-          "items": Array [
-            Object {
-              "measureHeaderItem": Object {
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
                 "format": "#,##0.00",
                 "identifier": undefined,
                 "localIdentifier": "measureLocalId",
@@ -85,14 +85,14 @@ Array [
       },
     ],
   },
-  Object {
-    "headers": Array [
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -103,13 +103,13 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr3",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [
-            Object {
-              "totalHeaderItem": Object {
+          "totalItems": [
+            {
+              "totalHeaderItem": {
                 "name": "max",
               },
             },
@@ -122,16 +122,16 @@ Array [
 ]
 `;
 
-exports[`transformResultDimensions should fill in totals with multiple totals of the same type on one attribute (RAIL-3246) 1`] = `
-Array [
-  Object {
-    "headers": Array [
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+exports[`transformResultDimensions > should fill in totals with multiple totals of the same type on one attribute (RAIL-3246) 1`] = `
+[
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -142,13 +142,13 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr1",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [
-            Object {
-              "totalHeaderItem": Object {
+          "totalItems": [
+            {
+              "totalHeaderItem": {
                 "name": "sum",
               },
             },
@@ -156,12 +156,12 @@ Array [
           "uri": "",
         },
       },
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -172,13 +172,13 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr2",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [
-            Object {
-              "totalHeaderItem": Object {
+          "totalItems": [
+            {
+              "totalHeaderItem": {
                 "name": "sum",
               },
             },
@@ -188,13 +188,13 @@ Array [
       },
     ],
   },
-  Object {
-    "headers": Array [
-      Object {
-        "measureGroupHeader": Object {
-          "items": Array [
-            Object {
-              "measureHeaderItem": Object {
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
                 "format": "#,##0.00",
                 "identifier": undefined,
                 "localIdentifier": "measureLocalId",
@@ -207,14 +207,14 @@ Array [
       },
     ],
   },
-  Object {
-    "headers": Array [
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -225,13 +225,13 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr3",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [
-            Object {
-              "totalHeaderItem": Object {
+          "totalItems": [
+            {
+              "totalHeaderItem": {
                 "name": "max",
               },
             },
@@ -244,15 +244,15 @@ Array [
 ]
 `;
 
-exports[`transformResultDimensions should fill in uris and refs for attribute descriptors 1`] = `
-Array [
-  Object {
-    "headers": Array [
-      Object {
-        "measureGroupHeader": Object {
-          "items": Array [
-            Object {
-              "measureHeaderItem": Object {
+exports[`transformResultDimensions > should fill in uris and refs for attribute descriptors 1`] = `
+[
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
                 "format": "#,##0.00",
                 "identifier": undefined,
                 "localIdentifier": "measureLocalId",
@@ -265,14 +265,14 @@ Array [
       },
     ],
   },
-  Object {
-    "headers": Array [
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -283,11 +283,11 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [],
+          "totalItems": [],
           "uri": "",
         },
       },
@@ -296,20 +296,20 @@ Array [
 ]
 `;
 
-exports[`transformResultDimensions should fill in uris and refs for attribute descriptors and simple measure descriptors 1`] = `
-Array [
-  Object {
-    "headers": Array [
-      Object {
-        "measureGroupHeader": Object {
-          "items": Array [
-            Object {
-              "measureHeaderItem": Object {
+exports[`transformResultDimensions > should fill in uris and refs for attribute descriptors and simple measure descriptors 1`] = `
+[
+  {
+    "headers": [
+      {
+        "measureGroupHeader": {
+          "items": [
+            {
+              "measureHeaderItem": {
                 "format": "#,##0.00",
                 "identifier": "measureIdentifier",
                 "localIdentifier": "measureLocalId",
                 "name": "measureLocalId",
-                "ref": Object {
+                "ref": {
                   "identifier": "measureIdentifier",
                   "type": "measure",
                 },
@@ -320,14 +320,14 @@ Array [
       },
     ],
   },
-  Object {
-    "headers": Array [
-      Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+  {
+    "headers": [
+      {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "event_date.quarter",
             "name": "event_date - Quarter/Year",
-            "ref": Object {
+            "ref": {
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
@@ -338,11 +338,11 @@ Array [
           "identifier": "event_date.quarter.label",
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
           "name": "event_date - Quarter/Year",
-          "ref": Object {
+          "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
           },
-          "totalItems": Array [],
+          "totalItems": [],
           "uri": "",
         },
       },

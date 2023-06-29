@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import { IBucket, IFilter, IInsight, ISortItem, uriRef, VisualizationProperties } from "@gooddata/sdk-model";
 
 /**

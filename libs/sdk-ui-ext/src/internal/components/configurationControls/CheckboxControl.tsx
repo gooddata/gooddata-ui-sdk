@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import DisabledBubbleMessage from "../DisabledBubbleMessage";
-import { IVisualizationProperties } from "../../interfaces/Visualization";
-import { getTranslation } from "../../utils/translations";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslation } from "../../utils/translations.js";
 
 export interface ICheckboxControlProps {
     valuePath: string;

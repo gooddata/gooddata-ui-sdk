@@ -1,26 +1,34 @@
 // (C) 2007-2019 GoodData Corporation
 
-// These imports and actions need to be done first because of mocks
-const Original = jest.requireActual("@gooddata/sdk-ui-geo/dist/core/geoChart/GeoChartOptionsWrapper");
-import { withPropsExtractor } from "../../_infra/withProps";
-const { extractProps, wrap } = withPropsExtractor();
-
-import geoScenarios, { latitudeLongitudeScenarios } from "../../../scenarios/geo/index";
-import { ScenarioAndDescription } from "../../../src";
-import { mountChartAndCapture } from "../../_infra/render";
+import { describe, it, expect, vi } from "vitest";
+import { withPropsExtractor } from "../../_infra/withProps.js";
+import geoScenarios, { latitudeLongitudeScenarios } from "../../../scenarios/geo/index.js";
+import { ScenarioAndDescription } from "../../../src/index.js";
+import { mountChartAndCapture } from "../../_infra/render.js";
 import { IGeoPushpinChartProps, IGeoPushpinChartLatitudeLongitudeProps } from "@gooddata/sdk-ui-geo";
-import flatMap from "lodash/flatMap";
-import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
-import { cleanupGeoChartProps } from "../../_infra/utils";
-import { mountInsight } from "../../_infra/renderPlugVis";
+import flatMap from "lodash/flatMap.js";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
+import { cleanupGeoChartProps } from "../../_infra/utils.js";
+import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { defSetSorts } from "@gooddata/sdk-model";
 
 const Chart = "GeoPushpinChart";
 
-jest.mock("@gooddata/sdk-ui-geo/dist/core/geoChart/GeoChartOptionsWrapper", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui-geo/dist/core/geoChart/GeoChartOptionsWrapper"),
-    GeoChartOptionsWrapper: wrap(Original.GeoChartOptionsWrapper),
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
 }));
+
+vi.mock("@gooddata/sdk-ui-geo/internal-tests/GeoChartOptionsWrapper", async () => {
+    const Original = await vi.importActual<any>("@gooddata/sdk-ui-geo/internal-tests/GeoChartOptionsWrapper");
+    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
+    extractProps = originalExtractProps;
+
+    return {
+        ...Original,
+        GeoChartOptionsWrapper: wrap(Original.GeoChartOptionsWrapper),
+    };
+});
 
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<IGeoPushpinChartProps>> = flatMap(geoScenarios, (group) =>

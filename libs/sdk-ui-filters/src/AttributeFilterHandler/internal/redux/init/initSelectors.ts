@@ -2,9 +2,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { selectState } from "../common/selectors";
-import { FilterSelector } from "../common/types";
-import { AsyncOperationStatus } from "../../../../AttributeFilterHandler/types";
+import { selectState } from "../common/selectors.js";
+import { FilterSelector } from "../common/types.js";
+import { AsyncOperationStatus } from "../../../types/index.js";
 
 /**
  * @internal

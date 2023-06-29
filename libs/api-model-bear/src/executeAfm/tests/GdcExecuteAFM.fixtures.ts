@@ -1,13 +1,25 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
+import {
+    CompatibilityFilter,
+    IArithmeticMeasureDefinition,
+    IAttributeLocatorItem,
+    IAttributeSortItem,
+    ILocalIdentifierQualifier,
+    IMeasureLocatorItem,
+    IMeasureSortItem,
+    IPopMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+    ISimpleMeasureDefinition,
+    ObjQualifier,
+} from "../GdcExecuteAFM.js";
 
-export const expressionFilter: AFM.CompatibilityFilter = {
+export const expressionFilter: CompatibilityFilter = {
     expression: {
         value: "MAQL",
     },
 };
 
-export const relativeDateFilter: AFM.CompatibilityFilter = {
+export const relativeDateFilter: CompatibilityFilter = {
     relativeDateFilter: {
         dataSet: {
             uri: "/gdc/mock/ds",
@@ -17,7 +29,7 @@ export const relativeDateFilter: AFM.CompatibilityFilter = {
         to: 0,
     },
 };
-export const absoluteDateFilter: AFM.CompatibilityFilter = {
+export const absoluteDateFilter: CompatibilityFilter = {
     absoluteDateFilter: {
         dataSet: {
             uri: "/gdc/mock/ds",
@@ -26,7 +38,7 @@ export const absoluteDateFilter: AFM.CompatibilityFilter = {
         to: "2",
     },
 };
-export const negativeAttributeFilter: AFM.CompatibilityFilter = {
+export const negativeAttributeFilter: CompatibilityFilter = {
     negativeAttributeFilter: {
         displayForm: {
             uri: "/gdc/mock/date",
@@ -34,7 +46,7 @@ export const negativeAttributeFilter: AFM.CompatibilityFilter = {
         notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
     },
 };
-export const positiveAttributeFilter: AFM.CompatibilityFilter = {
+export const positiveAttributeFilter: CompatibilityFilter = {
     positiveAttributeFilter: {
         displayForm: {
             uri: "/gdc/mock/attribute",
@@ -42,43 +54,43 @@ export const positiveAttributeFilter: AFM.CompatibilityFilter = {
         in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
     },
 };
-export const measureValueFilter: AFM.CompatibilityFilter = {
+export const measureValueFilter: CompatibilityFilter = {
     measureValueFilter: {
         measure: {
             uri: "/gdc/mock/date",
         },
     },
 };
-export const rankingFilter: AFM.CompatibilityFilter = {
+export const rankingFilter: CompatibilityFilter = {
     rankingFilter: {
         measures: [{ localIdentifier: "m1" }],
         value: 5,
         operator: "TOP",
     },
 };
-export const identifierObjectQualifier: AFM.ObjQualifier = {
+export const identifierObjectQualifier: ObjQualifier = {
     identifier: "id",
 };
-export const uriObjectQualifier: AFM.ObjQualifier = {
+export const uriObjectQualifier: ObjQualifier = {
     uri: "/gdc/mock/id",
 };
-export const localIdentifierQualifier: AFM.ILocalIdentifierQualifier = {
+export const localIdentifierQualifier: ILocalIdentifierQualifier = {
     localIdentifier: "localId",
 };
-export const simpleMeasureDefinition: AFM.ISimpleMeasureDefinition = {
+export const simpleMeasureDefinition: ISimpleMeasureDefinition = {
     measure: {
         item: {
             uri: "/gdc/mock/measure",
         },
     },
 };
-export const arithmeticMeasureDefinition: AFM.IArithmeticMeasureDefinition = {
+export const arithmeticMeasureDefinition: IArithmeticMeasureDefinition = {
     arithmeticMeasure: {
         measureIdentifiers: ["/gdc/mock/measure"],
         operator: "sum",
     },
 };
-export const popMeasureDefinition: AFM.IPopMeasureDefinition = {
+export const popMeasureDefinition: IPopMeasureDefinition = {
     popMeasure: {
         measureIdentifier: "m1",
         popAttribute: {
@@ -86,7 +98,7 @@ export const popMeasureDefinition: AFM.IPopMeasureDefinition = {
         },
     },
 };
-export const previousPeriodMeasureDefinition: AFM.IPreviousPeriodMeasureDefinition = {
+export const previousPeriodMeasureDefinition: IPreviousPeriodMeasureDefinition = {
     previousPeriodMeasure: {
         measureIdentifier: "m1",
         dateDataSets: [
@@ -99,13 +111,13 @@ export const previousPeriodMeasureDefinition: AFM.IPreviousPeriodMeasureDefiniti
         ],
     },
 };
-export const attributeSortItem: AFM.IAttributeSortItem = {
+export const attributeSortItem: IAttributeSortItem = {
     attributeSortItem: {
         direction: "asc",
         attributeIdentifier: "a1",
     },
 };
-export const measureSortItem: AFM.IMeasureSortItem = {
+export const measureSortItem: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -117,13 +129,13 @@ export const measureSortItem: AFM.IMeasureSortItem = {
         ],
     },
 };
-export const attributeLocatorItem: AFM.IAttributeLocatorItem = {
+export const attributeLocatorItem: IAttributeLocatorItem = {
     attributeLocatorItem: {
         attributeIdentifier: "a1",
         element: "element",
     },
 };
-export const measureLocatorItem: AFM.IMeasureLocatorItem = {
+export const measureLocatorItem: IMeasureLocatorItem = {
     measureLocatorItem: {
         measureIdentifier: "m1",
     },

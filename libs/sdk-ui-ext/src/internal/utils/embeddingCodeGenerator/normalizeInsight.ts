@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
-import flow from "lodash/fp/flow";
-import fromPairs from "lodash/fp/fromPairs";
-import map from "lodash/fp/map";
-import toPairs from "lodash/fp/toPairs";
+import flow from "lodash/fp/flow.js";
+import fromPairs from "lodash/fp/fromPairs.js";
+import map from "lodash/fp/map.js";
+import toPairs from "lodash/fp/toPairs.js";
 import {
     attributeLocalId,
     bucketItems,

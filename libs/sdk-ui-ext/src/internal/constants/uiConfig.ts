@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import { IUiConfig } from "../interfaces/Visualization";
+import { IUiConfig } from "../interfaces/Visualization.js";
 
-import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket";
+import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket.js";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const MAX_METRICS_COUNT = 20;

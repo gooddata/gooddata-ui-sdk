@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
-import { ComboChartTypes } from "./base";
+import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src/index.js";
+import { ComboChartTypes } from "./base.js";
 
 const AllExplicitCombinations: ComboChartTypes[][] = [
     ["column", "column"],
@@ -18,7 +18,7 @@ export function comboVariants<T extends VisProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {
-    return AllExplicitCombinations.map(c => [
+    return AllExplicitCombinations.map((c) => [
         baseName + c.join("-"),
         {
             ...baseProps,

@@ -3,9 +3,9 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
 import { fork, race, take } from "redux-saga/effects";
 
-import { Correlation } from "../../../types";
-import { loadInitialElementsPageSaga } from "../loadInitialElementsPage/loadInitialElementsPageSaga";
-import { actions } from "../store/slice";
+import { Correlation } from "../../../types/index.js";
+import { loadInitialElementsPageSaga } from "../loadInitialElementsPage/loadInitialElementsPageSaga.js";
+import { actions } from "../store/slice.js";
 
 /**
  * @internal

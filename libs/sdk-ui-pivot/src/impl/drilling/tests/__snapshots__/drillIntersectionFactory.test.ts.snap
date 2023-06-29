@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createDrillIntersection creates drill intersection for measure cell attribute 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+exports[`createDrillIntersection > creates drill intersection for measure cell attribute 1`] = `
+[
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.opportunitysnapshot.forecastcategory",
           "name": "Forecast Category",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1062",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1062",
@@ -16,24 +16,24 @@ Array [
         "identifier": "label.opportunitysnapshot.forecastcategory",
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
         "name": "Forecast Category",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1063",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1063",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "Exclude",
         "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1086",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1086",
@@ -41,38 +41,38 @@ Array [
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "East Coast",
         "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
       },
     },
   },
-  Object {
-    "header": Object {
-      "measureHeaderItem": Object {
+  {
+    "header": {
+      "measureHeaderItem": {
         "format": "$#,##0.00",
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1271",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -80,24 +80,24 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
     },
   },
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.owner.department",
           "name": "Department",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1088",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1088",
@@ -105,12 +105,12 @@ Array [
         "identifier": "label.owner.department",
         "localIdentifier": "a_label.owner.department",
         "name": "Department",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1089",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1089",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "Direct Sales",
         "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
       },
@@ -119,15 +119,15 @@ Array [
 ]
 `;
 
-exports[`createDrillIntersection creates drill intersection for row attribute 1`] = `
-Array [
-  Object {
-    "header": Object {
-      "attributeHeader": Object {
-        "formOf": Object {
+exports[`createDrillIntersection > creates drill intersection for row attribute 1`] = `
+[
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
           "identifier": "attr.product.id",
           "name": "Product",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "uri": "/gdc/md/referenceworkspace/obj/1054",
@@ -135,12 +135,12 @@ Array [
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "ref": Object {
+        "ref": {
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
         "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
-      "attributeHeaderItem": Object {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },

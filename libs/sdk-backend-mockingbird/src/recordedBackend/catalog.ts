@@ -24,9 +24,9 @@ import {
     isCatalogMeasure,
     isCatalogDateDataset,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 
-import { RecordedBackendConfig, RecordingIndex } from "./types";
+import { RecordedBackendConfig, RecordingIndex } from "./types.js";
 
 /**
  * @internal

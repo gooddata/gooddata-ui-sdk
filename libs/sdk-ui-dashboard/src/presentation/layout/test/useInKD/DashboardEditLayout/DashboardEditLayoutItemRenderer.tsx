@@ -5,9 +5,9 @@ import cx from "classnames";
 import {
     DashboardLayoutItemViewRenderer,
     IDashboardLayoutItemRenderProps,
-} from "../../../DefaultDashboardLayoutRenderer";
+} from "../../../DefaultDashboardLayoutRenderer/index.js";
 import { areObjRefsEqual, idRef, ObjRef } from "@gooddata/sdk-model";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export interface IDashboardEditLayoutItemRendererStateProps {
     hiddenWidgetRef?: ObjRef;

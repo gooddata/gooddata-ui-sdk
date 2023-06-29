@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { DashboardEditLayoutSectionBorderMarker } from "./DashboardEditLayoutSectionBorderMarker";
+import { DashboardEditLayoutSectionBorderMarker } from "./DashboardEditLayoutSectionBorderMarker.js";
 
 export type DashboardEditLayoutSectionBorderStatus = "active" | "muted" | "invisible";
 

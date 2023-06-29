@@ -2,12 +2,12 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import DropdownControl from "../DropdownControl";
-import { getTranslatedDropdownItems } from "../../../utils/translations";
-import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../../constants/dropdowns";
-import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import { messages } from "../../../../locales";
+import DropdownControl from "../DropdownControl.js";
+import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../../constants/dropdowns.js";
+import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { messages } from "../../../../locales.js";
 
 class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
     public render() {

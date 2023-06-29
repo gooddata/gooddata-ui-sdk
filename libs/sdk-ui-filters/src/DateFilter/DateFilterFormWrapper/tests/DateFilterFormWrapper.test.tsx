@@ -1,7 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { DateFilterFormWrapper } from "../DateFilterFormWrapper";
+import { DateFilterFormWrapper } from "../DateFilterFormWrapper.js";
+import { describe, it, expect } from "vitest";
 
 describe("DateFilterFormWrapper", () => {
     it("should render children", () => {

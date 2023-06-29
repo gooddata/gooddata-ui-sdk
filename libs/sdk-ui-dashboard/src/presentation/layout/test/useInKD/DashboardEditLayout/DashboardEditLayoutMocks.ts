@@ -2,8 +2,8 @@
 import { idRef, ObjRef } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { WidgetPosition, DropZoneType } from "./LayoutTypes";
-import { newInsight } from "../../../../../_staging/insight/insightBuilder";
+import { WidgetPosition, DropZoneType } from "./LayoutTypes.js";
+import { newInsight } from "../../../../../_staging/insight/insightBuilder.js";
 
 import {
     IDashboardEditLayout,
@@ -14,7 +14,7 @@ import {
     IDashboardEditLayoutContent,
     IDashboardEditLayoutItem,
     IDashboardEditLayoutContentWidgetNewInsightPlaceholder,
-} from "./DashboardEditLayoutTypes";
+} from "./DashboardEditLayoutTypes.js";
 
 export type DashboardEditLayoutContentGenerator = (
     ref: ObjRef,

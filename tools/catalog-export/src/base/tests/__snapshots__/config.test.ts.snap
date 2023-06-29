@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`configuration getConfigFromConfigFile should read the given config file and return allowed values from it 1`] = `
-Object {
+exports[`configuration > getConfigFromConfigFile > should read the given config file and return allowed values from it 1`] = `
+{
   "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname",
@@ -9,24 +9,24 @@ Object {
 }
 `;
 
-exports[`configuration getConfigFromEnv should parse credentials and ignore everything else 1`] = `
-Object {
+exports[`configuration > getConfigFromEnv > should parse credentials and ignore everything else 1`] = `
+{
   "password": "password",
   "token": "token",
   "username": "username",
 }
 `;
 
-exports[`configuration getConfigFromEnv should return null for credentials if not present in env 1`] = `
-Object {
+exports[`configuration > getConfigFromEnv > should return null for credentials if not present in env 1`] = `
+{
   "password": null,
   "token": null,
   "username": null,
 }
 `;
 
-exports[`configuration getConfigFromOptions should output allowed values from the input object 1`] = `
-Object {
+exports[`configuration > getConfigFromOptions > should output allowed values from the input object 1`] = `
+{
   "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname",
@@ -37,15 +37,15 @@ Object {
 }
 `;
 
-exports[`configuration getConfigFromPackage should ignore credentials and not supported values 1`] = `
-Object {
+exports[`configuration > getConfigFromPackage > should ignore credentials and not supported values 1`] = `
+{
   "hostname": "hostname",
   "workspaceId": "workspaceId",
 }
 `;
 
-exports[`configuration getConfigFromPackage should override parent folder package.jsons with child ones 1`] = `
-Object {
+exports[`configuration > getConfigFromPackage > should override parent folder package.jsons with child ones 1`] = `
+{
   "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname-new",
@@ -53,8 +53,8 @@ Object {
 }
 `;
 
-exports[`configuration getConfigFromPackage should parse allowed values from the package.json file in a given folder 1`] = `
-Object {
+exports[`configuration > getConfigFromPackage > should parse allowed values from the package.json file in a given folder 1`] = `
+{
   "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname",
@@ -62,8 +62,8 @@ Object {
 }
 `;
 
-exports[`configuration mergeConfigs should only output allowed values 1`] = `
-Object {
+exports[`configuration > mergeConfigs > should only output allowed values 1`] = `
+{
   "backend": "tiger",
   "catalogOutput": "./cat.ts",
   "hostname": "https://cloud.gooddata.com/",

@@ -22,17 +22,17 @@ import {
     selectAllCatalogMeasuresMap,
     selectIsEmbedded,
     selectDisableDefaultDrills,
-} from "../../../../model";
-import { OnFiredDashboardDrillEvent } from "../../../../types";
-import { DashboardItemKpi } from "../../../presentationComponents";
-import { useDashboardComponentsContext } from "../../../dashboardContexts";
+} from "../../../../model/index.js";
+import { OnFiredDashboardDrillEvent } from "../../../../types.js";
+import { DashboardItemKpi } from "../../../presentationComponents/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 
-import { ConfigurationBubble } from "../../common";
-import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
-import { IDashboardKpiProps } from "../types";
-import { useOptimisticMeasureUpdate } from "./useOptimisticMeasureUpdate";
-import { EditableKpiHeadline } from "./EditModeKpiHeadline";
-import { useKpiDrill } from "../common/useKpiDrill";
+import { ConfigurationBubble } from "../../common/index.js";
+import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common/index.js";
+import { IDashboardKpiProps } from "../types.js";
+import { useOptimisticMeasureUpdate } from "./useOptimisticMeasureUpdate.js";
+import { EditableKpiHeadline } from "./EditModeKpiHeadline.js";
+import { useKpiDrill } from "../common/useKpiDrill.js";
 
 export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     const {

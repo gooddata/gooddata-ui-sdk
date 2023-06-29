@@ -4,10 +4,10 @@ import { injectIntl, IntlShape } from "react-intl";
 import { v4 as uuid } from "uuid";
 import cx from "classnames";
 
-import { Button } from "../Button";
-import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import { Button } from "../Button/index.js";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 
-import { IHeaderMenuItem } from "./typings";
+import { IHeaderMenuItem } from "./typings.js";
 
 /**
  * @internal

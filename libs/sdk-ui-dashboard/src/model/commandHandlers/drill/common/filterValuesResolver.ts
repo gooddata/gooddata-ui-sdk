@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
 import {
     attributeElementsCount,
     filterAttributeElements,
@@ -23,7 +23,7 @@ import {
     IResolvedFilterValues,
     ResolvableFilter,
     IResolvedDateFilterValue,
-} from "../../../types/commonTypes";
+} from "../../../types/commonTypes.js";
 
 const MAX_ELEMENTS_COUNT_PER_REQUEST = 500; // should cover all attribute filters created by UI where we have 500 elements limit
 

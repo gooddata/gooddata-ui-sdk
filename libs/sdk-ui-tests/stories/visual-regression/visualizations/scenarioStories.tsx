@@ -1,19 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
-import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper";
+import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper.js";
 import React from "react";
-import allScenarios from "../../../scenarios";
-import { ScenarioGroup } from "../../../src";
+import allScenarios from "../../../scenarios/index.js";
+import { ScenarioGroup } from "../../../src/index.js";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
-import { StorybookBackend } from "../../_infra/backend";
-import { storyGroupFor } from "./storyGroupFactory";
-import groupBy from "lodash/groupBy";
-import sortBy from "lodash/sortBy";
-import { ScenarioStories } from "../../_infra/storyGroups";
-import values from "lodash/values";
-import { wrapWithTheme } from "../themeWrapper";
+import { StorybookBackend } from "../../_infra/backend.js";
+import { storyGroupFor } from "./storyGroupFactory.js";
+import groupBy from "lodash/groupBy.js";
+import sortBy from "lodash/sortBy.js";
+import { ScenarioStories } from "../../_infra/storyGroups.js";
+import values from "lodash/values.js";
+import { wrapWithTheme } from "../themeWrapper.js";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 

@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { isKpiPlaceholderWidget } from "../../../widgets";
+import { isKpiPlaceholderWidget } from "../../../widgets/index.js";
 import {
     eagerRemoveSectionItem,
     selectWidgetCoordinatesByRef,
@@ -10,11 +10,11 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
-} from "../../../model";
-import { DashboardItem, DashboardItemContent } from "../../presentationComponents";
-import { ConfigurationBubble } from "../common";
-import { CustomDashboardWidgetComponent } from "../widget/types";
-import { KpiPlaceholderConfigurationPanel } from "./KpiPlaceholderConfigurationPanel";
+} from "../../../model/index.js";
+import { DashboardItem, DashboardItemContent } from "../../presentationComponents/index.js";
+import { ConfigurationBubble } from "../common/index.js";
+import { CustomDashboardWidgetComponent } from "../widget/types.js";
+import { KpiPlaceholderConfigurationPanel } from "./KpiPlaceholderConfigurationPanel.js";
 
 /**
  * @internal

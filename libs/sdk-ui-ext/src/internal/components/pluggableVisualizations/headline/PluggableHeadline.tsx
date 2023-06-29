@@ -14,7 +14,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import { METRIC } from "../../../constants/bucket";
+import { METRIC } from "../../../constants/bucket.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -24,9 +24,9 @@ import {
     IVisConstruct,
     IVisProps,
     RenderFunction,
-} from "../../../interfaces/Visualization";
+} from "../../../interfaces/Visualization.js";
 
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     findDerivedBucketItem,
     getAllItemsByType,
@@ -36,27 +36,27 @@ import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
-import { hasGlobalDateFilter } from "../../../utils/bucketRules";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+} from "../../../utils/bucketHelper.js";
+import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
-} from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+} from "../../../utils/propertiesHelper.js";
+import { removeSort } from "../../../utils/sort.js";
 import {
     getDefaultHeadlineUiConfig,
     getHeadlineUiConfig,
-} from "../../../utils/uiConfigHelpers/headlineUiConfigHelper";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
+} from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
     findComplementaryOverTimeComparisonMeasure,
     findSecondMasterMeasure,
     setHeadlineRefPointBuckets,
     tryToMapForeignBuckets,
-} from "./headlineBucketHelper";
-import cloneDeep from "lodash/cloneDeep";
+} from "./headlineBucketHelper.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 /**
  * PluggableHeadline

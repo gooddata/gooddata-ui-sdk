@@ -1,5 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     IAbsoluteDateFilter,
     IInsight,
@@ -16,7 +16,7 @@ import {
     IAccessGrantee,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
-import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
+import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
 
 // TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters
 /**

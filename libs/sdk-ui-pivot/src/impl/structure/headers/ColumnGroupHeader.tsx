@@ -2,10 +2,10 @@
 import { IHeaderGroupParams } from "@ag-grid-community/all-modules";
 import React from "react";
 
-import { IMenu } from "../../../publicTypes";
+import { IMenu } from "../../../publicTypes.js";
 
-import HeaderCell, { ALIGN_LEFT, ICommonHeaderParams } from "./HeaderCell";
-import { agColId } from "../tableDescriptorTypes";
+import HeaderCell, { ALIGN_LEFT, ICommonHeaderParams } from "./HeaderCell.js";
+import { agColId } from "../tableDescriptorTypes.js";
 
 export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {
     menu?: () => IMenu;

@@ -3,7 +3,7 @@ import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasuresWithIdentifier,
-} from "../../../../../__mocks__/fixtures";
+} from "../../../../../__mocks__/fixtures.js";
 import { uriRef } from "@gooddata/sdk-model";
 
 export const DRILL_EVENT_DATA_BY_MEASURE_URI = {

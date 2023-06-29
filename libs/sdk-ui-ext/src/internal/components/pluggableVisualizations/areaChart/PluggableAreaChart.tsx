@@ -9,22 +9,22 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import isEmpty from "lodash/isEmpty.js";
 
-import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import {
     AREA_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
-} from "../../../constants/supportedProperties";
+} from "../../../constants/supportedProperties.js";
 import {
     AREA_UICONFIG_WITH_MULTIPLE_DATES,
     DEFAULT_AREA_UICONFIG,
     MAX_CATEGORIES_COUNT,
     MAX_STACKS_COUNT,
     MAX_VIEW_COUNT,
-} from "../../../constants/uiConfig";
+} from "../../../constants/uiConfig.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -35,8 +35,8 @@ import {
     IVisConstruct,
     IVisProps,
     IDrillDownDefinition,
-} from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAllAttributeItemsWithPreference,
     getAllCategoriesAttributeItems,
@@ -51,21 +51,21 @@ import {
     sanitizeFilters,
     getMainDateItem,
     getBucketItems,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
-} from "../../../utils/propertiesHelper";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
-import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+} from "../../../utils/propertiesHelper.js";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper.js";
+import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
-} from "../drillDownUtil";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+} from "../drillDownUtil.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
 /**
  * PluggableAreaChart

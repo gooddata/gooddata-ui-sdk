@@ -1,10 +1,11 @@
 // (C) 2020-2021 GoodData Corporation
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { colorPaletteDataLoaderFactory } from "../ColorPaletteDataLoader";
+import { colorPaletteDataLoaderFactory } from "../ColorPaletteDataLoader.js";
 
 describe("ColorPaletteDataLoader", () => {
     const workspace = "foo";
@@ -27,7 +28,7 @@ describe("ColorPaletteDataLoader", () => {
 
     it("should cache getColorPalette calls", async () => {
         const loader = colorPaletteDataLoaderFactory.forWorkspace(workspace);
-        const getColorPalette = jest.fn(() => Promise.resolve({} as any));
+        const getColorPalette = vi.fn(() => Promise.resolve({} as any));
         const backend = getMockBackend(getColorPalette);
 
         const first = loader.getColorPalette(backend);
@@ -41,7 +42,7 @@ describe("ColorPaletteDataLoader", () => {
 
     it("should not cache getColorPalette errors", async () => {
         const loader = colorPaletteDataLoaderFactory.forWorkspace(workspace);
-        const getColorPalette = jest.fn(() => Promise.resolve({} as any));
+        const getColorPalette = vi.fn(() => Promise.resolve({} as any));
         const errorBackend = getMockBackend(() => {
             throw new Error("FAIL");
         });

@@ -1,25 +1,29 @@
 // (C) 2019-2022 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { BUCKETS } from "../../../constants/bucket";
-import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig";
-import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { BUCKETS } from "../../../constants/bucket.js";
+import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig.js";
+import {
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
-import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper";
-import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+} from "../../../utils/bucketHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
+import { removeSort } from "../../../utils/sort.js";
+import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper.js";
+import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { transformBuckets } from "./bucketHelper";
-import cloneDeep from "lodash/cloneDeep";
+import { transformBuckets } from "./bucketHelper.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 /**
  * PluggableScatterPlot

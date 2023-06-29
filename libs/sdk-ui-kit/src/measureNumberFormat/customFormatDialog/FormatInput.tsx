@@ -3,9 +3,9 @@ import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown";
-import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput";
-import { IFormatTemplate } from "../typings";
+import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
+import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
+import { IFormatTemplate } from "../typings.js";
 
 const formattingRules = {
     start: [

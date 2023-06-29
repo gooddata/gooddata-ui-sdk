@@ -1,17 +1,18 @@
 // (C) 2020-2023 GoodData Corporation
 
-import { getMVS } from "../../_util/test/helper";
+import { getMVS } from "../../_util/test/helper.js";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { ColorFactory } from "../../_chartOptions/colorFactory";
-import { HeatmapColorStrategy } from "../heatmapColoring";
-import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
-import { IColorMapping } from "../../../../interfaces";
+import { ColorFactory } from "../../_chartOptions/colorFactory.js";
+import { HeatmapColorStrategy } from "../heatmapColoring.js";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
+import { IColorMapping } from "../../../../interfaces/index.js";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import range from "lodash/range";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { HEATMAP_BLUE_COLOR_PALETTE } from "../../_util/color";
+import range from "lodash/range.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { HEATMAP_BLUE_COLOR_PALETTE } from "../../_util/color.js";
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
 describe("HeatmapColorStrategy", () => {
     it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {

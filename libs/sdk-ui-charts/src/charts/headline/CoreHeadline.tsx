@@ -8,9 +8,9 @@ import {
     ILoadingInjectedProps,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { ICoreChartProps } from "../../interfaces";
-import HeadlineTransformation from "./internal/HeadlineTransformation";
-import { defaultCoreChartProps } from "../_commons/defaultProps";
+import { ICoreChartProps } from "../../interfaces/index.js";
+import HeadlineTransformation from "./internal/HeadlineTransformation.js";
+import { defaultCoreChartProps } from "../_commons/defaultProps.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class HeadlineStateless extends React.Component<Props> {

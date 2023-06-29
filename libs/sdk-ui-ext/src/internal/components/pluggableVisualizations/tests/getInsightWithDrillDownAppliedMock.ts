@@ -10,9 +10,10 @@ import {
     uriRef,
     IMeasureDescriptor,
 } from "@gooddata/sdk-model";
-import { ReferenceData } from "@gooddata/reference-workspace";
-import { Department, Region, Won } from "@gooddata/reference-workspace/dist/md/full";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
+
+const { Department, Region, Won } = ReferenceMd;
 
 export const targetUri = "target-uri";
 

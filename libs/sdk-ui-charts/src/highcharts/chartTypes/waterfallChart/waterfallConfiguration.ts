@@ -1,9 +1,9 @@
 // (C) 2023 GoodData Corporation
-import { IChartConfig } from "../../../interfaces";
-import { HighchartsOptions } from "../../lib";
-import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
-import { getAxesCounts } from "../_util/common";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { HighchartsOptions } from "../../lib/index.js";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
+import { getAxesCounts } from "../_util/common.js";
 
 export function getWaterfallConfiguration(config: IChartConfig): HighchartsOptions {
     const waterfallConfiguration = {

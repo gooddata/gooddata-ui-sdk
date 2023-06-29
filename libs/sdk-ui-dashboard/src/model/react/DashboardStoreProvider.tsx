@@ -2,10 +2,10 @@
 import React from "react";
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { createDispatchHook, createSelectorHook, Provider, TypedUseSelectorHook } from "react-redux";
-import { DashboardState } from "../store";
-import { DashboardEventsProvider } from "./DashboardEventsContext";
-import { useInitializeDashboardStore } from "./useInitializeDashboardStore";
-import { IDashboardStoreProviderProps } from "./types";
+import { DashboardState } from "../store/index.js";
+import { DashboardEventsProvider } from "./DashboardEventsContext.js";
+import { useInitializeDashboardStore } from "./useInitializeDashboardStore.js";
+import { IDashboardStoreProviderProps } from "./types.js";
 
 /**
  * @alpha

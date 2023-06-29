@@ -2,9 +2,10 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer";
-import { IGeoData } from "../../../../src/GeoChart";
+import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer.js";
+import { IGeoData } from "../../../GeoChart.js";
 import { createIntlMock } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
 
 const intl = createIntlMock();
 
@@ -16,13 +17,17 @@ function createComponent(customProps: Partial<IGeoChartRendererProps> = {}) {
     return render(<GeoChartRenderer {...chartProps} />);
 }
 
-jest.mock("mapbox-gl", () => ({
-    ...jest.requireActual("mapbox-gl"),
-    Map: jest.fn(() => ({
-        addControl: jest.fn(),
-        on: jest.fn(),
-        remove: jest.fn(),
-    })),
+vi.mock("mapbox-gl", async () => ({
+    default: {
+        Map: vi.fn(() => ({
+            addControl: vi.fn(),
+            on: vi.fn(),
+            remove: vi.fn(),
+        })),
+        Popup: vi.fn(),
+        AttributionControl: vi.fn(),
+        NavigationControl: vi.fn(),
+    },
 }));
 
 describe("GeoChartRenderer", () => {

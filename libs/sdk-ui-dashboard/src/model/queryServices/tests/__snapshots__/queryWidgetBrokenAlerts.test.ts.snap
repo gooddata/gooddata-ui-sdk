@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi has correct alert active 1`] = `Array []`;
+exports[`query widget broken alerts filters > should return broken filter alerts kpi has correct alert active 1`] = `[]`;
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi has correct alert off 1`] = `Array []`;
+exports[`query widget broken alerts filters > should return broken filter alerts kpi has correct alert off 1`] = `[]`;
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi has no alerts 1`] = `Array []`;
+exports[`query widget broken alerts filters > should return broken filter alerts kpi has no alerts 1`] = `[]`;
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi referenced by Identifier where some filters removed from dashboard 1`] = `
-Array [
-  Object {
-    "alertFilter": Object {
-      "attributeFilter": Object {
-        "attributeElements": Object {
-          "uris": Array [],
+exports[`query widget broken alerts filters > should return broken filter alerts kpi referenced by Identifier where some filters removed from dashboard 1`] = `
+[
+  {
+    "alertFilter": {
+      "attributeFilter": {
+        "attributeElements": {
+          "uris": [],
         },
-        "displayForm": Object {
+        "displayForm": {
           "uri": "/gdc/md/referenceworkspace/obj/1099",
         },
-        "filterElementsBy": Array [],
+        "filterElementsBy": [],
         "localIdentifier": "2699039d119c4f0b8a7163991004f82e",
         "negativeSelection": true,
       },
@@ -27,20 +27,20 @@ Array [
 ]
 `;
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi where default filer selection changed 1`] = `Array []`;
+exports[`query widget broken alerts filters > should return broken filter alerts kpi where default filer selection changed 1`] = `[]`;
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi where some filters removed from dashboard 1`] = `
-Array [
-  Object {
-    "alertFilter": Object {
-      "attributeFilter": Object {
-        "attributeElements": Object {
-          "uris": Array [],
+exports[`query widget broken alerts filters > should return broken filter alerts kpi where some filters removed from dashboard 1`] = `
+[
+  {
+    "alertFilter": {
+      "attributeFilter": {
+        "attributeElements": {
+          "uris": [],
         },
-        "displayForm": Object {
+        "displayForm": {
           "uri": "/gdc/md/referenceworkspace/obj/1099",
         },
-        "filterElementsBy": Array [],
+        "filterElementsBy": [],
         "localIdentifier": "2699039d119c4f0b8a7163991004f82e",
         "negativeSelection": true,
       },
@@ -50,18 +50,18 @@ Array [
 ]
 `;
 
-exports[`query widget broken alerts filters should return broken filter alerts kpi where widget ignore some filters from dashboard 1`] = `
-Array [
-  Object {
-    "alertFilter": Object {
-      "attributeFilter": Object {
-        "attributeElements": Object {
-          "uris": Array [],
+exports[`query widget broken alerts filters > should return broken filter alerts kpi where widget ignore some filters from dashboard 1`] = `
+[
+  {
+    "alertFilter": {
+      "attributeFilter": {
+        "attributeElements": {
+          "uris": [],
         },
-        "displayForm": Object {
+        "displayForm": {
           "uri": "/gdc/md/referenceworkspace/obj/1087",
         },
-        "filterElementsBy": Array [],
+        "filterElementsBy": [],
         "localIdentifier": "9c6ff2074b2d42b8aace577689155af2",
         "negativeSelection": true,
       },

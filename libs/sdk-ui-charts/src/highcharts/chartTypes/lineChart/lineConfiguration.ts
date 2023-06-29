@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { IChartConfig } from "../../../interfaces";
-import { styleVariables } from "../_chartCreators/styles/variables";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
-import { HighchartsOptions } from "../../../highcharts/lib";
-import { getAxesCounts } from "../_util/common";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { styleVariables } from "../_chartCreators/styles/variables.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
+import { HighchartsOptions } from "../../lib/index.js";
+import { getAxesCounts } from "../_util/common.js";
 
 export const LINE_WIDTH = 3;
 

@@ -3,11 +3,11 @@
 import React from "react";
 import cx from "classnames";
 
-import { IScrollGradientProps } from "./typings";
+import { IScrollGradientProps } from "./typings.js";
 
-import { useRightInScrollable } from "./hooks/useRightInScrollable";
-import { useScrollEvent } from "./hooks/useScrollEvent";
-import { useGradientColor } from "./hooks/useGradientColor";
+import { useRightInScrollable } from "./hooks/useRightInScrollable.js";
+import { useScrollEvent } from "./hooks/useScrollEvent.js";
+import { useGradientColor } from "./hooks/useGradientColor.js";
 
 /**
  * @internal

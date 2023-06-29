@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import cx from "classnames";
 import React, { useEffect } from "react";
-import { useDashboardDispatch } from "../../../model";
+import { useDashboardDispatch } from "../../../model/index.js";
 import {
     isBaseDraggableMovingItem,
     isInsightDraggableItem,
@@ -9,15 +9,15 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
-} from "../../dragAndDrop/types";
-import { getDropZoneDebugStyle } from "../debug";
-import { useDashboardDrop } from "../useDashboardDrop";
-import { SectionDropZoneBox } from "./SectionDropZoneBox";
-import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler";
-import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler";
-import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler";
-import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler";
-import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers";
+} from "../types.js";
+import { getDropZoneDebugStyle } from "../debug.js";
+import { useDashboardDrop } from "../useDashboardDrop.js";
+import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
+import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
+import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
+import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
+import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 export type RowPosition = "above" | "below";
 

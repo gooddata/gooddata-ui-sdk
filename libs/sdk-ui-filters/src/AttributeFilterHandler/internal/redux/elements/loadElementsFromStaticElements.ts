@@ -12,11 +12,11 @@ import {
     IAttributeElements,
     isAttributeElementsByRef,
 } from "@gooddata/sdk-model";
-import flow from "lodash/flow";
+import flow from "lodash/flow.js";
 
-import { ILoadElementsOptions } from "../../../types";
-import { InMemoryPaging } from "./InMemoryPaging";
-import { IHiddenElementsInfo } from "./types";
+import { ILoadElementsOptions } from "../../../types/index.js";
+import { InMemoryPaging } from "./InMemoryPaging.js";
+import { IHiddenElementsInfo } from "./types.js";
 
 const resolveHiddenElements =
     (hiddenElements: IAttributeElements) =>

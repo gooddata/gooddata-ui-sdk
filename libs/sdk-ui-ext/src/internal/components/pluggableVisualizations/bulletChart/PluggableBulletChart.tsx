@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import cloneDeep from "lodash/cloneDeep";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import {
     IReferencePoint,
     IExtendedReferencePoint,
@@ -13,7 +13,7 @@ import {
     InvalidBucketsSdkError,
     IUiConfig,
     IDrillDownDefinition,
-} from "../../../interfaces/Visualization";
+} from "../../../interfaces/Visualization.js";
 
 import {
     sanitizeFilters,
@@ -24,15 +24,18 @@ import {
     removeAllDerivedMeasures,
     getBucketItems,
     getAllItemsByType,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 
-import { BUCKETS, METRIC } from "../../../constants/bucket";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
-import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper";
-import { BULLET_CHART_CONFIG_MULTIPLE_DATES, DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
-import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { BUCKETS, METRIC } from "../../../constants/bucket.js";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper.js";
+import {
+    BULLET_CHART_CONFIG_MULTIPLE_DATES,
+    DEFAULT_BULLET_CHART_CONFIG,
+} from "../../../constants/uiConfig.js";
+import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { VisualizationTypes, IDrillEvent, getIntersectionPartAfter, BucketNames } from "@gooddata/sdk-ui";
 import {
     bucketIsEmpty,
@@ -41,10 +44,10 @@ import {
     insightBucket,
     newAttributeSort,
 } from "@gooddata/sdk-model";
-import { transformBuckets } from "./bucketHelper";
-import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+import { transformBuckets } from "./bucketHelper.js";
+import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil.js";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
 /**
  * PluggableBulletChart

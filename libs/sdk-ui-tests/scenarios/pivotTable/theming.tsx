@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { scenariosFor } from "../../src";
-import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base";
-import { ScenarioGroupNames } from "../charts/_infra/groupNames";
+import { scenariosFor } from "../../src/index.js";
+import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(...ScenarioGroupNames.Theming)

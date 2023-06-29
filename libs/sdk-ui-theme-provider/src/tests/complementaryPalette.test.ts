@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
-
-import { getComplementaryPalette } from "../complementaryPalette";
+import { describe, it, expect } from "vitest";
+import { getComplementaryPalette } from "../complementaryPalette.js";
 
 describe("complementaryPalette", () => {
     describe("getComplementaryPalette", () => {

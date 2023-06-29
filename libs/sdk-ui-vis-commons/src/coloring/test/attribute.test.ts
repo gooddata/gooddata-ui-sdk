@@ -2,12 +2,13 @@
 
 import { IColorPaletteItem, RgbType, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
-import { AttributeColorStrategy } from "../attribute";
-import { getRgbString } from "../color";
+import { AttributeColorStrategy } from "../attribute.js";
+import { getRgbString } from "../color.js";
 import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../__mocks__/recordings";
-import { getColorsFromStrategy } from "./helper";
-import { IColorMapping } from "../types";
+import { recordedDataFacade } from "../../../__mocks__/recordings.js";
+import { getColorsFromStrategy } from "./helper.js";
+import { IColorMapping } from "../types.js";
+import { describe, it, expect } from "vitest";
 
 const RgbPalette: IColorPalette = [
     {

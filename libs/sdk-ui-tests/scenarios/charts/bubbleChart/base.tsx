@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const BubbleChartWithAllMeasuresAndAttribute = {
     xAxisMeasure: ReferenceMd.Amount,

@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { DynamicSelectItem } from "../../DateFilter/DynamicSelect/types";
-import { ISelectItemOption } from "../../DateFilter/Select/types";
+import { DynamicSelectItem } from "../../DateFilter/DynamicSelect/types.js";
+import { ISelectItemOption } from "../../DateFilter/Select/types.js";
 
 const MAX_VALUE = 99_999;
 

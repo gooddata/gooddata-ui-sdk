@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import assign from "lodash/assign";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import assign from "lodash/assign.js";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 
-import { disabledOpenAsReportConfig, UICONFIG } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+import { disabledOpenAsReportConfig, UICONFIG } from "../../constants/uiConfig.js";
+import { BUCKETS } from "../../constants/bucket.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

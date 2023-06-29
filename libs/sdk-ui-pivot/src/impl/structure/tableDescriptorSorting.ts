@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { SortDirection } from "@gooddata/sdk-model";
 import { ColDef, Column } from "@ag-grid-community/all-modules";
-import { isColumn } from "../base/agUtils";
+import { isColumn } from "../base/agUtils.js";
 
 /**
  * This interface pin-points the sort-specific props in ag-grid ColDef.

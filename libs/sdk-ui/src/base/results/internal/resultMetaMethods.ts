@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocatorElement,
@@ -26,7 +26,7 @@ import {
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import findIndex from "lodash/findIndex";
+import findIndex from "lodash/findIndex.js";
 
 /**
  * Methods to access result metadata - dimension descriptors and result headers.

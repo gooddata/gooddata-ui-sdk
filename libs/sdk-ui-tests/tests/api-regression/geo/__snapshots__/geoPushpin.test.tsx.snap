@@ -1,29 +1,29 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GeoPushpinChart with latitude and longitude only with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with latitude and longitude only with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "longitude_df",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -31,20 +31,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -54,11 +54,11 @@ Object {
       ],
       "localIdentifier": "latitude",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -68,15 +68,15 @@ Object {
       ],
       "localIdentifier": "longitude",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -87,31 +87,31 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "longitude_df",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with latitude and longitude only with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with latitude and longitude only with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -124,35 +124,35 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with legend on the left should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with legend on the left > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.state_name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -160,16 +160,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -182,15 +182,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -203,11 +203,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -217,11 +217,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -231,11 +231,11 @@ Object {
       ],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -246,29 +246,29 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -278,13 +278,13 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -295,24 +295,24 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with legend on the left should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
+exports[`GeoPushpinChart > with legend on the left > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
       "enabled": false,
       "position": "left",
     },
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -325,35 +325,35 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with legend on the right should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with legend on the right > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.state_name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -361,16 +361,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -383,15 +383,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -404,11 +404,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -418,11 +418,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -432,11 +432,11 @@ Object {
       ],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -447,29 +447,29 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -479,13 +479,13 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -496,24 +496,24 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with legend on the right should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
+exports[`GeoPushpinChart > with legend on the right > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "legend": {
       "enabled": true,
       "position": "right",
     },
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -526,17 +526,17 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location and color should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location and color > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
@@ -544,20 +544,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -570,11 +570,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -584,32 +584,32 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -620,15 +620,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location and color should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location and color > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -637,26 +637,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location and color with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location and color with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -664,20 +664,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -690,11 +690,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -704,15 +704,15 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -723,28 +723,28 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -755,20 +755,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location and color with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location and color with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -781,26 +781,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location and segment should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location and segment > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
@@ -808,20 +808,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -831,11 +831,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -846,25 +846,25 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location and segment should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location and segment > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -873,35 +873,35 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location and segment with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location and segment with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.state_name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -909,20 +909,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -932,11 +932,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -946,11 +946,11 @@ Object {
       ],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -961,31 +961,31 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location and segment with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location and segment with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -998,26 +998,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location and size  with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location and size  with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -1025,16 +1025,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -1047,15 +1047,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1065,15 +1065,15 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -1084,28 +1084,28 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -1116,20 +1116,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location and size  with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location and size  with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -1142,17 +1142,17 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location and size should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location and size > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
@@ -1160,16 +1160,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -1182,15 +1182,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1200,32 +1200,32 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -1236,15 +1236,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location and size should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location and size > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -1253,17 +1253,17 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location only should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location only > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
@@ -1271,20 +1271,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1294,29 +1294,29 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location only should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location only > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -1325,26 +1325,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location only with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location only with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -1352,20 +1352,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1375,15 +1375,15 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -1394,30 +1394,30 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location only with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location only with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -1430,26 +1430,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment and color should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, segment and color > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
@@ -1457,20 +1457,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -1483,11 +1483,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1497,11 +1497,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -1512,28 +1512,28 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -1544,15 +1544,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, segment and color should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, segment and color > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -1561,26 +1561,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment and size should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, segment and size > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
@@ -1588,16 +1588,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -1610,15 +1610,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1628,11 +1628,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -1643,28 +1643,28 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -1675,15 +1675,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, segment and size should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, segment and size > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -1692,35 +1692,35 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, color with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, segment, color with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.state_name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -1728,20 +1728,20 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -1754,11 +1754,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1768,11 +1768,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -1782,11 +1782,11 @@ Object {
       ],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -1797,29 +1797,29 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -1830,20 +1830,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, color with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, segment, color with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -1856,26 +1856,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size and color  should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, segment, size and color  > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
@@ -1883,16 +1883,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -1905,15 +1905,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -1926,11 +1926,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -1940,11 +1940,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -1955,28 +1955,28 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -1986,13 +1986,13 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -2003,15 +2003,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size and color  should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, segment, size and color  > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -2020,35 +2020,35 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size and color with tooltip and filter should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, segment, size and color with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.state_name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -2056,16 +2056,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -2078,15 +2078,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -2099,11 +2099,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -2113,11 +2113,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -2127,11 +2127,11 @@ Object {
       ],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -2142,29 +2142,226 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "alias": "Population",
+        "definition": {
+          "measureDefinition": {
+            "aggregation": "sum",
+            "item": {
+              "identifier": "fact.uscities.population",
+              "type": "fact",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+      },
+    },
+    {
+      "measure": {
+        "alias": "Density",
+        "definition": {
+          "measureDefinition": {
+            "aggregation": "sum",
+            "item": {
+              "identifier": "fact.uscities.density",
+              "type": "fact",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "live-examples-workspace",
+}
+`;
+
+exports[`GeoPushpinChart > with location, segment, size and color with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+  "theme": {},
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`GeoPushpinChart > with location, segment, size and color with tooltip and filter > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.uscities.city.location",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city.location",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "localIdentifier": "a_label.uscities.state_name",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "alias": "Population",
+            "definition": {
+              "measureDefinition": {
+                "aggregation": "sum",
+                "item": {
+                  "identifier": "fact.uscities.population",
+                  "type": "fact",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+          },
+        },
+      ],
+      "localIdentifier": "size",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "alias": "Density",
+            "definition": {
+              "measureDefinition": {
+                "aggregation": "sum",
+                "item": {
+                  "identifier": "fact.uscities.density",
+                  "type": "fact",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+          },
+        },
+      ],
+      "localIdentifier": "color",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.uscities.city.location",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city.location",
+          },
+        },
+      ],
+      "localIdentifier": "location",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.uscities.state_name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.state_name",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "label.uscities.city",
+              "type": "displayForm",
+            },
+            "localIdentifier": "tooltipText_df",
+          },
+        },
+      ],
+      "localIdentifier": "tooltipText",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_label.uscities.city.location",
+        "a_label.uscities.state_name",
+        "tooltipText_df",
+      ],
+    },
+  ],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
+          "identifier": "label.uscities.state_name",
+          "type": "displayForm",
+        },
+        "in": {
+          "values": [
             "California",
             "Florida",
             "Texas",
@@ -2173,14 +2370,14 @@ Object {
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -2190,13 +2387,13 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -2207,20 +2404,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size and color with tooltip and filter should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, segment, size and color with tooltip and filter > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -2233,35 +2430,35 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size and color with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, segment, size with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.state_name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.state_name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -2269,16 +2466,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -2291,32 +2488,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
-                "aggregation": "sum",
-                "item": Object {
-                  "identifier": "fact.uscities.density",
-                  "type": "fact",
-                },
-              },
-            },
-            "format": "#,##0.00",
-            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
-          },
-        },
-      ],
+    {
+      "items": [],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -2326,11 +2506,11 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.state_name",
               "type": "displayForm",
             },
@@ -2340,11 +2520,11 @@ Object {
       ],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -2355,29 +2535,29 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -2387,37 +2567,21 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
-        "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
-            "aggregation": "sum",
-            "item": Object {
-              "identifier": "fact.uscities.density",
-              "type": "fact",
-            },
-          },
-        },
-        "format": "#,##0.00",
-        "localIdentifier": "m_35a08895_fact.uscities.density_sum",
-      },
-    },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size and color with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, segment, size with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -2430,52 +2594,34 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, segment, size with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, size and color > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.uscities.state_name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.uscities.state_name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.uscities.city",
-          "type": "displayForm",
-        },
-        "localIdentifier": "tooltipText_df",
-      },
-    },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -2488,161 +2634,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [],
-      "localIdentifier": "color",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.uscities.city.location",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.uscities.city.location",
-          },
-        },
-      ],
-      "localIdentifier": "location",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.uscities.state_name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.uscities.state_name",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.uscities.city",
-              "type": "displayForm",
-            },
-            "localIdentifier": "tooltipText_df",
-          },
-        },
-      ],
-      "localIdentifier": "tooltipText",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.uscities.city.location",
-        "a_label.uscities.state_name",
-        "tooltipText_df",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
-            "aggregation": "sum",
-            "item": Object {
-              "identifier": "fact.uscities.population",
-              "type": "fact",
-            },
-          },
-        },
-        "format": "#,##0.00",
-        "localIdentifier": "m_f508857c_fact.uscities.population_sum",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "live-examples-workspace",
-}
-`;
-
-exports[`GeoPushpinChart with location, segment, size with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "mapboxToken": "this-is-not-real-token",
-    "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.uscities.city",
-          "type": "displayForm",
-        },
-        "localIdentifier": "tooltipText_df",
-      },
-    },
-  },
-  "error": null,
-  "exportTitle": "GeoPushpinChart",
-  "isLoading": true,
-  "onDataTooLarge": [Function],
-  "onNegativeValues": [Function],
-  "theme": Object {},
-  "themeIsLoading": undefined,
-}
-`;
-
-exports[`GeoPushpinChart with location, size and color should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.uscities.city.location",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.uscities.city.location",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
-                "aggregation": "sum",
-                "item": Object {
-                  "identifier": "fact.uscities.population",
-                  "type": "fact",
-                },
-              },
-            },
-            "format": "#,##0.00",
-            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
-          },
-        },
-      ],
-      "localIdentifier": "size",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -2655,11 +2655,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -2669,32 +2669,32 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -2704,13 +2704,13 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -2721,15 +2721,15 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, size and color should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, size and color > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
   },
@@ -2738,26 +2738,26 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;
 
-exports[`GeoPushpinChart with location, size and color with tooltip should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`GeoPushpinChart > with location, size and color with tooltip > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city.location",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.uscities.city.location",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -2765,16 +2765,16 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Population",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.population",
                   "type": "fact",
                 },
@@ -2787,15 +2787,15 @@ Object {
       ],
       "localIdentifier": "size",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
+    {
+      "items": [
+        {
+          "measure": {
             "alias": "Density",
-            "definition": Object {
-              "measureDefinition": Object {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.uscities.density",
                   "type": "fact",
                 },
@@ -2808,11 +2808,11 @@ Object {
       ],
       "localIdentifier": "color",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city.location",
               "type": "displayForm",
             },
@@ -2822,15 +2822,15 @@ Object {
       ],
       "localIdentifier": "location",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
@@ -2841,28 +2841,28 @@ Object {
       "localIdentifier": "tooltipText",
     },
   ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.uscities.city.location",
         "tooltipText_df",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
         "alias": "Population",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.population",
               "type": "fact",
             },
@@ -2872,13 +2872,13 @@ Object {
         "localIdentifier": "m_f508857c_fact.uscities.population_sum",
       },
     },
-    Object {
-      "measure": Object {
+    {
+      "measure": {
         "alias": "Density",
-        "definition": Object {
-          "measureDefinition": Object {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.uscities.density",
               "type": "fact",
             },
@@ -2889,20 +2889,20 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "live-examples-workspace",
 }
 `;
 
-exports[`GeoPushpinChart with location, size and color with tooltip should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
+exports[`GeoPushpinChart > with location, size and color with tooltip > should create expected props for core chart 1`] = `
+{
+  "config": {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
-    "tooltipText": Object {
-      "attribute": Object {
-        "displayForm": Object {
+    "tooltipText": {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
@@ -2915,7 +2915,7 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
-  "theme": Object {},
+  "theme": {},
   "themeIsLoading": undefined,
 }
 `;

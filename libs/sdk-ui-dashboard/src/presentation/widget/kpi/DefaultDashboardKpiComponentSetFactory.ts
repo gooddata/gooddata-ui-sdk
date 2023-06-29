@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
-import { KpiWidgetComponentSet } from "../../componentDefinition";
-import { KpiComponentProvider } from "../../dashboardContexts";
-import { KpiDraggingComponent } from "../../dragAndDrop/";
-import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder";
-import { CreatableKpi } from "./CreatableKpi";
-import { DefaultKpiConfigurationPanel } from "./DefaultKpiConfigurationPanel/DefaultKpiConfigurationPanel";
+import { KpiWidgetComponentSet } from "../../componentDefinition/index.js";
+import { KpiComponentProvider } from "../../dashboardContexts/index.js";
+import { KpiDraggingComponent } from "../../dragAndDrop/index.js";
+import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder/index.js";
+import { CreatableKpi } from "./CreatableKpi.js";
+import { DefaultKpiConfigurationPanel } from "./DefaultKpiConfigurationPanel/DefaultKpiConfigurationPanel.js";
 
 /**
  * @internal

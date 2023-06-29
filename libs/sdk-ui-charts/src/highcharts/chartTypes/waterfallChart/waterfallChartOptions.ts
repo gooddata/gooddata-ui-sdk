@@ -8,12 +8,12 @@ import {
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
-import findLastIndex from "lodash/findLastIndex";
+import findLastIndex from "lodash/findLastIndex.js";
 
-import { IChartConfig, ITotalConfig } from "../../../interfaces";
-import { IPointData, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
-import { unwrap } from "../_util/common";
-import { getColorOrLegendIndex } from "./waterfallChartsSeries";
+import { IChartConfig, ITotalConfig } from "../../../interfaces/index.js";
+import { IPointData, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { unwrap } from "../_util/common.js";
+import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 
 function isTotalColumnEnabled(chartConfig: IChartConfig): boolean {
     return !hasTotalMeasure(chartConfig) && (chartConfig.total?.enabled ?? true);
@@ -31,16 +31,16 @@ function isMeasureIdATotal(totalConfig: ITotalConfig, measureId: string) {
     return totalMeasures.includes(measureId);
 }
 
-function getTotalValue(pointDatas: IPointData[]) {
-    const lastTotalIndex = findLastIndex(pointDatas, (item: IPointData) => item.visible === false);
+function getTotalValue(pointDataSet: IPointData[]) {
+    const lastTotalIndex = findLastIndex(pointDataSet, (item: IPointData) => item.visible === false);
     let total = 0;
 
-    if (lastTotalIndex + 1 === pointDatas.length) {
-        total = pointDatas[lastTotalIndex].y;
+    if (lastTotalIndex + 1 === pointDataSet.length) {
+        total = pointDataSet[lastTotalIndex].y;
     } else {
         const startFromIndex = lastTotalIndex + 1;
-        for (let i = startFromIndex; i < pointDatas.length; i += 1) {
-            total += pointDatas[i]?.y || 0;
+        for (let i = startFromIndex; i < pointDataSet.length; i += 1) {
+            total += pointDataSet[i]?.y || 0;
         }
     }
 

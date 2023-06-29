@@ -8,11 +8,11 @@ import {
     SVGAttributes,
     SVGDOMElement,
     TooltipPositionerPointObject,
-} from "../lib";
+} from "../lib/index.js";
 import { IColorAssignment } from "@gooddata/sdk-ui";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { StackingType } from "../constants/stacking";
-import { ChartAlignTypes, IAxisConfig, IGridConfig } from "../../interfaces";
+import { StackingType } from "../constants/stacking.js";
+import { ChartAlignTypes, IAxisConfig, IGridConfig } from "../../interfaces/index.js";
 
 /*
  * This file contains mixed types which:

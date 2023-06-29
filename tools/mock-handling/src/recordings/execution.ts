@@ -9,13 +9,13 @@ import {
 import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
-import { logWarn } from "../cli/loggers";
-import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
-import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface";
-import isArray from "lodash/isArray";
-import isEmpty from "lodash/isEmpty";
-import isObject from "lodash/isObject";
-import pickBy from "lodash/pickBy";
+import { logWarn } from "../cli/loggers.js";
+import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
+import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface.js";
+import isArray from "lodash/isArray.js";
+import isEmpty from "lodash/isEmpty.js";
+import isObject from "lodash/isObject.js";
+import pickBy from "lodash/pickBy.js";
 
 //
 // internal constants & types

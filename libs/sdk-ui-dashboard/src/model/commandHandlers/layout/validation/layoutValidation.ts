@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IDashboardLayout } from "@gooddata/sdk-model";
-import { ExtendedDashboardLayoutSection, ExtendedDashboardWidget } from "../../../types/layoutTypes";
-import isEmpty from "lodash/isEmpty";
+import { ExtendedDashboardLayoutSection, ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export function validateSectionPlacement(
     layout: IDashboardLayout<ExtendedDashboardWidget>,

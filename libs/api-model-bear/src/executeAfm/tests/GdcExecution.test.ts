@@ -1,18 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { GdcExecution } from "../GdcExecution";
+import { describe, it, expect } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import {
+    isAttributeHeader,
+    isAttributeHeaderItem,
+    isMeasureGroupHeader,
+    isMeasureHeaderItem,
+    isTotalHeaderItem,
+} from "../GdcExecution.js";
 import {
     attributeHeaderItem,
     measureHeaderItem,
     totalHeaderItem,
     attributeHeader,
     measureGroupGroup,
-} from "./GdcExecution.fixtures";
-import isAttributeHeaderItem = GdcExecution.isAttributeHeaderItem;
-import isMeasureHeaderItem = GdcExecution.isMeasureHeaderItem;
-import isTotalHeaderItem = GdcExecution.isTotalHeaderItem;
-import isMeasureGroupHeader = GdcExecution.isMeasureGroupHeader;
-import isAttributeHeader = GdcExecution.isAttributeHeader;
+} from "./GdcExecution.fixtures.js";
 
 describe("GdcExecution type guards", () => {
     describe("isAttributeHeaderItem", () => {

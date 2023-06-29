@@ -5,20 +5,21 @@
         "downlevelIteration": true,
         "jsx": "react",
         "lib": ["es7", "dom"],
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "esModuleInterop": true,
         "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strict": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "sourceMap": true,
         "resolveJsonModule": true,
         "baseUrl": "../..",
         "paths": {
             "@gooddata/sdk-ui": ["libs/sdk-ui/src"],
+            "@gooddata/sdk-ui-ext/internal": ["libs/sdk-ui-ext/src/internal"],
             "@gooddata/sdk-ui-ext": ["libs/sdk-ui-ext/src"],
             "@gooddata/sdk-ui-geo": ["libs/sdk-ui-geo/src"],
             "@gooddata/sdk-ui-kit": ["libs/sdk-ui-kit/src"],
@@ -27,8 +28,10 @@
             "@gooddata/sdk-backend-base": ["libs/sdk-backend-base/src"],
             "@gooddata/sdk-backend-spi": ["libs/sdk-backend-spi/src"],
             "@gooddata/sdk-backend-mockingbird": ["libs/sdk-backend-mockingbird/src"],
-            "@gooddata/reference-workspace": ["tools/reference-workspace/src"]
+            "@gooddata/reference-workspace": ["tools/reference-workspace/src"],
+            "@gooddata/experimental-workspace": ["tools/experimental-workspace/src"],
+            "@gooddata/mock-handling": ["tools/mock-handling/src/interface"]
         }
     },
-    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/*"]
+    "exclude": ["**/node_modules", "esm", "**/__mocks__/*"]
 }

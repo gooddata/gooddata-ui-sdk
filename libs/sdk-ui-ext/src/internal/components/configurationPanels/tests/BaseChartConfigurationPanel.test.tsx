@@ -1,14 +1,21 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
 import { VisualizationTypes, DefaultLocale } from "@gooddata/sdk-ui";
+import { describe, it, expect } from "vitest";
+import { defaultImport } from "default-import";
 
-import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
+import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel.js";
+import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
-import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
+import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("BaseChartConfigurationPanel", () => {
     describe("axis name configuration", () => {

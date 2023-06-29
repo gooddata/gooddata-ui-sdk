@@ -3,10 +3,10 @@ import React from "react";
 import { DayPickerRangeProps } from "react-day-picker";
 import { IAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 
-import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker";
-import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces";
+import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker.js";
+import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces/index.js";
 
-import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions";
+import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions.js";
 
 /**
  * @internal

@@ -1,19 +1,20 @@
 // (C) 2007-2020 GoodData Corporation
-import * as headerPredicateFactory from "../HeaderPredicateFactory";
-import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures";
-import { IMappingHeader } from "../MappingHeader";
-import { IHeaderPredicate } from "../HeaderPredicate";
-import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling";
+import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
+import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures.js";
+import { IMappingHeader } from "../MappingHeader.js";
+import { IHeaderPredicate } from "../HeaderPredicate.js";
+import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling.js";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForBuckets } from "@gooddata/sdk-model";
-import { DataViewFacade } from "../../results/facade";
+import { DataViewFacade } from "../../results/facade.js";
+import { describe, expect, it, vi } from "vitest";
 
 const emptyFacade = DataViewFacade.for(dummyDataView(newDefForBuckets("testWorkspace", [])));
 
 describe("isSomeHeaderPredicateMatched", () => {
     it("should return true when some of predicates match header", () => {
         const header: IMappingHeader = { attributeHeaderItem: { uri: "uri", name: "name" } };
-        const drillablePredicates: IHeaderPredicate[] = [jest.fn(() => false), jest.fn(() => true)];
+        const drillablePredicates: IHeaderPredicate[] = [vi.fn(() => false), vi.fn(() => true)];
 
         expect(isSomeHeaderPredicateMatched(drillablePredicates, header, emptyFacade)).toBe(true);
         expect(drillablePredicates[0]).toBeCalledWith(header, {
@@ -26,7 +27,7 @@ describe("isSomeHeaderPredicateMatched", () => {
 
     it("should return false when none of predicates match header", () => {
         const header: IMappingHeader = { attributeHeaderItem: { uri: "uri", name: "name" } };
-        const drillablePredicates: IHeaderPredicate[] = [jest.fn(() => false), jest.fn(() => false)];
+        const drillablePredicates: IHeaderPredicate[] = [vi.fn(() => false), vi.fn(() => false)];
 
         expect(isSomeHeaderPredicateMatched(drillablePredicates, header, emptyFacade)).toBe(false);
         expect(drillablePredicates[0]).toBeCalledWith(header, {

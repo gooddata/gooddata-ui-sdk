@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useRef, useImperativeHandle, useMemo, useCallback } from "react";
 
-import { ScrollContext, isElementInvisibleType } from "./ScrollContext";
-import { handleOnScrollEvent } from "../utils/scroll";
+import { ScrollContext, isElementInvisibleType } from "./ScrollContext.js";
+import { handleOnScrollEvent } from "../utils/scroll.js";
 
 /**
  * @internal

@@ -1,6 +1,6 @@
 // (C) 2020-2023 GoodData Corporation
-import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter";
-import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture";
+import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter.js";
+import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture.js";
 import {
     DateGranularity,
     idRef,
@@ -14,6 +14,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, expect, it } from "vitest";
 
 describe("tiger filter converter from model to AFM", () => {
     describe("convert measure value filter", () => {

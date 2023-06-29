@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import { IDashboardLayoutSection } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutSectionsFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutFacade,
-} from "./interfaces";
-import { DashboardLayoutSectionFacade } from "./section";
+} from "./interfaces.js";
+import { DashboardLayoutSectionFacade } from "./section.js";
 
 /**
  * @alpha

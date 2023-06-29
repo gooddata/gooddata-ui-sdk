@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
     ObjRef,
     serializeObjRef,
@@ -9,10 +9,10 @@ import {
     isKpiWidget,
     isInsightWidget,
 } from "@gooddata/sdk-model";
-import { IDashboardCommand } from "../../../commands";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { DashboardContext } from "../../../types/commonTypes";
-import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
+import { IDashboardCommand } from "../../../commands/index.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 
 type CommandWithRef = IDashboardCommand & {
     payload: {

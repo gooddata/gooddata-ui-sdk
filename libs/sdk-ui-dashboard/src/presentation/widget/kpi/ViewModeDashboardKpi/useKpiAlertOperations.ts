@@ -9,9 +9,9 @@ import {
     dispatchAndWaitFor,
     useDashboardDispatch,
     DashboardCommands,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
-import { KpiAlertOperationStatus } from "../common";
+import { KpiAlertOperationStatus } from "../common/index.js";
 
 /**
  * @internal

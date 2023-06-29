@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
-import { IAttributeFiltersCustomizer } from "../customizer";
+import { IAttributeFiltersCustomizer } from "../customizer.js";
 import {
     AttributeFilterComponentProvider,
     DefaultDashboardAttributeFilter,
     OptionalAttributeFilterComponentProvider,
-} from "../../presentation";
+} from "../../presentation/index.js";
 import { InvariantError } from "ts-invariant";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 const DefaultAttributeFilterRendererProvider: AttributeFilterComponentProvider = () => {
     return DefaultDashboardAttributeFilter;

@@ -2,10 +2,11 @@
 import React from "react";
 import { withIntl } from "@gooddata/sdk-ui";
 import { fireEvent, render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
-import { IRankingFilterProps, RankingFilter } from "../RankingFilter";
+import noop from "lodash/noop.js";
+import { IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
+import { describe, it, expect } from "vitest";
 
-import * as Mock from "./mocks";
+import * as Mock from "./mocks.js";
 
 const DROPDOWN_BODY = ".s-rf-dropdown-body";
 

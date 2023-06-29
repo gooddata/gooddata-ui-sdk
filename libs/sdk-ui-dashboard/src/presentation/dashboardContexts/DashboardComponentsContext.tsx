@@ -8,21 +8,21 @@ import {
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 
-import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/types";
+import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/types.js";
 import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
     CustomTitleComponent,
     CustomTopBarComponent,
     CustomSaveButtonComponent,
-} from "../topBar/types";
+} from "../topBar/types.js";
 import {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
-} from "../scheduledEmail/types";
-import { CustomFilterBarComponent } from "../filterBar/types";
-import { CustomSaveAsDialogComponent } from "../saveAs/types";
-import { CustomShareDialogComponent } from "../shareDialog/types";
+} from "../scheduledEmail/types.js";
+import { CustomFilterBarComponent } from "../filterBar/types.js";
+import { CustomSaveAsDialogComponent } from "../saveAs/types.js";
+import { CustomShareDialogComponent } from "../shareDialog/types.js";
 import {
     AttributeFilterComponentProvider,
     DateFilterComponentProvider,
@@ -33,14 +33,14 @@ import {
     InsightMenuTitleComponentProvider,
     KpiComponentProvider,
     WidgetComponentProvider,
-} from "./types";
-import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types";
+} from "./types.js";
+import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
-} from "../componentDefinition/types";
-import { CustomToolbarComponent } from "../toolbar/types";
+} from "../componentDefinition/types.js";
+import { CustomToolbarComponent } from "../toolbar/types.js";
 
 /**
  * @internal

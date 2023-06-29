@@ -8,8 +8,8 @@ import {
     IDashboardLayout,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import LRUCache from "lru-cache";
-import max from "lodash/max";
+import { LRUCache } from "lru-cache";
+import max from "lodash/max.js";
 
 import {
     useDashboardSelector,
@@ -20,22 +20,22 @@ import {
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
-} from "../../model";
+} from "../../model/index.js";
 
-import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
-import { IDashboardLayoutProps } from "./types";
+import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
+import { IDashboardLayoutProps } from "./types.js";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutWidgetRenderer,
-} from "./DefaultDashboardLayoutRenderer";
-import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer";
-import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
-import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
-import { SectionHotspot } from "../dragAndDrop";
-import { isInitialPlaceholderWidget } from "../../widgets";
-import { EmptyDashboardLayout } from "./EmptyDashboardLayout";
+} from "./DefaultDashboardLayoutRenderer/index.js";
+import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
+import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
+import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
+import { SectionHotspot } from "../dragAndDrop/index.js";
+import { isInitialPlaceholderWidget } from "../../widgets/index.js";
+import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 
 /**
  * Get dashboard layout for exports.

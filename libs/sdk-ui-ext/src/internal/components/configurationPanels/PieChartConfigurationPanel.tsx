@@ -4,16 +4,16 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import ConfigSection from "../configurationControls/ConfigSection";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
-import { messages } from "../../../locales";
+} from "../../constants/bubble.js";
+import { messages } from "../../../locales.js";
 
 export default class PieChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

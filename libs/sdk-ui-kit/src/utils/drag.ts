@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import throttle from "lodash/throttle";
+import throttle from "lodash/throttle.js";
 
 const fireGoodstrapDragEvent = (
     node: HTMLElement,

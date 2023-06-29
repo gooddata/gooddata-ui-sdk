@@ -4,9 +4,9 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import React from "react";
 import { v4 as uuid } from "uuid";
 
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/scrollGradient.css";
 

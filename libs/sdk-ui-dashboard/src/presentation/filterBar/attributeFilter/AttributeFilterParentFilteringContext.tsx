@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useContext, useMemo, useCallback } from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     filterObjRef,
     IDashboardAttributeFilter,
@@ -13,12 +13,12 @@ import {
     selectAttributeFilterDisplayFormsMap,
     selectOtherContextAttributeFilters,
     useDashboardSelector,
-} from "../../../model";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
-import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration";
-import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration";
-import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration";
-import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration";
+} from "../../../model/index.js";
+import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
+import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration.js";
+import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
+import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
 
 /**
  * @internal

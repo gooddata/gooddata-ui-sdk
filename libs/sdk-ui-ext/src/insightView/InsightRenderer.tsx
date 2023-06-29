@@ -2,9 +2,9 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { render } from "react-dom";
-import noop from "lodash/noop";
-import isEqual from "lodash/isEqual";
-import compose from "lodash/flowRight";
+import noop from "lodash/noop.js";
+import isEqual from "lodash/isEqual.js";
+import compose from "lodash/flowRight.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IExecutionFactory, IExportBlobResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
@@ -16,7 +16,7 @@ import {
     insightSetProperties,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps } from "../internal";
+import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps } from "../internal/index.js";
 import {
     OnError,
     fillMissingTitles,

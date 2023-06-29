@@ -2,11 +2,11 @@
 import React from "react";
 import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsight } from "@gooddata/sdk-model";
-import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem";
+import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem.js";
 import {
     CustomDashboardInsightListItemComponent,
     IWrapInsightListItemWithDragComponent,
-} from "../../../dragAndDrop/types";
+} from "../../../dragAndDrop/types.js";
 
 interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;

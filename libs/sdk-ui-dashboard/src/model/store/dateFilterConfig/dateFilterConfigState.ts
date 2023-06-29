@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
 import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
-import { DateFilterValidationResult } from "../../../types";
+import { DateFilterValidationResult } from "../../../types.js";
 
 /**
  * @beta

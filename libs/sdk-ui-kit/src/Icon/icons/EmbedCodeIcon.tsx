@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 
-import { IIconProps } from "../typings";
+import { IIconProps } from "../typings.js";
 
 /**
  * @internal

@@ -7,15 +7,15 @@ import {
     isSeriesCol,
     isRootCol,
     LeafDataCol,
-} from "./tableDescriptorTypes";
+} from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
     isTotalColumnLocator,
     isAttributeColumnLocator,
     isMeasureColumnLocator,
-} from "../../columnWidths";
-import { colMeasureLocalId } from "./colAccessors";
-import isEmpty from "lodash/isEmpty";
+} from "../../columnWidths.js";
+import { colMeasureLocalId } from "./colAccessors.js";
+import isEmpty from "lodash/isEmpty.js";
 import { isResultTotalHeader } from "@gooddata/sdk-model";
 
 /**

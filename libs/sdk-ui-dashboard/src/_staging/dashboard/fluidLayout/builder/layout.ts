@@ -5,19 +5,19 @@ import {
     IDashboardLayoutSize,
     isDashboardLayout,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import difference from "lodash/difference";
-import isArray from "lodash/isArray";
-import identity from "lodash/identity";
+import { invariant } from "ts-invariant";
+import difference from "lodash/difference.js";
+import isArray from "lodash/isArray.js";
+import identity from "lodash/identity.js";
 import {
     DashboardLayoutModifications,
     DashboardLayoutSectionModifications,
     DashboardLayoutSectionsSelector,
     IDashboardLayoutBuilder,
-} from "./interfaces";
-import { IDashboardLayoutFacade } from "../facade/interfaces";
-import { DashboardLayoutFacade } from "../facade/layout";
-import { DashboardLayoutSectionBuilder } from "./section";
+} from "./interfaces.js";
+import { IDashboardLayoutFacade } from "../facade/interfaces.js";
+import { DashboardLayoutFacade } from "../facade/layout.js";
+import { DashboardLayoutSectionBuilder } from "./section.js";
 import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 
 /**

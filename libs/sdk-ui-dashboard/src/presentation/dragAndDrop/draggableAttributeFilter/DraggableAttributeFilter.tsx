@@ -7,11 +7,11 @@ import {
     selectIsInEditMode,
     selectSupportsElementUris,
     selectCanAddMoreAttributeFilters,
-} from "../../../model";
-import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint";
-import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types";
-import { useDashboardDrag } from "../useDashboardDrag";
-import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors";
+} from "../../../model/index.js";
+import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint.js";
+import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
+import { useDashboardDrag } from "../useDashboardDrag.js";
+import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 
 type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;

@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { GroupingProviderFactory, IGroupingProvider } from "../rowGroupingProvider";
+import { GroupingProviderFactory, IGroupingProvider } from "../rowGroupingProvider.js";
 import {
     oneAttributeTwoMeasures,
     oneAttributeTwoMeasuresSameValuesDifferentURIs,
@@ -9,7 +9,8 @@ import {
     twoAttributesTwoMeasuresEvenGroupsFristPage,
     twoAttributesTwoMeasuresEvenGroupsSecondPage,
     noAttributesTwoMeasures,
-} from "./GroupingProvider.fixtures";
+} from "./GroupingProvider.fixtures.js";
+import { describe, it, expect } from "vitest";
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {
     const boundaries = new Array(expectedBoundaries.length)

@@ -14,11 +14,11 @@ import {
     IDashboardPluginDefinition,
     IDashboardPluginLink,
 } from "@gooddata/sdk-model";
-import omit from "lodash/omit";
-import { cloneWithSanitizedIds } from "./IdSanitization";
-import isEmpty from "lodash/isEmpty";
-import update from "lodash/fp/update";
-import { splitDrillUrlParts } from "@gooddata/sdk-model/dist/dashboard/drillUrl";
+import omit from "lodash/omit.js";
+import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import isEmpty from "lodash/isEmpty.js";
+import update from "lodash/fp/update.js";
+import { splitDrillUrlParts } from "@gooddata/sdk-model/internal";
 
 function removeIdentifiers(widget: IDashboardWidget) {
     return omit(widget, ["ref", "uri", "identifier"]);

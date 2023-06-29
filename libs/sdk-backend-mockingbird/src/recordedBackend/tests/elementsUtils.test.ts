@@ -15,8 +15,9 @@ import {
     resolveLimitingItems,
     resolveSelectedElements,
     resolveStringFilter,
-} from "../elementsUtils";
-import { AttributeElementsFiltering } from "../types";
+} from "../elementsUtils.js";
+import { AttributeElementsFiltering } from "../types.js";
+import { vi, MockInstance, describe, beforeAll, afterAll, expect, it } from "vitest";
 
 describe("elementsUtils", () => {
     const elements: IAttributeElement[] =
@@ -31,9 +32,9 @@ describe("elementsUtils", () => {
         const dateFilter = newRelativeDateFilter(ReferenceMd.DateDatasets.Timeline, "GDC.time.date", -42, 0);
         const measure = ReferenceMd.Amount;
 
-        let consoleWarnMock: jest.MockInstance<void, any[]>;
+        let consoleWarnMock: MockInstance;
         beforeAll(() => {
-            consoleWarnMock = jest.spyOn(console, "warn").mockImplementation();
+            consoleWarnMock = vi.spyOn(console, "warn");
         });
 
         afterAll(() => {

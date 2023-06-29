@@ -1,35 +1,36 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
     DashboardLayoutSectionItemReplaced,
-} from "../../../events";
-import { ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands";
-import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../events/index.js";
+import { ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 import {
     TestInsightItem,
     testItemWithDateDataset,
     testItemWithFilterIgnoreList,
     TestKpiPlaceholderItem,
-} from "../../../tests/fixtures/Layout.fixtures";
+} from "../../../tests/fixtures/Layout.fixtures.js";
 import { uriRef } from "@gooddata/sdk-model";
-import { selectInsightByRef } from "../../../store/insights/insightsSelectors";
+import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should fail if bad section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
@@ -72,11 +73,12 @@ describe("replace section item handler", () => {
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, ComplexDashboardIdentifier),
-        );
+            }, ComplexDashboardIdentifier);
+        });
 
         const [SecondSectionFirstItem, SecondSectionSecondItem] =
             ComplexDashboardWithReferences.dashboard.layout!.sections[1].items;

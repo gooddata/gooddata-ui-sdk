@@ -1,44 +1,44 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`newWidthForAllColumnsForMeasure should create width item when measure as localId and without grow to fit prop 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locator": Object {
-      "measureLocatorItem": Object {
+exports[`newWidthForAllColumnsForMeasure > should create width item when measure as localId and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
         "measureIdentifier": "localId",
       },
     },
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForAllColumnsForMeasure should create width item when measure as value and without grow to fit prop 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locator": Object {
-      "measureLocatorItem": Object {
+exports[`newWidthForAllColumnsForMeasure > should create width item when measure as value and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
         "measureIdentifier": "m_aangOxLSeztu",
       },
     },
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForAllColumnsForMeasure should create width item with grow to fit prop false 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locator": Object {
-      "measureLocatorItem": Object {
+exports[`newWidthForAllColumnsForMeasure > should create width item with grow to fit prop false 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
         "measureIdentifier": "m_aangOxLSeztu",
       },
     },
-    "width": Object {
+    "width": {
       "allowGrowToFit": false,
       "value": 10,
     },
@@ -46,15 +46,15 @@ Object {
 }
 `;
 
-exports[`newWidthForAllColumnsForMeasure should create width item with grow to fit prop true 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locator": Object {
-      "measureLocatorItem": Object {
+exports[`newWidthForAllColumnsForMeasure > should create width item with grow to fit prop true 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locator": {
+      "measureLocatorItem": {
         "measureIdentifier": "m_aangOxLSeztu",
       },
     },
-    "width": Object {
+    "width": {
       "allowGrowToFit": true,
       "value": 10,
     },
@@ -62,43 +62,43 @@ Object {
 }
 `;
 
-exports[`newWidthForAllMeasureColumns should create width item without grow to fit prop if not specified on factory call 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "width": Object {
+exports[`newWidthForAllMeasureColumns > should create width item without grow to fit prop if not specified on factory call 1`] = `
+{
+  "measureColumnWidthItem": {
+    "width": {
       "value": 1,
     },
   },
 }
 `;
 
-exports[`newWidthForAttributeColumn should create width item when attribute as localId and without grow to fit prop 1`] = `
-Object {
-  "attributeColumnWidthItem": Object {
+exports[`newWidthForAttributeColumn > should create width item when attribute as localId and without grow to fit prop 1`] = `
+{
+  "attributeColumnWidthItem": {
     "attributeIdentifier": "localId",
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForAttributeColumn should create width item when attribute as value and without grow to fit prop 1`] = `
-Object {
-  "attributeColumnWidthItem": Object {
+exports[`newWidthForAttributeColumn > should create width item when attribute as value and without grow to fit prop 1`] = `
+{
+  "attributeColumnWidthItem": {
     "attributeIdentifier": "a_label.product.id.name",
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForAttributeColumn should create width item with grow to fit prop false 1`] = `
-Object {
-  "attributeColumnWidthItem": Object {
+exports[`newWidthForAttributeColumn > should create width item with grow to fit prop false 1`] = `
+{
+  "attributeColumnWidthItem": {
     "attributeIdentifier": "a_label.product.id.name",
-    "width": Object {
+    "width": {
       "allowGrowToFit": false,
       "value": 10,
     },
@@ -106,11 +106,11 @@ Object {
 }
 `;
 
-exports[`newWidthForAttributeColumn should create width item with grow to fit prop true 1`] = `
-Object {
-  "attributeColumnWidthItem": Object {
+exports[`newWidthForAttributeColumn > should create width item with grow to fit prop true 1`] = `
+{
+  "attributeColumnWidthItem": {
     "attributeIdentifier": "a_label.product.id.name",
-    "width": Object {
+    "width": {
       "allowGrowToFit": true,
       "value": 10,
     },
@@ -118,74 +118,74 @@ Object {
 }
 `;
 
-exports[`newWidthForSelectedColumns should create width item when measure as localId and without grow to fit prop 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locators": Array [
-      Object {
-        "measureLocatorItem": Object {
+exports[`newWidthForSelectedColumns > should create width item when measure as localId and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "localId",
         },
       },
     ],
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForSelectedColumns should create width item when measure as value and without grow to fit prop 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locators": Array [
-      Object {
-        "measureLocatorItem": Object {
+exports[`newWidthForSelectedColumns > should create width item when measure as value and without grow to fit prop 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },
     ],
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForSelectedColumns should create width item with attr locators in front of measure locator 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locators": Array [
-      Object {
-        "attributeLocatorItem": Object {
+exports[`newWidthForSelectedColumns > should create width item with attr locators in front of measure locator 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "attributeLocatorItem": {
           "attributeIdentifier": "a_label.product.id.name",
           "element": "uri",
         },
       },
-      Object {
-        "measureLocatorItem": Object {
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },
     ],
-    "width": Object {
+    "width": {
       "value": 10,
     },
   },
 }
 `;
 
-exports[`newWidthForSelectedColumns should create width item with grow to fit prop false 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locators": Array [
-      Object {
-        "measureLocatorItem": Object {
+exports[`newWidthForSelectedColumns > should create width item with grow to fit prop false 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },
     ],
-    "width": Object {
+    "width": {
       "allowGrowToFit": false,
       "value": 10,
     },
@@ -193,17 +193,17 @@ Object {
 }
 `;
 
-exports[`newWidthForSelectedColumns should create width item with grow to fit prop true 1`] = `
-Object {
-  "measureColumnWidthItem": Object {
-    "locators": Array [
-      Object {
-        "measureLocatorItem": Object {
+exports[`newWidthForSelectedColumns > should create width item with grow to fit prop true 1`] = `
+{
+  "measureColumnWidthItem": {
+    "locators": [
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },
     ],
-    "width": Object {
+    "width": {
       "allowGrowToFit": true,
       "value": 10,
     },

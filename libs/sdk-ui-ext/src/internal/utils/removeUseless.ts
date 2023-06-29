@@ -1,14 +1,14 @@
 // (C) 2022 GoodData Corporation
-import compact from "lodash/fp/compact";
-import filter from "lodash/fp/filter";
-import flow from "lodash/fp/flow";
-import fromPairs from "lodash/fromPairs";
-import isArray from "lodash/isArray";
-import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
-import isObject from "lodash/isObject";
-import map from "lodash/fp/map";
-import toPairs from "lodash/toPairs";
+import compact from "lodash/fp/compact.js";
+import filter from "lodash/fp/filter.js";
+import flow from "lodash/fp/flow.js";
+import fromPairs from "lodash/fromPairs.js";
+import isArray from "lodash/isArray.js";
+import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
+import isObject from "lodash/isObject.js";
+import map from "lodash/fp/map.js";
+import toPairs from "lodash/toPairs.js";
 
 function isUseless(obj: unknown): boolean {
     return isNil(obj) || (isObject(obj) && isEmpty(obj));

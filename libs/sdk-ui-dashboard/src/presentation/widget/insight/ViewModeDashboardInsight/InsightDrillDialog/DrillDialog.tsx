@@ -2,10 +2,10 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model";
-import { PoweredByGDLogo } from "./PoweredByGDLogo";
-import { DrillModalFooter } from "./DrillModalFooter";
-import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
+import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
+import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
+import { DrillModalFooter } from "./DrillModalFooter.js";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
 export interface DrillDialogProps {
     insightTitle: string;

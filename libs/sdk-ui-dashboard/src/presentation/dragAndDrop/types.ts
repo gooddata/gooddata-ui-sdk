@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { IDashboardAttributeFilter, IInsight, IKpi } from "@gooddata/sdk-model";
-import { ICustomWidget } from "../../model/types/layoutTypes";
+import { ICustomWidget } from "../../model/types/layoutTypes.js";
 
 /**
  * @internal

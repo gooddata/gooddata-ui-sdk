@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import identity from "lodash/identity";
-import { GroupableCatalogItemBuilder } from "./groupFactory";
+import identity from "lodash/identity.js";
+import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 import {
     IMeasure,
     MeasureBuilder,
@@ -11,8 +11,8 @@ import {
     IMeasureMetadataObject,
     isMeasureMetadataObject,
 } from "@gooddata/sdk-model";
-import { builderFactory, BuilderModifications } from "../builder";
-import { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory";
+import { builderFactory, BuilderModifications } from "../builder.js";
+import { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory.js";
 
 /**
  * Catalog measure builder

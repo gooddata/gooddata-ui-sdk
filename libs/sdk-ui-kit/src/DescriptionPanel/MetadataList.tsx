@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
-import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import isEmpty from "lodash/isEmpty.js";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { IMetadataObjectBase } from "@gooddata/sdk-model";
 
 const ARROW_OFFSETS = {

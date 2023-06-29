@@ -1,11 +1,12 @@
 // (C) 2023 GoodData Corporation
-import { getMVSForViewByTwoAttributes } from "../../_util/test/helper";
+import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { ColorFactory } from "../../_chartOptions/colorFactory";
-import { SankeyChartColorStrategy } from "../sankeyChartColoring";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
-import { CHART_TYPE, COLOR_MAPPINGS, RECORDS_WITHOUT_EMPTY_ATTRIBUTE } from "./sankeyChart.fixture";
+import { ColorFactory } from "../../_chartOptions/colorFactory.js";
+import { SankeyChartColorStrategy } from "../sankeyChartColoring.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
+import { CHART_TYPE, COLOR_MAPPINGS, RECORDS_WITHOUT_EMPTY_ATTRIBUTE } from "./sankeyChart.fixture.js";
+import { describe, it, expect } from "vitest";
 
 describe("SankeyChartColorStrategy", () => {
     it.each(RECORDS_WITHOUT_EMPTY_ATTRIBUTE)(

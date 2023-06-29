@@ -3,7 +3,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
-import DrillMeasureSelectorList from "./DrillMeasureSelectorList";
+import DrillMeasureSelectorList from "./DrillMeasureSelectorList.js";
 
 export interface IDrillMeasureSelectorBodyProps {
     supportedItems: IAvailableDrillTargetMeasure[];

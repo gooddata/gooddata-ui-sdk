@@ -9,15 +9,15 @@ export {
     IInvertableSelectRenderStatusBarProps,
     IInvertableSelectRenderActionsProps,
     InvertableSelect,
-} from "./InvertableSelect";
-export { IInvertableSelectStatusBarProps, InvertableSelectStatusBar } from "./InvertableSelectStatusBar";
+} from "./InvertableSelect.js";
+export { IInvertableSelectStatusBarProps, InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
 export {
     InvertableSelectLimitWarning,
     IInvertableSelectLimitWarningProps,
-} from "./InvertableSelectLimitWarning";
-export { IInvertableSelectItem, InvertableSelectItem } from "./InvertableSelectItem";
-export { InvertableSelectSearchBar, IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar";
+} from "./InvertableSelectLimitWarning.js";
+export { IInvertableSelectItem, InvertableSelectItem } from "./InvertableSelectItem.js";
+export { InvertableSelectSearchBar, IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar.js";
 export {
     InvertableSelectAllCheckbox,
     IInvertableSelectAllCheckboxProps,
-} from "./InvertableSelectAllCheckbox";
+} from "./InvertableSelectAllCheckbox.js";

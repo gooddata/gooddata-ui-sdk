@@ -6,16 +6,16 @@
  * Do not add anything new here, instead try to remove as much as possible when you can.
  */
 
-export * from "./presentation/constants";
-export * from "./presentation/layout/DefaultDashboardLayoutRenderer";
-export * from "./presentation/presentationComponents";
-export * from "./presentation/scheduledEmail";
-export * from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
-export { PLATFORM_DATE_FORMAT } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/constants";
-export * from "./presentation/widget/kpi/ViewModeDashboardKpi/KpiAlerts";
-export * from "./presentation/widget/kpi/common/KpiContent";
-export * from "./presentation/widget/kpi/common/types";
-export * from "./presentation/widget/kpi/common/filterUtils";
-export * from "./model/utils/alertsUtils";
-export * from "./_staging/dashboard/fluidLayout/config";
-export * from "./_staging/layout/sizing";
+export * from "./presentation/constants/index.js";
+export * from "./presentation/layout/DefaultDashboardLayoutRenderer/index.js";
+export * from "./presentation/presentationComponents/index.js";
+export * from "./presentation/scheduledEmail/index.js";
+export * from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/ScheduledMailDialogRenderer/ScheduledMailDialogRenderer.js";
+export { PLATFORM_DATE_FORMAT } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/constants.js";
+export * from "./presentation/widget/kpi/ViewModeDashboardKpi/KpiAlerts/index.js";
+export * from "./presentation/widget/kpi/common/KpiContent/index.js";
+export * from "./presentation/widget/kpi/common/types.js";
+export * from "./presentation/widget/kpi/common/filterUtils.js";
+export * from "./model/utils/alertsUtils.js";
+export * from "./_staging/dashboard/fluidLayout/config.js";
+export * from "./_staging/layout/sizing.js";

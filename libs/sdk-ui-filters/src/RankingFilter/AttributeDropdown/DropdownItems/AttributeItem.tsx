@@ -4,7 +4,7 @@ import { stringUtils } from "@gooddata/util";
 import { ObjRefInScope } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types";
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types.js";
 
 interface IAttributeItemProps {
     item: IAttributeDropdownItem;

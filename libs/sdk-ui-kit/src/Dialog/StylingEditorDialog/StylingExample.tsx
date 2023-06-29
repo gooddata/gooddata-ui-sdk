@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import { ColorPreview } from "./ColorPreview";
+import { ColorPreview } from "./ColorPreview.js";
 import React from "react";
 import { useIntl } from "react-intl";
 

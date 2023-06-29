@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
-import partial from "lodash/partial";
-import Highcharts from "../../lib";
-import { styleVariables } from "./styles/variables";
-import { tickLabelClick } from "./drilldownEventing";
+import partial from "lodash/partial.js";
+import Highcharts from "../../lib/index.js";
+import { styleVariables } from "./styles/variables.js";
+import { tickLabelClick } from "./drilldownEventing.js";
 import { ChartType, IDrillConfig, IHighchartsCategoriesTree, IHighchartsParentTick } from "@gooddata/sdk-ui";
-import { IHighchartsPointObject } from "./isGroupHighchartsDrillEvent";
+import { IHighchartsPointObject } from "./isGroupHighchartsDrillEvent.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {

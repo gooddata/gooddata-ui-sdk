@@ -1,13 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import noop from "lodash/noop";
-import { Button } from "../Button";
-import { LoadingSpinner } from "../LoadingSpinner";
-import { DialogBase } from "./DialogBase";
-import { IConfirmDialogBaseProps } from "./typings";
-import { Bubble, BubbleHoverTrigger } from "../Bubble";
-import { Typography } from "../Typography";
+import noop from "lodash/noop.js";
+import { Button } from "../Button/index.js";
+import { LoadingSpinner } from "../LoadingSpinner/index.js";
+import { DialogBase } from "./DialogBase.js";
+import { IConfirmDialogBaseProps } from "./typings.js";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { Typography } from "../Typography/index.js";
 
 /**
  * @internal

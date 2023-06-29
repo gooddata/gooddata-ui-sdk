@@ -1,3 +1,3 @@
 // (C) 2022 GoodData Corporation
-export * from "./types";
-export { DashboardList } from "./DashboardList";
+export * from "./types.js";
+export { DashboardList } from "./DashboardList.js";

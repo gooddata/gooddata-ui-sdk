@@ -1,9 +1,13 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 
-import { ILockedStatusProps } from "./types";
-import { selectCanManageAnalyticalDashboard, selectSettings, useDashboardSelector } from "../../../../model";
-import { LockedStatusIndicator } from "./LockedStatusIndicator";
+import { ILockedStatusProps } from "./types.js";
+import {
+    selectCanManageAnalyticalDashboard,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { LockedStatusIndicator } from "./LockedStatusIndicator.js";
 
 /**
  * @alpha

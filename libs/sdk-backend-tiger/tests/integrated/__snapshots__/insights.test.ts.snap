@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tiger insights should load empty insights for out-of-range page 1`] = `
-Object {
-  "allItems": Array [
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+exports[`tiger insights > should load empty insights for out-of-range page 1`] = `
+{
+  "allItems": [
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "metric_has_null_value",
                         "type": "measure",
                       },
@@ -23,12 +23,12 @@ Object {
                   "title": "Metric has null value",
                 },
               },
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
                         "type": "measure",
                       },
@@ -38,12 +38,12 @@ Object {
                   "title": "_Snapshot [EOP]",
                 },
               },
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                         "type": "measure",
                       },
@@ -56,11 +56,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_product.product",
                     "type": "displayForm",
                   },
@@ -70,11 +70,11 @@ Object {
             ],
             "localIdentifier": "attribute",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
@@ -85,24 +85,24 @@ Object {
             "localIdentifier": "columns",
           },
         ],
-        "filters": Array [
-          Object {
-            "positiveAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
                 "identifier": "f_owner.region_id",
                 "type": "displayForm",
               },
-              "in": Object {
-                "values": Array [
+              "in": {
+                "values": [
                   "",
                   "East Coast",
                 ],
               },
             },
           },
-          Object {
-            "absoluteDateFilter": Object {
-              "dataSet": Object {
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
                 "identifier": "dt_closedate_timestamp",
                 "type": "dataSet",
               },
@@ -110,14 +110,14 @@ Object {
               "to": "2022-09-07 23:59",
             },
           },
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "attr.f_product.product",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "CompuSci",
                   "Educationly",
                 ],
@@ -127,20 +127,20 @@ Object {
         ],
         "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "measureSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "measureSortItem": {
                 "direction": "desc",
-                "locators": Array [
-                  Object {
-                    "attributeLocatorItem": Object {
+                "locators": [
+                  {
+                    "attributeLocatorItem": {
                       "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
                       "element": "East Coast",
                     },
                   },
-                  Object {
-                    "measureLocatorItem": Object {
+                  {
+                    "measureLocatorItem": {
                       "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
                     },
                   },
@@ -149,23 +149,23 @@ Object {
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "measureSortItem": Object {
+        "sorts": [
+          {
+            "measureSortItem": {
               "direction": "desc",
-              "locators": Array [
-                Object {
-                  "attributeLocatorItem": Object {
+              "locators": [
+                {
+                  "attributeLocatorItem": {
                     "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
                     "element": "East Coast",
                   },
                 },
-                Object {
-                  "measureLocatorItem": Object {
+                {
+                  "measureLocatorItem": {
                     "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
                   },
                 },
@@ -179,17 +179,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                         "type": "measure",
                       },
@@ -202,11 +202,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_activity.subject",
                     "type": "displayForm",
                   },
@@ -217,26 +217,26 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
               "direction": "asc",
             },
@@ -248,17 +248,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -271,11 +271,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "dt_activity_timestamp.year",
                     "type": "displayForm",
                   },
@@ -286,10 +286,10 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "relativeDateFilter": Object {
-              "dataSet": Object {
+        "filters": [
+          {
+            "relativeDateFilter": {
+              "dataSet": {
                 "identifier": "dt_activity_timestamp",
                 "type": "dataSet",
               },
@@ -299,23 +299,23 @@ Object {
         ],
         "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
               "direction": "asc",
             },
@@ -327,18 +327,18 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "aggregation": "sum",
-                      "filters": Array [],
-                      "item": Object {
+                      "filters": [],
+                      "item": {
                         "identifier": "fact.f_activity.activitydate",
                         "type": "fact",
                       },
@@ -352,20 +352,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_opportunity.id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "434ea45fa89e4a56ba2a827572a93852",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_account.account.name",
                     "type": "displayForm",
                   },
@@ -376,34 +376,34 @@ Object {
             "localIdentifier": "view",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [],
+        "properties": {
+          "sortItems": [],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
           "type": "insight",
         },
-        "sorts": Array [],
+        "sorts": [],
         "summary": "",
         "title": "many data",
         "uri": "sanitize_uri",
         "visualizationUrl": "local:column",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -416,20 +416,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_stage.stagename",
                     "type": "displayForm",
                   },
@@ -440,15 +440,15 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "label.f_stage.stagename.order",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "101",
                   "102",
                   "103",
@@ -459,23 +459,23 @@ Object {
         ],
         "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 "direction": "desc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
               "direction": "desc",
             },
@@ -487,17 +487,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
                         "type": "measure",
                       },
@@ -510,11 +510,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_product.product.name",
                     "type": "displayForm",
                   },
@@ -525,10 +525,10 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "absoluteDateFilter": Object {
-              "dataSet": Object {
+        "filters": [
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
                 "identifier": "dt_closedate_timestamp",
                 "type": "dataSet",
               },
@@ -539,23 +539,23 @@ Object {
         ],
         "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
               "direction": "asc",
             },
@@ -567,17 +567,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "e519fa2a-86c3-4e32-8313-0c03061626b1",
                         "type": "measure",
                       },
@@ -590,11 +590,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.department_id",
                     "type": "displayForm",
                   },
@@ -605,26 +605,26 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
               "direction": "asc",
             },
@@ -636,17 +636,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -659,20 +659,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_stage.stagename",
                     "type": "displayForm",
                   },
@@ -683,15 +683,15 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "label.f_stage.stagename.order",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "101",
                   "102",
                   "103",
@@ -702,23 +702,23 @@ Object {
         ],
         "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
               "direction": "asc",
             },
@@ -731,27 +731,27 @@ Object {
       },
     },
   ],
-  "items": Array [],
+  "items": [],
   "limit": 50,
   "offset": 8,
   "totalCount": 8,
 }
 `;
 
-exports[`tiger insights should load insights 1`] = `
-Object {
-  "allItems": Array [
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+exports[`tiger insights > should load insights 1`] = `
+{
+  "allItems": [
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "metric_has_null_value",
                         "type": "measure",
                       },
@@ -761,12 +761,12 @@ Object {
                   "title": "Metric has null value",
                 },
               },
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
                         "type": "measure",
                       },
@@ -776,12 +776,12 @@ Object {
                   "title": "_Snapshot [EOP]",
                 },
               },
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                         "type": "measure",
                       },
@@ -794,11 +794,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_product.product",
                     "type": "displayForm",
                   },
@@ -808,11 +808,11 @@ Object {
             ],
             "localIdentifier": "attribute",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
@@ -823,24 +823,24 @@ Object {
             "localIdentifier": "columns",
           },
         ],
-        "filters": Array [
-          Object {
-            "positiveAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
                 "identifier": "f_owner.region_id",
                 "type": "displayForm",
               },
-              "in": Object {
-                "values": Array [
+              "in": {
+                "values": [
                   "",
                   "East Coast",
                 ],
               },
             },
           },
-          Object {
-            "absoluteDateFilter": Object {
-              "dataSet": Object {
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
                 "identifier": "dt_closedate_timestamp",
                 "type": "dataSet",
               },
@@ -848,14 +848,14 @@ Object {
               "to": "2022-09-07 23:59",
             },
           },
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "attr.f_product.product",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "CompuSci",
                   "Educationly",
                 ],
@@ -865,20 +865,20 @@ Object {
         ],
         "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "measureSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "measureSortItem": {
                 "direction": "desc",
-                "locators": Array [
-                  Object {
-                    "attributeLocatorItem": Object {
+                "locators": [
+                  {
+                    "attributeLocatorItem": {
                       "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
                       "element": "East Coast",
                     },
                   },
-                  Object {
-                    "measureLocatorItem": Object {
+                  {
+                    "measureLocatorItem": {
                       "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
                     },
                   },
@@ -887,23 +887,23 @@ Object {
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "measureSortItem": Object {
+        "sorts": [
+          {
+            "measureSortItem": {
               "direction": "desc",
-              "locators": Array [
-                Object {
-                  "attributeLocatorItem": Object {
+              "locators": [
+                {
+                  "attributeLocatorItem": {
                     "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
                     "element": "East Coast",
                   },
                 },
-                Object {
-                  "measureLocatorItem": Object {
+                {
+                  "measureLocatorItem": {
                     "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
                   },
                 },
@@ -917,17 +917,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                         "type": "measure",
                       },
@@ -940,11 +940,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_activity.subject",
                     "type": "displayForm",
                   },
@@ -955,26 +955,26 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
               "direction": "asc",
             },
@@ -986,17 +986,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -1009,11 +1009,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "dt_activity_timestamp.year",
                     "type": "displayForm",
                   },
@@ -1024,10 +1024,10 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "relativeDateFilter": Object {
-              "dataSet": Object {
+        "filters": [
+          {
+            "relativeDateFilter": {
+              "dataSet": {
                 "identifier": "dt_activity_timestamp",
                 "type": "dataSet",
               },
@@ -1037,23 +1037,23 @@ Object {
         ],
         "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
               "direction": "asc",
             },
@@ -1065,18 +1065,18 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "aggregation": "sum",
-                      "filters": Array [],
-                      "item": Object {
+                      "filters": [],
+                      "item": {
                         "identifier": "fact.f_activity.activitydate",
                         "type": "fact",
                       },
@@ -1090,20 +1090,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_opportunity.id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "434ea45fa89e4a56ba2a827572a93852",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_account.account.name",
                     "type": "displayForm",
                   },
@@ -1114,34 +1114,34 @@ Object {
             "localIdentifier": "view",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [],
+        "properties": {
+          "sortItems": [],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
           "type": "insight",
         },
-        "sorts": Array [],
+        "sorts": [],
         "summary": "",
         "title": "many data",
         "uri": "sanitize_uri",
         "visualizationUrl": "local:column",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -1154,20 +1154,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_stage.stagename",
                     "type": "displayForm",
                   },
@@ -1178,15 +1178,15 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "label.f_stage.stagename.order",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "101",
                   "102",
                   "103",
@@ -1197,23 +1197,23 @@ Object {
         ],
         "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 "direction": "desc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
               "direction": "desc",
             },
@@ -1225,17 +1225,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
                         "type": "measure",
                       },
@@ -1248,11 +1248,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_product.product.name",
                     "type": "displayForm",
                   },
@@ -1263,10 +1263,10 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "absoluteDateFilter": Object {
-              "dataSet": Object {
+        "filters": [
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
                 "identifier": "dt_closedate_timestamp",
                 "type": "dataSet",
               },
@@ -1277,23 +1277,23 @@ Object {
         ],
         "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
               "direction": "asc",
             },
@@ -1305,17 +1305,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "e519fa2a-86c3-4e32-8313-0c03061626b1",
                         "type": "measure",
                       },
@@ -1328,11 +1328,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.department_id",
                     "type": "displayForm",
                   },
@@ -1343,26 +1343,26 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
               "direction": "asc",
             },
@@ -1374,17 +1374,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -1397,20 +1397,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_stage.stagename",
                     "type": "displayForm",
                   },
@@ -1421,15 +1421,15 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "label.f_stage.stagename.order",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "101",
                   "102",
                   "103",
@@ -1440,23 +1440,23 @@ Object {
         ],
         "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
               "direction": "asc",
             },
@@ -1469,18 +1469,18 @@ Object {
       },
     },
   ],
-  "items": Array [
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+  "items": [
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "metric_has_null_value",
                         "type": "measure",
                       },
@@ -1490,12 +1490,12 @@ Object {
                   "title": "Metric has null value",
                 },
               },
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
                         "type": "measure",
                       },
@@ -1505,12 +1505,12 @@ Object {
                   "title": "_Snapshot [EOP]",
                 },
               },
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                         "type": "measure",
                       },
@@ -1523,11 +1523,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_product.product",
                     "type": "displayForm",
                   },
@@ -1537,11 +1537,11 @@ Object {
             ],
             "localIdentifier": "attribute",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
@@ -1552,24 +1552,24 @@ Object {
             "localIdentifier": "columns",
           },
         ],
-        "filters": Array [
-          Object {
-            "positiveAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
                 "identifier": "f_owner.region_id",
                 "type": "displayForm",
               },
-              "in": Object {
-                "values": Array [
+              "in": {
+                "values": [
                   "",
                   "East Coast",
                 ],
               },
             },
           },
-          Object {
-            "absoluteDateFilter": Object {
-              "dataSet": Object {
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
                 "identifier": "dt_closedate_timestamp",
                 "type": "dataSet",
               },
@@ -1577,14 +1577,14 @@ Object {
               "to": "2022-09-07 23:59",
             },
           },
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "attr.f_product.product",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "CompuSci",
                   "Educationly",
                 ],
@@ -1594,20 +1594,20 @@ Object {
         ],
         "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "measureSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "measureSortItem": {
                 "direction": "desc",
-                "locators": Array [
-                  Object {
-                    "attributeLocatorItem": Object {
+                "locators": [
+                  {
+                    "attributeLocatorItem": {
                       "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
                       "element": "East Coast",
                     },
                   },
-                  Object {
-                    "measureLocatorItem": Object {
+                  {
+                    "measureLocatorItem": {
                       "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
                     },
                   },
@@ -1616,23 +1616,23 @@ Object {
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "measureSortItem": Object {
+        "sorts": [
+          {
+            "measureSortItem": {
               "direction": "desc",
-              "locators": Array [
-                Object {
-                  "attributeLocatorItem": Object {
+              "locators": [
+                {
+                  "attributeLocatorItem": {
                     "attributeIdentifier": "12f5fa008d404c5092f476a00bb1cda7",
                     "element": "East Coast",
                   },
                 },
-                Object {
-                  "measureLocatorItem": Object {
+                {
+                  "measureLocatorItem": {
                     "measureIdentifier": "38b871775be5400a98fd261a38e2cb9c",
                   },
                 },
@@ -1646,17 +1646,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                         "type": "measure",
                       },
@@ -1669,11 +1669,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_activity.subject",
                     "type": "displayForm",
                   },
@@ -1684,26 +1684,26 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "5517045e-661f-4d6b-b0b0-98030ab9f68c",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "644e49c9164d4763b23b4cf7436de0ef",
               "direction": "asc",
             },
@@ -1715,17 +1715,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -1738,11 +1738,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "dt_activity_timestamp.year",
                     "type": "displayForm",
                   },
@@ -1753,10 +1753,10 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "relativeDateFilter": Object {
-              "dataSet": Object {
+        "filters": [
+          {
+            "relativeDateFilter": {
+              "dataSet": {
                 "identifier": "dt_activity_timestamp",
                 "type": "dataSet",
               },
@@ -1766,23 +1766,23 @@ Object {
         ],
         "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "63e1799693114006adfed9e510b00a83",
               "direction": "asc",
             },
@@ -1794,18 +1794,18 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
                       "aggregation": "sum",
-                      "filters": Array [],
-                      "item": Object {
+                      "filters": [],
+                      "item": {
                         "identifier": "fact.f_activity.activitydate",
                         "type": "fact",
                       },
@@ -1819,20 +1819,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_opportunity.id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "434ea45fa89e4a56ba2a827572a93852",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_account.account.name",
                     "type": "displayForm",
                   },
@@ -1843,34 +1843,34 @@ Object {
             "localIdentifier": "view",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [],
+        "properties": {
+          "sortItems": [],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "dcce2234-9097-47e7-a165-36cdbaa2e134",
           "type": "insight",
         },
-        "sorts": Array [],
+        "sorts": [],
         "summary": "",
         "title": "many data",
         "uri": "sanitize_uri",
         "visualizationUrl": "local:column",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -1883,20 +1883,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_stage.stagename",
                     "type": "displayForm",
                   },
@@ -1907,15 +1907,15 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "label.f_stage.stagename.order",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "101",
                   "102",
                   "103",
@@ -1926,23 +1926,23 @@ Object {
         ],
         "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 "direction": "desc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "3ef94acb-1e15-49ef-88d5-e9e2931be959",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
               "direction": "desc",
             },
@@ -1954,17 +1954,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
                         "type": "measure",
                       },
@@ -1977,11 +1977,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "label.f_product.product.name",
                     "type": "displayForm",
                   },
@@ -1992,10 +1992,10 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "absoluteDateFilter": Object {
-              "dataSet": Object {
+        "filters": [
+          {
+            "absoluteDateFilter": {
+              "dataSet": {
                 "identifier": "dt_closedate_timestamp",
                 "type": "dataSet",
               },
@@ -2006,23 +2006,23 @@ Object {
         ],
         "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "cd73fb09abc34c4c92042ed0421a21f5",
               "direction": "asc",
             },
@@ -2034,17 +2034,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "e519fa2a-86c3-4e32-8313-0c03061626b1",
                         "type": "measure",
                       },
@@ -2057,11 +2057,11 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.department_id",
                     "type": "displayForm",
                   },
@@ -2072,26 +2072,26 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [],
+        "filters": [],
         "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "ce9720f3ccc642acb66d288a9adce435",
               "direction": "asc",
             },
@@ -2103,17 +2103,17 @@ Object {
         "visualizationUrl": "local:table",
       },
     },
-    Object {
-      "insight": Object {
-        "buckets": Array [
-          Object {
-            "items": Array [
-              Object {
-                "measure": Object {
-                  "definition": Object {
-                    "measureDefinition": Object {
-                      "filters": Array [],
-                      "item": Object {
+    {
+      "insight": {
+        "buckets": [
+          {
+            "items": [
+              {
+                "measure": {
+                  "definition": {
+                    "measureDefinition": {
+                      "filters": [],
+                      "item": {
                         "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                         "type": "measure",
                       },
@@ -2126,20 +2126,20 @@ Object {
             ],
             "localIdentifier": "measures",
           },
-          Object {
-            "items": Array [
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+          {
+            "items": [
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "localIdentifier": "e6b6e5c7d5754dda9afc4fdfa3c93d9f",
                 },
               },
-              Object {
-                "attribute": Object {
-                  "displayForm": Object {
+              {
+                "attribute": {
+                  "displayForm": {
                     "identifier": "attr.f_stage.stagename",
                     "type": "displayForm",
                   },
@@ -2150,15 +2150,15 @@ Object {
             "localIdentifier": "attribute",
           },
         ],
-        "filters": Array [
-          Object {
-            "negativeAttributeFilter": Object {
-              "displayForm": Object {
+        "filters": [
+          {
+            "negativeAttributeFilter": {
+              "displayForm": {
                 "identifier": "label.f_stage.stagename.order",
                 "type": "displayForm",
               },
-              "notIn": Object {
-                "values": Array [
+              "notIn": {
+                "values": [
                   "101",
                   "102",
                   "103",
@@ -2169,23 +2169,23 @@ Object {
         ],
         "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
         "isLocked": false,
-        "properties": Object {
-          "sortItems": Array [
-            Object {
-              "attributeSortItem": Object {
+        "properties": {
+          "sortItems": [
+            {
+              "attributeSortItem": {
                 "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
                 "direction": "asc",
               },
             },
           ],
         },
-        "ref": Object {
+        "ref": {
           "identifier": "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
           "type": "insight",
         },
-        "sorts": Array [
-          Object {
-            "attributeSortItem": Object {
+        "sorts": [
+          {
+            "attributeSortItem": {
               "attributeIdentifier": "168b0bbeefac47eeae7cdc172cd2083e",
               "direction": "asc",
             },

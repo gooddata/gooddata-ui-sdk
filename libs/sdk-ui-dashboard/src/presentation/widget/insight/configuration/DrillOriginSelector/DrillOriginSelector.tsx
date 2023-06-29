@@ -4,8 +4,8 @@ import { useIntl } from "react-intl";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import DrillOriginSelectorBody from "./DrillOriginSelectorBody";
-import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types";
+import DrillOriginSelectorBody from "./DrillOriginSelectorBody.js";
+import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorProps {
     items: IAvailableDrillTargets;

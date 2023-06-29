@@ -1,22 +1,22 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -29,21 +29,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -56,32 +56,32 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - single measure with two viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure with two viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -90,10 +90,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -102,20 +102,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -128,13 +128,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - single measure with viewBy and stackBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -143,10 +143,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -155,21 +155,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -182,21 +182,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - two measures with undefined values 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with undefined values 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -210,21 +210,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - two measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -237,21 +237,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - two measures with viewBy sorted by attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -264,21 +264,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - two measures with viewBy sorted by measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - two measures with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "PhoenixSoft",
       "WonderKid",
       "Grammar Plus",
@@ -291,13 +291,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: AreaChart - with one measure and view by date and stack by date 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: AreaChart - with one measure and view by date and stack by date 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 7,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2010 > Amount",
       "2011 > Amount",
       "2012 > Amount",
@@ -307,10 +307,10 @@ Object {
       "2017 > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 5,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2008",
       "2009",
       "2010",
@@ -322,23 +322,23 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -351,13 +351,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -366,10 +366,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -378,13 +378,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - four measures and PoP 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - four measures and PoP 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 5,
     "attributes": 0,
     "measures": 5,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
@@ -392,10 +392,10 @@ Object {
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -409,32 +409,32 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - single measure with two viewBy and stack 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure with two viewBy and stack 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 12,
     "attributes": 2,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > East Coast > Amount",
       "CompuSci > West Coast > Amount",
       "Educationly > East Coast > Amount",
@@ -449,10 +449,10 @@ Object {
       "WonderKid > West Coast > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Direct Sales",
       "Inside Sales",
     ],
@@ -461,20 +461,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -487,13 +487,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - single measure with viewBy and stackBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -502,10 +502,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -514,22 +514,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - stackBy with one date 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - stackBy with one date 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -543,13 +543,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -558,10 +558,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -570,21 +570,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - two measures with two viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with two viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -603,21 +603,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - two measures with two viewBy, filtered to single value 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with two viewBy, filtered to single value 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 1,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid > East Coast",
     ],
     "totals": 0,
@@ -625,21 +625,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - two measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -652,21 +652,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - two measures with viewBy sorted by attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -679,21 +679,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - two measures with viewBy sorted by measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - two measures with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "PhoenixSoft",
       "WonderKid",
       "Grammar Plus",
@@ -706,22 +706,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - viewBy date and PoP measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - viewBy date and PoP measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -735,22 +735,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BarChart - viewBy with two dates 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BarChart - viewBy with two dates 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010 > 2010",
       "2011 > 2011",
       "2012 > 2012",
@@ -764,22 +764,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - arithmetic measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - arithmetic measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -792,22 +792,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -820,22 +820,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -848,22 +848,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -876,22 +876,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy and sorted by attr 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy and sorted by attr 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -904,22 +904,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy with nulls in data 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis and size measures with viewBy with nulls in data 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -933,21 +933,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x and y axis measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x and y axis measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -960,21 +960,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x axis and size measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x axis and size measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -987,39 +987,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x axis measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x axis measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - x axis measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - x axis measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1032,21 +1032,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BubbleChart - y axis and size measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BubbleChart - y axis and size measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Probability",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1059,22 +1059,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1087,61 +1087,61 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary and comparative measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary and comparative measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary and target measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary and target measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary and target measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary and target measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1154,39 +1154,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary with two viewBy dates 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary with two viewBy dates 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 3,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010 > 2010",
       "2011 > 2011",
       "2012 > 2012",
@@ -1196,43 +1196,43 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -1251,22 +1251,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy dates 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with two viewBy dates 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010 > 2010",
       "2011 > 2011",
       "2012 > 2012",
@@ -1280,22 +1280,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1308,22 +1308,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - primary, target and comparative measures with viewBy and sort 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - primary, target and comparative measures with viewBy and sort 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1336,22 +1336,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: BulletChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: BulletChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1364,20 +1364,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - dense chart with two view by 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - dense chart with two view by 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > m_fact.opportunitysnapshot.amount_sum",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 215,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > AdvancedMD Software > CompuSci",
       "CompuSci > AdvantageBridal.com > CompuSci",
       "CompuSci > Aerial Services > CompuSci",
@@ -1599,21 +1599,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1626,40 +1626,40 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure with one viewBy and one stackBy with multiple items 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with one viewBy and one stackBy with multiple items 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "East Coast > Amount",
       "West Coast > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1672,13 +1672,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure with two viewBy and stack 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with two viewBy and stack 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 12,
     "attributes": 2,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > East Coast > Amount",
       "CompuSci > West Coast > Amount",
       "Educationly > East Coast > Amount",
@@ -1693,10 +1693,10 @@ Object {
       "WonderKid > West Coast > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Direct Sales",
       "Inside Sales",
     ],
@@ -1705,20 +1705,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1731,13 +1731,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure with viewBy and stackBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -1746,10 +1746,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -1758,13 +1758,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure with viewBy and stackBy filtered to single stack 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single measure with viewBy and stackBy filtered to single stack 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -1773,10 +1773,10 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 1,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
     ],
     "totals": 0,
@@ -1784,20 +1784,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - single ratio measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - single ratio measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount with Ratio",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1810,22 +1810,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - stackBy with one date 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - stackBy with one date 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -1839,21 +1839,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1866,41 +1866,41 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - two measures with two viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with two viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -1919,21 +1919,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - two measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -1946,21 +1946,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - two measures with viewBy sorted by attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -1973,21 +1973,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - two measures with viewBy sorted by measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - two measures with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "PhoenixSoft",
       "WonderKid",
       "Grammar Plus",
@@ -2000,22 +2000,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - viewBy date and PoP measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - viewBy date and PoP measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -2029,22 +2029,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ColumnChart - viewBy with two dates 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ColumnChart - viewBy with two dates 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010 > 2010",
       "2011 > 2011",
       "2012 > 2012",
@@ -2058,23 +2058,23 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2087,23 +2087,23 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2116,35 +2116,35 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - multiple measures and no viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - multiple measures and no viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - multiple primary and secondary measures with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - multiple primary and secondary measures with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 0,
     "measures": 6,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Min Amount",
       " > Median Amount",
       " > Max Amount",
@@ -2153,10 +2153,10 @@ Object {
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2169,41 +2169,41 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary and secondary measure no viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure no viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2216,21 +2216,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by attr 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by attr 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -2243,21 +2243,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by primary measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by primary measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Explorer",
       "CompuSci",
       "Educationly",
@@ -2270,21 +2270,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by secondary measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary and secondary measure with viewBy sorted by secondary measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Explorer",
       "CompuSci",
       "Educationly",
@@ -2297,39 +2297,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one primary measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one primary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2342,20 +2342,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - one secondary measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - one secondary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2368,23 +2368,23 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2397,21 +2397,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - two measures with null values 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - two measures with null values 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -2425,21 +2425,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ComboChart - two secondary measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ComboChart - two secondary measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2452,20 +2452,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DependencyWheelChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -2484,20 +2484,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DependencyWheelChart - measure and attributeFrom 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure and attributeFrom 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2510,20 +2510,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DependencyWheelChart - measure and attributeTo 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure and attributeTo 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -2532,39 +2532,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DependencyWheelChart - measure only 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure only 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DependencyWheelChart - measure, attributeFrom and attributeTo 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - measure, attributeFrom and attributeTo 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -2583,20 +2583,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DependencyWheelChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DependencyWheelChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -2615,42 +2615,42 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DonutChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DonutChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2663,39 +2663,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DonutChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DonutChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2708,20 +2708,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DonutChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2734,65 +2734,65 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: DonutChart - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: DonutChart - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Execute - scoped series 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Execute - scoped series 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 1,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       "East Coast > Amount",
       "East Coast > Won",
       "West Coast > Amount",
       "West Coast > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Execute - scoped series with slicing 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Execute - scoped series with slicing 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 1,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       "East Coast > Amount",
       "East Coast > Won",
       "West Coast > Amount",
       "West Coast > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2805,80 +2805,80 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Execute - single unscoped series 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Execute - single unscoped series 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Execute - two unscoped series 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Execute - two unscoped series 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Calculated 'Lost' measure",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2891,39 +2891,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -2936,20 +2936,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -2962,20 +2962,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - single measure with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
@@ -2988,20 +2988,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -3014,160 +3014,160 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: FunnelChart - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: FunnelChart - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Headline - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Headline - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Headline - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Headline - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Headline - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Headline - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
-      " > Won",
-      " > Amount",
-    ],
-  },
-  "slicesDigest": Object {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": Array [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess should correctly identify series and slices for: Headline - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
-    "allSeries": 2,
-    "attributes": 0,
-    "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Headline - two measures one PoP 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
+      " > Won",
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures one PoP 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
       " > Won",
       " > Won Last Year",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Headline - two measures with german separators 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with german separators 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Won",
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "East Coast > Amount",
       "West Coast > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -3180,13 +3180,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - measure and columns 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure and columns 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "CompuSci > Amount",
       "Educationly > Amount",
       "Explorer > Amount",
@@ -3195,29 +3195,29 @@ Object {
       "WonderKid > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - measure and rows 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure and rows 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -3230,40 +3230,40 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - measure only 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure only 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - measure, rows and columns 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure, rows and columns 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "East Coast > Amount",
       "West Coast > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -3276,13 +3276,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - measure, rows and columns with null data points 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - measure, rows and columns with null data points 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 7,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2010 > Amount",
       "2011 > Amount",
       "2012 > Amount",
@@ -3292,10 +3292,10 @@ Object {
       "2017 > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -3308,21 +3308,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "East Coast > Amount",
       "West Coast > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -3335,13 +3335,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Heatmap - themed with null values 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Heatmap - themed with null values 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 7,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2010 > Amount",
       "2011 > Amount",
       "2012 > Amount",
@@ -3351,10 +3351,10 @@ Object {
       "2017 > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -3367,23 +3367,23 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3408,21 +3408,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3447,39 +3447,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - single measure with % and trendBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure with % and trendBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3504,20 +3504,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - single measure with trendBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure with trendBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3542,13 +3542,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - single measure with trendBy and segmentBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - single measure with trendBy and segmentBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 18,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "Q1/2008 > Amount",
       "Q2/2008 > Amount",
       "Q3/2008 > Amount",
@@ -3569,10 +3569,10 @@ Object {
       "Q2/2012 > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -3581,21 +3581,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3620,21 +3620,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - two measures with trendBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - two measures with trendBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3659,21 +3659,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - two measures with trendBy and sort by attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - two measures with trendBy and sort by attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q2/2012",
       "Q1/2012",
       "Q4/2011",
@@ -3698,21 +3698,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - two measures with trendBy and sort by measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - two measures with trendBy and sort by measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -3737,20 +3737,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - with one measure and segment by date 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - with one measure and segment by date 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 5,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2008",
       "2009",
       "2010",
@@ -3762,13 +3762,13 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - with one measure and trend by date and segment by date 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - with one measure and trend by date and segment by date 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 5,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2008 > Amount",
       "2009 > Amount",
       "2010 > Amount",
@@ -3776,10 +3776,10 @@ Object {
       "2012 > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -3793,21 +3793,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: LineChart - with two measures and null values 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: LineChart - with two measures and null values 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -3821,42 +3821,42 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PieChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PieChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
       " > Ratio of Won and Lost",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PieChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PieChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -3869,39 +3869,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PieChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PieChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PieChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PieChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -3914,20 +3914,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PieChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PieChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -3940,59 +3940,59 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PieChart - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PieChart - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PivotTable - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PivotTable - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PivotTable - single measure with row attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PivotTable - single measure with row attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4005,61 +4005,61 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PivotTable - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PivotTable - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - arithmetic measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - arithmetic measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Calculated 'Lost' measure",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4072,39 +4072,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4117,20 +4117,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -4143,20 +4143,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - single measure with viewBy sorted by measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Grammar Plus",
       "PhoenixSoft",
       "WonderKid",
@@ -4169,20 +4169,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4195,40 +4195,40 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: PyramidChart - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: PyramidChart - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: SankeyChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -4247,20 +4247,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure and attributeFrom 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure and attributeFrom 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4273,20 +4273,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure and attributeTo 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure and attributeTo 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -4295,39 +4295,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure only 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure only 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: SankeyChart - measure, attributeFrom and attributeTo 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - measure, attributeFrom and attributeTo 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -4346,20 +4346,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: SankeyChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: SankeyChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > East Coast",
       "CompuSci > West Coast",
       "Educationly > East Coast",
@@ -4378,21 +4378,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4405,21 +4405,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4432,21 +4432,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4459,21 +4459,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute with attr sorting 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute with attr sorting 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "WonderKid",
       "PhoenixSoft",
       "Grammar Plus",
@@ -4486,21 +4486,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute with nulls in data 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures and attribute with nulls in data 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Win Rate",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 7,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010",
       "2011",
       "2012",
@@ -4514,39 +4514,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - x axis measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x axis measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - x axis measure and attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x axis measure and attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4559,20 +4559,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: ScatterPlot - y axis measure and attribute 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - y axis measure and attribute 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4585,22 +4585,22 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - arithmetic measures and segment 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - arithmetic measures and segment 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 3,
     "attributes": 0,
     "measures": 3,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
       " > Calculated 'Lost' measure",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 18,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Q1/2008",
       "Q2/2008",
       "Q3/2008",
@@ -4625,20 +4625,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > West Coast",
       "CompuSci > East Coast",
       "Educationly > West Coast",
@@ -4657,39 +4657,39 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - single measure and segment 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure and segment 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 2,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "East Coast",
       "West Coast",
     ],
@@ -4698,20 +4698,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - single measure and viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure and viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4724,20 +4724,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - single measure and viewBy filtered to one element 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure and viewBy filtered to one element 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 1,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
     ],
     "totals": 0,
@@ -4745,20 +4745,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - single measure, viewBy and segment 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - single measure, viewBy and segment 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > West Coast",
       "CompuSci > East Coast",
       "Educationly > West Coast",
@@ -4777,20 +4777,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 12,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci > West Coast",
       "CompuSci > East Coast",
       "Educationly > West Coast",
@@ -4809,41 +4809,41 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - two measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - two measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - two measures and segmentBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - two measures and segmentBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4856,21 +4856,21 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - two measures and viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - two measures and viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 2,
     "attributes": 0,
     "measures": 2,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
       " > Won",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 6,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "CompuSci",
       "Educationly",
       "Explorer",
@@ -4883,20 +4883,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Treemap - with one measure and view by date and segment by date 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Treemap - with one measure and view by date and segment by date 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 23,
     "attributes": 2,
-    "sliceNames": Array [
+    "sliceNames": [
       "2010 > 2010",
       "2010 > 2009",
       "2010 > 2008",
@@ -4926,20 +4926,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 8,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Interest",
       "Discovery",
       "Short List",
@@ -4954,35 +4954,35 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Sum Velocity",
       " > Sum Values",
       " > Negative Sum Probability",
       " > Negative Sum Duration",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with a total measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with a total measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 6,
     "attributes": 0,
     "measures": 6,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Sum Velocity",
       " > Sum Values",
       " > Total of velocity and values",
@@ -4991,92 +4991,92 @@ Object {
       " > Total balance",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Sum Velocity",
       " > Sum Values",
       " > Negative Sum Probability",
       " > Negative Sum Duration",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - multi measures with themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 0,
     "measures": 4,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Sum Velocity",
       " > Sum Values",
       " > Negative Sum Probability",
       " > Negative Sum Duration",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - single measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - single measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - single measure with viewBy 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - single measure with viewBy 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 8,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Interest",
       "Discovery",
       "Short List",
@@ -5091,20 +5091,20 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: WaterfallChart - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Amount",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 8,
     "attributes": 1,
-    "sliceNames": Array [
+    "sliceNames": [
       "Interest",
       "Discovery",
       "Short List",
@@ -5119,76 +5119,76 @@ Object {
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Xirr - correct config 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Xirr - correct config 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2018 > Sample XIRR",
       "2019 > Sample XIRR",
       "2020 > Sample XIRR",
       "2021 > Sample XIRR",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Xirr - font 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Xirr - font 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2018 > Sample XIRR",
       "2019 > Sample XIRR",
       "2020 > Sample XIRR",
       "2021 > Sample XIRR",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Xirr - only measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Xirr - only measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 1,
     "attributes": 0,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       " > Sample XIRR",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Xirr - semantically wrong measure 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Xirr - semantically wrong measure 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 21,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2000 > _Timeline [EOP]",
       "2001 > _Timeline [EOP]",
       "2002 > _Timeline [EOP]",
@@ -5212,32 +5212,32 @@ Object {
       "2020 > _Timeline [EOP]",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }
 `;
 
-exports[`DataAccess should correctly identify series and slices for: Xirr - themed 1`] = `
-Object {
-  "seriesDigest": Object {
+exports[`DataAccess > should correctly identify series and slices for: Xirr - themed 1`] = `
+{
+  "seriesDigest": {
     "allSeries": 4,
     "attributes": 1,
     "measures": 1,
-    "seriesNames": Array [
+    "seriesNames": [
       "2018 > Sample XIRR",
       "2019 > Sample XIRR",
       "2020 > Sample XIRR",
       "2021 > Sample XIRR",
     ],
   },
-  "slicesDigest": Object {
+  "slicesDigest": {
     "allSlices": 0,
     "attributes": 0,
-    "sliceNames": Array [],
+    "sliceNames": [],
     "totals": 0,
   },
 }

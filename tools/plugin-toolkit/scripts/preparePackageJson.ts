@@ -3,11 +3,9 @@
 import * as process from "process";
 import fs from "fs";
 import * as path from "path";
-import { keys } from "lodash";
+import keys from "lodash/keys.js";
 
-import {    
-    readJsonSync,
-} from "../src/_base/utils";
+import { readJsonSync } from "../src/_base/utils.js";
 
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with
@@ -34,23 +32,22 @@ const UnnecessaryDevDependencies = ["@gooddata/eslint-config", "dependency-cruis
 const ExplicitTypeScriptDependencies = [
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
-    "ts-jest",
     "ts-loader",
     "typescript",
     "tslib",
 ];
 
-function resolveCurrentPackageVersion(){
+function resolveCurrentPackageVersion() {
     //we need current version of app-toolkit
     const parenPackagePath = path.resolve("./", "package.json");
     const parentPackage = readJsonSync(parenPackagePath);
-    parentPackage.peerDependen
+    parentPackage.peerDependen;
     return parentPackage.version;
 }
 
-function updateGDPackageVersion(version:string, targets: { [key: string]: string }) {
-    //replace workspace version definition 
-    for (let [searchKey, searchValue] of Object.entries(targets)) {
+function updateGDPackageVersion(version: string, targets: { [key: string]: string }) {
+    //replace workspace version definition
+    for (const [searchKey, searchValue] of Object.entries(targets)) {
         if (searchValue === "workspace:*") {
             targets[searchKey] = version;
         } else {
@@ -64,7 +61,7 @@ function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.author = "";
     packageJson.description = "";
 
-    const { scripts, devDependencies,dependencies,peerDependencies } = packageJson;
+    const { scripts, devDependencies, dependencies, peerDependencies } = packageJson;
 
     GdScriptsRemove.forEach((script) => {
         delete scripts[script];
@@ -76,9 +73,9 @@ function removeGdStuff(packageJson: Record<string, any>) {
 
     const packageVersion = resolveCurrentPackageVersion();
 
-    updateGDPackageVersion(packageVersion,devDependencies);
-    updateGDPackageVersion(packageVersion,dependencies);
-    updateGDPackageVersion(packageVersion,peerDependencies);
+    updateGDPackageVersion(packageVersion, devDependencies);
+    updateGDPackageVersion(packageVersion, dependencies);
+    updateGDPackageVersion(packageVersion, peerDependencies);
 
     delete packageJson.repository;
 }

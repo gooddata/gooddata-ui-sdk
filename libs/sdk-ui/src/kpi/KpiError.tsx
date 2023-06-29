@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import { IErrorProps } from "../base";
+import { IErrorProps } from "../base/index.js";
 
 /**
  * @internal

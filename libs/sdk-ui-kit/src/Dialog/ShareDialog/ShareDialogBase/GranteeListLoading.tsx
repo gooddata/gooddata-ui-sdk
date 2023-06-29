@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { LoadingMask } from "../../../LoadingMask";
+import { LoadingMask } from "../../../LoadingMask/index.js";
 
 /**
  * @internal

@@ -12,10 +12,10 @@ import {
     IKpiWidgetConfiguration,
 } from "@gooddata/sdk-model";
 
-import { IDashboardEvent } from "./base";
-import { WidgetDescription, WidgetHeader } from "../types/widgetTypes";
-import { DashboardContext } from "../types/commonTypes";
-import { eventGuard } from "./util";
+import { IDashboardEvent } from "./base.js";
+import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link DashboardKpiWidgetHeaderChanged} event.

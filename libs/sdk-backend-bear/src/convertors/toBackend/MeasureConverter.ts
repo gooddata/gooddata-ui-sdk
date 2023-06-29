@@ -27,10 +27,10 @@ import {
     measureFilters,
     IPreviousPeriodDateDataSet,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import { toBearRef } from "./ObjRefConverter";
-import { convertFilter } from "./FilterConverter";
-import { convertAggregation } from "./afm/MeasureConverter";
+import isEmpty from "lodash/isEmpty.js";
+import { toBearRef } from "./ObjRefConverter.js";
+import { convertFilter } from "./FilterConverter.js";
+import { convertAggregation } from "./afm/MeasureConverter.js";
 
 const convertPreviousPeriodDataSet = (
     dataSet: IPreviousPeriodDateDataSet,

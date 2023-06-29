@@ -14,11 +14,11 @@
  *  - opposite
  */
 
-import isNil from "lodash/isNil";
-import isArray from "lodash/isArray";
-import Highcharts from "../../lib";
-import { isLineChart } from "../../chartTypes/_util/common";
-import { UnsafeInternals } from "../../typings/unsafe";
+import isNil from "lodash/isNil.js";
+import isArray from "lodash/isArray.js";
+import Highcharts from "../../lib/index.js";
+import { isLineChart } from "../../chartTypes/_util/common.js";
+import { UnsafeInternals } from "../../typings/unsafe.js";
 
 interface IBaseAndAlignedAxes {
     baseYAxis: Highcharts.Axis;

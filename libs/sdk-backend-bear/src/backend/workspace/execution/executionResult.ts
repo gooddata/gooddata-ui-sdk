@@ -28,12 +28,15 @@ import {
     TotalType,
 } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertExecutionApiError } from "../../../utils/errorHandling";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
-import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
-import { createResultHeaderTransformer } from "../../../convertors/fromBackend/afm/result";
-import { findDateAttributeUris } from "../../../convertors/dateFormatting/dateFormatter";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertExecutionApiError } from "../../../utils/errorHandling.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter.js";
+import {
+    convertWarning,
+    convertDimensions,
+} from "../../../convertors/fromBackend/ExecutionResultConverter.js";
+import { createResultHeaderTransformer } from "../../../convertors/fromBackend/afm/result.js";
+import { findDateAttributeUris } from "../../../convertors/dateFormatting/dateFormatter.js";
 
 interface IIndexedTotals {
     [key: string]: ITotal[];

@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import { IMappingHeader } from "@gooddata/sdk-ui";
-import { ROW_TOTAL } from "../base/constants";
+import { ROW_TOTAL } from "../base/constants.js";
 
 /**
  * All non-grand-total rows in the grid conform to this interface.

@@ -2,11 +2,11 @@
 import { SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 import { objRefToString, IWidgetAlert } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../types/commonTypes";
-import { UpdateAlert } from "../../commands/alerts";
-import { alertUpdated, DashboardAlertUpdated } from "../../events/alerts";
-import { PromiseFnReturnType } from "../../types/sagas";
-import { alertsActions } from "../../store/alerts";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { UpdateAlert } from "../../commands/alerts.js";
+import { alertUpdated, DashboardAlertUpdated } from "../../events/alerts.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { alertsActions } from "../../store/alerts/index.js";
 
 function updateAlert(ctx: DashboardContext, alert: IWidgetAlert): Promise<IWidgetAlert> {
     const { backend, workspace } = ctx;

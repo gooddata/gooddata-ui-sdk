@@ -1,10 +1,11 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
-import { Paging, IPagingProps } from "../Paging";
+import { Paging, IPagingProps } from "../Paging.js";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
 
 describe("Paging", () => {
     function renderComponent(customProps: Partial<IPagingProps> = {}) {
@@ -27,7 +28,7 @@ describe("Paging", () => {
     });
 
     it("should call showNextPage", async () => {
-        const showNextPage = jest.fn();
+        const showNextPage = vi.fn();
         renderComponent({ showNextPage });
         fireEvent.click(screen.getAllByRole("button")[1]);
         expect(showNextPage).toHaveBeenCalledTimes(1);

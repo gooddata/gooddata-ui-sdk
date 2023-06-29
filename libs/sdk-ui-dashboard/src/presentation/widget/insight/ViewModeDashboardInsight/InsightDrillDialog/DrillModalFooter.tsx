@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import DrillModalExportOptions from "./DrillModalExportOptions";
+import DrillModalExportOptions from "./DrillModalExportOptions.js";
 
 export interface IDrillModalFooterProps {
     exportAvailable: boolean;

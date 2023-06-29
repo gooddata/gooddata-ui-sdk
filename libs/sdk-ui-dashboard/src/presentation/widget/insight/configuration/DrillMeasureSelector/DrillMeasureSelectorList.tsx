@@ -2,7 +2,7 @@
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 import React from "react";
 
-import DrillMeasureSelectorItem from "./DrillMeasureSelectorItem";
+import DrillMeasureSelectorItem from "./DrillMeasureSelectorItem.js";
 
 export interface IDrillMeasureSelectorListProps {
     supportedItems: IAvailableDrillTargetMeasure[];

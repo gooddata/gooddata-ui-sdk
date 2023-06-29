@@ -1,6 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
-import { DistinctQuestion, prompt } from "inquirer";
-import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants";
+import pkg, { DistinctQuestion } from "inquirer";
+const { prompt } = pkg;
+
+import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants.js";
 import * as path from "path";
 import * as fs from "fs";
 

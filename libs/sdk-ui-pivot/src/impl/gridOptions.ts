@@ -4,14 +4,14 @@ import {
     TableAgGridCallbacks,
     TableConfigAccessors,
     TableMenuCallbacks,
-} from "./privateTypes";
-import { ICommonHeaderParams } from "./structure/headers/HeaderCell";
-import { cellClassFactory } from "./cell/cellClass";
-import ColumnHeader from "./structure/headers/ColumnHeader";
-import { MIN_WIDTH } from "./resizing/columnSizing";
-import { headerClassFactory } from "./structure/colDefHeaderClass";
-import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader";
-import { onCellClickedFactory } from "./cell/onCellClick";
+} from "./privateTypes.js";
+import { ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
+import { cellClassFactory } from "./cell/cellClass.js";
+import ColumnHeader from "./structure/headers/ColumnHeader.js";
+import { MIN_WIDTH } from "./resizing/columnSizing.js";
+import { headerClassFactory } from "./structure/colDefHeaderClass.js";
+import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader.js";
+import { onCellClickedFactory } from "./cell/onCellClick.js";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     DEFAULT_AUTOSIZE_PADDING,
@@ -20,16 +20,16 @@ import {
     COLUMN_TOTAL,
     COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
-} from "./base/constants";
+} from "./base/constants.js";
 import {
     columnAttributeTemplate,
     measureColumnTemplate,
     rowAttributeTemplate,
     totalSubTotalColumnTemplate,
-} from "./structure/colDefTemplates";
-import { TableFacade } from "./tableFacade";
-import { ICorePivotTableProps } from "../publicTypes";
-import { createLoadingRenderer } from "./data/loadingRenderer";
+} from "./structure/colDefTemplates.js";
+import { TableFacade } from "./tableFacade.js";
+import { ICorePivotTableProps } from "../publicTypes.js";
+import { createLoadingRenderer } from "./data/loadingRenderer.js";
 
 export function createGridOptions(
     table: TableFacade,

@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
-import { CustomFilterBarComponent, HiddenFilterBar } from "../../presentation";
-import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
+import { CustomFilterBarComponent, HiddenFilterBar } from "../../presentation/index.js";
+import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 interface IFilterBarCustomizerState {
     setRenderingMode(mode: FilterBarRenderingMode): void;

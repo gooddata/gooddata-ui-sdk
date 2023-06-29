@@ -5,7 +5,7 @@ import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import { DashboardAccessibilityLimitation } from "./types";
+import { DashboardAccessibilityLimitation } from "./types.js";
 
 const tooltipAlignPoints = [
     { align: "cl cr", offset: { x: 0, y: -2 } },

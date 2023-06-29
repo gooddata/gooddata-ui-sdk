@@ -17,8 +17,8 @@ import {
     IDashboardAttributeFilterParent,
     DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
-import { IDashboardCommand } from "./base";
-import { IDashboardFilter } from "../../types";
+import { IDashboardCommand } from "./base.js";
+import { IDashboardFilter } from "../../types.js";
 
 /**
  * Payload type for {@link ChangeDateFilterSelection} command.

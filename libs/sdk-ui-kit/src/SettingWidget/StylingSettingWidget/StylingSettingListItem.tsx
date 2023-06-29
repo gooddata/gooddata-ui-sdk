@@ -5,13 +5,13 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import { ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
-import { ShortenedText } from "../../ShortenedText";
-import { ColorPreview, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
-import { IOnOpenedChangeParams, Menu } from "../../Menu";
-import { Item, ItemsWrapper, Separator } from "../../List";
-import { Button } from "../../Button";
-import { Bubble, BubbleHoverTrigger } from "../../Bubble";
-import noop from "lodash/noop";
+import { ShortenedText } from "../../ShortenedText/index.js";
+import { ColorPreview, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
+import { IOnOpenedChangeParams, Menu } from "../../Menu/index.js";
+import { Item, ItemsWrapper, Separator } from "../../List/index.js";
+import { Button } from "../../Button/index.js";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
+import noop from "lodash/noop.js";
 
 interface IStylingSettingListItemProps<T> {
     item: IStylingPickerItem<T>;

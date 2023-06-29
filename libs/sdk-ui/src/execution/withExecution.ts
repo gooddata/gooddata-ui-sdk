@@ -5,8 +5,8 @@ import {
     IWithLoadingEvents,
     WithLoadingResult,
     DataViewWindow,
-} from "./withExecutionLoading";
-import { DataViewFacade } from "../base";
+} from "./withExecutionLoading.js";
+import { DataViewFacade } from "../base/index.js";
 
 /**
  * Configuration for the withExecution HOC. All configuration parameters can be either actual parameter values

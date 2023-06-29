@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import isArray from "lodash/isArray";
+import isArray from "lodash/isArray.js";
 import {
     IPlaceholder,
     PlaceholderValue,
@@ -9,8 +9,8 @@ import {
     IComposedPlaceholder,
     PlaceholdersResolvedValues,
     isComposedPlaceholder,
-} from "./base";
-import { PlaceholdersState } from "./context";
+} from "./base.js";
+import { PlaceholdersState } from "./context.js";
 
 /**
  * Set placeholder value to the context.

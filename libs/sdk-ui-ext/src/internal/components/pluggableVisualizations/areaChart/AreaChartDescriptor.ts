@@ -7,15 +7,15 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableAreaChart } from "./PluggableAreaChart";
-import { BigChartDescriptor } from "../BigChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableAreaChart } from "./PluggableAreaChart.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
     addIntersectionFiltersToInsight,
-} from "../drillDownUtil";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
+} from "../drillDownUtil.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     filtersInsightConversion,
     getInsightToPropsConverter,
@@ -26,8 +26,8 @@ import {
     sortsInsightConversion,
     localeInsightConversion,
     executionConfigInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

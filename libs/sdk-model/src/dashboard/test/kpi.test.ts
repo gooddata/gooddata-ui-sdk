@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isKpiWithComparison, isKpiWithoutComparison } from "../kpi";
-import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures";
+import { describe, expect, it } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isKpiWithComparison, isKpiWithoutComparison } from "../kpi.js";
+import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures.js";
 
 describe("kpi type guards", () => {
     describe("isKpiWithComparison", () => {

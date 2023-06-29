@@ -1,13 +1,13 @@
 // (C) 2022 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import { toId } from "@componentdriven/csf";
 
 // This is the only place that should be calling the storybook version of the storiesOf function
 // eslint-disable-next-line no-restricted-imports
 import { storiesOf as storiesOfInternal } from "@storybook/react";
 
-import { IBackstopScenarioConfig } from "./backstopScenario";
-import { wrapForBackstop } from "./backstopWrapper";
+import { IBackstopScenarioConfig } from "./backstopScenario.js";
+import { wrapForBackstop } from "./backstopWrapper.js";
 
 interface ISingleScreenshotConfig {
     screenshot?: IBackstopScenarioConfig | true;

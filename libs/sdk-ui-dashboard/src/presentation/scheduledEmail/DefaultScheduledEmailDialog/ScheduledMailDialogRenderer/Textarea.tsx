@@ -2,7 +2,7 @@
 import * as React from "react";
 import cx from "classnames";
 
-import { isMobileView } from "../utils/responsive";
+import { isMobileView } from "../utils/responsive.js";
 interface ITextareaOwnProps {
     className: string;
     hasError: boolean;

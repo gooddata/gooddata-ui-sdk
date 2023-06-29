@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { IAxisNameConfig, IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { CustomizedScenario, UnboundVisProps } from "../../../src";
+import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 
 function getConfig(nameConfig: IAxisNameConfig): IChartConfig {
     const { visible = true, position = "middle" } = nameConfig;

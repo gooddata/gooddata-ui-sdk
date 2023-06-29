@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`waterfallChartsSeries should render the series correctly when one metric 1`] = `
-Array [
-  Object {
+exports[`waterfallChartsSeries > should render the series correctly when one metric 1`] = `
+[
+  {
     "color": "rgb(229,77,66)",
     "connectNulls": true,
-    "data": Array [
-      Object {
+    "data": [
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -23,13 +23,13 @@ Array [
 ]
 `;
 
-exports[`waterfallChartsSeries should render the series correctly when one metric and view by 1`] = `
-Array [
-  Object {
+exports[`waterfallChartsSeries > should render the series correctly when one metric and view by 1`] = `
+[
+  {
     "color": "rgb(229,77,66)",
     "connectNulls": true,
-    "data": Array [
-      Object {
+    "data": [
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -37,7 +37,7 @@ Array [
         "name": "Interest",
         "y": 18447266.14,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -45,7 +45,7 @@ Array [
         "name": "Discovery",
         "y": 4249027.88,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -53,7 +53,7 @@ Array [
         "name": "Short List",
         "y": 5612062.6,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -61,7 +61,7 @@ Array [
         "name": "Risk Assessment",
         "y": 2606293.46,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -69,7 +69,7 @@ Array [
         "name": "Conviction",
         "y": 3067466.12,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -77,7 +77,7 @@ Array [
         "name": "Negotiation",
         "y": 1862015.73,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -85,7 +85,7 @@ Array [
         "name": "Closed Won",
         "y": 38310753.45,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0.00",
@@ -102,13 +102,13 @@ Array [
 ]
 `;
 
-exports[`waterfallChartsSeries should render the series correctly when only metrics 1`] = `
-Array [
-  Object {
+exports[`waterfallChartsSeries > should render the series correctly when only metrics 1`] = `
+[
+  {
     "color": "rgb(229,77,66)",
     "connectNulls": true,
-    "data": Array [
-      Object {
+    "data": [
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0",
@@ -116,7 +116,7 @@ Array [
         "name": "Sum Velocity",
         "y": 452518,
       },
-      Object {
+      {
         "borderColor": "rgb(0,193,141)",
         "color": "rgb(0,193,141)",
         "format": "$#,##0",
@@ -124,7 +124,7 @@ Array [
         "name": "Sum Values",
         "y": 257403,
       },
-      Object {
+      {
         "borderColor": "rgb(229,77,66)",
         "color": "rgb(229,77,66)",
         "format": "$#,##0",
@@ -132,7 +132,7 @@ Array [
         "name": "Negative Sum Probability",
         "y": -175819.7,
       },
-      Object {
+      {
         "borderColor": "rgb(229,77,66)",
         "color": "rgb(229,77,66)",
         "format": "$#,##0",

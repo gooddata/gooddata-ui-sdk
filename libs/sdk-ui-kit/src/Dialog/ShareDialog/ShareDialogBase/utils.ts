@@ -17,10 +17,10 @@ import {
     isGranteeGroup,
     isGranteeGroupAll,
     isGranularGranteeGroup,
-} from "./types";
-import differenceWith from "lodash/differenceWith";
-import partition from "lodash/partition";
-import { CurrentUserPermissions } from "../types";
+} from "./types.js";
+import differenceWith from "lodash/differenceWith.js";
+import partition from "lodash/partition.js";
+import { CurrentUserPermissions } from "../types.js";
 
 /**
  * @internal

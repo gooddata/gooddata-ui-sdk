@@ -20,22 +20,22 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
-import { TigerExecution } from "./execution/executionFactory";
-import { TigerWorkspaceCatalogFactory } from "./catalog/factory";
-import { TigerWorkspaceDataSets } from "./datasets";
-import { TigerAuthenticatedCallGuard } from "../../types";
-import { TigerWorkspaceAttributes } from "./attributes";
-import { TigerWorkspaceSettings } from "./settings";
-import { TigerWorkspacePermissionsFactory } from "./permissions";
-import { TigerWorkspaceStyling } from "./styling";
-import { TigerWorkspaceInsights } from "./insights";
-import { TigerWorkspaceDashboards } from "./dashboards";
-import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
-import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter";
-import { TigerWorkspaceMeasures } from "./measures";
-import { TigerWorkspaceFacts } from "./facts";
-import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
-import { TigerWorkspaceAccessControlService } from "./accessControl";
+import { TigerExecution } from "./execution/executionFactory.js";
+import { TigerWorkspaceCatalogFactory } from "./catalog/factory.js";
+import { TigerWorkspaceDataSets } from "./datasets/index.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { TigerWorkspaceAttributes } from "./attributes/index.js";
+import { TigerWorkspaceSettings } from "./settings/index.js";
+import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
+import { TigerWorkspaceStyling } from "./styling/index.js";
+import { TigerWorkspaceInsights } from "./insights/index.js";
+import { TigerWorkspaceDashboards } from "./dashboards/index.js";
+import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
+import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
+import { TigerWorkspaceMeasures } from "./measures/index.js";
+import { TigerWorkspaceFacts } from "./facts/index.js";
+import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
+import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(

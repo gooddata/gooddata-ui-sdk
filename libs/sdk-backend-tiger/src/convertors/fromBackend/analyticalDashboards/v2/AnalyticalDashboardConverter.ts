@@ -22,13 +22,13 @@ import {
     IDashboardPlugin,
     IDashboardPluginLink,
 } from "@gooddata/sdk-model";
-import updateWith from "lodash/updateWith";
-import { cloneWithSanitizedIds } from "../../IdSanitization";
-import { isInheritedObject } from "../../ObjectInheritance";
-import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
-import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
-import { getShareStatus, stripQueryParams } from "../../utils";
-import { sanitizeSelectionMode } from "../common/singleSelectionFilter";
+import updateWith from "lodash/updateWith.js";
+import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { isInheritedObject } from "../../ObjectInheritance.js";
+import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
+import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
+import { getShareStatus, stripQueryParams } from "../../utils.js";
+import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {

@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import range from "lodash/range";
-import { IMessageTranslator } from "../utils/Translations/Translators";
-import { granularityIntlCodes } from "../constants/i18n";
-import { getSelectableItems } from "../Select/utils";
-import { DynamicSelectItem, DynamicSelectOption } from "./types";
+import range from "lodash/range.js";
+import { IMessageTranslator } from "../utils/Translations/Translators.js";
+import { granularityIntlCodes } from "../constants/i18n.js";
+import { getSelectableItems } from "../Select/utils.js";
+import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 export const MINUTE: DateFilterGranularity = "GDC.time.minute";
 export const HOUR: DateFilterGranularity = "GDC.time.hour";

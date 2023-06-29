@@ -7,12 +7,12 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableHeatmap } from "./PluggableHeatmap";
-import { BigChartDescriptor } from "../BigChartDescriptor";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableHeatmap } from "./PluggableHeatmap.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -22,8 +22,8 @@ import {
     singleAttributeBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

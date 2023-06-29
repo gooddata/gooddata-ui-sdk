@@ -2,13 +2,13 @@
 import React from "react";
 
 import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
-import { ParentFiltersListItem } from "./ParentFiltersListItem";
+import { ParentFiltersListItem } from "./ParentFiltersListItem.js";
 import {
     useDashboardSelector,
     selectSupportsElementsQueryParentFiltering,
     IDashboardAttributeFilterParentItem,
     IConnectingAttribute,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };

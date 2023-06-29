@@ -2,8 +2,8 @@
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const FunnelChartWithMeasureAndViewBy = {
     measures: [ReferenceMd.Amount],

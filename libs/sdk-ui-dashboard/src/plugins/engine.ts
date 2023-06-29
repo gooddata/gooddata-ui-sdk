@@ -1,13 +1,13 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IDashboardPluginContract_V1 } from "./plugin";
-import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation";
+import { IDashboardPluginContract_V1 } from "./plugin.js";
+import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation/index.js";
 import React, { ComponentType } from "react";
-import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder";
-import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling";
-import { pluginDebugStr } from "./customizationApis/pluginUtils";
-import { DashboardContext } from "../model";
-import { LIB_VERSION } from "../__version";
+import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder.js";
+import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling.js";
+import { pluginDebugStr } from "./customizationApis/pluginUtils.js";
+import { DashboardContext } from "../model/index.js";
+import { LIB_VERSION } from "../__version.js";
 
 /**
  * Dashboard Engine encapsulates a particular build of the {@link Dashboard} component and provides

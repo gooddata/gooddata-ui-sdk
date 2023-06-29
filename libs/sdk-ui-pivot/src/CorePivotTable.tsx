@@ -28,28 +28,28 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { getUpdatedColumnOrRowTotals } from "./impl/structure/headers/aggregationsMenuHelper";
-import { getScrollbarWidth, sanitizeDefTotals, getTotalsForColumnsBucket } from "./impl/utils";
-import { IScrollPosition } from "./impl/stickyRowHandler";
+import { getUpdatedColumnOrRowTotals } from "./impl/structure/headers/aggregationsMenuHelper.js";
+import { getScrollbarWidth, sanitizeDefTotals, getTotalsForColumnsBucket } from "./impl/utils.js";
+import { IScrollPosition } from "./impl/stickyRowHandler.js";
 
-import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
-import { ColumnWidthItem } from "./columnWidths";
-import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
-import debounce from "lodash/debounce";
+import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes.js";
+import { ColumnWidthItem } from "./columnWidths.js";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
+import debounce from "lodash/debounce.js";
 import { invariant } from "ts-invariant";
-import { isManualResizing, scrollBarExists } from "./impl/base/agUtils";
+import { isManualResizing, scrollBarExists } from "./impl/base/agUtils.js";
 import {
     ColumnResizingConfig,
     IMenuAggregationClickConfig,
     TableAgGridCallbacks,
     TableMethods,
-} from "./impl/privateTypes";
-import { createGridOptions } from "./impl/gridOptions";
-import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
-import { ICorePivotTableState, InternalTableState } from "./tableState";
-import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing";
-import cloneDeep from "lodash/cloneDeep";
+} from "./impl/privateTypes.js";
+import { createGridOptions } from "./impl/gridOptions.js";
+import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
+import { ICorePivotTableState, InternalTableState } from "./tableState.js";
+import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;

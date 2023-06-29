@@ -1,12 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
-import { legendCustomizer } from "../_infra/legendVariants";
-import { TreemapWithMeasureViewByAndSegmentBy } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+import { scenariosFor } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
 
 const legendScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

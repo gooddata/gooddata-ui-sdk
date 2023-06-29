@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import { HighchartsOptions } from "../../../highcharts/lib";
-import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
-import { IChartConfig } from "../../../interfaces";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
-import { getAxesCounts } from "../_util/common";
+import cloneDeep from "lodash/cloneDeep.js";
+import { HighchartsOptions } from "../../lib/index.js";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
+import { getAxesCounts } from "../_util/common.js";
 
 const BAR_TEMPLATE = {
     chart: {

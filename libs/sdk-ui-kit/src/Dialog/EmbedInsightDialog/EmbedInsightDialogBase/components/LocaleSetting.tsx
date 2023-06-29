@@ -3,12 +3,12 @@ import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { ILocale, LOCALES } from "@gooddata/sdk-ui";
 
-import { DEFAULT_LOCALE } from "../types";
-import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown";
-import { SingleSelectListItem } from "../../../../List";
-import { dialogChangeMessageLabels } from "../../../../locales";
+import { DEFAULT_LOCALE } from "../types.js";
+import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";
+import { SingleSelectListItem } from "../../../../List/index.js";
+import { dialogChangeMessageLabels } from "../../../../locales.js";
 
-import { ToggleSwitch } from "./ToggleSwitch";
+import { ToggleSwitch } from "./ToggleSwitch.js";
 
 /**
  * @internal

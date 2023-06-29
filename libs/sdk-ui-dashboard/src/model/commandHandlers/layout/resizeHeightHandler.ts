@@ -3,18 +3,18 @@
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
-import { ResizeHeight } from "../../commands/layout";
-import { invalidArgumentsProvided } from "../../events/general";
+import { ResizeHeight } from "../../commands/layout.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     DashboardLayoutSectionItemsHeightResized,
     layoutSectionItemsHeightResized,
-} from "../../events/layout";
-import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors";
-import { layoutActions } from "../../store/layout";
-import { selectLayout } from "../../store/layout/layoutSelectors";
-import { DashboardContext } from "../../types/commonTypes";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
+} from "../../events/layout.js";
+import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,

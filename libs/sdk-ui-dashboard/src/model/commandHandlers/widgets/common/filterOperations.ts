@@ -10,10 +10,10 @@ import {
     isInsightWidget,
     isKpiWidget,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { DashboardContext } from "../../../types/commonTypes";
-import { IDashboardCommand } from "../../../commands";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { IDashboardCommand } from "../../../commands/index.js";
 import {
     FilterOpEnableDateFilter,
     FilterOpIgnoreAttributeFilter,
@@ -21,19 +21,19 @@ import {
     FilterOpReplaceAttributeIgnores,
     FilterOpUnignoreAttributeFilter,
     WidgetFilterOperation,
-} from "../../../types/widgetTypes";
+} from "../../../types/widgetTypes.js";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
-import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors";
-import { query } from "../../../store/_infra/queryCall";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
+import { query } from "../../../store/_infra/queryCall.js";
 import {
     InsightDateDatasets,
     insightSelectDateDataset,
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
-} from "../../../queries";
+} from "../../../queries/index.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);

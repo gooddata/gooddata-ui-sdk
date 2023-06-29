@@ -1,46 +1,46 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createTableDescriptor correctly creates colDefs for table with just column attribute 1`] = `
-Array [
-  Object {
-    "children": Array [
-      Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with just column attribute 1`] = `
+[
+  {
+    "children": [
+      {
         "colId": "cg_0",
         "headerName": "CompuSci",
         "headerTooltip": "CompuSci",
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
-      Object {
+      {
         "colId": "cg_1",
         "headerName": "Educationly",
         "headerTooltip": "Educationly",
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
-      Object {
+      {
         "colId": "cg_2",
         "headerName": "Explorer",
         "headerTooltip": "Explorer",
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
-      Object {
+      {
         "colId": "cg_3",
         "headerName": "Grammar Plus",
         "headerTooltip": "Grammar Plus",
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
-      Object {
+      {
         "colId": "cg_4",
         "headerName": "PhoenixSoft",
         "headerTooltip": "PhoenixSoft",
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
-      Object {
+      {
         "colId": "cg_5",
         "headerName": "TouchAll",
         "headerTooltip": "TouchAll",
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
-      Object {
+      {
         "colId": "cg_6",
         "headerName": "WonderKid",
         "headerTooltip": "WonderKid",
@@ -54,9 +54,9 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with just row attribute 1`] = `
-Array [
-  Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with just row attribute 1`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -67,9 +67,9 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with just two measures 1`] = `
-Array [
-  Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with just two measures 1`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "c_0",
     "field": "c_0",
@@ -77,7 +77,7 @@ Array [
     "headerTooltip": "Amount",
     "type": "MEASURE_COLUMN",
   },
-  Object {
+  {
     "colId": "c_1",
     "field": "c_1",
     "headerName": "Won",
@@ -87,13 +87,13 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with single attribute pivot 1`] = `
-Array [
-  Object {
-    "children": Array [
-      Object {
-        "children": Array [
-          Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with single attribute pivot 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
             "cellRenderer": "loadingRenderer",
             "colId": "c_0",
             "field": "c_0",
@@ -106,9 +106,9 @@ Array [
         "headerName": "East Coast",
         "headerTooltip": "East Coast",
       },
-      Object {
-        "children": Array [
-          Object {
+      {
+        "children": [
+          {
             "colId": "c_1",
             "field": "c_1",
             "headerName": "Amount",
@@ -128,9 +128,9 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with single row and column pivot 1`] = `
-Array [
-  Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with single row and column pivot 1`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -138,11 +138,11 @@ Array [
     "headerTooltip": "Product",
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
-  Object {
-    "children": Array [
-      Object {
-        "children": Array [
-          Object {
+  {
+    "children": [
+      {
+        "children": [
+          {
             "colId": "c_0",
             "field": "c_0",
             "headerName": "Amount",
@@ -154,9 +154,9 @@ Array [
         "headerName": "East Coast",
         "headerTooltip": "East Coast",
       },
-      Object {
-        "children": Array [
-          Object {
+      {
+        "children": [
+          {
             "colId": "c_1",
             "field": "c_1",
             "headerName": "Amount",
@@ -176,9 +176,9 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with two attribute pivot 1`] = `
-Array [
-  Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with two attribute pivot 1`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -186,20 +186,20 @@ Array [
     "headerTooltip": "Product",
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
-  Object {
+  {
     "colId": "r_1",
     "field": "r_1",
     "headerName": "Department",
     "headerTooltip": "Department",
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
-  Object {
-    "children": Array [
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_0",
                 "field": "c_0",
                 "headerName": "Amount",
@@ -211,9 +211,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_1",
                 "field": "c_1",
                 "headerName": "Amount",
@@ -230,11 +230,11 @@ Array [
         "headerName": "Interest",
         "headerTooltip": "Interest",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_2",
                 "field": "c_2",
                 "headerName": "Amount",
@@ -246,9 +246,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_3",
                 "field": "c_3",
                 "headerName": "Amount",
@@ -265,11 +265,11 @@ Array [
         "headerName": "Discovery",
         "headerTooltip": "Discovery",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_4",
                 "field": "c_4",
                 "headerName": "Amount",
@@ -281,9 +281,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_5",
                 "field": "c_5",
                 "headerName": "Amount",
@@ -300,11 +300,11 @@ Array [
         "headerName": "Short List",
         "headerTooltip": "Short List",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_6",
                 "field": "c_6",
                 "headerName": "Amount",
@@ -316,9 +316,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_7",
                 "field": "c_7",
                 "headerName": "Amount",
@@ -335,11 +335,11 @@ Array [
         "headerName": "Risk Assessment",
         "headerTooltip": "Risk Assessment",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_8",
                 "field": "c_8",
                 "headerName": "Amount",
@@ -351,9 +351,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_9",
                 "field": "c_9",
                 "headerName": "Amount",
@@ -370,11 +370,11 @@ Array [
         "headerName": "Conviction",
         "headerTooltip": "Conviction",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_10",
                 "field": "c_10",
                 "headerName": "Amount",
@@ -386,9 +386,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_11",
                 "field": "c_11",
                 "headerName": "Amount",
@@ -405,11 +405,11 @@ Array [
         "headerName": "Negotiation",
         "headerTooltip": "Negotiation",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_12",
                 "field": "c_12",
                 "headerName": "Amount",
@@ -421,9 +421,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_13",
                 "field": "c_13",
                 "headerName": "Amount",
@@ -440,11 +440,11 @@ Array [
         "headerName": "Closed Won",
         "headerTooltip": "Closed Won",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_14",
                 "field": "c_14",
                 "headerName": "Amount",
@@ -456,9 +456,9 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_15",
                 "field": "c_15",
                 "headerName": "Amount",
@@ -483,13 +483,13 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with two measures and single attribute pivot 1`] = `
-Array [
-  Object {
-    "children": Array [
-      Object {
-        "children": Array [
-          Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with two measures and single attribute pivot 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
             "cellRenderer": "loadingRenderer",
             "colId": "c_0",
             "field": "c_0",
@@ -497,7 +497,7 @@ Array [
             "headerTooltip": "Amount",
             "type": "MEASURE_COLUMN",
           },
-          Object {
+          {
             "colId": "c_1",
             "field": "c_1",
             "headerName": "Won",
@@ -509,16 +509,16 @@ Array [
         "headerName": "East Coast",
         "headerTooltip": "East Coast",
       },
-      Object {
-        "children": Array [
-          Object {
+      {
+        "children": [
+          {
             "colId": "c_2",
             "field": "c_2",
             "headerName": "Amount",
             "headerTooltip": "Amount",
             "type": "MEASURE_COLUMN",
           },
-          Object {
+          {
             "colId": "c_3",
             "field": "c_3",
             "headerName": "Won",
@@ -538,9 +538,9 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table with two measures, rows and cols and totals and subtotals 1`] = `
-Array [
-  Object {
+exports[`createTableDescriptor > correctly creates colDefs for table with two measures, rows and cols and totals and subtotals 1`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -548,27 +548,27 @@ Array [
     "headerTooltip": "Product",
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
-  Object {
+  {
     "colId": "r_1",
     "field": "r_1",
     "headerName": "Department",
     "headerTooltip": "Department",
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
-  Object {
-    "children": Array [
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_0",
                 "field": "c_0",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
                 "type": "MEASURE_COLUMN",
               },
-              Object {
+              {
                 "colId": "c_1",
                 "field": "c_1",
                 "headerName": "Won",
@@ -580,16 +580,16 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_2",
                 "field": "c_2",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
                 "type": "MEASURE_COLUMN",
               },
-              Object {
+              {
                 "colId": "c_3",
                 "field": "c_3",
                 "headerName": "Won",
@@ -606,18 +606,18 @@ Array [
         "headerName": "Exclude",
         "headerTooltip": "Exclude",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "colId": "c_4",
                 "field": "c_4",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
                 "type": "MEASURE_COLUMN",
               },
-              Object {
+              {
                 "colId": "c_5",
                 "field": "c_5",
                 "headerName": "Won",
@@ -629,16 +629,16 @@ Array [
             "headerName": "East Coast",
             "headerTooltip": "East Coast",
           },
-          Object {
-            "children": Array [
-              Object {
+          {
+            "children": [
+              {
                 "colId": "c_6",
                 "field": "c_6",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
                 "type": "MEASURE_COLUMN",
               },
-              Object {
+              {
                 "colId": "c_7",
                 "field": "c_7",
                 "headerName": "Won",
@@ -663,9 +663,9 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly creates colDefs for table without pivoting 1`] = `
-Array [
-  Object {
+exports[`createTableDescriptor > correctly creates colDefs for table without pivoting 1`] = `
+[
+  {
     "cellRenderer": "loadingRenderer",
     "colId": "r_0",
     "field": "r_0",
@@ -673,7 +673,7 @@ Array [
     "headerTooltip": "Product",
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
-  Object {
+  {
     "colId": "c_0",
     "field": "c_0",
     "headerName": "Amount",
@@ -683,75 +683,60 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with just column attribute 1`] = `
-Array [
-  Array [
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with just column attribute 1`] = `
+[
+  [
     0,
     0,
   ],
-  Array [
+  [
     0,
     1,
   ],
-  Array [
+  [
     0,
     2,
   ],
-  Array [
+  [
     0,
     3,
   ],
-  Array [
+  [
     0,
     4,
   ],
-  Array [
+  [
     0,
     5,
   ],
-  Array [
+  [
     0,
     6,
   ],
 ]
 `;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with just row attribute 1`] = `Array []`;
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with just row attribute 1`] = `[]`;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with just two measures 1`] = `
-Array [
-  Array [
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with just two measures 1`] = `
+[
+  [
     0,
   ],
-  Array [
+  [
     1,
   ],
 ]
 `;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with single attribute pivot 1`] = `
-Array [
-  Array [
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with single attribute pivot 1`] = `
+[
+  [
     0,
     0,
     0,
   ],
-  Array [
-    0,
-    1,
-    0,
-  ],
-]
-`;
-
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with single row and column pivot 1`] = `
-Array [
-  Array [
-    0,
-    0,
-    0,
-  ],
-  Array [
+  [
     0,
     1,
     0,
@@ -759,99 +744,114 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with two attribute pivot 1`] = `
-Array [
-  Array [
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with single row and column pivot 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with two attribute pivot 1`] = `
+[
+  [
     0,
     0,
     0,
     0,
   ],
-  Array [
+  [
     0,
     0,
     1,
     0,
   ],
-  Array [
+  [
     0,
     1,
     0,
     0,
   ],
-  Array [
+  [
     0,
     1,
     1,
     0,
   ],
-  Array [
+  [
     0,
     2,
     0,
     0,
   ],
-  Array [
+  [
     0,
     2,
     1,
     0,
   ],
-  Array [
+  [
     0,
     3,
     0,
     0,
   ],
-  Array [
+  [
     0,
     3,
     1,
     0,
   ],
-  Array [
+  [
     0,
     4,
     0,
     0,
   ],
-  Array [
+  [
     0,
     4,
     1,
     0,
   ],
-  Array [
+  [
     0,
     5,
     0,
     0,
   ],
-  Array [
+  [
     0,
     5,
     1,
     0,
   ],
-  Array [
+  [
     0,
     6,
     0,
     0,
   ],
-  Array [
+  [
     0,
     6,
     1,
     0,
   ],
-  Array [
+  [
     0,
     7,
     0,
     0,
   ],
-  Array [
+  [
     0,
     7,
     1,
@@ -860,87 +860,87 @@ Array [
 ]
 `;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with two measures and single attribute pivot 1`] = `
-Array [
-  Array [
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with two measures and single attribute pivot 1`] = `
+[
+  [
     0,
     0,
     0,
   ],
-  Array [
+  [
     0,
     0,
     1,
   ],
-  Array [
+  [
     0,
     1,
     0,
   ],
-  Array [
+  [
     0,
-    1,
-    1,
-  ],
-]
-`;
-
-exports[`createTableDescriptor correctly populates fullIndexPaths for table with two measures, rows and cols and totals and subtotals 1`] = `
-Array [
-  Array [
-    0,
-    0,
-    0,
-    0,
-  ],
-  Array [
-    0,
-    0,
-    0,
-    1,
-  ],
-  Array [
-    0,
-    0,
-    1,
-    0,
-  ],
-  Array [
-    0,
-    0,
-    1,
-    1,
-  ],
-  Array [
-    0,
-    1,
-    0,
-    0,
-  ],
-  Array [
-    0,
-    1,
-    0,
-    1,
-  ],
-  Array [
-    0,
-    1,
-    1,
-    0,
-  ],
-  Array [
-    0,
-    1,
     1,
     1,
   ],
 ]
 `;
 
-exports[`createTableDescriptor correctly populates fullIndexPaths for table without pivoting 1`] = `
-Array [
-  Array [
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table with two measures, rows and cols and totals and subtotals 1`] = `
+[
+  [
+    0,
+    0,
+    0,
+    0,
+  ],
+  [
+    0,
+    0,
+    0,
+    1,
+  ],
+  [
+    0,
+    0,
+    1,
+    0,
+  ],
+  [
+    0,
+    0,
+    1,
+    1,
+  ],
+  [
+    0,
+    1,
+    0,
+    0,
+  ],
+  [
+    0,
+    1,
+    0,
+    1,
+  ],
+  [
+    0,
+    1,
+    1,
+    0,
+  ],
+  [
+    0,
+    1,
+    1,
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor > correctly populates fullIndexPaths for table without pivoting 1`] = `
+[
+  [
     0,
   ],
 ]

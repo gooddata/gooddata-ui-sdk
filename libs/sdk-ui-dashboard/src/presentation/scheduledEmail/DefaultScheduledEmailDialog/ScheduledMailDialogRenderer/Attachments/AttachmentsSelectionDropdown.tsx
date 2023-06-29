@@ -3,14 +3,14 @@
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import { Icon, InsightIcon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { IWidgetsSelection } from "../../interfaces";
-import { IInsightWidgetExtended } from "../../useScheduledEmail";
-import { ScheduleDropdown } from "./ScheduleDropdown";
+import { IWidgetsSelection } from "../../interfaces.js";
+import { IInsightWidgetExtended } from "../../useScheduledEmail.js";
+import { ScheduleDropdown } from "./ScheduleDropdown.js";
 
 export interface IAttachmentsSelectionDropdownProps {
     dashboardTitle: string;

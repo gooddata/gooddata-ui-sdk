@@ -43,10 +43,10 @@ import {
     isPositiveAttributeFilter,
     ITotal,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import cloneDeep from "lodash/cloneDeep";
-import cloneDeepWith from "lodash/cloneDeepWith";
-import keyBy from "lodash/keyBy";
+import { invariant } from "ts-invariant";
+import cloneDeep from "lodash/cloneDeep.js";
+import cloneDeepWith from "lodash/cloneDeepWith.js";
+import keyBy from "lodash/keyBy.js";
 
 /**
  * @beta

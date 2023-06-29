@@ -1,22 +1,23 @@
 // (C) 2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { SankeyChart } from "../SankeyChart";
+import { SankeyChart } from "../SankeyChart.js";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { CoreSankeyChart } from "../CoreSankeyChart";
+import { CoreSankeyChart } from "../CoreSankeyChart.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreSankeyChart", () => ({
-    CoreSankeyChart: jest.fn(() => null),
+vi.mock("../CoreSankeyChart", () => ({
+    CoreSankeyChart: vi.fn(() => null),
 }));
 
 describe("SankeyChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render with custom SDK", () => {

@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { useWidgetSelection } from "../../../model";
-import { CreationPanel } from "./CreationPanel";
-import { ISidebarProps } from "./types";
+import { useWidgetSelection } from "../../../model/index.js";
+import { CreationPanel } from "./CreationPanel.js";
+import { ISidebarProps } from "./types.js";
 
 /**
  * @internal

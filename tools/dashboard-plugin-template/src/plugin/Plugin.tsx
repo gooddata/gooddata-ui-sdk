@@ -10,7 +10,8 @@ import {
     newCustomWidget,
 } from "@gooddata/sdk-ui-dashboard";
 
-import entryPoint from "../plugin_entry";
+// this import will be renamed in plugin-toolkit
+import entryPoint from "../plugin_entry/index.js";
 
 import React from "react";
 

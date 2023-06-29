@@ -11,11 +11,11 @@ import {
     attributeElementsIsEmpty,
 } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
-import compact from "lodash/compact";
-import first from "lodash/first";
-import flow from "lodash/flow";
-import isEqual from "lodash/isEqual";
-import sortBy from "lodash/fp/sortBy";
+import compact from "lodash/compact.js";
+import first from "lodash/first.js";
+import flow from "lodash/flow.js";
+import isEqual from "lodash/isEqual.js";
+import sortBy from "lodash/fp/sortBy.js";
 
 import {
     ExtendedDashboardWidget,
@@ -27,8 +27,8 @@ import {
     selectIsInEditMode,
     useDashboardQueryProcessing,
     useDashboardSelector,
-} from "../../../model";
-import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef";
+} from "../../../model/index.js";
+import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 
 /**
  * Hook for obtaining the effective filters for a widget.

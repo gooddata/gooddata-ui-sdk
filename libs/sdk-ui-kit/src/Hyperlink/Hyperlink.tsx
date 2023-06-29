@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import noop from "lodash/noop";
-import isEmpty from "lodash/isEmpty";
+import noop from "lodash/noop.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @internal

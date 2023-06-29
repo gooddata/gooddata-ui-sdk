@@ -2,9 +2,9 @@
 import React, { useCallback } from "react";
 import { IInsight, IInsightWidget, insightTitle } from "@gooddata/sdk-model";
 
-import { DashboardItemHeadlineContainer } from "../../../presentationComponents";
-import { changeInsightWidgetHeader, useDashboardDispatch } from "../../../../model";
-import { EditableHeadline } from "../../common/EditableHeadline";
+import { DashboardItemHeadlineContainer } from "../../../presentationComponents/index.js";
+import { changeInsightWidgetHeader, useDashboardDispatch } from "../../../../model/index.js";
+import { EditableHeadline } from "../../common/EditableHeadline.js";
 
 const MAX_VISUALIZATION_TITLE_LENGTH = 200;
 

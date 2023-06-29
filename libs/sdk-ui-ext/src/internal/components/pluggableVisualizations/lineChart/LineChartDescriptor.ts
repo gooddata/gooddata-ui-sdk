@@ -7,15 +7,15 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableLineChart } from "./PluggableLineChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableLineChart } from "./PluggableLineChart.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
-} from "../drillDownUtil";
+} from "../drillDownUtil.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -25,8 +25,8 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

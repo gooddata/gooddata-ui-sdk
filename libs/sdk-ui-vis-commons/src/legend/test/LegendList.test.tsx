@@ -1,10 +1,11 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { ILegendListProps, LegendList } from "../LegendList";
-import noop from "lodash/noop";
+import { ILegendListProps, LegendList } from "../LegendList.js";
+import noop from "lodash/noop.js";
 import { withIntl } from "@gooddata/sdk-ui";
-import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers";
+import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers.js";
+import { describe, it, expect } from "vitest";
 
 describe("LegendList", () => {
     function renderComponent(customProps: Partial<ILegendListProps> = {}) {

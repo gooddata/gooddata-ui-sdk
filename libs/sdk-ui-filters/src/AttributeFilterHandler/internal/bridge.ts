@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
-import invariant from "ts-invariant";
-import compact from "lodash/compact";
+import { invariant } from "ts-invariant";
+import compact from "lodash/compact.js";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeElement,
@@ -40,7 +40,7 @@ import {
     OnLoadCustomElementsCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
-} from "../types";
+} from "../types/index.js";
 import {
     actions,
     AttributeFilterHandlerStore,
@@ -75,9 +75,9 @@ import {
     selectOffset,
     selectIsLoadElementsOptionsChanged,
     selectLimitingAttributeFiltersAttributes,
-} from "./redux";
-import { newAttributeFilterCallbacks } from "./callbacks";
-import { AttributeFilterHandlerConfig } from "./types";
+} from "./redux/index.js";
+import { newAttributeFilterCallbacks } from "./callbacks.js";
+import { AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

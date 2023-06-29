@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
 import * as path from "path";
-import { findFiles } from "../base/utils";
-import { logWarn } from "../cli/loggers";
-import { IRecording, isNonNullRecording } from "./common";
-import { ExecutionRecording } from "./execution";
-import { RecordingFiles } from "../interface";
+import { findFiles } from "../base/utils.js";
+import { logWarn } from "../cli/loggers.js";
+import { IRecording, isNonNullRecording } from "./common.js";
+import { ExecutionRecording } from "./execution.js";
+import { RecordingFiles } from "../interface.js";
 
 function loadRecording(recordingDefinition: string): IRecording | null {
     const directory = path.dirname(recordingDefinition);

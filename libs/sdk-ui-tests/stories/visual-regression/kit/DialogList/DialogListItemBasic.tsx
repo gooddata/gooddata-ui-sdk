@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
-import { BackstopConfig } from "../../../_infra/backstopScenario";
-import { wrapWithTheme } from "../../themeWrapper";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import { DialogListItemBasic, Icon } from "@gooddata/sdk-ui-kit";
 import { action } from "@storybook/addon-actions";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";

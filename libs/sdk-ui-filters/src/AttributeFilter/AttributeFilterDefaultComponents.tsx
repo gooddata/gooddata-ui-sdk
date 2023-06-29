@@ -1,22 +1,22 @@
 // (C) 2022-2023 GoodData Corporation
-import { IAttributeFilterBaseProps, IAttributeFilterCustomComponentProps } from "./types";
-import { AttributeFilterLoading } from "./Components/AttributeFilterLoading";
-import { AttributeFilterError } from "./Components/AttributeFilterError";
-import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton";
-import { AttributeFilterDropdownBody } from "./Components/Dropdown/AttributeFilterDropdownBody";
-import { AttributeFilterDropdownActions } from "./Components/Dropdown/AttributeFilterDropdownActions";
-import { AttributeFilterElementsSearchBar } from "./Components/ElementsSelect/AttributeFilterElementsSearchBar";
-import { AttributeFilterElementsSelect } from "./Components/ElementsSelect/AttributeFilterElementsSelect";
-import { AttributeFilterElementsSelectItem } from "./Components/ElementsSelect/AttributeFilterElementsSelectItem";
-import { AttributeFilterElementsSelectError } from "./Components/ElementsSelect/AttributeFilterElementsSelectError";
-import { AttributeFilterElementsSelectLoading } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading";
-import { AttributeFilterEmptyResult } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult";
-import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar";
-import { AttributeFilterElementsActions } from "./Components/ElementsSelect/AttributeFilterElementsActions";
-import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem";
-import { SingleSelectionAttributeFilterElementsSelectActions } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsActions";
-import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar";
-import { SingleSelectionAttributeFilterDropdownActions } from "./Components/Dropdown/SingleSelectionAttributeFilterDropdownActions";
+import { IAttributeFilterBaseProps, IAttributeFilterCustomComponentProps } from "./types.js";
+import { AttributeFilterLoading } from "./Components/AttributeFilterLoading.js";
+import { AttributeFilterError } from "./Components/AttributeFilterError.js";
+import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
+import { AttributeFilterDropdownBody } from "./Components/Dropdown/AttributeFilterDropdownBody.js";
+import { AttributeFilterDropdownActions } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
+import { AttributeFilterElementsSearchBar } from "./Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
+import { AttributeFilterElementsSelect } from "./Components/ElementsSelect/AttributeFilterElementsSelect.js";
+import { AttributeFilterElementsSelectItem } from "./Components/ElementsSelect/AttributeFilterElementsSelectItem.js";
+import { AttributeFilterElementsSelectError } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
+import { AttributeFilterElementsSelectLoading } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
+import { AttributeFilterEmptyResult } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
+import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
+import { AttributeFilterElementsActions } from "./Components/ElementsSelect/AttributeFilterElementsActions.js";
+import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
+import { SingleSelectionAttributeFilterElementsSelectActions } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsActions.js";
+import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
+import { SingleSelectionAttributeFilterDropdownActions } from "./Components/Dropdown/SingleSelectionAttributeFilterDropdownActions.js";
 
 /**
  * @internal

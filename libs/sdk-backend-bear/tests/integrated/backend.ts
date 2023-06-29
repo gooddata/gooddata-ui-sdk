@@ -6,9 +6,9 @@ import {
     IAnalyticalBackend,
     IAuthenticationProvider,
 } from "@gooddata/sdk-backend-spi";
-import bearFactory, { BearAuthProviderBase, FixedLoginAndPasswordAuthProvider } from "../../src";
+import bearFactory, { BearAuthProviderBase, FixedLoginAndPasswordAuthProvider } from "../../src/index.js";
 import { config } from "dotenv";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 let GlobalBackend: IAnalyticalBackend | undefined;
 

@@ -4,11 +4,11 @@ import {
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
-} from "../../../queries";
+} from "../../../queries/index.js";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import { query } from "../../../store/_infra/queryCall";
-import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap";
-import { invalidArgumentsProvided } from "../../../events/general";
+import { query } from "../../../store/_infra/queryCall.js";
+import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
     areObjRefsEqual,
     IInsight,
@@ -20,12 +20,12 @@ import {
     IInsightWidget,
     ICatalogDateDataset,
 } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../types/commonTypes";
+import { DashboardContext } from "../../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
-import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
-import isEmpty from "lodash/isEmpty";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
-import { IDashboardCommand } from "../../../commands";
+import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
+import isEmpty from "lodash/isEmpty.js";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { IDashboardCommand } from "../../../commands/index.js";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in

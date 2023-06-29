@@ -3,6 +3,7 @@
 import { checkTranslations } from "../usage/checkTranslations";
 import { UsageResult } from "../../data";
 import { LocalesStructure } from "../../schema/localization";
+import { describe, it, expect } from "vitest";
 
 describe("check translations", () => {
     it("valid, extracted and loaded are same", () => {

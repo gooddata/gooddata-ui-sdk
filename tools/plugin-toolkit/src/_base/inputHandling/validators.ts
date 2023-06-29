@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import url from "url";
-import includes from "lodash/includes";
-import { InputValidationError, TargetBackendType } from "../types";
+import includes from "lodash/includes.js";
+import { InputValidationError, TargetBackendType } from "../types.js";
 import axios, { AxiosError } from "axios";
 import {
     IAnalyticalBackend,
@@ -10,7 +10,7 @@ import {
     IDashboardWithReferences,
     IAnalyticalWorkspace,
 } from "@gooddata/sdk-backend-spi";
-import { convertToPluginEntrypoint, extractRootCause } from "../utils";
+import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";
 import { idRef, IDashboardPlugin } from "@gooddata/sdk-model";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;

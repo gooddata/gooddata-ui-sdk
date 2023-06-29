@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import { DateFilterRoute } from "./types";
+import { DateFilterRoute } from "./types.js";
 
 export const DateFilterHeader: React.FC<{
     children: any;

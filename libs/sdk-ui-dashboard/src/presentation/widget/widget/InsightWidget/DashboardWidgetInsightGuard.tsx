@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { useDashboardSelector, selectInsightsMap } from "../../../../model";
+import { useDashboardSelector, selectInsightsMap } from "../../../../model/index.js";
 
-import { IDefaultDashboardInsightWidgetProps } from "./types";
+import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 
 interface IDashboardWidgetInsightGuardProps extends Omit<IDefaultDashboardInsightWidgetProps, "insight"> {
     Component: React.ComponentType<IDefaultDashboardInsightWidgetProps>;

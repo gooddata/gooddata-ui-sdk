@@ -2,10 +2,10 @@
 import { XAxisTitleOptions, YAxisTitleOptions } from "highcharts";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IAxisNameConfig } from "../../../interfaces";
-import { IAxis, IChartOptions } from "../../typings/unsafe";
-import { isOneOfTypes } from "../_util/common";
-import { ROTATE_NEGATIVE_90_DEGREES, ALIGN_LEFT, ALIGN_RIGHT } from "../../constants/axisLabel";
+import { IAxisNameConfig } from "../../../interfaces/index.js";
+import { IAxis, IChartOptions } from "../../typings/unsafe.js";
+import { isOneOfTypes } from "../_util/common.js";
+import { ROTATE_NEGATIVE_90_DEGREES, ALIGN_LEFT, ALIGN_RIGHT } from "../../constants/axisLabel.js";
 
 type HighchartsAxisTitle = XAxisTitleOptions | YAxisTitleOptions;
 

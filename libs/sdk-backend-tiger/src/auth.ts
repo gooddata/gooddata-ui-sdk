@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken, IUserProfile } from "@gooddata/api-client-tiger";
 
-import { convertApiError } from "./utils/errorHandling";
+import { convertApiError } from "./utils/errorHandling.js";
 
 /**
  * Base for other IAuthenticationProvider implementations.

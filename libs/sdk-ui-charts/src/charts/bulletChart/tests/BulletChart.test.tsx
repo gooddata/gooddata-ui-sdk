@@ -1,22 +1,23 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { BulletChart } from "../BulletChart";
+import { BulletChart } from "../BulletChart.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { MeasureGroupIdentifier, newAttributeSort, newTwoDimensional } from "@gooddata/sdk-model";
-import { CoreBulletChart } from "../CoreBulletChart";
+import { CoreBulletChart } from "../CoreBulletChart.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreBulletChart", () => ({
-    CoreBulletChart: jest.fn(() => null),
+vi.mock("../CoreBulletChart", () => ({
+    CoreBulletChart: vi.fn(() => null),
 }));
 
 describe("BulletChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render bullet chart and create correct stacking dimensions", () => {

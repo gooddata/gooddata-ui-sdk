@@ -9,7 +9,7 @@ import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import {
     getLocalIdentifierOrDie,
     getValidDrillOriginAttributes,
-} from "../../../_staging/drills/drillingUtils";
+} from "../../../_staging/drills/drillingUtils.js";
 
 export function isDisplayFormRelevantToDrill(
     drillDefinition: InsightDrillDefinition,

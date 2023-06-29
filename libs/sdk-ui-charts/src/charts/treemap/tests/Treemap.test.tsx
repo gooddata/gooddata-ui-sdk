@@ -1,16 +1,17 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { Treemap } from "../Treemap";
-import { CoreTreemap } from "../CoreTreemap";
+import { Treemap } from "../Treemap.js";
+import { CoreTreemap } from "../CoreTreemap.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreTreemap", () => ({
-    CoreTreemap: jest.fn(() => null),
+vi.mock("../CoreTreemap", () => ({
+    CoreTreemap: vi.fn(() => null),
 }));
 
 describe("Treemap", () => {

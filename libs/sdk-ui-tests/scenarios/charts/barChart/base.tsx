@@ -2,8 +2,8 @@
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const BarChartWithSingleMeasureAndViewBy = {
     measures: [ReferenceMd.Amount],

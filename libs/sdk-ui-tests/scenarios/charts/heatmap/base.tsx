@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const HeatmapWithMeasureRowsAndColumns = {
     measure: ReferenceMd.Amount,

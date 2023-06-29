@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "target": "es2017",
+        "lib": ["es7", "dom"],
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "allowJs": true,
         "jsx": "react",
         "sourceMap": true,
         "esModuleInterop": true,
-        "importHelpers": true,
-        "lib": ["es7", "dom"],
-        "outDir": "dist",
+        "importHelpers": true,        
+        "outDir": "esm",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
@@ -30,8 +32,8 @@
             "@gooddata/sdk-ui-loaders": ["sdk-ui-loaders/src"],
             "@gooddata/util": ["util/src"]
         },
-        "moduleResolution": "node"
+        
     },
     "include": ["src/index.tsx", "typings"],
-    "exclude": ["**/node_modules", "dist"]
+    "exclude": ["**/node_modules", "esm"]
 }

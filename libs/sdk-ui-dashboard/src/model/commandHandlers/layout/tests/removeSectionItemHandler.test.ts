@@ -1,34 +1,35 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutSectionRemoved,
-} from "../../../events";
+} from "../../../events/index.js";
 import {
     eagerRemoveSectionItem,
     RemoveSectionItem,
     removeSectionItem,
     undoLayoutChanges,
-} from "../../../commands/layout";
-import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../commands/layout.js";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardLayout,
     ComplexDashboardWithReferences,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 
 describe("remove layout section item handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should fail if bad section index specified", async () => {
             const layout = selectLayout(Tester.state());
@@ -54,11 +55,12 @@ describe("remove layout section item handler", () => {
 
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, ComplexDashboardIdentifier),
-        );
+            }, ComplexDashboardIdentifier);
+        });
 
         const [SecondSectionFirstItem, SecondSectionSecondItem] =
             ComplexDashboardWithReferences.dashboard.layout!.sections[1].items;

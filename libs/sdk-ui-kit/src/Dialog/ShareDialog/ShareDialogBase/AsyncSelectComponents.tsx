@@ -8,16 +8,16 @@ import {
     MenuListProps,
     NoticeProps,
 } from "react-select";
-import { Typography } from "../../../Typography";
-import { LoadingMask } from "../../../LoadingMask";
+import { Typography } from "../../../Typography/index.js";
+import { LoadingMask } from "../../../LoadingMask/index.js";
 import {
     ISelectErrorOption,
     ISelectOption,
     isGranteeItem,
     isGranteeUser,
     isSelectErrorOption,
-} from "./types";
-import { getGranteeItemTestId } from "./utils";
+} from "./types.js";
+import { getGranteeItemTestId } from "./utils.js";
 
 export const EmptyRenderer = (): JSX.Element => {
     return null;

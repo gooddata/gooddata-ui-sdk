@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { useDashboardComponentsContext } from "../dashboardContexts";
-import { IScheduledEmailManagementDialogProps } from "./types";
+import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+import { IScheduledEmailManagementDialogProps } from "./types.js";
 
 /**
  * @internal

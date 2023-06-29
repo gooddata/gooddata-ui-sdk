@@ -1,17 +1,17 @@
 // (C) 2007-2023 GoodData Corporation
-import { IChartConfig } from "../../../interfaces";
+import { IChartConfig } from "../../../interfaces/index.js";
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
-import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe";
+import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe.js";
 import {
     customEscape,
     isCssMultiLineTruncationSupported,
     isOneOfTypes,
     isTreemap,
     unwrap,
-} from "../_util/common";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
+} from "../_util/common.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import cx from "classnames";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";

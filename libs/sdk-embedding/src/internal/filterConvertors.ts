@@ -1,8 +1,8 @@
 // (C) 2020-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import isNumber from "lodash/isNumber";
-import isString from "lodash/isString";
-import { EmbeddedGdc } from "../iframe/common";
+import isEmpty from "lodash/isEmpty.js";
+import isNumber from "lodash/isNumber.js";
+import isString from "lodash/isString.js";
+import { EmbeddedGdc } from "../iframe/index.js";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";

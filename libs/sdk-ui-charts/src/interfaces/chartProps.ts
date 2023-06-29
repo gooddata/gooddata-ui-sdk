@@ -2,7 +2,7 @@
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IExecutionConfig } from "@gooddata/sdk-model";
-import { IChartConfig } from "./chartConfig";
+import { IChartConfig } from "./chartConfig.js";
 
 /**
  * Props applicable for all charts

@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import { Velocity, Won } from "../../../../__mocks__/model";
-import { newPositiveAttributeFilter } from "../../filter/factory";
+import { describe, expect, it } from "vitest";
+import { Velocity, Won } from "../../../../__mocks__/model.js";
+import { newPositiveAttributeFilter } from "../../filter/factory.js";
 import {
     modifyMeasure,
     modifyPopMeasure,
@@ -12,9 +13,9 @@ import {
     newPreviousPeriodMeasure,
     newInlineMeasure,
     modifyInlineMeasure,
-} from "../factory";
-import { measureLocalId } from "../index";
-import { idRef, uriRef } from "../../../objRef/factory";
+} from "../factory.js";
+import { measureLocalId } from "../index.js";
+import { idRef, uriRef } from "../../../objRef/factory.js";
 
 describe("measure factories", () => {
     describe("newMeasure", () => {

@@ -1,10 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import ConfigSection from "../ConfigSection";
-import LegendPositionControl from "./LegendPositionControl";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import { messages } from "../../../../locales";
-import noop from "lodash/noop";
+import ConfigSection from "../ConfigSection.js";
+import LegendPositionControl from "./LegendPositionControl.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { messages } from "../../../../locales.js";
+import noop from "lodash/noop.js";
 
 export interface ILegendSection {
     controlsDisabled: boolean;

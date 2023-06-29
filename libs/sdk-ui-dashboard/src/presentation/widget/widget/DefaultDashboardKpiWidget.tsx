@@ -3,10 +3,10 @@ import { FilterContextItem, IKpiWidget, ScreenSize, widgetRef } from "@gooddata/
 import cx from "classnames";
 import { OnError } from "@gooddata/sdk-ui";
 import React from "react";
-import { DashboardItem } from "../../presentationComponents";
-import { DashboardKpi } from "../kpi";
-import { selectAlertByWidgetRef, useDashboardSelector, useWidgetSelection } from "../../../model";
-import { IDashboardFilter } from "../../../types";
+import { DashboardItem } from "../../presentationComponents/index.js";
+import { DashboardKpi } from "../kpi/index.js";
+import { selectAlertByWidgetRef, useDashboardSelector, useWidgetSelection } from "../../../model/index.js";
+import { IDashboardFilter } from "../../../types.js";
 
 interface IDefaultDashboardKpiWidgetProps {
     kpiWidget: IKpiWidget;

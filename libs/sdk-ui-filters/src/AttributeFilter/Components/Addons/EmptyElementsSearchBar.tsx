@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/AttributeFilterElementsSearchBar";
+import { IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/AttributeFilterElementsSearchBar.js";
 
 /**
  * This component render empty ElementsSearchBar

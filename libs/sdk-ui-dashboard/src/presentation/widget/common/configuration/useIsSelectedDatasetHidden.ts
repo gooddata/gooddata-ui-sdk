@@ -6,9 +6,9 @@ import {
     useDashboardSelector,
     selectObjectAvailabilityConfig,
     selectCatalogDateDatasets,
-} from "../../../../model";
+} from "../../../../model/index.js";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 
 export function useIsSelectedDatasetHidden(selectedDateDatasetRef: ObjRef | undefined) {
     const backend = useBackendStrict();

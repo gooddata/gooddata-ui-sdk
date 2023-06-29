@@ -3,12 +3,12 @@ import { objRefToString, isKpiWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { select, call, SagaReturnType } from "redux-saga/effects";
 
-import { invalidQueryArguments } from "../events/general";
-import { QueryWidgetAlertCount } from "../queries/widgets";
-import { selectWidgetByRef } from "../store/layout/layoutSelectors";
-import { createQueryService } from "../store/_infra/queryService";
-import { DashboardContext } from "../types/commonTypes";
-import { isTemporaryIdentity } from "../utils/dashboardItemUtils";
+import { invalidQueryArguments } from "../events/general.js";
+import { QueryWidgetAlertCount } from "../queries/widgets.js";
+import { selectWidgetByRef } from "../store/layout/layoutSelectors.js";
+import { createQueryService } from "../store/_infra/queryService.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { isTemporaryIdentity } from "../utils/dashboardItemUtils.js";
 
 export const QueryWidgetAlertCountService = createQueryService(
     "GDC.DASH/QUERY.WIDGET.ALERT_COUNT",

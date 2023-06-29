@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`validateDrillDefinitionOrigin should throw error for invalid attribute ref 1`] = `"Invalid ObjRef invariant expecting LocalIdRef"`;
+exports[`validateDrillDefinitionOrigin > should throw error for invalid attribute ref 1`] = `"Invalid ObjRef invariant expecting LocalIdRef"`;
 
-exports[`validateDrillDefinitionOrigin should throw error for invalid attribute unknown origin localIdentifier  1`] = `"InsightDrillDefinition origin is not valid attribute drillTarget"`;
+exports[`validateDrillDefinitionOrigin > should throw error for invalid attribute unknown origin localIdentifier  1`] = `"InsightDrillDefinition origin is not valid attribute drillTarget"`;
 
-exports[`validateDrillDefinitionOrigin should throw error for invalid measure unknown origin localIdentifier  1`] = `"InsightDrillDefinition origin is not valid measure drillTarget"`;
+exports[`validateDrillDefinitionOrigin > should throw error for invalid measure unknown origin localIdentifier  1`] = `"InsightDrillDefinition origin is not valid measure drillTarget"`;
 
-exports[`validateInsightDrillDefinition validate IDrillToDashboard definition should throw error for unknown UriRef target IDrillToDashboard definition 1`] = `"Unknown target dashboard"`;
+exports[`validateInsightDrillDefinition > validate IDrillToDashboard definition > should throw error for unknown UriRef target IDrillToDashboard definition 1`] = `"Unknown target dashboard"`;
 
-exports[`validateInsightDrillDefinition validate IDrillToDashboard definition should throw error for unknown idRef target IDrillToDashboard definition 1`] = `"Unknown target dashboard"`;
+exports[`validateInsightDrillDefinition > validate IDrillToDashboard definition > should throw error for unknown idRef target IDrillToDashboard definition 1`] = `"Unknown target dashboard"`;
 
-exports[`validateInsightDrillDefinition validate IDrillToInsight definition should throw error for unknown UriRef target IDrillToDashboard definition 1`] = `"Unknown target Insight"`;
+exports[`validateInsightDrillDefinition > validate IDrillToInsight definition > should throw error for unknown UriRef target IDrillToDashboard definition 1`] = `"Unknown target Insight"`;
 
-exports[`validateInsightDrillDefinition validate IDrillToInsight definition should throw error for unknown idRef target IDrillToDashboard definition 1`] = `"Unknown target Insight"`;
+exports[`validateInsightDrillDefinition > validate IDrillToInsight definition > should throw error for unknown idRef target IDrillToDashboard definition 1`] = `"Unknown target Insight"`;

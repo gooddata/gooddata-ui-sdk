@@ -1,9 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import { idRef, IDateFilterConfig } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
-import { validateDateFilterConfig } from "../validation";
+import { validateDateFilterConfig } from "../validation.js";
 
-import { allTime, absoluteForm, year2019, relativeForm, lastMonth } from "./fixtures";
+import { allTime, absoluteForm, year2019, relativeForm, lastMonth } from "./fixtures.js";
 
 describe("validateDateFilterConfig", () => {
     it("should validate valid config", () => {

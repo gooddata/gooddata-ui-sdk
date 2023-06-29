@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ExamplesMd, ExamplesMdExt } from "@gooddata/live-examples-workspace";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
-import { MapboxToken, scenariosFor } from "../../src";
+import { MapboxToken, scenariosFor } from "../../src/index.js";
 import { IAttribute, modifyAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { ScenarioGroupNames } from "../charts/_infra/groupNames";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 
 const DefaultConfig: IGeoConfig = {
     mapboxToken: MapboxToken,

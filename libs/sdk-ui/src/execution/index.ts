@@ -1,27 +1,31 @@
 // (C) 2020-2022 GoodData Corporation
 
-export { withExecution, IWithExecution } from "./withExecution";
+export { withExecution, IWithExecution } from "./withExecution.js";
 export {
     withExecutionLoading,
     IWithExecutionLoading,
     IWithLoadingEvents,
     WithLoadingResult,
     DataViewWindow,
-} from "./withExecutionLoading";
-export { RawExecute, IRawExecuteProps } from "./RawExecute";
-export { Execute, IExecuteProps } from "./Execute";
-export { useDataExport, UseDataExportCallbacks, UseDataExportState } from "./useDataExport";
+} from "./withExecutionLoading.js";
+export { RawExecute, IRawExecuteProps } from "./RawExecute.js";
+export { Execute, IExecuteProps } from "./Execute.js";
+export { useDataExport, UseDataExportCallbacks, UseDataExportState } from "./useDataExport.js";
 export {
     IExecutionConfiguration,
     IUseExecutionDataViewConfig,
     UseExecutionDataViewCallbacks,
     useExecutionDataView,
-} from "./useExecutionDataView";
+} from "./useExecutionDataView.js";
 export {
     IUseInsightDataViewConfig,
     UseInsightDataViewCallbacks,
     useInsightDataView,
-} from "./useInsightDataView";
-export { ExecuteInsight, IExecuteInsightProps } from "./ExecuteInsight";
-export { IExecuteErrorComponent, IExecuteErrorComponentProps, IExecuteLoadingComponent } from "./interfaces";
-export { DataViewLoader } from "./DataViewLoader";
+} from "./useInsightDataView.js";
+export { ExecuteInsight, IExecuteInsightProps } from "./ExecuteInsight.js";
+export {
+    IExecuteErrorComponent,
+    IExecuteErrorComponentProps,
+    IExecuteLoadingComponent,
+} from "./interfaces.js";
+export { DataViewLoader } from "./DataViewLoader.js";

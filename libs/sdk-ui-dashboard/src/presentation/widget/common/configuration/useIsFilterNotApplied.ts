@@ -4,7 +4,7 @@ import {
     selectAttributeFilterDisplayFormsMap,
     selectExecutionResultByRef,
     useDashboardSelector,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
 const WARNING_FILTER_NOT_APPLIED = "gdc.aqe.not_applied_filter.report";
 

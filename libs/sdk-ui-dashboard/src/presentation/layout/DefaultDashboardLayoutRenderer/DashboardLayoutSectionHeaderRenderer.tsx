@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
-import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
-import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
-import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
-import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
+import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
+import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
+import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
+import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade.js";
 
 export function DashboardLayoutSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,

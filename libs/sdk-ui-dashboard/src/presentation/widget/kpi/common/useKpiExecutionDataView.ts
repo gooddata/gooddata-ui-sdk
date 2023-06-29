@@ -9,9 +9,9 @@ import {
     UseCancelablePromiseState,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
-import { IDashboardFilter } from "../../../../types";
+import { IDashboardFilter } from "../../../../types.js";
 
 interface IUseKpiExecutionDataViewConfig {
     backend?: IAnalyticalBackend;

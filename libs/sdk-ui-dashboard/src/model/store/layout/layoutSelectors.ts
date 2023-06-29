@@ -12,22 +12,26 @@ import {
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
 
-import { DashboardSelector, DashboardState } from "../types";
-import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
-import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
-import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters";
-import { createMemoizedSelector } from "../_infra/selectors";
-import { IDashboardFilter, ILayoutCoordinates } from "../../../types";
-import { isInsightPlaceholderWidget, isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes.js";
+import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
+import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { IDashboardFilter, ILayoutCoordinates } from "../../../types.js";
+import {
+    isInsightPlaceholderWidget,
+    isKpiPlaceholderWidget,
+    isPlaceholderWidget,
+} from "../../../widgets/index.js";
 
-import { LayoutStash, LayoutState } from "./layoutState";
-import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils";
-import { DashboardLayoutCommands } from "../../commands";
+import { LayoutStash, LayoutState } from "./layoutState.js";
+import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils.js";
+import { DashboardLayoutCommands } from "../../commands/index.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

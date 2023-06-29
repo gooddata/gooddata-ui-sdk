@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { useState, useEffect } from "react";
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
-import { usePromiseCache } from "./usePromiseCache";
+import { usePromiseCache } from "./usePromiseCache.js";
 
 /**
  * @public

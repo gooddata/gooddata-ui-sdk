@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { useIntl } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-model";
-import { getElementTitles } from "../utils";
+import { getElementTitles } from "../utils.js";
 
 /**
  * @internal

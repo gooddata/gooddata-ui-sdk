@@ -1,23 +1,25 @@
 // (C) 2021 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
-import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures";
-import { addLayoutSection } from "../../commands";
-import { InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
+import { addLayoutSection } from "../../commands/index.js";
+import { InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
 import { insightRef } from "@gooddata/sdk-model";
 import {
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
     TreemapWithSingleMeasureAndViewByFilteredToOneElement,
-} from "../../tests/fixtures/Insights.fixtures";
-import { createTestInsightItem, TestSectionHeader } from "../../tests/fixtures/Layout.fixtures";
+} from "../../tests/fixtures/Insights.fixtures.js";
+import { createTestInsightItem, TestSectionHeader } from "../../tests/fixtures/Layout.fixtures.js";
 
 describe("query insight attributes meta", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, EmptyDashboardIdentifier),
-    );
+        }, EmptyDashboardIdentifier);
+    });
 
     it("should return metadata for insight with multiple attributes in buckets", async () => {
         await Tester.dispatchAndWaitFor(

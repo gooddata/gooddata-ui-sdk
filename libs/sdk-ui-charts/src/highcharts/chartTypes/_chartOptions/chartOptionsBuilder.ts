@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 import {
     BucketNames,
@@ -10,16 +10,16 @@ import {
     IHeaderPredicate,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces";
+import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
     STACK_BY_DIMENSION_INDEX,
     VIEW_BY_DIMENSION_INDEX,
-} from "../../constants/dimensions";
+} from "../../constants/dimensions.js";
 
-import { findAttributeInDimension, findMeasureGroupInDimensions } from "../_util/executionResultHelper";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
+import { findAttributeInDimension, findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
@@ -37,31 +37,31 @@ import {
     unwrap,
     isSankeyOrDependencyWheel,
     isWaterfall,
-} from "../_util/common";
-import { setMeasuresToSecondaryAxis } from "./dualAxis";
+} from "../_util/common.js";
+import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import {
     canComboChartBeStackedInPercent,
     getComboChartSeries,
     getComboChartStackingConfig,
-} from "../comboChart/comboChartOptions";
+} from "../comboChart/comboChartOptions.js";
 
-import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions";
+import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
 
-import { ColorFactory } from "./colorFactory";
-import { getChartProperties } from "../_chartCreators/helpers";
-import Highcharts from "../../lib";
+import { ColorFactory } from "./colorFactory.js";
+import { getChartProperties } from "../_chartCreators/helpers.js";
+import Highcharts from "../../lib/index.js";
 import {
     multiMeasuresAlternatingTypes,
     showingNameInLegendWhenViewByPresent,
     unsupportedStackingTypes,
-} from "./chartCapabilities";
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import isUndefined from "lodash/isUndefined";
-import without from "lodash/without";
-import { StackingType } from "../../constants/stacking";
-import { IChartOptions, ITooltipFactory } from "../../typings/unsafe";
-import { getSeries } from "./chartSeries";
+} from "./chartCapabilities.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import isUndefined from "lodash/isUndefined.js";
+import without from "lodash/without.js";
+import { StackingType } from "../../constants/stacking.js";
+import { IChartOptions, ITooltipFactory } from "../../typings/unsafe.js";
+import { getSeries } from "./chartSeries.js";
 import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
@@ -69,14 +69,14 @@ import {
     generateTooltipXYFn,
     getTooltipFactory,
     getTooltipWaterfallChart,
-} from "./chartTooltips";
-import { getDrillableSeries } from "./chartDrilling";
-import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
+} from "./chartTooltips.js";
+import { getDrillableSeries } from "./chartDrilling.js";
+import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
 import {
-    getWaterfallChartCategories,
     buildWaterfallChartSeries,
     getColorAssignment,
-} from "../waterfallChart/waterfallChartOptions";
+    getWaterfallChartCategories,
+} from "../waterfallChart/waterfallChartOptions.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;

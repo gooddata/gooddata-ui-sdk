@@ -1,21 +1,21 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createSortItem creates valid attribute sort 1`] = `
-Object {
-  "attributeSortItem": Object {
+exports[`createSortItem > creates valid attribute sort 1`] = `
+{
+  "attributeSortItem": {
     "attributeIdentifier": "a_label.product.id.name",
     "direction": "asc",
   },
 }
 `;
 
-exports[`createSortItem creates valid measure sort item when no column attributes 1`] = `
-Object {
-  "measureSortItem": Object {
+exports[`createSortItem > creates valid measure sort item when no column attributes 1`] = `
+{
+  "measureSortItem": {
     "direction": "asc",
-    "locators": Array [
-      Object {
-        "measureLocatorItem": Object {
+    "locators": [
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },
@@ -24,19 +24,19 @@ Object {
 }
 `;
 
-exports[`createSortItem creates valid measure sort item when single column attribute 1`] = `
-Object {
-  "measureSortItem": Object {
+exports[`createSortItem > creates valid measure sort item when single column attribute 1`] = `
+{
+  "measureSortItem": {
     "direction": "desc",
-    "locators": Array [
-      Object {
-        "attributeLocatorItem": Object {
+    "locators": [
+      {
+        "attributeLocatorItem": {
           "attributeIdentifier": "a_label.owner.region",
           "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
         },
       },
-      Object {
-        "measureLocatorItem": Object {
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },
@@ -45,25 +45,25 @@ Object {
 }
 `;
 
-exports[`createSortItem creates valid measure sort item when two attributes 1`] = `
-Object {
-  "measureSortItem": Object {
+exports[`createSortItem > creates valid measure sort item when two attributes 1`] = `
+{
+  "measureSortItem": {
     "direction": "desc",
-    "locators": Array [
-      Object {
-        "attributeLocatorItem": Object {
+    "locators": [
+      {
+        "attributeLocatorItem": {
           "attributeIdentifier": "a_label.stage.name.stagename",
           "element": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498",
         },
       },
-      Object {
-        "attributeLocatorItem": Object {
+      {
+        "attributeLocatorItem": {
           "attributeIdentifier": "a_label.owner.region",
           "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
         },
       },
-      Object {
-        "measureLocatorItem": Object {
+      {
+        "measureLocatorItem": {
           "measureIdentifier": "m_aangOxLSeztu",
         },
       },

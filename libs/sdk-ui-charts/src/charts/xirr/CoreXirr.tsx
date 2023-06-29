@@ -8,9 +8,9 @@ import {
     ILoadingInjectedProps,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { ICoreChartProps } from "../../interfaces";
-import XirrTransformation from "./internal/XirrTransformation";
-import { defaultCoreChartProps } from "../_commons/defaultProps";
+import { ICoreChartProps } from "../../interfaces/index.js";
+import XirrTransformation from "./internal/XirrTransformation.js";
+import { defaultCoreChartProps } from "../_commons/defaultProps.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class XirrStateless extends React.Component<Props> {

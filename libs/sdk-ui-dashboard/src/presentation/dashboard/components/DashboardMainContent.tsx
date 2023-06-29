@@ -4,11 +4,11 @@ import {
     useDispatchDashboardCommand,
     changeFilterContextSelection,
     useWidgetSelection,
-} from "../../../model";
-import { useDashboardDrop, useWidgetDragHoverHandlers } from "../../dragAndDrop";
-import { DashboardLayout } from "../../layout";
-import { IDashboardProps } from "../types";
-import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings";
+} from "../../../model/index.js";
+import { useDashboardDrop, useWidgetDragHoverHandlers } from "../../dragAndDrop/index.js";
+import { DashboardLayout } from "../../layout/index.js";
+import { IDashboardProps } from "../types.js";
+import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);

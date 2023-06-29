@@ -1,15 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import every from "lodash/every";
+import cloneDeep from "lodash/cloneDeep.js";
+import every from "lodash/every.js";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IBucketItem, IExtendedReferencePoint } from "../../../interfaces/Visualization";
-import { METRIC, BUCKETS } from "../../../constants/bucket";
+import { IBucketItem, IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
+import { METRIC, BUCKETS } from "../../../constants/bucket.js";
 import {
     isDerivedBucketItem,
     findDerivedBucketItems,
     findMasterBucketItem,
     findMasterBucketItems,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 
 export function findSecondMasterMeasure(allMeasures: IBucketItem[]): IBucketItem {
     const masterBucketItems = findMasterBucketItems(allMeasures);

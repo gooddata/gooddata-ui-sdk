@@ -2,10 +2,10 @@
 import React, { useState, useRef } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
-import { Overlay } from "../Overlay";
-import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning";
+import { Overlay } from "../Overlay/index.js";
+import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning.js";
 
 interface IHelpItem {
     key: string;

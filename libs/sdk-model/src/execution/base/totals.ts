@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty";
-import { IMeasure, measureLocalId } from "../measure";
-import { attributeLocalId, IAttribute } from "../attribute";
-import invariant from "ts-invariant";
-import { Identifier } from "../../objRef/index";
+import isEmpty from "lodash/isEmpty.js";
+import { IMeasure, measureLocalId } from "../measure/index.js";
+import { attributeLocalId, IAttribute } from "../attribute/index.js";
+import { invariant } from "ts-invariant";
+import { Identifier } from "../../objRef/index.js";
 
 /**
  * Supported types of totals.

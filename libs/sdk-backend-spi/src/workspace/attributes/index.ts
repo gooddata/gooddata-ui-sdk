@@ -5,7 +5,7 @@ import {
     IAttributeMetadataObject,
     IMetadataObject,
 } from "@gooddata/sdk-model";
-import { IElementsQueryFactory } from "./elements";
+import { IElementsQueryFactory } from "./elements/index.js";
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.

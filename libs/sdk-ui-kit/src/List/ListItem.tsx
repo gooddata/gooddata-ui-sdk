@@ -3,7 +3,7 @@ import React, { Component, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
-import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 
 const BUBBLE_OFFSET_X = 16;
 

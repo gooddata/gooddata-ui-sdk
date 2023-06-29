@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import format from "date-fns/format";
-import isString from "lodash/isString";
-import capitalize from "lodash/capitalize";
+import format from "date-fns/format/index.js";
+import isString from "lodash/isString.js";
+import capitalize from "lodash/capitalize.js";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";
-import { granularityIntlCodes } from "../../constants/i18n";
-import { IMessageTranslator, IDateAndMessageTranslator } from "./Translators";
-import { convertPlatformDateStringToDate } from "../DateConversions";
+import { granularityIntlCodes } from "../../constants/i18n.js";
+import { IMessageTranslator, IDateAndMessageTranslator } from "./Translators.js";
+import { convertPlatformDateStringToDate } from "../DateConversions.js";
 import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,
@@ -16,15 +16,19 @@ import {
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
-import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
+import {
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
+    DateFilterOption,
+} from "../../interfaces/index.js";
 import {
     DAY_END_TIME,
     DAY_START_TIME,
     DEFAULT_DATE_FORMAT,
     TIME_FORMAT,
     TIME_FORMAT_WITH_SEPARATOR,
-} from "../../constants/Platform";
-import { messages } from "../../../locales";
+} from "../../constants/Platform.js";
+import { messages } from "../../../locales.js";
 import moment from "moment";
 
 export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {

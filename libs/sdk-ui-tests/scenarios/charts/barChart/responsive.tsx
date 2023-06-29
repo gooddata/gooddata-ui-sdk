@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { BarChartWithSingleMeasureViewByAndStackBy } from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
+import { BarChartWithSingleMeasureViewByAndStackBy } from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios.js";
 
 const sizeVariants: Array<IResponsiveSize> = [
     { label: "without x axis, without y axis (very small container)", width: 100, height: 70 },

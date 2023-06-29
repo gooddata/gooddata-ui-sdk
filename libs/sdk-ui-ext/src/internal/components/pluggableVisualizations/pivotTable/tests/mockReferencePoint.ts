@@ -4,7 +4,7 @@ import {
     IBucketItem,
     IExtendedReferencePoint,
     IFiltersBucketItem,
-} from "../../../../interfaces/Visualization";
+} from "../../../../interfaces/Visualization.js";
 import { ISortItem } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 

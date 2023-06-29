@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getColorPaletteMapping should return color palette mapping with one segment item 1`] = `
-Object {
-  "Florida": Array [
+exports[`getColorPaletteMapping > should return color palette mapping with one segment item 1`] = `
+{
+  "Florida": [
     "rgba(250,225,223,0.7)",
     "rgba(246,195,192,0.7)",
     "rgba(242,166,160,0.7)",
@@ -10,7 +10,7 @@ Object {
     "rgba(233,106,97,0.7)",
     "rgba(229,77,66,0.7)",
   ],
-  "Hawaii": Array [
+  "Hawaii": [
     "rgba(212,244,236,0.7)",
     "rgba(170,234,217,0.7)",
     "rgba(127,224,198,0.7)",
@@ -18,7 +18,7 @@ Object {
     "rgba(42,203,160,0.7)",
     "rgba(0,193,141,0.7)",
   ],
-  "Puerto Rico": Array [
+  "Puerto Rico": [
     "rgba(215,242,250,0.7)",
     "rgba(176,229,245,0.7)",
     "rgba(137,216,240,0.7)",
@@ -26,7 +26,7 @@ Object {
     "rgba(59,190,230,0.7)",
     "rgba(20,178,226,0.7)",
   ],
-  "Texas": Array [
+  "Texas": [
     "rgba(252,234,212,0.7)",
     "rgba(250,214,170,0.7)",
     "rgba(248,194,127,0.7)",
@@ -37,9 +37,9 @@ Object {
 }
 `;
 
-exports[`getColorPaletteMapping should return color palette mappings 1`] = `
-Object {
-  "California": Array [
+exports[`getColorPaletteMapping > should return color palette mappings 1`] = `
+{
+  "California": [
     "rgba(250,225,223,0.7)",
     "rgba(246,195,192,0.7)",
     "rgba(242,166,160,0.7)",
@@ -47,7 +47,7 @@ Object {
     "rgba(233,106,97,0.7)",
     "rgba(229,77,66,0.7)",
   ],
-  "Florida": Array [
+  "Florida": [
     "rgba(215,242,250,0.7)",
     "rgba(176,229,245,0.7)",
     "rgba(137,216,240,0.7)",
@@ -55,7 +55,7 @@ Object {
     "rgba(59,190,230,0.7)",
     "rgba(20,178,226,0.7)",
   ],
-  "Texas": Array [
+  "Texas": [
     "rgba(212,244,236,0.7)",
     "rgba(170,234,217,0.7)",
     "rgba(127,224,198,0.7)",
@@ -66,180 +66,180 @@ Object {
 }
 `;
 
-exports[`getPushpinColors should return pushpin RGB colors 1`] = `
-Array [
-  Object {
+exports[`getPushpinColors > should return pushpin RGB colors 1`] = `
+[
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(98,203,235,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(137,216,240,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(170,234,217,0.7)",
     "border": "rgba(0,193,141,0.7)",
   },
-  Object {
+  {
     "background": "rgba(85,213,179,0.7)",
     "border": "rgba(0,193,141,0.7)",
   },
-  Object {
+  {
     "background": "rgba(85,213,179,0.7)",
     "border": "rgba(0,193,141,0.7)",
   },
-  Object {
+  {
     "background": "rgba(229,77,66,0.7)",
     "border": "rgba(229,77,66,0.7)",
   },
-  Object {
+  {
     "background": "rgba(250,214,170,0.7)",
     "border": "rgba(241,134,0,0.7)",
   },
-  Object {
+  {
     "background": "rgba(250,214,170,0.7)",
     "border": "rgba(241,134,0,0.7)",
   },
-  Object {
+  {
     "background": "rgba(252,234,212,0.7)",
     "border": "rgba(241,134,0,0.7)",
   },
 ]
 `;
 
-exports[`getPushpinColors should return pushpin RGB colors with null value without segment 1`] = `
-Array [
-  Object {
+exports[`getPushpinColors > should return pushpin RGB colors with null value without segment 1`] = `
+[
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(215,242,250,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(137,216,240,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(98,203,235,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(98,203,235,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(20,178,226,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(215,242,250,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
 ]
 `;
 
-exports[`getPushpinColors should return pushpin RGB colors with null values 1`] = `
-Array [
-  Object {
+exports[`getPushpinColors > should return pushpin RGB colors with null values 1`] = `
+[
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(215,242,250,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(137,216,240,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(170,234,217,0.7)",
     "border": "rgba(0,193,141,0.7)",
   },
-  Object {
+  {
     "background": "rgba(85,213,179,0.7)",
     "border": "rgba(0,193,141,0.7)",
   },
-  Object {
+  {
     "background": "rgba(85,213,179,0.7)",
     "border": "rgba(0,193,141,0.7)",
   },
-  Object {
+  {
     "background": "rgba(229,77,66,0.7)",
     "border": "rgba(229,77,66,0.7)",
   },
-  Object {
+  {
     "background": "rgba(250,214,170,0.7)",
     "border": "rgba(241,134,0,0.7)",
   },
-  Object {
+  {
     "background": "rgba(250,214,170,0.7)",
     "border": "rgba(241,134,0,0.7)",
   },
-  Object {
+  {
     "background": "rgba(252,234,212,0.7)",
     "border": "rgba(241,134,0,0.7)",
   },
 ]
 `;
 
-exports[`getPushpinColors should return pushpin RGB colors with range of negative and positive and null values 1`] = `
-Array [
-  Object {
+exports[`getPushpinColors > should return pushpin RGB colors with range of negative and positive and null values 1`] = `
+[
+  {
     "background": "rgba(215,242,250,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(215,242,250,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(98,203,235,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(98,203,235,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(20,178,226,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },
-  Object {
+  {
     "background": "rgba(176,229,245,0.7)",
     "border": "rgba(20,178,226,0.7)",
   },

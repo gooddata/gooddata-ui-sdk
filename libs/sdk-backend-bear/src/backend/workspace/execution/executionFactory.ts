@@ -10,11 +10,11 @@ import {
     INullableFilter,
     newDefForInsight,
 } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { BearPreparedExecution } from "./preparedExecution";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { BearPreparedExecution } from "./preparedExecution.js";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import { BearPreparedExecutionByRef } from "./preparedExecutionByRef";
-import compact from "lodash/compact";
+import { BearPreparedExecutionByRef } from "./preparedExecutionByRef.js";
+import compact from "lodash/compact.js";
 
 export class BearExecution extends AbstractExecutionFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, workspace: string) {

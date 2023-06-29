@@ -2,10 +2,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { DateFilter, getLocalizedIcuDateFormatPattern, IDateFilterProps } from "@gooddata/sdk-ui-filters";
 
-import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
-import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping";
+import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 
-import { IDashboardDateFilterProps } from "./types";
+import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectIsInEditMode,
@@ -13,7 +13,7 @@ import {
     selectSettings,
     selectWeekStart,
     useDashboardSelector,
-} from "../../../model";
+} from "../../../model/index.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.

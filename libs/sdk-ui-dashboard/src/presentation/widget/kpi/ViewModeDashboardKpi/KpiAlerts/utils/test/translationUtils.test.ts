@@ -8,9 +8,10 @@ import {
     IDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect } from "vitest";
 
-import { translations } from "../../../../../../localization";
-import { getKpiAlertTranslationData, KpiAlertTranslationData } from "../translationUtils";
+import { translations } from "../../../../../../localization/index.js";
+import { getKpiAlertTranslationData, KpiAlertTranslationData } from "../translationUtils.js";
 
 // we need to have both sdk-ui and sdk-ui-ext messages available
 const intl = createIntlMock(translations[DefaultLocale], DefaultLocale);

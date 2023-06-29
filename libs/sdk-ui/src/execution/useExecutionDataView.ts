@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { DataViewWindow } from "./withExecutionLoading";
+import { DataViewWindow } from "./withExecutionLoading.js";
 import {
     DataViewFacade,
     GoodDataSdkError,
@@ -16,9 +16,9 @@ import {
     UseCancelablePromiseCallbacks,
     useCancelablePromise,
     convertError,
-} from "../base";
-import isEmpty from "lodash/isEmpty";
-import { createExecution } from "./createExecution";
+} from "../base/index.js";
+import isEmpty from "lodash/isEmpty.js";
+import { createExecution } from "./createExecution.js";
 
 /**
  * Convenient interface to define execution by series and slices.

@@ -1,10 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { renameDashboard } from "../../../commands";
-import { DashboardRenamed } from "../../../events";
-import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { renameDashboard } from "../../../commands/index.js";
+import { DashboardRenamed } from "../../../events/index.js";
+import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("rename dashboard handler", () => {
     const TestTitle = "newTitle";
@@ -12,11 +13,12 @@ describe("rename dashboard handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         // each test starts with a new dashboard
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, undefined),
-        );
+            }, undefined);
+        });
 
         it("should allow to set empty title", async () => {
             const event: DashboardRenamed = await Tester.dispatchAndWaitFor(
@@ -48,11 +50,12 @@ describe("rename dashboard handler", () => {
 
     describe("for existing dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should set title in descriptor and keep persisted dashboard data untouched", async () => {
             const event: DashboardRenamed = await Tester.dispatchAndWaitFor(

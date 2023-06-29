@@ -6,9 +6,9 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableComboChart } from "./PluggableComboChart";
-import { BigChartDescriptor } from "../BigChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableComboChart } from "./PluggableComboChart.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
     getReactEmbeddingCodeGenerator,
     getInsightToPropsConverter,
@@ -18,8 +18,8 @@ import {
     multipleAttributesBucketConversion,
     localeInsightConversion,
     executionConfigInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class ComboChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

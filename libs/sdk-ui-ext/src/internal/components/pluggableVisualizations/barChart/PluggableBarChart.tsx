@@ -1,18 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
-import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
-import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
-import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
-import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
-import { getBucketItems } from "../../../utils/bucketHelper";
-import { canSortStackTotalValue } from "./sortHelpers";
-import { getCustomSortDisabledExplanation } from "../../../utils/sort";
+import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
+import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization.js";
+import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel.js";
+import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { getBucketItems } from "../../../utils/bucketHelper.js";
+import { canSortStackTotalValue } from "./sortHelpers.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 
 /**
  * PluggableBarChart

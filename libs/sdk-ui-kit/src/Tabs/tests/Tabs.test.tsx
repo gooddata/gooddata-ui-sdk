@@ -1,10 +1,17 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, waitFor, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { Tabs, ITabsProps } from "../Tabs";
+import { Tabs, ITabsProps } from "../Tabs.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 const tabDefinitions = [{ id: "tab1" }, { id: "tab2" }];
 
@@ -46,7 +53,7 @@ describe("Tabs", () => {
     });
 
     it("should call callback on tab select", async () => {
-        const tabSelectStub = jest.fn();
+        const tabSelectStub = vi.fn();
         renderTabs({ onTabSelect: tabSelectStub });
         await userEvent.click(screen.getByLabelText("tab2"));
         await waitFor(() => {

@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
+import { describe, it, expect } from "vitest";
 
 import {
     generateRepeatString,
@@ -7,16 +8,16 @@ import {
     setDailyRepeat,
     setMonthlyRepeat,
     setWeeklyRepeat,
-} from "../repeat";
-import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../../constants";
+} from "../repeat.js";
+import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../../constants.js";
 import {
     IScheduleEmailRepeat,
     IScheduleEmailRepeatDate,
     IScheduleEmailRepeatFrequency,
     IScheduleEmailRepeatFrequencyDayOfWeek,
     IScheduleEmailRepeatTime,
-} from "../../interfaces";
-import { getDate, getDay, getMonth, getWeek, getYear } from "../datetime";
+} from "../../interfaces.js";
+import { getDate, getDay, getMonth, getWeek, getYear } from "../datetime.js";
 
 describe("repeat string generator", () => {
     const now = new Date(2019, 10, 10, 10, 30, 0, 0);

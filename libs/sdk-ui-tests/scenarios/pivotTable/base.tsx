@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../src";
+import { scenariosFor } from "../../src/index.js";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ScenarioGroupNames } from "../charts/_infra/groupNames";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 import { requestPages } from "@gooddata/mock-handling";
 import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 

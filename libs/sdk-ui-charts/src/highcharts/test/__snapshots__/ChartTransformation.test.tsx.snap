@@ -1,24 +1,24 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ChartTransformation Legend config should be always disabled for single series and push this info out 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "colors": Object {
-          "colorAssignments": Array [
-            Object {
-              "color": Object {
+exports[`ChartTransformation > Legend config > should be always disabled for single series and push this info out 1`] = `
+[MockFunction spy] {
+  "calls": [
+    [
+      {
+        "colors": {
+          "colorAssignments": [
+            {
+              "color": {
                 "type": "guid",
                 "value": "1",
               },
-              "headerItem": Object {
-                "measureHeaderItem": Object {
+              "headerItem": {
+                "measureHeaderItem": {
                   "format": "$#,##0.00",
                   "identifier": "aangOxLSeztu",
                   "localIdentifier": "m_aangOxLSeztu",
                   "name": "Amount",
-                  "ref": Object {
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1271",
                   },
                   "uri": "/gdc/md/referenceworkspace/obj/1271",
@@ -28,14 +28,14 @@ exports[`ChartTransformation Legend config should be always disabled for single 
           ],
           "colorPalette": undefined,
         },
-        "propertiesMeta": Object {
+        "propertiesMeta": {
           "legend_enabled": false,
         },
       },
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
       "value": undefined,
     },
@@ -43,56 +43,56 @@ exports[`ChartTransformation Legend config should be always disabled for single 
 }
 `;
 
-exports[`ChartTransformation Legend config should be enabled & on the top by default and push this info out 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "colors": Object {
-          "colorAssignments": Array [
-            Object {
-              "color": Object {
+exports[`ChartTransformation > Legend config > should be enabled & on the top by default and push this info out 1`] = `
+[MockFunction spy] {
+  "calls": [
+    [
+      {
+        "colors": {
+          "colorAssignments": [
+            {
+              "color": {
                 "type": "guid",
                 "value": "1",
               },
-              "headerItem": Object {
-                "measureHeaderItem": Object {
+              "headerItem": {
+                "measureHeaderItem": {
                   "format": "$#,##0.00",
                   "identifier": "aangOxLSeztu",
                   "localIdentifier": "m_aangOxLSeztu",
                   "name": "Amount",
-                  "ref": Object {
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1271",
                   },
                   "uri": "/gdc/md/referenceworkspace/obj/1271",
                 },
               },
             },
-            Object {
-              "color": Object {
+            {
+              "color": {
                 "type": "guid",
                 "value": "2",
               },
-              "headerItem": Object {
-                "measureHeaderItem": Object {
+              "headerItem": {
+                "measureHeaderItem": {
                   "format": "$#,##0.00",
                   "identifier": "acugFHNJgsBy",
                   "localIdentifier": "m_acugFHNJgsBy",
                   "name": "Won",
-                  "ref": Object {
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1272",
                   },
                   "uri": "/gdc/md/referenceworkspace/obj/1272",
                 },
               },
             },
-            Object {
-              "color": Object {
+            {
+              "color": {
                 "type": "guid",
                 "value": "3",
               },
-              "headerItem": Object {
-                "measureHeaderItem": Object {
+              "headerItem": {
+                "measureHeaderItem": {
                   "format": "#,##0.00",
                   "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "name": "Calculated 'Lost' measure",
@@ -100,13 +100,13 @@ exports[`ChartTransformation Legend config should be enabled & on the top by def
                 },
               },
             },
-            Object {
-              "color": Object {
+            {
+              "color": {
                 "type": "guid",
                 "value": "4",
               },
-              "headerItem": Object {
-                "measureHeaderItem": Object {
+              "headerItem": {
+                "measureHeaderItem": {
                   "format": "#,##0.00",
                   "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                   "name": "Ratio of Won and Lost",
@@ -117,14 +117,14 @@ exports[`ChartTransformation Legend config should be enabled & on the top by def
           ],
           "colorPalette": undefined,
         },
-        "propertiesMeta": Object {
+        "propertiesMeta": {
           "legend_enabled": true,
         },
       },
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
       "value": undefined,
     },

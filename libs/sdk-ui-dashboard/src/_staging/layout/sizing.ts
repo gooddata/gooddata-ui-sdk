@@ -27,13 +27,13 @@ import {
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
 } from "@gooddata/sdk-ui-ext";
 
-import { ObjRefMap } from "../metadata/objRefMap";
+import { ObjRefMap } from "../metadata/objRefMap.js";
 import {
     KPI_WITHOUT_COMPARISON_SIZE_INFO,
     KPI_WITH_COMPARISON_SIZE_INFO,
     GRID_ROW_HEIGHT_IN_PX,
-} from "./constants";
-import { ExtendedDashboardWidget } from "../../model/types/layoutTypes";
+} from "./constants.js";
+import { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 
 /**
  * @internal

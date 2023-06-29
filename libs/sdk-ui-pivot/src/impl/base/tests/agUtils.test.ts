@@ -1,5 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
-import { getGridIndex } from "../agUtils";
+import { getGridIndex } from "../agUtils.js";
+import { describe, it, expect } from "vitest";
 
 describe("getGridIndex", () => {
     const gridDistance = 20;

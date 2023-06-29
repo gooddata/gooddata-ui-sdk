@@ -2,24 +2,24 @@
 
 import ora from "ora";
 
-import { ActionOptions, TargetBackendType } from "./types";
+import { ActionOptions, TargetBackendType } from "./types.js";
 import {
     BackendCredentials,
     createCredentialsFromEnv,
     completeCredentialsOrDie,
     validateCredentialsComplete,
     promptCredentials,
-} from "./credentials";
-import { discoverBackendType, readPackageJsonIfExists } from "./utils";
+} from "./credentials.js";
+import { discoverBackendType, readPackageJsonIfExists } from "./utils.js";
 import {
     getBackendFromOptions,
     getHostnameFromOptions,
     getWorkspaceFromOptions,
-} from "./inputHandling/extractors";
-import { loadEnv } from "./env";
-import { createHostnameValidator, validOrDie } from "./inputHandling/validators";
-import { createBackend } from "./backend";
-import { promptBackend, promptHostname, promptWorkspaceId } from "./terminal/prompts";
+} from "./inputHandling/extractors.js";
+import { loadEnv } from "./env.js";
+import { createHostnameValidator, validOrDie } from "./inputHandling/validators.js";
+import { createBackend } from "./backend.js";
+import { promptBackend, promptHostname, promptWorkspaceId } from "./terminal/prompts.js";
 
 /**
  * Config for commands that target a workspace.

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/dist/internal";
+import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
 export interface IConfigurationPanelWrapperProps {
     className?: string;

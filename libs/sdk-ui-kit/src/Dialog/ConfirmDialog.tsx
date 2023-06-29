@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import { Overlay } from "../Overlay";
-import { ConfirmDialogBase } from "./ConfirmDialogBase";
-import { IConfirmDialogBaseProps } from "./typings";
+import { Overlay } from "../Overlay/index.js";
+import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
+import { IConfirmDialogBaseProps } from "./typings.js";
 
 /**
  * @internal

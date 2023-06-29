@@ -1,26 +1,26 @@
 // (C) 2021-2023 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
 import { IInsight, IWidgetAlert, IListedDashboard } from "@gooddata/sdk-model";
-import { LoadingState } from "./loading/loadingState";
-import { SavingState } from "./saving/savingState";
-import { FilterContextState } from "./filterContext/filterContextState";
-import { LayoutState } from "./layout/layoutState";
-import { ConfigState } from "./config/configState";
-import { EntitlementsState } from "./entitlements/entitlementsState";
-import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
-import { PermissionsState } from "./permissions/permissionsState";
-import { CatalogState } from "./catalog/catalogState";
-import { UserState } from "./user/userState";
-import { DrillState } from "./drill/drillState";
-import { DashboardMetaState } from "./meta/metaState";
-import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
-import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
-import { IExecutionResultEnvelope } from "./executionResults/types";
-import { UiState } from "./ui/uiState";
-import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
-import { RenderModeState } from "./renderMode/renderModeState";
-import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState";
-import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes";
+import { LoadingState } from "./loading/loadingState.js";
+import { SavingState } from "./saving/savingState.js";
+import { FilterContextState } from "./filterContext/filterContextState.js";
+import { LayoutState } from "./layout/layoutState.js";
+import { ConfigState } from "./config/configState.js";
+import { EntitlementsState } from "./entitlements/entitlementsState.js";
+import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
+import { PermissionsState } from "./permissions/permissionsState.js";
+import { CatalogState } from "./catalog/catalogState.js";
+import { UserState } from "./user/userState.js";
+import { DrillState } from "./drill/drillState.js";
+import { DashboardMetaState } from "./meta/metaState.js";
+import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
+import { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
+import { IExecutionResultEnvelope } from "./executionResults/types.js";
+import { UiState } from "./ui/uiState.js";
+import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.js";
+import { RenderModeState } from "./renderMode/renderModeState.js";
+import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
+import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,

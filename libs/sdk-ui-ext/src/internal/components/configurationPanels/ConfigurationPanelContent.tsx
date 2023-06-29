@@ -2,14 +2,14 @@
 import React from "react";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
-import { IReferences, IVisualizationProperties } from "../../interfaces/Visualization";
-import { IColorConfiguration } from "../../interfaces/Colors";
-import ColorsSection from "../configurationControls/colors/ColorsSection";
-import LegendSection from "../configurationControls/legend/LegendSection";
-import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
+import { IReferences, IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { IColorConfiguration } from "../../interfaces/Colors.js";
+import ColorsSection from "../configurationControls/colors/ColorsSection.js";
+import LegendSection from "../configurationControls/legend/LegendSection.js";
+import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
-import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
-import noop from "lodash/noop";
+import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
+import noop from "lodash/noop.js";
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;

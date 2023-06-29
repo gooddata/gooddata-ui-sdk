@@ -1,22 +1,23 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { FunnelChart } from "../FunnelChart";
+import { FunnelChart } from "../FunnelChart.js";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { CoreFunnelChart } from "../CoreFunnelChart";
+import { CoreFunnelChart } from "../CoreFunnelChart.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreFunnelChart", () => ({
-    CoreFunnelChart: jest.fn(() => null),
+vi.mock("../CoreFunnelChart", () => ({
+    CoreFunnelChart: vi.fn(() => null),
 }));
 
 describe("FunnelChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render with custom SDK", () => {

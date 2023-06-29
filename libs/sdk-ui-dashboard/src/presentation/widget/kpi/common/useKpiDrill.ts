@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
 import { IDrillToLegacyDashboard, IKpiWidget } from "@gooddata/sdk-model";
-import { OnFiredDashboardDrillEvent } from "../../../../types";
-import { useDrill, useDrillToLegacyDashboard } from "../../../drill";
-import { useDashboardSelector, selectDisableDefaultDrills } from "../../../../model";
+import { OnFiredDashboardDrillEvent } from "../../../../types.js";
+import { useDrill, useDrillToLegacyDashboard } from "../../../drill/index.js";
+import { useDashboardSelector, selectDisableDefaultDrills } from "../../../../model/index.js";
 
 /**
  * Returns a drill handler for a given KPI.

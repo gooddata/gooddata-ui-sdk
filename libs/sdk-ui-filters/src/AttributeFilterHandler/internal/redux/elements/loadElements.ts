@@ -2,11 +2,11 @@
 import { IElementsQueryResult, CancelableOptions } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 
-import { ILoadElementsOptions } from "../../../types";
-import { AttributeFilterHandlerStoreContext } from "../store/types";
-import { IHiddenElementsInfo } from "./types";
-import { loadElementsFromStaticElements } from "./loadElementsFromStaticElements";
-import { loadElementsFromBackend } from "./loadElementsFromBackend";
+import { ILoadElementsOptions } from "../../../types/index.js";
+import { AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { IHiddenElementsInfo } from "./types.js";
+import { loadElementsFromStaticElements } from "./loadElementsFromStaticElements.js";
+import { loadElementsFromBackend } from "./loadElementsFromBackend.js";
 
 /**
  * @internal

@@ -3,8 +3,8 @@ import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { getTranslation } from "../utils/translations";
-import { messages } from "../../locales";
+import { getTranslation } from "../utils/translations.js";
+import { messages } from "../../locales.js";
 
 export interface IBubbleMessageOwnProps {
     showDisabledMessage: boolean;

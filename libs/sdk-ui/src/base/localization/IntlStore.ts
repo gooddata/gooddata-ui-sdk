@@ -1,9 +1,9 @@
 // (C) 2007-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { IntlShape, MessageDescriptor, createIntl } from "react-intl";
 
-import { DefaultLocale, ILocale } from "./Locale";
-import { messagesMap } from "./messagesMap";
+import { DefaultLocale, ILocale } from "./Locale.js";
+import { messagesMap } from "./messagesMap.js";
 
 const intlStore: { [key in ILocale]?: IntlShape } = {};
 

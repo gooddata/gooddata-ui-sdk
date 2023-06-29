@@ -1,11 +1,11 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import invariant from "ts-invariant";
-import { IGeoData, IValidationResult } from "../../GeoChart";
-import { isDataOfReasonableSize } from "./helpers/geoChart/common";
-import { getGeoData } from "./helpers/geoChart/data";
-import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner";
-import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart";
+import { invariant } from "ts-invariant";
+import { IGeoData, IValidationResult } from "../../GeoChart.js";
+import { isDataOfReasonableSize } from "./helpers/geoChart/common.js";
+import { getGeoData } from "./helpers/geoChart/data.js";
+import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner.js";
+import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
 import {
     DataViewFacade,
     ErrorCodes,
@@ -20,7 +20,7 @@ import {
     IColorStrategy,
     IPushpinCategoryLegendItem,
 } from "@gooddata/sdk-ui-vis-commons";
-import { getColorStrategy } from "./colorStrategy/geoChart";
+import { getColorStrategy } from "./colorStrategy/geoChart.js";
 
 export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps> {
     private readonly emptyHeaderString: string;

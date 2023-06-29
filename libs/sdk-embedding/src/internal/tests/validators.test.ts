@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-
-import { isValidSetFilterParentsCommandData } from "../validators";
+import { describe, expect, it } from "vitest";
+import { isValidSetFilterParentsCommandData } from "../validators.js";
 
 describe("isValidSetFilterParentsCommandData", () => {
     function newCommandData(filters: any): any {

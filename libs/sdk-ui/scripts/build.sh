@@ -1,22 +1,18 @@
 #!/usr/bin/env bash
 
 _clean() {
-    rm -rf dist
     rm -rf esm
     rm -rf styles/css
 }
 
 _common-build() {
-    mkdir -p dist/base/localization/bundles
-    cp -rf src/base/localization/bundles dist/base/localization
-
     mkdir -p esm/base/localization/bundles
     cp -rf src/base/localization/bundles esm/base/localization
 }
 
 build() {
     _common-build
-    concurrently "npm run build-cjs" "npm run build-esm"
+    npm run build-esm
 }
 
 build-dev() {

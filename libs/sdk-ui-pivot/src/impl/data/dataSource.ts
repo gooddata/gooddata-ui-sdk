@@ -2,11 +2,11 @@
 import { IntlShape } from "react-intl";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
-import { COLS_PER_PAGE } from "../base/constants";
-import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider";
-import { createAgGridPage } from "./rowFactory";
-import { areTotalsChanged, isInvalidGetRowsRequest } from "./dataSourceUtils";
-import isEqual from "lodash/isEqual";
+import { COLS_PER_PAGE } from "../base/constants.js";
+import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider.js";
+import { createAgGridPage } from "./rowFactory.js";
+import { areTotalsChanged, isInvalidGetRowsRequest } from "./dataSourceUtils.js";
+import isEqual from "lodash/isEqual.js";
 import {
     attributeLocalId,
     bucketAttribute,
@@ -17,8 +17,8 @@ import {
     ITotal,
 } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
-import { TableDescriptor } from "../structure/tableDescriptor";
-import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes.js";
 
 export type DatasourceConfig = {
     tableDescriptor: TableDescriptor;

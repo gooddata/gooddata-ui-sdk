@@ -1,15 +1,22 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { IColor } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
-import { IColorConfiguration } from "../../../../interfaces/Colors";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { IColorConfiguration } from "../../../../interfaces/Colors.js";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 
-import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection";
-import cloneDeep from "lodash/cloneDeep";
-import noop from "lodash/noop";
+import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 const colors: IColorConfiguration = {
     colorPalette: DefaultColorPalette,
@@ -105,7 +112,7 @@ describe("ColorsSection", () => {
     });
 
     it("should call pushData on Reset Colors button click", async () => {
-        const pushData = jest.fn();
+        const pushData = vi.fn();
         const color1: IColor = {
             type: "guid",
             value: "guid1",

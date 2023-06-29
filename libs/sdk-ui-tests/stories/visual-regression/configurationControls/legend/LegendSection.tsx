@@ -2,12 +2,11 @@
 /* eslint-disable sonarjs/no-identical-functions */
 
 import { action } from "@storybook/addon-actions";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import React, { useState } from "react";
-import LegendSection from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/legend/LegendSection";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { InternalIntlWrapper, LegendSection } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
-import { ConfigurationControls } from "../../../_infra/storyGroups";
+import { ConfigurationControls } from "../../../_infra/storyGroups.js";
 import "../controlStyles.css";
 
 const wrapperStyle = {

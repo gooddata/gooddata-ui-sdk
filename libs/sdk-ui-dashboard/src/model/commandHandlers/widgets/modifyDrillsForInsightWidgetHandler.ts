@@ -1,22 +1,22 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ModifyDrillsForInsightWidget } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ModifyDrillsForInsightWidget } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { DashboardInsightWidgetDrillsModified, insightWidgetDrillsModified } from "../../events/insight";
-import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { getValidationData, validateDrillDefinition } from "./validation/insightDrillDefinitionValidation";
-import { layoutActions } from "../../store/layout";
+import { DashboardInsightWidgetDrillsModified, insightWidgetDrillsModified } from "../../events/insight.js";
+import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { getValidationData, validateDrillDefinition } from "./validation/insightDrillDefinitionValidation.js";
+import { layoutActions } from "../../store/layout/index.js";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../store/insights";
+import { insightsActions } from "../../store/insights/index.js";
 import {
     existsDrillDefinitionInArray,
     getDrillDefinitionFromArray,
-} from "./validation/insightDrillDefinitionUtils";
-import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
-import { validateDrills } from "../common/validateDrills";
+} from "./validation/insightDrillDefinitionUtils.js";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
+import { validateDrills } from "../common/validateDrills.js";
 
 export function* modifyDrillsForInsightWidgetHandler(
     ctx: DashboardContext,

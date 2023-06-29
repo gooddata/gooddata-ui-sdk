@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
 import {
     dispatchAndWaitFor,
@@ -16,10 +16,10 @@ import {
     useDashboardSelector,
     selectDashboardTitle,
     selectLayoutHasAnalyticalWidgets,
-} from "../../../../../model";
-import { messages } from "../../../../../locales";
-import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
-import { ISaveButtonProps } from "./types";
+} from "../../../../../model/index.js";
+import { messages } from "../../../../../locales.js";
+import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors.js";
+import { ISaveButtonProps } from "./types.js";
 
 /**
  * @internal

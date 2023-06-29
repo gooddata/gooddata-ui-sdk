@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     DashboardLayoutItemModifications,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
-} from "./interfaces";
-import { IDashboardLayoutItemFacade } from "../facade/interfaces";
+} from "./interfaces.js";
+import { IDashboardLayoutItemFacade } from "../facade/interfaces.js";
 import {
     InsightWidgetBuilder,
     KpiWidgetBuilder,
@@ -23,7 +23,7 @@ import {
     IDashboardLayoutItem,
     isDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 
 /**
  * @alpha

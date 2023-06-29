@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 
-import { ICatalogAttribute } from "../src/ldm/catalog/attribute";
-import { ICatalogMeasure } from "../src/ldm/catalog/measure";
-import { ICatalogFact } from "../src/ldm/catalog/fact";
-import { ICatalogDateDataset } from "../src/ldm/catalog/dateDataset";
-import { IAttributeDisplayFormMetadataObject } from "../src/ldm/metadata/attributeDisplayForm";
-import { idRef } from "../src";
+import { ICatalogAttribute } from "../src/ldm/catalog/attribute/index.js";
+import { ICatalogMeasure } from "../src/ldm/catalog/measure/index.js";
+import { ICatalogFact } from "../src/ldm/catalog/fact/index.js";
+import { ICatalogDateDataset } from "../src/ldm/catalog/dateDataset/index.js";
+import { IAttributeDisplayFormMetadataObject } from "../src/ldm/metadata/attributeDisplayForm/index.js";
+import { idRef } from "../src/index.js";
 
 const catalogDisplayForm: IAttributeDisplayFormMetadataObject = {
     type: "displayForm",

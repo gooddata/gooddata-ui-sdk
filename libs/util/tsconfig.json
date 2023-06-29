@@ -4,17 +4,17 @@
         "target": "es2017",
         "jsx": "react",
         "lib": ["es2017", "dom"],
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "esModuleInterop": true,
         "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "dist",
+        "outDir": "./esm",
         "sourceMap": true,
         "baseUrl": ".."
     },
     "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "esm", "**/__mocks__/**/*"]
 }

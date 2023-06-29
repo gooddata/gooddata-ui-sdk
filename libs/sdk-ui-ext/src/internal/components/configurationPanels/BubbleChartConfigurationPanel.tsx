@@ -3,25 +3,25 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import NameSubsection from "../configurationControls/axis/NameSubsection";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection";
-import ConfigSection from "../configurationControls/ConfigSection";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
-import CheckboxControl from "../configurationControls/CheckboxControl";
-import MinMaxControl from "../configurationControls//MinMaxControl";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import MinMaxControl from "../configurationControls/MinMaxControl.js";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
+} from "../../constants/bubble.js";
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { messages } from "../../../locales";
+import { messages } from "../../../locales.js";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

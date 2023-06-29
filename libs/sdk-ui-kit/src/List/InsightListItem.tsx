@@ -5,10 +5,10 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
-import { InsightListItemDate, getDateTimeConfig } from "./InsightListItemDate";
-import { Button } from "../Button";
-import { ShortenedText } from "../ShortenedText";
-import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel";
+import { InsightListItemDate, getDateTimeConfig } from "./InsightListItemDate.js";
+import { Button } from "../Button/index.js";
+import { ShortenedText } from "../ShortenedText/index.js";
+import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel/index.js";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";

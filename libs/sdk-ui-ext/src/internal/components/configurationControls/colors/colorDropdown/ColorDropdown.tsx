@@ -5,9 +5,9 @@ import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette }
 import { v4 as uuidv4 } from "uuid";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
 
-import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
-import ColorPalette from "./ColorPalette";
-import CustomColorButton from "./CustomColorButton";
+import ColorOverlay, { DropdownVersionType } from "./ColorOverlay.js";
+import ColorPalette from "./ColorPalette.js";
+import CustomColorButton from "./CustomColorButton.js";
 
 export enum IconPosition {
     Down,

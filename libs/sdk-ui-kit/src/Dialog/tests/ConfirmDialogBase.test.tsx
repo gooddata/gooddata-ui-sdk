@@ -1,9 +1,16 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { ConfirmDialogBase } from "../ConfirmDialogBase";
+import { ConfirmDialogBase } from "../ConfirmDialogBase.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("ConfirmDialogBase", () => {
     it("should render content", () => {
@@ -17,7 +24,7 @@ describe("ConfirmDialogBase", () => {
     });
 
     it("should call cancel handler", async () => {
-        const cancelSpy = jest.fn();
+        const cancelSpy = vi.fn();
         render(
             <ConfirmDialogBase onCancel={cancelSpy} cancelButtonText="Cancel">
                 ConfirmDialogBase content
@@ -29,7 +36,7 @@ describe("ConfirmDialogBase", () => {
     });
 
     it("should call submit handler", async () => {
-        const submitSpy = jest.fn();
+        const submitSpy = vi.fn();
         render(
             <ConfirmDialogBase onSubmit={submitSpy} submitButtonText="Submit">
                 ConfirmDialogBase content

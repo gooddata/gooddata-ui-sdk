@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import isFunction from "lodash/isFunction";
-import isString from "lodash/isString";
-import toPairs from "lodash/toPairs";
+import isFunction from "lodash/isFunction.js";
+import isString from "lodash/isString.js";
+import toPairs from "lodash/toPairs.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { factoryNotationFor } from "@gooddata/sdk-model";
 

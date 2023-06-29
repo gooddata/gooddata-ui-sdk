@@ -9,23 +9,23 @@ import {
     IAttributeDisplayFormMetadataObject,
     isKpiWidget,
 } from "@gooddata/sdk-model";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../converters";
-import isEmpty from "lodash/isEmpty";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
+import isEmpty from "lodash/isEmpty.js";
 import { SagaIterator } from "redux-saga";
 import { select, call, SagaReturnType } from "redux-saga/effects";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap";
-import invariant from "ts-invariant";
-import { IDashboardFilter } from "../../types";
-import { invalidQueryArguments } from "../events/general";
-import { QueryWidgetBrokenAlerts } from "../queries/widgets";
-import { selectAlertByWidgetRef } from "../store/alerts/alertsSelectors";
-import { selectFilterContextFilters } from "../store/filterContext/filterContextSelectors";
-import { selectAnalyticalWidgetByRef } from "../store/layout/layoutSelectors";
-import { createQueryService } from "../store/_infra/queryService";
-import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
-import { DashboardContext } from "../types/commonTypes";
-import { resolveDisplayFormMetadata } from "../utils/displayFormResolver";
-import { getBrokenAlertFiltersBasicInfo } from "../utils/alertsUtils";
+import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { invariant } from "ts-invariant";
+import { IDashboardFilter } from "../../types.js";
+import { invalidQueryArguments } from "../events/general.js";
+import { QueryWidgetBrokenAlerts } from "../queries/widgets.js";
+import { selectAlertByWidgetRef } from "../store/alerts/alertsSelectors.js";
+import { selectFilterContextFilters } from "../store/filterContext/filterContextSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../store/layout/layoutSelectors.js";
+import { createQueryService } from "../store/_infra/queryService.js";
+import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
+import { getBrokenAlertFiltersBasicInfo } from "../utils/alertsUtils.js";
 
 export const QueryWidgetBrokenAlertService = createQueryService(
     "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS",

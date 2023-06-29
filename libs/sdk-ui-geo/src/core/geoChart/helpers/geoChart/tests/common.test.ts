@@ -7,12 +7,13 @@ import {
     isDataOfReasonableSize,
     isLocationSet,
     isPointsConfigChanged,
-} from "../../geoChart/common";
-import { ColorBucket, LocationBucket, SegmentBucket, SizeBucket, TooltipBucket } from "./fixtures";
-import { IGeoData, IGeoPointsConfig } from "../../../../../GeoChart";
+} from "../common.js";
+import { ColorBucket, LocationBucket, SegmentBucket, SizeBucket, TooltipBucket } from "./fixtures.js";
+import { IGeoData, IGeoPointsConfig } from "../../../../../GeoChart.js";
 import { IColorAssignment } from "@gooddata/sdk-ui";
-import { RecShortcuts } from "../../../../../../__mocks__/recordings";
+import { RecShortcuts } from "../../../../../../__mocks__/recordings.js";
 import { IBucket } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
 describe("common", () => {
     describe("isDataOfReasonableSize", () => {

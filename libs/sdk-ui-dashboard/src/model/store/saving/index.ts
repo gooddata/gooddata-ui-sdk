@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
-import { savingInitialState } from "./savingState";
-import { savingReducers } from "./savingReducers";
+import { savingInitialState } from "./savingState.js";
+import { savingReducers } from "./savingReducers.js";
 
 const savingSlice = createSlice({
     name: "savingSlice",

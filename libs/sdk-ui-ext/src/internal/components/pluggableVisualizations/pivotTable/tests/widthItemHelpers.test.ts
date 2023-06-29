@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
-import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization";
+import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization.js";
 
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,
@@ -12,10 +12,11 @@ import {
     validMeasureColumnWidthItem,
     validAllMeasureColumnWidthItem,
     validWeakMeasureColumnWidthItem,
-} from "./widthItemsMock";
-import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers";
+} from "./widthItemsMock.js";
+import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 import { uriRef } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
 describe("adaptReferencePointWidthItemsToPivotTable", () => {
     const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;

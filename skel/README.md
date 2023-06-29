@@ -15,12 +15,12 @@ Alternatively, if you would like to create a new non-production tooling, use [cr
 
 ## sdk-skel-ts
 
-Pure TypeScript project. Jest for testing.
+Pure TypeScript project. Vitest for testing.
 
 Use this for new headless libraries.
 
 ## sdk-skel-tsx
 
-TypeScript + React project. Jest, React Testing Library and Storybook for testing.
+TypeScript + React project. Vitest, React Testing Library and Storybook for testing.
 
 Use this for new UI components.

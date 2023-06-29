@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     ChangeKpiWidgetFilterSettings,
     disableKpiWidgetDateFilter,
@@ -9,7 +10,7 @@ import {
     replaceKpiWidgetFilterSettings,
     replaceKpiWidgetIgnoredFilters,
     unignoreFilterOnKpiWidget,
-} from "../../../commands";
+} from "../../../commands/index.js";
 import {
     attributeDisplayFormRef,
     idRef,
@@ -17,14 +18,14 @@ import {
     uriRef,
     isDashboardAttributeFilterReference,
 } from "@gooddata/sdk-model";
-import { DashboardCommandFailed, DashboardKpiWidgetFilterSettingsChanged } from "../../../events";
-import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { DashboardCommandFailed, DashboardKpiWidgetFilterSettingsChanged } from "../../../events/index.js";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     ComplexDashboardFilters,
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 
 function ignoredWidgetFilterRefs(tester: DashboardTester, ref: ObjRef) {
     const widget = selectAnalyticalWidgetByRef(ref)(tester.state());
@@ -43,11 +44,12 @@ describe("change KPI widget filter settings handler", () => {
     const WidgetWithAllFilters = ComplexDashboardWidgets.FirstSection.LastKpi;
 
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, ComplexDashboardIdentifier),
-    );
+        }, ComplexDashboardIdentifier);
+    });
 
     describe("for replace settings operation", () => {
         const TestWidgetRef = WidgetWithNoFilters.ref;

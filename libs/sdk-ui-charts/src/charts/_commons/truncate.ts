@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import isArray from "lodash/isArray";
+import isArray from "lodash/isArray.js";
 
 export function truncate<T>(items: T | T[], maxLength: number): T[] {
     if (!items) {

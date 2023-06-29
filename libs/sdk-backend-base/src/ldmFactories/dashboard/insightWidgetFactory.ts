@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     ObjRef,
     VisualizationProperties,
@@ -9,8 +9,8 @@ import {
     isInsightWidgetDefinition,
     isInsightWidget,
 } from "@gooddata/sdk-model";
-import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory";
-import { ValueOrUpdateCallback } from "../builder";
+import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
+import { ValueOrUpdateCallback } from "../builder.js";
 
 /**
  * Insight widget builder

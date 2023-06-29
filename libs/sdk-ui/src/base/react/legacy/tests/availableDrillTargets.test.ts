@@ -3,8 +3,9 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { getAvailableDrillTargets } from "../availableDrillTargets";
-import { DataViewFacade } from "../../../results/facade";
+import { getAvailableDrillTargets } from "../availableDrillTargets.js";
+import { DataViewFacade } from "../../../results/facade.js";
+import { describe, expect, it } from "vitest";
 
 describe("getAvailableDrillTargets", () => {
     const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(

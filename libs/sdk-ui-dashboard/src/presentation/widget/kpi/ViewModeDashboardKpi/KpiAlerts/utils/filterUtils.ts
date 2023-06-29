@@ -9,7 +9,7 @@ import {
     relativeDateFilterValues,
     IWidgetDefinition,
 } from "@gooddata/sdk-model";
-import last from "lodash/last";
+import last from "lodash/last.js";
 
 export function isAlertingTemporarilyDisabledForGivenFilter(
     kpi: IWidgetDefinition,

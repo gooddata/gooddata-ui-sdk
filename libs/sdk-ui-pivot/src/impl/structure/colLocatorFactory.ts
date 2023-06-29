@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes";
+import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
     ITotalColumnLocator,
     IAttributeColumnLocator,
     IMeasureColumnLocator,
-} from "../../columnWidths";
+} from "../../columnWidths.js";
 import {
     IMeasureDescriptor,
     IAttributeDescriptor,
@@ -15,7 +15,7 @@ import {
     IResultTotalHeader,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import zip from "lodash/zip";
+import zip from "lodash/zip.js";
 
 function createAttributeLocator(
     descriptor: IAttributeDescriptor | undefined,

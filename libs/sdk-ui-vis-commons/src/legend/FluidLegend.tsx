@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import noop from "lodash/noop";
-import { LegendList } from "./LegendList";
-import { calculateFluidLegend } from "./helpers";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
+import noop from "lodash/noop.js";
+import { LegendList } from "./LegendList.js";
+import { calculateFluidLegend } from "./helpers.js";
+import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
 
 /**
  * @internal

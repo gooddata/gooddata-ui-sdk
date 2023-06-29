@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IKpiDeleteDialogProps } from "./types";
+import { IKpiDeleteDialogProps } from "./types.js";
 import {
     dispatchAndWaitFor,
     eagerRemoveSectionItem,
@@ -11,7 +11,7 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../model";
+} from "../../model/index.js";
 
 /**
  * @internal

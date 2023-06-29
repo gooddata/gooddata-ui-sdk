@@ -1,11 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import moment from "moment";
 import { createIntlMock, withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
 
-import { TimePickerProps, WrappedTimepicker } from "../Timepicker";
+import { TimePickerProps, WrappedTimepicker } from "../Timepicker.js";
 
 describe("TimePicker", () => {
     const TEST_TIME = new Date();
@@ -61,15 +61,15 @@ describe("TimePicker", () => {
             );
 
             it("should call onChange with time", async () => {
-                const onChange = jest.fn();
+                const onChange = vi.fn();
                 const expectedTime = moment(TEST_TIME);
                 expectedTime.hours(1).minutes(30);
                 renderComponent({
                     onChange,
                 });
 
-                await userEvent.click(screen.getByText("09:30 AM"));
-                await userEvent.click(screen.getByText("01:30 AM"));
+                fireEvent.click(screen.getByText("09:30 AM"));
+                fireEvent.click(screen.getByText("01:30 AM"));
 
                 expect(onChange).toHaveBeenCalledTimes(1);
                 await waitFor(() => {

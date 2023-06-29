@@ -1,27 +1,27 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tiger dateFilterConfigs should load date filter configs 1`] = `
+exports[`tiger dateFilterConfigs > should load date filter configs 1`] = `
 InMemoryPaging {
-  "allItems": Array [
-    Object {
-      "absoluteForm": Object {
+  "allItems": [
+    {
+      "absoluteForm": {
         "localIdentifier": "ABSOLUTE_FORM",
         "name": "",
         "type": "absoluteForm",
         "visible": true,
       },
-      "absolutePresets": Array [],
-      "allTime": Object {
+      "absolutePresets": [],
+      "allTime": {
         "localIdentifier": "ALL_TIME",
         "name": "",
         "type": "allTime",
         "visible": true,
       },
-      "ref": Object {
+      "ref": {
         "identifier": "defaultDateFilterProjectConfig",
       },
-      "relativeForm": Object {
-        "availableGranularities": Array [
+      "relativeForm": {
+        "availableGranularities": [
           "GDC.time.month",
           "GDC.time.minute",
           "GDC.time.hour",
@@ -35,8 +35,8 @@ InMemoryPaging {
         "type": "relativeForm",
         "visible": true,
       },
-      "relativePresets": Array [
-        Object {
+      "relativePresets": [
+        {
           "from": -14,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_15_MINUTES",
@@ -45,7 +45,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -29,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_30_MINUTES",
@@ -54,7 +54,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -44,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_45_MINUTES",
@@ -63,7 +63,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -59,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_60_MINUTES",
@@ -72,7 +72,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_HOUR",
@@ -81,7 +81,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -7,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_8_HOURS",
@@ -90,7 +90,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -11,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_12_HOURS",
@@ -99,7 +99,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -23,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_24_HOURS",
@@ -108,7 +108,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "THIS_WEEK",
@@ -117,7 +117,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_WEEK",
@@ -126,7 +126,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_2_WEEKS",
@@ -135,7 +135,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.date",
           "localIdentifier": "TODAY",
@@ -144,7 +144,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.date",
           "localIdentifier": "YESTERDAY",
@@ -153,7 +153,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -6,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_7_DAYS",
@@ -162,7 +162,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -29,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_30_DAYS",
@@ -171,7 +171,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -89,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_90_DAYS",
@@ -180,7 +180,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.month",
           "localIdentifier": "THIS_MONTH",
@@ -189,7 +189,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_MONTH",
@@ -198,7 +198,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -11,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_12_MONTHS",
@@ -207,7 +207,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "THIS_QUARTER",
@@ -216,7 +216,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_QUARTER",
@@ -225,7 +225,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -3,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_4_QUARTERS",
@@ -234,7 +234,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.year",
           "localIdentifier": "THIS_YEAR",
@@ -243,7 +243,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.year",
           "localIdentifier": "LAST_YEAR",
@@ -256,26 +256,26 @@ InMemoryPaging {
       "selectedOption": "THIS_MONTH",
     },
   ],
-  "items": Array [
-    Object {
-      "absoluteForm": Object {
+  "items": [
+    {
+      "absoluteForm": {
         "localIdentifier": "ABSOLUTE_FORM",
         "name": "",
         "type": "absoluteForm",
         "visible": true,
       },
-      "absolutePresets": Array [],
-      "allTime": Object {
+      "absolutePresets": [],
+      "allTime": {
         "localIdentifier": "ALL_TIME",
         "name": "",
         "type": "allTime",
         "visible": true,
       },
-      "ref": Object {
+      "ref": {
         "identifier": "defaultDateFilterProjectConfig",
       },
-      "relativeForm": Object {
-        "availableGranularities": Array [
+      "relativeForm": {
+        "availableGranularities": [
           "GDC.time.month",
           "GDC.time.minute",
           "GDC.time.hour",
@@ -289,8 +289,8 @@ InMemoryPaging {
         "type": "relativeForm",
         "visible": true,
       },
-      "relativePresets": Array [
-        Object {
+      "relativePresets": [
+        {
           "from": -14,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_15_MINUTES",
@@ -299,7 +299,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -29,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_30_MINUTES",
@@ -308,7 +308,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -44,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_45_MINUTES",
@@ -317,7 +317,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -59,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_60_MINUTES",
@@ -326,7 +326,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_HOUR",
@@ -335,7 +335,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -7,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_8_HOURS",
@@ -344,7 +344,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -11,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_12_HOURS",
@@ -353,7 +353,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -23,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_24_HOURS",
@@ -362,7 +362,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "THIS_WEEK",
@@ -371,7 +371,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_WEEK",
@@ -380,7 +380,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_2_WEEKS",
@@ -389,7 +389,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.date",
           "localIdentifier": "TODAY",
@@ -398,7 +398,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.date",
           "localIdentifier": "YESTERDAY",
@@ -407,7 +407,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -6,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_7_DAYS",
@@ -416,7 +416,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -29,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_30_DAYS",
@@ -425,7 +425,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -89,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_90_DAYS",
@@ -434,7 +434,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.month",
           "localIdentifier": "THIS_MONTH",
@@ -443,7 +443,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_MONTH",
@@ -452,7 +452,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -11,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_12_MONTHS",
@@ -461,7 +461,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "THIS_QUARTER",
@@ -470,7 +470,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_QUARTER",
@@ -479,7 +479,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -3,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_4_QUARTERS",
@@ -488,7 +488,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.year",
           "localIdentifier": "THIS_YEAR",
@@ -497,7 +497,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.year",
           "localIdentifier": "LAST_YEAR",
@@ -516,28 +516,28 @@ InMemoryPaging {
 }
 `;
 
-exports[`tiger dateFilterConfigs should load empty date filter configs for out-of-range page 1`] = `
+exports[`tiger dateFilterConfigs > should load empty date filter configs for out-of-range page 1`] = `
 InMemoryPaging {
-  "allItems": Array [
-    Object {
-      "absoluteForm": Object {
+  "allItems": [
+    {
+      "absoluteForm": {
         "localIdentifier": "ABSOLUTE_FORM",
         "name": "",
         "type": "absoluteForm",
         "visible": true,
       },
-      "absolutePresets": Array [],
-      "allTime": Object {
+      "absolutePresets": [],
+      "allTime": {
         "localIdentifier": "ALL_TIME",
         "name": "",
         "type": "allTime",
         "visible": true,
       },
-      "ref": Object {
+      "ref": {
         "identifier": "defaultDateFilterProjectConfig",
       },
-      "relativeForm": Object {
-        "availableGranularities": Array [
+      "relativeForm": {
+        "availableGranularities": [
           "GDC.time.month",
           "GDC.time.minute",
           "GDC.time.hour",
@@ -551,8 +551,8 @@ InMemoryPaging {
         "type": "relativeForm",
         "visible": true,
       },
-      "relativePresets": Array [
-        Object {
+      "relativePresets": [
+        {
           "from": -14,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_15_MINUTES",
@@ -561,7 +561,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -29,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_30_MINUTES",
@@ -570,7 +570,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -44,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_45_MINUTES",
@@ -579,7 +579,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -59,
           "granularity": "GDC.time.minute",
           "localIdentifier": "LAST_60_MINUTES",
@@ -588,7 +588,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_HOUR",
@@ -597,7 +597,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -7,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_8_HOURS",
@@ -606,7 +606,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -11,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_12_HOURS",
@@ -615,7 +615,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -23,
           "granularity": "GDC.time.hour",
           "localIdentifier": "LAST_24_HOURS",
@@ -624,7 +624,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "THIS_WEEK",
@@ -633,7 +633,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_WEEK",
@@ -642,7 +642,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.week_us",
           "localIdentifier": "LAST_2_WEEKS",
@@ -651,7 +651,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.date",
           "localIdentifier": "TODAY",
@@ -660,7 +660,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.date",
           "localIdentifier": "YESTERDAY",
@@ -669,7 +669,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -6,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_7_DAYS",
@@ -678,7 +678,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -29,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_30_DAYS",
@@ -687,7 +687,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -89,
           "granularity": "GDC.time.date",
           "localIdentifier": "LAST_90_DAYS",
@@ -696,7 +696,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.month",
           "localIdentifier": "THIS_MONTH",
@@ -705,7 +705,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_MONTH",
@@ -714,7 +714,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -11,
           "granularity": "GDC.time.month",
           "localIdentifier": "LAST_12_MONTHS",
@@ -723,7 +723,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "THIS_QUARTER",
@@ -732,7 +732,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_QUARTER",
@@ -741,7 +741,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -3,
           "granularity": "GDC.time.quarter",
           "localIdentifier": "LAST_4_QUARTERS",
@@ -750,7 +750,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": 0,
           "granularity": "GDC.time.year",
           "localIdentifier": "THIS_YEAR",
@@ -759,7 +759,7 @@ InMemoryPaging {
           "type": "relativePreset",
           "visible": true,
         },
-        Object {
+        {
           "from": -1,
           "granularity": "GDC.time.year",
           "localIdentifier": "LAST_YEAR",
@@ -772,7 +772,7 @@ InMemoryPaging {
       "selectedOption": "THIS_MONTH",
     },
   ],
-  "items": Array [],
+  "items": [],
   "limit": 10,
   "offset": 1,
   "totalCount": 1,

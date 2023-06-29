@@ -1,11 +1,11 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { Typography } from "../../../Typography";
-import { AddUserOrGroupButton } from "./AddGranteeButton";
-import { GranteeList } from "./GranteeList";
-import { GranteeListLoading } from "./GranteeListLoading";
-import { IShareGranteeContentProps } from "./types";
+import { Typography } from "../../../Typography/index.js";
+import { AddUserOrGroupButton } from "./AddGranteeButton.js";
+import { GranteeList } from "./GranteeList.js";
+import { GranteeListLoading } from "./GranteeListLoading.js";
+import { IShareGranteeContentProps } from "./types.js";
 
 /**
  * @internal

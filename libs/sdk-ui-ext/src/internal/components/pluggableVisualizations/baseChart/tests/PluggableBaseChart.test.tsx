@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
 import {
     BucketNames,
     DefaultLocale,
@@ -9,27 +9,30 @@ import {
     IDrillEventIntersectionElement,
 } from "@gooddata/sdk-ui";
 import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
-import { PluggableBaseChart } from "../PluggableBaseChart";
-import * as testMocks from "../../../../tests/mocks/testMocks";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
+import { PluggableBaseChart } from "../PluggableBaseChart.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IAttribute, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
-import { Region } from "@gooddata/reference-workspace/dist/md/full";
+import noop from "lodash/noop.js";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     createDrillEvent,
     insightDefinitionToInsight,
     createDrillDefinition,
     getLastRenderEl,
-} from "../../tests/testHelpers";
+} from "../../tests/testHelpers.js";
 import {
     sourceInsightDef,
     intersection,
     expectedInsightDefRegion,
     targetUri,
-} from "./getInsightWithDrillDownAppliedMock";
-import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties";
+} from "./getInsightWithDrillDownAppliedMock.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
+
+const { Region } = ReferenceMd;
 
 describe("PluggableBaseChart", () => {
     const noneEnvironment: VisualizationEnvironment = "none";
@@ -39,7 +42,7 @@ describe("PluggableBaseChart", () => {
     const emptyPropertiesMeta = {};
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
 
     const callbacks: any = {
         afterRender: noop,
@@ -86,7 +89,7 @@ describe("PluggableBaseChart", () => {
     });
 
     it("should not render chart when insight has no data to render", () => {
-        const onError = jest.fn();
+        const onError = vi.fn();
         const props = {
             ...defaultProps,
             callbacks: {
@@ -111,7 +114,7 @@ describe("PluggableBaseChart", () => {
     });
 
     it("should not render chart when insight has no measure", () => {
-        const onError = jest.fn();
+        const onError = vi.fn();
         const props = {
             ...defaultProps,
             callbacks: {

@@ -5,12 +5,12 @@ import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterDropdownActionsProps } from "@gooddata/sdk-ui-filters";
 import { action } from "@storybook/addon-actions";
 
-import { storiesOf } from "../../../../_infra/storyRepository";
-import { FilterStories } from "../../../../_infra/storyGroups";
-import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend";
+import { storiesOf } from "../../../../_infra/storyRepository.js";
+import { FilterStories } from "../../../../_infra/storyGroups.js";
+import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
-import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper";
+import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();

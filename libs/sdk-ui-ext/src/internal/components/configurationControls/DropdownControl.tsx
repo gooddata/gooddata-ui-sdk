@@ -2,13 +2,13 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 
-import DisabledBubbleMessage from "../DisabledBubbleMessage";
-import { getTranslation } from "../../utils/translations";
-import { IVisualizationProperties } from "../../interfaces/Visualization";
-import { IDropdownItem } from "../../interfaces/Dropdown";
+import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { getTranslation } from "../../utils/translations.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { IDropdownItem } from "../../interfaces/Dropdown.js";
 
 export interface IDropdownControlProps {
     valuePath: string;

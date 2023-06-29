@@ -3,11 +3,11 @@ import React, { useCallback } from "react";
 import { GoodDataSdkError, IDrillEventContext } from "@gooddata/sdk-ui";
 import { IFilter, IKpiWidget, IKpiWidgetDefinition, ISeparators } from "@gooddata/sdk-model";
 
-import { OnFiredDashboardDrillEvent } from "../../../../types";
+import { OnFiredDashboardDrillEvent } from "../../../../types.js";
 
-import { KpiContent } from "./KpiContent";
-import { IKpiResult } from "./types";
-import { useDashboardSelector, selectIsInEditMode } from "../../../../model";
+import { KpiContent } from "./KpiContent/index.js";
+import { IKpiResult } from "./types.js";
+import { useDashboardSelector, selectIsInEditMode } from "../../../../model/index.js";
 
 interface IKpiRendererProps {
     kpi: IKpiWidget | IKpiWidgetDefinition;

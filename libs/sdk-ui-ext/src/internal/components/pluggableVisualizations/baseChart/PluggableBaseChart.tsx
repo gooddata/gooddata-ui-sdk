@@ -18,14 +18,14 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
-import { BUCKETS } from "../../../constants/bucket";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
-import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT } from "../../../constants/uiConfig";
-import { AxisType } from "../../../interfaces/AxisType";
-import { IColorConfiguration } from "../../../interfaces/Colors";
+import { BUCKETS } from "../../../constants/bucket.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT } from "../../../constants/uiConfig.js";
+import { AxisType } from "../../../interfaces/AxisType.js";
+import { IColorConfiguration } from "../../../interfaces/Colors.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -38,9 +38,9 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
-} from "../../../interfaces/Visualization";
-import { IAvailableSortsGroup } from "../../../interfaces/SortConfig";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
     filterOutDerivedMeasures,
@@ -51,10 +51,10 @@ import {
     getStackItems,
     isNotDateBucketItem,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
-import { getValidProperties } from "../../../utils/colors";
-import { generateDimensions } from "../../../utils/dimensions";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+} from "../../../utils/bucketHelper.js";
+import { getValidProperties } from "../../../utils/colors.js";
+import { generateDimensions } from "../../../utils/dimensions.js";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
@@ -62,24 +62,24 @@ import {
     isEmptyObject,
     getChartSupportedControls,
     getChartSupportedControlsDashboardsEnv,
-} from "../../../utils/propertiesHelper";
-import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort";
-import { getTranslation } from "../../../utils/translations";
+} from "../../../utils/propertiesHelper.js";
+import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort.js";
+import { getTranslation } from "../../../utils/translations.js";
 
 import {
     setBaseChartUiConfig,
     setBaseChartUiConfigRecommendations,
-} from "../../../utils/uiConfigHelpers/baseChartUiConfigHelper";
-import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
+} from "../../../utils/uiConfigHelpers/baseChartUiConfigHelper.js";
+import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper.js";
 
-import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import set from "lodash/set";
-import tail from "lodash/tail";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
-import { messages } from "../../../../locales";
+import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import set from "lodash/set.js";
+import tail from "lodash/tail.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+import { messages } from "../../../../locales.js";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;

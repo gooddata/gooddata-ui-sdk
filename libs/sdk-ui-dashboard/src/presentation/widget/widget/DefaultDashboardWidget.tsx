@@ -5,16 +5,16 @@ import { isWidget, isInsightWidget, isDashboardWidget, widgetRef } from "@goodda
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
-import { useDashboardEventDispatch } from "../../../model";
+import { useDashboardEventDispatch } from "../../../model/index.js";
 import {
     widgetExecutionFailed,
     widgetExecutionStarted,
     widgetExecutionSucceeded,
-} from "../../../model/events/widget";
-import { IDashboardWidgetProps } from "./types";
-import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef";
-import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget";
-import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget";
+} from "../../../model/events/widget.js";
+import { IDashboardWidgetProps } from "./types.js";
+import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
+import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
+import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 
 /**
  * @internal

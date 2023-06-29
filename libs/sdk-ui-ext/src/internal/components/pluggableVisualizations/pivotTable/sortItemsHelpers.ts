@@ -19,10 +19,10 @@ import {
     measureLocalId,
     newAttributeSort,
 } from "@gooddata/sdk-model";
-import includes from "lodash/includes";
-import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization";
+import includes from "lodash/includes.js";
+import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { isAttributeFilter } from "../../../utils/bucketHelper";
+import { isAttributeFilter } from "../../../utils/bucketHelper.js";
 
 function filterInvalidSortItems(
     originalSortItems: ISortItem[],

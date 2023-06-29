@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableSankeyChart sankey should allow date attribute in attribute (from/to) 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableSankeyChart > sankey should allow date attribute in attribute (from/to) 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -16,17 +16,17 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.datedataset",
-          "filters": Array [
-            Object {
+          "filters": [
+            {
               "attribute": "attr.datedataset",
-              "interval": Object {
+              "interval": {
                 "granularity": "GDC.year",
-                "interval": Array [
+                "interval": [
                   -1,
                   0,
                 ],
@@ -43,22 +43,22 @@ Object {
       ],
       "localIdentifier": "attribute_from",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "attribute_to",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.datedataset",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.datedataset",
-            "interval": Object {
+            "interval": {
               "granularity": "GDC.year",
-              "interval": Array [
+              "interval": [
                 -1,
                 0,
               ],
@@ -74,10 +74,10 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "uiConfig": Object {
-    "buckets": Object {
-      "attribute_from": Object {
-        "accepts": Array [
+  "uiConfig": {
+    "buckets": {
+      "attribute_from": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -88,14 +88,14 @@ Object {
         "icon": "local:sankey/bucket-title-from.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "subtitle": "from",
         "title": "Attribute",
       },
-      "attribute_to": Object {
-        "accepts": Array [
+      "attribute_to": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -106,14 +106,14 @@ Object {
         "icon": "local:sankey/bucket-title-to.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "subtitle": "to",
         "title": "Attribute",
       },
-      "filters": Object {
-        "accepts": Array [
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -121,12 +121,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -143,24 +143,24 @@ Object {
         "title": "MEASURE",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableSankeyChart should return reference point with one metric, attributeFrom, attributeTo and valid filters 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableSankeyChart > should return reference point with one metric, attributeFrom, attributeTo and valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -171,12 +171,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -185,12 +185,12 @@ Object {
       ],
       "localIdentifier": "attribute_from",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -200,17 +200,17 @@ Object {
       "localIdentifier": "attribute_to",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {
-    "sortItems": Array [],
+  "properties": {
+    "sortItems": [],
   },
-  "uiConfig": Object {
-    "buckets": Object {
-      "attribute_from": Object {
-        "accepts": Array [
+  "uiConfig": {
+    "buckets": {
+      "attribute_from": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -221,14 +221,14 @@ Object {
         "icon": "local:sankey/bucket-title-from.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "subtitle": "from",
         "title": "Attribute",
       },
-      "attribute_to": Object {
-        "accepts": Array [
+      "attribute_to": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -239,14 +239,14 @@ Object {
         "icon": "local:sankey/bucket-title-to.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "subtitle": "to",
         "title": "Attribute",
       },
-      "filters": Object {
-        "accepts": Array [
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -254,12 +254,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -276,24 +276,24 @@ Object {
         "title": "MEASURE",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableSankeyChart should reuse one measure and order attribute types 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableSankeyChart > should reuse one measure and order attribute types 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -304,12 +304,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -318,12 +318,12 @@ Object {
       ],
       "localIdentifier": "attribute_from",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -333,20 +333,20 @@ Object {
       "localIdentifier": "attribute_to",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -357,18 +357,18 @@ Object {
         "localIdentifier": "a1",
         "type": "attribute",
       },
-      Object {
+      {
         "aggregation": null,
         "attribute": "attr.stage.iswon",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.stage.iswon",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "iswon/attribute/df/uri",
             },
             "isInverted": true,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -382,20 +382,20 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {
-    "sortItems": Array [
-      Object {
-        "attributeSortItem": Object {
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
           "attributeIdentifier": "a1",
           "direction": "asc",
         },
       },
     ],
   },
-  "uiConfig": Object {
-    "buckets": Object {
-      "attribute_from": Object {
-        "accepts": Array [
+  "uiConfig": {
+    "buckets": {
+      "attribute_from": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -406,14 +406,14 @@ Object {
         "icon": "local:sankey/bucket-title-from.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "subtitle": "from",
         "title": "Attribute",
       },
-      "attribute_to": Object {
-        "accepts": Array [
+      "attribute_to": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -424,14 +424,14 @@ Object {
         "icon": "local:sankey/bucket-title-to.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "subtitle": "to",
         "title": "Attribute",
       },
-      "filters": Object {
-        "accepts": Array [
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -439,12 +439,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -461,14 +461,14 @@ Object {
         "title": "MEASURE",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;

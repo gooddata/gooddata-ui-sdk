@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { useNumberState } from "./useNumberState";
+import { useNumberState } from "./useNumberState.js";
 
 export function useRightInScrollable(): {
     right: number;

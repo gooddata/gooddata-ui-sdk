@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
-import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../../objRef";
-import { IMeasureFilter } from "../filter";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../../objRef/index.js";
+import { IMeasureFilter } from "../filter/index.js";
 
 /**
  * Available measure definitions; this is union of simple measure, arithmetic measure, PoP measure and

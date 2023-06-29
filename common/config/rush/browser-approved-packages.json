@@ -28,7 +28,7 @@
     },
     {
       "name": "@babel/plugin-proposal-class-properties",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-proposal-export-default-from",
@@ -36,11 +36,11 @@
     },
     {
       "name": "@babel/plugin-proposal-object-rest-spread",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-transform-async-to-generator",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/plugin-transform-typescript",
@@ -48,7 +48,7 @@
     },
     {
       "name": "@babel/polyfill",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/preset-env",
@@ -64,7 +64,7 @@
     },
     {
       "name": "@babel/runtime",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@braintree/sanitize-url",
@@ -132,11 +132,11 @@
     },
     {
       "name": "@gooddata/plugin-toolkit",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@gooddata/reference-workspace",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-base",
@@ -148,7 +148,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-mockingbird",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-spi",
@@ -196,7 +196,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-loaders",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-pivot",
@@ -204,7 +204,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-theme-provider",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-vis-commons",
@@ -243,10 +243,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addons",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@storybook/builder-webpack5",
       "allowedCategories": [ "production" ]
     },
@@ -271,16 +267,8 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/theming",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@testing-library/dom",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@testing-library/jest-dom",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@testing-library/react",
@@ -292,10 +280,6 @@
     },
     {
       "name": "@types/blessed",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/cliff",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -339,10 +323,6 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "@types/jest",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@types/json-stable-stringify",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -372,7 +352,7 @@
     },
     {
       "name": "@types/pdf-parse",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/prettier",
@@ -431,10 +411,6 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "@types/react-select",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "@types/react-syntax-highlighter",
       "allowedCategories": [ "examples" ]
     },
@@ -456,7 +432,7 @@
     },
     {
       "name": "@types/spark-md5",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/stringify-object",
@@ -467,11 +443,11 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@types/testing-library__jest-dom",
-      "allowedCategories": [ "production", "tools" ]
+      "name": "@types/tinycolor2",
+      "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/tinycolor2",
+      "name": "@types/tough-cookie",
       "allowedCategories": [ "production" ]
     },
     {
@@ -479,16 +455,8 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/wait-on",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "@types/webpack-env",
       "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@types/xml2js",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
@@ -544,7 +512,7 @@
     },
     {
       "name": "circular-dependency-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "classnames",
@@ -552,7 +520,7 @@
     },
     {
       "name": "clean-webpack-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "codemirror",
@@ -568,7 +536,7 @@
     },
     {
       "name": "compression-webpack-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "concurrently",
@@ -580,7 +548,7 @@
     },
     {
       "name": "copy-webpack-plugin",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "core-js",
@@ -596,11 +564,11 @@
     },
     {
       "name": "cypress",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "cypress-real-events",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "date-fns",
@@ -608,6 +576,10 @@
     },
     {
       "name": "debounce-promise",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "default-import",
       "allowedCategories": [ "production" ]
     },
     {
@@ -631,6 +603,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-import-resolver-typescript",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
       "name": "eslint-plugin-header",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -639,12 +615,12 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "eslint-plugin-jest",
+      "name": "eslint-plugin-import-esm",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "eslint-plugin-jest-dom",
-      "allowedCategories": [ "production" ]
+      "name": "eslint-plugin-jest",
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "eslint-plugin-no-only-tests",
@@ -695,12 +671,16 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "fix-esm-import-path",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "fixed-data-table-2",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "fork-ts-checker-webpack-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "fs-extra",
@@ -709,6 +689,10 @@
     {
       "name": "full-icu",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "happy-dom",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "heroku",
@@ -735,10 +719,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "http-proxy",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
     },
@@ -755,23 +735,15 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "jest",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "jest-environment-jsdom",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "jest-environment-jsdom-fourteen",
+      "name": "js-object-pretty-print",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "jest-junit",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "name": "jsdom",
+      "allowedCategories": [ "production" ]
     },
     {
-      "name": "js-object-pretty-print",
+      "name": "json-loader",
       "allowedCategories": [ "production" ]
     },
     {
@@ -793,10 +765,6 @@
     {
       "name": "lodash",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "lodash-webpack-plugin",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "lru-cache",
@@ -848,7 +816,7 @@
     },
     {
       "name": "pdf-parse",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "polished",
@@ -896,11 +864,11 @@
     },
     {
       "name": "react-dnd",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-dnd-html5-backend",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-dom",
@@ -1016,11 +984,11 @@
     },
     {
       "name": "spark-md5",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "speed-measure-webpack-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "stringify-object",
@@ -1067,10 +1035,6 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "ts-jest",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "ts-loader",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -1095,10 +1059,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "url",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "util",
       "allowedCategories": [ "tools" ]
     },
@@ -1107,8 +1067,16 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "wait-on",
+      "name": "vitest",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "vitest-dom",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "wait-on",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "webpack",
@@ -1128,7 +1096,7 @@
     },
     {
       "name": "xml2js",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     }
   ]
 }

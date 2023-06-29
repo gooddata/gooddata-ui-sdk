@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`move section command handler for dashboard with three sections should emit correct event 1`] = `
-Array [
-  Object {
+exports[`move section command handler > for dashboard with three sections > should emit correct event 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
   },

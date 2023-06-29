@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ActionOptions } from "./types";
+import { ActionOptions } from "./types.js";
 
-import { readPackageJsonIfExists } from "./utils";
+import { readPackageJsonIfExists } from "./utils.js";
 
 /**
  * Config for commands that target a workspace.

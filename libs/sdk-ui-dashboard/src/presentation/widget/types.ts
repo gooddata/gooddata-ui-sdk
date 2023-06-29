@@ -4,7 +4,7 @@ export {
     CustomDashboardInsightComponent,
     IInsightBodyProps,
     CustomInsightBodyComponent,
-} from "./insight/types";
+} from "./insight/types.js";
 export {
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
@@ -15,6 +15,6 @@ export {
     IInsightMenuItem,
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
-} from "./insightMenu/types";
-export { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types";
-export { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types";
+} from "./insightMenu/types.js";
+export { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types.js";
+export { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types.js";

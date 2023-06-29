@@ -2,13 +2,13 @@
 import React from "react";
 import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 import cx from "classnames";
-import range from "lodash/range";
+import range from "lodash/range.js";
 import { ControllerStateAndHelpers } from "downshift";
-import { SelectOption } from "./SelectOption";
-import { SelectHeading } from "./SelectHeading";
-import { SelectSeparator } from "./SelectSeparator";
-import { ISelectItem, ISelectItemOption, SelectItemTypes } from "./types";
-import { getSelectableItems } from "./utils";
+import { SelectOption } from "./SelectOption.js";
+import { SelectHeading } from "./SelectHeading.js";
+import { SelectSeparator } from "./SelectSeparator.js";
+import { ISelectItem, ISelectItemOption, SelectItemTypes } from "./types.js";
+import { getSelectableItems } from "./utils.js";
 
 export interface IOptionGetterProps<V> {
     items: Array<ISelectItem<V>>;

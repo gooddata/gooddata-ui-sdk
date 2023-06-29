@@ -11,8 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { ExtendedDashboardWidget } from "../../types/layoutTypes";
-import { ILayoutCoordinates } from "../../../types";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { ILayoutCoordinates } from "../../../types.js";
 
 export function getWidgetCoordinates(
     layout: IDashboardLayout<ExtendedDashboardWidget>,

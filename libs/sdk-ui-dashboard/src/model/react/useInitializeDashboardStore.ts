@@ -5,12 +5,12 @@ import { useMapboxToken, enrichMapboxToken } from "@gooddata/sdk-ui-geo";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboardWidget, IDashboard, isDashboard } from "@gooddata/sdk-model";
 import { objectUtils } from "@gooddata/util";
-import { IDashboardStoreProviderProps } from "./types";
-import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
-import { DashboardEventHandler } from "../eventHandlers/eventHandler";
-import { initializeDashboardWithPersistedDashboard, InitialLoadCorrelationId } from "../commands";
-import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
-import { dashboardDeinitialized } from "../events/dashboard";
+import { IDashboardStoreProviderProps } from "./types.js";
+import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { initializeDashboardWithPersistedDashboard, InitialLoadCorrelationId } from "../commands/index.js";
+import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore.js";
+import { dashboardDeinitialized } from "../events/dashboard.js";
 
 type InitProps = {
     backend: IAnalyticalBackend;

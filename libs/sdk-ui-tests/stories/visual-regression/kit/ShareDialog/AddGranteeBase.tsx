@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import { AddGranteeBase, ComponentLabelsProvider, IAffectedSharedObject } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -17,12 +17,12 @@ import {
     group,
     groupAll,
     user,
-} from "./GranteeMock";
+} from "./GranteeMock.js";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { idRef } from "@gooddata/sdk-model";
-import { LabelsMock } from "./LabelsMock";
+import { LabelsMock } from "./LabelsMock.js";
 
 const sharedObject: IAffectedSharedObject = {
     ref: idRef("object"),

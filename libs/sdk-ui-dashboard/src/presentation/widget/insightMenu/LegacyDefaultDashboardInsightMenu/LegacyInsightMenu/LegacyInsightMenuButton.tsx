@@ -7,8 +7,8 @@ import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model";
-import { IDashboardInsightMenuButtonProps } from "../../types";
+import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
+import { IDashboardInsightMenuButtonProps } from "../../types.js";
 
 const nonExportableVisTypes: VisType[] = ["headline", "xirr"];
 function isExportableVisualization(visType: VisType): boolean {

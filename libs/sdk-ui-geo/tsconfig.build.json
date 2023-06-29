@@ -1,6 +1,6 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/index.ts", "src/typings.d.ts"],
+    "include": ["src/index.ts", "src/typings.d.ts", "src/core/geoChart/GeoChartOptionsWrapper.ts"],
     "compilerOptions": {
         "baseUrl": null,
         "paths": null,

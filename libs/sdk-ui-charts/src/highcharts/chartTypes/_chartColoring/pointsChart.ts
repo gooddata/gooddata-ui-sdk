@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
-import { IColorMapping } from "../../../interfaces";
+import { IColorMapping } from "../../../interfaces/index.js";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 import {
     isValidMappedColor,
     getColorByGuid,

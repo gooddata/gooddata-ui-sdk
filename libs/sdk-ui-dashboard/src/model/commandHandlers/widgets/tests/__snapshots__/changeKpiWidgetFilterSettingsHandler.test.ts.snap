@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`change KPI widget filter settings handler for replace settings operation should emit correct events 1`] = `
-Array [
-  Object {
+exports[`change KPI widget filter settings handler > for replace settings operation > should emit correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "queryType": "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
     "type": "GDC.DASH/EVT.QUERY.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "queryType": "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
     "type": "GDC.DASH/EVT.QUERY.COMPLETED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED",
   },

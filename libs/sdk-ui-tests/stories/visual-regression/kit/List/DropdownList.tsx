@@ -1,11 +1,11 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { withIntl } from "@gooddata/sdk-ui";
 import { DropdownList, SingleSelectListItem, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const items: ISingleSelectListItemProps[] = [
     {

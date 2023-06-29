@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { IMenuPositionProps } from "../positioning/MenuPosition";
-import { OnOpenedChange } from "../MenuSharedTypes";
+import { IMenuPositionProps } from "../positioning/MenuPosition.js";
+import { OnOpenedChange } from "../MenuSharedTypes.js";
 
 export interface IMenuOpenedBySharedProps extends IMenuPositionProps {
     portalTarget: Element;

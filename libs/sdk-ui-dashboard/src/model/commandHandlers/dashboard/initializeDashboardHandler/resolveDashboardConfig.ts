@@ -5,20 +5,20 @@ import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata
 import { ILocale, resolveLocale } from "@gooddata/sdk-ui";
 import { IColorPalette, ISeparators, ISettings } from "@gooddata/sdk-model";
 
-import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig";
-import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
-import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion";
-import { InitializeDashboard } from "../../../commands";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
+import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
+import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation.js";
+import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion.js";
+import { InitializeDashboard } from "../../../commands/index.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
 import {
     DashboardConfig,
     DashboardContext,
     isResolvedConfig,
     ResolvedDashboardConfig,
-} from "../../../types/commonTypes";
-import { PromiseFnReturnType } from "../../../types/sagas";
-import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings";
-import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError";
+} from "../../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;

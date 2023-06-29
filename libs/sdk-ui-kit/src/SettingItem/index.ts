@@ -1,3 +1,3 @@
 // (C) 2022 GoodData Corporation
-export * from "./typings";
-export { SettingItem } from "./SettingItem";
+export * from "./typings.js";
+export { SettingItem } from "./SettingItem.js";

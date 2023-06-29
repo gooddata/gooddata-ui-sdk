@@ -4,8 +4,8 @@ import { useCallback } from "react";
 import {
     useDashboardDispatch,
     moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
-} from "../../../model";
-import { BaseDraggableMovingItem } from "../types";
+} from "../../../model/index.js";
+import { BaseDraggableMovingItem } from "../types.js";
 
 export function useMoveWidgetToNewSectionDropHandler(newSectionIndex: number) {
     const dispatch = useDashboardDispatch();

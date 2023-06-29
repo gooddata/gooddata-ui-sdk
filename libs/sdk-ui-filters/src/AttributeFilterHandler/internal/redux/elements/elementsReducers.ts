@@ -3,7 +3,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { IAttributeMetadataObject, IMeasure, IRelativeDateFilter, SortDirection } from "@gooddata/sdk-model";
 
-import { AttributeFilterReducer } from "../store/state";
+import { AttributeFilterReducer } from "../store/state.js";
 
 const setElementsTotalCount: AttributeFilterReducer<
     PayloadAction<{

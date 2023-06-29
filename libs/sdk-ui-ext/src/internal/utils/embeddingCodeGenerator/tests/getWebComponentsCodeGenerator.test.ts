@@ -1,7 +1,8 @@
 // (C) 2022-2023 GoodData Corporation
 import { IInsight, newInsightDefinition } from "@gooddata/sdk-model";
 import { IWebComponentsOptions, getHeightWithUnitsForEmbedCode } from "@gooddata/sdk-ui-kit";
-import { getWebComponentsCodeGenerator } from "../getWebComponentsCodeGenerator";
+import { getWebComponentsCodeGenerator } from "../getWebComponentsCodeGenerator.js";
+import { describe, it, expect, beforeAll } from "vitest";
 
 describe("getWebComponentsCodeGenerator", () => {
     const generateWebComponentSnippet = (config: IWebComponentsOptions) => {
@@ -21,12 +22,13 @@ describe("getWebComponentsCodeGenerator", () => {
             height,
         } as IWebComponentsOptions);
     };
+
     beforeAll(() => {
-        delete window.location;
         Object.defineProperty(window, "location", {
             value: new URL("https://localhost"),
         });
     });
+
     it("without any configuration", () => {
         const code = generateWebComponentSnippet({
             type: "webComponents",

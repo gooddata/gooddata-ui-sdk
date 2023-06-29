@@ -1,12 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
-import { newTestAttributeFilterHandler } from "./fixtures";
-import { waitForAsync } from "./testUtils";
-import * as elements from "../internal/redux/elements/loadElements";
+import { newTestAttributeFilterHandler } from "./fixtures.js";
+import { waitForAsync } from "./testUtils.js";
+import * as elements from "../internal/redux/elements/loadElements.js";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
 
 describe("AttributeFilterHandler", () => {
     it("loadCustomElements() should trigger onLoadCustomElementsStart() callback", async () => {
-        const onLoadCustomElementsStart = jest.fn();
+        const onLoadCustomElementsStart = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
@@ -22,7 +23,7 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadCustomElements() that was successful should trigger onLoadCustomElementsSuccess() callback", async () => {
-        const onLoadCustomElementsSuccess = jest.fn();
+        const onLoadCustomElementsSuccess = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
@@ -38,13 +39,13 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadCustomElements() that failed should trigger onLoadCustomElementsError() callback", async () => {
-        const onLoadCustomElementsError = jest.fn();
+        const onLoadCustomElementsError = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
         await waitForAsync();
 
-        jest.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.onLoadCustomElementsError(onLoadCustomElementsError);
         attributeFilterHandler.loadCustomElements({}, "error");
 
@@ -55,7 +56,7 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadCustomElements() that was canceled by cancelCustomElementsLoad() call should trigger onLoadCustomElementsCancel() callback", async () => {
-        const onLoadCustomElementsCancel = jest.fn();
+        const onLoadCustomElementsCancel = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
@@ -71,7 +72,7 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsStart() callback multiple times", async () => {
-        const onLoadCustomElementsStart = jest.fn();
+        const onLoadCustomElementsStart = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
@@ -87,7 +88,7 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsSuccess() callback multiple times", async () => {
-        const onLoadCustomElementsSuccess = jest.fn();
+        const onLoadCustomElementsSuccess = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
@@ -103,16 +104,16 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsError() callback multiple times", async () => {
-        const onLoadCustomElementsError = jest.fn();
+        const onLoadCustomElementsError = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.init();
         await waitForAsync();
 
         attributeFilterHandler.onLoadCustomElementsError(onLoadCustomElementsError);
-        jest.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadCustomElements({}, "1");
-        jest.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadCustomElements({}, "2");
 
         await waitForAsync();

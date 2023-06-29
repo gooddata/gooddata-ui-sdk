@@ -1,23 +1,23 @@
 // (C) 2007-2022 GoodData Corporation
-import isPlainObject from "lodash/isPlainObject";
-import chunk from "lodash/chunk";
-import flatten from "lodash/flatten";
-import pick from "lodash/pick";
-import pickBy from "lodash/pickBy";
+import isPlainObject from "lodash/isPlainObject.js";
+import chunk from "lodash/chunk.js";
+import flatten from "lodash/flatten.js";
+import pick from "lodash/pick.js";
+import pickBy from "lodash/pickBy.js";
 import {
     GdcVisualizationObject,
     GdcMetadata,
     GdcMetadataObject,
     GdcProjectDashboard,
 } from "@gooddata/api-model-bear";
-import { getQueryEntries, handlePolling, queryString } from "./util";
-import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
+import { getQueryEntries, handlePolling, queryString } from "./util.js";
+import { ApiResponse, ApiResponseError, XhrModule } from "./xhr.js";
 import {
     IGetObjectsByQueryOptions,
     IGetObjectUsingOptions,
     IGetObjectsByQueryWithPagingResponse,
-} from "./interfaces";
-import { stringify } from "./utils/queryString";
+} from "./interfaces.js";
+import { stringify } from "./utils/queryString.js";
 
 export interface IUriIdentifierPair {
     uri: string;

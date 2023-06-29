@@ -3,10 +3,10 @@
 import React, { useMemo } from "react";
 import stringify from "json-stable-stringify";
 import { useIntl, IntlShape } from "react-intl";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
-import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import {
     IInsight,
     insightTitle,
@@ -17,19 +17,19 @@ import {
     isDrillToLegacyDashboard,
     IListedDashboard,
 } from "@gooddata/sdk-model";
-import { isDrillToUrl } from "../types";
-import { DrillSelectListBody } from "./DrillSelectListBody";
-import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils";
-import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";
+import { isDrillToUrl } from "../types.js";
+import { DrillSelectListBody } from "./DrillSelectListBody.js";
+import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils.js";
+import { DrillSelectContext, DrillType, DrillSelectItem } from "./types.js";
 import {
     selectAccessibleDashboards,
     selectDashboardTitle,
     selectInsightsMap,
     useDashboardSelector,
-} from "../../../model";
-import { dashboardMatch } from "../utils/dashboardPredicate";
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
+} from "../../../model/index.js";
+import { dashboardMatch } from "../utils/dashboardPredicate.js";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;

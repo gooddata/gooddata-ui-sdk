@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import {
     ComboChartWithArithmeticMeasuresAndViewBy,
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     ComboChartWithTwoSecondaryMeasures,
-} from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+} from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 /*
  * TODO: there was "stack primary measures with same chart type and custom width style" story

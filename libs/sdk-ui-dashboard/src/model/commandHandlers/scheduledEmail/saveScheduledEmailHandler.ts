@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { IScheduledMailDefinition, ObjRef, isObjRef } from "@gooddata/sdk-model";
-import { SaveScheduledEmail } from "../../commands/scheduledEmail";
-import { DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail";
+import { SaveScheduledEmail } from "../../commands/scheduledEmail.js";
+import { DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 
 function saveScheduledEmail(
     ctx: DashboardContext,

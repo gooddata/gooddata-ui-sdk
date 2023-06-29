@@ -1,18 +1,18 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
 import mapboxgl from "mapbox-gl";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     createClusterLabels,
     createClusterPoints,
     createPushpinDataLayer,
     createUnclusterPoints,
     createPushpinFilter,
-} from "./geoChartDataLayers";
-import { createPushpinDataSource, IGeoDataSourceProps } from "./geoChartDataSource";
+} from "./geoChartDataLayers.js";
+import { createPushpinDataSource, IGeoDataSourceProps } from "./geoChartDataSource.js";
 import {
     DEFAULT_CLUSTER_LABELS_CONFIG,
     DEFAULT_CLUSTER_LAYER_NAME,
@@ -23,16 +23,16 @@ import {
     INTERACTION_EVENTS,
     LAYER_STYLE_LABEL_PREFIX,
     ZOOM_CONTROLS_HEIGHT,
-} from "./constants/geoChart";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart";
+} from "./constants/geoChart.js";
+import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 
-import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip";
-import { getViewportOptions } from "./helpers/geoChart/viewport";
+import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip.js";
+import { getViewportOptions } from "./helpers/geoChart/viewport.js";
 import {
     isClusteringAllowed,
     isPointsConfigChanged,
     isColorAssignmentItemChanged,
-} from "./helpers/geoChart/common";
+} from "./helpers/geoChart/common.js";
 import {
     IDrillConfig,
     IHeaderPredicate,
@@ -42,7 +42,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling";
+import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling.js";
 
 import { WrappedComponentProps } from "react-intl";
 

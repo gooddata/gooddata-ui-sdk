@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import path from "path";
 import fse from "fs-extra";
-import snakeCase from "lodash/snakeCase";
-import { isInputValidationError, TargetBackendType } from "./types";
-import { logError, logInfo } from "./terminal/loggers";
+import snakeCase from "lodash/snakeCase.js";
+import { isInputValidationError, TargetBackendType } from "./types.js";
+import { logError, logInfo } from "./terminal/loggers.js";
 import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 export function toJsonString(obj: any): string {

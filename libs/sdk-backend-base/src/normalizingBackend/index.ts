@@ -13,8 +13,8 @@ import {
     NoDataError,
     IExportBlobResult,
 } from "@gooddata/sdk-backend-spi";
-import { decoratedBackend } from "../decoratedBackend";
-import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution";
+import { decoratedBackend } from "../decoratedBackend/index.js";
+import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
 import {
     defFingerprint,
     IExecutionDefinition,
@@ -24,8 +24,8 @@ import {
     IDimensionDescriptor,
     IResultHeader,
 } from "@gooddata/sdk-model";
-import { Denormalizer, NormalizationState, Normalizer } from "./normalizer";
-import cloneDeep from "lodash/cloneDeep";
+import { Denormalizer, NormalizationState, Normalizer } from "./normalizer.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory, private readonly config: NormalizationConfig) {

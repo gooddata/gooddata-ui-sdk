@@ -3,9 +3,10 @@
 import {
     resolveUseCancelablePromisesStatus,
     resolveUseCancelablePromisesError,
-} from "../useCancelablePromiseUtils";
-import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "../useCancelablePromise";
-import { GoodDataSdkError, UnexpectedSdkError } from "../../errors/GoodDataSdkError";
+} from "../useCancelablePromiseUtils.js";
+import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "../useCancelablePromise.js";
+import { GoodDataSdkError, UnexpectedSdkError } from "../../errors/GoodDataSdkError.js";
+import { describe, it, expect } from "vitest";
 
 const pendingState: UseCancelablePromiseState<unknown, GoodDataSdkError> = {
     status: "pending",

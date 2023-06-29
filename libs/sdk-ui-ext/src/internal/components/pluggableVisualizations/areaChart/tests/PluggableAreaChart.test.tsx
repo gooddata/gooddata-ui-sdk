@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import noop from "lodash/noop";
-import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
 import {
     IBucketOfFun,
@@ -8,11 +8,11 @@ import {
     IVisConstruct,
     IReferencePoint,
     IExtendedReferencePoint,
-} from "../../../../interfaces/Visualization";
-import { PluggableAreaChart } from "../PluggableAreaChart";
+} from "../../../../interfaces/Visualization.js";
+import { PluggableAreaChart } from "../PluggableAreaChart.js";
 
-import * as testMocks from "../../../../tests/mocks/testMocks";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     IAttribute,
@@ -21,27 +21,30 @@ import {
     insightBucket,
     insightSetProperties,
 } from "@gooddata/sdk-model";
-import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import {
     createDrillDefinition,
     createDrillEvent,
     insightDefinitionToInsight,
     getLastRenderEl,
-} from "../../tests/testHelpers";
+} from "../../tests/testHelpers.js";
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,
     intersection,
     sourceInsightDef,
     targetUri,
-} from "./getInsightWithDrillDownAppliedMock";
+} from "./getInsightWithDrillDownAppliedMock.js";
 import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
+import { describe, it, expect, vi, afterEach } from "vitest";
+
+const { Department, Region } = ReferenceMd;
 
 describe("PluggableAreaChart", () => {
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         element: () => mockElement,

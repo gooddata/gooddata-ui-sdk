@@ -3,8 +3,8 @@ import { ComponentType } from "react";
 import {
     IDashboardAttributeFilterProps,
     IDashboardAttributeFilterPlaceholderProps,
-} from "../filterBar/types";
-import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
+} from "../filterBar/types.js";
+import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types.js";
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
@@ -12,15 +12,15 @@ import {
     IWrapCreatePanelItemWithDragComponent,
     InsightDraggableItem,
     KpiDraggableItem,
-} from "../dragAndDrop/types";
+} from "../dragAndDrop/types.js";
 import {
     AttributeFilterComponentProvider,
     InsightComponentProvider,
     KpiComponentProvider,
     WidgetComponentProvider,
-} from "../dashboardContexts/types";
+} from "../dashboardContexts/types.js";
 import { IInsightWidget, IKpiWidget } from "@gooddata/sdk-model";
-import { ICustomWidget } from "../../model";
+import { ICustomWidget } from "../../model/index.js";
 
 /**
  * @internal

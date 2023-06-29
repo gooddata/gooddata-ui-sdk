@@ -1,14 +1,14 @@
 // (C) 2022 GoodData Corporation
 import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useRef } from "react";
 import { useDragLayer } from "react-dnd";
-import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview";
-import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview";
-import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview";
-import { useScrollCorrection } from "./Resize/useScrollCorrection";
-import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
-import { emptyDOMRect } from "../layout/constants";
-import { useResizeHandlers } from "./LayoutResizeContext";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../constants/";
+import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview.js";
+import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview.js";
+import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview.js";
+import { useScrollCorrection } from "./Resize/useScrollCorrection.js";
+import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types.js";
+import { emptyDOMRect } from "../layout/constants.js";
+import { useResizeHandlers } from "./LayoutResizeContext.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../constants/index.js";
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,

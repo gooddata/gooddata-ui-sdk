@@ -1,17 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
-import noop from "lodash/noop";
-import { PluggableDonutChart } from "../PluggableDonutChart";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import noop from "lodash/noop.js";
+import { PluggableDonutChart } from "../PluggableDonutChart.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 
-import { IBucketOfFun, IVisConstruct } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IVisConstruct } from "../../../../interfaces/Visualization.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { getLastRenderEl } from "../../tests/testHelpers";
-import * as testMocks from "../../../../tests/mocks/testMocks";
+import { getLastRenderEl } from "../../tests/testHelpers.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 describe("PluggableDonutChart", () => {
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",

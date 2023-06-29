@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import identity from "lodash/identity";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import identity from "lodash/identity.js";
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
@@ -21,13 +21,13 @@ import {
     MeasureOrLocalId,
     isInlineMeasure,
     IInlineMeasureDefinition,
-} from "./index";
-import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef";
-import { IMeasureFilter } from "../filter";
-import { idRef } from "../../objRef/factory";
+} from "./index.js";
+import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef/index.js";
+import { IMeasureFilter } from "../filter/index.js";
+import { idRef } from "../../objRef/factory.js";
 import SparkMD5 from "spark-md5";
-import invariant, { InvariantError } from "ts-invariant";
-import { sanitizeLocalId } from "../../sanitizeLocalId";
+import { invariant, InvariantError } from "ts-invariant";
+import { sanitizeLocalId } from "../../sanitizeLocalId.js";
 
 /**
  * Simplified Previous Period Data DataSet specification

@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { LayoutState } from "./layoutState";
+import { LayoutState } from "./layoutState.js";
 import { invariant } from "ts-invariant";
-import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer";
+import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer.js";
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
@@ -10,8 +10,8 @@ import {
     RelativeIndex,
     StashedDashboardItemsId,
     isCustomWidget,
-} from "../../types/layoutTypes";
-import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps";
+} from "../../types/layoutTypes.js";
+import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps.js";
 import {
     areObjRefsEqual,
     ObjRef,
@@ -29,14 +29,14 @@ import {
     IInsightWidgetConfiguration,
     IKpiWidgetConfiguration,
 } from "@gooddata/sdk-model";
-import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes";
-import flatMap from "lodash/flatMap";
+import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
+import flatMap from "lodash/flatMap.js";
 import { Draft } from "immer";
-import { newMapForObjectWithIdentity, ObjRefMap } from "../../../_staging/metadata/objRefMap";
-import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout";
-import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete";
+import { newMapForObjectWithIdentity, ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout.js";
+import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete.js";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
-import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils";
+import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 

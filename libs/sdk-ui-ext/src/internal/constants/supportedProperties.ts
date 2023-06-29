@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { AXIS } from "./axis";
+import { AXIS } from "./axis.js";
 
 const BASE_PROPERTIES = [
     "dataLabels.visible",

@@ -1,48 +1,54 @@
 // (C) 2021-2023 GoodData Corporation
 import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
-import createSagaMiddleware, { Saga, SagaIterator, Task } from "redux-saga";
+import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { v4 as uuidv4 } from "uuid";
-import { filterContextSliceReducer } from "./filterContext";
-import { layoutSliceReducer } from "./layout";
-import { loadingSliceReducer } from "./loading";
-import { savingSliceReducer } from "./saving";
-import { insightsSliceReducer } from "./insights";
-import { createRootEventEmitter } from "./_infra/rootEventEmitter";
-import { DashboardEventHandler } from "../eventHandlers/eventHandler";
-import { rootCommandHandler } from "./_infra/rootCommandHandler";
-import { DashboardContext, PrivateDashboardContext } from "../types/commonTypes";
-import { configSliceReducer } from "./config";
-import { entitlementsSliceReducer } from "./entitlements";
-import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
-import { permissionsSliceReducer } from "./permissions";
-import { alertsSliceReducer } from "./alerts";
-import { catalogSliceReducer } from "./catalog";
+import { filterContextSliceReducer } from "./filterContext/index.js";
+import { layoutSliceReducer } from "./layout/index.js";
+import { loadingSliceReducer } from "./loading/index.js";
+import { savingSliceReducer } from "./saving/index.js";
+import { insightsSliceReducer } from "./insights/index.js";
+import { createRootEventEmitter } from "./_infra/rootEventEmitter.js";
+import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { rootCommandHandler } from "./_infra/rootCommandHandler.js";
+import { DashboardContext, PrivateDashboardContext } from "../types/commonTypes.js";
+import { configSliceReducer } from "./config/index.js";
+import { entitlementsSliceReducer } from "./entitlements/index.js";
+import { dateFilterConfigSliceReducer } from "./dateFilterConfig/index.js";
+import { permissionsSliceReducer } from "./permissions/index.js";
+import { alertsSliceReducer } from "./alerts/index.js";
+import { catalogSliceReducer } from "./catalog/index.js";
 import { call, fork } from "redux-saga/effects";
-import { userSliceReducer } from "./user";
-import { metaSliceReducer } from "./meta";
-import { DashboardDispatch, DashboardState } from "./types";
-import { AllQueryServices } from "../queryServices";
-import { executionResultsSliceReducer } from "./executionResults";
-import { createQueryProcessingModule } from "./_infra/queryProcessing";
-import { IDashboardQueryService } from "./_infra/queryService";
-import values from "lodash/values";
-import merge from "lodash/merge";
-import keyBy from "lodash/keyBy";
-import { listedDashboardsSliceReducer } from "./listedDashboards";
-import { accessibleDashboardsSliceReducer } from "./accessibleDashboards";
-import { inaccessibleDashboardsSliceReducer } from "./inaccessibleDashboards";
-import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
-import { drillTargetsReducer } from "./drillTargets";
-import { DashboardEventType } from "../events";
-import { DashboardCommandType } from "../commands";
-import { drillSliceReducer } from "./drill";
-import { uiSliceReducer } from "./ui";
-import { getDashboardContext } from "./_infra/contexts";
-import { RenderMode } from "../../types";
-import { legacyDashboardsSliceReducer } from "./legacyDashboards";
-import { renderModeSliceReducer } from "./renderMode";
-import { dashboardPermissionsSliceReducer } from "./dashboardPermissions";
+import { userSliceReducer } from "./user/index.js";
+import { metaSliceReducer } from "./meta/index.js";
+import { DashboardDispatch, DashboardState } from "./types.js";
+import { AllQueryServices } from "../queryServices/index.js";
+import { executionResultsSliceReducer } from "./executionResults/index.js";
+import { createQueryProcessingModule } from "./_infra/queryProcessing.js";
+import { IDashboardQueryService } from "./_infra/queryService.js";
+import values from "lodash/values.js";
+import merge from "lodash/merge.js";
+import keyBy from "lodash/keyBy.js";
+import { listedDashboardsSliceReducer } from "./listedDashboards/index.js";
+import { accessibleDashboardsSliceReducer } from "./accessibleDashboards/index.js";
+import { inaccessibleDashboardsSliceReducer } from "./inaccessibleDashboards/index.js";
+import { backendCapabilitiesSliceReducer } from "./backendCapabilities/index.js";
+import { drillTargetsReducer } from "./drillTargets/index.js";
+import { DashboardEventType } from "../events/index.js";
+import { DashboardCommandType } from "../commands/index.js";
+import { drillSliceReducer } from "./drill/index.js";
+import { uiSliceReducer } from "./ui/index.js";
+import { getDashboardContext } from "./_infra/contexts.js";
+import { RenderMode } from "../../types.js";
+import { legacyDashboardsSliceReducer } from "./legacyDashboards/index.js";
+import { renderModeSliceReducer } from "./renderMode/index.js";
+import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const createSagaMiddleware = defaultImport(defaultReduxSaga);
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",

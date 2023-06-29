@@ -18,21 +18,21 @@ import {
     IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
-import isError from "lodash/isError";
-import { convertApiError, isApiResponseError } from "../utils/errorHandling";
-import { BearWorkspace } from "./workspace";
-import { BearWorkspaceQueryFactory } from "./workspaces";
-import { BearUserService } from "./user";
-import { convertInsight } from "../convertors/toBackend/InsightConverter";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
+import isError from "lodash/isError.js";
+import { convertApiError, isApiResponseError } from "../utils/errorHandling.js";
+import { BearWorkspace } from "./workspace/index.js";
+import { BearWorkspaceQueryFactory } from "./workspaces/index.js";
+import { BearUserService } from "./user/index.js";
+import { convertInsight } from "../convertors/toBackend/InsightConverter.js";
 import {
     GdcUser,
     GdcProjectDashboard,
     GdcMetadataObject,
     GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
-import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
+import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData/index.js";
 import {
     IAuthProviderCallGuard,
     NoopAuthProvider,
@@ -42,9 +42,9 @@ import {
     TelemetryData,
 } from "@gooddata/sdk-backend-base";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
-import { BearOrganization, BearOrganizations } from "./organization";
-import packageJson from "../../package.json";
-import { BearEntitlements } from "./entitlements";
+import { BearOrganization, BearOrganizations } from "./organization/index.js";
+import { LIB_VERSION, LIB_NAME } from "../__version.js";
+import { BearEntitlements } from "./entitlements/index.js";
 
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateGrandTotals: true,
@@ -274,15 +274,15 @@ export class BearBackend implements IAnalyticalBackend {
                 getUISettings: () => {
                     return this.sdk.xhr
                         .get("/gdc/account/organization/settings")
-                        .then((response) => response.getData());
+                        .then((response: any) => response.getData());
                 },
 
                 isDomainAdmin: (domainUri: string): Promise<boolean> => {
                     return this.authApiCall((sdk) => {
                         return sdk.xhr
                             .get(`${domainUri}/config`)
-                            .then((_) => true)
-                            .catch((error) => {
+                            .then((_: any) => true)
+                            .catch((error: any) => {
                                 if (isApiResponseError(error)) {
                                     // when user _is not_ domain admin, then attempting to retrieve domain config
                                     // will fail fast with 403
@@ -498,7 +498,7 @@ function newSdkInstance(
     if (implConfig.packageName && implConfig.packageVersion) {
         sdk.config.setJsPackage(implConfig.packageName, implConfig.packageVersion);
     } else {
-        sdk.config.setJsPackage(packageJson.name, packageJson.version);
+        sdk.config.setJsPackage(LIB_NAME, LIB_VERSION);
     }
 
     if (telemetry.componentName) {

@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
-import merge from "lodash/merge";
+import merge from "lodash/merge.js";
 import { translationUtils } from "@gooddata/util";
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 
@@ -14,7 +14,7 @@ import ptBR from "../translations/pt-BR.json";
 import ptPT from "../translations/pt-PT.json";
 import zhHans from "../translations/zh-Hans.json";
 import ruRU from "../translations/ru-RU.json";
-import { IDropdownItem } from "../interfaces/Dropdown";
+import { IDropdownItem } from "../interfaces/Dropdown.js";
 
 export function getTranslation(
     translationId: string,

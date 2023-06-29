@@ -6,8 +6,8 @@ import {
     isResultAttributeHeader,
     IResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import findIndex from "lodash/findIndex";
-import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";
+import findIndex from "lodash/findIndex.js";
+import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory.js";
 import {
     ExplicitDrill,
     IDrillEventIntersectionElement,
@@ -16,10 +16,10 @@ import {
     IDrillEventCallback,
     IDrillEvent,
     isDrillIntersectionAttributeItem,
-} from "./DrillEvents";
-import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
-import { IMappingHeader } from "../headerMatching/MappingHeader";
-import { DataViewFacade } from "../results/facade";
+} from "./DrillEvents.js";
+import { IHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
+import { IMappingHeader } from "../headerMatching/MappingHeader.js";
+import { DataViewFacade } from "../results/facade.js";
 
 /**
  * @internal

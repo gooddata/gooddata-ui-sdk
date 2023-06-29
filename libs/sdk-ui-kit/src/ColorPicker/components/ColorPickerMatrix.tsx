@@ -3,7 +3,7 @@ import React, { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import { ColorFormats } from "tinycolor2";
 
-import { getColorStyle, SATURATION_ARRAY } from "../utils";
+import { getColorStyle, SATURATION_ARRAY } from "../utils.js";
 
 export interface IColorPickerMatrixProps {
     initColor: ColorFormats.HSL;

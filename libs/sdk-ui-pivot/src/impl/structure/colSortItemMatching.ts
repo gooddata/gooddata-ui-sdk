@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { SeriesCol, SliceCol } from "./tableDescriptorTypes";
+import { SeriesCol, SliceCol } from "./tableDescriptorTypes.js";
 import {
     IAttributeLocatorItem,
     IMeasureLocatorItem,
@@ -10,8 +10,8 @@ import {
     ISortItem,
     sortMeasureLocators,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import findIndex from "lodash/findIndex";
+import { invariant } from "ts-invariant";
+import findIndex from "lodash/findIndex.js";
 
 function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): boolean {
     const { attributeDescriptors, attributeHeaders } = col.seriesDescriptor;

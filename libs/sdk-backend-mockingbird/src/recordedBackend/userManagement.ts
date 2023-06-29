@@ -7,7 +7,7 @@ import {
     IWorkspaceUsersQueryOptions,
     IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { RecordedBackendConfig } from "./types";
+import { RecordedBackendConfig } from "./types.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { ObjRef, IWorkspaceUser, AccessGranteeDetail } from "@gooddata/sdk-model";
 

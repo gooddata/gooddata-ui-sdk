@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fixInsightLegacyElementUris color mapping should handle color mapping items with null ids (RAIL-3983) 1`] = `
-Array [
-  Object {
-    "color": Object {
+exports[`fixInsightLegacyElementUris > color mapping > should handle color mapping items with null ids (RAIL-3983) 1`] = `
+[
+  {
+    "color": {
       "type": "guid",
       "value": "0",
     },
     "id": "CZ",
   },
-  Object {
-    "color": Object {
+  {
+    "color": {
       "type": "guid",
       "value": "1",
     },
     "id": "Czech.Republic",
   },
-  Object {
-    "color": Object {
+  {
+    "color": {
       "type": "guid",
       "value": "foo",
     },
@@ -26,31 +26,31 @@ Array [
 ]
 `;
 
-exports[`fixInsightLegacyElementUris color mapping should strip fake uris and keep only label text values 1`] = `
-Array [
-  Object {
-    "color": Object {
+exports[`fixInsightLegacyElementUris > color mapping > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "color": {
       "type": "guid",
       "value": "0",
     },
     "id": "CZ",
   },
-  Object {
-    "color": Object {
+  {
+    "color": {
       "type": "guid",
       "value": "1",
     },
     "id": "Czech.Republic",
   },
-  Object {
-    "color": Object {
+  {
+    "color": {
       "type": "guid",
       "value": "2",
     },
     "id": "Czech Republic",
   },
-  Object {
-    "color": Object {
+  {
+    "color": {
       "type": "guid",
       "value": "3",
     },
@@ -59,46 +59,46 @@ Array [
 ]
 `;
 
-exports[`fixInsightLegacyElementUris column widths should strip fake uris and keep only label text values 1`] = `
-Array [
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+exports[`fixInsightLegacyElementUris > column widths > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "CZ",
           },
         },
       ],
     },
   },
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "Czech.Republic",
           },
         },
       ],
     },
   },
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "Czech Republic",
           },
         },
       ],
     },
   },
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "CZ",
           },
         },
@@ -108,14 +108,14 @@ Array [
 ]
 `;
 
-exports[`fixInsightLegacyElementUris sort items should strip fake uris and keep only label text values 1`] = `
-Array [
-  Object {
-    "measureSortItem": Object {
+exports[`fixInsightLegacyElementUris > sort items > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "measureSortItem": {
       "direction": "asc",
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "attributeIdentifier": "localAttributeId",
             "element": "CZ",
           },
@@ -123,12 +123,12 @@ Array [
       ],
     },
   },
-  Object {
-    "measureSortItem": Object {
+  {
+    "measureSortItem": {
       "direction": "asc",
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "attributeIdentifier": "localAttributeId",
             "element": "Czech.Republic",
           },
@@ -136,12 +136,12 @@ Array [
       ],
     },
   },
-  Object {
-    "measureSortItem": Object {
+  {
+    "measureSortItem": {
       "direction": "asc",
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "attributeIdentifier": "localAttributeId",
             "element": "Czech Republic",
           },
@@ -149,12 +149,12 @@ Array [
       ],
     },
   },
-  Object {
-    "measureSortItem": Object {
+  {
+    "measureSortItem": {
       "direction": "asc",
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "attributeIdentifier": "localAttributeId",
             "element": "CZ",
           },
@@ -165,46 +165,46 @@ Array [
 ]
 `;
 
-exports[`fixWidgetLegacyElementUris column widths should strip fake uris and keep only label text values 1`] = `
-Array [
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+exports[`fixWidgetLegacyElementUris > column widths > should strip fake uris and keep only label text values 1`] = `
+[
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "CZ",
           },
         },
       ],
     },
   },
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "Czech.Republic",
           },
         },
       ],
     },
   },
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "Czech Republic",
           },
         },
       ],
     },
   },
-  Object {
-    "measureColumnWidthItem": Object {
-      "locators": Array [
-        Object {
-          "attributeLocatorItem": Object {
+  {
+    "measureColumnWidthItem": {
+      "locators": [
+        {
+          "attributeLocatorItem": {
             "element": "CZ",
           },
         },

@@ -34,10 +34,11 @@ import {
     openAbsoluteFormFilter,
     createDateFilterWithState,
     clickAbsoluteFormFilter,
-} from "./extendedDateFilters_helpers";
-import { AbsoluteForm } from "./AbsoluteForm";
-import { DEFAULT_DATE_FORMAT } from "../constants/Platform";
-import { verifyDateFormat } from "../DateFilterCore";
+} from "./extendedDateFilters_helpers.js";
+import { AbsoluteForm } from "./AbsoluteForm.js";
+import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
+import { verifyDateFormat } from "../DateFilterCore.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {
@@ -63,7 +64,7 @@ describe("DateFilter", () => {
 
     describe("cancel button", () => {
         it("should close DateFilter", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             createDateFilter({ onCancel });
             clickDateFilterButton();
             clickCancelButton();
@@ -73,7 +74,7 @@ describe("DateFilter", () => {
         });
 
         it("should not call onApply", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilter({ onApply });
             clickDateFilterButton();
             clickStaticFilter("last-7-days");
@@ -118,7 +119,7 @@ describe("DateFilter", () => {
 
     describe("reopening", () => {
         it("should keep all time selected when reopening", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilter({ onApply });
 
             clickDateFilterButton();
@@ -133,7 +134,7 @@ describe("DateFilter", () => {
         });
 
         it("should keep relative preset selected when reopening", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
 
             clickDateFilterButton();
@@ -151,7 +152,7 @@ describe("DateFilter", () => {
             const fromInputValue = dateToAbsoluteInputFormat("2017-01-01");
             const toInputValue = dateToAbsoluteInputFormat("2018-01-01");
 
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
 
             openAbsoluteFormFilter();
@@ -171,7 +172,7 @@ describe("DateFilter", () => {
         });
 
         it("should keep relative form selected and filled when reopening", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
 
             openRelativeFormFilter();
@@ -265,7 +266,7 @@ describe("DateFilter", () => {
         ])(
             "should switch static date filter to %s when exclude is on",
             (item: string, relativePreset: any[]) => {
-                const onApply = jest.fn();
+                const onApply = vi.fn();
                 createDateFilter({ onApply });
 
                 clickDateFilterButton();
@@ -281,7 +282,7 @@ describe("DateFilter", () => {
         );
 
         it("should use adjusted period as a title when exclude is on", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
             clickDateFilterButton();
             clickStaticFilter("last-12-months");
@@ -292,7 +293,7 @@ describe("DateFilter", () => {
         });
 
         it("should use original period title when exclude is off", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
             clickDateFilterButton();
             clickStaticFilter("last-12-months");
@@ -316,7 +317,7 @@ describe("DateFilter", () => {
             ["this-year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
             ["last-year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
         ])("should switch to static date filter with %s", (item: string, relativePreset: any[]) => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilter({ onApply });
 
             clickDateFilterButton();
@@ -377,7 +378,7 @@ describe("DateFilter", () => {
         it.each([["christmas-2019"], ["year-2018"]])(
             "should switch static date filter to %s",
             (item: string) => {
-                const onApply = jest.fn();
+                const onApply = vi.fn();
                 createDateFilter({ onApply });
 
                 clickDateFilterButton();
@@ -408,7 +409,7 @@ describe("DateFilter", () => {
         });
 
         it("should set correct values into input", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
 
             const from = "2019-10-15";
@@ -427,7 +428,7 @@ describe("DateFilter", () => {
 
         it("should set correct values with desired format", () => {
             const dateFormat = "yyyy/MM/dd";
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({
                 dateFormat,
                 onApply,
@@ -495,7 +496,7 @@ describe("DateFilter", () => {
             const from = "2019-01-01";
             const to = "2019-12-31";
 
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({ onApply });
             const absoluteForm = new AbsoluteForm();
 
@@ -639,7 +640,7 @@ describe("DateFilter", () => {
         const isTimeForAbsoluteRangeEnabled = true;
 
         it("should set correct values with desired format", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({
                 dateFormat,
                 onApply,
@@ -671,7 +672,7 @@ describe("DateFilter", () => {
         });
 
         it("should get default time values if not configured", () => {
-            const onApply = jest.fn();
+            const onApply = vi.fn();
             createDateFilterWithState({
                 dateFormat,
                 onApply,

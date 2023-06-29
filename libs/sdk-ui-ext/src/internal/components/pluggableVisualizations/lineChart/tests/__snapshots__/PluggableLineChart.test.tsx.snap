@@ -1,54 +1,54 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableLineChart Sort config should return expected sort config for 0 M + 0 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
+exports[`PluggableLineChart > Sort config > should return expected sort config for 0 M + 0 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
   "disabled": true,
   "disabledExplanation": "Sorting is not possible for this insight configuration.",
   "supported": true,
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
+exports[`PluggableLineChart > Sort config > should return expected sort config for 0 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
   "disabled": true,
   "supported": true,
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 1 M + 0 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
+exports[`PluggableLineChart > Sort config > should return expected sort config for 1 M + 0 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
   "disabled": true,
   "disabledExplanation": "Sorting is not possible for this insight configuration.",
   "supported": true,
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 1 M + 1 VB + 1 SEG 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableLineChart > Sort config > should return expected sort config for 1 M + 1 VB + 1 SEG 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -59,23 +59,23 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 1 M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableLineChart > Sort config > should return expected sort config for 1 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": false,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
@@ -85,9 +85,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -98,33 +98,33 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 1 M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
+exports[`PluggableLineChart > Sort config > should return expected sort config for 1 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
   "disabled": true,
   "supported": true,
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 2 M + 1 VB + 1 SEG 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableLineChart > Sort config > should return expected sort config for 2 M + 1 VB + 1 SEG 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -135,33 +135,33 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 2 M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableLineChart > Sort config > should return expected sort config for 2 M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -171,9 +171,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -184,43 +184,43 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 2 M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
+exports[`PluggableLineChart > Sort config > should return expected sort config for 2 M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
   "disabled": true,
   "supported": true,
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 2 stacked M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableLineChart > Sort config > should return expected sort config for 2 stacked M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -230,9 +230,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -243,22 +243,22 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart Sort config should return expected sort config for 2 stacked M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
+exports[`PluggableLineChart > Sort config > should return expected sort config for 2 stacked M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [],
+  "defaultSort": [],
   "disabled": true,
   "supported": true,
 }
 `;
 
-exports[`PluggableLineChart should cut out measures tail when getting nM 0Vb 1Sb 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should cut out measures tail when getting nM 0Vb 1Sb 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -269,16 +269,16 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -288,15 +288,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -304,12 +304,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -327,8 +327,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">segment by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -340,8 +340,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -352,20 +352,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -373,12 +373,12 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart should handle wrong order of buckets in reference point 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should handle wrong order of buckets in reference point 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -389,12 +389,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -403,12 +403,12 @@ Object {
       ],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -418,15 +418,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -434,12 +434,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -457,8 +457,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">segment by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -470,8 +470,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -482,20 +482,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -503,12 +503,12 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart should return reference point when no categories and only stacks 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should return reference point when no categories and only stacks 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -519,16 +519,16 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -538,15 +538,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -554,12 +554,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -577,8 +577,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">segment by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -590,8 +590,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -602,20 +602,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -623,12 +623,12 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart should return reference point with Date in categories even it was as second item 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should return reference point with Date in categories even it was as second item 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -639,12 +639,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -653,12 +653,12 @@ Object {
       ],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -668,15 +668,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -684,12 +684,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -707,8 +707,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">segment by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -720,8 +720,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -732,20 +732,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -753,12 +753,12 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart should return reference point with one category and one stack 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should return reference point with one category and one stack 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -769,12 +769,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -783,12 +783,12 @@ Object {
       ],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -798,15 +798,15 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -814,12 +814,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -837,8 +837,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">segment by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -850,8 +850,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -862,20 +862,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -883,12 +883,12 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart should reuse all measures, only one category and no stacks 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should reuse all measures, only one category and no stacks 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -896,7 +896,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -904,7 +904,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -912,7 +912,7 @@ Object {
           "showOnSecondaryAxis": true,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "acfWntEMcom0",
           "localIdentifier": "m4",
@@ -923,12 +923,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -937,25 +937,25 @@ Object {
       ],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -969,21 +969,21 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {
-    "controls": Object {
-      "secondary_yaxis": Object {
-        "measures": Array [
+  "properties": {
+    "controls": {
+      "secondary_yaxis": {
+        "measures": [
           "m3",
           "m4",
         ],
       },
     },
   },
-  "uiConfig": Object {
+  "uiConfig": {
     "axis": "dual",
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -991,12 +991,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -1013,8 +1013,8 @@ Object {
         "itemsLimit": 20,
         "title": "Measures",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -1027,8 +1027,8 @@ Object {
         "title": "Segment by",
         "warningMessage": "To segment by, an insight can have only one measure",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -1039,20 +1039,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],
@@ -1060,12 +1060,12 @@ Object {
 }
 `;
 
-exports[`PluggableLineChart should reuse one measure, only one category and one category as stack 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableLineChart > should reuse one measure, only one category and one category as stack 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -1076,12 +1076,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -1090,12 +1090,12 @@ Object {
       ],
       "localIdentifier": "trend",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a2/df",
           },
           "localIdentifier": "a2",
@@ -1105,20 +1105,20 @@ Object {
       "localIdentifier": "segment",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -1129,18 +1129,18 @@ Object {
         "localIdentifier": "a1",
         "type": "attribute",
       },
-      Object {
+      {
         "aggregation": null,
         "attribute": "attr.stage.iswon",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.stage.iswon",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "iswon/attribute/df/uri",
             },
             "isInverted": true,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -1154,11 +1154,11 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -1166,12 +1166,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -1189,8 +1189,8 @@ Object {
         "title": "Measures",
         "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">segment by</span>",
       },
-      "segment": Object {
-        "accepts": Array [
+      "segment": {
+        "accepts": [
           "attribute",
         ],
         "allowsReordering": false,
@@ -1202,8 +1202,8 @@ Object {
         "itemsLimit": 1,
         "title": "Segment by",
       },
-      "trend": Object {
-        "accepts": Array [
+      "trend": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -1214,20 +1214,20 @@ Object {
         "icon": "local:line/bucket-title-trend.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "Trend by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": true,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
     ],

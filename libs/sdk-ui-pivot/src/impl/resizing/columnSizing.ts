@@ -1,9 +1,9 @@
 // (C) 2007-2023 GoodData Corporation
-import invariant, { InvariantError } from "ts-invariant";
-import omit from "lodash/omit";
-import omitBy from "lodash/omitBy";
-import chunk from "lodash/chunk";
-import { isMeasureColumn, isMeasureOrAnyColumnTotal } from "../base/agUtils";
+import { invariant, InvariantError } from "ts-invariant";
+import omit from "lodash/omit.js";
+import omitBy from "lodash/omitBy.js";
+import chunk from "lodash/chunk.js";
+import { isMeasureColumn, isMeasureOrAnyColumnTotal } from "../base/agUtils.js";
 import {
     COLUMN_SUBTOTAL_CLASS,
     DEFAULT_HEADER_FONT,
@@ -15,7 +15,7 @@ import {
     ROW_TOTAL_CLASS,
     VALUE_CLASS,
     COLUMN_TOTAL_CLASS,
-} from "../base/constants";
+} from "../base/constants.js";
 
 import { ColDef, Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
 import {
@@ -33,10 +33,10 @@ import {
     isMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
-} from "../../columnWidths";
+} from "../../columnWidths.js";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { getMeasureCellFormattedValue } from "../cell/cellUtils";
-import isEmpty from "lodash/isEmpty";
+import { getMeasureCellFormattedValue } from "../cell/cellUtils.js";
+import isEmpty from "lodash/isEmpty.js";
 import {
     agColId,
     AnyCol,
@@ -47,15 +47,15 @@ import {
     isSliceCol,
     SliceCol,
     LeafDataCol,
-} from "../structure/tableDescriptorTypes";
-import { createColumnLocator } from "../structure/colLocatorFactory";
-import { colMeasureLocalId } from "../structure/colAccessors";
-import { IGridRow } from "../data/resultTypes";
-import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils";
-import { TableDescriptor } from "../structure/tableDescriptor";
-import { ColumnResizingConfig } from "../privateTypes";
-import { DefaultColumnWidth } from "../../publicTypes";
-import { IGroupingProvider } from "../data/rowGroupingProvider";
+} from "../structure/tableDescriptorTypes.js";
+import { createColumnLocator } from "../structure/colLocatorFactory.js";
+import { colMeasureLocalId } from "../structure/colAccessors.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { ColumnResizingConfig } from "../privateTypes.js";
+import { DefaultColumnWidth } from "../../publicTypes.js";
+import { IGroupingProvider } from "../data/rowGroupingProvider.js";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;

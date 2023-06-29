@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import {
     bucketIsEmpty,
     bucketsItems,
@@ -16,15 +16,15 @@ import {
     IDrillEvent,
     IDrillEventIntersectionElement,
 } from "@gooddata/sdk-ui";
-import { AXIS } from "../../constants/axis";
-import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
+import { AXIS } from "../../constants/axis.js";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import {
     COLUMN_BAR_CHART_UICONFIG,
     COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES,
     MAX_CATEGORIES_COUNT,
     MAX_STACKS_COUNT,
-} from "../../constants/uiConfig";
-import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
+} from "../../constants/uiConfig.js";
+import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 import {
     IBucketItem,
     IDrillDownContext,
@@ -33,7 +33,7 @@ import {
     IUiConfig,
     IVisConstruct,
     IDrillDownDefinition,
-} from "../../interfaces/Visualization";
+} from "../../interfaces/Visualization.js";
 import {
     getAllCategoriesAttributeItems,
     getDateItems,
@@ -44,7 +44,7 @@ import {
     isDateBucketItem,
     isNotDateBucketItem,
     hasSameDateDimension,
-} from "../../utils/bucketHelper";
+} from "../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     isStackingMeasure,
@@ -52,10 +52,10 @@ import {
     removeImmutableOptionalStackingProperties,
     setSecondaryMeasures,
     getReferencePointWithTotalLabelsInitialized,
-} from "../../utils/propertiesHelper";
-import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper";
-import { PluggableBaseChart } from "./baseChart/PluggableBaseChart";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil";
+} from "../../utils/propertiesHelper.js";
+import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper.js";
+import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);

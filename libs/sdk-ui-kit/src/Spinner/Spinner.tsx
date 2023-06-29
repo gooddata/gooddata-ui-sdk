@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import cx from "classnames";
-import { ISpinnerProps } from "./typings";
+import { ISpinnerProps } from "./typings.js";
 
 /**
  * @internal

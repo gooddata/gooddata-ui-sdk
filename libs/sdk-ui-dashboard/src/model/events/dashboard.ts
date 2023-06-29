@@ -3,11 +3,11 @@
 import { IInsight, ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
 
-import { DateFilterValidationResult, ISharingProperties } from "../../types";
-import { DashboardConfig, DashboardContext } from "../types/commonTypes";
+import { DateFilterValidationResult, ISharingProperties } from "../../types.js";
+import { DashboardConfig, DashboardContext } from "../types/commonTypes.js";
 
-import { IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 //
 //

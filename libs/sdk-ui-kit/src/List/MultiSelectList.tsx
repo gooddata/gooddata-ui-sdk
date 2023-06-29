@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 
-import { List } from "./List";
-import { Button } from "../Button";
-import { FlexDimensions } from "../FlexDimensions";
+import { List } from "./List.js";
+import { Button } from "../Button/index.js";
+import { FlexDimensions } from "../FlexDimensions/index.js";
 
 /**
  * @internal

@@ -1,24 +1,24 @@
 // (C) 2022-2023 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { batchActions } from "redux-batched-actions";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 
-import { SetAttributeFilterDisplayForm } from "../../../commands/filters";
-import { attributeDisplayFormChanged } from "../../../events/filters";
-import { filterContextActions } from "../../../store/filterContext";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../../types/commonTypes";
-import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
-import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors";
+import { SetAttributeFilterDisplayForm } from "../../../commands/filters.js";
+import { attributeDisplayFormChanged } from "../../../events/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged } from "../common.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";
-import { query } from "../../../store/_infra/queryCall";
-import { queryAttributeByDisplayForm } from "../../../../model/queries";
-import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap";
+import { query } from "../../../store/_infra/queryCall.js";
+import { queryAttributeByDisplayForm } from "../../../queries/index.js";
+import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,

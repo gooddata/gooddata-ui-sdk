@@ -10066,15 +10066,15 @@
                     }
                 }
             },
-            "JsonApiCookieSecurityConfigurationOut": {
+            "JsonApiUserSettingOut": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "cookieSecurityConfiguration",
-                        "enum": ["cookieSecurityConfiguration"]
+                        "example": "userSetting",
+                        "enum": ["userSetting"]
                     },
                     "id": {
                         "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
@@ -10085,210 +10085,26 @@
                     "attributes": {
                         "type": "object",
                         "properties": {
-                            "lastRotation": {
-                                "type": "string",
-                                "format": "date-time"
+                            "content": {
+                                "type": "object"
                             },
-                            "rotationInterval": {
+                            "type": {
                                 "type": "string",
-                                "description": "Length of interval between automatic rotations expressed in format of ISO 8601 duration",
-                                "example": "P30D"
+                                "enum": [
+                                    "TIMEZONE",
+                                    "ACTIVE_THEME",
+                                    "ACTIVE_COLOR_PALETTE",
+                                    "WHITE_LABELING",
+                                    "LOCALE",
+                                    "FORMAT_LOCALE",
+                                    "MAPBOX_TOKEN",
+                                    "WEEK_START"
+                                ]
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of cookieSecurityConfiguration entity."
-            },
-            "JsonApiOrganizationPatchDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiOrganizationPatch"
-                    }
-                }
-            },
-            "JsonApiOrganizationPatch": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "organization",
-                        "enum": ["organization"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "hostname": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "allowedOrigins": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "oauthIssuerLocation": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "oauthClientId": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "oauthClientSecret": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "earlyAccess": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "oauthIssuerId": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.",
-                                "example": "myOidcProvider"
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of patching organization entity."
-            },
-            "JsonApiOrganizationOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
-                    }
-                ]
-            },
-            "JsonApiOrganizationOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiOrganizationOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiOrganizationOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiOrganizationOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "organization",
-                        "enum": ["organization"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "permissions": {
-                                "type": "array",
-                                "description": "List of valid permissions for a logged-in user.",
-                                "items": {
-                                    "type": "string",
-                                    "enum": ["MANAGE"]
-                                }
-                            }
-                        }
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "hostname": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "allowedOrigins": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "oauthIssuerLocation": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "oauthClientId": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "earlyAccess": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "oauthIssuerId": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.",
-                                "example": "myOidcProvider"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "bootstrapUser": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserToOneLinkage"
-                                    }
-                                }
-                            },
-                            "bootstrapUserGroup": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of organization entity."
+                "description": "JSON:API representation of userSetting entity."
             },
             "JsonApiUserGroupLinkage": {
                 "required": ["id", "type"],
@@ -12360,17 +12176,17 @@
                 },
                 "description": "JSON:API representation of userSetting entity."
             },
-            "JsonApiColorPaletteOutWithLinks": {
+            "JsonApiDataSourceTableOutWithLinks": {
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/JsonApiColorPaletteOut"
+                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
                     },
                     {
                         "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
                 ]
             },
-            "JsonApiColorPaletteOutList": {
+            "JsonApiDataSourceTableOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
@@ -12378,7 +12194,7 @@
                         "uniqueItems": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiColorPaletteOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
                         }
                     },
                     "links": {

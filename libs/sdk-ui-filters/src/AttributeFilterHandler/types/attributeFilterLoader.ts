@@ -6,9 +6,9 @@ import {
     CallbackPayloadWithCorrelation,
     CallbackRegistration,
     Correlation,
-} from "./common";
-import { IAttributeLoader } from "./attributeLoader";
-import { IAttributeElementLoader } from "./elementsLoader";
+} from "./common.js";
+import { IAttributeLoader } from "./attributeLoader.js";
+import { IAttributeElementLoader } from "./elementsLoader.js";
 
 /**
  * Handles the loading of the all required metadata for the attribute filter handler.

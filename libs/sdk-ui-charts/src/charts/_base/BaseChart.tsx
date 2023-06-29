@@ -1,9 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { ICoreChartProps, OnLegendReady } from "../../interfaces";
-import { getValidColorPalette, ChartTransformation } from "../../highcharts";
-import noop from "lodash/noop";
-import { defaultCoreChartProps } from "../_commons/defaultProps";
+import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
+import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
+import noop from "lodash/noop.js";
+import { defaultCoreChartProps } from "../_commons/defaultProps.js";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -17,7 +17,7 @@ import {
     ILoadingInjectedProps,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking";
+import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 

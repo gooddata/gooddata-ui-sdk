@@ -1,19 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
-import { dataPointCustomizer } from "../_infra/dataPointVariants";
-import { legendCustomizer } from "../_infra/legendVariants";
+import { scenariosFor } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
 import {
     LineChartTwoMeasuresWithTrendyBy,
     LineChartWithArithmeticMeasuresAndViewBy,
     LineChartWithManyDataPoints,
     LineChartWithLotArithmeticMeasuresAndViewBy,
     LineChartViewByDate,
-} from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+} from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -45,11 +48,17 @@ const legendResponziveScenarios = responsiveScenarios(
 );
 
 const continuousLineScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
-.withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-.withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-.addScenario("null values with continuous line", {
-    ...LineChartViewByDate,
-    config: { continuousLine: { enabled: true } },
-});
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario("null values with continuous line", {
+        ...LineChartViewByDate,
+        config: { continuousLine: { enabled: true } },
+    });
 
-export default [legendScenarios, dataLabelScenarios, dataPointScenarios, continuousLineScenario, ...legendResponziveScenarios];
+export default [
+    legendScenarios,
+    dataLabelScenarios,
+    dataPointScenarios,
+    continuousLineScenario,
+    ...legendResponziveScenarios,
+];

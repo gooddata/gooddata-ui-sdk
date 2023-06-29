@@ -1,27 +1,29 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     EmptyDashboardIdentifier,
     TestCorrelation,
     TestStash,
-} from "../../../tests/fixtures/Dashboard.fixtures";
+} from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
     DashboardLayoutSectionRemoved,
-} from "../../../events";
-import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands";
-import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../events/index.js";
+import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("remove layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, EmptyDashboardIdentifier),
-        );
+            }, EmptyDashboardIdentifier);
+        });
 
         it("should fail the command", async () => {
             const event: DashboardCommandFailed<RemoveLayoutSection> = await Tester.dispatchAndWaitFor(
@@ -36,11 +38,12 @@ describe("remove layout section handler", () => {
 
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should remove the section", async () => {
             const originalLayout = selectLayout(Tester.state());

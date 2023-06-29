@@ -3,8 +3,8 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-
-import { TranslationsCustomizationProvider } from "../TranslationsCustomizationProvider";
+import { describe, expect, it } from "vitest";
+import { TranslationsCustomizationProvider } from "../TranslationsCustomizationProvider.js";
 
 const workspace = "testWorkspace";
 const getBackend = (enableInsightToReport = true) =>

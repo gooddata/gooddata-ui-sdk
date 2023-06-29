@@ -2,14 +2,14 @@
 
 import { call, put, select } from "redux-saga/effects";
 import { isDrillToDashboard, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap";
-import compact from "lodash/compact";
+import flatMap from "lodash/flatMap.js";
+import compact from "lodash/compact.js";
 
-import { PromiseFnReturnType } from "../../../types/sagas";
-import { DashboardContext } from "../../../types/commonTypes";
-import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes";
-import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors";
-import { inaccessibleDashboardsActions } from "../../../store/inaccessibleDashboards";
+import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
+import { inaccessibleDashboardsActions } from "../../../store/inaccessibleDashboards/index.js";
 
 export function* loadInaccessibleDashboards(ctx: DashboardContext, widgets: IWidget[]) {
     const accessibleDashboardsMap: ReturnType<typeof selectAccessibleDashboardsMap> = yield select(

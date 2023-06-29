@@ -1,11 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
-import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
-import { LINE_WIDTH } from "../lineChart/lineConfiguration";
-import { IChartConfig } from "../../../interfaces";
-import { isLineChart } from "../_util/common";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import { LINE_WIDTH } from "../lineChart/lineConfiguration.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { isLineChart } from "../_util/common.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { styleVariables } from "../_chartCreators/styles/variables";
+import { styleVariables } from "../_chartCreators/styles/variables.js";
 
 const { COLUMN, LINE } = VisualizationTypes;
 

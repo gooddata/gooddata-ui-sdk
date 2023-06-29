@@ -8,13 +8,13 @@ import {
     CustomDashboardWidgetComponent,
     CustomInsightBodyComponent,
     IInsightMenuItem,
-} from "../widget/types";
-import { ExtendedDashboardWidget } from "../../model";
+} from "../widget/types.js";
+import { ExtendedDashboardWidget } from "../../model/index.js";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
-} from "../filterBar/types";
-import { RenderMode } from "../../types";
+} from "../filterBar/types.js";
+import { RenderMode } from "../../types.js";
 import {
     IInsight,
     IDashboardAttributeFilter,

@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { formatTime, normalizeTime, updateTime, TIME_ANCHOR } from "../timeUtilities";
+import { formatTime, normalizeTime, updateTime, TIME_ANCHOR } from "../timeUtilities.js";
+import { describe, it, expect } from "vitest";
 
 describe("timeUtilities", () => {
     it("should format time", () => {

@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import { Density, Population } from "./full";
+import { Density, Population } from "./full.js";
 import { modifySimpleMeasure } from "@gooddata/sdk-model";
 
 export const sizeMeasure = modifySimpleMeasure(Population.Sum, (m) =>

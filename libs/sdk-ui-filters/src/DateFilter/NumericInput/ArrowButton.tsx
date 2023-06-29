@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import constant from "lodash/constant";
+import constant from "lodash/constant.js";
 import cx from "classnames";
-import { unless } from "./utils";
+import { unless } from "./utils.js";
 
 type ArrowDirection = "increment" | "decrement";
 

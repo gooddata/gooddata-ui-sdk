@@ -4,13 +4,13 @@ import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
 
-import { ConfirmDialogBase } from "../../ConfirmDialogBase";
-import { Tabs, ITab } from "../../../Tabs";
-import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales";
+import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+import { Tabs, ITab } from "../../../Tabs/index.js";
+import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales.js";
 
-import { CopyCodeOriginType, EmbedType, IReactOptions, IWebComponentsOptions } from "./types";
-import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
-import { EmbedInsightContent } from "./components/EmbedInsightContent";
+import { CopyCodeOriginType, EmbedType, IReactOptions, IWebComponentsOptions } from "./types.js";
+import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage.js";
+import { EmbedInsightContent } from "./components/EmbedInsightContent.js";
 
 /**
  * @internal

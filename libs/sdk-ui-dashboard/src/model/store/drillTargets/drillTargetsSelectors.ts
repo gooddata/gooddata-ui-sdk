@@ -1,12 +1,12 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { DashboardSelector, DashboardState } from "../types";
-import { drillTargetsAdapter } from "./drillTargetsEntityAdapter";
-import memoize from "lodash/memoize";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { drillTargetsAdapter } from "./drillTargetsEntityAdapter.js";
+import memoize from "lodash/memoize.js";
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
-import { IDrillTargets } from "./drillTargetsTypes";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
+import { IDrillTargets } from "./drillTargetsTypes.js";
 
 const entitySelectors = drillTargetsAdapter.getSelectors((state: DashboardState) => state.drillTargets);
 

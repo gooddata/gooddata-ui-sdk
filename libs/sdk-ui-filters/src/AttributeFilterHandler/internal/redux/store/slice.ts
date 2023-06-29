@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
-import { rootReducers } from "./rootReducers";
-import { AttributeFilterState, initialState } from "./state";
+import { rootReducers } from "./rootReducers.js";
+import { AttributeFilterState, initialState } from "./state.js";
 
 const attributeFilterSlice = createSlice({
     name: "attributeFilterSlice",

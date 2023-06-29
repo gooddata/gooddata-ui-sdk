@@ -1,23 +1,29 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands";
-import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionMoved } from "../../../events";
-import { selectLayout } from "../../../store/layout/layoutSelectors";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import {
+    DashboardCommandFailed,
+    DashboardLayoutChanged,
+    DashboardLayoutSectionMoved,
+} from "../../../events/index.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures";
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 
 describe("move section command handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, SimpleDashboardIdentifier),
-        );
+            }, SimpleDashboardIdentifier);
+        });
 
         it("should fail if bad section index specified", async () => {
             const originalLayout = selectLayout(Tester.state());
@@ -46,11 +52,12 @@ describe("move section command handler", () => {
             ComplexDashboardWithReferences.dashboard.layout!.sections;
 
         let Tester: DashboardTester;
-        beforeEach(
-            preloadedTesterFactory((tester) => {
+
+        beforeEach(async () => {
+            await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, ComplexDashboardIdentifier),
-        );
+            }, ComplexDashboardIdentifier);
+        });
 
         it("should move first section to the end of the section list", async () => {
             const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(

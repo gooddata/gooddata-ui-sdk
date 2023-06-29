@@ -20,11 +20,11 @@ import {
     AttributeOrPlaceholder,
     NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { treemapDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CoreTreemap } from "./CoreTreemap";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { treemapDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CoreTreemap } from "./CoreTreemap.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

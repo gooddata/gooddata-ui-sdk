@@ -1,15 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
-import axisCustomization from "./axisCustomization";
-import base from "./base";
-import coloring from "./coloring";
-import customization from "./customization";
-import stacking from "./stacking";
-import drilling from "./drilling";
-import experimental from "./experimental";
-import theming from "./theming";
-import responsive from "./responsive";
-import reversedStacking from "./reversedStacking";
+import axisCustomization from "./axisCustomization.js";
+import base from "./base.js";
+import coloring from "./coloring.js";
+import customization from "./customization.js";
+import stacking from "./stacking.js";
+import drilling from "./drilling.js";
+import experimental from "./experimental.js";
+import theming from "./theming.js";
+import responsive from "./responsive.js";
+import reversedStacking from "./reversedStacking.js";
 
 export default [
     base,

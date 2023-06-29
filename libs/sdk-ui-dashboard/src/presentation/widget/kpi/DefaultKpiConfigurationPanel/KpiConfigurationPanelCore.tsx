@@ -5,14 +5,14 @@ import cx from "classnames";
 import { IKpiWidget, IKpiWidgetDescriptionConfiguration, ObjRef, widgetRef } from "@gooddata/sdk-model";
 import { ScrollablePanel, Typography } from "@gooddata/sdk-ui-kit";
 
-import { AttributeFilterConfiguration } from "../../common";
-import { KpiComparison } from "./KpiComparison/KpiComparison";
-import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter";
-import { KpiMetricDropdown } from "./KpiMetricDropdown/KpiMetricDropdown";
-import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
-import { KpiConfigurationMessages } from "./KpiConfigurationMessages";
-import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
+import { AttributeFilterConfiguration } from "../../common/index.js";
+import { KpiComparison } from "./KpiComparison/KpiComparison.js";
+import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter.js";
+import { KpiMetricDropdown } from "./KpiMetricDropdown/KpiMetricDropdown.js";
+import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader.js";
+import { KpiConfigurationMessages } from "./KpiConfigurationMessages.js";
+import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration.js";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     changeKpiWidgetConfiguration,
     changeKpiWidgetDescription,
@@ -25,8 +25,8 @@ import {
     useDashboardDispatch,
     useDashboardQueryProcessing,
     useDashboardSelector,
-} from "../../../../model";
-import { KpiDescriptionConfig } from "./KpiDescriptionConfig";
+} from "../../../../model/index.js";
+import { KpiDescriptionConfig } from "./KpiDescriptionConfig.js";
 
 interface IKpiConfigurationPanelCoreProps {
     widget?: IKpiWidget;

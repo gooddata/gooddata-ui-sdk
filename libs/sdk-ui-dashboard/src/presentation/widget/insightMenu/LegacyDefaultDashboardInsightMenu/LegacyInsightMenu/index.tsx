@@ -4,9 +4,9 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { Bubble, IAlignPoint, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { LegacyInsightMenuItem } from "./LegacyInsightMenuItem";
-import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";
-import { IDashboardInsightMenuProps } from "../../types";
+import { LegacyInsightMenuItem } from "./LegacyInsightMenuItem.js";
+import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
+import { IDashboardInsightMenuProps } from "../../types.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tr", offset: { x: 2, y: 0 } }];
 

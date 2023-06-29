@@ -1,13 +1,13 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { DropdownSectionHeader } from "../DropdownSectionHeader";
-import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail";
-import { Parameter } from "./Parameter";
+import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
+import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
+import { Parameter } from "./Parameter.js";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types";
+import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types.js";
 import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
-import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model";
+import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model/index.js";
 
 interface XProps {
     item: IAttributeDisplayFormMetadataObject;

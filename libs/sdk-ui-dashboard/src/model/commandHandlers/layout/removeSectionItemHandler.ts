@@ -1,15 +1,15 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands";
-import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands/index.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { call, put, select } from "redux-saga/effects";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
-import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout";
-import { layoutActions } from "../../store/layout";
-import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 
 type RemoveSectionItemContext = {
     readonly ctx: DashboardContext;

@@ -12,7 +12,7 @@ import {
     AttributesOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
-import { ColumnWidthItem } from "./columnWidths";
+import { ColumnWidthItem } from "./columnWidths.js";
 
 /**
  * @public

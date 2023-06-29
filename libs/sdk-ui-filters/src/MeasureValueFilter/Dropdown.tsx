@@ -3,9 +3,9 @@ import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
-import { DropdownBody } from "./DropdownBody";
-import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types";
-import { WarningMessage } from "./typings";
+import { DropdownBody } from "./DropdownBody.js";
+import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types.js";
+import { WarningMessage } from "./typings.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 /*

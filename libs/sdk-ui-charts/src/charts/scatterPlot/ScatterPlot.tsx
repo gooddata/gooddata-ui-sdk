@@ -9,11 +9,11 @@ import {
     SortsOrPlaceholders,
     AttributeOrPlaceholder,
 } from "@gooddata/sdk-ui";
-import { pointyChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CoreScatterPlot } from "./CoreScatterPlot";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { pointyChartDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CoreScatterPlot } from "./CoreScatterPlot.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

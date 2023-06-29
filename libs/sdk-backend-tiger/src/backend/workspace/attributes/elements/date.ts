@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
 import { IRelativeDateFilter } from "@gooddata/sdk-model";
-import addYears from "date-fns/addYears";
-import addMonths from "date-fns/addMonths";
-import addDays from "date-fns/addDays";
-import setDate from "date-fns/setDate";
-import setMonth from "date-fns/setMonth";
-import getMonth from "date-fns/getMonth";
-import format from "date-fns/format";
+import addYears from "date-fns/addYears/index.js";
+import addMonths from "date-fns/addMonths/index.js";
+import addDays from "date-fns/addDays/index.js";
+import setDate from "date-fns/setDate/index.js";
+import setMonth from "date-fns/setMonth/index.js";
+import getMonth from "date-fns/getMonth/index.js";
+import format from "date-fns/format/index.js";
 
 enum DATE_GRANULARITY {
     DATE = "GDC.time.date",

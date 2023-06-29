@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { AxiosPromise } from "axios";
-import flatMap from "lodash/flatMap";
-import merge from "lodash/merge";
-import uniqBy from "lodash/uniqBy";
-import { ITigerClient } from "./client";
-import { jsonApiHeaders } from "./constants";
+import flatMap from "lodash/flatMap.js";
+import merge from "lodash/merge.js";
+import uniqBy from "lodash/uniqBy.js";
+import { ITigerClient } from "./client.js";
+import { jsonApiHeaders } from "./constants.js";
 import {
     JsonApiAnalyticalDashboardOutList,
     JsonApiApiTokenOutList,
@@ -19,7 +19,7 @@ import {
     JsonApiThemeOutList,
     JsonApiColorPaletteOutList,
     JsonApiVisualizationObjectOutList,
-} from "./generated/metadata-json-api";
+} from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
 const DefaultOptions = {

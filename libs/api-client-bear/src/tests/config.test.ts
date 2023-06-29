@@ -1,5 +1,6 @@
 // (C) 2007-2014 GoodData Corporation
-import { sanitizeConfig, sanitizeDomain, IConfigStorage, ConfigModule } from "../config";
+import { describe, expect, it } from "vitest";
+import { sanitizeConfig, sanitizeDomain, IConfigStorage, ConfigModule } from "../config.js";
 
 describe("sanitizeDomain", () => {
     it("should set url if valid", () => {

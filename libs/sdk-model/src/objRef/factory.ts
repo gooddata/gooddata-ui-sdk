@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { Identifier, Uri, IdentifierRef, UriRef, LocalIdRef, ObjectType } from ".";
+import { Identifier, Uri, IdentifierRef, UriRef, LocalIdRef, ObjectType } from "./index.js";
 
 /**
  * Creates an IdentifierRef from object identifier and given object type.

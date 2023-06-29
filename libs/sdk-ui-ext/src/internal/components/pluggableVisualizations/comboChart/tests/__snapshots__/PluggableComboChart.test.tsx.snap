@@ -1,22 +1,22 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableComboChart Sort config should not offer area sort as available, when primary type is area but there is only singe measure 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableComboChart > Sort config > should not offer area sort as available, when primary type is area but there is only singe measure 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": false,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
@@ -26,9 +26,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -39,33 +39,33 @@ Object {
 }
 `;
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableComboChart > Sort config > should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -75,9 +75,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -88,33 +88,33 @@ Object {
 }
 `;
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measures sorts as available sorts for 2 primary measures stacked + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableComboChart > Sort config > should provide attribute sort as default sort, attribute area and two measures sorts as available sorts for 2 primary measures stacked + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -124,9 +124,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -137,23 +137,23 @@ Object {
 }
 `;
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute normal and measue sort as available sorts for 1 seconday measure + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableComboChart > Sort config > should provide attribute sort as default sort, attribute normal and measue sort as available sorts for 1 seconday measure + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": false,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
@@ -163,9 +163,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -176,23 +176,23 @@ Object {
 }
 `;
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute normal and measure sort as available sorts for 1 primary measure + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableComboChart > Sort config > should provide attribute sort as default sort, attribute normal and measure sort as available sorts for 1 primary measure + 1 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": false,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
@@ -202,9 +202,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },

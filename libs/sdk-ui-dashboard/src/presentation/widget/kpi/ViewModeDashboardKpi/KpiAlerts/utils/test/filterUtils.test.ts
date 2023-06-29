@@ -8,8 +8,9 @@ import {
     IWidgetDefinition,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect } from "vitest";
 
-import { isAlertingTemporarilyDisabledForGivenFilter } from "../filterUtils";
+import { isAlertingTemporarilyDisabledForGivenFilter } from "../filterUtils.js";
 
 describe("isAlertingTemporarilyDisabledForGivenFilter", () => {
     type Scenario = [boolean, string, IWidgetDefinition, IFilter[]];

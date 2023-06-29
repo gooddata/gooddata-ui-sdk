@@ -2,9 +2,9 @@
 import React from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
-import { backend, hasCredentialsSetup, needsAuthentication } from "./backend";
-import { App } from "./App";
-import { DEFAULT_WORKSPACE } from "./constants";
+import { backend, hasCredentialsSetup, needsAuthentication } from "./backend.js";
+import { App } from "./App.js";
+import { DEFAULT_WORKSPACE } from "./constants.js";
 
 export const Root: React.FC = () => {
     if (!hasCredentialsSetup() && needsAuthentication()) {

@@ -1,14 +1,14 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights";
-import { QueryWidgetBrokenAlerts, QueryWidgetFilters, QueryWidgetAlertCount } from "./widgets";
-import { QueryMeasureDateDatasets } from "./kpis";
-import { QueryConnectingAttributes } from "./connectingAttributes";
-import { QueryAttributeByDisplayForm } from "./attributes";
-import { QueryAttributeDataSet } from "./attributeDataSet";
-import { QueryAttributeElements } from "./attributeElements";
+import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights.js";
+import { QueryWidgetBrokenAlerts, QueryWidgetFilters, QueryWidgetAlertCount } from "./widgets.js";
+import { QueryMeasureDateDatasets } from "./kpis.js";
+import { QueryConnectingAttributes } from "./connectingAttributes.js";
+import { QueryAttributeByDisplayForm } from "./attributes.js";
+import { QueryAttributeDataSet } from "./attributeDataSet.js";
+import { QueryAttributeElements } from "./attributeElements.js";
 
-export { IDashboardQuery, DashboardQueryType } from "./base";
+export { IDashboardQuery, DashboardQueryType } from "./base.js";
 export {
     QueryInsightDateDatasets,
     InsightDateDatasets,
@@ -17,8 +17,8 @@ export {
     InsightAttributesMeta,
     queryInsightAttributesMeta,
     insightSelectDateDataset,
-} from "./insights";
-export { QueryMeasureDateDatasets, queryDateDatasetsForMeasure, MeasureDateDatasets } from "./kpis";
+} from "./insights.js";
+export { QueryMeasureDateDatasets, queryDateDatasetsForMeasure, MeasureDateDatasets } from "./kpis.js";
 export {
     QueryWidgetFilters,
     queryWidgetFilters,
@@ -26,11 +26,11 @@ export {
     queryWidgetBrokenAlerts,
     QueryWidgetAlertCount,
     queryWidgetAlertCount,
-} from "./widgets";
-export { QueryConnectingAttributes, queryConnectingAttributes } from "./connectingAttributes";
-export { QueryAttributeByDisplayForm, queryAttributeByDisplayForm } from "./attributes";
-export { QueryAttributeDataSet, queryAttributeDataSet } from "./attributeDataSet";
-export { QueryAttributeElements, queryAttributeElements } from "./attributeElements";
+} from "./widgets.js";
+export { QueryConnectingAttributes, queryConnectingAttributes } from "./connectingAttributes.js";
+export { QueryAttributeByDisplayForm, queryAttributeByDisplayForm } from "./attributes.js";
+export { QueryAttributeDataSet, queryAttributeDataSet } from "./attributeDataSet.js";
+export { QueryAttributeElements, queryAttributeElements } from "./attributeElements.js";
 
 /**
  * @alpha

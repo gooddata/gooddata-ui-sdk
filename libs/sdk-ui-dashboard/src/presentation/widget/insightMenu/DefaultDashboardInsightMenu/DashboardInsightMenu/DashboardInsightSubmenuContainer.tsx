@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { DashboardInsightSubmenuHeader } from "./DashboardInsightSubmenuHeader";
+import { DashboardInsightSubmenuHeader } from "./DashboardInsightSubmenuHeader.js";
 
 interface IDashboardInsightSubmenuContainerProps {
     children: React.ReactNode;

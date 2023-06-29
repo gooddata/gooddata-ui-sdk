@@ -1,7 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
+import { describe, expect, it } from "vitest";
 
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isIdentifierRef, isLocalIdRef, isUriRef, isObjRef } from "../index";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { isIdentifierRef, isLocalIdRef, isUriRef, isObjRef } from "../index.js";
 
 describe("objRef type guard", () => {
     describe("isUriRef", () => {

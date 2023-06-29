@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import flow from "lodash/flow";
-import uniqBy from "lodash/uniqBy";
+import flow from "lodash/flow.js";
+import uniqBy from "lodash/uniqBy.js";
 import stringify from "json-stable-stringify";
 import {
     IAbsoluteDateFilterPreset,
@@ -9,7 +9,7 @@ import {
     IDashboardDateFilterConfig,
 } from "@gooddata/sdk-model";
 
-import { sanitizeDateFilterOption } from "./sanitization";
+import { sanitizeDateFilterOption } from "./sanitization.js";
 
 type NonArrayFilterOptionKey = "absoluteForm" | "relativeForm" | "allTime";
 

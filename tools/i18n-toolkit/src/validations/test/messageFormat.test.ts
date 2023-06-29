@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
 import { getIntlMessageFormatCheck } from "../messageFormat";
+import { describe, expect, it } from "vitest";
 
 type Scenario = [string, string, string | null];
 
@@ -21,7 +22,7 @@ describe("validate ICU message tests", () => {
         ],
     ];
 
-    it.each(scenarios)("validate %s", async (_, msg, err) => {
+    it.each(scenarios)("validate %s", async (_: any, msg: any, err: any) => {
         if (err) {
             await expect(getIntlMessageFormatCheck([msg])).rejects.toThrowError(err);
         } else {

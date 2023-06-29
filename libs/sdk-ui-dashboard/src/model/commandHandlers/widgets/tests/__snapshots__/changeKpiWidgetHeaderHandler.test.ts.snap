@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`change KPI widget header handler for dashboard with KPIs and insights should emit correct events 1`] = `
-Array [
-  Object {
+exports[`change KPI widget header handler > for dashboard with KPIs and insights > should emit correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED",
   },

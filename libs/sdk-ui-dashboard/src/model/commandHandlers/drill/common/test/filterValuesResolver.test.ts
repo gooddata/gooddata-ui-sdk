@@ -12,13 +12,14 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { recordedBackend, dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { resolveFilterValues } from "../filterValuesResolver";
+import { resolveFilterValues } from "../filterValuesResolver.js";
 import { decoratedBackend } from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalBackend,
     IWorkspaceAttributesService,
     IElementsQueryFactory,
 } from "@gooddata/sdk-backend-spi";
+import { describe, it, expect } from "vitest";
 
 describe("resolveFilterValues", () => {
     it("should return resolved absolute date limits", async () => {

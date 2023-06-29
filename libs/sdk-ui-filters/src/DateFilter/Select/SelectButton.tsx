@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { ISelectItemOption } from "./types";
-import { itemToString } from "./utils";
+import { ISelectItemOption } from "./types.js";
+import { itemToString } from "./utils.js";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const SelectButton = <V extends {}>({

@@ -7,7 +7,7 @@ import {
     isTempFilterContext,
     IDashboard,
 } from "@gooddata/sdk-model";
-import { createDefaultFilterContext } from "./defaultFilterContext";
+import { createDefaultFilterContext } from "./defaultFilterContext.js";
 
 /**
  * Given a dashboard, this function will inspect its filter context and always return a valid instance of IFilterContextDefinition to use.

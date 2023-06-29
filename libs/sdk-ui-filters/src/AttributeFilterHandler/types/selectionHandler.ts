@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { CallbackRegistration } from "./common";
+import { CallbackRegistration } from "./common.js";
 
 /**
  * Handles simple selection of at most one item.

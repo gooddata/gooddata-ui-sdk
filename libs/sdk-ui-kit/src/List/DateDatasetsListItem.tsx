@@ -3,7 +3,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import { ShortenedText } from "../ShortenedText";
+import { ShortenedText } from "../ShortenedText/index.js";
 
 /**
  * @internal

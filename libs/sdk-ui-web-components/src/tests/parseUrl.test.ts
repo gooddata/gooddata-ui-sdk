@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 
-import { parseUrl } from "../parseUrl";
+import { parseUrl } from "../parseUrl.js";
+import { describe, expect, it } from "vitest";
 
 describe("parseUrl", () => {
     it("should parse workspaceId from the URL", () => {

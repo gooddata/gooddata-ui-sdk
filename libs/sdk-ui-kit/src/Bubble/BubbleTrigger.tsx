@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import pickBy from "lodash/pickBy";
+import pickBy from "lodash/pickBy.js";
 
 /**
  * @internal

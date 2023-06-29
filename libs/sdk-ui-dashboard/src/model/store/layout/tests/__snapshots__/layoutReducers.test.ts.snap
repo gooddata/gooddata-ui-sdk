@@ -1,46 +1,46 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`layout slice reducer removeSection action should correctly handle remove section and create undo entry 1`] = `
-Object {
+exports[`layout slice reducer > removeSection action > should correctly handle remove section and create undo entry 1`] = `
+{
   "undoPointer": 0,
-  "undoStack": Array [
-    Object {
-      "cmd": Object {
+  "undoStack": [
+    {
+      "cmd": {
         "correlationId": "correlation",
-        "payload": Object {
+        "payload": {
           "index": 0,
           "stashIdentifier": undefined,
         },
         "type": "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
       },
-      "redoPatches": Array [
-        Object {
+      "redoPatches": [
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             0,
           ],
-          "value": Object {
-            "items": Array [
-              Object {
-                "size": Object {
-                  "xl": Object {
+          "value": {
+            "items": [
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 12,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
+                "widget": {
                   "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
+                  "drills": [
+                    {
+                      "origin": {
+                        "measure": {
                           "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
                         },
                         "type": "drillFromMeasure",
                       },
-                      "target": Object {
+                      "target": {
                         "identifier": "aeis6NlXcL7X",
                       },
                       "transition": "in-place",
@@ -48,19 +48,19 @@ Object {
                     },
                   ],
                   "identifier": "acMpe9e1gOEC",
-                  "ignoreDashboardFilters": Array [
-                    Object {
-                      "displayForm": Object {
+                  "ignoreDashboardFilters": [
+                    {
+                      "displayForm": {
                         "uri": "/gdc/md/referenceworkspace/obj/1071",
                       },
                       "type": "attributeFilterReference",
                     },
                   ],
-                  "insight": Object {
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1308",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1310",
                   },
                   "title": "Simple Sorted Table",
@@ -68,23 +68,23 @@ Object {
                   "uri": "/gdc/md/referenceworkspace/obj/1310",
                 },
               },
-              Object {
-                "size": Object {
-                  "xl": Object {
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 4,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
+                "widget": {
                   "description": "",
-                  "drills": Array [],
+                  "drills": [],
                   "identifier": "acrpg7NRgQub",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
+                  "ignoreDashboardFilters": [],
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1308",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1309",
                   },
                   "title": "Simple Sorted Table",
@@ -92,27 +92,27 @@ Object {
                   "uri": "/gdc/md/referenceworkspace/obj/1309",
                 },
               },
-              Object {
-                "size": Object {
-                  "xl": Object {
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 6,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
-                  "dateDataSet": Object {
+                "widget": {
+                  "dateDataSet": {
                     "uri": "/gdc/md/referenceworkspace/obj/557",
                   },
                   "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
+                  "drills": [
+                    {
+                      "origin": {
+                        "measure": {
                           "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
                         },
                         "type": "drillFromMeasure",
                       },
-                      "target": Object {
+                      "target": {
                         "uri": "/gdc/md/referenceworkspace/obj/1284",
                       },
                       "transition": "pop-up",
@@ -120,12 +120,12 @@ Object {
                     },
                   ],
                   "identifier": "aadaJHsFexBu",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
+                  "ignoreDashboardFilters": [],
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1297",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1302",
                   },
                   "title": "Test insight",
@@ -137,32 +137,32 @@ Object {
             "type": "IDashboardLayoutSection",
           },
         },
-        Object {
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             1,
           ],
-          "value": Object {
-            "items": Array [
-              Object {
-                "size": Object {
-                  "xl": Object {
+          "value": {
+            "items": [
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 12,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
+                "widget": {
                   "description": "",
-                  "drills": Array [],
+                  "drills": [],
                   "identifier": "ahdV45WpcDUR",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
+                  "ignoreDashboardFilters": [],
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1419",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1420",
                   },
                   "title": "drillToAttributeUrl",
@@ -174,9 +174,9 @@ Object {
             "type": "IDashboardLayoutSection",
           },
         },
-        Object {
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             "length",
@@ -184,39 +184,39 @@ Object {
           "value": 2,
         },
       ],
-      "undoPatches": Array [
-        Object {
+      "undoPatches": [
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             0,
           ],
-          "value": Object {
-            "items": Array [
-              Object {
-                "size": Object {
-                  "xl": Object {
+          "value": {
+            "items": [
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 2,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
-                  "dateDataSet": Object {
+                "widget": {
+                  "dateDataSet": {
                     "uri": "/gdc/md/referenceworkspace/obj/557",
                   },
                   "description": "",
-                  "drills": Array [],
+                  "drills": [],
                   "identifier": "abZ3WTf0ckan",
-                  "ignoreDashboardFilters": Array [],
-                  "kpi": Object {
+                  "ignoreDashboardFilters": [],
+                  "kpi": {
                     "comparisonDirection": "growIsGood",
                     "comparisonType": "previousPeriod",
-                    "metric": Object {
+                    "metric": {
                       "uri": "/gdc/md/referenceworkspace/obj/1271",
                     },
                   },
-                  "ref": Object {
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1386",
                   },
                   "title": "Amount",
@@ -228,33 +228,33 @@ Object {
             "type": "IDashboardLayoutSection",
           },
         },
-        Object {
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             1,
           ],
-          "value": Object {
-            "items": Array [
-              Object {
-                "size": Object {
-                  "xl": Object {
+          "value": {
+            "items": [
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 12,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
+                "widget": {
                   "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
+                  "drills": [
+                    {
+                      "origin": {
+                        "measure": {
                           "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
                         },
                         "type": "drillFromMeasure",
                       },
-                      "target": Object {
+                      "target": {
                         "identifier": "aeis6NlXcL7X",
                       },
                       "transition": "in-place",
@@ -262,19 +262,19 @@ Object {
                     },
                   ],
                   "identifier": "acMpe9e1gOEC",
-                  "ignoreDashboardFilters": Array [
-                    Object {
-                      "displayForm": Object {
+                  "ignoreDashboardFilters": [
+                    {
+                      "displayForm": {
                         "uri": "/gdc/md/referenceworkspace/obj/1071",
                       },
                       "type": "attributeFilterReference",
                     },
                   ],
-                  "insight": Object {
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1308",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1310",
                   },
                   "title": "Simple Sorted Table",
@@ -282,23 +282,23 @@ Object {
                   "uri": "/gdc/md/referenceworkspace/obj/1310",
                 },
               },
-              Object {
-                "size": Object {
-                  "xl": Object {
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 4,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
+                "widget": {
                   "description": "",
-                  "drills": Array [],
+                  "drills": [],
                   "identifier": "acrpg7NRgQub",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
+                  "ignoreDashboardFilters": [],
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1308",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1309",
                   },
                   "title": "Simple Sorted Table",
@@ -306,27 +306,27 @@ Object {
                   "uri": "/gdc/md/referenceworkspace/obj/1309",
                 },
               },
-              Object {
-                "size": Object {
-                  "xl": Object {
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 6,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
-                  "dateDataSet": Object {
+                "widget": {
+                  "dateDataSet": {
                     "uri": "/gdc/md/referenceworkspace/obj/557",
                   },
                   "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
+                  "drills": [
+                    {
+                      "origin": {
+                        "measure": {
                           "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
                         },
                         "type": "drillFromMeasure",
                       },
-                      "target": Object {
+                      "target": {
                         "uri": "/gdc/md/referenceworkspace/obj/1284",
                       },
                       "transition": "pop-up",
@@ -334,12 +334,12 @@ Object {
                     },
                   ],
                   "identifier": "aadaJHsFexBu",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
+                  "ignoreDashboardFilters": [],
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1297",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1302",
                   },
                   "title": "Test insight",
@@ -351,32 +351,32 @@ Object {
             "type": "IDashboardLayoutSection",
           },
         },
-        Object {
+        {
           "op": "add",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             2,
           ],
-          "value": Object {
-            "items": Array [
-              Object {
-                "size": Object {
-                  "xl": Object {
+          "value": {
+            "items": [
+              {
+                "size": {
+                  "xl": {
                     "gridWidth": 12,
                   },
                 },
                 "type": "IDashboardLayoutItem",
-                "widget": Object {
+                "widget": {
                   "description": "",
-                  "drills": Array [],
+                  "drills": [],
                   "identifier": "ahdV45WpcDUR",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
+                  "ignoreDashboardFilters": [],
+                  "insight": {
                     "uri": "/gdc/md/referenceworkspace/obj/1419",
                   },
-                  "properties": Object {},
-                  "ref": Object {
+                  "properties": {},
+                  "ref": {
                     "uri": "/gdc/md/referenceworkspace/obj/1420",
                   },
                   "title": "drillToAttributeUrl",
@@ -394,23 +394,23 @@ Object {
 }
 `;
 
-exports[`layout slice reducer replaceWidgetDrill action should correctly handle replace widget drill and create undo entry 1`] = `
-Object {
+exports[`layout slice reducer > replaceWidgetDrill action > should correctly handle replace widget drill and create undo entry 1`] = `
+{
   "undoPointer": 0,
-  "undoStack": Array [
-    Object {
-      "cmd": Object {
+  "undoStack": [
+    {
+      "cmd": {
         "correlationId": "correlation",
-        "payload": Object {
-          "drills": Array [
-            Object {
-              "origin": Object {
-                "measure": Object {
+        "payload": {
+          "drills": [
+            {
+              "origin": {
+                "measure": {
                   "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
                 },
                 "type": "drillFromMeasure",
               },
-              "target": Object {
+              "target": {
                 "identifier": "aeis6NlXcL7X",
                 "type": "analyticalDashboard",
               },
@@ -418,16 +418,16 @@ Object {
               "type": "drillToDashboard",
             },
           ],
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/1310",
           },
         },
         "type": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
       },
-      "redoPatches": Array [
-        Object {
+      "redoPatches": [
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             1,
@@ -436,15 +436,15 @@ Object {
             "widget",
             "drills",
           ],
-          "value": Array [
-            Object {
-              "origin": Object {
-                "measure": Object {
+          "value": [
+            {
+              "origin": {
+                "measure": {
                   "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
                 },
                 "type": "drillFromMeasure",
               },
-              "target": Object {
+              "target": {
                 "identifier": "aeis6NlXcL7X",
                 "type": "analyticalDashboard",
               },
@@ -454,10 +454,10 @@ Object {
           ],
         },
       ],
-      "undoPatches": Array [
-        Object {
+      "undoPatches": [
+        {
           "op": "replace",
-          "path": Array [
+          "path": [
             "layout",
             "sections",
             1,
@@ -466,15 +466,15 @@ Object {
             "widget",
             "drills",
           ],
-          "value": Array [
-            Object {
-              "origin": Object {
-                "measure": Object {
+          "value": [
+            {
+              "origin": {
+                "measure": {
                   "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
                 },
                 "type": "drillFromMeasure",
               },
-              "target": Object {
+              "target": {
                 "identifier": "aeis6NlXcL7X",
               },
               "transition": "in-place",

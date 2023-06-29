@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 
-import { isElementInvisibleType, useScrollContext } from "./ScrollContext";
+import { isElementInvisibleType, useScrollContext } from "./ScrollContext.js";
 
 /**
  * @internal

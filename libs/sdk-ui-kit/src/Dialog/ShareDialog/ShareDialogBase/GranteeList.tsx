@@ -1,11 +1,11 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { serializeObjRef } from "@gooddata/sdk-model";
-import { GranteeItemComponent } from "./GranteeItem";
-import { IGranteesListProps } from "./types";
-import { GranteeListEmpty } from "./GranteeListEmpty";
+import { GranteeItemComponent } from "./GranteeItem.js";
+import { IGranteesListProps } from "./types.js";
+import { GranteeListEmpty } from "./GranteeListEmpty.js";
 import { useIntl } from "react-intl";
-import { sortGranteeList } from "./utils";
+import { sortGranteeList } from "./utils.js";
 
 /**
  * @internal

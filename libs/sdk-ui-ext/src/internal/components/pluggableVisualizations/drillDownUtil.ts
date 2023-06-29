@@ -23,9 +23,9 @@ import {
     IDrillEventIntersectionElement,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
+import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 import { ColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
-import { IDrillDownDefinition } from "../../interfaces/Visualization";
+import { IDrillDownDefinition } from "../../interfaces/Visualization.js";
 
 function matchesDrillDownTargetAttribute(
     drillDefinition: IDrillDownDefinition,

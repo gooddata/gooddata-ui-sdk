@@ -21,12 +21,12 @@ import {
     IMeasureMetadataObjectDefinition,
     IMeasureMetadataObject,
 } from "@gooddata/sdk-model";
-import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
-import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { objRefToIdentifier } from "../../../utils/api";
-import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
-import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
+import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
+import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToIdentifier } from "../../../utils/api.js";
+import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens.js";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}

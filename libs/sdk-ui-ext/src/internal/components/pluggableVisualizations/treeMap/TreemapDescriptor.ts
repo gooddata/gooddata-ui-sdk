@@ -6,15 +6,15 @@ import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 import {
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableTreemap } from "./PluggableTreemap";
-import { BigChartDescriptor } from "../BigChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableTreemap } from "./PluggableTreemap.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
-} from "../drillDownUtil";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
+} from "../drillDownUtil.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -23,8 +23,8 @@ import {
     localeInsightConversion,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

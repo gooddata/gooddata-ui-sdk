@@ -1,20 +1,20 @@
 // (C) 2019-2023 GoodData Corporation
-import { IPagedResource } from "../common/paging";
-import { IExecutionFactory } from "./execution";
-import { IWorkspaceInsightsService } from "./insights";
-import { IWorkspaceStylingService } from "./styling";
-import { IWorkspaceSettingsService } from "./settings";
-import { IWorkspaceCatalogFactory } from "./ldm/catalog";
-import { IWorkspaceDatasetsService } from "./ldm/datasets";
-import { IWorkspacePermissionsService } from "./permissions";
-import { IWorkspaceDashboardsService } from "./dashboards";
-import { IWorkspaceUsersQuery } from "./users";
-import { IDateFilterConfigsQuery } from "./dateFilterConfigs";
-import { IWorkspaceAttributesService } from "./attributes";
-import { IWorkspaceMeasuresService } from "./measures";
-import { IWorkspaceFactsService } from "./facts";
-import { IWorkspaceAccessControlService } from "./accessControl";
-import { IWorkspaceUserGroupsQuery } from "./userGroups";
+import { IPagedResource } from "../common/paging.js";
+import { IExecutionFactory } from "./execution/index.js";
+import { IWorkspaceInsightsService } from "./insights/index.js";
+import { IWorkspaceStylingService } from "./styling/index.js";
+import { IWorkspaceSettingsService } from "./settings/index.js";
+import { IWorkspaceCatalogFactory } from "./ldm/catalog.js";
+import { IWorkspaceDatasetsService } from "./ldm/datasets.js";
+import { IWorkspacePermissionsService } from "./permissions/index.js";
+import { IWorkspaceDashboardsService } from "./dashboards/index.js";
+import { IWorkspaceUsersQuery } from "./users/index.js";
+import { IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
+import { IWorkspaceAttributesService } from "./attributes/index.js";
+import { IWorkspaceMeasuresService } from "./measures/index.js";
+import { IWorkspaceFactsService } from "./facts/index.js";
+import { IWorkspaceAccessControlService } from "./accessControl/index.js";
+import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.

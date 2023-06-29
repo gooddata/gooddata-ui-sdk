@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`measure factories modifyInlineMeasure should return a modified inline measure 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "inlineDefinition": Object {
+exports[`measure factories > modifyInlineMeasure > should return a modified inline measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "inlineDefinition": {
         "maql": "SELECT 2;",
       },
     },
@@ -13,12 +13,12 @@ Object {
 }
 `;
 
-exports[`measure factories modifyMeasure should create new measure with modified local id 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > modifyMeasure > should create new measure with modified local id 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "measure1",
         },
       },
@@ -28,13 +28,13 @@ Object {
 }
 `;
 
-exports[`measure factories modifyPopMeasure should change master measure and pop attribute 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "popMeasureDefinition": Object {
+exports[`measure factories > modifyPopMeasure > should change master measure and pop attribute 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
         "measureIdentifier": "otherMaster",
-        "popAttribute": Object {
+        "popAttribute": {
           "identifier": "attrId2",
           "type": "attribute",
         },
@@ -45,14 +45,14 @@ Object {
 }
 `;
 
-exports[`measure factories modifyPreviousPeriodMeasure should change master measure and pop attribute 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "previousPeriodMeasure": Object {
-        "dateDataSets": Array [
-          Object {
-            "dataSet": Object {
+exports[`measure factories > modifyPreviousPeriodMeasure > should change master measure and pop attribute 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
               "identifier": "dataset2",
             },
             "periodsAgo": -1,
@@ -66,12 +66,12 @@ Object {
 }
 `;
 
-exports[`measure factories modifySimpleMeasure should create new measure with cleaned up customizations and same localId 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > modifySimpleMeasure > should create new measure with cleaned up customizations and same localId 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "measure1",
         },
       },
@@ -81,13 +81,13 @@ Object {
 }
 `;
 
-exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and custom local id 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
+exports[`measure factories > modifySimpleMeasure > should create new measure with modified aggregation and custom local id 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
         "aggregation": "min",
-        "item": Object {
+        "item": {
           "identifier": "measure1",
         },
       },
@@ -97,13 +97,13 @@ Object {
 }
 `;
 
-exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and same localId 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
+exports[`measure factories > modifySimpleMeasure > should create new measure with modified aggregation and same localId 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
         "aggregation": "min",
-        "item": Object {
+        "item": {
           "identifier": "measure1",
         },
       },
@@ -113,12 +113,12 @@ Object {
 }
 `;
 
-exports[`measure factories newArithmeticMeasure should return a simple arithmetic measure 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "arithmeticMeasure": Object {
-        "measureIdentifiers": Array [
+exports[`measure factories > newArithmeticMeasure > should return a simple arithmetic measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
           "foo",
           "bar",
         ],
@@ -130,12 +130,12 @@ Object {
 }
 `;
 
-exports[`measure factories newArithmeticMeasure should return a simple arithmetic measure from two measure objects 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "arithmeticMeasure": Object {
-        "measureIdentifiers": Array [
+exports[`measure factories > newArithmeticMeasure > should return a simple arithmetic measure from two measure objects 1`] = `
+{
+  "measure": {
+    "definition": {
+      "arithmeticMeasure": {
+        "measureIdentifiers": [
           "m_afSEwRwdbMeQ",
           "m_fact.stagehistory.velocity_min",
         ],
@@ -147,11 +147,11 @@ Object {
 }
 `;
 
-exports[`measure factories newInlineMeasure should return a inline measure 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "inlineDefinition": Object {
+exports[`measure factories > newInlineMeasure > should return a inline measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "inlineDefinition": {
         "maql": "SELECT 1",
       },
     },
@@ -160,13 +160,13 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should honor custom-set localId for simple measures with aggregation 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
+exports[`measure factories > newMeasure > should honor custom-set localId for simple measures with aggregation 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
         "aggregation": "sum",
-        "item": Object {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -176,26 +176,26 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a measure with a filter 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "filters": Array [
-          Object {
-            "positiveAttributeFilter": Object {
-              "displayForm": Object {
+exports[`measure factories > newMeasure > should return a measure with a filter 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "filters": [
+          {
+            "positiveAttributeFilter": {
+              "displayForm": {
                 "identifier": "filter",
               },
-              "in": Object {
-                "uris": Array [
+              "in": {
+                "uris": [
                   "baz",
                 ],
               },
             },
           },
         ],
-        "item": Object {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -205,13 +205,13 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a measure with alias 1`] = `
-Object {
-  "measure": Object {
+exports[`measure factories > newMeasure > should return a measure with alias 1`] = `
+{
+  "measure": {
     "alias": "bar",
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -221,12 +221,12 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a measure with custom localIdentifier 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > newMeasure > should return a measure with custom localIdentifier 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -236,12 +236,12 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a measure with format 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > newMeasure > should return a measure with format 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -252,12 +252,12 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a measure with title 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > newMeasure > should return a measure with title 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -268,12 +268,12 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a simple measure 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > newMeasure > should return a simple measure 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -283,13 +283,13 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should return a simple measure with different aggregation 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
+exports[`measure factories > newMeasure > should return a simple measure with different aggregation 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
         "aggregation": "sum",
-        "item": Object {
+        "item": {
           "identifier": "foo",
         },
       },
@@ -299,12 +299,12 @@ Object {
 }
 `;
 
-exports[`measure factories newMeasure should sanitize automatically generated localId 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "measureDefinition": Object {
-        "item": Object {
+exports[`measure factories > newMeasure > should sanitize automatically generated localId 1`] = `
+{
+  "measure": {
+    "definition": {
+      "measureDefinition": {
+        "item": {
           "identifier": "id:with:colons",
         },
       },
@@ -314,13 +314,13 @@ Object {
 }
 `;
 
-exports[`measure factories newPopMeasure should return a simple PoP measure from attribute ref 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "popMeasureDefinition": Object {
+exports[`measure factories > newPopMeasure > should return a simple PoP measure from attribute ref 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
         "measureIdentifier": "foo",
-        "popAttribute": Object {
+        "popAttribute": {
           "identifier": "attr",
         },
       },
@@ -330,13 +330,13 @@ Object {
 }
 `;
 
-exports[`measure factories newPopMeasure should return a simple PoP measure from other measure object 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "popMeasureDefinition": Object {
+exports[`measure factories > newPopMeasure > should return a simple PoP measure from other measure object 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
         "measureIdentifier": "m_afSEwRwdbMeQ",
-        "popAttribute": Object {
+        "popAttribute": {
           "identifier": "attr",
           "type": "attribute",
         },
@@ -347,13 +347,13 @@ Object {
 }
 `;
 
-exports[`measure factories newPopMeasure should return a simple PoP measure from shorthand attribute identifier 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "popMeasureDefinition": Object {
+exports[`measure factories > newPopMeasure > should return a simple PoP measure from shorthand attribute identifier 1`] = `
+{
+  "measure": {
+    "definition": {
+      "popMeasureDefinition": {
         "measureIdentifier": "foo",
-        "popAttribute": Object {
+        "popAttribute": {
           "identifier": "attr",
           "type": "attribute",
         },
@@ -364,14 +364,14 @@ Object {
 }
 `;
 
-exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with ObjRef datasets 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "previousPeriodMeasure": Object {
-        "dateDataSets": Array [
-          Object {
-            "dataSet": Object {
+exports[`measure factories > newPreviousPeriodMeasure > should return a simple PP measure when supplied with ObjRef datasets 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
               "uri": "/some/uri",
             },
             "periodsAgo": 3,
@@ -385,14 +385,14 @@ Object {
 }
 `;
 
-exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with objects 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "previousPeriodMeasure": Object {
-        "dateDataSets": Array [
-          Object {
-            "dataSet": Object {
+exports[`measure factories > newPreviousPeriodMeasure > should return a simple PP measure when supplied with objects 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
               "identifier": "bar",
             },
             "periodsAgo": 3,
@@ -406,14 +406,14 @@ Object {
 }
 `;
 
-exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with strings 1`] = `
-Object {
-  "measure": Object {
-    "definition": Object {
-      "previousPeriodMeasure": Object {
-        "dateDataSets": Array [
-          Object {
-            "dataSet": Object {
+exports[`measure factories > newPreviousPeriodMeasure > should return a simple PP measure when supplied with strings 1`] = `
+{
+  "measure": {
+    "definition": {
+      "previousPeriodMeasure": {
+        "dateDataSets": [
+          {
+            "dataSet": {
               "identifier": "bar",
             },
             "periodsAgo": 3,

@@ -1,30 +1,30 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import includes from "lodash/includes";
-import isEmpty from "lodash/isEmpty";
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import MinMaxControl from "../configurationControls//MinMaxControl";
-import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
-import ConfigSection from "../configurationControls/ConfigSection";
-import CheckboxControl from "../configurationControls/CheckboxControl";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
+import MinMaxControl from "../configurationControls/MinMaxControl.js";
+import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection";
-import { IAxisProperties } from "../../interfaces/AxisType";
-import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis";
+} from "../../constants/bubble.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import { IAxisProperties } from "../../interfaces/AxisType.js";
+import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis.js";
 import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
-import NameSubsection from "../configurationControls/axis/NameSubsection";
-import { messages } from "../../../locales";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import { messages } from "../../../locales.js";
 
 export default class BaseChartConfigurationPanel<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { RenderModeState } from "./renderModeState";
-import { RenderMode } from "../../../types";
+import { RenderModeState } from "./renderModeState.js";
+import { RenderMode } from "../../../types.js";
 
 type RenderModeReducer<A extends Action = AnyAction> = CaseReducer<RenderModeState, A>;
 

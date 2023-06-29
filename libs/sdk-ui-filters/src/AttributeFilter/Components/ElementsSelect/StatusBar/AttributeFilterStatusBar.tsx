@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import React from "react";
-import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus";
-import { AttributeFilterSelectionStatus } from "./AttributeFilterSelectionStatus";
+import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
+import { AttributeFilterSelectionStatus } from "./AttributeFilterSelectionStatus.js";
 
 /**
  * It represents component that display status of current selection.

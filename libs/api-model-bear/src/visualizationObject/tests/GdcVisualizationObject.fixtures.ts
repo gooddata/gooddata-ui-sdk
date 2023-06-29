@@ -1,12 +1,13 @@
 // (C) 2019 GoodData Corporation
-import { GdcVisualizationObject } from "../GdcVisualizationObject";
-import IMeasure = GdcVisualizationObject.IMeasure;
-import IAttribute = GdcVisualizationObject.IAttribute;
-import DateFilter = GdcVisualizationObject.DateFilter;
-import Filter = GdcVisualizationObject.Filter;
-import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
-import IArithmeticMeasureDefinition = GdcVisualizationObject.IArithmeticMeasureDefinition;
-import IMeasureValueFilter = GdcVisualizationObject.IMeasureValueFilter;
+import {
+    DateFilter,
+    Filter,
+    IArithmeticMeasureDefinition,
+    IAttribute,
+    IMeasure,
+    IMeasureDefinitionType,
+    IMeasureValueFilter,
+} from "../GdcVisualizationObject.js";
 
 export const attribute: IAttribute = {
     visualizationAttribute: {

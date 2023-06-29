@@ -2,8 +2,8 @@
 import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { BubbleHoverTrigger, Bubble } from "../../../Bubble";
-import { IAddUserOrGroupButton } from "./types";
+import { BubbleHoverTrigger, Bubble } from "../../../Bubble/index.js";
+import { IAddUserOrGroupButton } from "./types.js";
 
 /**
  * @internal

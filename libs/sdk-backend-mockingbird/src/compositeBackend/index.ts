@@ -13,7 +13,7 @@ import {
     IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 /**
  * @internal

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { copyWithModifiedProps, scenariosFor } from "../../src";
+import { copyWithModifiedProps, scenariosFor } from "../../src/index.js";
 import {
     IPivotTableProps,
     newWidthForAllColumnsForMeasure,
@@ -11,7 +11,7 @@ import {
 import {
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
-} from "./base";
+} from "./base.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const ATTRIBUTE_WIDTH = 400;

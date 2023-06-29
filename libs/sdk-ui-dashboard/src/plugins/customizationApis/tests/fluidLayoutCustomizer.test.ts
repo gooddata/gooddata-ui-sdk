@@ -1,10 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer";
+import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer.js";
 import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
-import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../../model";
-import { DashboardCustomizationLogger } from "../customizationLogging";
-import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types";
+import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../../model/index.js";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
+import { describe, it, expect, beforeEach } from "vitest";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",

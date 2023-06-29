@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { RecordedBackendConfig, RecordingIndex } from "./types";
-import { RecordedElementQueryFactory } from "./elements";
+import { RecordedBackendConfig, RecordingIndex } from "./types.js";
+import { RecordedElementQueryFactory } from "./elements.js";
 import {
     ObjRef,
     objRefToString,
@@ -11,9 +11,9 @@ import {
     isUriRef,
 } from "@gooddata/sdk-model";
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
-import values from "lodash/values";
-import { objRefsToStringKey } from "./utils";
-import compact from "lodash/compact";
+import values from "lodash/values.js";
+import { objRefsToStringKey } from "./utils.js";
+import compact from "lodash/compact.js";
 import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,

@@ -1,31 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`removeAttributeFilterHandler should emit the appropriate events for removed attribute filter 1`] = `
-Array [
-  Object {
+exports[`removeAttributeFilterHandler > should emit the appropriate events for removed attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`removeAttributeFilterHandler should emit the appropriate events when trying to remove a non-existent attribute filter 1`] = `
-Array [
-  Object {
+exports[`removeAttributeFilterHandler > should emit the appropriate events when trying to remove a non-existent attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },

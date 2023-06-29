@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
-import { useDashboardComponentsContext } from "../dashboardContexts";
+import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 
 export const EmptyDashboardError: React.FC = () => {
     const intl = useIntl();

@@ -7,8 +7,8 @@ import {
     IInsightDefinition,
     ISettings,
 } from "@gooddata/sdk-model";
-import { IFluidLayoutDescriptor } from "./LayoutDescriptor";
-import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization";
+import { IFluidLayoutDescriptor } from "./LayoutDescriptor.js";
+import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization.js";
 
 /**
  * Factories that create a new instance of pluggable visualization.

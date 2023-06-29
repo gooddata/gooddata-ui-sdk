@@ -12,10 +12,10 @@ import {
     isMeasureLocator,
 } from "@gooddata/sdk-model";
 
-import { IAvailableSortsGroup, SORT_TARGET_TYPE, ISortTypeItem, IBucketItemDescriptors } from "../types";
-import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown";
-import { SingleSelectListItem } from "../../List";
-import { MeasureDropdown } from "../MeasureDropdown/MeasureDropdown";
+import { IAvailableSortsGroup, SORT_TARGET_TYPE, ISortTypeItem, IBucketItemDescriptors } from "../types.js";
+import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown/index.js";
+import { SingleSelectListItem } from "../../List/index.js";
+import { MeasureDropdown } from "../MeasureDropdown/MeasureDropdown.js";
 
 interface AttributeDropdownProps {
     currentSortItem: ISortItem;

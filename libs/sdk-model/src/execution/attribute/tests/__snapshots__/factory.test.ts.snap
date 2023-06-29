@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`modifyAttribute should keep localId if one not provided during modification 1`] = `
-Object {
-  "attribute": Object {
+exports[`modifyAttribute > should keep localId if one not provided during modification 1`] = `
+{
+  "attribute": {
     "alias": "My Account Name",
-    "displayForm": Object {
+    "displayForm": {
       "identifier": "label.account.id.name",
       "type": "displayForm",
     },
@@ -13,11 +13,11 @@ Object {
 }
 `;
 
-exports[`modifyAttribute should use localId provided during modification 1`] = `
-Object {
-  "attribute": Object {
+exports[`modifyAttribute > should use localId provided during modification 1`] = `
+{
+  "attribute": {
     "alias": "My Account Name",
-    "displayForm": Object {
+    "displayForm": {
       "identifier": "label.account.id.name",
       "type": "displayForm",
     },
@@ -26,10 +26,10 @@ Object {
 }
 `;
 
-exports[`newAttribute should return a simple attribute 1`] = `
-Object {
-  "attribute": Object {
-    "displayForm": Object {
+exports[`newAttribute > should return a simple attribute 1`] = `
+{
+  "attribute": {
+    "displayForm": {
       "identifier": "foo",
       "type": "displayForm",
     },
@@ -38,10 +38,10 @@ Object {
 }
 `;
 
-exports[`newAttribute should return an attribute with a custom localId 1`] = `
-Object {
-  "attribute": Object {
-    "displayForm": Object {
+exports[`newAttribute > should return an attribute with a custom localId 1`] = `
+{
+  "attribute": {
+    "displayForm": {
       "identifier": "foo",
       "type": "displayForm",
     },
@@ -50,11 +50,11 @@ Object {
 }
 `;
 
-exports[`newAttribute should return an attribute with an alias 1`] = `
-Object {
-  "attribute": Object {
+exports[`newAttribute > should return an attribute with an alias 1`] = `
+{
+  "attribute": {
     "alias": "alias",
-    "displayForm": Object {
+    "displayForm": {
       "identifier": "foo",
       "type": "displayForm",
     },
@@ -63,10 +63,10 @@ Object {
 }
 `;
 
-exports[`newAttribute should sanitize automatically generated localId 1`] = `
-Object {
-  "attribute": Object {
-    "displayForm": Object {
+exports[`newAttribute > should sanitize automatically generated localId 1`] = `
+{
+  "attribute": {
+    "displayForm": {
       "identifier": "id:with:colons",
       "type": "displayForm",
     },

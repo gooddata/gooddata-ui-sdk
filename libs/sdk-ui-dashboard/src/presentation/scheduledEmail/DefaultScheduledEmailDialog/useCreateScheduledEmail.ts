@@ -6,8 +6,12 @@ import {
     IScheduledMail,
     IScheduledMailDefinition,
 } from "@gooddata/sdk-model";
-import { CommandProcessingStatus, createScheduledEmail, useDashboardCommandProcessing } from "../../../model";
-import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils";
+import {
+    CommandProcessingStatus,
+    createScheduledEmail,
+    useDashboardCommandProcessing,
+} from "../../../model/index.js";
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 
 export const useCreateScheduledEmail = ({
     onBeforeRun,

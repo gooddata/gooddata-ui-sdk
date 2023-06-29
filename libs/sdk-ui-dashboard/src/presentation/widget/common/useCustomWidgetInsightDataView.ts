@@ -13,9 +13,9 @@ import {
 } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 
-import { ICustomWidget } from "../../../model";
+import { ICustomWidget } from "../../../model/index.js";
 
-import { useWidgetFilters } from "./useWidgetFilters";
+import { useWidgetFilters } from "./useWidgetFilters.js";
 
 /**
  * Configuration options for the {@link useCustomWidgetInsightDataView} hook.

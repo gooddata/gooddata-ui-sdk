@@ -1,31 +1,35 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { render, screen, waitFor } from "@testing-library/react";
 import { IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
-import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization";
-import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
-import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
+import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization.js";
+import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
+import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog.js";
 
-import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
-import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor";
+import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture.js";
+import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor.js";
 
-import { IVisualizationMeta, PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
+import {
+    IVisualizationMeta,
+    PluggableVisualizationFactory,
+} from "../../interfaces/VisualizationDescriptor.js";
 import {
     IBucketItem,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
     IDrillDownContext,
-} from "../../interfaces/Visualization";
-import * as testMocks from "../../tests/mocks/testMocks";
-import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks";
+} from "../../interfaces/Visualization.js";
+import * as testMocks from "../../tests/mocks/testMocks.js";
+import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
+import { describe, it, expect, vi, afterEach, afterAll, beforeAll, beforeEach } from "vitest";
 
-const pluggableVisualizationGetExecutionMock = jest.fn(() => ({} as IPreparedExecution));
+const pluggableVisualizationGetExecutionMock = vi.fn(() => ({} as IPreparedExecution));
 
 class DummyClass extends AbstractPluggableVisualization {
     constructor(props: IVisConstruct) {
@@ -108,10 +112,10 @@ describe("BaseVisualization", () => {
     }
 
     function getDummyComponent(customProps?: Partial<IBaseVisualizationProps>) {
-        const tableConstructorCall = jest.fn();
-        const tableUpdateCall = jest.fn();
-        const tableAddBucketItemsCall = jest.fn();
-        const onExportReady = jest.fn();
+        const tableConstructorCall = vi.fn();
+        const tableUpdateCall = vi.fn();
+        const tableAddBucketItemsCall = vi.fn();
+        const onExportReady = vi.fn();
 
         class DummyTable extends DummyClass {
             constructor(props: IVisConstruct) {
@@ -141,8 +145,8 @@ describe("BaseVisualization", () => {
             }
         }
 
-        const columnConstructorCall = jest.fn();
-        const columnAddBucketItemsCall = jest.fn();
+        const columnConstructorCall = vi.fn();
+        const columnAddBucketItemsCall = vi.fn();
         class DummyColumn extends DummyClass {
             constructor() {
                 super(DummyVisConstruct);
@@ -257,8 +261,8 @@ describe("BaseVisualization", () => {
         };
 
         it("should process new derived bucket items and call onNewDerivedBucketItemsPlaced", async () => {
-            const onNewDerivedBucketItemsPlaced = jest.fn();
-            const onExtendedReferencePointChanged = jest.fn();
+            const onNewDerivedBucketItemsPlaced = vi.fn();
+            const onExtendedReferencePointChanged = vi.fn();
 
             const {
                 tableAddBucketItemsCall,
@@ -282,8 +286,8 @@ describe("BaseVisualization", () => {
         });
 
         it("should NOT call onNewDerivedBucketItemsPlaced when newDerivedBucketItems are empty", async () => {
-            const onNewDerivedBucketItemsPlaced = jest.fn();
-            const onExtendedReferencePointChanged = jest.fn();
+            const onNewDerivedBucketItemsPlaced = vi.fn();
+            const onExtendedReferencePointChanged = vi.fn();
 
             const {
                 tableAddBucketItemsCall,
@@ -311,8 +315,8 @@ describe("BaseVisualization", () => {
         });
 
         it("should NOT process when newDerivedBucketItems are unchanged", async () => {
-            const onNewDerivedBucketItemsPlaced = jest.fn();
-            const onExtendedReferencePointChanged = jest.fn();
+            const onNewDerivedBucketItemsPlaced = vi.fn();
+            const onExtendedReferencePointChanged = vi.fn();
 
             const {
                 tableAddBucketItemsCall,
@@ -391,7 +395,7 @@ describe("BaseVisualization", () => {
             component: { rerender },
             columnConstructorCall,
         } = getDummyComponent();
-        const onColumnBucketsChange = jest.fn();
+        const onColumnBucketsChange = vi.fn();
 
         rerender(
             <BaseVisualization
@@ -412,7 +416,7 @@ describe("BaseVisualization", () => {
             component: { rerender },
             tableConstructorCall,
         } = getDummyComponent();
-        const onExtendedReferencePointChanged = jest.fn();
+        const onExtendedReferencePointChanged = vi.fn();
 
         rerender(
             <BaseVisualization
@@ -440,7 +444,7 @@ describe("BaseVisualization", () => {
     });
 
     it("should render message in case visualization type is unknown", () => {
-        const onLoadingChanged = jest.fn();
+        const onLoadingChanged = vi.fn();
         createComponent({
             ...defaultProps,
             insight: testMocks.dummyInsight,
@@ -454,7 +458,7 @@ describe("BaseVisualization", () => {
 
     describe("getExtendedReferencePoint in componentDidMount", () => {
         let visualizationCatalog: IVisualizationCatalog;
-        let getExtendedReferencePointMock = jest.fn();
+        let getExtendedReferencePointMock = vi.fn();
         let originalConsoleError: any;
 
         beforeAll(() => {
@@ -467,7 +471,7 @@ describe("BaseVisualization", () => {
         });
 
         beforeEach(() => {
-            getExtendedReferencePointMock = jest.fn();
+            getExtendedReferencePointMock = vi.fn();
             class DummyTable extends DummyClass {
                 public getExtendedReferencePoint() {
                     getExtendedReferencePointMock();

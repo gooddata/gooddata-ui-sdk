@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { ISelectItem, ISelectItemOption } from "./types";
+import { ISelectItem, ISelectItemOption } from "./types.js";
 
 export const itemToString = <V>(item: ISelectItem<V>): string => {
     if (item?.type === "option" && item.label) {

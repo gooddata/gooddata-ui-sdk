@@ -1,12 +1,12 @@
 // (C) 2019-2023 GoodData Corporation
-import identity from "lodash/identity";
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import { IAttribute, isAttribute } from "./index";
-import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef";
-import { idRef } from "../../objRef/factory";
+import identity from "lodash/identity.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import { IAttribute, isAttribute } from "./index.js";
+import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef/index.js";
+import { idRef } from "../../objRef/factory.js";
 import SparkMD5 from "spark-md5";
-import { sanitizeLocalId } from "../../sanitizeLocalId";
+import { sanitizeLocalId } from "../../sanitizeLocalId.js";
 
 /**
  * Input to the AttributeBuilder.

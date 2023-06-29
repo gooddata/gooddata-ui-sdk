@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { messages } from "../locales";
+import { messages } from "../locales.js";
 
 export interface ILegendAxisIndicatorProps {
     labelKey: string;

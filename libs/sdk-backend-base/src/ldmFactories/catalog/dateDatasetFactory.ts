@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import {
     DateAttributeGranularity,
     ObjRef,
@@ -12,13 +12,13 @@ import {
     IDataSetMetadataObject,
     isDataSetMetadataObject,
 } from "@gooddata/sdk-model";
-import { Builder, builderFactory, BuilderModifications } from "../builder";
-import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory";
+import { Builder, builderFactory, BuilderModifications } from "../builder.js";
+import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory.js";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
-} from "../metadata/displayFormFactory";
-import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metadata/dataSetFactory";
+} from "../metadata/displayFormFactory.js";
+import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metadata/dataSetFactory.js";
 
 /**
  * Catalog date attribute builder

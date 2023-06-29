@@ -3,17 +3,17 @@ import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
-import differenceInMonths from "date-fns/differenceInMonths";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
-import format from "date-fns/format";
+import differenceInMonths from "date-fns/differenceInMonths/index.js";
+import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
+import format from "date-fns/format/index.js";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { v4 as uuid } from "uuid";
-import debounce from "lodash/debounce";
+import debounce from "lodash/debounce.js";
 
-import { Overlay } from "../Overlay";
-import { removeFromDom } from "../utils/domUtilities";
-import { Icon } from "../Icon";
+import { Overlay } from "../Overlay/index.js";
+import { removeFromDom } from "../utils/domUtilities.js";
+import { Icon } from "../Icon/index.js";
 
 import {
     getItemActiveColor,
@@ -21,14 +21,14 @@ import {
     getItemHoverColor,
     getSeparatorColor,
     getWorkspacePickerHoverColor,
-} from "./colors";
-import { addCssToStylesheet } from "./addCssToStylesheet";
-import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings";
-import { HeaderHelp } from "./HeaderHelp";
-import { HeaderAccount } from "./HeaderAccount";
-import { HeaderMenu } from "./HeaderMenu";
-import { HeaderUpsellButton } from "./HeaderUpsellButton";
-import { HeaderInvite } from "./HeaderInvite";
+} from "./colors.js";
+import { addCssToStylesheet } from "./addCssToStylesheet.js";
+import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings.js";
+import { HeaderHelp } from "./HeaderHelp.js";
+import { HeaderAccount } from "./HeaderAccount.js";
+import { HeaderMenu } from "./HeaderMenu.js";
+import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
+import { HeaderInvite } from "./HeaderInvite.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;

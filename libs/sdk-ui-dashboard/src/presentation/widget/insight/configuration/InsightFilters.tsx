@@ -2,9 +2,9 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import InsightDateDataSetFilter from "./InsightDateDataSetFilter";
+import InsightDateDataSetFilter from "./InsightDateDataSetFilter.js";
 import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
-import { AttributeFilterConfiguration } from "../../common/configuration/AttributeFilterConfiguration";
+import { AttributeFilterConfiguration } from "../../common/configuration/AttributeFilterConfiguration.js";
 
 interface IInsightFiltersProps {
     widget: IInsightWidget;

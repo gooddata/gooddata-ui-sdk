@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
-import { renderModeAware } from "../../../componentDefinition";
-import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
-import { EditableDashboardInsightWidget } from "./EditableDashboardInsightWidget";
+import { renderModeAware } from "../../../componentDefinition/index.js";
+import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
+import { EditableDashboardInsightWidget } from "./EditableDashboardInsightWidget.js";
 
 /**
  * @internal

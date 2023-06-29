@@ -1,16 +1,16 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { isAttributeMetadataObject, IWidget, objRefToString } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
     useDashboardSelector,
-} from "../../../../model";
-import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem";
-import { getAttributeByDisplayForm } from "./utils";
-import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes";
+} from "../../../../model/index.js";
+import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
+import { getAttributeByDisplayForm } from "./utils.js";
+import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 
 interface IAttributeFilterConfigurationProps {
     widget: IWidget;

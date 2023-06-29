@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { testBackend } from "./backend";
+import { describe, beforeAll, expect, it } from "vitest";
+import { testBackend } from "./backend.js";
 
 const backend = testBackend();
 
@@ -9,7 +10,7 @@ beforeAll(async () => {
 
 describe("tiger entitlements", () => {
     it("should load all entitlements", async () => {
-        const result = await backend.entitlements();
+        const result = backend.entitlements();
         const entitlements = await result.resolveEntitlements();
 
         expect(entitlements).toContainEqual({ name: "UnlimitedWorkspaces" });

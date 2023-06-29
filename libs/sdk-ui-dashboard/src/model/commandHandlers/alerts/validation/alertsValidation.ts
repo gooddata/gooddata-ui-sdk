@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
-import { IDashboardCommand } from "../../../commands";
-import { DashboardContext } from "../../../types/commonTypes";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { IDashboardCommand } from "../../../commands/index.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 type CommandWithRefs = IDashboardCommand & {
     payload: {

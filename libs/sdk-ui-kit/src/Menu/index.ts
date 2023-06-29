@@ -1,12 +1,12 @@
 // (C) 2021 GoodData Corporation
 
-export { Menu, IMenuProps } from "./Menu";
-export { SubMenu, ISubMenuProps } from "./SubMenu";
+export { Menu, IMenuProps } from "./Menu.js";
+export { SubMenu, ISubMenuProps } from "./SubMenu.js";
 export {
     OnOpenedChange,
     IOnOpenedChangeParams,
     IMenuPositionConfig,
     MenuAlignment,
     OpenAction,
-} from "./MenuSharedTypes";
-export { IMenuStateProps, IMenuStateConfig } from "./MenuState";
+} from "./MenuSharedTypes.js";
+export { IMenuStateProps, IMenuStateConfig } from "./MenuState.js";

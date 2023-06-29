@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import parse from "date-fns/parse";
-import identity from "lodash/identity";
+import parse from "date-fns/parse/index.js";
+import identity from "lodash/identity.js";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 

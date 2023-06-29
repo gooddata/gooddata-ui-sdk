@@ -1,15 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import { action } from "@storybook/addon-actions";
-import { scenariosFor } from "../../src";
+import { scenariosFor } from "../../src/index.js";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base";
+import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base.js";
 import {
     DepartmentPredicate,
     ProductPredicate,
     SalesRepPredicate,
     AmountMeasurePredicate,
     WonMeasurePredicate,
-} from "../_infra/predicates";
+} from "../_infra/predicates.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("drilling")

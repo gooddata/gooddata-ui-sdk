@@ -1,13 +1,13 @@
 // (C) 2022 GoodData Corporation
 
 import { useIntl } from "react-intl";
-import { DRILL_TARGET_TYPE } from "../../../drill/types";
+import { DRILL_TARGET_TYPE } from "../../../drill/types.js";
 import {
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardDrillToInsight,
     selectEnableKPIDashboardDrillToURL,
     useDashboardSelector,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
 export interface IDrillTargetType {
     id: DRILL_TARGET_TYPE;

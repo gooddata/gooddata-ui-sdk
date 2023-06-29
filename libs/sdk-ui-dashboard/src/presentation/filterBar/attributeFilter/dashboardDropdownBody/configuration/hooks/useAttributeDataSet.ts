@@ -5,7 +5,7 @@ import {
     queryAttributeDataSet,
     QueryAttributeDataSet,
     useDashboardQueryProcessing,
-} from "../../../../../../model";
+} from "../../../../../../model/index.js";
 
 /**
  * @internal

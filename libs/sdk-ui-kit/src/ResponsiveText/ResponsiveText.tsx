@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
-import debounce from "lodash/debounce";
-import isNumber from "lodash/isNumber";
+import debounce from "lodash/debounce.js";
+import isNumber from "lodash/isNumber.js";
 
 /**
  * @internal

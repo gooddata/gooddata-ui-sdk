@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 
 import React from "react";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     IScenario,
     ScenarioBuilder,
@@ -13,10 +13,10 @@ import {
     ScenarioTestInput,
     WorkspaceType,
     ScenarioAndDescription,
-} from "./scenario";
-import intersection from "lodash/intersection";
-import identity from "lodash/identity";
-import cloneDeep from "lodash/cloneDeep";
+} from "./scenario.js";
+import intersection from "lodash/intersection.js";
+import identity from "lodash/identity.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import { ISettings } from "@gooddata/sdk-model";
 
 //
@@ -54,7 +54,7 @@ export interface IScenarioGroup<T extends VisProps> {
 /**
  * This class supports concept of grouping multiple related test scenarios. To that end it provides functions
  * to add one scenario, add scenarios in bulk & accessing the scenarios either in their normal shape or as
- * input to jest parameterized tests.
+ * input to vitest parameterized tests.
  */
 export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public groupNames: string[] = [];
@@ -238,7 +238,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     };
 
     /**
-     * Transform scenarios for this component to an inputs for parameterized Jest tests.
+     * Transform scenarios for this component to an inputs for parameterized vitest tests.
      */
     public asTestInput = (): Array<ScenarioTestInput<T>> => {
         return this.scenarioList.map((scenario) => scenario.asTestInput());

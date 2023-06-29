@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
         "lib": ["es2017", "dom"],
         "importHelpers": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,

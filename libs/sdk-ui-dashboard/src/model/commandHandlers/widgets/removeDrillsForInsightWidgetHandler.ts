@@ -1,17 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { RemoveDrillsForInsightWidget } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { RemoveDrillsForInsightWidget } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from "../../events/insight";
-import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { validateRemoveDrillsByOrigins } from "./validation/removeDrillsSelectorValidation";
-import { layoutActions } from "../../store/layout";
-import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils";
-import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
-import { validateDrills } from "../common/validateDrills";
+import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from "../../events/insight.js";
+import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { validateRemoveDrillsByOrigins } from "./validation/removeDrillsSelectorValidation.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils.js";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
+import { validateDrills } from "../common/validateDrills.js";
 
 export function* removeDrillsForInsightWidgetHandler(
     ctx: DashboardContext,

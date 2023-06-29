@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import forEach from "lodash/forEach";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import forEach from "lodash/forEach.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNameValues, BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -10,11 +10,11 @@ import {
     IBucketOfFun,
     IUiConfig,
     IBucketItem,
-} from "../../interfaces/Visualization";
+} from "../../interfaces/Visualization.js";
 
-import { UICONFIG, RECOMMENDATIONS, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
-import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
-import { messages } from "../../../locales";
+import { UICONFIG, RECOMMENDATIONS, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig.js";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
+import { messages } from "../../../locales.js";
 
 import {
     comparisonAndTrendingRecommendationEnabled,
@@ -24,11 +24,11 @@ import {
     percentRecommendationEnabled,
     previousPeriodRecommendationEnabled,
     hasNoStacksWithDate,
-} from "./../bucketRules";
+} from "../bucketRules.js";
 
-import { getStackItems, isDateBucketItem, setBucketTitles } from "./../bucketHelper";
-import { getTranslation } from "./../translations";
-import { hasColorMapping } from "./../propertiesHelper";
+import { getStackItems, isDateBucketItem, setBucketTitles } from "../bucketHelper.js";
+import { getTranslation } from "../translations.js";
+import { hasColorMapping } from "../propertiesHelper.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

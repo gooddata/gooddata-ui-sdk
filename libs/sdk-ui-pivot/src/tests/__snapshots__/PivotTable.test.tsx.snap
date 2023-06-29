@@ -1,34 +1,34 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`pivotTableMenuForCapabilities should disable aggregations in default menu when no grand totals capability 1`] = `
-Object {
+exports[`pivotTableMenuForCapabilities > should disable aggregations in default menu when no grand totals capability 1`] = `
+{
   "aggregations": false,
 }
 `;
 
-exports[`pivotTableMenuForCapabilities should disable aggregations in menu when no grand totals capability 1`] = `
-Object {
+exports[`pivotTableMenuForCapabilities > should disable aggregations in menu when no grand totals capability 1`] = `
+{
   "aggregations": false,
 }
 `;
 
-exports[`pivotTableMenuForCapabilities should disable aggregations when no available total types left 1`] = `
-Object {
+exports[`pivotTableMenuForCapabilities > should disable aggregations when no available total types left 1`] = `
+{
   "aggregations": false,
 }
 `;
 
-exports[`pivotTableMenuForCapabilities should keep default menu config as is if all capabilities 1`] = `Object {}`;
+exports[`pivotTableMenuForCapabilities > should keep default menu config as is if all capabilities 1`] = `{}`;
 
-exports[`pivotTableMenuForCapabilities should keep menu config as is if all capabilities 1`] = `
-Object {
+exports[`pivotTableMenuForCapabilities > should keep menu config as is if all capabilities 1`] = `
+{
   "aggregations": true,
 }
 `;
 
-exports[`pivotTableMenuForCapabilities should limit total types in default menu when no subtotals and no native totals capability 1`] = `
-Object {
-  "aggregationTypes": Array [
+exports[`pivotTableMenuForCapabilities > should limit total types in default menu when no subtotals and no native totals capability 1`] = `
+{
+  "aggregationTypes": [
     "sum",
     "max",
     "min",
@@ -38,9 +38,9 @@ Object {
 }
 `;
 
-exports[`pivotTableMenuForCapabilities should limit total types in menu when no subtotals and no native totals capability 1`] = `
-Object {
-  "aggregationTypes": Array [
+exports[`pivotTableMenuForCapabilities > should limit total types in menu when no subtotals and no native totals capability 1`] = `
+{
+  "aggregationTypes": [
     "sum",
     "max",
     "min",

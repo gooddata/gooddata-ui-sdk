@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import {
     IAnalyticalBackend,
     IUserWorkspaceSettings,
@@ -7,8 +7,8 @@ import {
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
-import { decoratedBackend, WorkspaceSettingsDecoratorFactory } from "../decoratedBackend";
-import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings";
+import { decoratedBackend, WorkspaceSettingsDecoratorFactory } from "../decoratedBackend/index.js";
+import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
 
 /**
  * Adjusts workspace config

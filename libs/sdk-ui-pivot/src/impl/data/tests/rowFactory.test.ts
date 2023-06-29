@@ -1,11 +1,12 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { createIntlMock } from "@gooddata/sdk-ui";
-import { getRow, getRowTotals } from "../rowFactory";
+import { getRow, getRowTotals } from "../rowFactory.js";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../__mocks__/recordings";
-import { TableDescriptor } from "../../structure/tableDescriptor";
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
+import { describe, it, expect } from "vitest";
 
 const intl = createIntlMock();
 

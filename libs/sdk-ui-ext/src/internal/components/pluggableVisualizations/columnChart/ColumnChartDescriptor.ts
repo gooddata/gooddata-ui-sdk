@@ -13,12 +13,12 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableColumnChart } from "./PluggableColumnChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableColumnChart } from "./PluggableColumnChart.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -29,8 +29,8 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import { ActionOptions } from "../_base/types";
-import { logInfo } from "../_base/terminal/loggers";
-import { genericErrorReporter } from "../_base/utils";
-import { getInspectCmdActionConfig, InspectCmdActionConfig } from "./actionConfig";
-import { InspectObjectFn } from "./types";
+import { ActionOptions } from "../_base/types.js";
+import { logInfo } from "../_base/terminal/loggers.js";
+import { genericErrorReporter } from "../_base/utils.js";
+import { getInspectCmdActionConfig, InspectCmdActionConfig } from "./actionConfig.js";
+import { InspectObjectFn } from "./types.js";
 
 function printInspectConfigSummary(config: InspectCmdActionConfig) {
     const {

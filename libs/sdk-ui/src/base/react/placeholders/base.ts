@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import { IMeasure, IMeasureDefinitionType } from "@gooddata/sdk-model";
 

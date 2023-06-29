@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import {
     AttributeModifications,
     IAttribute,
@@ -11,13 +11,13 @@ import {
     IAttributeMetadataObject,
     isAttributeMetadataObject,
 } from "@gooddata/sdk-model";
-import { GroupableCatalogItemBuilder } from "./groupFactory";
-import { builderFactory, BuilderModifications } from "../builder";
-import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory";
+import { GroupableCatalogItemBuilder } from "./groupFactory.js";
+import { builderFactory, BuilderModifications } from "../builder.js";
+import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory.js";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
-} from "../metadata/displayFormFactory";
+} from "../metadata/displayFormFactory.js";
 
 /**
  * Catalog attribute builder

@@ -2,16 +2,16 @@
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { StylingExample } from "./StylingExample";
-import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
-import { Button } from "../../Button";
-import { Dialog } from "../Dialog";
-import { Typography } from "../../Typography";
-import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
+import { StylingExample } from "./StylingExample.js";
+import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator.js";
+import { Button } from "../../Button/index.js";
+import { Dialog } from "../Dialog.js";
+import { Typography } from "../../Typography/index.js";
+import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter.js";
 
 /**
  * @internal

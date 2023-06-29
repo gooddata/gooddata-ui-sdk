@@ -3,26 +3,26 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { IAttributeDescriptor, ObjRef } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     UrlDrillTarget,
-} from "../../../../drill/types";
-import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection";
-import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor";
+} from "../../../../drill/types.js";
+import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection.js";
+import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor.js";
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection";
+import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection.js";
 import {
     selectAllCatalogDisplayFormsMap,
     useDashboardSelector,
     selectBackendCapabilities,
     selectSettings,
     selectAllCatalogAttributesMap,
-} from "../../../../../model";
+} from "../../../../../model/index.js";
 
-import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier";
-import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms";
+import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
+import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
 
 function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
     const intl = useIntl();

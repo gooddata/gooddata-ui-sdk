@@ -2,7 +2,7 @@
 import { SagaIterator } from "redux-saga";
 import { getContext } from "redux-saga/effects";
 
-import { AttributeFilterHandlerStoreContext } from "../store/types";
+import { AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**
  * @internal

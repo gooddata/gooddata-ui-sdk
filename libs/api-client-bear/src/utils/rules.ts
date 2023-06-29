@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import invariant from "ts-invariant";
-import find from "lodash/find";
-import every from "lodash/every";
+import { invariant } from "ts-invariant";
+import find from "lodash/find.js";
+import every from "lodash/every.js";
 
 export type RulePredicate = (measureDefinition: any, mdObj: any) => boolean;
 

@@ -1,5 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { mergeDayPickerProps } from "../utils";
+import { mergeDayPickerProps } from "../utils.js";
+import { describe, it, expect } from "vitest";
 
 describe("mergeDayPickerProps", () => {
     it.each([

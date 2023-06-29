@@ -1,8 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
-import flatMap from "lodash/flatMap";
-import isNil from "lodash/isNil";
-import isArray from "lodash/isArray";
-import Highcharts from "../../lib";
+import flatMap from "lodash/flatMap.js";
+import isNil from "lodash/isNil.js";
+import isArray from "lodash/isArray.js";
+import Highcharts from "../../lib/index.js";
 
 import {
     isStacked,
@@ -11,11 +11,11 @@ import {
     pointInRange,
     IAxisRange,
     IAxisRangeForAxes,
-} from "./helpers";
-import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common";
-import { IDataLabelsVisible, IChartConfig } from "../../../interfaces";
-import { BLACK_LABEL, DATA_LABEL_C6, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
-import { StackingType } from "../../constants/stacking";
+} from "./helpers.js";
+import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
+import { IDataLabelsVisible, IChartConfig } from "../../../interfaces/index.js";
+import { BLACK_LABEL, DATA_LABEL_C6, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label.js";
+import { StackingType } from "../../constants/stacking.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isLabelOverlappingItsShape(point: any): boolean {

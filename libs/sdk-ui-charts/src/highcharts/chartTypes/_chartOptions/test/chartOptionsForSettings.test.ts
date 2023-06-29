@@ -1,8 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 
 import { ISettings } from "@gooddata/sdk-model";
-import { IChartConfig } from "../../../../interfaces";
-import { updateConfigWithSettings } from "../chartOptionsForSettings";
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { updateConfigWithSettings } from "../chartOptionsForSettings.js";
+import { describe, it, expect } from "vitest";
 
 describe("updateConfigWithSettings", () => {
     describe("disableKpiDashboardHeadlineUnderline", () => {

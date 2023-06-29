@@ -3,8 +3,8 @@
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
-import { getGeoData } from "../src/core/geoChart/helpers/geoChart/data";
-import cloneDeep from "lodash/cloneDeep";
+import { getGeoData } from "../src/core/geoChart/helpers/geoChart/data.js";
+import cloneDeep from "lodash/cloneDeep.js";
 export function recordedDataFacade(rec: ScenarioRecording): DataViewFacade {
     return DataViewFacade.for(recordedDataView(rec));
 }

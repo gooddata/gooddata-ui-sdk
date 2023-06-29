@@ -8,7 +8,7 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { IAddGranteeSelectProps, ISelectOption, isGranteeItem } from "./types";
+import { IAddGranteeSelectProps, ISelectOption, isGranteeItem } from "./types.js";
 
 import {
     EmptyRenderer,
@@ -18,9 +18,9 @@ import {
     MenuListRendered,
     NoOptionsMessageRenderer,
     OptionRenderer,
-} from "./AsyncSelectComponents";
-import { loadGranteeOptionsPromise } from "./backend/loadGranteeOptionsPromise";
-import { useShareDialogInteraction } from "./ComponentInteractionContext";
+} from "./AsyncSelectComponents.js";
+import { loadGranteeOptionsPromise } from "./backend/loadGranteeOptionsPromise.js";
+import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 
 const SEARCH_INTERVAL = 400;
 

@@ -1,14 +1,15 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
-import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody";
+import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
+import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody.js";
 import {
     DateFilterButtonLocalized,
     IDateFilterButtonLocalizedProps,
-} from "../../DateFilterButtonLocalized/DateFilterButtonLocalized";
+} from "../../DateFilterButtonLocalized/DateFilterButtonLocalized.js";
 import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
+import { describe, it, expect, vi } from "vitest";
 
 describe("ExtendedDateFilterBody", () => {
     const allTime: IAllTimeDateFilterOption = {
@@ -33,20 +34,20 @@ describe("ExtendedDateFilterBody", () => {
             dateFilterButton: createDateFilterButton(),
             dateFormat: DEFAULT_DATE_FORMAT,
             selectedFilterOption: allTime,
-            onSelectedFilterOptionChange: jest.fn(),
+            onSelectedFilterOptionChange: vi.fn(),
 
             excludeCurrentPeriod: false,
             isExcludeCurrentPeriodEnabled: false,
-            onExcludeCurrentPeriodChange: jest.fn(),
+            onExcludeCurrentPeriodChange: vi.fn(),
 
             availableGranularities: [],
             isEditMode: false,
             isMobile: false,
             isTimeForAbsoluteRangeEnabled: true,
 
-            onApplyClick: jest.fn(),
-            onCancelClick: jest.fn(),
-            closeDropdown: jest.fn(),
+            onApplyClick: vi.fn(),
+            onCancelClick: vi.fn(),
+            closeDropdown: vi.fn(),
         };
         const Wrapped = withIntl(DateFilterBody);
         return render(<Wrapped {...mockProps} {...props} />);

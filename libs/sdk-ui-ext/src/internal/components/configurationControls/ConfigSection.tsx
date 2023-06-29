@@ -2,13 +2,13 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep";
-import noop from "lodash/noop";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import set from "lodash/set.js";
 
-import DisabledBubbleMessage from "../DisabledBubbleMessage";
+import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
 
-import { getTranslation } from "../../utils/translations";
+import { getTranslation } from "../../utils/translations.js";
 
 export interface IConfigSectionOwnProps {
     id: string;

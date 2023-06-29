@@ -1,10 +1,16 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { TextAreaWithSubmit } from "../TextAreaWithSubmit";
-import { ITextAreaWithSubmitProps } from "../typings";
-import Mock = jest.Mock;
+import defaultUserEvent from "@testing-library/user-event";
+import { TextAreaWithSubmit } from "../TextAreaWithSubmit.js";
+import { ITextAreaWithSubmitProps } from "../typings.js";
+import { describe, it, expect, vi, Mock } from "vitest";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 function renderTextAreaWithSubmit(options: ITextAreaWithSubmitProps) {
     return render(<TextAreaWithSubmit {...options} />);
@@ -20,7 +26,7 @@ describe("TextAreaWithSubmit", () => {
             renderTextAreaWithSubmit({
                 defaultValue: "",
                 maxLength: 10,
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             await clickToEnableEditing();
@@ -32,7 +38,7 @@ describe("TextAreaWithSubmit", () => {
         it("should change defaultValue when received", async () => {
             renderTextAreaWithSubmit({
                 defaultValue: "aaa",
-                onSubmit: jest.fn(),
+                onSubmit: vi.fn(),
             });
 
             await clickToEnableEditing();
@@ -44,9 +50,9 @@ describe("TextAreaWithSubmit", () => {
 
     describe("saving and canceling and change defaultValue", () => {
         const renderTextAreaWithSubmitAndClickIn = async ({
-            onCancel = jest.fn(),
-            onSubmit = jest.fn(),
-            onChange = jest.fn(),
+            onCancel = vi.fn(),
+            onSubmit = vi.fn(),
+            onChange = vi.fn(),
         }: {
             onCancel?: Mock;
             onSubmit?: Mock;
@@ -63,7 +69,7 @@ describe("TextAreaWithSubmit", () => {
         };
 
         it("should not call onSubmit callback after user leaves the input without changes", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             await renderTextAreaWithSubmitAndClickIn({ onSubmit });
 
             fireEvent.blur(screen.getByRole("textbox"));
@@ -72,7 +78,7 @@ describe("TextAreaWithSubmit", () => {
         });
 
         it("should call onSubmit when user press the enter key", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             const defaultValue = "This is new text";
             await renderTextAreaWithSubmitAndClickIn({ onSubmit });
 
@@ -86,7 +92,7 @@ describe("TextAreaWithSubmit", () => {
         });
 
         it("should call onCancel callback and discard temporary defaultValue when user press the escape key", async () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             await renderTextAreaWithSubmitAndClickIn({ onCancel });
 
             fireEvent.keyDown(screen.getByRole("textbox"), {
@@ -102,7 +108,7 @@ describe("TextAreaWithSubmit", () => {
         });
 
         it("should trim defaultValue when user enters only spaces", async () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             await renderTextAreaWithSubmitAndClickIn({ onSubmit });
 
             await userEvent.clear(screen.getByRole("textbox"));
@@ -118,7 +124,7 @@ describe("TextAreaWithSubmit", () => {
         });
 
         it("should call onChange when user change defaultValue", async () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             const defaultValue = "This is new text";
             await renderTextAreaWithSubmitAndClickIn({ onChange });
 

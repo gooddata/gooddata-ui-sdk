@@ -1,61 +1,61 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`moveAttributeFilterHandler should emit the appropriate events for moved attribute filter 1`] = `
-Array [
-  Object {
+exports[`moveAttributeFilterHandler > should emit the appropriate events for moved attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`moveAttributeFilterHandler should emit the appropriate events when trying to move a non-existent attribute filter 1`] = `
-Array [
-  Object {
+exports[`moveAttributeFilterHandler > should emit the appropriate events when trying to move a non-existent attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
 `;
 
-exports[`moveAttributeFilterHandler should emit the appropriate events when trying to move an attribute filter to an invalid index 1`] = `
-Array [
-  Object {
+exports[`moveAttributeFilterHandler > should emit the appropriate events when trying to move an attribute filter to an invalid index 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
 `;
 
-exports[`moveAttributeFilterHandler should set the attribute selection in state on moved attribute filter 1`] = `
-Object {
-  "attributeFilter": Object {
-    "attributeElements": Object {
-      "uris": Array [],
+exports[`moveAttributeFilterHandler > should set the attribute selection in state on moved attribute filter 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
     },
-    "displayForm": Object {
+    "displayForm": {
       "uri": "/gdc/md/referenceworkspace/obj/1071",
     },
-    "filterElementsBy": Array [],
+    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
   },

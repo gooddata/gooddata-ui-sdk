@@ -1,42 +1,42 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 1`] = `
-Array [
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 1`] = `
+[
   "Date (Activity)",
   "Date (Timeline)",
 ]
 `;
 
-exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance and title if tied 2`] = `
-Object {
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 2`] = `
+{
   "Date (Activity)": "Activity",
   "Date (Timeline)": "Timeline",
 }
 `;
 
-exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance desc 1`] = `
-Array [
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 1`] = `
+[
   "Date (Timeline)",
   "Date (Activity)",
 ]
 `;
 
-exports[`query insight date datasets for datasets obtained from catalog should order date datasets by relevance desc 2`] = `
-Object {
+exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 2`] = `
+{
   "Date (Activity)": "Activity",
   "Date (Timeline)": "Timeline",
 }
 `;
 
-exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date attributes in buckets 1`] = `
-Array [
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 1`] = `
+[
   "Date (Closed)",
   "Date (Created)",
 ]
 `;
 
-exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date attributes in buckets 2`] = `
-Array [
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 2`] = `
+[
   "Date (Activity)",
   "Date (Closed)",
   "Date (Created)",
@@ -45,8 +45,8 @@ Array [
 ]
 `;
 
-exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date attributes in buckets 3`] = `
-Object {
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 3`] = `
+{
   "Date (Activity)": "Activity",
   "Date (Closed)": "Closed",
   "Date (Created)": "Created",
@@ -55,14 +55,14 @@ Object {
 }
 `;
 
-exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date filter 1`] = `
-Array [
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 1`] = `
+[
   "Date (Activity)",
 ]
 `;
 
-exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date filter 2`] = `
-Array [
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 2`] = `
+[
   "Date (Activity)",
   "Date (Closed)",
   "Date (Created)",
@@ -71,8 +71,8 @@ Array [
 ]
 `;
 
-exports[`query insight date datasets for insights that reference dates should return date datasets for insight with date filter 3`] = `
-Object {
+exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 3`] = `
+{
   "Date (Activity)": "Activity",
   "Date (Closed)": "Closed",
   "Date (Created)": "Created",

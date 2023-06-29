@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
-import { IPatternObject, IPointData } from "../../typings/unsafe";
-import { GRAY, TRANSPARENT, WHITE } from "../_util/color";
+import { IPatternObject, IPointData } from "../../typings/unsafe.js";
+import { GRAY, TRANSPARENT, WHITE } from "../_util/color.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ITheme, DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { parseValue, unwrap } from "../_util/common";
-import isNil from "lodash/isNil";
+import { parseValue, unwrap } from "../_util/common.js";
+import isNil from "lodash/isNil.js";
 
 const getNullColor = (theme?: ITheme): IPatternObject => ({
     pattern: {

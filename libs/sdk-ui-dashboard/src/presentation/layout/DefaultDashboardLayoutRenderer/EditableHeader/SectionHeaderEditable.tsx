@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { EditableLabelWithBubble } from "./EditableLabelWithBubble";
+import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import {
     getTitle,
     getDescription,
@@ -10,8 +10,8 @@ import {
     TITLE_LENGTH_WARNING_LIMIT,
     MAX_DESCRIPTION_LENGTH,
     DESCRIPTION_LENGTH_WARNING_LIMIT,
-} from "./sectionHeaderHelper";
-import { changeLayoutSectionHeader, uiActions, useDashboardDispatch } from "../../../../model";
+} from "./sectionHeaderHelper.js";
+import { changeLayoutSectionHeader, uiActions, useDashboardDispatch } from "../../../../model/index.js";
 
 export interface ISectionHeaderEditableProps {
     title: string;

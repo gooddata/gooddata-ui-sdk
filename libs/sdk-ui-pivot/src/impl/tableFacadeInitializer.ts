@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "./privateTypes";
+import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "./privateTypes.js";
 import {
     IDataView,
     IExecutionResult,
@@ -7,12 +7,12 @@ import {
     isNoDataError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { COLS_PER_PAGE } from "./base/constants";
-import { getAvailableDrillTargets } from "./drilling/drillTargets";
+import { COLS_PER_PAGE } from "./base/constants.js";
+import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
 import { convertError, DataViewFacade } from "@gooddata/sdk-ui";
-import { ICorePivotTableProps } from "../publicTypes";
-import invariant from "ts-invariant";
-import { TableFacade } from "./tableFacade";
+import { ICorePivotTableProps } from "../publicTypes.js";
+import { invariant } from "ts-invariant";
+import { TableFacade } from "./tableFacade.js";
 
 export type InitializerResult = {
     initializer: TableFacadeInitializer;

@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
-import { validatePluginUrlIsSane } from "../pluginUrlValidation";
+import { describe, it, expect } from "vitest";
+import { validatePluginUrlIsSane } from "../pluginUrlValidation.js";
 
 describe("plugin url validation", () => {
     const InvalidUrlScenarios: Array<[string, string]> = [

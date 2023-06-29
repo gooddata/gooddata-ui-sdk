@@ -2,15 +2,15 @@
 import { GdcUser } from "@gooddata/api-model-bear";
 import { IAuthenticatedPrincipal, UnexpectedError, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { Identifier, isIdentifierRef, isUriRef, IUser, ObjRef, Uri } from "@gooddata/sdk-model";
-import last from "lodash/last";
-import uniq from "lodash/uniq";
-import invariant from "ts-invariant";
+import last from "lodash/last.js";
+import uniq from "lodash/uniq.js";
+import { invariant } from "ts-invariant";
 
-import { convertUser } from "../convertors/fromBackend/UsersConverter";
+import { convertUser } from "../convertors/fromBackend/UsersConverter.js";
 
-import { BearAuthenticatedCallGuard } from "../types/auth";
-import isEmpty from "lodash/isEmpty";
-import { isApiResponseError } from "./errorHandling";
+import { BearAuthenticatedCallGuard } from "../types/auth.js";
+import isEmpty from "lodash/isEmpty.js";
+import { isApiResponseError } from "./errorHandling.js";
 
 /**
  * Returns a user uri. This is used in some bear client calls.

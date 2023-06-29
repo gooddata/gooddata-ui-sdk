@@ -1,12 +1,13 @@
 // (C) 2007-2021 GoodData Corporation
-import { generateChartOptions } from "../../chartTypes/_util/test/helper";
+import { generateChartOptions } from "../../chartTypes/_util/test/helper.js";
 
-import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";
+import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { recordedDataFacade } from "../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
+import { describe, it, expect } from "vitest";
 
 const rec = recordedDataFacade;
 

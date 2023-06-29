@@ -11,7 +11,7 @@
 import { dummyBackend, dummyBackendEmptyData, dummyDataView } from "@gooddata/sdk-backend-base";
 export { dummyBackend, dummyBackendEmptyData, dummyDataView };
 
-export { recordedBackend, defaultRecordedBackendCapabilities } from "./recordedBackend";
+export { recordedBackend, defaultRecordedBackendCapabilities } from "./recordedBackend/index.js";
 
 export {
     RecordingIndex,
@@ -33,7 +33,7 @@ export {
     IUserManagement,
     AttributeElementsFiltering,
     AttributeElementsFilteringPredicate,
-} from "./recordedBackend/types";
+} from "./recordedBackend/types.js";
 
 export {
     recordedDataView,
@@ -44,15 +44,15 @@ export {
     dataViewWindow,
     DataViewFirstPage,
     NamedDataView,
-} from "./recordedBackend/execution";
+} from "./recordedBackend/execution.js";
 
 export {
     newAttributeFilterLimitingItem,
     newDateFilterLimitingItem,
     newMeasureLimitingItem,
-} from "./recordedBackend/elementsUtils";
+} from "./recordedBackend/elementsUtils.js";
 
-export { CompositeBackendPart, compositeBackend } from "./compositeBackend/index";
+export { CompositeBackendPart, compositeBackend } from "./compositeBackend/index.js";
 
 export {
     LegacyExecutionRecording,
@@ -60,6 +60,6 @@ export {
     legacyRecordedDataView,
     LegacyRecordingIndex,
     LegacyWorkspaceRecordings,
-} from "./legacyRecordedBackend";
+} from "./legacyRecordedBackend/index.js";
 
-export { objRefsToStringKey } from "./recordedBackend/utils";
+export { objRefsToStringKey } from "./recordedBackend/utils.js";

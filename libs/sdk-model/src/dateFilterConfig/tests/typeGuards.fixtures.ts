@@ -5,7 +5,7 @@ import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
-} from "../index";
+} from "../index.js";
 
 export const allTimeDateFilter: IAllTimeDateFilterOption = {
     localIdentifier: "allTimeDateFilter",

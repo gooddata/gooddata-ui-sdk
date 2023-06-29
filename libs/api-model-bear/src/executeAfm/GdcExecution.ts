@@ -1,147 +1,209 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @public
  */
-export namespace GdcExecution {
-    export interface IMeasureHeaderItem {
-        measureHeaderItem: {
-            uri?: string;
-            identifier?: string;
-            localIdentifier: string;
-            name: string;
-            format: string;
-        };
-    }
+export interface IMeasureHeaderItem {
+    measureHeaderItem: {
+        uri?: string;
+        identifier?: string;
+        localIdentifier: string;
+        name: string;
+        format: string;
+    };
+}
 
-    export interface ITotalHeaderItem {
-        totalHeaderItem: {
-            name: string;
-        };
-    }
+/**
+ * @public
+ */
+export interface ITotalHeaderItem {
+    totalHeaderItem: {
+        name: string;
+    };
+}
 
-    export interface IMeasureGroupHeader {
-        measureGroupHeader: {
-            items: IMeasureHeaderItem[];
-            totalItems?: ITotalHeaderItem[];
-        };
-    }
+/**
+ * @public
+ */
+export interface IMeasureGroupHeader {
+    measureGroupHeader: {
+        items: IMeasureHeaderItem[];
+        totalItems?: ITotalHeaderItem[];
+    };
+}
 
-    export interface IAttributeHeader {
-        attributeHeader: {
+/**
+ * @public
+ */
+export interface IAttributeHeader {
+    attributeHeader: {
+        uri: string;
+        identifier: string;
+        localIdentifier: string;
+        name: string;
+        totalItems?: ITotalHeaderItem[];
+        formOf: {
             uri: string;
             identifier: string;
-            localIdentifier: string;
-            name: string;
-            totalItems?: ITotalHeaderItem[];
-            formOf: {
-                uri: string;
-                identifier: string;
-                name: string;
-            };
-        };
-    }
-
-    export type IHeader = IMeasureGroupHeader | IAttributeHeader;
-
-    export interface IResultAttributeHeaderItem {
-        attributeHeaderItem: {
-            uri: string;
             name: string;
         };
-    }
+    };
+}
 
-    export interface IResultMeasureHeaderItem {
-        measureHeaderItem: {
-            name: string;
-            order: number;
-        };
-    }
+/**
+ * @public
+ */
+export type IHeader = IMeasureGroupHeader | IAttributeHeader;
 
-    export interface IResultTotalHeaderItem {
-        totalHeaderItem: {
-            name: string;
-            type: string;
-        };
-    }
+/**
+ * @public
+ */
+export interface IResultAttributeHeaderItem {
+    attributeHeaderItem: {
+        uri: string;
+        name: string;
+    };
+}
 
-    export type IResultHeaderItem =
-        | IResultAttributeHeaderItem
-        | IResultMeasureHeaderItem
-        | IResultTotalHeaderItem;
+/**
+ * @public
+ */
+export interface IResultMeasureHeaderItem {
+    measureHeaderItem: {
+        name: string;
+        order: number;
+    };
+}
 
-    export interface IResultDimension {
-        headers: IHeader[];
-    }
+/**
+ * @public
+ */
+export interface IResultTotalHeaderItem {
+    totalHeaderItem: {
+        name: string;
+        type: string;
+    };
+}
 
-    export interface IExecutionResponse {
-        links: {
-            executionResult: string;
-        };
-        dimensions: IResultDimension[];
-    }
+/**
+ * @public
+ */
+export type IResultHeaderItem =
+    | IResultAttributeHeaderItem
+    | IResultMeasureHeaderItem
+    | IResultTotalHeaderItem;
 
-    export interface IExecutionResponseWrapper {
-        executionResponse: IExecutionResponse;
-    }
+/**
+ * @public
+ */
+export interface IResultDimension {
+    headers: IHeader[];
+}
 
-    export type DataValue = null | string | number;
+/**
+ * @public
+ */
+export interface IExecutionResponse {
+    links: {
+        executionResult: string;
+    };
+    dimensions: IResultDimension[];
+}
 
-    export interface Warning {
-        warningCode: string;
-        message: string;
-        parameters?: any[];
-    }
+/**
+ * @public
+ */
+export interface IExecutionResponseWrapper {
+    executionResponse: IExecutionResponse;
+}
 
-    export interface IExecutionResult {
-        headerItems?: IResultHeaderItem[][][];
-        data: DataValue[][] | DataValue[];
-        totals?: DataValue[][][];
-        totalTotals?: DataValue[][][];
-        paging: {
-            count: number[];
-            offset: number[];
-            total: number[];
-        };
-        warnings?: Warning[];
-    }
+/**
+ * @public
+ */
+export type DataValue = null | string | number;
 
-    export interface IExecutionResultWrapper {
-        executionResult: IExecutionResult;
-    }
+/**
+ * @public
+ */
+export interface Warning {
+    warningCode: string;
+    message: string;
+    parameters?: any[];
+}
 
-    export interface IError extends Error {
-        response: Response;
-    }
+/**
+ * @public
+ */
+export interface IExecutionResult {
+    headerItems?: IResultHeaderItem[][][];
+    data: DataValue[][] | DataValue[];
+    totals?: DataValue[][][];
+    totalTotals?: DataValue[][][];
+    paging: {
+        count: number[];
+        offset: number[];
+        total: number[];
+    };
+    warnings?: Warning[];
+}
 
-    /**
-     * Combination of both AFM executions responses
-     *
-     * `null` value as executionResult means empty response (HTTP 204)
-     */
-    export interface IExecutionResponses {
-        executionResponse: IExecutionResponse;
-        executionResult: IExecutionResult | null;
-    }
+/**
+ * @public
+ */
+export interface IExecutionResultWrapper {
+    executionResult: IExecutionResult;
+}
 
-    export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem {
-        return !isEmpty(header) && (header as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
-    }
+/**
+ * @public
+ */
+export interface IError extends Error {
+    response: Response;
+}
 
-    export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem {
-        return !isEmpty(header) && (header as IResultMeasureHeaderItem).measureHeaderItem !== undefined;
-    }
+/**
+ * Combination of both AFM executions responses
+ *
+ * `null` value as executionResult means empty response (HTTP 204)
+ * @public
+ */
+export interface IExecutionResponses {
+    executionResponse: IExecutionResponse;
+    executionResult: IExecutionResult | null;
+}
 
-    export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem {
-        return !isEmpty(header) && (header as IResultTotalHeaderItem).totalHeaderItem !== undefined;
-    }
+/**
+ * @public
+ */
+export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem {
+    return !isEmpty(header) && (header as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
+}
 
-    export function isAttributeHeader(header: IHeader): header is IAttributeHeader {
-        return !isEmpty(header) && (header as IAttributeHeader).attributeHeader !== undefined;
-    }
+/**
+ * @public
+ */
+export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem {
+    return !isEmpty(header) && (header as IResultMeasureHeaderItem).measureHeaderItem !== undefined;
+}
 
-    export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader {
-        return !isEmpty(header) && (header as IMeasureGroupHeader).measureGroupHeader !== undefined;
-    }
+/**
+ * @public
+ */
+export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem {
+    return !isEmpty(header) && (header as IResultTotalHeaderItem).totalHeaderItem !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isAttributeHeader(header: IHeader): header is IAttributeHeader {
+    return !isEmpty(header) && (header as IAttributeHeader).attributeHeader !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader {
+    return !isEmpty(header) && (header as IMeasureGroupHeader).measureGroupHeader !== undefined;
 }

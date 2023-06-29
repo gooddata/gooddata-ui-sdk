@@ -6,7 +6,7 @@ import {
     CustomDashboardInsightListItemComponent,
     CustomDashboardInsightListItemComponentProps,
     IWrapInsightListItemWithDragComponent,
-} from "../types";
+} from "../types.js";
 
 /**
  * @internal

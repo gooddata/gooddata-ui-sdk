@@ -1,3 +1,3 @@
 // (C) 2020 GoodData Corporation
 
-export * from "./SyntaxHighlightingInput";
+export * from "./SyntaxHighlightingInput.js";

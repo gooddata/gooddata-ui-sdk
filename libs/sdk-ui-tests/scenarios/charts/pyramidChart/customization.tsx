@@ -1,13 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import { PyramidChart, IPyramidChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
-import { legendCustomizer } from "../_infra/legendVariants";
-import { PyramidChartWithMeasureAndViewBy, PyramidChartWithTwoMeasures } from "./base";
-import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+import { scenariosFor } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { PyramidChartWithMeasureAndViewBy, PyramidChartWithTwoMeasures } from "./base.js";
+import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
 
 const legendScenarios = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

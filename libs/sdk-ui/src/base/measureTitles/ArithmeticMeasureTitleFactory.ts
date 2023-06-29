@@ -1,8 +1,8 @@
 // (C) 2007-2023 GoodData Corporation
-import { getTranslation } from "../localization/IntlStore";
-import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
-import { ILocale } from "../localization/Locale";
-import { messages } from "../../locales";
+import { getTranslation } from "../localization/IntlStore.js";
+import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle.js";
+import { ILocale } from "../localization/Locale.js";
+import { messages } from "../../locales.js";
 import { MessageDescriptor } from "react-intl";
 
 /**

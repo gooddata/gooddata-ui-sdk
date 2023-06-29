@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Overlay utils Alignment computing should align overlay bottom-left to given node bottom-right 1`] = `
-Object {
-  "alignment": Object {
+exports[`Overlay utils > Alignment computing > should align overlay bottom-left to given node bottom-right 1`] = `
+{
+  "alignment": {
     "align": "br bl",
     "left": 150,
     "right": 650,
@@ -12,9 +12,9 @@ Object {
 }
 `;
 
-exports[`Overlay utils Alignment computing should align overlay center-center to given node bottom right 1`] = `
-Object {
-  "alignment": Object {
+exports[`Overlay utils > Alignment computing > should align overlay center-center to given node bottom right 1`] = `
+{
+  "alignment": {
     "align": "br cc",
     "left": 50,
     "right": 750,
@@ -24,9 +24,9 @@ Object {
 }
 `;
 
-exports[`Overlay utils Alignment computing should align overlay to given node top-left both 1`] = `
-Object {
-  "alignment": Object {
+exports[`Overlay utils > Alignment computing > should align overlay to given node top-left both 1`] = `
+{
+  "alignment": {
     "align": "tl tl",
     "left": 50,
     "right": 750,
@@ -36,9 +36,9 @@ Object {
 }
 `;
 
-exports[`Overlay utils Alignment computing should align overlay top left to given node center-center 1`] = `
-Object {
-  "alignment": Object {
+exports[`Overlay utils > Alignment computing > should align overlay top left to given node center-center 1`] = `
+{
+  "alignment": {
     "align": "cc tl",
     "left": 100,
     "right": 700,
@@ -48,9 +48,9 @@ Object {
 }
 `;
 
-exports[`Overlay utils should align inside document when aligned element is outside of the viewport 1`] = `
-Object {
-  "alignment": Object {
+exports[`Overlay utils > should align inside document when aligned element is outside of the viewport 1`] = `
+{
+  "alignment": {
     "align": "tl tr",
     "left": 700,
     "right": 100,
@@ -60,9 +60,9 @@ Object {
 }
 `;
 
-exports[`Overlay utils without offset should use second alignPoint because it would be hidden or partially visible using the first one 1`] = `
-Object {
-  "alignment": Object {
+exports[`Overlay utils > without offset > should use second alignPoint because it would be hidden or partially visible using the first one 1`] = `
+{
+  "alignment": {
     "align": "tl tr",
     "left": 700,
     "right": 200,

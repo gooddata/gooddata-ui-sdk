@@ -1,6 +1,7 @@
 // (C) 2023 GoodData Corporation
 
-import { splitScheduledEmailRecipients, uniqueScheduledEmailRecipients } from "../scheduledMailRecipients";
+import { splitScheduledEmailRecipients, uniqueScheduledEmailRecipients } from "../scheduledMailRecipients.js";
+import { describe, it, expect } from "vitest";
 
 const scheduleEmailExistingRecipient = {
     user: {

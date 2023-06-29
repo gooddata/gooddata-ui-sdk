@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { IScenarioGroup } from "../../../src";
-import { storiesOf } from "../../_infra/storyRepository";
+import { IScenarioGroup } from "../../../src/index.js";
+import { storiesOf } from "../../_infra/storyRepository.js";
 
 type GroupedStories = {
     [visAndGroup: string]: ReturnType<typeof storiesOf>;

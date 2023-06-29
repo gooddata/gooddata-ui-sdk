@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, ReactNode, RefObject } from "react";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 
-import { ITextAreaWithSubmitProps, ITextAreaWithSubmitState } from "./typings";
+import { ITextAreaWithSubmitProps, ITextAreaWithSubmitState } from "./typings.js";
 
 /**
  * @internal

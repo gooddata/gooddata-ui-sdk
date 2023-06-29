@@ -1,14 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { MoveLayoutSection } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { MoveLayoutSection } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { put, select } from "redux-saga/effects";
-import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout";
-import { resolveRelativeIndex } from "../../utils/arrayOps";
+import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { DashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout.js";
+import { resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 type MoveLayoutSectionContext = {
     readonly ctx: DashboardContext;

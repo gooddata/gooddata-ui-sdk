@@ -1,14 +1,14 @@
 // (C) 2022 GoodData Corporation
 import { IDashboardAttributeFilter, IDashboardAttributeFilterParent, ObjRef } from "@gooddata/sdk-model";
 import { useState, useMemo, useCallback } from "react";
-import invariant from "ts-invariant";
-import isEqual from "lodash/isEqual";
+import { invariant } from "ts-invariant";
+import isEqual from "lodash/isEqual.js";
 import {
     setAttributeFilterParents,
     useDispatchDashboardCommand,
     IDashboardAttributeFilterParentItem,
-} from "../../../../../../model";
-import { useOriginalConfigurationState } from "./useOriginalConfigurationState";
+} from "../../../../../../model/index.js";
+import { useOriginalConfigurationState } from "./useOriginalConfigurationState.js";
 
 export function useParentsConfiguration(
     neighborFilters: IDashboardAttributeFilter[],

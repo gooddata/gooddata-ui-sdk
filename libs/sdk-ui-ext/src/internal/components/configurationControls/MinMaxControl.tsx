@@ -5,12 +5,12 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
-import ConfigSubsection from "../configurationControls/ConfigSubsection";
-import InputControl from "../configurationControls/InputControl";
+import ConfigSubsection from "../configurationControls/ConfigSubsection.js";
+import InputControl from "../configurationControls/InputControl.js";
 
-import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl";
-import { minInputValidateAndPushData, maxInputValidateAndPushData } from "../../utils/controlsHelper";
-import { messages } from "../../../locales";
+import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl.js";
+import { minInputValidateAndPushData, maxInputValidateAndPushData } from "../../utils/controlsHelper.js";
+import { messages } from "../../../locales.js";
 
 const defaultMinMaxControlState = {
     minScale: {

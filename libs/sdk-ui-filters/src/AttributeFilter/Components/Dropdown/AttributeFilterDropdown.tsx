@@ -3,9 +3,9 @@ import React from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
-import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
-import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle";
+import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
+import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },

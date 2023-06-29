@@ -1,132 +1,132 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AttributeFilterHandler staticElements option should replace loaded elements on init 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > staticElements option should replace loaded elements on init 1`] = `
+[
+  {
     "title": "Element 0",
     "uri": "/element?id=0",
   },
-  Object {
+  {
     "title": "Element 1",
     "uri": "/element?id=1",
   },
-  Object {
+  {
     "title": "Element 2",
     "uri": "/element?id=2",
   },
-  Object {
+  {
     "title": "Element 3",
     "uri": "/element?id=3",
   },
-  Object {
+  {
     "title": "Element 4",
     "uri": "/element?id=4",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler staticElements option should work properly with loadNextElementsPage() call 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > staticElements option should work properly with loadNextElementsPage() call 1`] = `
+[
+  {
     "title": "Element 0",
     "uri": "/element?id=0",
   },
-  Object {
+  {
     "title": "Element 1",
     "uri": "/element?id=1",
   },
-  Object {
+  {
     "title": "Element 2",
     "uri": "/element?id=2",
   },
-  Object {
+  {
     "title": "Element 3",
     "uri": "/element?id=3",
   },
-  Object {
+  {
     "title": "Element 4",
     "uri": "/element?id=4",
   },
-  Object {
+  {
     "title": "Element 5",
     "uri": "/element?id=5",
   },
-  Object {
+  {
     "title": "Element 6",
     "uri": "/element?id=6",
   },
-  Object {
+  {
     "title": "Element 7",
     "uri": "/element?id=7",
   },
-  Object {
+  {
     "title": "Element 8",
     "uri": "/element?id=8",
   },
-  Object {
+  {
     "title": "Element 9",
     "uri": "/element?id=9",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler staticElements option with setLimitingAttributeFilters() option should throw error on init() call 1`] = `"Using limitingAttributeFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingAttributeFilters() option should throw error on init() call 1`] = `"Using limitingAttributeFilters is not supported when using static attribute elements"`;
 
-exports[`AttributeFilterHandler staticElements option with setLimitingAttributeFilters() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingAttributeFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingAttributeFilters() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingAttributeFilters is not supported when using static attribute elements"`;
 
-exports[`AttributeFilterHandler staticElements option with setLimitingDateFilters() option should throw error on init() call 1`] = `"Using limitingDateFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingDateFilters() option should throw error on init() call 1`] = `"Using limitingDateFilters is not supported when using static attribute elements"`;
 
-exports[`AttributeFilterHandler staticElements option with setLimitingDateFilters() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingDateFilters is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingDateFilters() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingDateFilters is not supported when using static attribute elements"`;
 
-exports[`AttributeFilterHandler staticElements option with setLimitingMeasures() option should throw error on init() call 1`] = `"Using limitingMeasures is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingMeasures() option should throw error on init() call 1`] = `"Using limitingMeasures is not supported when using static attribute elements"`;
 
-exports[`AttributeFilterHandler staticElements option with setLimitingMeasures() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingMeasures is not supported when using static attribute elements"`;
+exports[`AttributeFilterHandler > staticElements option with setLimitingMeasures() option should throw error on loadInitialElementsPage() call 1`] = `"Using limitingMeasures is not supported when using static attribute elements"`;
 
-exports[`AttributeFilterHandler staticElements should be filtered by limit() 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > staticElements should be filtered by limit() 1`] = `
+[
+  {
     "title": "Element 0",
     "uri": "/element?id=0",
   },
-  Object {
+  {
     "title": "Element 1",
     "uri": "/element?id=1",
   },
-  Object {
+  {
     "title": "Element 2",
     "uri": "/element?id=2",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler staticElements should be filtered by order() 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > staticElements should be filtered by order() 1`] = `
+[
+  {
     "title": "Element 99",
     "uri": "/element?id=99",
   },
-  Object {
+  {
     "title": "Element 98",
     "uri": "/element?id=98",
   },
-  Object {
+  {
     "title": "Element 97",
     "uri": "/element?id=97",
   },
-  Object {
+  {
     "title": "Element 96",
     "uri": "/element?id=96",
   },
-  Object {
+  {
     "title": "Element 95",
     "uri": "/element?id=95",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler staticElements should be filtered by search() 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > staticElements should be filtered by search() 1`] = `
+[
+  {
     "title": "Element 0",
     "uri": "/element?id=0",
   },

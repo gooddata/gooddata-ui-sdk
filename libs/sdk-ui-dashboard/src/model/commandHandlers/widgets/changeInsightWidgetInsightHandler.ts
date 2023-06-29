@@ -1,23 +1,23 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeInsightWidgetInsight } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeInsightWidgetInsight } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
-import invariant from "ts-invariant";
-import { DashboardInsightWidgetInsightSwitched } from "../../events";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { invariant } from "ts-invariant";
+import { DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../store/layout";
-import { insightWidgetInsightChanged } from "../../events/insight";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { insightWidgetInsightChanged } from "../../events/insight.js";
 import { insightTitle, serializeObjRef, widgetTitle } from "@gooddata/sdk-model";
-import { invalidArgumentsProvided } from "../../events/general";
-import { insightsActions } from "../../store/insights";
-import { uiActions } from "../../store/ui";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors";
-import { getSizeInfo } from "../../../_staging/layout/sizing";
-import { loadInsight } from "./common/loadInsight";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { insightsActions } from "../../store/insights/index.js";
+import { uiActions } from "../../store/ui/index.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
+import { loadInsight } from "./common/loadInsight.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,

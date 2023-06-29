@@ -10,20 +10,20 @@ import {
     selectPersistedDashboard,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
-import { ButtonBar, DefaultButtonBar } from "../buttonBar";
-import { DefaultMenuButton, MenuButton, useDefaultMenuItems } from "../menuButton";
-import { Title } from "../title";
-import { ITopBarProps } from "./types";
-import { HiddenTopBar } from "./HiddenTopBar";
-import { DefaultLockedStatus, DefaultShareStatus } from "../shareIndicators";
+} from "../../../model/index.js";
+import { ButtonBar, DefaultButtonBar } from "../buttonBar/index.js";
+import { DefaultMenuButton, MenuButton, useDefaultMenuItems } from "../menuButton/index.js";
+import { Title } from "../title/index.js";
+import { ITopBarProps } from "./types.js";
+import { HiddenTopBar } from "./HiddenTopBar.js";
+import { DefaultLockedStatus, DefaultShareStatus } from "../shareIndicators/index.js";
 import {
     useCancelButtonProps,
     useEditButtonProps,
     useSaveAsNewButtonProps,
     useSaveButtonProps,
     useShareButtonProps,
-} from "../buttonBar/button";
+} from "../buttonBar/button/index.js";
 
 /**
  * @alpha

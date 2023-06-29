@@ -1,14 +1,21 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import set from "lodash/set";
-import noop from "lodash/noop";
+import defaultUserEvent from "@testing-library/user-event";
+import set from "lodash/set.js";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import NamePositionControl from "../NamePositionControl";
+import NamePositionControl from "../NamePositionControl.js";
 
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
-import { IConfigItemSubsection } from "../../../../interfaces/ConfigurationPanel";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import { IConfigItemSubsection } from "../../../../interfaces/ConfigurationPanel.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 const defaultProps: IConfigItemSubsection = {
     disabled: true,
@@ -56,7 +63,7 @@ describe("NamePositionControl render", () => {
     });
 
     it("should call pushData when click on list item", async () => {
-        const pushData = jest.fn();
+        const pushData = vi.fn();
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
 

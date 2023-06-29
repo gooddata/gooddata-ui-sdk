@@ -8,9 +8,10 @@ import {
     newArithmeticMeasure,
     newPopMeasure,
 } from "@gooddata/sdk-model";
-import { newComposedPlaceholder, newPlaceholder } from "../factory";
-import { resolveValueWithPlaceholders } from "../resolve";
-import { PlaceholdersState } from "../context";
+import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
+import { resolveValueWithPlaceholders } from "../resolve.js";
+import { PlaceholdersState } from "../context.js";
+import { describe, it } from "vitest";
 
 const emptyState: PlaceholdersState = {
     placeholders: {},

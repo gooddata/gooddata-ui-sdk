@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { unmountComponentsAtNodes } from "../domHelper";
+import { unmountComponentsAtNodes } from "../domHelper.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("domHelpers", () => {
     describe("unmountComponentsAtNodes", () => {
@@ -9,7 +10,7 @@ describe("domHelpers", () => {
         const secondElement = document.createElement("div");
 
         it("should call unmountComponentAtNode for all selectors which are in dom", () => {
-            const unmount = jest.fn();
+            const unmount = vi.fn();
             const querySelector = (selector: string) => {
                 switch (selector) {
                     case firstSelector:
@@ -32,7 +33,7 @@ describe("domHelpers", () => {
         });
 
         it("should not call unmountComponentsAtNode for selectors which are not in dom", () => {
-            const unmount = jest.fn();
+            const unmount = vi.fn();
             const querySelector = (selector: string) => {
                 switch (selector) {
                     case firstSelector:
@@ -53,7 +54,7 @@ describe("domHelpers", () => {
         });
 
         it("should do nothing if no selectors given", () => {
-            const unmount = jest.fn();
+            const unmount = vi.fn();
 
             unmountComponentsAtNodes([], {
                 unmount,
@@ -64,7 +65,7 @@ describe("domHelpers", () => {
         });
 
         it("should accept elements as input", () => {
-            const unmount = jest.fn();
+            const unmount = vi.fn();
 
             unmountComponentsAtNodes([firstElement, secondElement], {
                 unmount,

@@ -2,7 +2,7 @@
 import React, { ReactNode, createRef, RefObject } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import { IFilterLabelProps, IFilterLabelState } from "./typings";
+import { IFilterLabelProps, IFilterLabelState } from "./typings.js";
 
 class WrappedFilterLabel extends React.PureComponent<
     IFilterLabelProps & WrappedComponentProps,

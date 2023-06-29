@@ -1,53 +1,53 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`changeRenderModeHandler without initial config should process cancel edit mode 1`] = `
-Array [
-  Object {
+exports[`changeRenderModeHandler > without initial config > should process cancel edit mode 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.CHANGE_RENDER_MODE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RESET",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
   },
 ]
 `;
 
-exports[`changeRenderModeHandler without initial config should process render mode change 1`] = `
-Array [
-  Object {
+exports[`changeRenderModeHandler > without initial config > should process render mode change 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.CHANGE_RENDER_MODE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RESET",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
   },
 ]
 `;
 
-exports[`changeRenderModeHandler without initial config should process switch to edit mode 1`] = `
-Array [
-  Object {
+exports[`changeRenderModeHandler > without initial config > should process switch to edit mode 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.CHANGE_RENDER_MODE",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RESET",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
   },

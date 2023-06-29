@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
-import { AttributeFilterComponentSet } from "../../componentDefinition";
-import { AttributeFilterComponentProvider } from "../../dashboardContexts";
-import { DefaultAttributeFilterDraggingComponent } from "../../dragAndDrop";
-import { AttributesDropdown } from "./addAttributeFilter";
-import { CreatableAttributeFilter } from "./CreatableAttributeFilter";
+import { AttributeFilterComponentSet } from "../../componentDefinition/index.js";
+import { AttributeFilterComponentProvider } from "../../dashboardContexts/index.js";
+import { DefaultAttributeFilterDraggingComponent } from "../../dragAndDrop/index.js";
+import { AttributesDropdown } from "./addAttributeFilter/index.js";
+import { CreatableAttributeFilter } from "./CreatableAttributeFilter.js";
 
 /**
  * @internal

@@ -1,16 +1,16 @@
 // (C) 2020-2022 GoodData Corporation
-import range from "lodash/range";
-import isEmpty from "lodash/isEmpty";
-import isFinite from "lodash/isFinite";
+import range from "lodash/range.js";
+import isEmpty from "lodash/isEmpty.js";
+import isFinite from "lodash/isFinite.js";
 import {
     DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
     DEFAULT_PUSHPIN_COLOR_OPACITY,
     DEFAULT_PUSHPIN_COLOR_SCALE,
-} from "./constants/geoChart";
-import { IPushpinColor } from "../../GeoChart";
-import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors";
+} from "./constants/geoChart.js";
+import { IPushpinColor } from "../../GeoChart.js";
+import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors.js";
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { getMinMax } from "./helpers/geoChart/common";
+import { getMinMax } from "./helpers/geoChart/common.js";
 import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 const DEFAULT_SEGMENT_ITEM = "default_segment_item";

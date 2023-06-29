@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
-import { RankingFilterButton } from "./RankingFilterButton";
-import { RankingFilterDropdown } from "./RankingFilterDropdown";
-import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
-import noop from "lodash/noop";
+import { RankingFilterButton } from "./RankingFilterButton.js";
+import { RankingFilterDropdown } from "./RankingFilterDropdown.js";
+import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types.js";
+import noop from "lodash/noop.js";
 
 /**
  * @beta

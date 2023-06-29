@@ -1,13 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import reject from "lodash/reject";
-import keys from "lodash/keys";
+import reject from "lodash/reject.js";
+import keys from "lodash/keys.js";
 import { v4 as uuid } from "uuid";
 import { Button, Messages, Message, IMessage } from "@gooddata/sdk-ui-kit";
-import { wrapWithTheme } from "../../themeWrapper";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 
 const info: { guidelines: { name: string }[]; messages: Record<string, IMessage> } = {
     guidelines: [

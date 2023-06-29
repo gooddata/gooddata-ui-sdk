@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps } from "react-intl";
 
-import { UiKit } from "../../../_infra/storyGroups";
+import { UiKit } from "../../../_infra/storyGroups.js";
 
 interface IEditableLabelExamplesState {
     text: string;

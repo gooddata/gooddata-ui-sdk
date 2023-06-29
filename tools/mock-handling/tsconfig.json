@@ -2,15 +2,16 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "target": "es2017",
-        "module": "commonjs",
         "lib": ["es2017", "dom"],
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "importHelpers": true,
-        "outDir": "./dist",
+        "outDir": "./esm",
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true
     },
-    "exclude": ["**/node_modules", "dist", "esm"]
+    "exclude": ["**/node_modules", "esm", "**/*.test.ts", "**/*.test.tsx"]
 }

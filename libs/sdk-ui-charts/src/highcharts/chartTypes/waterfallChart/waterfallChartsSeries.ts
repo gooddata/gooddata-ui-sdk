@@ -3,9 +3,9 @@ import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { parseValue, unwrap } from "../_util/common";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import { IPointData } from "../../typings/unsafe";
+import { parseValue, unwrap } from "../_util/common.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { IPointData } from "../../typings/unsafe.js";
 
 export function getColorOrLegendIndex(yValue: number, isTotal = false) {
     return isTotal ? 0 : yValue > 0 ? 1 : 2; //0: Total, 1: Positive, 2: Negative

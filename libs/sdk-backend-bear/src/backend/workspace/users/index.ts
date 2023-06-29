@@ -6,8 +6,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IWorkspaceUser } from "@gooddata/sdk-model";
 
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertWorkspaceUser } from "../../../convertors/fromBackend/UsersConverter";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertWorkspaceUser } from "../../../convertors/fromBackend/UsersConverter.js";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceUsersQuery implements IWorkspaceUsersQuery {

@@ -1,8 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
-import flow from "lodash/flow";
-import filter from "lodash/fp/filter";
-import map from "lodash/fp/map";
-import uniq from "lodash/fp/uniq";
+import flow from "lodash/flow.js";
+import filter from "lodash/fp/filter.js";
+import map from "lodash/fp/map.js";
+import uniq from "lodash/fp/uniq.js";
 
 type ExpressionTokenType =
     | "text"

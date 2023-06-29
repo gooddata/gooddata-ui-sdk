@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import { testBackend, testWorkspace } from "./backend";
+import { testBackend, testWorkspace } from "./backend.js";
 import { ReferenceMd, ReferenceRecordings, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     attributeDisplayFormRef,
@@ -8,6 +8,7 @@ import {
     newPositiveAttributeFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
+import { describe, expect, it, beforeAll } from "vitest";
 const backend = testBackend();
 
 beforeAll(async () => {

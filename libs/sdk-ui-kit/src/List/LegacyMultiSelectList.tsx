@@ -2,15 +2,15 @@
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
-import { Button } from "../Button";
-import { LegacyList } from "./LegacyList";
-import { ScrollCallback } from "./List";
-import { LegacyListItem } from "./LegacyListItem";
-import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem";
-import { guidFor } from "./guid";
-import { FlexDimensions } from "../FlexDimensions";
+import { Button } from "../Button/index.js";
+import { LegacyList } from "./LegacyList.js";
+import { ScrollCallback } from "./List.js";
+import { LegacyListItem } from "./LegacyListItem.js";
+import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
+import { guidFor } from "./guid.js";
+import { FlexDimensions } from "../FlexDimensions/index.js";
 
 /**
  * @internal

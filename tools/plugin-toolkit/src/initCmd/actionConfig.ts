@@ -1,12 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
-import { ActionOptions, SupportedPackageManager, TargetAppLanguage, TargetBackendType } from "../_base/types";
+import {
+    ActionOptions,
+    SupportedPackageManager,
+    TargetAppLanguage,
+    TargetBackendType,
+} from "../_base/types.js";
 import {
     createHostnameValidator,
     languageValidator,
     packageManagerValidator,
     pluginNameValidator,
     validOrDie,
-} from "../_base/inputHandling/validators";
+} from "../_base/inputHandling/validators.js";
 import {
     promptBackend,
     promptDashboardIdWithoutChoice,
@@ -14,14 +19,14 @@ import {
     promptLanguage,
     promptName,
     promptWorkspaceIdWithoutChoice,
-} from "../_base/terminal/prompts";
+} from "../_base/terminal/prompts.js";
 import {
     getBackendFromOptions,
     getDashboardFromOptions,
     getHostnameFromOptions,
     getWorkspaceFromOptions,
-} from "../_base/inputHandling/extractors";
-import { convertToPluginIdentifier } from "../_base/utils";
+} from "../_base/inputHandling/extractors.js";
+import { convertToPluginIdentifier } from "../_base/utils.js";
 
 function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;

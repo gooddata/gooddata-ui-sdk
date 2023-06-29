@@ -6,9 +6,9 @@ import {
     isAttributeDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { createDateValueFormatter } from "./dateValueFormatter";
-import { DateFormat, DEFAULT_DATE_FORMAT } from "./dateValueParser";
-import { createDefaultDateFormatter } from "./defaultDateFormatter";
+import { createDateValueFormatter } from "./dateValueFormatter.js";
+import { DateFormat, DEFAULT_DATE_FORMAT } from "./dateValueParser.js";
+import { createDefaultDateFormatter } from "./defaultDateFormatter.js";
 
 // TODO: rewrite. move search for date attributes into data view facade / meta() section
 export function findDateAttributeUris(dimensions: IDimensionDescriptor[]): string[] {

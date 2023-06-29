@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`measure converter should return converted alias 1`] = `
-Object {
+exports[`measure converter > should return converted alias 1`] = `
+{
   "alias": "alias",
-  "definition": Object {
-    "measure": Object {
-      "item": Object {
+  "definition": {
+    "measure": {
+      "item": {
         "identifier": "foo",
       },
     },
@@ -14,11 +14,11 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted arithmetic measure definition from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "arithmeticMeasure": Object {
-      "measureIdentifiers": Array [
+exports[`measure converter > should return converted arithmetic measure definition from model to AFM 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
         "foo",
         "bar",
       ],
@@ -29,25 +29,25 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted definition 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "filters": Array [
-        Object {
-          "positiveAttributeFilter": Object {
-            "displayForm": Object {
+exports[`measure converter > should return converted definition 1`] = `
+{
+  "definition": {
+    "measure": {
+      "filters": [
+        {
+          "positiveAttributeFilter": {
+            "displayForm": {
               "identifier": "filter",
             },
-            "in": Object {
-              "uris": Array [
+            "in": {
+              "uris": [
                 "baz",
               ],
             },
           },
         },
       ],
-      "item": Object {
+      "item": {
         "identifier": "foo",
       },
     },
@@ -56,12 +56,12 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted pop measure definition from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "popMeasure": Object {
+exports[`measure converter > should return converted pop measure definition from model to AFM 1`] = `
+{
+  "definition": {
+    "popMeasure": {
       "measureIdentifier": "m_acugFHNJgsBy",
-      "popAttribute": Object {
+      "popAttribute": {
         "identifier": "attr",
       },
     },
@@ -70,13 +70,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return converted previous period measure from model to AFM 1`] = `
-Object {
-  "definition": Object {
-    "previousPeriodMeasure": Object {
-      "dateDataSets": Array [
-        Object {
-          "dataSet": Object {
+exports[`measure converter > should return converted previous period measure from model to AFM 1`] = `
+{
+  "definition": {
+    "previousPeriodMeasure": {
+      "dateDataSets": [
+        {
+          "dataSet": {
             "identifier": "bar",
           },
           "periodsAgo": 3,
@@ -89,11 +89,11 @@ Object {
 }
 `;
 
-exports[`measure converter should return custom format: arithmetic measure 1`] = `
-Object {
-  "definition": Object {
-    "arithmeticMeasure": Object {
-      "measureIdentifiers": Array [
+exports[`measure converter > should return custom format: arithmetic measure 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
         "foo",
         "bar",
       ],
@@ -105,12 +105,12 @@ Object {
 }
 `;
 
-exports[`measure converter should return custom format: pop measure 1`] = `
-Object {
-  "definition": Object {
-    "popMeasure": Object {
+exports[`measure converter > should return custom format: pop measure 1`] = `
+{
+  "definition": {
+    "popMeasure": {
       "measureIdentifier": "m_acugFHNJgsBy",
-      "popAttribute": Object {
+      "popAttribute": {
         "identifier": "attr",
       },
     },
@@ -120,13 +120,13 @@ Object {
 }
 `;
 
-exports[`measure converter should return custom format: previous period measure 1`] = `
-Object {
-  "definition": Object {
-    "previousPeriodMeasure": Object {
-      "dateDataSets": Array [
-        Object {
-          "dataSet": Object {
+exports[`measure converter > should return custom format: previous period measure 1`] = `
+{
+  "definition": {
+    "previousPeriodMeasure": {
+      "dateDataSets": [
+        {
+          "dataSet": {
             "identifier": "bar",
           },
           "periodsAgo": 3,
@@ -140,11 +140,11 @@ Object {
 }
 `;
 
-exports[`measure converter should return custom format: simple measure 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "item": Object {
+exports[`measure converter > should return custom format: simple measure 1`] = `
+{
+  "definition": {
+    "measure": {
+      "item": {
         "identifier": "foo",
       },
     },
@@ -154,11 +154,11 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: change 1`] = `
-Object {
-  "definition": Object {
-    "arithmeticMeasure": Object {
-      "measureIdentifiers": Array [
+exports[`measure converter > should return format of measure: change 1`] = `
+{
+  "definition": {
+    "arithmeticMeasure": {
+      "measureIdentifiers": [
         "foo",
         "bar",
       ],
@@ -170,12 +170,12 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: count 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: count 1`] = `
+{
+  "definition": {
+    "measure": {
       "aggregation": "count",
-      "item": Object {
+      "item": {
         "identifier": "foo",
       },
     },
@@ -185,12 +185,12 @@ Object {
 }
 `;
 
-exports[`measure converter should return format of measure: ratio 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
+exports[`measure converter > should return format of measure: ratio 1`] = `
+{
+  "definition": {
+    "measure": {
       "computeRatio": true,
-      "item": Object {
+      "item": {
         "identifier": "foo",
       },
     },
@@ -200,11 +200,11 @@ Object {
 }
 `;
 
-exports[`measure converter should return local identifier of measure 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "item": Object {
+exports[`measure converter > should return local identifier of measure 1`] = `
+{
+  "definition": {
+    "measure": {
+      "item": {
         "identifier": "aangOxLSeztu",
       },
     },
@@ -213,4 +213,4 @@ Object {
 }
 `;
 
-exports[`measure converter should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
+exports[`measure converter > should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;

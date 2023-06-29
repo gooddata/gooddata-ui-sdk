@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { objRefToString } from "../../objRef";
+import { objRefToString } from "../../objRef/index.js";
 import {
     IAttributeFilter,
     IDateFilter,
@@ -13,12 +13,12 @@ import {
     isMeasureValueFilter,
     isRankingFilter,
     INullableFilter,
-} from "./index";
-import compact from "lodash/compact";
-import groupBy from "lodash/groupBy";
-import last from "lodash/last";
-import invariant from "ts-invariant";
-import values from "lodash/values";
+} from "./index.js";
+import compact from "lodash/compact.js";
+import groupBy from "lodash/groupBy.js";
+import last from "lodash/last.js";
+import { invariant } from "ts-invariant";
+import values from "lodash/values.js";
 
 type FilterByType = {
     attribute: IAttributeFilter[];

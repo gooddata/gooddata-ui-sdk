@@ -1,22 +1,22 @@
 // (C) 2021-2022 GoodData Corporation
 
 import React from "react";
-import invariant from "ts-invariant";
-import includes from "lodash/includes";
+import { invariant } from "ts-invariant";
+import includes from "lodash/includes.js";
 import { render } from "@testing-library/react";
 import { IInsight, insightTags, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-
-import { DefaultInsightCustomizer } from "../insightCustomizer";
-import { DashboardCustomizationLogger } from "../customizationLogging";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { DefaultInsightCustomizer } from "../insightCustomizer.js";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
 import {
     IDashboardInsightProps,
     InsightComponentProvider,
     OptionalInsightComponentProvider,
-} from "../../../presentation";
-import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types";
+} from "../../../presentation/index.js";
+import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 
 //
 //
@@ -185,7 +185,7 @@ describe("insight customizer", () => {
                 DefaultTestComponentProvider,
             );
 
-            const consoleSpy = jest.spyOn(logger, "warn");
+            const consoleSpy = vi.spyOn(logger, "warn");
 
             customizer.withTag("", createTestComponent("forTag1"));
 

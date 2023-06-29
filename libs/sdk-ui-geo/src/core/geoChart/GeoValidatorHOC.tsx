@@ -1,11 +1,11 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import { injectIntl } from "react-intl";
 
-import { IGeoChartInnerProps } from "./GeoChartInner";
-import { isLocationSet } from "./helpers/geoChart/common";
-import { IGeoConfig } from "../../GeoChart";
+import { IGeoChartInnerProps } from "./GeoChartInner.js";
+import { isLocationSet } from "./helpers/geoChart/common.js";
+import { IGeoConfig } from "../../GeoChart.js";
 import {
     ErrorCodes,
     ErrorComponent as DefaultErrorComponent,

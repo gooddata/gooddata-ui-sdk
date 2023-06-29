@@ -7,7 +7,7 @@ import {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: GdcScheduledMail.ScheduledMailAttachment,

@@ -23,11 +23,15 @@ import {
     IDashboardPluginLink,
     ShareStatus,
 } from "@gooddata/sdk-model";
-import keyBy from "lodash/keyBy";
-import { sanitizeExportFilterContext, convertFilterContext, convertTempFilterContext } from "./filterContext";
-import { convertLayout, createImplicitDashboardLayout } from "./layout";
-import { DashboardDependency, BearDashboardDependency } from "./types";
-import { convertVisualizationWidget, convertKpi } from "./widget";
+import keyBy from "lodash/keyBy.js";
+import {
+    sanitizeExportFilterContext,
+    convertFilterContext,
+    convertTempFilterContext,
+} from "./filterContext.js";
+import { convertLayout, createImplicitDashboardLayout } from "./layout.js";
+import { DashboardDependency, BearDashboardDependency } from "./types.js";
+import { convertVisualizationWidget, convertKpi } from "./widget.js";
 
 export const convertListedDashboard = (
     dashboardLink: GdcMetadata.IObjectLink,

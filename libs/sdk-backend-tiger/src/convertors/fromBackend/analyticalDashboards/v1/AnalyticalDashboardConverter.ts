@@ -17,13 +17,13 @@ import {
     IDashboard,
     IDashboardDateFilterConfig,
 } from "@gooddata/sdk-model";
-import updateWith from "lodash/updateWith";
-import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
-import { cloneWithSanitizedIds } from "../../IdSanitization";
-import { isInheritedObject } from "../../ObjectInheritance";
-import { getShareStatus, stripQueryParams } from "../../utils";
-import { sanitizeSelectionMode } from "../common/singleSelectionFilter";
-import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
+import updateWith from "lodash/updateWith.js";
+import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
+import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { isInheritedObject } from "../../ObjectInheritance.js";
+import { getShareStatus, stripQueryParams } from "../../utils.js";
+import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
+import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import omit from "lodash/omit";
+import omit from "lodash/omit.js";
 import { ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";

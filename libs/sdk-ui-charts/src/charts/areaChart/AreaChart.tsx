@@ -8,8 +8,8 @@ import {
     ISortItem,
     newBucket,
 } from "@gooddata/sdk-model";
-import { truncate } from "../_commons/truncate";
-import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces";
+import { truncate } from "../_commons/truncate.js";
+import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces/index.js";
 import {
     BucketNames,
     useResolveValuesWithPlaceholders,
@@ -19,12 +19,12 @@ import {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { stackedChartDimensions } from "../_commons/dimensions";
-import { CoreAreaChart } from "./CoreAreaChart";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import isNil from "lodash/isNil";
-import { withChart } from "../_base/withChart";
-import { sanitizeConfig } from "../_commons/sanitizeStacking";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
+import { CoreAreaChart } from "./CoreAreaChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import isNil from "lodash/isNil.js";
+import { withChart } from "../_base/withChart.js";
+import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 
 //
 // Internals

@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
-import isNil from "lodash/isNil";
-import isString from "lodash/isString";
-import partition from "lodash/partition";
+import isNil from "lodash/isNil.js";
+import isString from "lodash/isString.js";
+import partition from "lodash/partition.js";
 import {
     ColumnLocator,
     IAbsoluteColumnWidth,
@@ -20,7 +20,7 @@ import {
     IWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
-import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator";
+import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
 
 export function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
     const { attributeIdentifier, width } = obj.attributeColumnWidthItem;

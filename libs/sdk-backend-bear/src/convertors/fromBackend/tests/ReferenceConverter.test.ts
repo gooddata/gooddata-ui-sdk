@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
-import { convertReferencesToUris, convertUrisToReferences } from "../ReferenceConverter";
-import * as fixtures from "./ReferenceConverter.fixtures";
+import { convertReferencesToUris, convertUrisToReferences } from "../ReferenceConverter.js";
+import * as fixtures from "./ReferenceConverter.fixtures.js";
+import { describe, expect, it, beforeEach } from "vitest";
 
 describe("reference handling", () => {
     describe("convertReferencesToUris", () => {

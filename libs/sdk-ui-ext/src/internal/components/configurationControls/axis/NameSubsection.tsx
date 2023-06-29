@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import ConfigSubsection from "../../configurationControls/ConfigSubsection";
-import NamePositionControl from "./NamePositionControl";
-import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import { messages } from "../../../../locales";
+import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
+import NamePositionControl from "./NamePositionControl.js";
+import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { messages } from "../../../../locales.js";
 
 class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
     public render() {

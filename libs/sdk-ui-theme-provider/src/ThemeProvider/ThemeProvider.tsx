@@ -1,14 +1,14 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
 import { getLuminance } from "polished";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 
-import { clearCssProperties, setCssProperties } from "../cssProperties";
-import { ThemeContextProvider } from "./Context";
-import { prepareTheme } from "./prepareTheme";
+import { clearCssProperties, setCssProperties } from "../cssProperties.js";
+import { ThemeContextProvider } from "./Context.js";
+import { prepareTheme } from "./prepareTheme.js";
 
 /**
  * @public

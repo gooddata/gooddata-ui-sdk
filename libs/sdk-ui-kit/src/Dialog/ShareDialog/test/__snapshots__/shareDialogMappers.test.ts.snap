@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`shareDialogMappers mapSharedObjectToAffectedSharedObject should map shared object to expected affected shared object 1`] = `
-Object {
+exports[`shareDialogMappers > mapSharedObjectToAffectedSharedObject > should map shared object to expected affected shared object 1`] = `
+{
   "areGranularPermissionsSupported": false,
   "canWorkspaceManagerSeeEverySharedObject": false,
   "isLeniencyControlSupported": false,
@@ -9,9 +9,9 @@ Object {
   "isLockingSupported": true,
   "isMetadataObjectLockingSupported": true,
   "isUnderLenientControl": true,
-  "owner": Object {
+  "owner": {
     "email": undefined,
-    "id": Object {
+    "id": {
       "uri": "userID1",
     },
     "isCurrentUser": true,
@@ -20,7 +20,7 @@ Object {
     "status": "Active",
     "type": "user",
   },
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/referenceworkspace/obj/1304",
   },
   "shareStatus": "public",

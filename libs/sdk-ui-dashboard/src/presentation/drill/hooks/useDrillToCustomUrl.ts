@@ -6,7 +6,7 @@ import {
     DrillToCustomUrl,
     drillToCustomUrl,
     useDashboardCommandProcessing,
-} from "../../../model";
+} from "../../../model/index.js";
 
 /**
  * @internal

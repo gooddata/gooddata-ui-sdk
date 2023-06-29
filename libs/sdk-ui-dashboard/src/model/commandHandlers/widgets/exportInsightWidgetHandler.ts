@@ -3,24 +3,24 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { IExecutionResult, IExportBlobResult } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { ExportInsightWidget } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
+import { ExportInsightWidget } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     DashboardInsightWidgetExportResolved,
     insightWidgetExportRequested,
     insightWidgetExportResolved,
-} from "../../events/insight";
+} from "../../events/insight.js";
 import {
     selectExecutionResultByRef,
     selectIsExecutionResultReadyForExportByRef,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
-} from "../../store/executionResults/executionResultsSelectors";
-import { DashboardContext } from "../../types/commonTypes";
+} from "../../store/executionResults/executionResultsSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { createExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
-import { PromiseFnReturnType } from "../../types/sagas";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 
 async function performExport(
     executionResult: IExecutionResult,

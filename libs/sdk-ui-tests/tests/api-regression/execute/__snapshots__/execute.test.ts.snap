@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Execute with scoped series should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Execute > with scoped series > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
@@ -13,22 +13,22 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -37,11 +37,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -51,27 +51,27 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Execute with scoped series with slicing should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`Execute > with scoped series with slicing > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.owner.region",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -79,27 +79,27 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "a_label.product.id.name",
       ],
     },
-    Object {
-      "itemIdentifiers": Array [
+    {
+      "itemIdentifiers": [
         "a_label.owner.region",
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -108,11 +108,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -122,30 +122,30 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Execute with single unscoped series should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Execute > with single unscoped series > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -155,30 +155,30 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;
 
-exports[`Execute with two unscoped series should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
+exports[`Execute > with two unscoped series > should create expected execution definition 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
         "measureGroup",
       ],
     },
   ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "aangOxLSeztu",
               "type": "measure",
             },
@@ -187,11 +187,11 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "acugFHNJgsBy",
               "type": "measure",
             },
@@ -201,8 +201,8 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "reference-workspace",
 }
 `;

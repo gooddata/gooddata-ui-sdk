@@ -4,9 +4,9 @@
  *
  */
 
-export { DefaultColorPalette } from "./constants/colorPalette";
-export { BucketNames, BucketNameKeys, BucketNameValues } from "./constants/bucketNames";
-export { visualizationIsBetaWarning } from "./helpers/logging";
+export { DefaultColorPalette } from "./constants/colorPalette.js";
+export { BucketNames, BucketNameKeys, BucketNameValues } from "./constants/bucketNames.js";
+export { visualizationIsBetaWarning } from "./helpers/logging.js";
 
 /*
  * Error handling
@@ -42,34 +42,34 @@ export {
     isUnauthorized,
     isUnknownSdkError,
     isDynamicScriptLoadSdkError,
-} from "./errors/GoodDataSdkError";
+} from "./errors/GoodDataSdkError.js";
 export {
     IErrorDescriptors,
     newErrorMapping,
     convertError,
     defaultErrorHandler,
-} from "./errors/errorHandling";
+} from "./errors/errorHandling.js";
 
 /*
  * Base React stuff
  */
-export { LoadingComponent, ILoadingProps } from "./react/LoadingComponent";
-export { ErrorComponent, IErrorProps } from "./react/ErrorComponent";
+export { LoadingComponent, ILoadingProps } from "./react/LoadingComponent.js";
+export { ErrorComponent, IErrorProps } from "./react/ErrorComponent.js";
 export {
     BackendProvider,
     useBackend,
     useBackendStrict,
     withBackend,
     IBackendProviderProps,
-} from "./react/BackendContext";
+} from "./react/BackendContext.js";
 export {
     WorkspaceProvider,
     useWorkspace,
     useWorkspaceStrict,
     withWorkspace,
     IWorkspaceProviderProps,
-} from "./react/WorkspaceContext";
-export { IPlaceholdersProviderProps, PlaceholdersProvider } from "./react/placeholders/context";
+} from "./react/WorkspaceContext.js";
+export { IPlaceholdersProviderProps, PlaceholdersProvider } from "./react/placeholders/context.js";
 export {
     AnyPlaceholder,
     IPlaceholder,
@@ -95,8 +95,8 @@ export {
     IUseComposedPlaceholderHook,
     UnionToIntersection,
     ValueOrMultiValuePlaceholder,
-} from "./react/placeholders/base";
-export { IPlaceholderOptions, newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory";
+} from "./react/placeholders/base.js";
+export { IPlaceholderOptions, newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory.js";
 export {
     AttributeFilterOrPlaceholder,
     AttributeFiltersOrPlaceholders,
@@ -113,15 +113,19 @@ export {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
     TotalsOrPlaceholders,
-} from "./react/placeholders/aliases";
+} from "./react/placeholders/aliases.js";
 export {
     usePlaceholder,
     usePlaceholders,
     useComposedPlaceholder,
     useResolveValueWithPlaceholders,
     useResolveValuesWithPlaceholders,
-} from "./react/placeholders/hooks";
-export { usePagedResource, IUsePagedResourceResult, IUsePagedResourceState } from "./react/usePagedResource";
+} from "./react/placeholders/hooks.js";
+export {
+    usePagedResource,
+    IUsePagedResourceResult,
+    IUsePagedResourceState,
+} from "./react/usePagedResource.js";
 export {
     UseCancelablePromiseStatus,
     useCancelablePromise,
@@ -132,17 +136,17 @@ export {
     UseCancelablePromiseLoadingState,
     UseCancelablePromisePendingState,
     UseCancelablePromiseSuccessState,
-} from "./react/useCancelablePromise";
-export { withContexts } from "./react/withContexts";
-export { wrapDisplayName } from "./react/wrapDisplayName";
-export { CancelError, ICancelablePromise, makeCancelable, isCancelError } from "./react/CancelablePromise";
-export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEntireDataView";
-export { getIntersectionAttributes } from "./react/legacy/availableDrillTargets";
+} from "./react/useCancelablePromise.js";
+export { withContexts } from "./react/withContexts.js";
+export { wrapDisplayName } from "./react/wrapDisplayName.js";
+export { CancelError, ICancelablePromise, makeCancelable, isCancelError } from "./react/CancelablePromise.js";
+export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEntireDataView.js";
+export { getIntersectionAttributes } from "./react/legacy/availableDrillTargets.js";
 
 export {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,
-} from "./react/useCancelablePromiseUtils";
+} from "./react/useCancelablePromiseUtils.js";
 export {
     IClientWorkspaceProviderProps,
     IClientWorkspaceProviderCoreProps,
@@ -154,35 +158,35 @@ export {
     useClientWorkspaceStatus,
     useClientWorkspaceError,
     useClientWorkspaceInitialized,
-} from "./react/ClientWorkspaceContext/ClientWorkspaceContext";
+} from "./react/ClientWorkspaceContext/ClientWorkspaceContext.js";
 export {
     IClientWorkspaceIdentifiers,
     IClientWorkspaceStatus,
-} from "./react/ClientWorkspaceContext/interfaces";
-export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/resolveLCMWorkspaceIdentifiers";
-export { usePrevious } from "./react/usePrevious";
+} from "./react/ClientWorkspaceContext/interfaces.js";
+export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/resolveLCMWorkspaceIdentifiers.js";
+export { usePrevious } from "./react/usePrevious.js";
 /*
  * Localization exports
  */
 
-export { ILocale, DefaultLocale, isLocale, LOCALES } from "./localization/Locale";
-export { getTranslation, getIntl } from "./localization/IntlStore";
-export { IntlWrapper, IIntlWrapperProps } from "./localization/IntlWrapper";
-export { messagesMap, ITranslations } from "./localization/messagesMap";
+export { ILocale, DefaultLocale, isLocale, LOCALES } from "./localization/Locale.js";
+export { getTranslation, getIntl } from "./localization/IntlStore.js";
+export { IntlWrapper, IIntlWrapperProps } from "./localization/IntlWrapper.js";
+export { messagesMap, ITranslations } from "./localization/messagesMap.js";
 export {
     TranslationsProvider,
     IntlTranslationsProvider,
     ITranslationsComponentProps,
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
-} from "./localization/TranslationsProvider";
+} from "./localization/TranslationsProvider.js";
 export {
     createIntlMock,
     withIntl,
     resolveLocale,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
-} from "./localization/intlUtils";
+} from "./localization/intlUtils.js";
 export {
     ITranslationsCustomizationContextProviderProps,
     TranslationsCustomizationContextProvider,
@@ -194,7 +198,7 @@ export {
     pickCorrectWording,
     removeAllInsightToReportTranslations,
     removeAllWordingTranslationsWithSpecialSuffix,
-} from "./localization/TranslationsCustomizationProvider";
+} from "./localization/TranslationsCustomizationProvider/index.js";
 
 /*
  * Header matching & predicates
@@ -210,12 +214,12 @@ export {
     getAttributeHeaderItemName,
     getMappingHeaderFormattedName,
     hasMappingHeaderFormattedName,
-} from "./headerMatching/MappingHeader";
+} from "./headerMatching/MappingHeader.js";
 export {
     IHeaderPredicate,
     IHeaderPredicateContext,
     isHeaderPredicate,
-} from "./headerMatching/HeaderPredicate";
+} from "./headerMatching/HeaderPredicate.js";
 
 export {
     HeaderPredicates,
@@ -227,24 +231,24 @@ export {
     uriMatch,
     objRefMatch,
     objMatch,
-} from "./headerMatching/HeaderPredicateFactory";
+} from "./headerMatching/HeaderPredicateFactory.js";
 
 /*
  * Derived measure title generation
  */
 
-export { ArithmeticMeasureTitleFactory } from "./measureTitles/ArithmeticMeasureTitleFactory";
-export { DerivedMeasureTitleSuffixFactory } from "./measureTitles/DerivedMeasureTitleSuffixFactory";
-export { fillMissingTitles } from "./measureTitles/fillMissingTitles";
-export { ignoreTitlesForSimpleMeasures } from "./measureTitles/ignoreTitlesForSimpleMeasures";
-export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle";
+export { ArithmeticMeasureTitleFactory } from "./measureTitles/ArithmeticMeasureTitleFactory.js";
+export { DerivedMeasureTitleSuffixFactory } from "./measureTitles/DerivedMeasureTitleSuffixFactory.js";
+export { fillMissingTitles } from "./measureTitles/fillMissingTitles.js";
+export { ignoreTitlesForSimpleMeasures } from "./measureTitles/ignoreTitlesForSimpleMeasures.js";
+export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle.js";
 
 /*
  * Derived measure format generation
  */
 
-export { fillMissingFormats } from "./measureFormats/fillMissingFormats";
-export { fillMissingFormat } from "./measureFormats/fillMissingFormat";
+export { fillMissingFormats } from "./measureFormats/fillMissingFormats.js";
+export { fillMissingFormat } from "./measureFormats/fillMissingFormat.js";
 
 /*
  *
@@ -254,7 +258,7 @@ export {
     IVisualizationProps,
     IVisualizationCallbacks,
     IDataVisualizationProps,
-} from "./vis/VisualizationProps";
+} from "./vis/VisualizationProps.js";
 export {
     IPushData,
     IOpenAsReportUiConfig,
@@ -269,7 +273,7 @@ export {
     IAvailableDrillTargetAttribute,
     IColorAssignment,
     IColorsData,
-} from "./vis/Events";
+} from "./vis/Events.js";
 export {
     OnFiredDrillEvent,
     IDrillableItem,
@@ -296,15 +300,15 @@ export {
     isDrillIntersectionAttributeItem,
     IHighchartsCategoriesTree,
     IHighchartsParentTick,
-} from "./vis/DrillEvents";
+} from "./vis/DrillEvents.js";
 export {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
     getDrillIntersection,
     getIntersectionPartAfter,
     fireDrillEvent,
-} from "./vis/drilling";
-export { createExportFunction, createExportErrorFunction } from "./vis/export";
+} from "./vis/drilling.js";
+export { createExportFunction, createExportErrorFunction } from "./vis/export.js";
 export {
     VisualizationTypes,
     VisualizationEnvironment,
@@ -318,17 +322,17 @@ export {
     TableType,
     VisElementType,
     XirrType,
-} from "./vis/visualizationTypes";
-export { Subtract } from "./typings/subtract";
-export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
+} from "./vis/visualizationTypes.js";
+export { Subtract } from "./typings/subtract.js";
+export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison.js";
 /*
  *
  */
 
-export { DataViewFacade } from "./results/facade";
-export { IExecutionDefinitionMethods } from "./results/internal/definitionMethods";
-export { IResultDataMethods } from "./results/internal/resultDataMethods";
-export { IResultMetaMethods } from "./results/internal/resultMetaMethods";
+export { DataViewFacade } from "./results/facade.js";
+export { IExecutionDefinitionMethods } from "./results/internal/definitionMethods.js";
+export { IResultDataMethods } from "./results/internal/resultDataMethods.js";
+export { IResultMetaMethods } from "./results/internal/resultMetaMethods.js";
 export {
     DataSeriesId,
     DataPoint,
@@ -345,13 +349,13 @@ export {
     DataSeriesHeaders,
     DataSliceHeaders,
     DataPointCoordinates,
-} from "./results/dataAccess";
+} from "./results/dataAccess.js";
 export {
     DataAccessConfig,
     ValueFormatter,
     HeaderTranslator,
     createNumberJsFormatter,
     DefaultDataAccessConfig,
-} from "./results/dataAccessConfig";
+} from "./results/dataAccessConfig.js";
 
-export { getTotalInfo } from "./results/internal/utils";
+export { getTotalInfo } from "./results/internal/utils.js";

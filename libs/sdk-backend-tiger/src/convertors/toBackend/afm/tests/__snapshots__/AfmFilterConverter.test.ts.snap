@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`convertAfmFilters should keep non-measure based filter 1`] = `
-Object {
-  "auxMeasures": Array [],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "in": Object {
-          "values": Array [
+exports[`convertAfmFilters > should keep non-measure based filter 1`] = `
+{
+  "auxMeasures": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "in": {
+          "values": [
             "value",
           ],
         },
-        "label": Object {
-          "identifier": Object {
+        "label": {
+          "identifier": {
             "id": "label.product.id.name",
             "type": "label",
           },
@@ -23,22 +23,22 @@ Object {
 }
 `;
 
-exports[`convertAfmFilters should not transform measure based filter of non-ratio measure 1`] = `
-Object {
-  "auxMeasures": Array [],
-  "filters": Array [
-    Object {
-      "rankingFilter": Object {
-        "dimensionality": Array [
-          Object {
-            "identifier": Object {
+exports[`convertAfmFilters > should not transform measure based filter of non-ratio measure 1`] = `
+{
+  "auxMeasures": [],
+  "filters": [
+    {
+      "rankingFilter": {
+        "dimensionality": [
+          {
+            "identifier": {
               "id": "label.stage.isactive",
               "type": "label",
             },
           },
         ],
-        "measures": Array [
-          Object {
+        "measures": [
+          {
             "localIdentifier": "nonRatio",
           },
         ],
@@ -50,14 +50,14 @@ Object {
 }
 `;
 
-exports[`convertAfmFilters should transform measure based filter of ratio measure 1`] = `
-Object {
-  "auxMeasures": Array [
-    Object {
-      "definition": Object {
-        "measure": Object {
-          "item": Object {
-            "identifier": Object {
+exports[`convertAfmFilters > should transform measure based filter of ratio measure 1`] = `
+{
+  "auxMeasures": [
+    {
+      "definition": {
+        "measure": {
+          "item": {
+            "identifier": {
               "id": "test",
               "type": "fact",
             },
@@ -67,11 +67,11 @@ Object {
       "localIdentifier": "m_test",
     },
   ],
-  "filters": Array [
-    Object {
-      "comparisonMeasureValueFilter": Object {
+  "filters": [
+    {
+      "comparisonMeasureValueFilter": {
         "applyOnResult": false,
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_test",
         },
         "operator": "GREATER_THAN",

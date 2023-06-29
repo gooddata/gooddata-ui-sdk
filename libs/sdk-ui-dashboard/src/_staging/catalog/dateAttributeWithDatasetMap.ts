@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ICatalogDateDataset, ICatalogDateAttribute } from "@gooddata/sdk-model";
 
-import { ObjRefMap, ObjRefMapConfig } from "../metadata/objRefMap";
+import { ObjRefMap, ObjRefMapConfig } from "../metadata/objRefMap.js";
 
 /**
  * @internal

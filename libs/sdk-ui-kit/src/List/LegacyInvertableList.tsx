@@ -2,17 +2,17 @@
 import React, { Component } from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
-import keyBy from "lodash/keyBy";
-import values from "lodash/values";
-import take from "lodash/take";
-import has from "lodash/has";
-import noop from "lodash/noop";
+import keyBy from "lodash/keyBy.js";
+import values from "lodash/values.js";
+import take from "lodash/take.js";
+import has from "lodash/has.js";
+import noop from "lodash/noop.js";
 
-import { Input } from "../Form";
-import LegacyMultiSelectList from "./LegacyMultiSelectList";
-import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem";
-import { Message } from "../Messages";
-import { guidFor } from "./guid";
+import { Input } from "../Form/index.js";
+import LegacyMultiSelectList from "./LegacyMultiSelectList.js";
+import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
+import { Message } from "../Messages/index.js";
+import { guidFor } from "./guid.js";
 
 const NoItemsFound: React.FC = () => {
     return (

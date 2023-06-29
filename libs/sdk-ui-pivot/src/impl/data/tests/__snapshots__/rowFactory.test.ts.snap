@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getRow should return a grid row 1`] = `
-Object {
+exports[`getRow > should return a grid row 1`] = `
+{
   "c_0": "5099309.54",
   "c_1": "22123590.1",
-  "headerItemMap": Object {
-    "r_0": Object {
-      "attributeHeaderItem": Object {
+  "headerItemMap": {
+    "r_0": {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
@@ -16,8 +16,8 @@ Object {
 }
 `;
 
-exports[`getRow should return subtotal row 1`] = `
-Object {
+exports[`getRow > should return subtotal row 1`] = `
+{
   "c_0": "2174478.26",
   "c_1": "883793.08",
   "c_2": "5917286.73",
@@ -26,15 +26,15 @@ Object {
   "c_5": "817756.22",
   "c_6": "5501537.16",
   "c_7": "2039952.64",
-  "headerItemMap": Object {
-    "r_0": Object {
-      "attributeHeaderItem": Object {
+  "headerItemMap": {
+    "r_0": {
+      "attributeHeaderItem": {
         "name": "CompuSci",
         "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
     },
-    "r_1": Object {
-      "totalHeaderItem": Object {
+    "r_1": {
+      "totalHeaderItem": {
         "name": "med",
         "type": "med",
       },
@@ -47,9 +47,9 @@ Object {
 }
 `;
 
-exports[`getRowTotals should return total rows 1`] = `
-Array [
-  Object {
+exports[`getRowTotals > should return total rows 1`] = `
+[
+  {
     "c_0": "1813790.98",
     "c_1": "16633475.16",
     "c_10": "667035.74",
@@ -66,7 +66,7 @@ Array [
     "c_7": "1161023.49",
     "c_8": "926586.28",
     "c_9": "2140879.84",
-    "calculatedForColumns": Array [
+    "calculatedForColumns": [
       "c_0",
       "c_1",
       "c_2",
@@ -84,14 +84,14 @@ Array [
       "c_14",
       "c_15",
     ],
-    "colSpan": Object {
+    "colSpan": {
       "count": 2,
       "headerKey": "r_0",
     },
     "r_0": "Sum",
     "type": "rowTotal",
   },
-  Object {
+  {
     "c_0": "770602.99",
     "c_1": "13387810.63",
     "c_10": "398641.54",
@@ -108,7 +108,7 @@ Array [
     "c_7": "389676.45",
     "c_8": "627304.21",
     "c_9": "707188.64",
-    "calculatedForColumns": Array [
+    "calculatedForColumns": [
       "c_0",
       "c_1",
       "c_2",
@@ -126,14 +126,14 @@ Array [
       "c_14",
       "c_15",
     ],
-    "colSpan": Object {
+    "colSpan": {
       "count": 2,
       "headerKey": "r_0",
     },
     "r_0": "Max",
     "type": "rowTotal",
   },
-  Object {
+  {
     "c_0": "3601.6",
     "c_1": "14001.6",
     "c_10": "2339.1",
@@ -150,7 +150,7 @@ Array [
     "c_7": "3129.5",
     "c_8": "2735.24",
     "c_9": "3564.9",
-    "calculatedForColumns": Array [
+    "calculatedForColumns": [
       "c_0",
       "c_1",
       "c_2",
@@ -168,14 +168,14 @@ Array [
       "c_14",
       "c_15",
     ],
-    "colSpan": Object {
+    "colSpan": {
       "count": 2,
       "headerKey": "r_0",
     },
     "r_0": "Min",
     "type": "rowTotal",
   },
-  Object {
+  {
     "c_0": "1813790.98",
     "c_1": "16633475.16",
     "c_10": "667035.74",
@@ -192,7 +192,7 @@ Array [
     "c_7": "1161023.49",
     "c_8": "926586.28",
     "c_9": "2140879.84",
-    "calculatedForColumns": Array [
+    "calculatedForColumns": [
       "c_0",
       "c_1",
       "c_2",
@@ -210,7 +210,7 @@ Array [
       "c_14",
       "c_15",
     ],
-    "colSpan": Object {
+    "colSpan": {
       "count": 2,
       "headerKey": "r_0",
     },

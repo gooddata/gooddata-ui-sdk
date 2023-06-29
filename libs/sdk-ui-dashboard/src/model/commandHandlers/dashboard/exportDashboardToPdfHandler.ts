@@ -3,18 +3,18 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ExportDashboardToPdf } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExportDashboardToPdf } from "../../commands/index.js";
 import {
     dashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
     dashboardExportToPdfResolved,
-} from "../../events/dashboard";
-import { selectDashboardRef } from "../../store/meta/metaSelectors";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors";
-import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils";
-import { PromiseFnReturnType } from "../../types/sagas";
+} from "../../events/dashboard.js";
+import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
 
 function exportDashboardToPdf(

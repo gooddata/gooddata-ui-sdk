@@ -2,11 +2,11 @@
 
 import { ConnectDragSource, DragSourceMonitor, useDrag } from "react-dnd";
 import { useCallback, useEffect, useRef } from "react";
-import { DraggableItem } from "./types";
+import { DraggableItem } from "./types.js";
 
 import { getEmptyImage } from "react-dnd-html5-backend";
-import isFunction from "lodash/isFunction";
-import { useBeforeDrag } from "./useBeforeDrag";
+import isFunction from "lodash/isFunction.js";
+import { useBeforeDrag } from "./useBeforeDrag.js";
 
 type CollectedProps<TItem> = {
     isDragging: boolean;

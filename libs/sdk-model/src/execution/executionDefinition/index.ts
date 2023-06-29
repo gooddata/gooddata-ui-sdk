@@ -1,20 +1,20 @@
 // (C) 2019-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import isString from "lodash/isString";
+import isEmpty from "lodash/isEmpty.js";
+import isString from "lodash/isString.js";
 import SparkMD5 from "spark-md5";
-import invariant from "ts-invariant";
-import { IAttribute } from "../attribute";
-import { dimensionTotals, IDimension } from "../base/dimension";
-import { ISortItem } from "../base/sort";
-import { ITotal } from "../base/totals";
-import { IBucket } from "../buckets";
-import { IFilter, INullableFilter } from "../filter";
-import { mergeFilters } from "../filter/filterMerge";
-import { IMeasure } from "../measure";
-import { measureFingerprint } from "../measure/fingerprint";
-import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints";
-import { dimensionFingerprint } from "../base/fingerprint";
-import { filterFingerprint } from "../filter/fingerprint";
+import { invariant } from "ts-invariant";
+import { IAttribute } from "../attribute/index.js";
+import { dimensionTotals, IDimension } from "../base/dimension.js";
+import { ISortItem } from "../base/sort.js";
+import { ITotal } from "../base/totals.js";
+import { IBucket } from "../buckets/index.js";
+import { IFilter, INullableFilter } from "../filter/index.js";
+import { mergeFilters } from "../filter/filterMerge.js";
+import { IMeasure } from "../measure/index.js";
+import { measureFingerprint } from "../measure/fingerprint.js";
+import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints.js";
+import { dimensionFingerprint } from "../base/fingerprint.js";
+import { filterFingerprint } from "../filter/fingerprint.js";
 
 /**
  * Contains any configuration that should be done with the data after they are obtained from the server

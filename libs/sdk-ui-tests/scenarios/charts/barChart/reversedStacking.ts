@@ -4,10 +4,10 @@ import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceMdExt } from "@gooddata/reference-workspace";
 
-import { BarChartWithTwoMeasuresAndTwoViewBy, BarChartWithArithmeticMeasuresAndViewBy } from "./base";
+import { BarChartWithTwoMeasuresAndTwoViewBy, BarChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { scenariosFor } from "../../../src";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { scenariosFor } from "../../../src/index.js";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.StackingReverse)

@@ -17,10 +17,10 @@ import {
     IRankingFilter,
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import isNil from "lodash/isNil";
-import { toBearRef, toScopedBearRef } from "../ObjRefConverter";
-import compact from "lodash/compact";
-import { assertNoNulls } from "../utils";
+import isNil from "lodash/isNil.js";
+import { toBearRef, toScopedBearRef } from "../ObjRefConverter.js";
+import compact from "lodash/compact.js";
+import { assertNoNulls } from "../utils.js";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     /*

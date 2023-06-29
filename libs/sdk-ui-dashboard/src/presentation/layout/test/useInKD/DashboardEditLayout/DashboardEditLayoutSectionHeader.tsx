@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 
-import { DashboardLayoutSectionHeader } from "../../../DefaultDashboardLayoutRenderer";
+import { DashboardLayoutSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 export interface IDashboardEditLayoutSectionHeaderOwnProps {
     title: string;

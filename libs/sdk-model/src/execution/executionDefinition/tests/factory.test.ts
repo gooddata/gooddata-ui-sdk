@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-
+import { describe, expect, it } from "vitest";
 import {
     DateGranularity,
     defaultDimensionsGenerator,
@@ -10,10 +10,10 @@ import {
     newMeasureValueFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
-} from "../../../index";
-import { newInsight } from "../../../../__mocks__/insights";
-import { Account, Activity, Department, Velocity, Won } from "../../../../__mocks__/model";
-import { emptyDef, newDefForItems } from "../factory";
+} from "../../../index.js";
+import { newInsight } from "../../../../__mocks__/insights.js";
+import { Account, Activity, Department, Velocity, Won } from "../../../../__mocks__/model.js";
+import { emptyDef, newDefForItems } from "../factory.js";
 
 const Workspace = "testWorkspace";
 const VisClassId = "testTable";

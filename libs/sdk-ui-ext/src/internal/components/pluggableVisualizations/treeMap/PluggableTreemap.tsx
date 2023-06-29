@@ -1,22 +1,22 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import set from "lodash/set";
-import tail from "lodash/tail";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import set from "lodash/set.js";
+import tail from "lodash/tail.js";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { BUCKETS, DATE, ATTRIBUTE } from "../../../constants/bucket";
-import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { BUCKETS, DATE, ATTRIBUTE } from "../../../constants/bucket.js";
+import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 
-import { getTreemapUiConfig } from "../../../constants/uiConfig";
+import { getTreemapUiConfig } from "../../../constants/uiConfig.js";
 import {
     IDrillDownContext,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
     IDrillDownDefinition,
-} from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
     getAttributeItemsWithoutStacks,
@@ -27,19 +27,19 @@ import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-} from "../../../utils/bucketHelper";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+} from "../../../utils/bucketHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
+import { removeSort } from "../../../utils/sort.js";
 
-import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper";
-import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper.js";
+import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
-} from "../drillDownUtil";
+} from "../drillDownUtil.js";
 
 /**
  * PluggableTreemap

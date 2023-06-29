@@ -3,8 +3,8 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
 
-import { Typography } from "../../Typography";
-import { Bubble, BubbleHoverTrigger } from "../../Bubble";
+import { Typography } from "../../Typography/index.js";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
 
 const BUTTON_TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: 0 } },

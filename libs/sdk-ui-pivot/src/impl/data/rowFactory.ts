@@ -8,16 +8,16 @@ import {
     IMappingHeader,
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
+import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
 import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { isSeriesCol, SliceCol } from "../structure/tableDescriptorTypes";
-import { TableDescriptor } from "../structure/tableDescriptor";
-import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
-import { getSubtotalStyles } from "./dataSourceUtils";
-import fill from "lodash/fill";
-import findIndex from "lodash/findIndex";
-import { messages } from "../../locales";
+import { invariant } from "ts-invariant";
+import { isSeriesCol, SliceCol } from "../structure/tableDescriptorTypes.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes.js";
+import { getSubtotalStyles } from "./dataSourceUtils.js";
+import fill from "lodash/fill.js";
+import findIndex from "lodash/findIndex.js";
+import { messages } from "../../locales.js";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
     return findIndex(resultHeaderItems, (headerItem) => isResultTotalHeader(headerItem[rowIndex]));

@@ -1,195 +1,195 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`schedule email recipients utils split schedule email recipients with comma delimiter 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > split schedule email recipients > with comma delimiter 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
-  Object {
+  {
     "email": "external1@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils split schedule email recipients with multiple delimiter 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > split schedule email recipients > with multiple delimiter 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
-  Object {
+  {
     "email": "external1@gooddata.com",
   },
-  Object {
+  {
     "email": "external2@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils split schedule email recipients with semicolon delimiter 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > split schedule email recipients > with semicolon delimiter 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
-  Object {
+  {
     "email": "external1@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils split schedule email recipients with space delimiter 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > split schedule email recipients > with space delimiter 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
-  Object {
+  {
     "email": "external1@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils split schedule email recipients with unsupported delimiter 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > split schedule email recipients > with unsupported delimiter 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com|new_external@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils unique schedule email recipients with existing email duplicate 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > unique schedule email recipients > with existing email duplicate 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils unique schedule email recipients with external and existing email are duplicate 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > unique schedule email recipients > with external and existing email are duplicate 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils unique schedule email recipients with external email duplicate 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > unique schedule email recipients > with external email duplicate 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
 ]
 `;
 
-exports[`schedule email recipients utils unique schedule email recipients without duplicate 1`] = `
-Array [
-  Object {
-    "user": Object {
+exports[`schedule email recipients utils > unique schedule email recipients > without duplicate 1`] = `
+[
+  {
+    "user": {
       "email": "test@gooddata.com",
       "firstName": "First name",
       "fullName": "Full name",
       "lastName": "Last name",
       "login": "test@gooddata.com",
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/account/profile/123456",
       },
     },
   },
-  Object {
+  {
     "email": "external@gooddata.com",
   },
 ]

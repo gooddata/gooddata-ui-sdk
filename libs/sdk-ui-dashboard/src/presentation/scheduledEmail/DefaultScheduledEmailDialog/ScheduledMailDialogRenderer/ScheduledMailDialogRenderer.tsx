@@ -1,11 +1,11 @@
 // (C) 2019-2023 GoodData Corporation
 import * as React from "react";
-import cloneDeep from "lodash/cloneDeep";
-import differenceBy from "lodash/differenceBy";
-import isEqual from "lodash/isEqual";
-import omit from "lodash/omit";
+import cloneDeep from "lodash/cloneDeep.js";
+import differenceBy from "lodash/differenceBy.js";
+import isEqual from "lodash/isEqual.js";
+import omit from "lodash/omit.js";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
-import parse from "date-fns/parse";
+import parse from "date-fns/parse/index.js";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment, Message } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -24,7 +24,7 @@ import {
     WeekStart,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError, withContexts } from "@gooddata/sdk-ui";
-import memoize from "lodash/memoize";
+import memoize from "lodash/memoize.js";
 
 import {
     DEFAULT_REPEAT_PERIOD,
@@ -32,7 +32,7 @@ import {
     REPEAT_EXECUTE_ON,
     REPEAT_FREQUENCIES,
     REPEAT_TYPES,
-} from "../constants";
+} from "../constants.js";
 import {
     IScheduleEmailRecipient,
     IScheduleEmailRepeat,
@@ -41,36 +41,36 @@ import {
     isScheduleEmailExternalRecipient,
     IWidgetExportConfiguration,
     IWidgetsSelection,
-} from "../interfaces";
+} from "../interfaces.js";
 import {
     generateRepeatString,
     setDailyRepeat,
     setMonthlyRepeat,
     setWeeklyRepeat,
     parseRepeatString,
-} from "../utils/repeat";
-import { getScheduledEmailSummaryString } from "../utils/scheduledMailSummary";
-import { getScheduledEmailRecipientEmail } from "../utils/scheduledMailRecipients";
-import { getTimezoneByIdentifier, getUserTimezone, ITimezone, TIMEZONE_DEFAULT } from "../utils/timezone";
+} from "../utils/repeat.js";
+import { getScheduledEmailSummaryString } from "../utils/scheduledMailSummary.js";
+import { getScheduledEmailRecipientEmail } from "../utils/scheduledMailRecipients.js";
+import { getTimezoneByIdentifier, getUserTimezone, ITimezone, TIMEZONE_DEFAULT } from "../utils/timezone.js";
 import {
     getDate,
     getMonth,
     getYear,
     convertDateToDisplayDateString,
     convertDateToPlatformDateString,
-} from "../utils/datetime";
-import { isEmail } from "../utils/validate";
+} from "../utils/datetime.js";
+import { isEmail } from "../utils/validate.js";
 
-import { Textarea } from "./Textarea";
-import { RepeatSelect, IRepeatSelectData } from "./RepeatSelect/RepeatSelect";
-import { Input } from "./Input";
-import { DateTime } from "./DateTime";
-import { Attachments } from "./Attachments/Attachments";
-import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect";
-import { IntlWrapper } from "../../../localization";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../constants";
-import { AttachmentNoWidgets } from "./Attachments/AttachmentNoWidgets";
-import { IInsightWidgetExtended } from "../useScheduledEmail";
+import { Textarea } from "./Textarea.js";
+import { RepeatSelect, IRepeatSelectData } from "./RepeatSelect/RepeatSelect.js";
+import { Input } from "./Input.js";
+import { DateTime } from "./DateTime.js";
+import { Attachments } from "./Attachments/Attachments.js";
+import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect.js";
+import { IntlWrapper } from "../../../localization/index.js";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../constants/index.js";
+import { AttachmentNoWidgets } from "./Attachments/AttachmentNoWidgets.js";
+import { IInsightWidgetExtended } from "../useScheduledEmail.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;

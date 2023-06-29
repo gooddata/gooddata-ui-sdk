@@ -3,9 +3,9 @@
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 
-import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types";
-import { getGranteeLabel, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils";
-import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
+import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types.js";
+import { getGranteeLabel, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils.js";
+import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import {
     ObjRef,
     isAvailableUserGroupAccessGrantee,

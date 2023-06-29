@@ -1,11 +1,11 @@
 // (C) 2022 GoodData Corporation
 import { put } from "redux-saga/effects";
 
-import { dateFilterValidationFailed } from "../../../events/dashboard";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
-import { DateFilterValidationResult } from "../../../../types";
-import { DashboardContext } from "../../../types/commonTypes";
+import { dateFilterValidationFailed } from "../../../events/dashboard.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { DateFilterValidationResult } from "../../../../types.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function* onDateFilterConfigValidationError(
     ctx: DashboardContext,

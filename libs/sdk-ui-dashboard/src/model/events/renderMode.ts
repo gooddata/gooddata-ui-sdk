@@ -1,9 +1,9 @@
 // (C) 2022-2023 GoodData Corporation
 
-import { IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
-import { RenderMode } from "../../types";
-import { DashboardContext } from "../types/commonTypes";
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
+import { RenderMode } from "../../types.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardRenderModeChanged} event.

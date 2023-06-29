@@ -3,10 +3,10 @@ import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { IShareButtonProps } from "./types";
-import { uiActions, useDashboardDispatch, useDashboardSelector } from "../../../../../model";
-import { HiddenShareButton } from "./HiddenShareButton";
-import { selectIsShareButtonVisible } from "../selectors";
+import { IShareButtonProps } from "./types.js";
+import { uiActions, useDashboardDispatch, useDashboardSelector } from "../../../../../model/index.js";
+import { HiddenShareButton } from "./HiddenShareButton.js";
+import { selectIsShareButtonVisible } from "../selectors.js";
 
 /**
  * @internal

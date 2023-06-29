@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { DashboardItemBase, IDashboardItemBaseProps } from "./DashboardItemBase";
+import { DashboardItemBase, IDashboardItemBaseProps } from "./DashboardItemBase.js";
 
 export const DashboardItemVisualization: React.FC<IDashboardItemBaseProps> = ({
     visualizationClassName,

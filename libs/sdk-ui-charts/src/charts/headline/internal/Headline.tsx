@@ -1,20 +1,26 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { createRef } from "react";
-import Measure from "react-measure";
+import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../../interfaces";
-import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines";
-import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines.js";
+import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils.js";
 import { Identifier } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import {
     HeadlinePagination,
     calculateHeadlineHeightFontSize,
     shouldRenderPagination,
     getHeadlineResponsiveClassName,
 } from "@gooddata/sdk-ui-vis-commons";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const Measure = defaultImport(ReactMeasure);
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: Identifier;
@@ -62,7 +68,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     public render() {
         return (
             <Measure client>
-                {({ measureRef, contentRect }) => {
+                {({ measureRef, contentRect }: MeasuredComponentProps) => {
                     return (
                         <div className="headline" ref={measureRef}>
                             {this.renderPrimaryItem(contentRect.client?.height)}

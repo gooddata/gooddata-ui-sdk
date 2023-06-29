@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import cloneDeep from "lodash/cloneDeep";
-import noop from "lodash/noop";
-import set from "lodash/set";
-import DisabledBubbleMessage from "../DisabledBubbleMessage";
+import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import set from "lodash/set.js";
+import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
 
-import { getTranslation } from "../../utils/translations";
-import { AxisType } from "../../interfaces/AxisType";
+import { getTranslation } from "../../utils/translations.js";
+import { AxisType } from "../../interfaces/AxisType.js";
 
 export interface IConfigSubsectionOwnProps {
     valuePath?: string;

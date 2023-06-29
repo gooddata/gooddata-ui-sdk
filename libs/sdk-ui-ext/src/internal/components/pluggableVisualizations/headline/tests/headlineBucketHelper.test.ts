@@ -1,13 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
-import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig";
-import { IBucketOfFun, IBucketItem, IExtendedReferencePoint } from "../../../../interfaces/Visualization";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig.js";
+import { IBucketOfFun, IBucketItem, IExtendedReferencePoint } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {
     findComplementaryOverTimeComparisonMeasure,
     findSecondMasterMeasure,
     setHeadlineRefPointBuckets,
     tryToMapForeignBuckets,
-} from "../headlineBucketHelper";
+} from "../headlineBucketHelper.js";
+import { describe, it, expect } from "vitest";
 
 describe("headlineBucketHelper", () => {
     function createReferencePoint(

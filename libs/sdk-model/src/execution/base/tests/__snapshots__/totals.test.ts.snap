@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`newTotal should create total with alias 1`] = `
-Object {
+exports[`newTotal > should create total with alias 1`] = `
+{
   "alias": "My Total",
   "attributeIdentifier": "a_label.account.id",
   "measureIdentifier": "m_afSEwRwdbMeQ",
@@ -9,24 +9,24 @@ Object {
 }
 `;
 
-exports[`newTotal should create total with measure and attr ids 1`] = `
-Object {
+exports[`newTotal > should create total with measure and attr ids 1`] = `
+{
   "attributeIdentifier": "attrLocalId",
   "measureIdentifier": "measureLocalId",
   "type": "sum",
 }
 `;
 
-exports[`newTotal should create total with measure and attr objects 1`] = `
-Object {
+exports[`newTotal > should create total with measure and attr objects 1`] = `
+{
   "attributeIdentifier": "a_label.account.id",
   "measureIdentifier": "m_afSEwRwdbMeQ",
   "type": "sum",
 }
 `;
 
-exports[`newTotal should create total with mix of object and ids 1`] = `
-Object {
+exports[`newTotal > should create total with mix of object and ids 1`] = `
+{
   "attributeIdentifier": "attrLocalId",
   "measureIdentifier": "m_afSEwRwdbMeQ",
   "type": "sum",

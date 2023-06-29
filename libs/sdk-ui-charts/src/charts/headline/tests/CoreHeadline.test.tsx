@@ -1,26 +1,27 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import { CoreHeadline } from "../CoreHeadline";
-import HeadlineTransformation from "../internal/HeadlineTransformation";
-import { ICoreChartProps } from "../../../interfaces/chartProps";
+import { CoreHeadline } from "../CoreHeadline.js";
+import HeadlineTransformation from "../internal/HeadlineTransformation.js";
+import { ICoreChartProps } from "../../../interfaces/chartProps.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../internal/HeadlineTransformation", () => ({
+vi.mock("../internal/HeadlineTransformation", () => ({
     __esModule: true,
-    default: jest.fn(() => null),
+    default: vi.fn(() => null),
 }));
 
 describe("CoreHeadline", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
-    const afterRender = jest.fn();
+    const afterRender = vi.fn();
 
     function createComponent(props: ICoreChartProps) {
         return render(<CoreHeadline {...props} afterRender={afterRender} drillableItems={[]} />);
@@ -34,7 +35,7 @@ describe("CoreHeadline", () => {
 
     describe("one measure", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", async () => {
-            const drillEventCallback = jest.fn();
+            const drillEventCallback = vi.fn();
             createComponent({
                 execution: singleMeasureExec,
                 onDrill: drillEventCallback,

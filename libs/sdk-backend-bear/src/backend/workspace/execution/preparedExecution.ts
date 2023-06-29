@@ -21,12 +21,12 @@ import {
     isPositiveAttributeFilter,
     filterIsEmpty,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
-import isEmpty from "lodash/isEmpty";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertExecutionApiError } from "../../../utils/errorHandling";
-import { BearExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
+import isEqual from "lodash/isEqual.js";
+import isEmpty from "lodash/isEmpty.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertExecutionApiError } from "../../../utils/errorHandling.js";
+import { BearExecutionResult } from "./executionResult.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter.js";
 
 export class BearPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;

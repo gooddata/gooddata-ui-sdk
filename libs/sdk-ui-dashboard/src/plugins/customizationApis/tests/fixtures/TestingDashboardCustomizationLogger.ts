@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { IDashboardPluginContract_V1 } from "../../../plugin";
-import { IDashboardCustomizationLogger } from "../../customizationLogging";
+import { IDashboardPluginContract_V1 } from "../../../plugin.js";
+import { IDashboardCustomizationLogger } from "../../customizationLogging.js";
 
 export class TestingDashboardCustomizationLogger implements IDashboardCustomizationLogger {
     private readonly setCurrentPluginImpl: IDashboardCustomizationLogger["setCurrentPlugin"] | undefined;

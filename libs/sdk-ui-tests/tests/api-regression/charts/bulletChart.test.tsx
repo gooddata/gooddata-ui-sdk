@@ -1,26 +1,34 @@
 // (C) 2007-2019 GoodData Corporation
 
-// These imports and actions need to be done first because of mocks
-const Original = jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/bulletChart/CoreBulletChart");
-import { withPropsExtractor } from "../../_infra/withProps";
-const { extractProps, wrap } = withPropsExtractor();
-
-import bulletChartScenarios from "../../../scenarios/charts/bulletChart";
-import { ScenarioAndDescription } from "../../../src";
-import { mountChartAndCapture } from "../../_infra/render";
-import { cleanupCoreChartProps } from "../../_infra/utils";
+import { describe, it, expect, vi } from "vitest";
+import { withPropsExtractor } from "../../_infra/withProps.js";
+import bulletChartScenarios from "../../../scenarios/charts/bulletChart/index.js";
+import { ScenarioAndDescription } from "../../../src/index.js";
+import { mountChartAndCapture } from "../../_infra/render.js";
+import { cleanupCoreChartProps } from "../../_infra/utils.js";
 import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
-import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
-import { mountInsight } from "../../_infra/renderPlugVis";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
+import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { defSetSorts } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 
 const Chart = "BulletChart";
 
-jest.mock("@gooddata/sdk-ui-charts/dist/charts/bulletChart/CoreBulletChart", () => ({
-    ...jest.requireActual("@gooddata/sdk-ui-charts/dist/charts/bulletChart/CoreBulletChart"),
-    CoreBulletChart: wrap(Original.CoreBulletChart),
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
 }));
+
+vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBulletChart", async () => {
+    const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreBulletChart");
+    const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
+    extractProps = originalExtractProps;
+
+    return {
+        ...Original,
+        CoreBulletChart: wrap(Original.CoreBulletChart),
+    };
+});
 
 describe(Chart, () => {
     const Scenarios: Array<ScenarioAndDescription<IBulletChartProps>> = flatMap(

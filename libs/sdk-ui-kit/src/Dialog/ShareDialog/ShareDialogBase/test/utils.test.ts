@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 import { idRef, IUser, uriRef } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
-import { CurrentUserPermissions } from "../../types";
+import { CurrentUserPermissions } from "../../types.js";
 import {
     getGranteeItemTestId,
     getGranteeLabel,
@@ -9,8 +9,9 @@ import {
     getIsGranteeCurrentUser,
     notInArrayFilter,
     sortGranteesByName,
-} from "../utils";
-import { current, groupAll, owner, user } from "./GranteeMock";
+} from "../utils.js";
+import { current, groupAll, owner, user } from "./GranteeMock.js";
+import { describe, it, expect } from "vitest";
 
 describe("utils", () => {
     describe("getGranteeItemTestId", () => {

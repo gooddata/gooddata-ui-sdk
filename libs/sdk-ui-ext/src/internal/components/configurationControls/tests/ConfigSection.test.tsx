@@ -1,11 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import defaultUserEvent from "@testing-library/user-event";
 import { DefaultLocale } from "@gooddata/sdk-ui";
-import noop from "lodash/noop";
-import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection";
-import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import noop from "lodash/noop.js";
+import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection.js";
+import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("ConfigSection", () => {
     const defaultProps = {
@@ -55,7 +62,7 @@ describe("ConfigSection", () => {
         });
 
         it("should call pushData when header clicked", async () => {
-            const pushData = jest.fn();
+            const pushData = vi.fn();
             createComponent({ pushData });
 
             await userEvent.click(screen.getByText("Legend"));
@@ -77,7 +84,7 @@ describe("ConfigSection", () => {
         });
 
         it("should call pushData when click on toggle switch with valuePath set", async () => {
-            const pushData = jest.fn();
+            const pushData = vi.fn();
             createComponent({
                 canBeToggled: true,
                 valuePath: "path",
@@ -92,7 +99,7 @@ describe("ConfigSection", () => {
         });
 
         it("shouldn't call pushData when click on toggle switch with undefined valuePath", async () => {
-            const pushData = jest.fn();
+            const pushData = vi.fn();
             createComponent({
                 canBeToggled: true,
                 properties: {},

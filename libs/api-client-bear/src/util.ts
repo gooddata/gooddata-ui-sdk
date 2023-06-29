@@ -1,11 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
-import isObject from "lodash/isObject";
-import omitBy from "lodash/fp/omitBy";
-import { delay } from "./utils/promise";
-import { ApiResponse, ApiResponseError } from "./xhr";
-import { parseFileNameFromContentDisposition } from "./utils/export";
+
+import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
+import isObject from "lodash/isObject.js";
+import omitBy from "lodash/fp/omitBy.js";
+import { delay } from "./utils/promise.js";
+import { ApiResponse, ApiResponseError } from "./xhr.js";
+import { parseFileNameFromContentDisposition } from "./utils/export.js";
 
 /**
  * Omit nil or empty object/array values of the object. Keep booleans & numbers.

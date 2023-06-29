@@ -19,11 +19,11 @@ import {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { heatmapDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CoreHeatmap } from "./CoreHeatmap";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { heatmapDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CoreHeatmap } from "./CoreHeatmap.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

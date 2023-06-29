@@ -1,18 +1,18 @@
 // (C) 2020-2021 GoodData Corporation
 
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {
     IBucketFilter,
     IBucketFilterElement,
     IBucketItem,
     IExtendedReferencePoint,
-} from "../../../../interfaces/Visualization";
+} from "../../../../interfaces/Visualization.js";
 import { IMeasureSortItem, ISortItem, SortDirection, uriRef } from "@gooddata/sdk-model";
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
     isSortItemVisible,
-} from "../sortItemsHelpers";
+} from "../sortItemsHelpers.js";
 import {
     invalidAttributeSort,
     invalidMeasureSortInvalidAttribute,
@@ -21,8 +21,9 @@ import {
     invalidMeasureSortTooManyLocators,
     validAttributeSort,
     validMeasureSort,
-} from "./sortMocks";
-import { getMockReferencePoint } from "./mockReferencePoint";
+} from "./sortMocks.js";
+import { getMockReferencePoint } from "./mockReferencePoint.js";
+import { describe, it, expect } from "vitest";
 
 const createAttributeBucketItem = (localIdentifier: string, attributeName: string): IBucketItem => ({
     aggregation: null,

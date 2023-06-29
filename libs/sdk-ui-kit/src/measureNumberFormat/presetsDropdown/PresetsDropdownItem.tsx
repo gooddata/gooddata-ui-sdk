@@ -4,8 +4,8 @@ import cx from "classnames";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
 
-import { IFormatPreset } from "../typings";
-import { FormattedPreview } from "../customFormatDialog/shared/FormattedPreview";
+import { IFormatPreset } from "../typings.js";
+import { FormattedPreview } from "../customFormatDialog/shared/FormattedPreview.js";
 
 interface IMeasureNumberFormatDropdownItemProps {
     preset: IFormatPreset;

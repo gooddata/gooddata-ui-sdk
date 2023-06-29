@@ -3,7 +3,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { ConfigurationBubble } from "../../../common";
+import { ConfigurationBubble } from "../../../common/index.js";
 
 interface IDashboardInsightMenuBubbleProps {
     onClose: () => void;

@@ -5,7 +5,7 @@ export {
     IAttributeFilterBaseProps,
     IAttributeFilterCoreProps,
     IAttributeFilterCustomComponentProps,
-} from "./types";
+} from "./types.js";
 export {
     AttributeDisplayFormSelect,
     AttributeFilterAllValuesFilteredResult,
@@ -57,24 +57,27 @@ export {
     IAttributeFilterSelectionStatusProps,
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
-} from "./Components";
-export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter";
-export { AttributeFilterButton, IAttributeFilterButtonProps } from "./AttributeFilterButton";
+} from "./Components/index.js";
+export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter.js";
+export { AttributeFilterButton, IAttributeFilterButtonProps } from "./AttributeFilterButton.js";
 export {
     useAttributeFilterController,
     IUseAttributeFilterControllerProps,
-} from "./hooks/useAttributeFilterController";
+} from "./hooks/useAttributeFilterController.js";
 
 export {
     AttributeFilterController,
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
-} from "./hooks/types";
+} from "./hooks/types.js";
 
 export {
     useAttributeFilterHandler,
     IUseAttributeFilterHandlerProps,
-} from "./hooks/useAttributeFilterHandler";
-export { useAttributeFilterContext, IAttributeFilterContext } from "./Context/AttributeFilterContext";
+} from "./hooks/useAttributeFilterHandler.js";
+export { useAttributeFilterContext, IAttributeFilterContext } from "./Context/AttributeFilterContext.js";
 
-export { IUseAttributeFilterSearchProps, useAttributeFilterSearch } from "./hooks/useAttributeFilterSearch";
+export {
+    IUseAttributeFilterSearchProps,
+    useAttributeFilterSearch,
+} from "./hooks/useAttributeFilterSearch.js";

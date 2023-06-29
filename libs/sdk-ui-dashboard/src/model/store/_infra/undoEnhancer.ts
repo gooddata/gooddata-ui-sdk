@@ -1,9 +1,9 @@
 // (C) 2021-2023 GoodData Corporation
-import produce, { applyPatches, enablePatches, original, Patch, produceWithPatches } from "immer";
+import { produce, applyPatches, enablePatches, original, Patch, produceWithPatches } from "immer";
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
-import { IDashboardCommand } from "../../commands";
+import { IDashboardCommand } from "../../commands/index.js";
 import { invariant } from "ts-invariant";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 
 /*
  * Undo relies on immer's patching functionality. It has to be turned on explicitly.
@@ -161,7 +161,8 @@ export const undoReducer = <TState extends UndoEnhancedState>(
     action: PayloadAction<UndoActionPayload>,
 ): TState => {
     const { undoDownTo } = action.payload;
-    const originalState = original(state) as TState;
+    const originalState = safeOriginal(state) as TState;
+
     const { _undo } = originalState;
 
     // if this happens then the issuer has incorrectly calculated point to which to rollback.

@@ -17,10 +17,10 @@ import {
     MeasureOrPlaceholder,
     NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
-import { CoreHeadline } from "./CoreHeadline";
-import omit from "lodash/omit";
-import invariant from "ts-invariant";
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
+import { CoreHeadline } from "./CoreHeadline.js";
+import omit from "lodash/omit.js";
+import { invariant } from "ts-invariant";
 
 //
 // Public interface

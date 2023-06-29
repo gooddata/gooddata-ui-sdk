@@ -1,15 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IWidgetReferences, SupportedWidgetReferenceTypes } from "@gooddata/sdk-backend-spi";
 import { CatalogItem, IWidget, widgetUri } from "@gooddata/sdk-model";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
-import { getObjectIdFromUri } from "../../../utils/api";
-import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";
-import isEmpty from "lodash/isEmpty";
-import keyBy from "lodash/keyBy";
+import { getObjectIdFromUri } from "../../../utils/api.js";
+import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter.js";
+import isEmpty from "lodash/isEmpty.js";
+import keyBy from "lodash/keyBy.js";
 
-import { convertMetric } from "../../../convertors/fromBackend/CatalogConverter";
+import { convertMetric } from "../../../convertors/fromBackend/CatalogConverter.js";
 
 const objectTypeToObjectCategory = (type: SupportedWidgetReferenceTypes): GdcMetadata.ObjectCategory => {
     if (type === "measure") {

@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
-import { IDashboardInsightMenuButtonProps } from "../types";
+import { IDashboardInsightMenuButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 
 export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): JSX.Element | null => {

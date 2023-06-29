@@ -19,22 +19,22 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
-import { BearExecution } from "./execution/executionFactory";
-import { BearWorkspaceMeasures } from "./measures";
-import { BearWorkspaceStyling } from "./styling/styling";
-import { BearWorkspaceCatalogFactory } from "./catalog/factory";
-import { BearWorkspaceSettings } from "./settings/settings";
-import { BearWorkspacePermissionsFactory } from "./permissions/permissions";
-import { BearWorkspaceInsights } from "./insights";
-import { BearWorkspaceDataSets } from "./datasets";
-import { BearWorkspaceDashboards } from "./dashboards";
-import { BearAuthenticatedCallGuard } from "../../types/auth";
-import { BearWorkspaceUsersQuery } from "./users";
-import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
-import { BearWorkspaceAttributes } from "./attributes/index";
-import { BearWorkspaceFacts } from "./facts";
-import { BearWorkspaceUserGroupsQuery } from "./userGroups";
-import { BearWorkspaceAccessControlService } from "./accessControl";
+import { BearExecution } from "./execution/executionFactory.js";
+import { BearWorkspaceMeasures } from "./measures/index.js";
+import { BearWorkspaceStyling } from "./styling/styling.js";
+import { BearWorkspaceCatalogFactory } from "./catalog/factory.js";
+import { BearWorkspaceSettings } from "./settings/settings.js";
+import { BearWorkspacePermissionsFactory } from "./permissions/permissions.js";
+import { BearWorkspaceInsights } from "./insights/index.js";
+import { BearWorkspaceDataSets } from "./datasets/index.js";
+import { BearWorkspaceDashboards } from "./dashboards/index.js";
+import { BearAuthenticatedCallGuard } from "../../types/auth.js";
+import { BearWorkspaceUsersQuery } from "./users/index.js";
+import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
+import { BearWorkspaceAttributes } from "./attributes/index.js";
+import { BearWorkspaceFacts } from "./facts/index.js";
+import { BearWorkspaceUserGroupsQuery } from "./userGroups/index.js";
+import { BearWorkspaceAccessControlService } from "./accessControl/index.js";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(

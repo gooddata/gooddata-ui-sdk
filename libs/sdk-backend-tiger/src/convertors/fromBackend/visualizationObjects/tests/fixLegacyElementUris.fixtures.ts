@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
-import { ColorMapping } from "../../fixLegacyElementUris";
+import { ColorMapping } from "../../fixLegacyElementUris.js";
 
 const mockColorMapping = (elementIds: string[]): ColorMapping[] => {
     return elementIds.map((id, idx) => ({

@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`export dashboard to PDF handler should emit events in correct order and carry-over correlationId 1`] = `
-Array [
-  Object {
+exports[`export dashboard to PDF handler > should emit events in correct order and carry-over correlationId 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.EXPORT.PDF",
     "correlationId": "correlation-id",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "correlation-id",
     "type": "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
   },
-  Object {
+  {
     "correlationId": "correlation-id",
     "type": "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
   },

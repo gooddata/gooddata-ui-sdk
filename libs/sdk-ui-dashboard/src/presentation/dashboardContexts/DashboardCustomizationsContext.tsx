@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
 
-import { InsightMenuItemsProvider } from "./types";
+import { InsightMenuItemsProvider } from "./types.js";
 
 /**
  * @internal

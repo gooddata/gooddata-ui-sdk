@@ -1,22 +1,23 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { LineChart } from "../LineChart";
+import { LineChart } from "../LineChart.js";
 import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
-import { CoreLineChart } from "../CoreLineChart";
+import { CoreLineChart } from "../CoreLineChart.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreLineChart", () => ({
-    CoreLineChart: jest.fn(() => null),
+vi.mock("../CoreLineChart", () => ({
+    CoreLineChart: vi.fn(() => null),
 }));
 
 describe("LineChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render with custom SDK", () => {

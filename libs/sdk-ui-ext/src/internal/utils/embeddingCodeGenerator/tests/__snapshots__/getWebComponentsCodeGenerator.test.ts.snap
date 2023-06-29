@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getWebComponentsCodeGenerator display the custom insight title 1`] = `
+exports[`getWebComponentsCodeGenerator > display the custom insight title 1`] = `
 "<!-- Load the library... -->
 <script type=\\"module\\" src=\\"https://localhost/components/workspaceId.js?auth=sso\\"></script>
 <!-- ...and embed an insight -->
@@ -12,7 +12,7 @@ exports[`getWebComponentsCodeGenerator display the custom insight title 1`] = `
 ></gd-insight>"
 `;
 
-exports[`getWebComponentsCodeGenerator display the insight title 1`] = `
+exports[`getWebComponentsCodeGenerator > display the insight title 1`] = `
 "<!-- Load the library... -->
 <script type=\\"module\\" src=\\"https://localhost/components/workspaceId.js?auth=sso\\"></script>
 <!-- ...and embed an insight -->
@@ -24,7 +24,7 @@ exports[`getWebComponentsCodeGenerator display the insight title 1`] = `
 ></gd-insight>"
 `;
 
-exports[`getWebComponentsCodeGenerator with the custom height 1`] = `
+exports[`getWebComponentsCodeGenerator > with the custom height 1`] = `
 "<!-- Load the library... -->
 <script type=\\"module\\" src=\\"https://localhost/components/workspaceId.js?auth=sso\\"></script>
 <!-- ...and embed an insight -->
@@ -37,7 +37,7 @@ exports[`getWebComponentsCodeGenerator with the custom height 1`] = `
 ></gd-insight>"
 `;
 
-exports[`getWebComponentsCodeGenerator with the locale 1`] = `
+exports[`getWebComponentsCodeGenerator > with the locale 1`] = `
 "<!-- Load the library... -->
 <script type=\\"module\\" src=\\"https://localhost/components/workspaceId.js?auth=sso\\"></script>
 <!-- ...and embed an insight -->
@@ -50,7 +50,7 @@ exports[`getWebComponentsCodeGenerator with the locale 1`] = `
 ></gd-insight>"
 `;
 
-exports[`getWebComponentsCodeGenerator without any configuration 1`] = `
+exports[`getWebComponentsCodeGenerator > without any configuration 1`] = `
 "<!-- Load the library... -->
 <script type=\\"module\\" src=\\"https://localhost/components/workspaceId.js?auth=sso\\"></script>
 <!-- ...and embed an insight -->

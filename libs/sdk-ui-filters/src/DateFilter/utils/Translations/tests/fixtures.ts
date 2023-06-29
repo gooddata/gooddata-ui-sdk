@@ -5,7 +5,7 @@ import {
     IRelativeDateFilterPreset,
     IAllTimeDateFilterOption,
 } from "@gooddata/sdk-model";
-import { IUiAbsoluteDateFilterForm } from "../../../interfaces";
+import { IUiAbsoluteDateFilterForm } from "../../../interfaces/index.js";
 
 export const allTimeFilter: IAllTimeDateFilterOption = {
     localIdentifier: "ALL_TIME",

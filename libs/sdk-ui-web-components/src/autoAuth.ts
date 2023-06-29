@@ -1,7 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
-import throttle from "lodash/throttle";
-import { AuthType, parseUrl } from "./parseUrl";
-import { getContext, setContext } from "./context";
+import throttle from "lodash/throttle.js";
+import { AuthType, parseUrl } from "./parseUrl.js";
+import { getContext, setContext } from "./context.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 type AnyFunc = (...args: any[]) => any;
@@ -44,7 +44,7 @@ const authMethodsMap: { [key in AuthType]?: (hostname: string) => Promise<IAnaly
             default: tigerBackend,
             ContextDeferredAuthProvider,
             redirectToTigerAuthentication,
-        } = await import("./tigerBackend");
+        } = await import("./tigerBackend.js");
 
         return tigerBackend({ hostname }).withAuthentication(
             new ContextDeferredAuthProvider(withThrottle(withRedirectGate(redirectToTigerAuthentication))),
@@ -55,7 +55,7 @@ const authMethodsMap: { [key in AuthType]?: (hostname: string) => Promise<IAnaly
             default: bearBackend,
             ContextDeferredAuthProvider,
             redirectToBearSsoAuthentication,
-        } = await import("./bearBackend");
+        } = await import("./bearBackend.js");
 
         return bearBackend({ hostname }).withAuthentication(
             new ContextDeferredAuthProvider(withThrottle(withRedirectGate(redirectToBearSsoAuthentication))),
@@ -66,7 +66,7 @@ const authMethodsMap: { [key in AuthType]?: (hostname: string) => Promise<IAnaly
             default: bearBackend,
             ContextDeferredAuthProvider,
             redirectToBearAuthentication,
-        } = await import("./bearBackend");
+        } = await import("./bearBackend.js");
 
         return bearBackend({ hostname }).withAuthentication(
             new ContextDeferredAuthProvider(withThrottle(withRedirectGate(redirectToBearAuthentication))),

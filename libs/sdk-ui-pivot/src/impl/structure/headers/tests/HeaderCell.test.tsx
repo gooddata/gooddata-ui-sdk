@@ -4,9 +4,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 
-import HeaderCell from "../HeaderCell";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { TableDescriptor } from "../../tableDescriptor";
+import HeaderCell from "../HeaderCell.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { TableDescriptor } from "../../tableDescriptor.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("HeaderCell renderer", () => {
     const fixture = recordedDataFacade(
@@ -37,7 +38,7 @@ describe("HeaderCell renderer", () => {
         });
 
         it("should call onSortChanged when clicked on label", () => {
-            const onSortClick = jest.fn();
+            const onSortClick = vi.fn();
             render(
                 <HeaderCell
                     displayText="Header"
@@ -53,7 +54,7 @@ describe("HeaderCell renderer", () => {
         });
 
         it("should call onSortChanged with next sort direction", () => {
-            const onSortClick = jest.fn();
+            const onSortClick = vi.fn();
             render(
                 <HeaderCell
                     displayText="Header"

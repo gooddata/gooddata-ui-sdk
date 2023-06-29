@@ -15,7 +15,7 @@ import {
     ScrollableItem,
 } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
-import { removeDateFromTitle } from "./utils";
+import { removeDateFromTitle } from "./utils.js";
 
 const DEFAULT_HYPHEN_CHAR = "-";
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];

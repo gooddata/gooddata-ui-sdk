@@ -27,15 +27,15 @@ import {
     isInlineMeasureDefinition,
     MeasureAggregation,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 import { InvariantError } from "ts-invariant";
 import {
     toDateDataSetQualifier,
     toFactQualifier,
     toLocalIdentifier,
     toAttributeQualifier,
-} from "../ObjRefConverter";
-import { convertFilter } from "./FilterConverter";
+} from "../ObjRefConverter.js";
+import { convertFilter } from "./FilterConverter.js";
 
 export function convertMeasure(measure: IMeasure): MeasureItem {
     const {

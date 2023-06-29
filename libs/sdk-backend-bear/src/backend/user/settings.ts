@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import { IUserSettingsService, IUserSettings, NotSupported } from "@gooddata/sdk-backend-spi";
-import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../utils/api";
-import { BearAuthenticatedCallGuard } from "../../types/auth";
-import { ANONYMOUS_USER_SETTINGS } from "../constants";
+import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../utils/api.js";
+import { BearAuthenticatedCallGuard } from "../../types/auth.js";
+import { ANONYMOUS_USER_SETTINGS } from "../constants.js";
 
 export class BearUserSettingsService implements IUserSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}

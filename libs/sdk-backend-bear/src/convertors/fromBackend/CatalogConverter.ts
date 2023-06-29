@@ -14,7 +14,7 @@ import {
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
-import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog";
+import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog.js";
 import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,

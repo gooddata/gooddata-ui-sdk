@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { ExperimentalMd } from "@gooddata/experimental-workspace";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { newRankingFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
 
 const BarChartWithSingleMeasureAndViewBy = {

@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { IRegion } from "../typings/domUtilities";
+import { IRegion } from "../typings/domUtilities.js";
 
 /**
  * Removes the element specified from the DOM

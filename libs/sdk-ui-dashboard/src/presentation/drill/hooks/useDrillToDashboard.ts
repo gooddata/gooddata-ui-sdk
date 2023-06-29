@@ -6,7 +6,7 @@ import {
     drillToDashboard,
     useDashboardCommandProcessing,
     DrillToDashboard,
-} from "../../../model";
+} from "../../../model/index.js";
 
 /**
  * @internal

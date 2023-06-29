@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
-import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning";
+import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
 /**
  * @internal
  */

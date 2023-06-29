@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 
-import { ViewModeDashboardKpi } from "./ViewModeDashboardKpi";
-import { EditModeDashboardKpi } from "./EditModeDashboardKpi";
-import { renderModeAware } from "../../componentDefinition";
+import { ViewModeDashboardKpi } from "./ViewModeDashboardKpi/index.js";
+import { EditModeDashboardKpi } from "./EditModeDashboardKpi/index.js";
+import { renderModeAware } from "../../componentDefinition/index.js";
 
 /**
  * @internal

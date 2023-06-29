@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-import flatMap from "lodash/flatMap";
-import flow from "lodash/flow";
-import map from "lodash/fp/map";
-import sortBy from "lodash/fp/sortBy";
+import flatMap from "lodash/flatMap.js";
+import flow from "lodash/flow.js";
+import map from "lodash/fp/map.js";
+import sortBy from "lodash/fp/sortBy.js";
 import {
     IGetVisualizationClassesOptions,
     IInsightsQueryOptions,
@@ -27,16 +27,16 @@ import {
     insightSetFilters,
     IUser,
 } from "@gooddata/sdk-model";
-import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter";
-import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
-import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
-import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
-import { objRefToUri, objRefsToUris, getObjectIdFromUri, updateUserMap } from "../../../utils/api";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { InsightReferencesQuery } from "./insightReferences";
-import { appendFilters } from "./filterMerging";
+import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter.js";
+import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter.js";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";
+import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter.js";
+import { objRefToUri, objRefsToUris, getObjectIdFromUri, updateUserMap } from "../../../utils/api.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { InsightReferencesQuery } from "./insightReferences.js";
+import { appendFilters } from "./filterMerging.js";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { getVisualizationUserUris } from "../../../utils/metadata";
+import { getVisualizationUserUris } from "../../../utils/metadata.js";
 
 export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

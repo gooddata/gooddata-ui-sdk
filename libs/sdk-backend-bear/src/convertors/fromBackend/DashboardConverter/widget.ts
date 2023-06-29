@@ -2,9 +2,9 @@
 
 import { GdcVisualizationWidget, GdcKpi, GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import { uriRef, IDashboardFilterReference, IWidget } from "@gooddata/sdk-model";
-import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills";
-import { convertReferencesToUris } from "../ReferenceConverter";
-import { deserializeProperties } from "../PropertiesConverter";
+import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills.js";
+import { convertReferencesToUris } from "../ReferenceConverter.js";
+import { deserializeProperties } from "../PropertiesConverter.js";
 
 export const convertFilterReference = (
     filterReference:

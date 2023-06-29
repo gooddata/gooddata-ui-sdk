@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import { IHeaderPredicateContext } from "../HeaderPredicate";
-import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
+import { IHeaderPredicateContext } from "../HeaderPredicate.js";
+import { barChartForDrillTests } from "../../../../__mocks__/fixtures.js";
 import {
     uriRef,
     IMeasureDescriptor,

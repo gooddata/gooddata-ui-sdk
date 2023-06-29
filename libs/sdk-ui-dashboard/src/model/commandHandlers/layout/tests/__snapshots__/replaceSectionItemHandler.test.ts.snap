@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`replace section item handler for dashboard with existing sections should emit correct events 1`] = `
-Array [
-  Object {
+exports[`replace section item handler > for dashboard with existing sections > should emit correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
   },

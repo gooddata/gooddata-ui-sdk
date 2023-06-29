@@ -1,23 +1,23 @@
 // (C) 2021 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { ReplaceSectionItem } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout, selectStash } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ReplaceSectionItem } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
-import { layoutActions } from "../../store/layout";
-import { validateAndResolveStashedItems } from "./validation/stashValidation";
-import isEmpty from "lodash/isEmpty";
-import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
+import isEmpty from "lodash/isEmpty.js";
+import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
-} from "./validation/itemValidation";
+} from "./validation/itemValidation.js";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../store/insights";
-import { InternalDashboardItemDefinition } from "../../types/layoutTypes";
-import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
+import { insightsActions } from "../../store/insights/index.js";
+import { InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;

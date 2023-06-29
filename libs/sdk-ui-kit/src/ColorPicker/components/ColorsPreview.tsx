@@ -2,7 +2,7 @@
 import React, { PureComponent, ReactNode } from "react";
 import { ColorFormats } from "tinycolor2";
 
-import { getColorStyle } from "../utils";
+import { getColorStyle } from "../utils.js";
 
 export interface IColorsPreviewProps {
     currentHslColor: ColorFormats.HSL;

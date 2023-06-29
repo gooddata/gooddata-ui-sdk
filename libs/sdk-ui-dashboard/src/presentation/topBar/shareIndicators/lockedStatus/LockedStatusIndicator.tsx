@@ -3,8 +3,8 @@ import React, { ReactNode } from "react";
 import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ILockedStatusProps } from "./types";
-import { gdColorStateBlank } from "../../../constants/colors";
+import { ILockedStatusProps } from "./types.js";
+import { gdColorStateBlank } from "../../../constants/colors.js";
 
 /**
  * @alpha

@@ -12,8 +12,9 @@ import {
     IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect } from "vitest";
 
-import { areKpiAlertFiltersSameAsDashboard } from "../filterUtils";
+import { areKpiAlertFiltersSameAsDashboard } from "../filterUtils.js";
 
 describe("areKpiAlertFiltersSameAsDashboard", () => {
     const alertBase: IWidgetAlertDefinition = {

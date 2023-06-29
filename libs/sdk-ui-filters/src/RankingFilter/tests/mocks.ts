@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import { uriRef, idRef, localIdRef, IRankingFilter } from "@gooddata/sdk-model";
-import { IMeasureDropdownItem, IAttributeDropdownItem } from "../types";
+import { IMeasureDropdownItem, IAttributeDropdownItem } from "../types.js";
 
 export const attribute1Ref = uriRef("attribute1");
 export const attribute2Ref = idRef("attribute2");

@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { IUser, IWorkspaceUser } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @internal

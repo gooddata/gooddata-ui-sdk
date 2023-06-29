@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import set from "lodash/set";
+import set from "lodash/set.js";
 import {
     getDataLabelAttributes,
     isLabelOverlappingItsShape,
@@ -8,12 +8,13 @@ import {
     showStackLabelInAxisRange,
     getShapeVisiblePart,
     getLabelStyle,
-} from "../dataLabelsHelpers";
+} from "../dataLabelsHelpers.js";
 
-import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers";
-import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label";
+import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers.js";
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { StackingType } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 describe("dataLabelsHelpers", () => {
     describe("getDataLabelAttributes", () => {
@@ -191,10 +192,10 @@ describe("dataLabelsHelpers", () => {
                     y: 50,
                     width: 50,
                     height: 50,
-                    show: jest.fn(),
-                    hide: jest.fn(),
-                    xSetter: jest.fn(),
-                    ySetter: jest.fn(),
+                    show: vi.fn(),
+                    hide: vi.fn(),
+                    xSetter: vi.fn(),
+                    ySetter: vi.fn(),
                     parentGroup: {
                         translateX: 0,
                         translateY: 0,
@@ -253,10 +254,10 @@ describe("dataLabelsHelpers", () => {
                     y: 50,
                     width: 50,
                     height: 50,
-                    show: jest.fn(),
-                    hide: jest.fn(),
-                    xSetter: jest.fn(),
-                    ySetter: jest.fn(),
+                    show: vi.fn(),
+                    hide: vi.fn(),
+                    xSetter: vi.fn(),
+                    ySetter: vi.fn(),
                     parentGroup: {
                         translateX: 0,
                         translateY: 0,

@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { useDragDropManager } from "react-dnd";
 import { RefObject, useEffect, useState } from "react";
-import { DraggableItemType } from "./types";
-import { useInterval } from "./useInterval";
+import { DraggableItemType } from "./types.js";
+import { useInterval } from "./useInterval.js";
 
 const SCROLLING_STEP = 3;
 const SCROLLING_INTERVAL = 5;

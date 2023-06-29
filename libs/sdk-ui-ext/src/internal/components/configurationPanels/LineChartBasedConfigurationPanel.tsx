@@ -2,20 +2,20 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import ConfigSection from "../configurationControls/ConfigSection";
-import CheckboxControl from "../configurationControls/CheckboxControl";
-import ContinuousLineControl from "../configurationControls/ContinuousLineControl";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
-import DataPointsControl from "../configurationControls/DataPointsControl";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import ContinuousLineControl from "../configurationControls/ContinuousLineControl.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import DataPointsControl from "../configurationControls/DataPointsControl.js";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
-import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
-import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
-import { messages } from "../../../locales";
+} from "../../constants/bubble.js";
+import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel.js";
+import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import { messages } from "../../../locales.js";
 
 export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
     dataLabelDefaultValue?: string | boolean;

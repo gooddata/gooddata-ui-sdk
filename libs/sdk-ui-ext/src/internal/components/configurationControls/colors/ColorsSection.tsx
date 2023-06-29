@@ -1,19 +1,19 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IColor } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import ConfigSection from "../../configurationControls/ConfigSection";
-import ColoredItemsList from "./coloredItemsList/ColoredItemsList";
-import { getTranslation } from "../../../utils/translations";
-import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization";
-import { IColoredItem, IColorConfiguration } from "../../../interfaces/Colors";
-import { getColoredInputItems, getProperties } from "../../../utils/colors";
-import { messages } from "../../../../locales";
+import ConfigSection from "../../configurationControls/ConfigSection.js";
+import ColoredItemsList from "./coloredItemsList/ColoredItemsList.js";
+import { getTranslation } from "../../../utils/translations.js";
+import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { IColoredItem, IColorConfiguration } from "../../../interfaces/Colors.js";
+import { getColoredInputItems, getProperties } from "../../../utils/colors.js";
+import { messages } from "../../../../locales.js";
 
 export interface IColorsSectionProps {
     controlsDisabled: boolean;

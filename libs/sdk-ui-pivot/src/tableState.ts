@@ -1,9 +1,9 @@
 // (C) 2007-2021 GoodData Corporation
 import { ITotal } from "@gooddata/sdk-model";
-import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
-import { TableFacade } from "./impl/tableFacade";
-import { ICustomGridOptions } from "./impl/privateTypes";
-import { IScrollPosition } from "./impl/stickyRowHandler";
+import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
+import { TableFacade } from "./impl/tableFacade.js";
+import { ICustomGridOptions } from "./impl/privateTypes.js";
+import { IScrollPosition } from "./impl/stickyRowHandler.js";
 
 export interface ICorePivotTableState {
     readyToRender: boolean;

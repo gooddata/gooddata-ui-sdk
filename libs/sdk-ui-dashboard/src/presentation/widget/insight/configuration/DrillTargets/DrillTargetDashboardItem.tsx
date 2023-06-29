@@ -7,8 +7,8 @@ import {
     selectAccessibleDashboards,
     selectInaccessibleDashboards,
     useDashboardSelector,
-} from "../../../../../model";
-import { DashboardList, IDrillableDashboardListItem } from "../../../../dashboardList";
+} from "../../../../../model/index.js";
+import { DashboardList, IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
 
 interface IDrillTargetDashboardItemProps {
     selected?: ObjRef;

@@ -19,10 +19,10 @@ import {
     IDrillDownDefinition,
     IVisualizationSizeInfo,
     IVisualizationMeta,
-} from "./internal";
+} from "./internal/index.js";
 
-export { clearInsightViewCaches } from "./dataLoaders";
-export * from "./insightView";
+export { clearInsightViewCaches } from "./dataLoaders/index.js";
+export * from "./insightView/index.js";
 
 // exported for sdk-ui-dashboard
 export {
@@ -51,7 +51,7 @@ export {
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
     EmbedInsightDialog,
     IEmbedInsightDialogProps,
-} from "./internal";
+} from "./internal/index.js";
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
 /**

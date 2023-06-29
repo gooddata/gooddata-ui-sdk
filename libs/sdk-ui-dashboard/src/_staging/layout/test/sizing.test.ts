@@ -7,9 +7,10 @@ import {
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForGrid,
-} from "../sizing";
+} from "../sizing.js";
 import { VisType } from "@gooddata/sdk-ui";
 import { AnalyticalWidgetType, idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
 export const allVisTypes: VisType[] = [
     "area",

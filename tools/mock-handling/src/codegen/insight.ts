@@ -2,9 +2,9 @@
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import { createUniqueVariableName, TakenNamesSet } from "../base/variableNaming";
-import { InsightRecording } from "../recordings/insights";
-import groupBy from "lodash/groupBy";
+import { createUniqueVariableName, TakenNamesSet } from "../base/variableNaming.js";
+import { InsightRecording } from "../recordings/insights.js";
+import groupBy from "lodash/groupBy.js";
 
 const InsightIndexConstName = "Insights";
 

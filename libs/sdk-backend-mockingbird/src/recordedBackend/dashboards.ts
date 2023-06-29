@@ -42,13 +42,13 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
 } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep";
-import isEqual from "lodash/isEqual";
-import values from "lodash/values";
-import { DashboardRecording, RecordingIndex } from "./types";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEqual from "lodash/isEqual.js";
+import values from "lodash/values.js";
+import { DashboardRecording, RecordingIndex } from "./types.js";
 import { v4 as uuidv4 } from "uuid";
-import isEmpty from "lodash/isEmpty";
-import includes from "lodash/includes";
+import isEmpty from "lodash/isEmpty.js";
+import includes from "lodash/includes.js";
 
 function isDashboardRecording(obj: unknown): obj is DashboardRecording {
     return !isEmpty(obj) && (obj as any).obj !== undefined;

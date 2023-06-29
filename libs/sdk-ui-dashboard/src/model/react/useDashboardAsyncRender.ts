@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { useCallback } from "react";
-import { requestAsyncRender, resolveAsyncRender } from "../commands";
-import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
+import { requestAsyncRender, resolveAsyncRender } from "../commands/index.js";
+import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 
 /**
  * Callbacks returned from {@link useDashboardAsyncRender} hook.

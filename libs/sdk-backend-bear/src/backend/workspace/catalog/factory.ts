@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
-import partition from "lodash/partition";
-import uniq from "lodash/uniq";
-import flatMap from "lodash/flatMap";
-import keyBy from "lodash/keyBy";
+import partition from "lodash/partition.js";
+import uniq from "lodash/uniq.js";
+import flatMap from "lodash/flatMap.js";
+import keyBy from "lodash/keyBy.js";
 import {
     Identifier,
     ObjRef,
@@ -22,11 +22,11 @@ import {
     convertItemType,
     convertMeasure,
     isCompatibleCatalogItemType,
-} from "../../../convertors/fromBackend/CatalogConverter";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { IAttributeByKey, IDisplayFormByKey, IFactByKey, IMeasureByKey } from "../../../types/catalog";
-import { BearWorkspaceCatalog } from "./catalog";
-import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
+} from "../../../convertors/fromBackend/CatalogConverter.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { IAttributeByKey, IDisplayFormByKey, IFactByKey, IMeasureByKey } from "../../../types/catalog.js";
+import { BearWorkspaceCatalog } from "./catalog.js";
+import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api.js";
 import IDateDataSet = GdcDateDataSets.IDateDataSet;
 import IDateDataSetAttribute = GdcDateDataSets.IDateDataSetAttribute;
 

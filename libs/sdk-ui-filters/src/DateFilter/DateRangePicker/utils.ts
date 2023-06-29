@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import moment from "moment";
 import { DayModifiers, DayPickerRangeProps } from "react-day-picker";
-import { platformDateFormat, TIME_FORMAT } from "../constants/Platform";
+import { platformDateFormat, TIME_FORMAT } from "../constants/Platform.js";
 
 const mergeModifiers = (
     defaultModifiers: Partial<DayModifiers> | undefined,

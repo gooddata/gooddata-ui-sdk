@@ -15,16 +15,16 @@ import {
     IRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { IElementsQueryAttributeFilter, NotSupported } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
-import flatMap from "lodash/flatMap";
-import groupBy from "lodash/groupBy";
-import uniqWith from "lodash/uniqWith";
+import { invariant } from "ts-invariant";
+import flatMap from "lodash/flatMap.js";
+import groupBy from "lodash/groupBy.js";
+import uniqWith from "lodash/uniqWith.js";
 
-import { toBearRef } from "../../../../convertors/toBackend/ObjRefConverter";
-import { convertMeasure } from "../../../../convertors/toBackend/afm/MeasureConverter";
-import { BearAuthenticatedCallGuard } from "../../../../types/auth";
+import { toBearRef } from "../../../../convertors/toBackend/ObjRefConverter.js";
+import { convertMeasure } from "../../../../convertors/toBackend/afm/MeasureConverter.js";
+import { BearAuthenticatedCallGuard } from "../../../../types/auth.js";
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
-import { objRefsToUris } from "../../../../utils/api";
+import { objRefsToUris } from "../../../../utils/api.js";
 
 export class LimitingAfmFactory {
     constructor(

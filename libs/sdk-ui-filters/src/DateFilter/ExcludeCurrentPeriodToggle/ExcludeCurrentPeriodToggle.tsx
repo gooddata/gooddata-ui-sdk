@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
-import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel";
+import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel.js";
 
 interface IExcludeCurrentPeriodToggleProps {
     value: boolean;

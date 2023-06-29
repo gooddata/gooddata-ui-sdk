@@ -8,10 +8,10 @@ import {
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
     IVisualizationMeta,
-} from "../../../interfaces/VisualizationDescriptor";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
-import { PluggableHeadline } from "./PluggableHeadline";
-import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { PluggableHeadline } from "./PluggableHeadline.js";
+import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -19,7 +19,7 @@ import {
     getReactEmbeddingCodeGenerator,
     localeInsightConversion,
     singleMeasureBucketConversion,
-} from "../../../utils/embeddingCodeGenerator";
+} from "../../../utils/embeddingCodeGenerator/index.js";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
     insight.insight.buckets.filter((bucket) => bucket.items.length > 0).length > 1;

@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-model";
 
-import { generateSupportUrl } from "../utils/featureFlags";
-import { IHeaderMenuItem, TUTMContent } from "./typings";
+import { generateSupportUrl } from "../utils/featureFlags.js";
+import { IHeaderMenuItem, TUTMContent } from "./typings.js";
 
 /**
  * @internal

@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AttributeFilterHandler getAttribute() should return the attribute after successful initialization 1`] = `
-Object {
+exports[`AttributeFilterHandler > getAttribute() should return the attribute after successful initialization 1`] = `
+{
   "description": "",
   "displayForms": undefined,
   "id": "attr.product.id",
   "production": true,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/referenceworkspace/obj/1054",
   },
   "title": "Product",
@@ -15,13 +15,13 @@ Object {
 }
 `;
 
-exports[`AttributeFilterHandler getAttribute() should return the attribute after successful loadAttribute() call 1`] = `
-Object {
+exports[`AttributeFilterHandler > getAttribute() should return the attribute after successful loadAttribute() call 1`] = `
+{
   "description": "",
   "displayForms": undefined,
   "id": "attr.product.id",
   "production": true,
-  "ref": Object {
+  "ref": {
     "uri": "/gdc/md/referenceworkspace/obj/1054",
   },
   "title": "Product",
@@ -30,62 +30,62 @@ Object {
 }
 `;
 
-exports[`AttributeFilterHandler getAttributeError() should return error 1`] = `[Error: NOT_FOUND]`;
+exports[`AttributeFilterHandler > getAttributeError() should return error 1`] = `[Error: NOT_FOUND]`;
 
-exports[`AttributeFilterHandler getAttributeStatus() should return proper status for failed load: after the load 1`] = `"canceled"`;
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for failed load > after the load 1`] = `"canceled"`;
 
-exports[`AttributeFilterHandler getAttributeStatus() should return proper status for failed load: before the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for failed load > before the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getAttributeStatus() should return proper status for failed load: during the load 1`] = `"loading"`;
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for failed load > during the load 1`] = `"loading"`;
 
-exports[`AttributeFilterHandler getAttributeStatus() should return proper status for successful load: after the load 1`] = `"success"`;
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for successful load > after the load 1`] = `"success"`;
 
-exports[`AttributeFilterHandler getAttributeStatus() should return proper status for successful load: before the load 1`] = `"pending"`;
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for successful load > before the load 1`] = `"pending"`;
 
-exports[`AttributeFilterHandler getAttributeStatus() should return proper status for successful load: during the load 1`] = `"loading"`;
+exports[`AttributeFilterHandler > getAttributeStatus() should return proper status for successful load > during the load 1`] = `"loading"`;
 
-exports[`AttributeFilterHandler loadAttribute() should trigger onLoadAttributeStart() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadAttribute() should trigger onLoadAttributeStart() callback > with parameters 1`] = `
+[
+  {
     "correlation": "start",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadAttribute() that failed should trigger onLoadAttributeError() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadAttribute() that failed should trigger onLoadAttributeError() callback > with parameters 1`] = `
+[
+  {
     "correlation": "error",
     "error": [Error: NOT_FOUND],
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadAttribute() that was canceled by another loadAttribute() call should trigger onLoadAttributeCancel() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadAttribute() that was canceled by another loadAttribute() call should trigger onLoadAttributeCancel() callback > with parameters 1`] = `
+[
+  {
     "correlation": "cancel",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadAttribute() that was canceled by cancelAttributeLoad() call should trigger onLoadAttributeCancel() callback: with parameters 1`] = `
-Array [
-  Object {
+exports[`AttributeFilterHandler > loadAttribute() that was canceled by cancelAttributeLoad() call should trigger onLoadAttributeCancel() callback > with parameters 1`] = `
+[
+  {
     "correlation": "cancel",
   },
 ]
 `;
 
-exports[`AttributeFilterHandler loadAttribute() that was successful should trigger onLoadAttributeSuccess() callback: with parameters 1`] = `
-Array [
-  Object {
-    "attribute": Object {
+exports[`AttributeFilterHandler > loadAttribute() that was successful should trigger onLoadAttributeSuccess() callback > with parameters 1`] = `
+[
+  {
+    "attribute": {
       "description": "",
       "displayForms": undefined,
       "id": "attr.product.id",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1054",
       },
       "title": "Product",

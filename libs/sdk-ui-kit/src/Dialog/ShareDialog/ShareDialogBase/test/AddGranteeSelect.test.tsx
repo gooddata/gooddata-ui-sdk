@@ -1,8 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { AddGranteeSelect } from "../AddGranteeSelect";
-import { IAddGranteeSelectProps } from "../types";
+import { AddGranteeSelect } from "../AddGranteeSelect.js";
+import { IAddGranteeSelectProps } from "../types.js";
 import { noop } from "lodash";
 import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
@@ -12,9 +12,10 @@ import {
     availableUserGroupAccessGrantee,
     defaultUser,
     groupAll,
-} from "./GranteeMock";
-import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
+} from "./GranteeMock.js";
+import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import { uriRef, IAvailableAccessGrantee } from "@gooddata/sdk-model";
+import { describe, it, expect, vi } from "vitest";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,
@@ -116,7 +117,7 @@ describe("AddGranteeSelect", () => {
     });
 
     it("it should close options and call onSelectGrantee when option is selected", async () => {
-        const onSelectGrantee = jest.fn();
+        const onSelectGrantee = vi.fn();
 
         createComponent({ appliedGrantees: [groupAll], onSelectGrantee }, [
             availableUserAccessGrantee,

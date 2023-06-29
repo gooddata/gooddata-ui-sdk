@@ -8,9 +8,9 @@ import {
     ITheme,
     IResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color";
-import uniqBy from "lodash/uniqBy";
-import { IColorMapping } from "./types";
+import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color.js";
+import uniqBy from "lodash/uniqBy.js";
+import { IColorMapping } from "./types.js";
 
 /**
  * @internal

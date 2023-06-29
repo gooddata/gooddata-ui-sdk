@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints";
+import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
 const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
     const isMobile = useMediaQuery("<sm");

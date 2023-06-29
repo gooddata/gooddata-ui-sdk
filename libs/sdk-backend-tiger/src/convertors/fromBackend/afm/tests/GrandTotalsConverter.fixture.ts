@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { dimensionLocalIdentifier } from "../../../toBackend/afm/DimensionsConverter";
+import { dimensionLocalIdentifier } from "../../../toBackend/afm/DimensionsConverter.js";
 import {
     defWithDimensions,
     IDimensionDescriptor,

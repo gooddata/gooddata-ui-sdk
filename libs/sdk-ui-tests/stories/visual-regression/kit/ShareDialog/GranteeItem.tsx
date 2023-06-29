@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { UiKit } from "../../../_infra/storyGroups";
-import { wrapWithTheme } from "../../themeWrapper";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import { UiKit } from "../../../_infra/storyGroups.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
@@ -15,7 +15,7 @@ import {
     GranteeItemComponent,
     IGranteeItemProps,
 } from "@gooddata/sdk-ui-kit";
-import { BackstopConfig } from "../../../_infra/backstopScenario";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import {
     current,
     currentAndOwen,
@@ -28,8 +28,8 @@ import {
     owner,
     user,
     userInactive,
-} from "./GranteeMock";
-import { LabelsMock } from "./LabelsMock";
+} from "./GranteeMock.js";
+import { LabelsMock } from "./LabelsMock.js";
 
 const defaultGranteeItemComponentProps: Omit<IGranteeItemProps, "grantee"> = {
     mode: "ShareGrantee",

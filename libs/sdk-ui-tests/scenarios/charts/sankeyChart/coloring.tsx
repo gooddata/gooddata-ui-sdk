@@ -1,13 +1,13 @@
 // (C) 2023 GoodData Corporation
 import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
-import { AttributeElements } from "../../_infra/predicates";
-import { coloringCustomizer } from "../_infra/coloringVariants";
-import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { scenariosFor } from "../../../src/index.js";
+import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
+import { AttributeElements } from "../../_infra/predicates.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 import { ReferenceData } from "@gooddata/reference-workspace";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { SankeyChartWithMeasureAttributeFromAndTo } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
 
 const colorsAndPalette = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

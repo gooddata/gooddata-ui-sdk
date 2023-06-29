@@ -5,7 +5,8 @@ import {
     getPushpinSizeLegendTitle,
     isSmallPushpinSizeLegend,
     shouldRenderCircleLegendInsidePopUp,
-} from "../responsive";
+} from "../responsive.js";
+import { describe, it, expect } from "vitest";
 
 describe("responsive", () => {
     describe("getPushpinColorLegendSize", () => {

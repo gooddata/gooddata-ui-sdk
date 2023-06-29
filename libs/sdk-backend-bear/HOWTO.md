@@ -28,9 +28,9 @@ the tests and let the infrastructure handle the rest for you.
 Use the integrated tests to verify code that transforms responses into domain objects as defined by the backend SPI
 and for end-to-end verification of use cases exposed via the SPI.
 
-### On use of Jest snapshots
+### On use of Vitest snapshots
 
-When asserting that the conversion results match the expectations, use Jest snapshots instead of hardcoded objects.
+When asserting that the conversion results match the expectations, use Vitest snapshots instead of hardcoded objects.
 Let the machine generate the right side of the equation > verify the snapshot > commit. This is all about efficiency, don't
 spend time writing same thing that the infrastructure can create automatically.
 
@@ -68,7 +68,7 @@ included in the .gitignore file
 
 ### Writing tests
 
-Writing integrated tests is Jest business as usual. However focus on blackbox testing and exercise the
+Writing integrated tests is Vitest business as usual. However focus on blackbox testing and exercise the
 different SPI methods and make assertions. You can obtain an instance of IAnalyticalBackend implemented by bear
 by using the `testBackend` function.
 

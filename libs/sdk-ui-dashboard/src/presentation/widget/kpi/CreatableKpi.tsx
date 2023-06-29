@@ -2,9 +2,13 @@
 import React from "react";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
-import { useDashboardSelector, selectHasCatalogMeasures, selectIsWhiteLabeled } from "../../../model";
-import { AddKpiWidgetButton, DraggableKpiCreatePanelItem } from "../../dragAndDrop";
-import { ICreatePanelItemComponentProps } from "../../componentDefinition";
+import {
+    useDashboardSelector,
+    selectHasCatalogMeasures,
+    selectIsWhiteLabeled,
+} from "../../../model/index.js";
+import { AddKpiWidgetButton, DraggableKpiCreatePanelItem } from "../../dragAndDrop/index.js";
+import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: -20, y: 0 } }];
 

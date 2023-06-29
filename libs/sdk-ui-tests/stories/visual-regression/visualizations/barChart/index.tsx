@@ -1,18 +1,21 @@
 // (C) 2020 GoodData Corporation
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import React from "react";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { CustomStories } from "../../../_infra/storyGroups";
-import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
+import { CustomStories } from "../../../_infra/storyGroups.js";
+import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
 
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "../insightStories.css";
 import {
     BarChartWithLargeLegend,
     BarChartWithTwoMeasuresAndTwoViewBy,
-} from "../../../../scenarios/charts/barChart/base";
-import { createElementCountResolver, ScreenshotReadyWrapper } from "../../../_infra/ScreenshotReadyWrapper";
-import { wrapWithTheme } from "../../themeWrapper";
+} from "../../../../scenarios/charts/barChart/base.js";
+import {
+    createElementCountResolver,
+    ScreenshotReadyWrapper,
+} from "../../../_infra/ScreenshotReadyWrapper.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const backend = StorybookBackend();
 

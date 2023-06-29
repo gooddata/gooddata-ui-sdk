@@ -4,15 +4,15 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { ObjRef } from "@gooddata/sdk-model";
-import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem";
+import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import { stringUtils } from "@gooddata/util";
 import {
     useDashboardSelector,
     IDashboardAttributeFilterParentItem,
     selectIsCircularDependency,
     IConnectingAttribute,
-} from "../../../../../../model";
-import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown";
+} from "../../../../../../model/index.js";
+import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown.js";
 
 export interface IConfigurationParentItem {
     localId: string;

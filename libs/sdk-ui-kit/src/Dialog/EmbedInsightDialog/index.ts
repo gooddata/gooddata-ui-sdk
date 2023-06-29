@@ -9,24 +9,24 @@ export type {
     CodeLanguageType,
     UnitsType,
     CopyCodeOriginType,
-} from "./EmbedInsightDialogBase/types";
+} from "./EmbedInsightDialogBase/types.js";
 
-export { getDefaultEmbedTypeOptions, getHeightWithUnitsForEmbedCode } from "./utils";
+export { getDefaultEmbedTypeOptions, getHeightWithUnitsForEmbedCode } from "./utils.js";
 
-export { EmbedInsightDialogBase } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
-export type { IEmbedInsightDialogBaseProps } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
+export { EmbedInsightDialogBase } from "./EmbedInsightDialogBase/EmbedInsightDialogBase.js";
+export type { IEmbedInsightDialogBaseProps } from "./EmbedInsightDialogBase/EmbedInsightDialogBase.js";
 
-export { NumericInput } from "./EmbedInsightDialogBase/components/NumericInput";
-export type { INumericInputProps } from "./EmbedInsightDialogBase/components/NumericInput";
+export { NumericInput } from "./EmbedInsightDialogBase/components/NumericInput.js";
+export type { INumericInputProps } from "./EmbedInsightDialogBase/components/NumericInput.js";
 
-export { CodeArea } from "./EmbedInsightDialogBase/components/CodeArea";
-export type { ICodeAreaProps } from "./EmbedInsightDialogBase/components/CodeArea";
+export { CodeArea } from "./EmbedInsightDialogBase/components/CodeArea.js";
+export type { ICodeAreaProps } from "./EmbedInsightDialogBase/components/CodeArea.js";
 
-export { CodeLanguageSelect } from "./EmbedInsightDialogBase/components/CodeLanguageSelect";
-export type { ICodeLanguageSelectProps } from "./EmbedInsightDialogBase/components/CodeLanguageSelect";
+export { CodeLanguageSelect } from "./EmbedInsightDialogBase/components/CodeLanguageSelect.js";
+export type { ICodeLanguageSelectProps } from "./EmbedInsightDialogBase/components/CodeLanguageSelect.js";
 
-export { CodeOptions } from "./EmbedInsightDialogBase/components/CodeOptions";
-export type { ICodeOptionsProps } from "./EmbedInsightDialogBase/components/CodeOptions";
+export { CodeOptions } from "./EmbedInsightDialogBase/components/CodeOptions.js";
+export type { ICodeOptionsProps } from "./EmbedInsightDialogBase/components/CodeOptions.js";
 
-export { LocaleSetting } from "./EmbedInsightDialogBase/components/LocaleSetting";
-export type { ILocaleSettingProps } from "./EmbedInsightDialogBase/components/LocaleSetting";
+export { LocaleSetting } from "./EmbedInsightDialogBase/components/LocaleSetting.js";
+export type { ILocaleSettingProps } from "./EmbedInsightDialogBase/components/LocaleSetting.js";

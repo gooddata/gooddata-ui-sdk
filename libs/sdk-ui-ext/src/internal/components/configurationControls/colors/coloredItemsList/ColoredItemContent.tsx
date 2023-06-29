@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { IRgbColorValue } from "@gooddata/sdk-model";
-import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown";
+import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown.js";
 
 export interface IColoredItemContentProps extends ISelectableChild {
     color: IRgbColorValue;

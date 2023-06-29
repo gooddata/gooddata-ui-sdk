@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { Attribute, Catalog, Fact, Metric } from "../../base/types";
+import { Attribute, Catalog, Fact, Metric } from "../../base/types.js";
 import {
     JsonApiAttributeOutList,
     JsonApiFactOutList,
@@ -8,7 +8,7 @@ import {
     MetadataUtilities,
     ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
-import { convertAttribute, createLabelMap } from "./tigerCommon";
+import { convertAttribute, createLabelMap } from "./tigerCommon.js";
 
 function convertMetrics(metrics: JsonApiMetricOutList): Metric[] {
     return metrics.data.map((metric) => {

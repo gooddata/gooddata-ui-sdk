@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import { ObjRef, IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
 
-import { DropZoneType, IDragZoneWidget } from "./LayoutTypes";
+import { DropZoneType, IDragZoneWidget } from "./LayoutTypes.js";
 
 export type DashboardEditLayoutContentType =
     | "widget"

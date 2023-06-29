@@ -2,9 +2,9 @@
 import React from "react";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
-import { storiesOf } from "../../../_infra/storyRepository";
+import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
-import { FilterStories } from "../../../_infra/storyGroups";
+import { FilterStories } from "../../../_infra/storyGroups.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
 

@@ -1,9 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
-import * as referencePointMock from "../../../tests/mocks/referencePointMocks";
-import { getBulletChartUiConfig } from "../bulletChartUiConfigHelper";
-import { createInternalIntl } from "../../internalIntlProvider";
-import { DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
+import * as referencePointMock from "../../../tests/mocks/referencePointMocks.js";
+import { getBulletChartUiConfig } from "../bulletChartUiConfigHelper.js";
+import { createInternalIntl } from "../../internalIntlProvider.js";
+import { DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig.js";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
+import { describe, it, expect } from "vitest";
 
 describe("bulletChartUiConfigHelper", () => {
     describe("getBulletChartUiConfig", () => {

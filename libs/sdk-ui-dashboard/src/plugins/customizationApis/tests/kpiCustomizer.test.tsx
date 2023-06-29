@@ -5,14 +5,15 @@ import {
     IDashboardKpiProps,
     KpiComponentProvider,
     OptionalKpiComponentProvider,
-} from "../../../presentation";
+} from "../../../presentation/index.js";
 import { idRef, measureItem, IKpiWidget, IKpi } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { render } from "@testing-library/react";
-import invariant from "ts-invariant";
-import { DefaultKpiCustomizer } from "../kpiCustomizer";
-import { DashboardCustomizationLogger } from "../customizationLogging";
-import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types";
+import { invariant } from "ts-invariant";
+import { DefaultKpiCustomizer } from "../kpiCustomizer.js";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
+import { describe, it, expect, beforeEach } from "vitest";
 
 //
 //

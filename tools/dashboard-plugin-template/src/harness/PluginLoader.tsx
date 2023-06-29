@@ -2,11 +2,12 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { idRef } from "@gooddata/sdk-model";
 import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
-import PluginFactory from "../plugin";
-import { DEFAULT_DASHBOARD_ID } from "./constants";
+// this import will be renamed in plugin-toolkit
+import PluginFactory from "../plugin/index.js";
+import { DEFAULT_DASHBOARD_ID } from "./constants.js";
 import { DashboardConfig, CustomToolbarComponent } from "@gooddata/sdk-ui-dashboard";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
-import { PluginToolbar } from "./PluginToolbar";
+import { PluginToolbar } from "./PluginToolbar.js";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 const Config: DashboardConfig = { mapboxToken: process.env.MAPBOX_TOKEN };

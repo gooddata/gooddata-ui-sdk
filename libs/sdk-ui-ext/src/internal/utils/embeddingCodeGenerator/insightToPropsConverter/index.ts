@@ -5,5 +5,5 @@ export {
     insightConversion,
     IInsightToPropConversion,
     ConversionSpec,
-} from "./convertor";
-export * from "./convenience";
+} from "./convertor.js";
+export * from "./convenience.js";

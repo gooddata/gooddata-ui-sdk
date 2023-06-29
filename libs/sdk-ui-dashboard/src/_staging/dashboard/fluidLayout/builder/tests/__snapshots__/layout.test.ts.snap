@@ -1,20 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DashboardLayoutBuilder .addSection() should create a section at the end of the layout by default: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .addSection() > should create a section at the end of the layout by default > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Initial section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Added section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -22,14 +22,14 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .addSection() should create a section at the end of the layout by default: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .addSection() > should create a section at the end of the layout by default > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Initial section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -37,28 +37,28 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .addSection() should create a section at the provided index: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .addSection() > should create a section at the provided index > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Section 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Added section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Section 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -66,21 +66,21 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .addSection() should create a section at the provided index: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .addSection() > should create a section at the provided index > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Section 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Section 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -88,18 +88,18 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .createSection() should create a section at the end of the layout by default: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .createSection() > should create a section at the end of the layout by default > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Added section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -107,11 +107,11 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .createSection() should create a section at the end of the layout by default: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .createSection() > should create a section at the end of the layout by default > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -119,38 +119,22 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .createSection() should create a section at the provided index: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .createSection() > should create a section at the provided index > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Added section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
-      "type": "IDashboardLayoutSection",
-    },
-  ],
-  "type": "IDashboardLayout",
-}
-`;
-
-exports[`DashboardLayoutBuilder .createSection() should create a section at the provided index: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
-      "type": "IDashboardLayoutSection",
-    },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -158,14 +142,30 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySection() should modify the section: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .createSection() > should create a section at the provided index > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .modifySection() > should modify the section > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Modified section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -173,14 +173,14 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySection() should modify the section: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .modifySection() > should modify the section > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Original section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -188,23 +188,23 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySection() should throw error, when the section at provided index does not exist 1`] = `"Cannot modify the section - section at index 0 does not exist."`;
+exports[`DashboardLayoutBuilder > .modifySection() > should throw error, when the section at provided index does not exist 1`] = `"Cannot modify the section - section at index 0 does not exist."`;
 
-exports[`DashboardLayoutBuilder .modifySections() should modify all sections by default: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .modifySections() > should modify all sections by default > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Modified section 0",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Modified section 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -212,15 +212,15 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySections() should modify all sections by default: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .modifySections() > should modify all sections by default > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -228,22 +228,22 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySections() should modify selected section only: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .modifySections() > should modify selected section only > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Modified section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -251,22 +251,22 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySections() should modify selected section only: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .modifySections() > should modify selected section only > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Original section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -274,29 +274,29 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySections() should modify selected sections only: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .modifySections() > should modify selected sections only > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Modified section 0",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Modified section 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -304,41 +304,29 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySections() should modify selected sections only: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .modifySections() > should modify selected sections only > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Original section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Original section",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
-      "type": "IDashboardLayoutSection",
-    },
-  ],
-  "type": "IDashboardLayout",
-}
-`;
-
-exports[`DashboardLayoutBuilder .modifySections() should not modify any section, when selection result is undefined: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -346,11 +334,11 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .modifySections() should not modify any section, when selection result is undefined: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .modifySections() > should not modify any section, when selection result is undefined > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -358,28 +346,40 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .moveSection() should move the section: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .modifySections() > should not modify any section, when selection result is undefined > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .moveSection() > should move the section > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Row 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row 0",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -387,28 +387,28 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .moveSection() should move the section: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .moveSection() > should move the section > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Row 0",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -416,23 +416,23 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .moveSection() should throw error, when the section at provided index does not exist 1`] = `"Cannot move the section - section at index 0 does not exist."`;
+exports[`DashboardLayoutBuilder > .moveSection() > should throw error, when the section at provided index does not exist 1`] = `"Cannot move the section - section at index 0 does not exist."`;
 
-exports[`DashboardLayoutBuilder .removeSection() should remove the section from the layout: after 1`] = `
-Object {
-  "sections": Array [],
+exports[`DashboardLayoutBuilder > .removeSection() > should remove the section from the layout > after 1`] = `
+{
+  "sections": [],
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSection() should remove the section from the layout: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .removeSection() > should remove the section from the layout > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Row to remove",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -440,13 +440,13 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSection() should throw error, when the section at provided index does not exist 1`] = `"Cannot remove the section - section at index 0 does not exist."`;
+exports[`DashboardLayoutBuilder > .removeSection() > should throw error, when the section at provided index does not exist 1`] = `"Cannot remove the section - section at index 0 does not exist."`;
 
-exports[`DashboardLayoutBuilder .removeSections() should not remove any section, when selection result is undefined: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .removeSections() > should not remove any section, when selection result is undefined > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -454,11 +454,11 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should not remove any section, when selection result is undefined: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .removeSections() > should not remove any section, when selection result is undefined > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -466,22 +466,22 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should remove all sections by default: after 1`] = `
-Object {
-  "sections": Array [],
+exports[`DashboardLayoutBuilder > .removeSections() > should remove all sections by default > after 1`] = `
+{
+  "sections": [],
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should remove all sections by default: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .removeSections() > should remove all sections by default > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -489,15 +489,15 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should remove selected section only: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .removeSections() > should remove selected section only > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -505,22 +505,22 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should remove selected section only: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [],
+exports[`DashboardLayoutBuilder > .removeSections() > should remove selected section only > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row to remove",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -528,21 +528,21 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should remove selected sections only: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .removeSections() > should remove selected sections only > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Row to keep 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row to keep 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -550,29 +550,29 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .removeSections() should remove selected sections only: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "header": Object {
+exports[`DashboardLayoutBuilder > .removeSections() > should remove selected sections only > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
         "title": "Row to keep 1",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "header": Object {
+    {
+      "header": {
         "title": "Row to keep 2",
       },
-      "items": Array [],
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -580,10 +580,10 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .size() should update size by callback 1`] = `
-Object {
-  "sections": Array [],
-  "size": Object {
+exports[`DashboardLayoutBuilder > .size() > should update size by callback 1`] = `
+{
+  "sections": [],
+  "size": {
     "gridWidth": 12,
     "heightAsRatio": 50,
   },
@@ -591,26 +591,26 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder .size() should update size by callback returning undefined 1`] = `
-Object {
-  "sections": Array [],
+exports[`DashboardLayoutBuilder > .size() > should update size by callback returning undefined 1`] = `
+{
+  "sections": [],
   "size": undefined,
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`DashboardLayoutBuilder .size() should update size by undefined 1`] = `
-Object {
-  "sections": Array [],
+exports[`DashboardLayoutBuilder > .size() > should update size by undefined 1`] = `
+{
+  "sections": [],
   "size": undefined,
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`DashboardLayoutBuilder .size() should update size by value 1`] = `
-Object {
-  "sections": Array [],
-  "size": Object {
+exports[`DashboardLayoutBuilder > .size() > should update size by value 1`] = `
+{
+  "sections": [],
+  "size": {
     "gridWidth": 12,
     "heightAsRatio": 50,
   },
@@ -618,36 +618,36 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder constructors .for() should throw error, when the layout is damaged 1`] = `"Provided data must be IDashboardLayout."`;
+exports[`DashboardLayoutBuilder > constructors > .for() > should throw error, when the layout is damaged 1`] = `"Provided data must be IDashboardLayout."`;
 
-exports[`DashboardLayoutBuilder constructors .forNewLayout() should create new empty layout 1`] = `
-Object {
-  "sections": Array [],
+exports[`DashboardLayoutBuilder > constructors > .forNewLayout() > should create new empty layout 1`] = `
+{
+  "sections": [],
   "type": "IDashboardLayout",
 }
 `;
 
-exports[`DashboardLayoutBuilder should remove all items with kpi widget: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+exports[`DashboardLayoutBuilder > should remove all items with kpi widget > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "insightRef",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "insightWidget",
             },
             "title": "Insight widget",
@@ -657,24 +657,24 @@ Object {
       ],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "insightRef",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "insightWidget",
             },
             "title": "Insight widget",
@@ -689,52 +689,52 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder should remove all items with kpi widget: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+exports[`DashboardLayoutBuilder > should remove all items with kpi widget > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "insightRef",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "insightWidget",
             },
             "title": "Insight widget",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "xl": Object {
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "kpi": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "kpi": {
               "comparisonType": "none",
-              "metric": Object {
+              "metric": {
                 "identifier": "measure",
               },
             },
-            "ref": Object {
+            "ref": {
               "identifier": "kpiWidget",
             },
             "title": "Kpi widget",
@@ -744,27 +744,27 @@ Object {
       ],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "kpi": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "kpi": {
               "comparisonType": "none",
-              "metric": Object {
+              "metric": {
                 "identifier": "measure",
               },
             },
-            "ref": Object {
+            "ref": {
               "identifier": "kpiWidget",
             },
             "title": "Kpi widget",
@@ -774,24 +774,24 @@ Object {
       ],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "insightRef",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "insightWidget",
             },
             "title": "Insight widget",
@@ -806,71 +806,71 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder should resize items with particular insight: after 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+exports[`DashboardLayoutBuilder > should resize items with particular insight > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 2,
               "heightAsRatio": 25,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "tableInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget1",
             },
             "title": "Table widget",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "xl": Object {
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "barInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget2",
             },
             "title": "Bar widget",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "xl": Object {
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "columnInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget3",
             },
             "title": "Column widget",
@@ -880,24 +880,24 @@ Object {
       ],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 2,
               "heightAsRatio": 25,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "tableInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget4",
             },
             "title": "Table widget 2",
@@ -912,71 +912,71 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutBuilder should resize items with particular insight: before 1`] = `
-Object {
-  "sections": Array [
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+exports[`DashboardLayoutBuilder > should resize items with particular insight > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "tableInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget1",
             },
             "title": "Table widget",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "xl": Object {
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "barInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget2",
             },
             "title": "Bar widget",
             "type": "insight",
           },
         },
-        Object {
-          "size": Object {
-            "xl": Object {
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "columnInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget3",
             },
             "title": "Column widget",
@@ -986,24 +986,24 @@ Object {
       ],
       "type": "IDashboardLayoutSection",
     },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "xl": Object {
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
               "gridWidth": 12,
               "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
+          "widget": {
             "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
+            "drills": [],
+            "ignoreDashboardFilters": [],
+            "insight": {
               "identifier": "tableInsight",
             },
-            "ref": Object {
+            "ref": {
               "identifier": "widget4",
             },
             "title": "Table widget 2",

@@ -2,12 +2,13 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { withIntl } from "@gooddata/sdk-ui";
-import first from "lodash/first";
-import times from "lodash/times";
-import assign from "lodash/assign";
-import noop from "lodash/noop";
-import { customMessages } from "./customDictionary";
-import { LegacyInvertableList, ILegacyInvertableListProps } from "../LegacyInvertableList";
+import first from "lodash/first.js";
+import times from "lodash/times.js";
+import assign from "lodash/assign.js";
+import noop from "lodash/noop.js";
+import { customMessages } from "./customDictionary.js";
+import { LegacyInvertableList, ILegacyInvertableListProps } from "../LegacyInvertableList.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 interface IItem {
     title: string;
@@ -50,7 +51,7 @@ describe("LegacyInvertableList", () => {
 
         [firstItem, secondItem] = items;
 
-        onSelectStub = jest.fn();
+        onSelectStub = vi.fn();
     });
 
     it("should select all as empty inverted selection", () => {

@@ -7,4 +7,4 @@ export {
     dashboardDateFilterToDateFilterByWidget,
     dashboardDateFilterToDateFilterByDateDataSet,
     dashboardAttributeFilterToAttributeFilter,
-} from "./filterConverters";
+} from "./filterConverters.js";

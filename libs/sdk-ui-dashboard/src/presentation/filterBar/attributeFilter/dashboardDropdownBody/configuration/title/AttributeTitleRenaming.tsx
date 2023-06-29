@@ -3,7 +3,7 @@
 import React from "react";
 import { Input } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationCategory } from "../ConfigurationCategory";
+import { ConfigurationCategory } from "../ConfigurationCategory.js";
 
 interface IAttributeTitleRenamingProps {
     categoryTitle: string;
@@ -24,7 +24,7 @@ export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (p
         <div>
             <div className="configuration-category-title">
                 <ConfigurationCategory categoryTitle={categoryTitle} />
-                {showResetTitle && (
+                {showResetTitle ? (
                     <a
                         className={buttonClassNames}
                         target="_blank"
@@ -33,7 +33,7 @@ export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (p
                     >
                         {resetTitleText}
                     </a>
-                )}
+                ) : null}
             </div>
             <Input
                 className="configuration-attribute-filter-title s-configuration-attribute-filter-title"

@@ -7,6 +7,6 @@ export {
     IDescriptionTriggerProps,
     DESCRIPTION_PANEL_ALIGN_POINTS,
     DESCRIPTION_PANEL_ARROW_OFFSETS,
-} from "./DescriptionPanel";
-export { EllipsisText, IEllipsisTextProps } from "./EllipsisText";
-export { MetadataList, IMetadataListProps } from "./MetadataList";
+} from "./DescriptionPanel.js";
+export { EllipsisText, IEllipsisTextProps } from "./EllipsisText.js";
+export { MetadataList, IMetadataListProps } from "./MetadataList.js";

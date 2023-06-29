@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
-import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter";
+import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 
 const accessibleDashboardsSlice = createSlice({
     name: "accessibleDashboards",

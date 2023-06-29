@@ -1,8 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 
-import { FormattedPreview, IFormattedPreviewProps } from "../FormattedPreview";
+import { FormattedPreview, IFormattedPreviewProps } from "../FormattedPreview.js";
 
 describe("FormattedPreview", () => {
     function renderComponent(props: Partial<IFormattedPreviewProps> = {}) {

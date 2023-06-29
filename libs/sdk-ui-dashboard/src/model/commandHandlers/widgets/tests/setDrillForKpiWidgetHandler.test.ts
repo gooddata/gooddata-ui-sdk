@@ -1,17 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
-
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { RemoveDrillsForInsightWidget, setDrillForKpiWidget } from "../../../commands";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { RemoveDrillsForInsightWidget, setDrillForKpiWidget } from "../../../commands/index.js";
 import { uriRef } from "@gooddata/sdk-model";
-import { DashboardCommandFailed } from "../../../events";
+import { DashboardCommandFailed } from "../../../events/index.js";
 import {
     KpiWidgetRef,
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
-} from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { legacyDashboardsActions } from "../../../store/legacyDashboards";
-import { ILegacyDashboard } from "../../../../types";
+} from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { legacyDashboardsActions } from "../../../store/legacyDashboards/index.js";
+import { ILegacyDashboard } from "../../../../types.js";
 
 describe("setDrillForKpiWidgetHandler", () => {
     const mockDashboard: ILegacyDashboard = {
@@ -23,12 +23,13 @@ describe("setDrillForKpiWidgetHandler", () => {
     };
 
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory(async (tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory(async (tester) => {
             Tester = tester;
             Tester.dispatch(legacyDashboardsActions.setLegacyDashboards([mockDashboard]));
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     describe("set", () => {
         it("should emit the appropriate events for set drill for Kpi Widget command", async () => {

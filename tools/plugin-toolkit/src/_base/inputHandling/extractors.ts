@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
-import { ActionOptions, TargetBackendType } from "../types";
-import { backendTypeValidator, createHostnameValidator, validOrDie } from "./validators";
+import { ActionOptions, TargetBackendType } from "../types.js";
+import { backendTypeValidator, createHostnameValidator, validOrDie } from "./validators.js";
 
 /**
  * Gets a valid hostname from CLI options or dies with validation error.

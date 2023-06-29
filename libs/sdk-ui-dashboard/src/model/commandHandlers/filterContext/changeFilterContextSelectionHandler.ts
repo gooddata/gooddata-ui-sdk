@@ -1,19 +1,19 @@
 // (C) 2021-2023 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeFilterContextSelection } from "../../commands";
-import { filterContextActions } from "../../store/filterContext";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeFilterContextSelection } from "../../commands/index.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
-} from "../../store/filterContext/filterContextSelectors";
+} from "../../store/filterContext/filterContextSelectors.js";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "./common";
-import partition from "lodash/partition";
-import uniqBy from "lodash/uniqBy";
-import compact from "lodash/compact";
+import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
+import partition from "lodash/partition.js";
+import uniqBy from "lodash/uniqBy.js";
+import compact from "lodash/compact.js";
 import {
     objRefToString,
     isUriRef,
@@ -43,10 +43,10 @@ import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     IUpdateAttributeFilterSelectionPayload,
     IUpsertDateFilterPayload,
-} from "../../store/filterContext/filterContextReducers";
-import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver";
-import { resolveAttributeMetadata } from "../../utils/attributeResolver";
-import { IDashboardFilter } from "./../../../types";
+} from "../../store/filterContext/filterContextReducers.js";
+import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
+import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
+import { IDashboardFilter } from "../../../types.js";
 
 function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
     if (isAttributeFilter(filter)) {

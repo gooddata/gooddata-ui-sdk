@@ -3,8 +3,8 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { CompactContentError } from "./CompactContentError";
-import { ErrorContainer } from "./ErrorContainer";
+import { CompactContentError } from "./CompactContentError.js";
+import { ErrorContainer } from "./ErrorContainer.js";
 
 interface IExecuteProtectedErrorProps {
     fullContent: boolean;

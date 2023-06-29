@@ -2,8 +2,8 @@
 import React from "react";
 import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
 import MediaQuery from "react-responsive";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { UiKit } from "../../../_infra/storyGroups";
+import { storiesOf } from "../../../_infra/storyRepository.js";
+import { UiKit } from "../../../_infra/storyGroups.js";
 import { Button, Overlay, FullScreenOverlay } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";

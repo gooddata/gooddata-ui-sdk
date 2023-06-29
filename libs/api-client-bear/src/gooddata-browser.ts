@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
-import { factory, SDK } from "./gooddata";
+import { factory, SDK } from "./gooddata.js";
 
 const getFactoryBrowser = (config?: any) => factory(fetch.bind(window))(config);
 
@@ -9,6 +9,6 @@ const getFactoryBrowser = (config?: any) => factory(fetch.bind(window))(config);
 
 // For node see `gooddata-node.js` file.
 export { getFactoryBrowser as getFactory, SDK };
-export * from "./api";
+export * from "./api.js";
 
 export default getFactoryBrowser();

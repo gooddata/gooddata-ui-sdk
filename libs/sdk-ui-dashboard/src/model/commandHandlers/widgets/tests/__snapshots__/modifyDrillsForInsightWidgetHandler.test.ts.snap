@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`modifyDrillsForInsightWidgetHandler modify should emit the appropriate events for modify drill for Insight Widget command 1`] = `
-Array [
-  Object {
+exports[`modifyDrillsForInsightWidgetHandler > modify > should emit the appropriate events for modify drill for Insight Widget command 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
   },

@@ -2,8 +2,8 @@
 import React, { useEffect, useRef } from "react";
 import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 
-import { DraggableInsightListCore } from "./DraggableInsightListCore";
-import { IWrapInsightListItemWithDragComponent } from "../../../dragAndDrop/types";
+import { DraggableInsightListCore } from "./DraggableInsightListCore.js";
+import { IWrapInsightListItemWithDragComponent } from "../../../dragAndDrop/types.js";
 
 interface IDraggableInsightListProps {
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;

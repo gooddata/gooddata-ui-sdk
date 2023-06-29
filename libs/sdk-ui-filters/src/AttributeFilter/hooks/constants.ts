@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { Correlation } from "../../AttributeFilterHandler";
+import { Correlation } from "../../AttributeFilterHandler/index.js";
 
 /**
  * @internal

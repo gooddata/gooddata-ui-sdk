@@ -14,10 +14,10 @@ import {
     IDimensionDescriptor,
     ITotalDescriptor,
 } from "@gooddata/sdk-model";
-import keyBy from "lodash/keyBy";
-import mapValues from "lodash/mapValues";
-import groupBy from "lodash/groupBy";
-import uniqBy from "lodash/uniqBy";
+import keyBy from "lodash/keyBy.js";
+import mapValues from "lodash/mapValues.js";
+import groupBy from "lodash/groupBy.js";
+import uniqBy from "lodash/uniqBy.js";
 
 const DEFAULT_FORMAT = "#,#.##";
 

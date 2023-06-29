@@ -1,17 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-import { setAttributeFilterParents } from "../../../../commands";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
+import { beforeEach, describe, it, expect } from "vitest";
+import { setAttributeFilterParents } from "../../../../commands/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors.js";
 import { uriRef } from "@gooddata/sdk-model";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("setAttributeFilterParentHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     it("should emit the appropriate events for valid set attribute filter parent command", async () => {
         const [firstFilterLocalId, secondFilterLocalId] = selectFilterContextAttributeFilters(

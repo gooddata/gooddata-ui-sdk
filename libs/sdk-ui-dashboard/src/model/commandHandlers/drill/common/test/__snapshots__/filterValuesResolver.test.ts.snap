@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`resolveFilterValues should resolve relative date filter 1`] = `
-Object {
-  "attributeFilters": Object {},
-  "dateFilters": Array [
-    Object {
+exports[`resolveFilterValues > should resolve relative date filter 1`] = `
+{
+  "attributeFilters": {},
+  "dateFilters": [
+    {
       "from": "2021-08-01",
       "to": "2021-08-04",
     },
@@ -12,34 +12,34 @@ Object {
 }
 `;
 
-exports[`resolveFilterValues should resolved ALL attribute filter to empty values 1`] = `
-Object {
-  "attributeFilters": Object {
-    "label.product.id.name": Object {},
+exports[`resolveFilterValues > should resolved ALL attribute filter to empty values 1`] = `
+{
+  "attributeFilters": {
+    "label.product.id.name": {},
   },
-  "dateFilters": Array [],
+  "dateFilters": [],
 }
 `;
 
-exports[`resolveFilterValues should resolved multiple attribute filters 1`] = `
-Object {
-  "attributeFilters": Object {
-    "label.owner.department": Object {
+exports[`resolveFilterValues > should resolved multiple attribute filters 1`] = `
+{
+  "attributeFilters": {
+    "label.owner.department": {
       "/gdc/md/referenceworkspace/obj/1088/elements?id=460487": "Direct Sales",
     },
-    "label.product.id.name": Object {
+    "label.product.id.name": {
       "/gdc/md/referenceworkspace/obj/1054/elements?id=165847": "Educationly",
     },
   },
-  "dateFilters": Array [],
+  "dateFilters": [],
 }
 `;
 
-exports[`resolveFilterValues should return resolved absolute date limits 1`] = `
-Object {
-  "attributeFilters": Object {},
-  "dateFilters": Array [
-    Object {
+exports[`resolveFilterValues > should return resolved absolute date limits 1`] = `
+{
+  "attributeFilters": {},
+  "dateFilters": [
+    {
       "from": "2020-01-01",
       "to": "2020-02-01",
     },
@@ -47,24 +47,24 @@ Object {
 }
 `;
 
-exports[`resolveFilterValues should return resolved attribute filter elements by value 1`] = `
-Object {
-  "attributeFilters": Object {
-    "label.product.id.name": Object {
+exports[`resolveFilterValues > should return resolved attribute filter elements by value 1`] = `
+{
+  "attributeFilters": {
+    "label.product.id.name": {
       "/gdc/md/referenceworkspace/obj/1054/elements?id=165847": "Educationly",
     },
   },
-  "dateFilters": Array [],
+  "dateFilters": [],
 }
 `;
 
-exports[`resolveFilterValues should return resolved attribute filters elements by ref 1`] = `
-Object {
-  "attributeFilters": Object {
-    "label.product.id.name": Object {
+exports[`resolveFilterValues > should return resolved attribute filters elements by ref 1`] = `
+{
+  "attributeFilters": {
+    "label.product.id.name": {
       "/gdc/md/referenceworkspace/obj/1054/elements?id=165678": "CompuSci",
     },
   },
-  "dateFilters": Array [],
+  "dateFilters": [],
 }
 `;

@@ -5,12 +5,12 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types";
-import { getGranularGranteeClassNameId } from "../utils";
-import { granularPermissionMessageLabels } from "../../../../locales";
+import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
+import { getGranularGranteeClassNameId } from "../utils.js";
+import { granularPermissionMessageLabels } from "../../../../locales.js";
 
-import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
-import { withBubble } from "../../../../Bubble";
+import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
+import { withBubble } from "../../../../Bubble/index.js";
 
 interface IGranularPermissionsDropdownProps {
     grantee: IGranularGrantee;

@@ -9,9 +9,9 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
-import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../widgets";
-import { getSizeInfo } from "../../../_staging/layout/sizing";
+} from "../../../model/index.js";
+import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../widgets/index.js";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 
 export function useKpiPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

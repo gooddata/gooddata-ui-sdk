@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { TableFacade } from "../tableFacade";
+import { TableFacade } from "../tableFacade.js";
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import cx from "classnames";
 import {
@@ -8,10 +8,10 @@ import {
     isScopeCol,
     isSeriesCol,
     isSliceCol,
-} from "./tableDescriptorTypes";
-import { ICorePivotTableProps } from "../../publicTypes";
+} from "./tableDescriptorTypes.js";
+import { ICorePivotTableProps } from "../../publicTypes.js";
 import { isResultTotalHeader } from "@gooddata/sdk-model";
-import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants.js";
 
 export type HeaderClassProvider = (headerClassParams: any) => string;
 

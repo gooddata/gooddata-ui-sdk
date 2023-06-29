@@ -6,8 +6,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IWorkspaceUserGroup } from "@gooddata/sdk-model";
 
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertWorkspaceUserGroup } from "../../../convertors/fromBackend/UserGroupsConverter";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertWorkspaceUserGroup } from "../../../convertors/fromBackend/UserGroupsConverter.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { GdcUserGroup } from "@gooddata/api-model-bear";
 

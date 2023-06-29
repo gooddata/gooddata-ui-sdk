@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 import {
     isObjRef,
     ObjRef,
@@ -13,7 +13,7 @@ import {
     WidgetDescription,
     WidgetFilterOperation,
     WidgetHeader,
-} from "../types/widgetTypes";
+} from "../types/widgetTypes.js";
 
 /**
  * Payload of the {@link ChangeKpiWidgetHeader} command.

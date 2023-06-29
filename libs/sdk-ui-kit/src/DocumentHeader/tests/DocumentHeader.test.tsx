@@ -1,8 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import DocumentHeader, { IDocumentHeaderProps } from "../DocumentHeader";
+import DocumentHeader, { IDocumentHeaderProps } from "../DocumentHeader.js";
 import { Helmet } from "react-helmet";
+import { describe, it, expect } from "vitest";
 
 describe("DocumentHeader", () => {
     const createComponent = (props: IDocumentHeaderProps = {}) => {

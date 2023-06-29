@@ -1,14 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes";
-import { ChangeInsightWidgetVisConfiguration } from "../../commands";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ChangeInsightWidgetVisConfiguration } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardInsightWidgetVisConfigurationChanged } from "../../events";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { DashboardInsightWidgetVisConfigurationChanged } from "../../events/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { put, select } from "redux-saga/effects";
-import { validateExistingInsightWidget } from "./validation/widgetValidations";
-import { layoutActions } from "../../store/layout";
-import { insightWidgetVisConfigurationChanged } from "../../events/insight";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { insightWidgetVisConfigurationChanged } from "../../events/insight.js";
 
 export function* changeInsightWidgetVisConfigurationHandler(
     ctx: DashboardContext,

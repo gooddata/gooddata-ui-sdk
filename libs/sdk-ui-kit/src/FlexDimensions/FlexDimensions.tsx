@@ -1,12 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component, createRef, ReactNode, RefObject } from "react";
 import cx from "classnames";
-import throttle from "lodash/throttle";
-import pickBy from "lodash/pickBy";
+import throttle from "lodash/throttle.js";
+import pickBy from "lodash/pickBy.js";
 
-import { elementRegion } from "../utils/domUtilities";
+import { elementRegion } from "../utils/domUtilities.js";
 
-import { IFlexDimensionsProps, IFlexDimensionsState } from "./typings";
+import { IFlexDimensionsProps, IFlexDimensionsState } from "./typings.js";
 
 /**
  * @internal

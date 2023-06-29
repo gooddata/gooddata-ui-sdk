@@ -3,7 +3,7 @@ import React from "react";
 import { ICatalogAttribute, IDataSetMetadataObject } from "@gooddata/sdk-model";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IUseAttributeElements } from "../../../../../model";
+import { IUseAttributeElements } from "../../../../../model/index.js";
 
 function AttrTooltipElements(props: IUseAttributeElements) {
     const intl = useIntl();

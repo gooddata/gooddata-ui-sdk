@@ -1,15 +1,16 @@
 // (C) 2020-2023 GoodData Corporation
 
-import { getMVS } from "../../_util/test/helper";
-import { IColorMapping } from "../../../../interfaces";
+import { getMVS } from "../../_util/test/helper.js";
+import { IColorMapping } from "../../../../interfaces/index.js";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { ColorFactory } from "../../_chartOptions/colorFactory";
-import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
-import { ScatterPlotColorStrategy } from "../scatterPlotColoring";
+import { ColorFactory } from "../../_chartOptions/colorFactory.js";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
+import { ScatterPlotColorStrategy } from "../scatterPlotColoring.js";
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
-import range from "lodash/range";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import range from "lodash/range.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { describe, it, expect } from "vitest";
 
 describe("ScatterPlotColorStrategy", () => {
     it("should create palette with same color from first measure for all attribute elements", () => {

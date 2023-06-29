@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { TableDescriptor } from "./structure/tableDescriptor";
+import { TableDescriptor } from "./structure/tableDescriptor.js";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     createExportFunction,
@@ -21,36 +21,36 @@ import {
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
     isColumnAutoresizeEnabled,
-} from "./resizing/columnSizing";
-import { IResizedColumns, UIClick } from "../columnWidths";
-import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource";
+} from "./resizing/columnSizing.js";
+import { IResizedColumns, UIClick } from "../columnWidths.js";
+import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource.js";
 import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
 import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
-import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper";
-import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils";
-import { agColId } from "./structure/tableDescriptorTypes";
-import { sleep } from "./utils";
-import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants";
-import { getAvailableDrillTargets } from "./drilling/drillTargets";
-import { IGroupingProvider } from "./data/rowGroupingProvider";
-import identity from "lodash/identity";
-import ApiWrapper from "./base/agApiWrapper";
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
+import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils.js";
+import { agColId } from "./structure/tableDescriptorTypes.js";
+import { sleep } from "./utils.js";
+import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants.js";
+import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
+import { IGroupingProvider } from "./data/rowGroupingProvider.js";
+import identity from "lodash/identity.js";
+import ApiWrapper from "./base/agApiWrapper.js";
 import {
     initializeStickyRow,
     stickyRowExists,
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
-} from "./stickyRowHandler";
+} from "./stickyRowHandler.js";
 import {
     ColumnResizingConfig,
     StickyRowConfig,
     TableDataCallbacks,
     TableConfigAccessors,
     OnExecutionTransformed,
-} from "./privateTypes";
-import { ICorePivotTableProps } from "../publicTypes";
+} from "./privateTypes.js";
+import { ICorePivotTableProps } from "../publicTypes.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;

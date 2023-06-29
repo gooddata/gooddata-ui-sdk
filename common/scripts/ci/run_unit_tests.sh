@@ -98,7 +98,7 @@ RC=1
 
   if [ $RC -eq 0 ]; then
     #
-    # Explicitly limiting parallelism during tests; this is because Jest already does parallel test execution on
+    # Explicitly limiting parallelism during tests; this is because Vitest already does parallel test execution on
     # per-project basis.
     #
 

@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 
-import { DashboardQueries } from "../../queries";
-import { DashboardDispatch } from "../types";
-import { queryEnvelopeWithPromise } from "./queryProcessing";
+import { DashboardQueries } from "../../queries/index.js";
+import { DashboardDispatch } from "../types.js";
+import { queryEnvelopeWithPromise } from "./queryProcessing.js";
 
 /**
  * Dispatches a query and returns a promise to its result.

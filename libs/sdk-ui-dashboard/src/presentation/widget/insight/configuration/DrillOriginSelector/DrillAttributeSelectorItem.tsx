@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
-import { useDashboardSelector, selectCatalogDateDatasets } from "../../../../../model";
+import { useDashboardSelector, selectCatalogDateDatasets } from "../../../../../model/index.js";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 export interface IDrillAttributeSelectorItemStateProps {

@@ -4,23 +4,23 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection";
-import MinMaxControl from "../configurationControls//MinMaxControl";
-import ConfigSection from "../configurationControls/ConfigSection";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
-import CheckboxControl from "../configurationControls/CheckboxControl";
-import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import MinMaxControl from "../configurationControls/MinMaxControl.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
-} from "../../constants/bubble";
+} from "../../constants/bubble.js";
 import { insightHasAttributes } from "@gooddata/sdk-model";
-import NameSubsection from "../configurationControls/axis/NameSubsection";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
-import { messages } from "../../../locales";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import { messages } from "../../../locales.js";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled(): boolean {

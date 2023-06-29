@@ -1,16 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { legendCustomizer } from "../_infra/legendVariants";
+import { scenariosFor } from "../../../src/index.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
 import {
     BarChartWithTwoMeasuresAndViewBy,
     BarChartWithLargeLegend,
     BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
-} from "./base";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
-import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants";
+} from "./base.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    legendResponsiveVariants,
+    legendResponsiveSizeVariants,
+} from "../_infra/legendResponsiveVariants.js";
+import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
 
 const legendScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import React, { useEffect, useState } from "react";
-import { useBackend } from "../../react/BackendContext";
-import { useWorkspace } from "../../react/WorkspaceContext";
-import { TranslationsCustomizationContextProvider } from "./Context";
-import { pickCorrectWording } from "./utils";
+import { useBackend } from "../../react/BackendContext.js";
+import { useWorkspace } from "../../react/WorkspaceContext.js";
+import { TranslationsCustomizationContextProvider } from "./Context.js";
+import { pickCorrectWording } from "./utils.js";
 
 declare global {
     interface Window {

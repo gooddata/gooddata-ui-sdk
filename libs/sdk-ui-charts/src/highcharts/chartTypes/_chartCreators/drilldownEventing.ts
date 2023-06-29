@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
-import debounce from "lodash/debounce";
-import cloneDeep from "lodash/cloneDeep";
-import invariant from "ts-invariant";
+import debounce from "lodash/debounce.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { invariant } from "ts-invariant";
 import {
     ChartElementType,
     ChartType,
@@ -16,9 +16,9 @@ import {
     IDrillPoint,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import Highcharts from "../../lib";
-import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common";
-import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
+import Highcharts from "../../lib/index.js";
+import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
+import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
     switch (type) {

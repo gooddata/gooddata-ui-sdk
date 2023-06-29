@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { LegendLabelItem } from "../LegendLabelItem";
-import { LegendList } from "../LegendList";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types";
+import { LegendLabelItem } from "../LegendLabelItem.js";
+import { LegendList } from "../LegendList.js";
+import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types.js";
 
 const LEGEND_ROW_HEIGHT = 20;
 const LEGEND_TOP_BOTTOM_PADDING = 10;

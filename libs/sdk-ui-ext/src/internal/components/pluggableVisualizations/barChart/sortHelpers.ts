@@ -3,8 +3,8 @@
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IAxisConfig } from "@gooddata/sdk-ui-charts";
 
-import { IReferencePoint } from "../../../interfaces/Visualization";
-import { getBucketItems } from "../../../utils/bucketHelper";
+import { IReferencePoint } from "../../../interfaces/Visualization.js";
+import { getBucketItems } from "../../../utils/bucketHelper.js";
 
 function areAllMeasuresOnSingleAxis(
     buckets: IReferencePoint["buckets"],

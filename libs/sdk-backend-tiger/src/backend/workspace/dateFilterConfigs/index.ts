@@ -2,7 +2,7 @@
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import { idRef, IDateFilterConfig } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
 const DefaultDateFilterConfig: IDateFilterConfig = {
     ref: idRef("defaultDateFilterProjectConfig"),

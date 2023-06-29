@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import { DataValue, IExecutionDefinition, IResultHeader, isResultTotalHeader } from "@gooddata/sdk-model";
 import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
-import isEmpty from "lodash/isEmpty";
-import flatMap from "lodash/flatMap";
-import { dimensionLocalIdentifier } from "../../toBackend/afm/DimensionsConverter";
+import isEmpty from "lodash/isEmpty.js";
+import flatMap from "lodash/flatMap.js";
+import { dimensionLocalIdentifier } from "../../toBackend/afm/DimensionsConverter.js";
 
 /**
  * Transform the grand total structure from Tiger API into a form acceptable by the SDK.

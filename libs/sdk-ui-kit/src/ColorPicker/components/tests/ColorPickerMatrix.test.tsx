@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { ColorFormats } from "tinycolor2";
 
-import { ColorPickerMatrix, IColorPickerMatrixProps } from "../ColorPickerMatrix";
+import { ColorPickerMatrix, IColorPickerMatrixProps } from "../ColorPickerMatrix.js";
+import { describe, it, expect, vi } from "vitest";
 
 const initColor: ColorFormats.HSL = {
     h: 3,
@@ -32,8 +32,8 @@ describe("ColorPickerMatrix", () => {
         expect(colors[23]).toHaveStyle({ backgroundColor: "hsl(3, 100%, 30%)" });
     });
 
-    it("should set selected color", async () => {
-        const selectColorMock = jest.fn();
+    it("should set selected color", () => {
+        const selectColorMock = vi.fn();
         const expectedColor: ColorFormats.HSL = {
             h: 3,
             s: 0.1,
@@ -42,7 +42,7 @@ describe("ColorPickerMatrix", () => {
         renderColorPickerMatrix({ onColorSelected: selectColorMock });
 
         const colors = screen.getAllByRole("color");
-        await userEvent.click(colors[0]);
+        fireEvent.click(colors[0]);
 
         expect(selectColorMock).toHaveBeenCalledTimes(1);
         expect(selectColorMock.mock.calls[0][0]).toEqual(expectedColor);

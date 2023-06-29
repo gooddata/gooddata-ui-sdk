@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { CustomDashboardInsightMenuTitleComponent } from "../types";
+import { CustomDashboardInsightMenuTitleComponent } from "../types.js";
 import { insightTitle, widgetTitle } from "@gooddata/sdk-model";
 
 const OriginalInsightTitle: React.FC<{ title: string }> = (props) => {

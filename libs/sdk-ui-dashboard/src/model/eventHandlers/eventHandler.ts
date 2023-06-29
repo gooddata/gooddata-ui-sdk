@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
-import { IDashboardCommand } from "../commands";
-import { DashboardSelectorEvaluator } from "../store/types";
+import { IDashboardCommand } from "../commands/index.js";
+import { DashboardSelectorEvaluator } from "../store/types.js";
 import {
     ICustomDashboardEvent,
     isDashboardEvent,
@@ -10,7 +10,7 @@ import {
     isDashboardCommandFailed,
     isDashboardCommandStarted,
     DashboardEvents,
-} from "../events";
+} from "../events/index.js";
 
 /**
  * @public

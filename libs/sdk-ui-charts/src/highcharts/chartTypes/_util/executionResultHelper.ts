@@ -9,8 +9,8 @@ import {
     IMeasureDescriptorObject,
     IAttributeDescriptorBody,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
+import { invariant } from "ts-invariant";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 
 //
 // TODO: move all this code to data view facade.

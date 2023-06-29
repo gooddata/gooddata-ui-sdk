@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`change layout section header handler for any dashboard should emit the correct events 1`] = `
-Array [
-  Object {
+exports[`change layout section header handler > for any dashboard > should emit the correct events 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
   },

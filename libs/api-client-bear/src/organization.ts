@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { XhrModule } from "./xhr";
+import { XhrModule } from "./xhr.js";
 import { GdcOrganization } from "@gooddata/api-model-bear";
 
 export class OrganizationModule {

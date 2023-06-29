@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 import cx from "classnames";
 import React from "react";
-import { moveAttributeFilter, useDashboardDispatch } from "../../../model";
-import { getDropZoneDebugStyle } from "../debug";
-import { isAttributeFilterDraggableItem, isAttributeFilterPlaceholderDraggableItem } from "../types";
-import { useDashboardDrop } from "../useDashboardDrop";
+import { moveAttributeFilter, useDashboardDispatch } from "../../../model/index.js";
+import { getDropZoneDebugStyle } from "../debug.js";
+import { isAttributeFilterDraggableItem, isAttributeFilterPlaceholderDraggableItem } from "../types.js";
+import { useDashboardDrop } from "../useDashboardDrop.js";
 
 export type AttributeFilterDropZonePlacement = "inside" | "outside";
 export type AttributeFilterDropZoneHintPosition = "next" | "prev";

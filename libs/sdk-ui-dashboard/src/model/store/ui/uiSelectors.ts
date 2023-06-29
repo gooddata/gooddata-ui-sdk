@@ -2,16 +2,16 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import union from "lodash/union";
-import filter from "lodash/filter";
-import { selectWidgetsMap } from "../layout/layoutSelectors";
-import { DashboardSelector, DashboardState } from "../types";
-import { createMemoizedSelector } from "../_infra/selectors";
-import { IDashboardWidgetOverlay } from "../../types/commonTypes";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
-import { DraggableLayoutItem } from "../../../presentation";
-import { InvalidCustomUrlDrillParameterInfo } from "./uiState";
+import union from "lodash/union.js";
+import filter from "lodash/filter.js";
+import { selectWidgetsMap } from "../layout/layoutSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
+import { InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

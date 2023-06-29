@@ -2,10 +2,10 @@
 import React, { PureComponent, ReactNode } from "react";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 import { v4 as uuid } from "uuid";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import cx from "classnames";
 
-import { IHeaderMenuProps, IHeaderMenuItem } from "./typings";
+import { IHeaderMenuProps, IHeaderMenuItem } from "./typings.js";
 
 class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponentProps> {
     static defaultProps: Pick<IHeaderMenuProps, "className" | "onMenuItemClick" | "sections"> = {

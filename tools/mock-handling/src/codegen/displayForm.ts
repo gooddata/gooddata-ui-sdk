@@ -2,7 +2,7 @@
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import { DisplayFormRecording } from "../recordings/displayForms";
+import { DisplayFormRecording } from "../recordings/displayForms.js";
 
 function displayFormRecordingInit(rec: DisplayFormRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());

@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
-import { drillTargetsAdapter } from "./drillTargetsEntityAdapter";
+import { drillTargetsAdapter } from "./drillTargetsEntityAdapter.js";
 
 const drillTargetsSlice = createSlice({
     name: "drillTargets",

@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import {
     idRef,
     IInsight,
@@ -26,10 +26,10 @@ import {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDrillOriginLocalIdentifier,
     getLocalIdentifierOrDie,
-} from "../../../../_staging/drills/drillingUtils";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
-import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill";
-import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes";
+} from "../../../../_staging/drills/drillingUtils.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";
+import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
 
 export function validateDrillDefinitionOrigin(
     drillDefinition: InsightDrillDefinition,

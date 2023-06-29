@@ -12,7 +12,7 @@ import {
     isMeasureGroupDescriptor,
     isResultTotalHeader as isResultTotalHeaderModel,
 } from "@gooddata/sdk-model";
-import { DateFormatter, DateParseFormatter } from "../dateFormatting/types";
+import { DateFormatter, DateParseFormatter } from "../dateFormatting/types.js";
 import {
     AttributeExecutionResultHeader,
     DimensionHeader,
@@ -25,9 +25,9 @@ import {
     ExecutionResultGrandTotal,
     ExecutionResultHeader,
 } from "@gooddata/api-client-tiger";
-import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
-import { toSdkGranularity } from "../dateGranularityConversions";
-import { FormattingLocale } from "../dateFormatting/defaultDateFormatter";
+import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter.js";
+import { toSdkGranularity } from "../dateGranularityConversions.js";
+import { FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
 
 type DateAttributeFormatProps = {
     granularity: DateAttributeGranularity;

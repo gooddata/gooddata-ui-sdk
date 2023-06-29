@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter from model to AFM with all attributes 1`] = `
-Object {
-  "absoluteDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter from model to AFM with all attributes 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -15,15 +15,15 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'from' attribute 1`] = `null`;
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter without 'from' attribute 1`] = `null`;
 
-exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'to' attribute 1`] = `null`;
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter without 'to' attribute 1`] = `null`;
 
-exports[`tiger filter converter from model to AFM convert filter should return absolute date filter 1`] = `
-Object {
-  "absoluteDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return absolute date filter 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -34,10 +34,10 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return comparison measure value filter 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return comparison measure value filter 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "measure": {
       "localIdentifier": "m_acugFHNJgsBy",
     },
     "operator": "GREATER_THAN",
@@ -47,10 +47,10 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return comparison measure value filter with treatNullValueAs 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return comparison measure value filter with treatNullValueAs 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "measure": {
       "localIdentifier": "m_acugFHNJgsBy",
     },
     "operator": "GREATER_THAN",
@@ -60,17 +60,17 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "label": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return negative attribute filter 1`] = `
+{
+  "negativeAttributeFilter": {
+    "label": {
+      "identifier": {
         "id": "label.product.id.name",
         "type": "label",
       },
     },
-    "notIn": Object {
-      "values": Array [
+    "notIn": {
+      "values": [
         "value 2",
       ],
     },
@@ -78,18 +78,18 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter with applyOnResult false 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return negative attribute filter with applyOnResult false 1`] = `
+{
+  "negativeAttributeFilter": {
     "applyOnResult": false,
-    "label": Object {
-      "identifier": Object {
+    "label": {
+      "identifier": {
         "id": "label.product.id.name",
         "type": "label",
       },
     },
-    "notIn": Object {
-      "values": Array [
+    "notIn": {
+      "values": [
         "value 2",
       ],
     },
@@ -97,17 +97,17 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter with uri attribute elements 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "label": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return negative attribute filter with uri attribute elements 1`] = `
+{
+  "negativeAttributeFilter": {
+    "label": {
+      "identifier": {
         "id": "label.product.id.name",
         "type": "label",
       },
     },
-    "notIn": Object {
-      "values": Array [
+    "notIn": {
+      "values": [
         "value",
       ],
     },
@@ -115,16 +115,16 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "in": Object {
-      "values": Array [
+exports[`tiger filter converter from model to AFM > convert filter > should return positive attribute filter 1`] = `
+{
+  "positiveAttributeFilter": {
+    "in": {
+      "values": [
         "value",
       ],
     },
-    "label": Object {
-      "identifier": Object {
+    "label": {
+      "identifier": {
         "id": "label.product.id.name",
         "type": "label",
       },
@@ -133,17 +133,17 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter with applyOnResult true 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return positive attribute filter with applyOnResult true 1`] = `
+{
+  "positiveAttributeFilter": {
     "applyOnResult": true,
-    "in": Object {
-      "values": Array [
+    "in": {
+      "values": [
         "value",
       ],
     },
-    "label": Object {
-      "identifier": Object {
+    "label": {
+      "identifier": {
         "id": "label.product.id.name",
         "type": "label",
       },
@@ -152,16 +152,16 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter with uri attribute elements 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "in": Object {
-      "values": Array [
+exports[`tiger filter converter from model to AFM > convert filter > should return positive attribute filter with uri attribute elements 1`] = `
+{
+  "positiveAttributeFilter": {
+    "in": {
+      "values": [
         "value",
       ],
     },
-    "label": Object {
-      "identifier": Object {
+    "label": {
+      "identifier": {
         "id": "label.product.id.name",
         "type": "label",
       },
@@ -170,11 +170,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return range measure value filter 1`] = `
-Object {
-  "rangeMeasureValueFilter": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter 1`] = `
+{
+  "rangeMeasureValueFilter": {
     "from": 64,
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_acugFHNJgsBy",
     },
     "operator": "BETWEEN",
@@ -184,11 +184,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return range measure value filter with crossed boundaries 1`] = `
-Object {
-  "rangeMeasureValueFilter": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter with crossed boundaries 1`] = `
+{
+  "rangeMeasureValueFilter": {
     "from": 64,
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_acugFHNJgsBy",
     },
     "operator": "BETWEEN",
@@ -198,11 +198,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return range measure value filter with treatNullValueAs 1`] = `
-Object {
-  "rangeMeasureValueFilter": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter with treatNullValueAs 1`] = `
+{
+  "rangeMeasureValueFilter": {
     "from": 64,
-    "measure": Object {
+    "measure": {
       "localIdentifier": "m_acugFHNJgsBy",
     },
     "operator": "BETWEEN",
@@ -212,11 +212,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return ranking filter 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measures": Array [
-      Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return ranking filter 1`] = `
+{
+  "rankingFilter": {
+    "measures": [
+      {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     ],
@@ -226,19 +226,19 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return ranking filter with attributes 1`] = `
-Object {
-  "rankingFilter": Object {
-    "dimensionality": Array [
-      Object {
-        "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return ranking filter with attributes 1`] = `
+{
+  "rankingFilter": {
+    "dimensionality": [
+      {
+        "identifier": {
           "id": "label.stage.isactive",
           "type": "label",
         },
       },
     ],
-    "measures": Array [
-      Object {
+    "measures": [
+      {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     ],
@@ -248,11 +248,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert filter should return relative date filter 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert filter > should return relative date filter 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -264,11 +264,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using id of metric 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "measure": {
+      "identifier": {
         "id": "measureId",
         "type": "metric",
       },
@@ -280,11 +280,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using id of metric 2`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 2`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "measure": {
+      "identifier": {
         "id": "factId",
         "type": "fact",
       },
@@ -296,10 +296,10 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using localId of metric specified as string 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using localId of metric specified as string 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "measure": {
       "localIdentifier": "localId",
     },
     "operator": "GREATER_THAN",
@@ -309,10 +309,10 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using localId of metric specified by value 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using localId of metric specified by value 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "measure": {
       "localIdentifier": "m_aangOxLSeztu",
     },
     "operator": "GREATER_THAN",
@@ -322,13 +322,13 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert measure value filter should throw exception if filter has idRef without type 1`] = `"Incomplete object specification in {\\"identifier\\":\\"ambiguous\\"}. You must provide both id and type of object you want to reference."`;
+exports[`tiger filter converter from model to AFM > convert measure value filter > should throw exception if filter has idRef without type 1`] = `"Incomplete object specification in {\\"identifier\\":\\"ambiguous\\"}. You must provide both id and type of object you want to reference."`;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with date granularity 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with date granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -340,11 +340,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with missing 'to' parameter 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with missing 'to' parameter 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -356,13 +356,13 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with mission 'from' parameter 1`] = `null`;
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with mission 'from' parameter 1`] = `null`;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with month granularity 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with month granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -374,11 +374,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with quarter granularity 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with quarter granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -390,11 +390,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with week granularity 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with week granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },
@@ -406,11 +406,11 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with year granularity 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with year granularity 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
         "id": "closed.dataset.dt",
         "type": "dataset",
       },

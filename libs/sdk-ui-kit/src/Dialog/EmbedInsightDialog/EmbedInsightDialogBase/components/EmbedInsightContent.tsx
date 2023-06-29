@@ -1,12 +1,12 @@
 // (C) 2022-2023 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { IReactOptions, IWebComponentsOptions, EmbedOptionsType } from "../types";
-import { EmbedInsightCodeArea } from "./CodeArea";
+import { IReactOptions, IWebComponentsOptions, EmbedOptionsType } from "../types.js";
+import { EmbedInsightCodeArea } from "./CodeArea.js";
 
-import { PrepareEnvMessage } from "./PrepareEnvMessage";
-import { ReactOptions } from "./ReactOptions";
-import { WebComponentsOptions } from "./WebComponentsOptions";
+import { PrepareEnvMessage } from "./PrepareEnvMessage.js";
+import { ReactOptions } from "./ReactOptions.js";
+import { WebComponentsOptions } from "./WebComponentsOptions.js";
 
 interface IEmbedInsightContentProps {
     integrationDocLink: string;

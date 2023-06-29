@@ -1,17 +1,17 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ColorFormats } from "tinycolor2";
 
-import { Button } from "../Button";
+import { Button } from "../Button/index.js";
 
-import { ColorPickerMatrix } from "./components/ColorPickerMatrix";
-import { HexColorInput } from "./components/HexColorInput";
-import { HueColorPicker } from "./components/HueColorPicker";
-import { ColorsPreview } from "./components/ColorsPreview";
-import { getRgbFromHslColor, getHslFromRgbColor, isHslColorBlackOrWhite } from "./utils";
-import { IColorPickerProps, IColorPickerState } from "./typings";
+import { ColorPickerMatrix } from "./components/ColorPickerMatrix.js";
+import { HexColorInput } from "./components/HexColorInput.js";
+import { HueColorPicker } from "./components/HueColorPicker.js";
+import { ColorsPreview } from "./components/ColorsPreview.js";
+import { getRgbFromHslColor, getHslFromRgbColor, isHslColorBlackOrWhite } from "./utils.js";
+import { IColorPickerProps, IColorPickerState } from "./typings.js";
 
 class WrappedColorPicker extends Component<IColorPickerProps & WrappedComponentProps, IColorPickerState> {
     constructor(props: IColorPickerProps & WrappedComponentProps) {

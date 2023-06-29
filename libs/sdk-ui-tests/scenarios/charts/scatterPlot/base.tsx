@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const ScatterPlotWithMeasuresAndAttribute = {
     xAxisMeasure: ReferenceMd.Amount,

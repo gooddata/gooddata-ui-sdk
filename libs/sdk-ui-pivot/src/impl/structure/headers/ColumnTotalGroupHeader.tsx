@@ -2,7 +2,7 @@
 import { IHeaderGroupParams } from "@ag-grid-community/all-modules";
 import React from "react";
 
-import TotalHeaderCell, { ALIGN_LEFT } from "./TotalHeaderCell";
+import TotalHeaderCell, { ALIGN_LEFT } from "./TotalHeaderCell.js";
 
 export const ColumnTotalGroupHeader: React.FC<IHeaderGroupParams> = (props) => {
     return (

@@ -2,9 +2,9 @@
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { isUri } from "@gooddata/api-client-bear";
-import isArray from "lodash/isArray";
-import isObject from "lodash/isObject";
-import isString from "lodash/isString";
+import isArray from "lodash/isArray.js";
+import isObject from "lodash/isObject.js";
+import isString from "lodash/isString.js";
 import { v4 as uuidv4 } from "uuid";
 
 /*

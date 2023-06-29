@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React, { Component } from "react";
-import { Overlay } from "../Overlay";
-import { DialogBase } from "./DialogBase";
-import { IDialogBaseProps } from "./typings";
+import { Overlay } from "../Overlay/index.js";
+import { DialogBase } from "./DialogBase.js";
+import { IDialogBaseProps } from "./typings.js";
 
 /**
  * @internal

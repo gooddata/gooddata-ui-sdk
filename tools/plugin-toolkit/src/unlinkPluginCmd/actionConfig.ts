@@ -1,19 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
+import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { ActionOptions } from "../_base/types";
-import { createBackend } from "../_base/backend";
-import { getDashboardFromOptions } from "../_base/inputHandling/extractors";
+import { ActionOptions } from "../_base/types.js";
+import { createBackend } from "../_base/backend.js";
+import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
 import ora from "ora";
 import {
     asyncValidOrDie,
     createDashboardValidator,
     createWorkspaceValidator,
     InputValidator,
-} from "../_base/inputHandling/validators";
-import isEmpty from "lodash/isEmpty";
-import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
-import { promptDashboardIdWithoutChoice } from "../_base/terminal/prompts";
+} from "../_base/inputHandling/validators.js";
+import isEmpty from "lodash/isEmpty.js";
+import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils.js";
+import { promptDashboardIdWithoutChoice } from "../_base/terminal/prompts.js";
 
 export type UnlinkCmdActionConfig = WorkspaceTargetConfig & {
     /**

@@ -1,11 +1,11 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import LinesEllipsis from "react-lines-ellipsis";
-import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
+import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC.js";
 
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 
-import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer";
+import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer.js";
 
 interface IDashboardItemHeadlineProps {
     title: string;

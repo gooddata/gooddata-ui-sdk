@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 
-import { Color, IIconProps } from "../typings";
+import { Color, IIconProps } from "../typings.js";
 
 /**
  * @internal

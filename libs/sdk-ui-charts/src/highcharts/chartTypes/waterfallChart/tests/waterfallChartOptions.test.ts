@@ -3,15 +3,20 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DefaultColorPalette, IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { IColorDescriptor } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { WaterfallChartColorStrategy } from "../waterfallChartColoring";
-import { getWaterfallChartSeries } from "../waterfallChartsSeries";
-import { getMVS } from "../../_util/test/helper";
-import { buildWaterfallChartSeries, getColorAssignment, getTotalColumnColor } from "../waterfallChartOptions";
-import { IChartConfig, ITotalConfig } from "../../../../interfaces";
-import { ISeriesItem } from "../../../typings/unsafe";
-import { getDrillableSeries } from "../../_chartOptions/chartDrilling";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { WaterfallChartColorStrategy } from "../waterfallChartColoring.js";
+import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
+import { getMVS } from "../../_util/test/helper.js";
+import {
+    buildWaterfallChartSeries,
+    getColorAssignment,
+    getTotalColumnColor,
+} from "../waterfallChartOptions.js";
+import { IChartConfig, ITotalConfig } from "../../../../interfaces/index.js";
+import { ISeriesItem } from "../../../typings/unsafe.js";
+import { getDrillableSeries } from "../../_chartOptions/chartDrilling.js";
 
 const emptyHeaderTitle = "Total";
 

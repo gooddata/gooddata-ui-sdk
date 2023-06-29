@@ -5,7 +5,8 @@ import {
     otherHeader,
     getRecommendedDateDataset,
     preselectDateDataset,
-} from "../dateDatasets";
+} from "../dateDatasets.js";
+import { describe, it, expect } from "vitest";
 
 describe("dateDatasets", () => {
     describe("getRecommendedDateDataset", () => {

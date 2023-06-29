@@ -1,20 +1,21 @@
 // (C) 2007-2021 GoodData Corporation
+import { describe, expect, it, beforeEach, afterEach } from "vitest";
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
-import range from "lodash/range";
-import cloneDeep from "lodash/cloneDeep";
+import fetchMock from "fetch-mock/esm/client.js";
+import range from "lodash/range.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
-import { ExperimentalExecutionsModule } from "../experimental-executions";
-import { AttributesMapLoaderModule } from "../../utils/attributesMapLoader";
-import { XhrModule } from "../../xhr";
-import { MetadataModule } from "../../metadata";
-import { IMetricDefinition } from "../../interfaces";
+import { ExperimentalExecutionsModule } from "../experimental-executions.js";
+import { AttributesMapLoaderModule } from "../../utils/attributesMapLoader.js";
+import { XhrModule } from "../../xhr.js";
+import { MetadataModule } from "../../metadata.js";
+import { IMetricDefinition } from "../../interfaces.js";
 import { pretty } from "js-object-pretty-print";
-import first from "lodash/first";
-import sortBy from "lodash/sortBy";
+import first from "lodash/first.js";
+import sortBy from "lodash/sortBy.js";
 import levenshtein from "fast-levenshtein";
-import includes from "lodash/includes";
-import find from "lodash/find";
+import includes from "lodash/includes.js";
+import find from "lodash/find.js";
 
 interface IReportDefinition {
     columns: string[];

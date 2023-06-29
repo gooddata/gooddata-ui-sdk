@@ -8,7 +8,7 @@ import {
     Bubble,
     DESCRIPTION_PANEL_ARROW_OFFSETS,
 } from "@gooddata/sdk-ui-kit";
-import { IDescriptionClickTriggerProps } from "./types";
+import { IDescriptionClickTriggerProps } from "./types.js";
 
 const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "tr tl" },

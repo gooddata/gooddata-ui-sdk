@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
-
+import { describe, it, expect } from "vitest";
 import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { CacheControl, withCaching } from "../index";
-import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
+import { CacheControl, withCaching } from "../index.js";
+import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     IAttributeOrMeasure,
@@ -13,7 +13,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
-import { withEventing } from "../../eventingBackend";
+import { withEventing } from "../../eventingBackend/index.js";
 
 const defaultBackend = dummyBackendEmptyData();
 

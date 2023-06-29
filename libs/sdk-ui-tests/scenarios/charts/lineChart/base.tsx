@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const LineChartTwoMeasuresWithTrendyBy = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
@@ -90,7 +90,4 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
         "with one measure and trend by date and segment by date",
         LineChartWithTrendByDateAndSegmentByDate,
     )
-    .addScenario(
-        "with two measures and null values",
-        LineChartViewByDate,
-    );
+    .addScenario("with two measures and null values", LineChartViewByDate);

@@ -5,7 +5,7 @@
  */
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { StorybookBackend, ReferenceWorkspaceId } from "./backend";
+import { StorybookBackend, ReferenceWorkspaceId } from "./backend.js";
 
 const configureWebComponentsBackend = (backend: IAnalyticalBackend, workspaceId: string) => {
     // preview-head.html loads after this file.

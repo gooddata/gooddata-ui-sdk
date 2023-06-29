@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 
-import { TitleWrapper } from "./TitleWrapper";
-import { CustomTitleComponent } from "./types";
+import { TitleWrapper } from "./TitleWrapper.js";
+import { CustomTitleComponent } from "./types.js";
 
 /**
  * @alpha

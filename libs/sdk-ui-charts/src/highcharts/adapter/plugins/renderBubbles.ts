@@ -9,9 +9,9 @@
  *  - Set default size for bubbles in bubble chart where size value is not provided
  *  - Fix bubbles is not rendered with min/max config
  */
-import isNil from "lodash/isNil";
-import Highcharts from "../../lib";
-import { IHighchartsAxisExtend } from "../../typings/extend";
+import isNil from "lodash/isNil.js";
+import Highcharts from "../../lib/index.js";
+import { IHighchartsAxisExtend } from "../../typings/extend.js";
 import { SeriesMapbubbleOptions } from "highcharts";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;

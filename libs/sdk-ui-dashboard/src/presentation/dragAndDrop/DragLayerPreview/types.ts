@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { XYCoord } from "react-dnd";
-import { DraggableInternalItem, DraggableItem } from "../types";
+import { DraggableInternalItem, DraggableItem } from "../types.js";
 
 export type ReachedResizingLimit = "min" | "max" | "none";
 

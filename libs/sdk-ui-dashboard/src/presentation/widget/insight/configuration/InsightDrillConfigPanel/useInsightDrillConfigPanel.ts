@@ -13,12 +13,12 @@ import {
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model";
-import invariant from "ts-invariant";
-import { getMappedConfigForWidget } from "./drillConfigMapper";
-import { IDrillConfigItem } from "../../../../drill/types";
+} from "../../../../../model/index.js";
+import { invariant } from "ts-invariant";
+import { getMappedConfigForWidget } from "./drillConfigMapper.js";
+import { IDrillConfigItem } from "../../../../drill/types.js";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { useIncompleteItems } from "./useDrillConfigIncompleteItems";
+import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
 const messages = defineMessages({
     added: { id: "messages.drill.InteractionConfiguredSuccess" },

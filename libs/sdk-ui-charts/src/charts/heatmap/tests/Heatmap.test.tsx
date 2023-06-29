@@ -2,16 +2,17 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import { Heatmap } from "../Heatmap";
-import { CoreHeatmap } from "../CoreHeatmap";
+import { Heatmap } from "../Heatmap.js";
+import { CoreHeatmap } from "../CoreHeatmap.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreHeatmap", () => ({
-    CoreHeatmap: jest.fn(() => null),
+vi.mock("../CoreHeatmap", () => ({
+    CoreHeatmap: vi.fn(() => null),
 }));
 
 describe("Heatmap", () => {

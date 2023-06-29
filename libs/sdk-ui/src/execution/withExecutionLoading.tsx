@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import {
     CancelledSdkError,
@@ -13,7 +13,7 @@ import {
     IExportFunction,
     isCancelError,
     makeCancelable,
-} from "../base";
+} from "../base/index.js";
 
 /**
  * Structure specifying a particular portion of data.

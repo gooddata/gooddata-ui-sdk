@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(...ScenarioGroupNames.Theming)

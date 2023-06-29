@@ -7,11 +7,11 @@ import {
     IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { JsonApiWorkspaceOutList, OrganizationUtilities } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../types";
-import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
-import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
+import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { TigerWorkspace } from "../workspace";
+import { TigerWorkspace } from "../workspace/index.js";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(

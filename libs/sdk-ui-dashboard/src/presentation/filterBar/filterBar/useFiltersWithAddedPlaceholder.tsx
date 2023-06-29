@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
-import partition from "lodash/partition";
+import partition from "lodash/partition.js";
 import {
     areObjRefsEqual,
     FilterContextItem,
@@ -19,7 +19,7 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
+} from "../../../model/index.js";
 
 /**
  * @internal

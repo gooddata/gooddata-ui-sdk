@@ -1,18 +1,19 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
-import { ChartTransformation } from "../ChartTransformation";
-import { HighChartsRenderer } from "../adapter/HighChartsRenderer";
-import { IChartConfig } from "../../interfaces";
+import { ChartTransformation } from "../ChartTransformation.js";
+import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
+import { IChartConfig } from "../../interfaces/index.js";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
-import { TOP, BOTTOM, MIDDLE } from "../constants/alignments";
+import { TOP, BOTTOM, MIDDLE } from "../constants/alignments.js";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import * as fixtures from "../../../__mocks__/fixtures";
-import { recordedDataFacade } from "../../../__mocks__/recordings";
+import * as fixtures from "../../../__mocks__/fixtures.js";
+import { recordedDataFacade } from "../../../__mocks__/recordings.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const BarChartNoAttributes = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
 const BarChartView = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
@@ -28,14 +29,14 @@ const PieChartSingleMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.P
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../adapter/HighChartsRenderer", () => ({
-    ...(jest.requireActual("../adapter/HighChartsRenderer") as object),
-    HighChartsRenderer: jest.fn(() => null),
+vi.mock("../adapter/HighChartsRenderer", async () => ({
+    ...((await vi.importActual("../adapter/HighChartsRenderer")) as object),
+    HighChartsRenderer: vi.fn(() => null),
 }));
 
 describe("ChartTransformation", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     const defaultProps = {
@@ -59,7 +60,7 @@ describe("ChartTransformation", () => {
     }
 
     it("should use custom renderer", () => {
-        const renderer = jest.fn().mockReturnValue(<div />);
+        const renderer = vi.fn().mockReturnValue(<div />);
         render(createComponent({ renderer }));
         expect(renderer).toHaveBeenCalledTimes(1);
     });
@@ -116,8 +117,8 @@ describe("ChartTransformation", () => {
         };
         let pushData: any;
         function createChartRendererProps(executionData = BarChartViewAndStack, config: IChartConfig = {}) {
-            const renderer = jest.fn().mockReturnValue(<div />);
-            pushData = jest.fn();
+            const renderer = vi.fn().mockReturnValue(<div />);
+            pushData = vi.fn();
             render(
                 createComponent({
                     renderer,
@@ -159,7 +160,7 @@ describe("ChartTransformation", () => {
 
     describe("onDataTooLarge", () => {
         it("should be invoked if data series is over limit", () => {
-            const onDataTooLarge = jest.fn();
+            const onDataTooLarge = vi.fn();
             const props = {
                 ...BarChartMultipleMeasures,
                 onDataTooLarge,
@@ -175,7 +176,7 @@ describe("ChartTransformation", () => {
         });
 
         it("should be invoked if data categories is over limit", () => {
-            const onDataTooLarge = jest.fn();
+            const onDataTooLarge = vi.fn();
             const props = {
                 ...BarChartMultipleMeasures,
                 onDataTooLarge,
@@ -191,7 +192,7 @@ describe("ChartTransformation", () => {
         });
 
         it("should be invoked on component mount", () => {
-            const onDataTooLarge = jest.fn();
+            const onDataTooLarge = vi.fn();
             const props = {
                 ...BarChartMultipleMeasures,
                 onDataTooLarge,
@@ -218,7 +219,7 @@ describe("ChartTransformation", () => {
         };
 
         it("should be invoked if pie chart data contains a negative value", () => {
-            const onNegativeValues = jest.fn();
+            const onNegativeValues = vi.fn();
             const props = {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
@@ -228,7 +229,7 @@ describe("ChartTransformation", () => {
         });
 
         it("should not be invoke on other than pie charts", () => {
-            const onNegativeValues = jest.fn();
+            const onNegativeValues = vi.fn();
             const props = {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
@@ -242,7 +243,7 @@ describe("ChartTransformation", () => {
         });
 
         it("should not be invoked if data is too large as well", () => {
-            const onNegativeValues = jest.fn();
+            const onNegativeValues = vi.fn();
             const props = {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
@@ -259,7 +260,7 @@ describe("ChartTransformation", () => {
         });
 
         it("should be invoked on component mount", () => {
-            const onNegativeValues = jest.fn();
+            const onNegativeValues = vi.fn();
             const props = {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,

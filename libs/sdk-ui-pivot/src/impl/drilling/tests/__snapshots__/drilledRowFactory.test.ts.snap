@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createDrilledRow creates drill row with extracted id when /gdc uri 1`] = `
-Array [
-  Object {
+exports[`createDrilledRow > creates drill row with extracted id when /gdc uri 1`] = `
+[
+  {
     "id": "165678",
     "name": "CompuSci",
     "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
   },
-  Object {
+  {
     "id": "460487",
     "name": "Direct Sales",
     "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
@@ -23,14 +23,14 @@ Array [
 ]
 `;
 
-exports[`createDrilledRow creates drill row with extracted id when no link in attribute uri 1`] = `
-Array [
-  Object {
+exports[`createDrilledRow > creates drill row with extracted id when no link in attribute uri 1`] = `
+[
+  {
     "id": "arbitrary_pk_that_is_not_link",
     "name": "value1",
     "uri": "arbitrary_pk_that_is_not_link",
   },
-  Object {
+  {
     "id": "arbitrary_pk_that_is_not_a_link",
     "name": "value2",
     "uri": "arbitrary_pk_that_is_not_a_link",
@@ -46,14 +46,14 @@ Array [
 ]
 `;
 
-exports[`createDrilledRow creates drill row with name when formattedName is present 1`] = `
-Array [
-  Object {
+exports[`createDrilledRow > creates drill row with name when formattedName is present 1`] = `
+[
+  {
     "id": "arbitrary_pk_that_is_not_link",
     "name": "value1",
     "uri": "arbitrary_pk_that_is_not_link",
   },
-  Object {
+  {
     "id": "arbitrary_pk_that_is_not_a_link",
     "name": "value2",
     "uri": "arbitrary_pk_that_is_not_a_link",

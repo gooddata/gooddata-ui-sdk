@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React, { ReactNode } from "react";
 
-import { BackstopConfig } from "../../../../_infra/backstopScenario";
-import { FilterStories } from "../../../../_infra/storyGroups";
-import { storiesOf } from "../../../../_infra/storyRepository";
-import { wrapWithTheme } from "../../../themeWrapper";
+import { BackstopConfig } from "../../../../_infra/backstopScenario.js";
+import { FilterStories } from "../../../../_infra/storyGroups.js";
+import { storiesOf } from "../../../../_infra/storyRepository.js";
+import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import { action } from "@storybook/addon-actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";

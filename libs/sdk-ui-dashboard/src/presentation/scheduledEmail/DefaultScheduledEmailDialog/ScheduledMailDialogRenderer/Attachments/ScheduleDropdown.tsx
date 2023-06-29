@@ -3,7 +3,7 @@ import * as React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Dropdown, Button } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
-import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";
+import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants.js";
 
 const ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },

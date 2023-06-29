@@ -3,9 +3,9 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
 import { race, put, call, take, takeEvery, cancelled, SagaReturnType } from "redux-saga/effects";
 
-import { ILoadElementsResult } from "../../../types";
-import { elementsSaga } from "../elements/elementsSaga";
-import { actions } from "../store/slice";
+import { ILoadElementsResult } from "../../../types/index.js";
+import { elementsSaga } from "../elements/elementsSaga.js";
+import { actions } from "../store/slice.js";
 
 /**
  * @internal

@@ -11,17 +11,17 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import filter from "lodash/fp/filter";
-import flow from "lodash/fp/flow";
-import fromPairs from "lodash/fromPairs";
-import isNil from "lodash/isNil";
-import toPairs from "lodash/toPairs";
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor";
+import filter from "lodash/fp/filter.js";
+import flow from "lodash/fp/flow.js";
+import fromPairs from "lodash/fromPairs.js";
+import isNil from "lodash/isNil.js";
+import toPairs from "lodash/toPairs.js";
+import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     IInsightToPropConversion,
     sdkModelPropMetas,
     PropWithMeta,
-} from "../../../utils/embeddingCodeGenerator";
+} from "../../../utils/embeddingCodeGenerator/index.js";
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "center",

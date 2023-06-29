@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes";
+import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import { all, call, SagaReturnType, select } from "redux-saga/effects";
-import { createQueryService } from "../store/_infra/queryService";
+import { createQueryService } from "../store/_infra/queryService.js";
 import {
     areObjRefsEqual,
     filterObjRef,
@@ -32,17 +32,17 @@ import {
     IMetadataObject,
     isInsightWidget,
 } from "@gooddata/sdk-model";
-import { QueryWidgetFilters } from "../queries/widgets";
-import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors";
-import { selectInsightByRef } from "../store/insights/insightsSelectors";
-import { invalidQueryArguments } from "../events/general";
-import compact from "lodash/compact";
-import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors";
-import { DashboardState } from "../store/types";
-import { resolveDisplayFormMetadata } from "../utils/displayFormResolver";
-import invariant from "ts-invariant";
-import isEmpty from "lodash/isEmpty";
-import { ExtendedDashboardWidget, ICustomWidget } from "../types/layoutTypes";
+import { QueryWidgetFilters } from "../queries/widgets.js";
+import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors.js";
+import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
+import { invalidQueryArguments } from "../events/general.js";
+import compact from "lodash/compact.js";
+import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors.js";
+import { DashboardState } from "../store/types.js";
+import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
+import { invariant } from "ts-invariant";
+import isEmpty from "lodash/isEmpty.js";
+import { ExtendedDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 

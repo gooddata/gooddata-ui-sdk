@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getBulletChartSeries should return expected bullet chart series 1`] = `
-Array [
-  Object {
+exports[`getBulletChartSeries > should return expected bullet chart series 1`] = `
+[
+  {
     "bulletChartMeasureType": "primary",
     "color": "rgb(255,0,0)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Won",
@@ -25,15 +25,15 @@ Array [
 ]
 `;
 
-exports[`getBulletChartSeries should return expected bullet chart series 2`] = `
-Array [
-  Object {
+exports[`getBulletChartSeries > should return expected bullet chart series 2`] = `
+[
+  {
     "bulletChartMeasureType": "primary",
     "color": "rgb(0,0,255)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Won",
@@ -47,13 +47,13 @@ Array [
     "seriesIndex": 0,
     "zIndex": 1,
   },
-  Object {
+  {
     "bulletChartMeasureType": "comparative",
     "color": "rgb(217,220,226)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Amount",
@@ -69,15 +69,15 @@ Array [
 ]
 `;
 
-exports[`getBulletChartSeries should return expected bullet chart series 3`] = `
-Array [
-  Object {
+exports[`getBulletChartSeries > should return expected bullet chart series 3`] = `
+[
+  {
     "bulletChartMeasureType": "primary",
     "color": "rgb(255,0,0)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Won",
@@ -91,13 +91,13 @@ Array [
     "seriesIndex": 0,
     "zIndex": 1,
   },
-  Object {
+  {
     "bulletChartMeasureType": "target",
     "color": "rgb(179,0,0)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Amount",
@@ -109,7 +109,7 @@ Array [
     "name": "Amount",
     "pointPadding": 0,
     "seriesIndex": 1,
-    "targetOptions": Object {
+    "targetOptions": {
       "width": "100%",
     },
     "type": "bullet",
@@ -118,15 +118,15 @@ Array [
 ]
 `;
 
-exports[`getBulletChartSeries should return expected bullet chart series 4`] = `
-Array [
-  Object {
+exports[`getBulletChartSeries > should return expected bullet chart series 4`] = `
+[
+  {
     "bulletChartMeasureType": "primary",
     "color": "rgb(0,0,255)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Won",
@@ -140,13 +140,13 @@ Array [
     "seriesIndex": 0,
     "zIndex": 1,
   },
-  Object {
+  {
     "bulletChartMeasureType": "target",
     "color": "rgb(0,0,179)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Amount",
@@ -158,19 +158,19 @@ Array [
     "name": "Amount",
     "pointPadding": 0,
     "seriesIndex": 1,
-    "targetOptions": Object {
+    "targetOptions": {
       "width": "100%",
     },
     "type": "bullet",
     "zIndex": 2,
   },
-  Object {
+  {
     "bulletChartMeasureType": "comparative",
     "color": "rgb(217,220,226)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "#,##0.00",
-        "marker": Object {
+        "marker": {
           "enabled": true,
         },
         "name": "Calculated 'Lost' measure",

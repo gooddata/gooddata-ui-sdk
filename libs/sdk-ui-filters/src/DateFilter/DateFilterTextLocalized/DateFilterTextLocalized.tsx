@@ -2,8 +2,8 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { resolveLocale } from "@gooddata/sdk-ui";
-import { DateFilterOption } from "../interfaces";
-import { getDateFilterTitle } from "../utils/Translations/DateFilterTitle";
+import { DateFilterOption } from "../interfaces/index.js";
+import { getDateFilterTitle } from "../utils/Translations/DateFilterTitle.js";
 
 interface IDateFilterTextLocalizedProps {
     dateFormat: string;

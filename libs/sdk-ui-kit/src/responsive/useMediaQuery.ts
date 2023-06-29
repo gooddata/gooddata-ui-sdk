@@ -1,8 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
-import { useResponsiveContext } from "./ResponsiveContext";
+import { useResponsiveContext } from "./ResponsiveContext.js";
 import { useMediaQuery as useReactResponsiveMediaQuery } from "react-responsive";
-import invariant from "ts-invariant";
-import { IMediaQueries } from "./interfaces";
+import { invariant } from "ts-invariant";
+import { IMediaQueries } from "./interfaces.js";
 
 const SCREEN = "only screen";
 

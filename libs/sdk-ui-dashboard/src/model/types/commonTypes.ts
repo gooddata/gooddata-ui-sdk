@@ -10,10 +10,10 @@ import {
     IEntitlementDescriptor,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
-import keys from "lodash/keys";
-import includes from "lodash/includes";
-import { IDashboardFilter, IMenuButtonItemsVisibility, RenderMode } from "../../types";
-import { ExtendedDashboardWidget } from "./layoutTypes";
+import keys from "lodash/keys.js";
+import includes from "lodash/includes.js";
+import { IDashboardFilter, IMenuButtonItemsVisibility, RenderMode } from "../../types.js";
+import { ExtendedDashboardWidget } from "./layoutTypes.js";
 
 /**
  * Dashboard component may offer users to pick objects to use on the dashboard.

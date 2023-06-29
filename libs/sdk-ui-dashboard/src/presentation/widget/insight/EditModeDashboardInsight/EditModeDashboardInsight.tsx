@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { DashboardInsight } from "../ViewModeDashboardInsight/Insight/DashboardInsight";
-import { IDashboardInsightProps } from "../types";
+import { DashboardInsight } from "../ViewModeDashboardInsight/Insight/DashboardInsight.js";
+import { IDashboardInsightProps } from "../types.js";
 
 /**
  * @internal

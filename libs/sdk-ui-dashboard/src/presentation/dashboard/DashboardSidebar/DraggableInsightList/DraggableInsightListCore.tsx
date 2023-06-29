@@ -9,10 +9,10 @@ import {
     insightVisualizationType,
 } from "@gooddata/sdk-model";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
-import { IInsightListProps, InsightList } from "../../../insightList";
-import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper";
+import { IInsightListProps, InsightList } from "../../../insightList/index.js";
+import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 import { VisType } from "@gooddata/sdk-ui";
-import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "./../../../../model";
+import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "../../../../model/index.js";
 
 export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
     const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;

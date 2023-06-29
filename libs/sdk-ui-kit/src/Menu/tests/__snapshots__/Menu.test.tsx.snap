@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Menu snapshot should match snapshot of menu with config 1`] = `
+exports[`Menu snapshot > should match snapshot of menu with config 1`] = `
 <body>
   <div>
     <div>
@@ -38,7 +38,7 @@ exports[`Menu snapshot should match snapshot of menu with config 1`] = `
 </body>
 `;
 
-exports[`Menu snapshot should match snapshot of menu with no config 1`] = `
+exports[`Menu snapshot > should match snapshot of menu with no config 1`] = `
 <body>
   <div>
     <div>
@@ -55,7 +55,7 @@ exports[`Menu snapshot should match snapshot of menu with no config 1`] = `
 </body>
 `;
 
-exports[`Menu snapshot should match snapshot of menu with portalTarget 1`] = `
+exports[`Menu snapshot > should match snapshot of menu with portalTarget 1`] = `
 <body>
   <section
     class="portal-target"
@@ -97,7 +97,7 @@ exports[`Menu snapshot should match snapshot of menu with portalTarget 1`] = `
 </body>
 `;
 
-exports[`Menu snapshot should match snapshot of nested menus 1`] = `
+exports[`Menu snapshot > should match snapshot of nested menus 1`] = `
 <body>
   <div>
     <div>

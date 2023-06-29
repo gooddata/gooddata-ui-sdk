@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import includes from "lodash/includes";
+import includes from "lodash/includes.js";
 import { ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 const openAsReportSupportingVisualizations: ChartType[] = [

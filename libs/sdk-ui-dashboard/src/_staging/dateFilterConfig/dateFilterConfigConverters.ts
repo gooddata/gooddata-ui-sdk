@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import groupBy from "lodash/groupBy";
-import isEmpty from "lodash/isEmpty";
-import min from "lodash/min";
-import max from "lodash/max";
-import format from "date-fns/format";
-import startOfDay from "date-fns/startOfDay";
-import subMonths from "date-fns/subMonths";
+import groupBy from "lodash/groupBy.js";
+import isEmpty from "lodash/isEmpty.js";
+import min from "lodash/min.js";
+import max from "lodash/max.js";
+import format from "date-fns/format/index.js";
+import startOfDay from "date-fns/startOfDay/index.js";
+import subMonths from "date-fns/subMonths/index.js";
 import {
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,

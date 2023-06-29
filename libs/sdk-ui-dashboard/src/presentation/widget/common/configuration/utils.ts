@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     areObjRefsEqual,
     ICatalogDateDataset,

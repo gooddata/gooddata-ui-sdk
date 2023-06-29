@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { ComponentType } from "react";
-import { IButtonBarProps } from "../buttonBar/types";
+import { IButtonBarProps } from "../buttonBar/types.js";
 
-import { IMenuButtonProps } from "../menuButton/types";
-import { ILockedStatusProps, IShareStatusProps } from "../shareIndicators";
-import { ITitleProps } from "../title/types";
+import { IMenuButtonProps } from "../menuButton/types.js";
+import { ILockedStatusProps, IShareStatusProps } from "../shareIndicators/index.js";
+import { ITitleProps } from "../title/types.js";
 
 /**
  * @alpha

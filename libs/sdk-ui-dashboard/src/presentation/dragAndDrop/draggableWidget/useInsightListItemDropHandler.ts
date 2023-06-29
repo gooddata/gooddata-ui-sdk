@@ -14,9 +14,9 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../model";
-import { newLoadingPlaceholderWidget } from "../../../widgets";
-import { getSizeInfo } from "../../../_staging/layout/sizing";
+} from "../../../model/index.js";
+import { newLoadingPlaceholderWidget } from "../../../widgets/index.js";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 
 export function useInsightListItemDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

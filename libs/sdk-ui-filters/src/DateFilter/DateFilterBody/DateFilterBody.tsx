@@ -1,31 +1,31 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { ListItem } from "../ListItem/ListItem";
+import { ListItem } from "../ListItem/ListItem.js";
 import {
     IExtendedDateFilterErrors,
     IDateFilterOptionsByType,
     DateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
-} from "../interfaces";
-import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
-import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar";
-import { getDateFilterOptionGranularity } from "../utils/OptionUtils";
-import { AllTimeFilterItem } from "./AllTimeFilterItem";
-import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper";
-import { AbsoluteDateFilterForm } from "../AbsoluteDateFilterForm/AbsoluteDateFilterForm";
-import { ListItemTooltip } from "../ListItemTooltip/ListItemTooltip";
-import { RelativeDateFilterForm } from "../RelativeDateFilterForm/RelativeDateFilterForm";
-import { RelativePresetFilterItems } from "./RelativePresetFilterItems";
-import { EditModeMessage } from "./EditModeMessage";
-import { DateFilterHeader } from "./DateFilterHeader";
-import { DateFilterBodyButton } from "./DateFilterBodyButton";
-import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems";
-import { DateFilterRoute } from "./types";
+} from "../interfaces/index.js";
+import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
+import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
+import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
+import { AllTimeFilterItem } from "./AllTimeFilterItem.js";
+import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
+import { AbsoluteDateFilterForm } from "../AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";
+import { ListItemTooltip } from "../ListItemTooltip/ListItemTooltip.js";
+import { RelativeDateFilterForm } from "../RelativeDateFilterForm/RelativeDateFilterForm.js";
+import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
+import { EditModeMessage } from "./EditModeMessage.js";
+import { DateFilterHeader } from "./DateFilterHeader.js";
+import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
+import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
+import { DateFilterRoute } from "./types.js";
 import {
     DateFilterGranularity,
     isAbsoluteDateFilterForm,

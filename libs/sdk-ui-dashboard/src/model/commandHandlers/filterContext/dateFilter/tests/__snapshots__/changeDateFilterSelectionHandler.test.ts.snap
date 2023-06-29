@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`changeDateFilterSelectionHandler should clear date filter in the state 1`] = `undefined`;
+exports[`changeDateFilterSelectionHandler > should clear date filter in the state 1`] = `undefined`;
 
-exports[`changeDateFilterSelectionHandler should emit the appropriate events for changed date filter 1`] = `
-Array [
-  Object {
+exports[`changeDateFilterSelectionHandler > should emit the appropriate events for changed date filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is added 1`] = `
-Object {
-  "dateFilter": Object {
+exports[`changeDateFilterSelectionHandler > should set the date filter in the state when a date filter is added 1`] = `
+{
+  "dateFilter": {
     "from": -3,
     "granularity": "GDC.time.month",
     "to": 0,
@@ -31,9 +31,9 @@ Object {
 }
 `;
 
-exports[`changeDateFilterSelectionHandler should set the date filter in the state when a date filter is changed 1`] = `
-Object {
-  "dateFilter": Object {
+exports[`changeDateFilterSelectionHandler > should set the date filter in the state when a date filter is changed 1`] = `
+{
+  "dateFilter": {
     "from": -3,
     "granularity": "GDC.time.month",
     "to": 0,

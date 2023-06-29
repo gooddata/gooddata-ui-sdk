@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes";
+import isEmpty from "lodash/isEmpty.js";
+import { ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes.js";
 
 /**
  * @alpha

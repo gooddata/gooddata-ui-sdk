@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings";
+import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings.js";
 
 /**
  * This query service provides access to feature flags that are in effect for particular workspace.

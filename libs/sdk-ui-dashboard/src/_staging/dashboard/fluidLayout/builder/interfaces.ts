@@ -16,7 +16,7 @@ import {
     IDashboardLayoutItemsFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
-} from "../facade/interfaces";
+} from "../facade/interfaces.js";
 
 /**
  * Represents a query to select a subset of layout sections.

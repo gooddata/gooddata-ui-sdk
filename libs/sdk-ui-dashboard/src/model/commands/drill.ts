@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 import {
     IInsight,
     IDrillToAttributeUrl,
@@ -9,7 +9,7 @@ import {
     IDrillToLegacyDashboard,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
-import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
+import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
 
 /**
  * Payload of the {@link Drill} command.

@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
-import identity from "lodash/identity";
-import isEmpty from "lodash/isEmpty";
+import identity from "lodash/identity.js";
+import isEmpty from "lodash/isEmpty.js";
 import React from "react";
 import SparkMD5 from "spark-md5";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -138,7 +138,7 @@ export interface IScenario<T extends VisProps> {
     readonly insightConverter: InsightConverter;
 
     /**
-     * Returns this scenario in an array shape that is suitable as input to parameterized jest tests.
+     * Returns this scenario in an array shape that is suitable as input to parameterized vitest tests.
      */
     readonly asTestInput: () => ScenarioTestInput<T>;
 }
@@ -287,7 +287,7 @@ export type ScenarioModification<T extends VisProps> = (m: ScenarioBuilder<T>) =
  * Fourth element: scenario tags
  * Fifth element: identifier of the insight which persists this test scenario (buckets, properties and all)
  *
- * Having this as array is essential for parameterized jest tests in order for jest to correctly name the
+ * Having this as array is essential for parameterized vitest tests in order for vitest to correctly name the
  * test suite / test case.
  */
 export type ScenarioTestInput<T extends VisProps> = [

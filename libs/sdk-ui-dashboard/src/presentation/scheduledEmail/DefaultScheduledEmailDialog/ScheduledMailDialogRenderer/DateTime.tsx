@@ -2,8 +2,8 @@
 import * as React from "react";
 import { Datepicker, Timepicker } from "@gooddata/sdk-ui-kit";
 
-import { IScheduleEmailRepeatTime } from "../interfaces";
-import { DEFAULT_DROPDOWN_ZINDEX } from "../constants";
+import { IScheduleEmailRepeatTime } from "../interfaces.js";
+import { DEFAULT_DROPDOWN_ZINDEX } from "../constants.js";
 
 import { WeekStart } from "@gooddata/sdk-model";
 

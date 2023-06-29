@@ -6,8 +6,8 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model";
-import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset";
+} from "../../../../model/index.js";
+import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
 
 export function useDateDatasetFilter(dateDatasets: Readonly<ICatalogDateDataset[]> | undefined) {
     const dispatch = useDashboardDispatch();

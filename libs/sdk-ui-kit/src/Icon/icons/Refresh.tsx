@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 
-import { GD_COLOR_HIGHLIGHT } from "../../utils/constants";
-import { IIconProps } from "../typings";
+import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
+import { IIconProps } from "../typings.js";
 
 /**
  * @internal

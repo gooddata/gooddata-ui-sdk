@@ -1,9 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import { LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, uriRef } from "@gooddata/sdk-model";
-import { DataViewFacade } from "../src/base/results/facade";
+import { DataViewFacade } from "../src/base/results/facade.js";
+import { createRequire } from "module";
 
 export const testWorkspace = "testWorkspace";
+
+const require = createRequire(import.meta.url);
 
 function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {
     return DataViewFacade.for(legacyRecordedDataView(rec));

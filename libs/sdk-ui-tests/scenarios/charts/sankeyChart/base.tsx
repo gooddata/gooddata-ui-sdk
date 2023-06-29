@@ -1,8 +1,8 @@
 // (C) 2023 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { SankeyChart, ISankeyChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 export const SankeyChartWithMeasureAttributeFromAndTo = {
     measure: ReferenceMd.Amount,
     attributeFrom: ReferenceMd.Product.Name,

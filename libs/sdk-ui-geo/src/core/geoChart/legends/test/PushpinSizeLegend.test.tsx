@@ -1,7 +1,8 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import PushpinSizeLegend, { IPushpinSizeLegendProps } from "../PushpinSizeLegend";
+import PushpinSizeLegend, { IPushpinSizeLegendProps } from "../PushpinSizeLegend.js";
+import { describe, it, expect } from "vitest";
 
 function createComponent(customProps: IPushpinSizeLegendProps) {
     const legendProps = {

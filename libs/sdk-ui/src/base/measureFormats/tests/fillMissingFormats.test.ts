@@ -1,7 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import { IInsight, insightMeasures, idMatchMeasure, measureFormat } from "@gooddata/sdk-model";
-import { fillMissingFormats } from "../fillMissingFormats";
-import { insightWithMultipleMeasureBucketsAndFormats } from "../../../../__mocks__/fixtures";
+import { fillMissingFormats } from "../fillMissingFormats.js";
+import { insightWithMultipleMeasureBucketsAndFormats } from "../../../../__mocks__/fixtures.js";
+import { describe, expect, it } from "vitest";
 
 describe("fillMissingFormats", () => {
     function getMeasureFormat(insight: IInsight, localIdentifier: string): string | undefined {

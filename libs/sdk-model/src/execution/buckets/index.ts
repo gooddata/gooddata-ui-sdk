@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     anyAttribute,
     attributeIdentifier,
@@ -7,8 +7,8 @@ import {
     IAttribute,
     idMatchAttribute,
     isAttribute,
-} from "../attribute";
-import { Identifier } from "../../objRef";
+} from "../attribute/index.js";
+import { Identifier } from "../../objRef/index.js";
 import {
     anyMeasure,
     idMatchMeasure,
@@ -17,14 +17,14 @@ import {
     isSimpleMeasure,
     measureIdentifier,
     MeasurePredicate,
-} from "../measure";
-import { isTotal, ITotal } from "../base/totals";
-import invariant from "ts-invariant";
-import { modifySimpleMeasure } from "../measure/factory";
-import isArray from "lodash/isArray";
-import identity from "lodash/identity";
-import findIndex from "lodash/findIndex";
-import intersection from "lodash/intersection";
+} from "../measure/index.js";
+import { isTotal, ITotal } from "../base/totals.js";
+import { invariant } from "ts-invariant";
+import { modifySimpleMeasure } from "../measure/factory.js";
+import isArray from "lodash/isArray.js";
+import identity from "lodash/identity.js";
+import findIndex from "lodash/findIndex.js";
+import intersection from "lodash/intersection.js";
 import stringify from "json-stable-stringify";
 
 /**

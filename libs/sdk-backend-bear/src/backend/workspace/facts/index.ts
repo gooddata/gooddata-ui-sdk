@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import { ObjRef, IMetadataObject } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
-import { getObjectIdFromUri, objRefToUri } from "../../../utils/api";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";
+import { getObjectIdFromUri, objRefToUri } from "../../../utils/api.js";
 
 export class BearWorkspaceFacts implements IWorkspaceFactsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

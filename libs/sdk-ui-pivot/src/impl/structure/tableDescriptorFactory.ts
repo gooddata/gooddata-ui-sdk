@@ -7,8 +7,8 @@ import {
     isAttributeDescriptor,
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import range from "lodash/range";
+import { invariant } from "ts-invariant";
+import range from "lodash/range.js";
 import {
     AnyCol,
     DataCol,
@@ -20,8 +20,8 @@ import {
     TableColDefs,
     TableCols,
     LeafDataCol,
-} from "./tableDescriptorTypes";
-import { createColDefsFromTableDescriptor } from "./colDefFactory";
+} from "./tableDescriptorTypes.js";
+import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 
 type ColumnGroupLevel = {
     pkToGroup: Record<string, ScopeCol>;

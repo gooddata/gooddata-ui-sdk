@@ -6,7 +6,7 @@ import {
     EmbedType,
     UnitsType,
     DEFAULT_LOCALE,
-} from "./EmbedInsightDialogBase/types";
+} from "./EmbedInsightDialogBase/types.js";
 
 /**
  * @internal

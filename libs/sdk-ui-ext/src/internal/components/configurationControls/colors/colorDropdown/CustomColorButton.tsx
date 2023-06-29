@@ -2,8 +2,8 @@
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { getTranslation } from "../../../../utils/translations";
-import { messages } from "../../../../../locales";
+import { getTranslation } from "../../../../utils/translations.js";
+import { messages } from "../../../../../locales.js";
 
 export interface ICustomColorButtonProps {
     onClick: () => void;

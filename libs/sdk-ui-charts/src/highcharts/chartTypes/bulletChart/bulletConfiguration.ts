@@ -1,10 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 
-import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
-import { IChartConfig } from "../../../interfaces";
-import { HighchartsOptions } from "../../../highcharts/lib";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { HighchartsOptions } from "../../lib/index.js";
 
 const BULLET_TEMPLATE = {
     chart: {

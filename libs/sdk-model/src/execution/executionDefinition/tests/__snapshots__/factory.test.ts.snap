@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`defaultDimensionsGenerator should create single dim when just attributes in def 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create single dim when just attributes in def 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "a_label.account.id.name",
       "a_label.activity.id.subject",
     ],
@@ -11,25 +11,25 @@ Array [
 ]
 `;
 
-exports[`defaultDimensionsGenerator should create single dim when single attr bucket 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create single dim when single attr bucket 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "a_label.account.id.name",
     ],
   },
 ]
 `;
 
-exports[`defaultDimensionsGenerator should create two dim when attributes and measures in def 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create two dim when attributes and measures in def 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "measureGroup",
     ],
   },
-  Object {
-    "itemIdentifiers": Array [
+  {
+    "itemIdentifiers": [
       "a_label.account.id.name",
       "a_label.activity.id.subject",
     ],
@@ -37,30 +37,30 @@ Array [
 ]
 `;
 
-exports[`defaultDimensionsGenerator should create two dim when bucket with both attr and measure 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create two dim when bucket with both attr and measure 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "measureGroup",
     ],
   },
-  Object {
-    "itemIdentifiers": Array [
+  {
+    "itemIdentifiers": [
       "a_label.activity.id.subject",
     ],
   },
 ]
 `;
 
-exports[`defaultDimensionsGenerator should create two dim with attributes divided in two dims 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create two dim with attributes divided in two dims 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "a_label.account.id.name",
     ],
   },
-  Object {
-    "itemIdentifiers": Array [
+  {
+    "itemIdentifiers": [
       "a_label.activity.id.subject",
       "a_label.owner.department",
       "measureGroup",
@@ -69,55 +69,55 @@ Array [
 ]
 `;
 
-exports[`defaultDimensionsGenerator should create two dim with measure group in first dim if measure in first bucket 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create two dim with measure group in first dim if measure in first bucket 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "measureGroup",
     ],
   },
-  Object {
-    "itemIdentifiers": Array [
+  {
+    "itemIdentifiers": [
       "a_label.account.id.name",
     ],
   },
 ]
 `;
 
-exports[`defaultDimensionsGenerator should create two dim with measure group in second dim if measure in second bucket 1`] = `
-Array [
-  Object {
-    "itemIdentifiers": Array [
+exports[`defaultDimensionsGenerator > should create two dim with measure group in second dim if measure in second bucket 1`] = `
+[
+  {
+    "itemIdentifiers": [
       "a_label.account.id.name",
     ],
   },
-  Object {
-    "itemIdentifiers": Array [
+  {
+    "itemIdentifiers": [
       "measureGroup",
     ],
   },
 ]
 `;
 
-exports[`emptyDef should create def with all fields empty 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+exports[`emptyDef > should create def with all fields empty 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with attr filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForBuckets > should create def with attr filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -125,24 +125,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -154,29 +154,29 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -185,18 +185,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with date filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForBuckets > should create def with date filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -204,24 +204,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -233,11 +233,11 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "relativeDateFilter": {
+        "dataSet": {
           "identifier": "myDs",
         },
         "from": 0,
@@ -246,13 +246,13 @@ Object {
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -261,18 +261,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with just attributes for attr bucket 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForBuckets > should create def with just attributes for attr bucket 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -280,12 +280,12 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.account.id.name",
               "type": "displayForm",
             },
@@ -296,26 +296,26 @@ Object {
       "localIdentifier": "attributeBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with just measures for measure bucket 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+exports[`newDefForBuckets > should create def with just measures for measure bucket 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "afSEwRwdbMeQ",
                 },
               },
@@ -327,14 +327,14 @@ Object {
       "localIdentifier": "measureBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -343,18 +343,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with measure value filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForBuckets > should create def with measure value filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -362,24 +362,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -391,29 +391,29 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -422,18 +422,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with mixed filters 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForBuckets > should create def with mixed filters 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -441,24 +441,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -470,11 +470,11 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "relativeDateFilter": {
+        "dataSet": {
           "identifier": "myDs",
         },
         "from": 0,
@@ -482,40 +482,40 @@ Object {
         "to": -10,
       },
     },
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -524,45 +524,45 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with no attributes or measures for empty bucket 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [],
+exports[`newDefForBuckets > should create def with no attributes or measures for empty bucket 1`] = `
+{
+  "attributes": [],
+  "buckets": [
+    {
+      "items": [],
       "localIdentifier": "emptyBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create def with ordering of attributes and measures retained 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForBuckets > should create def with ordering of attributes and measures retained 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.activity.id.subject",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -570,24 +570,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -598,11 +598,11 @@ Object {
       ],
       "localIdentifier": "mixedBucket",
     },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.account.id.name",
               "type": "displayForm",
             },
@@ -612,13 +612,13 @@ Object {
       ],
       "localIdentifier": "attributeBucket",
     },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
                   "identifier": "afSEwRwdbMeQ",
                 },
               },
@@ -630,15 +630,15 @@ Object {
       "localIdentifier": "measureBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -646,11 +646,11 @@ Object {
         "localIdentifier": "m_fact.stagehistory.velocity_sum",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -659,31 +659,31 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForBuckets should create empty def if no buckets 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+exports[`newDefForBuckets > should create empty def if no buckets 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForInsight should create def with AFM 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForInsight > should create def with AFM 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -691,24 +691,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -720,29 +720,29 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -751,18 +751,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForInsight should create def with attribute and measure 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForInsight > should create def with attribute and measure 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -770,24 +770,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -799,15 +799,15 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -816,18 +816,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForInsight should create def with extra filter merged with insight filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForInsight > should create def with extra filter merged with insight filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -835,24 +835,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -864,24 +864,24 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
+    {
+      "relativeDateFilter": {
+        "dataSet": {
           "identifier": "myDs",
         },
         "from": 0,
@@ -890,13 +890,13 @@ Object {
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -905,18 +905,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForInsight should create def with extra measure filter merged with insight filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForInsight > should create def with extra measure filter merged with insight filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -924,24 +924,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -953,42 +953,42 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -997,18 +997,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForInsight should create def with filters merged in 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForInsight > should create def with filters merged in 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -1016,24 +1016,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -1045,24 +1045,24 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "dimensions": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
+    {
+      "relativeDateFilter": {
+        "dataSet": {
           "identifier": "myDs",
         },
         "from": 0,
@@ -1070,27 +1070,27 @@ Object {
         "to": -10,
       },
     },
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
   ],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -1099,10 +1099,10 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [
-    Object {
-      "attributeSortItem": Object {
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a_label.activity.id.subject",
         "direction": "asc",
       },
@@ -1112,12 +1112,12 @@ Object {
 }
 `;
 
-exports[`newDefForInsight should create def with sorts 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForInsight > should create def with sorts 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -1125,24 +1125,24 @@ Object {
       },
     },
   ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
               "identifier": "label.activity.id.subject",
               "type": "displayForm",
             },
             "localIdentifier": "a_label.activity.id.subject",
           },
         },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
                 "aggregation": "sum",
-                "item": Object {
+                "item": {
                   "identifier": "fact.stagehistory.velocity",
                 },
               },
@@ -1154,15 +1154,15 @@ Object {
       "localIdentifier": "mixedBucket",
     },
   ],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -1171,10 +1171,10 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [
-    Object {
-      "attributeSortItem": Object {
+  "postProcessing": {},
+  "sortBy": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a_label.activity.id.subject",
         "direction": "asc",
       },
@@ -1184,25 +1184,25 @@ Object {
 }
 `;
 
-exports[`newDefForInsight should create empty def if empty insight 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+exports[`newDefForInsight > should create empty def if empty insight 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with attr filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with attr filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -1210,45 +1210,45 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+  "buckets": [],
+  "dimensions": [],
+  "filters": [
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
   ],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with attributes and measures 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with attributes and measures 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -1256,15 +1256,15 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -1272,12 +1272,12 @@ Object {
         "localIdentifier": "m_afSEwRwdbMeQ",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -1286,18 +1286,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with date filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with date filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -1305,12 +1305,12 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
+  "buckets": [],
+  "dimensions": [],
+  "filters": [
+    {
+      "relativeDateFilter": {
+        "dataSet": {
           "identifier": "myDs",
         },
         "from": 0,
@@ -1319,28 +1319,28 @@ Object {
       },
     },
   ],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with just attributes 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with just attributes 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -1348,28 +1348,28 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with just measures 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+exports[`newDefForItems > should create def with just measures 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -1377,12 +1377,12 @@ Object {
         "localIdentifier": "m_afSEwRwdbMeQ",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -1391,18 +1391,18 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with measure value filter 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with measure value filter 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -1410,36 +1410,36 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+  "buckets": [],
+  "dimensions": [],
+  "filters": [
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
   ],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with mixed filters 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with mixed filters 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
@@ -1447,12 +1447,12 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
+  "buckets": [],
+  "dimensions": [],
+  "filters": [
+    {
+      "relativeDateFilter": {
+        "dataSet": {
           "identifier": "myDs",
         },
         "from": 0,
@@ -1460,55 +1460,55 @@ Object {
         "to": -10,
       },
     },
-    Object {
-      "positiveAttributeFilter": Object {
-        "displayForm": Object {
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
-        "in": Object {
-          "values": Array [
+        "in": {
+          "values": [
             "myAccount",
           ],
         },
       },
     },
-    Object {
-      "measureValueFilter": Object {
-        "condition": Object {
-          "comparison": Object {
+    {
+      "measureValueFilter": {
+        "condition": {
+          "comparison": {
             "operator": "EQUAL_TO",
             "value": 11,
           },
         },
-        "measure": Object {
+        "measure": {
           "localIdentifier": "m_afSEwRwdbMeQ",
         },
       },
     },
   ],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create def with order of attributes and measures retained 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+exports[`newDefForItems > should create def with order of attributes and measures retained 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.account.id.name",
           "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },
     },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
+    {
+      "attribute": {
+        "displayForm": {
           "identifier": "label.activity.id.subject",
           "type": "displayForm",
         },
@@ -1516,15 +1516,15 @@ Object {
       },
     },
   ],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
               "identifier": "afSEwRwdbMeQ",
             },
           },
@@ -1532,12 +1532,12 @@ Object {
         "localIdentifier": "m_afSEwRwdbMeQ",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
             "aggregation": "sum",
-            "item": Object {
+            "item": {
               "identifier": "fact.stagehistory.velocity",
             },
           },
@@ -1546,21 +1546,21 @@ Object {
       },
     },
   ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;
 
-exports[`newDefForItems should create empty def if no items 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [],
-  "dimensions": Array [],
-  "filters": Array [],
-  "measures": Array [],
-  "postProcessing": Object {},
-  "sortBy": Array [],
+exports[`newDefForItems > should create empty def if no items 1`] = `
+{
+  "attributes": [],
+  "buckets": [],
+  "dimensions": [],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
   "workspace": "testWorkspace",
 }
 `;

@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
-import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
-import omitBy from "lodash/omitBy";
-import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
+import omitBy from "lodash/omitBy.js";
+import isEqual from "lodash/isEqual.js";
 import {
     bucketAttributes,
     IBucket,
@@ -30,13 +30,17 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { getTranslation } from "./translations";
+import { getTranslation } from "./translations.js";
 
-import { SORT_DIR_DESC } from "../constants/sort";
-import { IBucketItem, IExtendedReferencePoint, IVisualizationProperties } from "../interfaces/Visualization";
-import { IAvailableSortsGroup } from "../interfaces/SortConfig";
+import { SORT_DIR_DESC } from "../constants/sort.js";
+import {
+    IBucketItem,
+    IExtendedReferencePoint,
+    IVisualizationProperties,
+} from "../interfaces/Visualization.js";
+import { IAvailableSortsGroup } from "../interfaces/SortConfig.js";
 import { IAxisConfig } from "@gooddata/sdk-ui-charts";
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 export function getAttributeSortItem(
     identifier: string,

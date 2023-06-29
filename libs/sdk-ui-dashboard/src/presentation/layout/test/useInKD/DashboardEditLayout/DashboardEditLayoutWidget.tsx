@@ -2,8 +2,8 @@
 import { ScreenSize } from "@gooddata/sdk-model";
 import React from "react";
 
-import { IDashboardLayoutItemFacade } from "../../../DefaultDashboardLayoutRenderer";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes";
+import { IDashboardLayoutItemFacade } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export interface IDashboardEditLayoutWidgetProps {
     item: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>;

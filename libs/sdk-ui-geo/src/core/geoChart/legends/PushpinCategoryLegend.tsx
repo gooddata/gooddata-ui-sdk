@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { ContentRect } from "react-measure";
 import {
     PopUpLegend,

@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
 
-import { uiActions, useDashboardDispatch } from "../../../model";
+import { uiActions, useDashboardDispatch } from "../../../model/index.js";
 
 /**
  * @internal

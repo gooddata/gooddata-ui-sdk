@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import { SDK } from "@gooddata/api-client-bear";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     IAuthenticationContext,
     IAuthenticatedPrincipal,

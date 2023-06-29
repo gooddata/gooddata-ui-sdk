@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import { IKpiWidgetDefinition } from "@gooddata/sdk-model";
-import { BrokenAlertType } from "../../../../../model";
+import { BrokenAlertType } from "../../../../../model/index.js";
 
 interface IBrokenAlertFilterBase {
     title: string;

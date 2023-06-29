@@ -3,14 +3,14 @@
 /**
  * @internal
  */
-export { Icon, IRowsIconProps, IColumnsIconProps } from "./Icon";
+export { Icon, IRowsIconProps, IColumnsIconProps } from "./Icon.js";
 
 /**
  * @internal
  */
-export { InsightIcon, IInsightIconProps } from "./InsightIcon";
+export { InsightIcon, IInsightIconProps } from "./InsightIcon.js";
 
 /**
  * @internal
  */
-export { IIconProps, Color } from "./typings";
+export { IIconProps, Color } from "./typings.js";

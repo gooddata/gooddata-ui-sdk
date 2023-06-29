@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`available item filtering item filtering should filter-in date dataset if attribute ref matches 1`] = `
-Array [
-  Object {
-    "dataSet": Object {
+exports[`available item filtering > item filtering > should filter-in date dataset if attribute ref matches 1`] = `
+[
+  {
+    "dataSet": {
       "deprecated": false,
       "description": "DataSet Date",
       "id": "activity.dataset.dt",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/887",
       },
       "title": "Date (Activity)",
@@ -16,21 +16,21 @@ Array [
       "unlisted": false,
       "uri": "/gdc/md/referenceworkspace/obj/887",
     },
-    "dateAttributes": Array [
-      Object {
-        "attribute": Object {
+    "dateAttributes": [
+      {
+        "attribute": {
           "deprecated": false,
           "description": "Year",
-          "displayForms": Array [
-            Object {
-              "attribute": Object {
+          "displayForms": [
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/827",
               },
               "deprecated": false,
               "description": "DisplayForm Year.",
               "id": "activity.aag81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/845",
               },
               "title": "Year (Activity)",
@@ -39,12 +39,12 @@ Array [
               "uri": "/gdc/md/referenceworkspace/obj/845",
             },
           ],
-          "drillDownStep": Object {
+          "drillDownStep": {
             "uri": "/gdc/md/referenceworkspace/obj/877",
           },
           "id": "activity.year",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/827",
           },
           "title": "Year (Activity)",
@@ -52,12 +52,12 @@ Array [
           "unlisted": false,
           "uri": "/gdc/md/referenceworkspace/obj/827",
         },
-        "defaultDisplayForm": Object {
+        "defaultDisplayForm": {
           "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "activity.aag81lMifn6q",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/845",
           },
           "title": "Year (Activity)",
@@ -67,20 +67,20 @@ Array [
         },
         "granularity": "GDC.time.year",
       },
-      Object {
-        "attribute": Object {
+      {
+        "attribute": {
           "deprecated": false,
           "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
-          "displayForms": Array [
-            Object {
-              "attribute": Object {
+          "displayForms": [
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/829",
               },
               "deprecated": false,
               "description": "DisplayForm Week #/Year (W1/2010).",
               "id": "activity.aaA81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/851",
               },
               "title": "Week #/Year (W1/2010) (Activity)",
@@ -88,15 +88,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/851",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/829",
               },
               "deprecated": false,
               "description": "DisplayForm Week Starting.",
               "id": "activity.aaw81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/849",
               },
               "title": "Week Starting (Activity)",
@@ -104,15 +104,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/849",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/829",
               },
               "deprecated": false,
               "description": "DisplayForm From - To.",
               "id": "activity.aau81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/848",
               },
               "title": "From - To (Activity)",
@@ -120,15 +120,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/848",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/829",
               },
               "deprecated": false,
               "description": "DisplayForm Week #/Year (Cont.).",
               "id": "activity.aay81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/850",
               },
               "title": "Week #/Year (Cont.) (Activity)",
@@ -136,15 +136,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/850",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/829",
               },
               "deprecated": false,
               "description": "DisplayForm Wk/Qtr/Year (Cont.).",
               "id": "activity.aaC81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/852",
               },
               "title": "Wk/Qtr/Year (Cont.) (Activity)",
@@ -152,15 +152,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/852",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/829",
               },
               "deprecated": false,
               "description": "DisplayForm Wk/Qtr/Year.",
               "id": "activity.aas81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/847",
               },
               "title": "Wk/Qtr/Year (Activity)",
@@ -169,12 +169,12 @@ Array [
               "uri": "/gdc/md/referenceworkspace/obj/847",
             },
           ],
-          "drillDownStep": Object {
+          "drillDownStep": {
             "uri": "/gdc/md/referenceworkspace/obj/883",
           },
           "id": "activity.week",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/829",
           },
           "title": "Week (Sun-Sat)/Year (Activity)",
@@ -182,12 +182,12 @@ Array [
           "unlisted": false,
           "uri": "/gdc/md/referenceworkspace/obj/829",
         },
-        "defaultDisplayForm": Object {
+        "defaultDisplayForm": {
           "deprecated": false,
           "description": "DisplayForm Week #/Year (W1/2010).",
           "id": "activity.aaA81lMifn6q",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/851",
           },
           "title": "Week #/Year (W1/2010) (Activity)",
@@ -197,20 +197,20 @@ Array [
         },
         "granularity": "GDC.time.week_us",
       },
-      Object {
-        "attribute": Object {
+      {
+        "attribute": {
           "deprecated": false,
           "description": "Quarter and Year (Q1/2010)",
-          "displayForms": Array [
-            Object {
-              "attribute": Object {
+          "displayForms": [
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/842",
               },
               "deprecated": false,
               "description": "DisplayForm US Short.",
               "id": "activity.aci81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/877",
               },
               "title": "US Short (Activity)",
@@ -219,12 +219,12 @@ Array [
               "uri": "/gdc/md/referenceworkspace/obj/877",
             },
           ],
-          "drillDownStep": Object {
+          "drillDownStep": {
             "uri": "/gdc/md/referenceworkspace/obj/878",
           },
           "id": "activity.quarter",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/842",
           },
           "title": "Quarter/Year (Activity)",
@@ -232,12 +232,12 @@ Array [
           "unlisted": false,
           "uri": "/gdc/md/referenceworkspace/obj/842",
         },
-        "defaultDisplayForm": Object {
+        "defaultDisplayForm": {
           "deprecated": false,
           "description": "DisplayForm US Short.",
           "id": "activity.aci81lMifn6q",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/877",
           },
           "title": "US Short (Activity)",
@@ -247,20 +247,20 @@ Array [
         },
         "granularity": "GDC.time.quarter",
       },
-      Object {
-        "attribute": Object {
+      {
+        "attribute": {
           "deprecated": false,
           "description": "Month and Year",
-          "displayForms": Array [
-            Object {
-              "attribute": Object {
+          "displayForms": [
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/843",
               },
               "deprecated": false,
               "description": "DisplayForm Short (Jan 2010).",
               "id": "activity.act81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/878",
               },
               "title": "Short (Jan 2010) (Activity)",
@@ -268,15 +268,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/878",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/843",
               },
               "deprecated": false,
               "description": "DisplayForm Long (January 2010).",
               "id": "activity.acx81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/880",
               },
               "title": "Long (January 2010) (Activity)",
@@ -284,15 +284,15 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/880",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/843",
               },
               "deprecated": false,
               "description": "DisplayForm Number (1/2010).",
               "id": "activity.acv81lMifn6q",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/879",
               },
               "title": "Number (1/2010) (Activity)",
@@ -301,12 +301,12 @@ Array [
               "uri": "/gdc/md/referenceworkspace/obj/879",
             },
           ],
-          "drillDownStep": Object {
+          "drillDownStep": {
             "uri": "/gdc/md/referenceworkspace/obj/883",
           },
           "id": "activity.month",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/843",
           },
           "title": "Month/Year (Activity)",
@@ -314,12 +314,12 @@ Array [
           "unlisted": false,
           "uri": "/gdc/md/referenceworkspace/obj/843",
         },
-        "defaultDisplayForm": Object {
+        "defaultDisplayForm": {
           "deprecated": false,
           "description": "DisplayForm Short (Jan 2010).",
           "id": "activity.act81lMifn6q",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/878",
           },
           "title": "Short (Jan 2010) (Activity)",
@@ -329,13 +329,13 @@ Array [
         },
         "granularity": "GDC.time.month",
       },
-      Object {
-        "attribute": Object {
+      {
+        "attribute": {
           "deprecated": false,
           "description": "Date",
-          "displayForms": Array [
-            Object {
-              "attribute": Object {
+          "displayForms": [
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/844",
               },
               "deprecated": false,
@@ -343,7 +343,7 @@ Array [
               "displayFormType": "GDC.time.day_us",
               "id": "activity.date.mmddyyyy",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/883",
               },
               "title": "mm/dd/yyyy (Activity)",
@@ -351,8 +351,8 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/883",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/844",
               },
               "deprecated": false,
@@ -360,7 +360,7 @@ Array [
               "displayFormType": "GDC.time.day",
               "id": "activity.date.yyyymmdd",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/882",
               },
               "title": "yyyy-mm-dd (Activity)",
@@ -368,8 +368,8 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/882",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/844",
               },
               "deprecated": false,
@@ -377,7 +377,7 @@ Array [
               "displayFormType": "GDC.time.day_us_noleading",
               "id": "activity.date.mdyy",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/886",
               },
               "title": "m/d/yy (no leading zeroes) (Activity)",
@@ -385,8 +385,8 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/886",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/844",
               },
               "deprecated": false,
@@ -394,7 +394,7 @@ Array [
               "displayFormType": "GDC.time.day_us_long",
               "id": "activity.date.long",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/885",
               },
               "title": "Long (Mon, Jan 1, 2010) (Activity)",
@@ -402,8 +402,8 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/885",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/844",
               },
               "deprecated": false,
@@ -411,7 +411,7 @@ Array [
               "displayFormType": "GDC.time.day_eu",
               "id": "activity.date.ddmmyyyy",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/881",
               },
               "title": "dd/mm/yyyy (Activity)",
@@ -419,8 +419,8 @@ Array [
               "unlisted": false,
               "uri": "/gdc/md/referenceworkspace/obj/881",
             },
-            Object {
-              "attribute": Object {
+            {
+              "attribute": {
                 "uri": "/gdc/md/referenceworkspace/obj/844",
               },
               "deprecated": false,
@@ -428,7 +428,7 @@ Array [
               "displayFormType": "GDC.time.day_iso",
               "id": "activity.date.eddmmyyyy",
               "production": true,
-              "ref": Object {
+              "ref": {
                 "uri": "/gdc/md/referenceworkspace/obj/884",
               },
               "title": "dd-mm-yyyy (Activity)",
@@ -439,7 +439,7 @@ Array [
           ],
           "id": "activity.date",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/844",
           },
           "title": "Date (Activity)",
@@ -447,12 +447,12 @@ Array [
           "unlisted": false,
           "uri": "/gdc/md/referenceworkspace/obj/844",
         },
-        "defaultDisplayForm": Object {
+        "defaultDisplayForm": {
           "deprecated": false,
           "description": "DisplayForm mm/dd/yyyy.",
           "id": "activity.date.mmddyyyy",
           "production": true,
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/referenceworkspace/obj/883",
           },
           "title": "mm/dd/yyyy (Activity)",
@@ -469,11 +469,11 @@ Array [
 ]
 `;
 
-exports[`available item filtering item filtering should filter-in simple object if ref matches 1`] = `
-Array [
-  Object {
-    "groups": Array [],
-    "measure": Object {
+exports[`available item filtering > item filtering > should filter-in simple object if ref matches 1`] = `
+[
+  {
+    "groups": [],
+    "measure": {
       "deprecated": false,
       "description": "",
       "expression": "SELECT MAX([/gdc/md/referenceworkspace/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/referenceworkspace/obj/679] WHERE [/gdc/md/referenceworkspace/obj/1105] <= [/gdc/md/referenceworkspace/obj/1266]
@@ -481,7 +481,7 @@ Array [
       "format": "#,##0.00",
       "id": "abxgDICQav2J",
       "production": true,
-      "ref": Object {
+      "ref": {
         "uri": "/gdc/md/referenceworkspace/obj/1267",
       },
       "title": "_Snapshot [EOP]",

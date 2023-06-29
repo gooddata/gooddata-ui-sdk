@@ -2,9 +2,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
-import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu";
-import { IColumnTotal } from "../aggregationsMenuTypes";
+import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu.js";
+import { IColumnTotal } from "../aggregationsMenuTypes.js";
 import { uriRef } from "@gooddata/sdk-model";
+import { describe, it, expect, vi } from "vitest";
 
 const intlMock = createIntlMock();
 
@@ -76,7 +77,7 @@ describe("AggregationsSubMenu", () => {
     ];
 
     function renderComponent(customProps: Partial<IAggregationsSubMenuProps> = {}) {
-        const onAggregationSelect = jest.fn();
+        const onAggregationSelect = vi.fn();
         return render(
             <AggregationsSubMenu
                 intl={intlMock}
@@ -164,7 +165,7 @@ describe("AggregationsSubMenu", () => {
     });
 
     it("should call onAggregationSelect callback when clicked on submenu row item", () => {
-        const onAggregationSelect = jest.fn();
+        const onAggregationSelect = vi.fn();
         renderComponent({ onAggregationSelect });
 
         fireEvent.click(screen.getByText("within Department"));
@@ -180,7 +181,7 @@ describe("AggregationsSubMenu", () => {
     });
 
     it("should call onAggregationSelect callback when clicked on submenu column item", () => {
-        const onAggregationSelect = jest.fn();
+        const onAggregationSelect = vi.fn();
         renderComponent({ onAggregationSelect });
 
         fireEvent.click(screen.getByText("within Forecast Category"));

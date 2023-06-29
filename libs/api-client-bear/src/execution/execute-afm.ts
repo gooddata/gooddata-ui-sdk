@@ -1,12 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import qs from "qs";
-import range from "lodash/range";
+import range from "lodash/range.js";
 import { GdcExecution, GdcExecuteAFM } from "@gooddata/api-model-bear";
 
-import { XhrModule, ApiResponseError } from "../xhr";
-import { convertExecutionToJson } from "./execute-afm.convert";
-import { stringify } from "../utils/queryString";
+import { XhrModule, ApiResponseError } from "../xhr.js";
+import { convertExecutionToJson } from "./execute-afm.convert.js";
+import { stringify } from "../utils/queryString.js";
 
 export const DEFAULT_LIMIT = 1000;
 

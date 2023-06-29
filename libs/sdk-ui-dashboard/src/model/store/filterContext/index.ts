@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
-import { filterContextReducers } from "./filterContextReducers";
-import { filterContextInitialState } from "./filterContextState";
+import { filterContextReducers } from "./filterContextReducers.js";
+import { filterContextInitialState } from "./filterContextState.js";
 
 const filterContextSlice = createSlice({
     name: "filterContext",

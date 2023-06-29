@@ -1,8 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
-import { convertFilters } from "./FilterConverter";
-import { convertMeasure } from "./MeasureConverter";
+import { convertFilters } from "./FilterConverter.js";
+import { convertMeasure } from "./MeasureConverter.js";
 import {
     dimensionsFindItem,
     dimensionTotals,
@@ -15,8 +15,8 @@ import {
     MeasureGroupIdentifier,
     totalIsNative,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { toBearRef } from "../ObjRefConverter";
+import { invariant } from "ts-invariant";
+import { toBearRef } from "../ObjRefConverter.js";
 
 function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;

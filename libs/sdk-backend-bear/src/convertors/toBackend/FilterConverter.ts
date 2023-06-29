@@ -24,8 +24,8 @@ import {
     IRankingFilter,
     ObjRefInScope,
 } from "@gooddata/sdk-model";
-import { toBearRef } from "./ObjRefConverter";
-import { assertNoNulls } from "./utils";
+import { toBearRef } from "./ObjRefConverter.js";
+import { assertNoNulls } from "./utils.js";
 
 const convertObjRefInScopeToRefWithoutIdentifier = (ref: ObjRefInScope) => {
     if (isIdentifierRef(ref)) {

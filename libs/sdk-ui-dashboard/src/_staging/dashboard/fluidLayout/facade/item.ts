@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
+import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
 import {
     ObjRef,
     areObjRefsEqual,
@@ -26,7 +26,7 @@ import {
     isDashboardLayoutItem,
     isObjRef,
 } from "@gooddata/sdk-model";
-import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces";
+import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces.js";
 
 /**
  * @alpha

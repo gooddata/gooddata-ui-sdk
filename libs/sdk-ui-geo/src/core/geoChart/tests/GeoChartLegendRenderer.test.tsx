@@ -1,7 +1,7 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "../GeoChartLegendRenderer";
+import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "../GeoChartLegendRenderer.js";
 import { LegendPosition, PositionType } from "@gooddata/sdk-ui-vis-commons";
 import {
     DefaultLocale,
@@ -10,9 +10,10 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "@gooddata/sdk-ui";
-import { IGeoData } from "../../../GeoChart";
-import { DEFAULT_COLORS } from "../constants/geoChart";
-import { RecShortcuts } from "../../../../__mocks__/recordings";
+import { IGeoData } from "../../../GeoChart.js";
+import { DEFAULT_COLORS } from "../constants/geoChart.js";
+import { RecShortcuts } from "../../../../__mocks__/recordings.js";
+import { describe, it, expect } from "vitest";
 
 interface ILegendFlags {
     hasSizeLegend?: boolean;

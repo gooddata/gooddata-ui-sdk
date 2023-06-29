@@ -3,8 +3,8 @@
 import React from "react";
 import cx from "classnames";
 
-import { Overlay } from "../Overlay";
-import { IAlignPoint } from "../typings/positioning";
+import { Overlay } from "../Overlay/index.js";
+import { IAlignPoint } from "../typings/positioning.js";
 
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr" }];
 

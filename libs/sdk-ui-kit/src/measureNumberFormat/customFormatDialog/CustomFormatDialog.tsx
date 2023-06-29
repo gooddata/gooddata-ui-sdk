@@ -3,14 +3,14 @@ import React from "react";
 import { WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { IPositioning, SnapPoint } from "../../typings/positioning";
-import { positioningToAlignPoints } from "../../utils/positioning";
-import { Button } from "../../Button";
-import { Overlay } from "../../Overlay";
-import { IFormatTemplate } from "../typings";
-import Preview from "./previewSection/Preview";
-import FormatInput from "./FormatInput";
-import DocumentationLink from "./DocumentationLink";
+import { IPositioning, SnapPoint } from "../../typings/positioning.js";
+import { positioningToAlignPoints } from "../../utils/positioning.js";
+import { Button } from "../../Button/index.js";
+import { Overlay } from "../../Overlay/index.js";
+import { IFormatTemplate } from "../typings.js";
+import Preview from "./previewSection/Preview.js";
+import FormatInput from "./FormatInput.js";
+import DocumentationLink from "./DocumentationLink.js";
 
 interface ICustomFormatDialogOwnProps {
     onApply: (formatString: string) => void;

@@ -1,7 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import { renderHook } from "@testing-library/react";
-import { IUseInvertableSelectProps, SelectionStatusType, useInvertableSelect } from "../useInvertableSelect";
+import {
+    IUseInvertableSelectProps,
+    SelectionStatusType,
+    useInvertableSelect,
+} from "../useInvertableSelect.js";
+import { describe, it, expect } from "vitest";
 
 const defaultProps: IUseInvertableSelectProps<number> = {
     items: [],

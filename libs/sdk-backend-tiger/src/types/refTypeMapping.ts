@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { ObjectType } from "@gooddata/sdk-model";
-import invert from "lodash/invert";
-import isEmpty from "lodash/isEmpty";
-import values from "lodash/values";
-import { TigerObjectType } from "./index";
+import invert from "lodash/invert.js";
+import isEmpty from "lodash/isEmpty.js";
+import values from "lodash/values.js";
+import { TigerObjectType } from "./index.js";
 
 export type TigerCompatibleObjectType = Exclude<ObjectType, "tag">;
 

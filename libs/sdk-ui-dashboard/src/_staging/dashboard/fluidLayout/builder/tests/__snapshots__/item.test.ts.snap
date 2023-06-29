@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DashboardLayoutItemBuilder .size() should update size by callback 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
+exports[`DashboardLayoutItemBuilder > .size() > should update size by callback 1`] = `
+{
+  "size": {
+    "xl": {
       "gridWidth": 6,
       "heightAsRatio": 150,
     },
@@ -12,10 +12,10 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutItemBuilder .size() should update size by value 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
+exports[`DashboardLayoutItemBuilder > .size() > should update size by value 1`] = `
+{
+  "size": {
+    "xl": {
       "gridWidth": 6,
       "heightAsRatio": 150,
     },
@@ -24,10 +24,10 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutItemBuilder .widget() should update content by callback 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
+exports[`DashboardLayoutItemBuilder > .widget() > should update content by callback 1`] = `
+{
+  "size": {
+    "xl": {
       "gridWidth": 12,
       "heightAsRatio": 50,
     },
@@ -37,10 +37,10 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutItemBuilder .widget() should update content by callback returning undefined 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
+exports[`DashboardLayoutItemBuilder > .widget() > should update content by callback returning undefined 1`] = `
+{
+  "size": {
+    "xl": {
       "gridWidth": 12,
       "heightAsRatio": 50,
     },
@@ -50,10 +50,10 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutItemBuilder .widget() should update content by undefined 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
+exports[`DashboardLayoutItemBuilder > .widget() > should update content by undefined 1`] = `
+{
+  "size": {
+    "xl": {
       "gridWidth": 12,
       "heightAsRatio": 50,
     },
@@ -63,10 +63,10 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutItemBuilder .widget() should update content by value 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
+exports[`DashboardLayoutItemBuilder > .widget() > should update content by value 1`] = `
+{
+  "size": {
+    "xl": {
       "gridWidth": 12,
       "heightAsRatio": 50,
     },
@@ -76,4 +76,4 @@ Object {
 }
 `;
 
-exports[`DashboardLayoutItemBuilder constructors .for() should throw error, when the item is damaged 1`] = `"Provided data must be IDashboardLayoutItem! 0 [object Object]"`;
+exports[`DashboardLayoutItemBuilder > constructors > .for() > should throw error, when the item is damaged 1`] = `"Provided data must be IDashboardLayoutItem! 0 [object Object]"`;

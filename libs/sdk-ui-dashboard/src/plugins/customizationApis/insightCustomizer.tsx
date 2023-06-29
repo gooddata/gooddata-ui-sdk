@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardInsightCustomizer } from "../customizer";
+import { IDashboardInsightCustomizer } from "../customizer.js";
 import {
     CustomDashboardInsightComponent,
     DefaultDashboardInsight,
@@ -8,13 +8,13 @@ import {
     InsightBodyComponentProvider,
     OptionalInsightComponentProvider,
     OptionalInsightBodyComponentProvider,
-} from "../../presentation";
+} from "../../presentation/index.js";
 import { InvariantError } from "ts-invariant";
-import includes from "lodash/includes";
-import union from "lodash/union";
+import includes from "lodash/includes.js";
+import union from "lodash/union.js";
 import { insightTags } from "@gooddata/sdk-model";
-import { IDashboardCustomizationLogger } from "./customizationLogging";
-import { CustomizerMutationsContext } from "./types";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 
 const DefaultDashboardInsightComponentProvider: InsightComponentProvider = () => {
     return DefaultDashboardInsight;

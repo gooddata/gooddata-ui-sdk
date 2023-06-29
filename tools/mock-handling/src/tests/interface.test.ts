@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { requestPages } from "../interface";
+import { requestPages } from "../interface.js";
+import { describe, it, expect } from "vitest";
 
 describe("requestPages", () => {
     it("creates correct request window for 1 page", () => {

@@ -34,15 +34,15 @@ import {
     isGranularGrantee,
     IGranularGranteeUser,
     IGranularGranteeGroup,
-} from "./ShareDialogBase/types";
+} from "./ShareDialogBase/types.js";
 import {
     GranteeGroupAll,
     InactiveOwner,
     getAppliedGrantees,
     hasGroupAll,
     getIsGranteeCurrentUser,
-} from "./ShareDialogBase/utils";
-import { ISharedObject } from "./types";
+} from "./ShareDialogBase/utils.js";
+import { ISharedObject } from "./types.js";
 
 const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeStatus => {
     if (status === "DISABLED") {

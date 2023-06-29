@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
 import React from "react";
-import { ISaveAsNewButtonProps } from "./types";
-import { DefaultSaveAsNewButton } from "./DefaultSaveAsNewButton";
+import { ISaveAsNewButtonProps } from "./types.js";
+import { DefaultSaveAsNewButton } from "./DefaultSaveAsNewButton.js";
 
 /**
  * @internal

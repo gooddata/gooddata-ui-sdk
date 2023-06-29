@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDashboardCustomizer, IDashboardEventHandling } from "./customizer";
-import { DashboardContext } from "../model";
+import { IDashboardCustomizer, IDashboardEventHandling } from "./customizer.js";
+import { DashboardContext } from "../model/index.js";
 
 /**
  * Basic set of information about a Dashboard plugin.

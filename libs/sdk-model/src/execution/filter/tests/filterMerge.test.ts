@@ -1,13 +1,14 @@
 // (C) 2020 GoodData Corporation
-import { mergeFilters } from "../filterMerge";
+import { describe, expect, it } from "vitest";
+import { mergeFilters } from "../filterMerge.js";
 import {
     newPositiveAttributeFilter,
     newMeasureValueFilter,
     newAbsoluteDateFilter,
     newAllTimeFilter,
     newRankingFilter,
-} from "../factory";
-import { IFilter } from "..";
+} from "../factory.js";
+import { IFilter } from "../index.js";
 
 describe("mergeFilters", () => {
     it("should append attribute filters", () => {

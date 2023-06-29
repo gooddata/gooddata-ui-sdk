@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
-import { IDashboardQuery } from "./base";
+import { IDashboardQuery } from "./base.js";
 
 /**
  * @internal

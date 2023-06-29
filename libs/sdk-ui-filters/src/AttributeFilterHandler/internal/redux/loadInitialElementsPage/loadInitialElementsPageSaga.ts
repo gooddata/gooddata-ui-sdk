@@ -3,14 +3,14 @@ import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
 import { CancelableOptions } from "@gooddata/sdk-backend-spi";
 
-import { getAttributeFilterContext } from "../common/sagas";
-import { selectElementsForm } from "../common/selectors";
+import { getAttributeFilterContext } from "../common/sagas.js";
+import { selectElementsForm } from "../common/selectors.js";
 
-import { elementsSaga } from "../elements/elementsSaga";
-import { selectLoadElementsOptions } from "../elements/elementsSelectors";
-import { actions } from "../store/slice";
-import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes";
-import { ILoadElementsOptions } from "../../../types";
+import { elementsSaga } from "../elements/elementsSaga.js";
+import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";
+import { actions } from "../store/slice.js";
+import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
+import { ILoadElementsOptions } from "../../../types/index.js";
 
 /**
  * @internal

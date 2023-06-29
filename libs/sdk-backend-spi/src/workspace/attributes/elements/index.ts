@@ -7,8 +7,8 @@ import {
     IRelativeDateFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import { IPagedResource } from "../../../common/paging";
-import { ICancelable } from "../../../cancelation";
+import { IPagedResource } from "../../../common/paging.js";
+import { ICancelable } from "../../../cancelation/index.js";
 
 /**
  * Specification of particular elements to load in {@link IElementsQueryOptions} using their values.

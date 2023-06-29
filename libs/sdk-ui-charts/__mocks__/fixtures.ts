@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
 
-import * as rec from "./recordings/playlist";
+import * as rec from "./recordings/playlist.js";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
 function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {

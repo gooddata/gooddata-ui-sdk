@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { MouseEvent } from "react";
 
-import { DashboardItemContent } from "./DashboardItemContent";
-import { DashboardItemContentWrapper } from "./DashboardItemContentWrapper";
+import { DashboardItemContent } from "./DashboardItemContent.js";
+import { DashboardItemContentWrapper } from "./DashboardItemContentWrapper.js";
 
 export interface IDashboardItemBaseProps {
     /**

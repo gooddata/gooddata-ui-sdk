@@ -18,22 +18,22 @@ import {
     IColorPaletteMetadataObject,
     IColorPaletteDefinition,
 } from "@gooddata/sdk-model";
-import { objRefToIdentifier } from "../../utils/api";
+import { objRefToIdentifier } from "../../utils/api.js";
 import {
     convertTheme as convertThemeFromBackend,
     convertThemeWithLinks,
-} from "../../convertors/fromBackend/ThemeConverter";
+} from "../../convertors/fromBackend/ThemeConverter.js";
 import {
     convertColorPalette as convertColorPaletteFromBackend,
     convertColorPaletteWithLinks,
     getColorPaletteFromMDObject,
     isValidColorPalette,
-} from "../../convertors/fromBackend/ColorPaletteConverter";
-import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter";
-import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter";
-import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter";
-import { TigerAuthenticatedCallGuard } from "../../types";
-import { OrganizationSettingsService } from "./settings";
+} from "../../convertors/fromBackend/ColorPaletteConverter.js";
+import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter.js";
+import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter.js";
+import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { OrganizationSettingsService } from "./settings.js";
 
 export class OrganizationStylingService implements IOrganizationStylingService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

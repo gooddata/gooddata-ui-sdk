@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import last from "lodash/last";
+import cloneDeep from "lodash/cloneDeep.js";
+import last from "lodash/last.js";
 
 const HEATMAP_TEMPLATE = {
     chart: {

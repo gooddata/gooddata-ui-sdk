@@ -33,6 +33,7 @@ import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
+import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
@@ -4147,7 +4148,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     context: React_2.ContextType<typeof OverlayContext>;
     // (undocumented)
-    static contextType: React_2.Context<OverlayController>;
+    static contextType: React_2.Context<OverlayController_2>;
     // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
     // (undocumented)

@@ -7,7 +7,7 @@ import {
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
-import { DateFilterOption } from "../interfaces";
+import { DateFilterOption } from "../interfaces/index.js";
 
 /**
  * Returns the date filter option with excludeCurrentPeriod applied if applicable.

@@ -10,7 +10,7 @@ import {
     selectCanManageWorkspace,
     useDashboardSelector,
     useDashboardUserInteraction,
-} from "../../../../../model";
+} from "../../../../../model/index.js";
 
 /**
  * @internal

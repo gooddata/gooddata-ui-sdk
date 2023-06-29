@@ -9,17 +9,17 @@ import {
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
-import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";
-import { useInsightExport } from "../../../common";
-import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill";
-import { IntlWrapper } from "../../../../localization";
-import { DrillDialog } from "./DrillDialog";
-import { DrillDialogInsight } from "./DrillDialogInsight";
-import { useWidgetExecutionsHandler } from "../../../../../model";
-import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
-import { useDashboardComponentsContext } from "../../../../dashboardContexts";
-import { ThemedLoadingEqualizer } from "../../../../presentationComponents";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants";
+import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
+import { useInsightExport } from "../../../common/index.js";
+import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
+import { IntlWrapper } from "../../../../localization/index.js";
+import { DrillDialog } from "./DrillDialog.js";
+import { DrillDialogInsight } from "./DrillDialogInsight.js";
+import { useWidgetExecutionsHandler } from "../../../../../model/index.js";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
+import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

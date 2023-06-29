@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { IAlignPoint } from "../typings/positioning";
-import { ArrowOffset, Bubble, BubbleHoverTrigger } from "../Bubble";
-import { ALIGN_POINTS, ARROW_OFFSETS } from "./constants";
+import { IAlignPoint } from "../typings/positioning.js";
+import { ArrowOffset, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { ALIGN_POINTS, ARROW_OFFSETS } from "./constants.js";
 
 /**
  * @internal

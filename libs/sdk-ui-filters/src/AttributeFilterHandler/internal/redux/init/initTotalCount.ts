@@ -3,11 +3,11 @@ import { SagaIterator } from "redux-saga";
 import { put, fork, race, take, call, select, SagaReturnType } from "redux-saga/effects";
 import { AnyAction } from "@reduxjs/toolkit";
 
-import { Correlation } from "../../../types";
-import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga";
-import { actions } from "../store/slice";
-import { getAttributeFilterContext } from "../common/sagas";
-import { selectElementsForm } from "../common/selectors";
+import { Correlation } from "../../../types/index.js";
+import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga.js";
+import { actions } from "../store/slice.js";
+import { getAttributeFilterContext } from "../common/sagas.js";
+import { selectElementsForm } from "../common/selectors.js";
 
 /**
  * @internal

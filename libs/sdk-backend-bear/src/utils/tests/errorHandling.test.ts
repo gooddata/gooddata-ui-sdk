@@ -1,6 +1,7 @@
 // (C) 2023 GoodData Corporation
 import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
-import { convertApiError } from "../errorHandling";
+import { convertApiError } from "../errorHandling.js";
+import { describe, expect, test } from "vitest";
 
 describe("errorHandling", () => {
     describe("convertApiError", () => {

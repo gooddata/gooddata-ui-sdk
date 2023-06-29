@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IColorPaletteItem, IFeatureFlags } from "./interfaces";
+import { IColorPaletteItem, IFeatureFlags } from "./interfaces.js";
 
 export interface IStyleSettingsResponse {
     styleSettings: IStyleSettings;

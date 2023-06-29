@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getRelativeDateFilterShiftedValues should return correct from to date values for day granularity 1`] = `
-Array [
+exports[`getRelativeDateFilterShiftedValues > should return correct from to date values for day granularity 1`] = `
+[
   "08/23/2021",
   "08/24/2021",
   "08/25/2021",
@@ -9,8 +9,8 @@ Array [
 ]
 `;
 
-exports[`getRelativeDateFilterShiftedValues should return correct from to date values for month granularity 1`] = `
-Array [
+exports[`getRelativeDateFilterShiftedValues > should return correct from to date values for month granularity 1`] = `
+[
   "05/01/2021",
   "05/02/2021",
   "05/03/2021",
@@ -137,8 +137,8 @@ Array [
 ]
 `;
 
-exports[`getRelativeDateFilterShiftedValues should return correct from to date values for quarter granularity 1`] = `
-Array [
+exports[`getRelativeDateFilterShiftedValues > should return correct from to date values for quarter granularity 1`] = `
+[
   "10/01/2020",
   "10/02/2020",
   "10/03/2020",
@@ -507,8 +507,8 @@ Array [
 ]
 `;
 
-exports[`getRelativeDateFilterShiftedValues should return correct from to date values for year granularity 1`] = `
-Array [
+exports[`getRelativeDateFilterShiftedValues > should return correct from to date values for year granularity 1`] = `
+[
   "01/01/2018",
   "01/02/2018",
   "01/03/2018",

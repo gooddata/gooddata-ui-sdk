@@ -1,32 +1,32 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute area and measure sort as available sorts for 2M + 1VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide attribute normal sort as default sort, attribute area and measure sort as available sorts for 2M + 1VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -36,9 +36,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -49,23 +49,23 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -76,38 +76,38 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 2VB + 1SB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 2VB + 1SB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
-    Object {
-      "attributeSort": Object {
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a2",
       },
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
     },
-    Object {
-      "attributeSortItem": Object {
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a2",
         "direction": "asc",
       },
@@ -118,23 +118,23 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and measure sort as available sorts for 1M + 1VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide attribute normal sort as default sort, attribute normal and measure sort as available sorts for 1M + 1VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": false,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
@@ -144,9 +144,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -157,33 +157,33 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, one attribute area and two measure sorts as available sorts for 2 stacked M + 1VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide attribute normal sort as default sort, one attribute area and two measure sorts as available sorts for 2 stacked M + 1VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -193,9 +193,9 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
@@ -206,32 +206,32 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide attribute normal sorts as default sort, two attribute normal, one area sort and one measure sort as available sort for 1M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide attribute normal sorts as default sort, two attribute normal, one area sort and one measure sort as available sort for 1M + 2 VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
-    Object {
-      "attributeSort": Object {
+    {
+      "attributeSort": {
         "areaSortEnabled": false,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a2",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
@@ -241,15 +241,15 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
     },
-    Object {
-      "attributeSortItem": Object {
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a2",
         "direction": "asc",
       },
@@ -260,42 +260,42 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2 stacked M + 2VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2 stacked M + 2VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
-    Object {
-      "attributeSort": Object {
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a2",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -305,15 +305,15 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
     },
-    Object {
-      "attributeSortItem": Object {
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a2",
         "direction": "asc",
       },
@@ -324,42 +324,42 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2M + 2VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
+exports[`PluggableColumnChart > Sort config > should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2M + 2VB 1`] = `
+{
+  "appliedSort": [],
+  "availableSorts": [
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a1",
       },
     },
-    Object {
-      "attributeSort": Object {
+    {
+      "attributeSort": {
         "areaSortEnabled": true,
         "normalSortEnabled": true,
       },
-      "itemId": Object {
+      "itemId": {
         "localIdentifier": "a2",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m1",
               },
             },
           ],
           "type": "measureSort",
         },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
                 "measureIdentifier": "m2",
               },
             },
@@ -369,15 +369,15 @@ Object {
       ],
     },
   ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
+  "defaultSort": [
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a1",
         "direction": "asc",
       },
     },
-    Object {
-      "attributeSortItem": Object {
+    {
+      "attributeSortItem": {
         "attributeIdentifier": "a2",
         "direction": "asc",
       },

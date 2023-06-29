@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import { useMemo } from "react";
-import isArray from "lodash/isArray";
-import mergeWith from "lodash/mergeWith";
+import isArray from "lodash/isArray.js";
+import mergeWith from "lodash/mergeWith.js";
 import { IInsight, insightProperties, insightSetProperties, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectSettings, useDashboardSelector } from "../../../../model";
+import { selectSettings, useDashboardSelector } from "../../../../model/index.js";
 
 /**
  * @internal

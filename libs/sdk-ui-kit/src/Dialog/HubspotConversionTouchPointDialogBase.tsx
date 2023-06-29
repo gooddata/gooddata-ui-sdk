@@ -4,8 +4,8 @@ import { useIntl } from "react-intl";
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
-import { Button } from "../Button";
-import { Typography } from "../Typography";
+import { Button } from "../Button/index.js";
+import { Typography } from "../Typography/index.js";
 
 declare global {
     interface Window {

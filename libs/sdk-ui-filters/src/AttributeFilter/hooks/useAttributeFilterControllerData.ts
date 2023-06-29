@@ -1,11 +1,11 @@
 // (C) 2022 GoodData Corporation
 import { useState, useEffect } from "react";
-import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
-import { isLimitingAttributeFiltersEmpty } from "../utils";
-import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState";
-import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants";
+import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
+import { isLimitingAttributeFiltersEmpty } from "../utils.js";
+import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
+import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants.js";
 import { filterObjRef } from "@gooddata/sdk-model";
-import { AttributeFilterControllerData } from "./types";
+import { AttributeFilterControllerData } from "./types.js";
 
 /**
  * @internal

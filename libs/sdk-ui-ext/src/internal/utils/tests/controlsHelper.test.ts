@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { maxInputValidateAndPushData, minInputValidateAndPushData } from "../controlsHelper";
+import { maxInputValidateAndPushData, minInputValidateAndPushData } from "../controlsHelper.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 describe("controlsHelper", () => {
     describe("max/min input validation", () => {
@@ -24,8 +25,8 @@ describe("controlsHelper", () => {
             let state: any;
 
             beforeEach(() => {
-                pushData = jest.fn();
-                setState = jest.fn();
+                pushData = vi.fn();
+                setState = vi.fn();
                 props = {
                     properties: { controls: { yAxis: {} } },
                     pushData,
@@ -106,8 +107,8 @@ describe("controlsHelper", () => {
             let state: any;
 
             beforeEach(() => {
-                pushData = jest.fn();
-                setState = jest.fn();
+                pushData = vi.fn();
+                setState = vi.fn();
                 props = {
                     properties: { controls: { yAxis: {} } },
                     pushData,

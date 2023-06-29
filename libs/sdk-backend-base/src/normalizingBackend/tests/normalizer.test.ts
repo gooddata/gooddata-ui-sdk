@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-
+import { describe, it, expect } from "vitest";
 import {
     defaultDimensionsGenerator,
     defWithDimensions,
@@ -29,7 +29,7 @@ import {
     newTotal,
 } from "@gooddata/sdk-model";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { Denormalizer, Normalizer } from "../normalizer";
+import { Denormalizer, Normalizer } from "../normalizer.js";
 
 // cannot be constructed using model functions - so doing this
 const EmptyMvf = (measure: IMeasure): IMeasureValueFilter => {

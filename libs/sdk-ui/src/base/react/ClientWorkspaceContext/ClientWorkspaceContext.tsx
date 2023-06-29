@@ -1,18 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { useBackendStrict } from "../BackendContext";
+import { useBackendStrict } from "../BackendContext.js";
 import {
     useCancelablePromise,
     UseCancelablePromiseState,
     UseCancelablePromiseStatus,
-} from "../useCancelablePromise";
-import { GoodDataSdkError } from "../../errors/GoodDataSdkError";
-import isEmpty from "lodash/isEmpty";
-import { resolveLCMWorkspaceIdentifiers } from "./resolveLCMWorkspaceIdentifiers";
-import { IClientWorkspaceIdentifiers, IClientWorkspaceStatus } from "./interfaces";
-import { useWorkspace, WorkspaceProvider } from "../WorkspaceContext";
-import invariant from "ts-invariant";
+} from "../useCancelablePromise.js";
+import { GoodDataSdkError } from "../../errors/GoodDataSdkError.js";
+import isEmpty from "lodash/isEmpty.js";
+import { resolveLCMWorkspaceIdentifiers } from "./resolveLCMWorkspaceIdentifiers.js";
+import { IClientWorkspaceIdentifiers, IClientWorkspaceStatus } from "./interfaces.js";
+import { useWorkspace, WorkspaceProvider } from "../WorkspaceContext.js";
+import { invariant } from "ts-invariant";
 
 /**
  * @alpha

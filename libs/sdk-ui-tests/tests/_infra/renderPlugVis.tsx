@@ -7,12 +7,12 @@ import {
     IVisualizationClass,
     uriRef,
 } from "@gooddata/sdk-model";
-import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal";
-import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
+import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/internal";
+import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.js";
 import { render } from "@testing-library/react";
 import React from "react";
-import { IScenario } from "../../src";
-import noop from "lodash/noop";
+import { IScenario } from "../../src/index.js";
+import noop from "lodash/noop.js";
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
     const visClassUri = insightVisualizationUrl(insight);

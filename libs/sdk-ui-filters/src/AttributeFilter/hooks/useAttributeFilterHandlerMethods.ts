@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
+import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
 
 /**
  * @internal

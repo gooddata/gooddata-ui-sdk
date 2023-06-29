@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { ISeparators } from "@gooddata/sdk-ui";
-import DropdownItem from "./DropdownItem";
-import DropdownToggleButton from "./DropdownToggleButton";
-import { IFormatTemplate } from "../../typings";
-import { Overlay } from "../../../Overlay";
+import DropdownItem from "./DropdownItem.js";
+import DropdownToggleButton from "./DropdownToggleButton.js";
+import { IFormatTemplate } from "../../typings.js";
+import { Overlay } from "../../../Overlay/index.js";
 
 interface ICustomFormatTemplatesState {
     isOpened: boolean;

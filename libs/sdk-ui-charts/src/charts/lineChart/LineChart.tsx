@@ -17,11 +17,11 @@ import {
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { stackedChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CoreLineChart } from "./CoreLineChart";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CoreLineChart } from "./CoreLineChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

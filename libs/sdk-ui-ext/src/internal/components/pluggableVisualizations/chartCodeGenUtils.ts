@@ -6,20 +6,20 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import filter from "lodash/fp/filter";
-import flow from "lodash/fp/flow";
-import fromPairs from "lodash/fromPairs";
-import toPairs from "lodash/toPairs";
+import filter from "lodash/fp/filter.js";
+import flow from "lodash/fp/flow.js";
+import fromPairs from "lodash/fromPairs.js";
+import toPairs from "lodash/toPairs.js";
 
-import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
+import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import {
     IAdditionalFactoryDefinition,
     IInsightToPropConversion,
     insightConversion,
     PropMeta,
-} from "../../utils/embeddingCodeGenerator";
-import { getChartSupportedControls } from "../../utils/propertiesHelper";
-import { removeUseless } from "../../utils/removeUseless";
+} from "../../utils/embeddingCodeGenerator/index.js";
+import { getChartSupportedControls } from "../../utils/propertiesHelper.js";
+import { removeUseless } from "../../utils/removeUseless.js";
 
 const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "colorMapping",

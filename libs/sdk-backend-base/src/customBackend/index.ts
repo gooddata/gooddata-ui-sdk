@@ -16,16 +16,16 @@ import {
     IOrganizations,
     IEntitlements,
 } from "@gooddata/sdk-backend-spi";
-import { TelemetryData } from "../toolkit/backend";
+import { TelemetryData } from "../toolkit/backend.js";
 import {
     AnonymousAuthProvider,
     AuthenticatedAsyncCall,
     AuthProviderCallGuard,
     IAuthenticatedAsyncCallContext,
     IAuthProviderCallGuard,
-} from "../toolkit/auth";
-import { CustomWorkspace } from "./workspace";
-import { CustomBackendConfig } from "./config";
+} from "../toolkit/auth.js";
+import { CustomWorkspace } from "./workspace.js";
+import { CustomBackendConfig } from "./config.js";
 
 //
 //

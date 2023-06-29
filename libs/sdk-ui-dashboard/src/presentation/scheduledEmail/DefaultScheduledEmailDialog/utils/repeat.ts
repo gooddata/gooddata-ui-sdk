@@ -1,9 +1,9 @@
 // (C) 2019-2023 GoodData Corporation
-import identity from "lodash/identity";
-import { IScheduleEmailRepeat, IScheduleEmailRepeatFrequency } from "../interfaces";
-import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../constants";
+import identity from "lodash/identity.js";
+import { IScheduleEmailRepeat, IScheduleEmailRepeatFrequency } from "../interfaces.js";
+import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../constants.js";
 
-import { getDate, getDay, getWeek } from "./datetime";
+import { getDate, getDay, getWeek } from "./datetime.js";
 
 type IFragments = number[];
 interface IFragmentObject {

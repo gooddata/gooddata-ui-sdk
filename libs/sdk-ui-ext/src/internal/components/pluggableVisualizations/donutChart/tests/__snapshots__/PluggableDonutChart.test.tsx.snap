@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PluggableDonutChart should return reference point with multiple metrics and no category 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableDonutChart > should return reference point with multiple metrics and no category 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -13,7 +13,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "af2Ewj9Re2vK",
           "localIdentifier": "m2",
@@ -21,7 +21,7 @@ Object {
           "showOnSecondaryAxis": null,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "dt.opportunitysnapshot.snapshotdate",
           "localIdentifier": "m3",
@@ -29,7 +29,7 @@ Object {
           "showOnSecondaryAxis": true,
           "type": "metric",
         },
-        Object {
+        {
           "aggregation": null,
           "attribute": "acfWntEMcom0",
           "localIdentifier": "m4",
@@ -40,20 +40,20 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "view",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -61,12 +61,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -82,8 +82,8 @@ Object {
         "itemsLimit": 20,
         "title": "Measures",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -94,31 +94,31 @@ Object {
         "icon": "local:donut/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 0,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
         "warningMessage": "To view by, an insight can have only one measure",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableDonutChart should return reference point with one metric and no category 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableDonutChart > should return reference point with one metric and no category 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -129,20 +129,20 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [],
+    {
+      "items": [],
       "localIdentifier": "view",
     },
   ],
-  "filters": Object {
-    "items": Array [],
+  "filters": {
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -150,12 +150,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -171,8 +171,8 @@ Object {
         "itemsLimit": 20,
         "title": "Measures",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -183,30 +183,30 @@ Object {
         "icon": "local:donut/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;
 
-exports[`PluggableDonutChart should return reference point with only one metric and one category and only valid filters 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
+exports[`PluggableDonutChart > should return reference point with only one metric and one category and only valid filters 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "aazb6kroa3iC",
           "localIdentifier": "m1",
@@ -217,12 +217,12 @@ Object {
       ],
       "localIdentifier": "measures",
     },
-    Object {
-      "items": Array [
-        Object {
+    {
+      "items": [
+        {
           "aggregation": null,
           "attribute": "attr.owner.department",
-          "dfRef": Object {
+          "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
@@ -232,20 +232,20 @@ Object {
       "localIdentifier": "view",
     },
   ],
-  "filters": Object {
-    "items": Array [
-      Object {
+  "filters": {
+    "items": [
+      {
         "aggregation": null,
         "attribute": "attr.owner.department",
-        "filters": Array [
-          Object {
+        "filters": [
+          {
             "attribute": "attr.owner.department",
-            "displayFormRef": Object {
+            "displayFormRef": {
               "uri": "owner/attribute/df/uri",
             },
             "isInverted": false,
-            "selectedElements": Array [
-              Object {
+            "selectedElements": [
+              {
                 "title": "string",
                 "uri": "string",
               },
@@ -259,11 +259,11 @@ Object {
     ],
     "localIdentifier": "filters",
   },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
+  "properties": {},
+  "uiConfig": {
+    "buckets": {
+      "filters": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -271,12 +271,12 @@ Object {
         "enabled": true,
         "isShowInPercentEnabled": false,
         "itemsLimit": 20,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
       },
-      "measures": Object {
-        "accepts": Array [
+      "measures": {
+        "accepts": [
           "metric",
           "fact",
           "attribute",
@@ -292,8 +292,8 @@ Object {
         "itemsLimit": 1,
         "title": "Measures",
       },
-      "view": Object {
-        "accepts": Array [
+      "view": {
+        "accepts": [
           "attribute",
           "date",
         ],
@@ -304,20 +304,20 @@ Object {
         "icon": "local:donut/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
-        "itemsLimitByType": Object {
+        "itemsLimitByType": {
           "date": 1,
         },
         "title": "View by",
       },
     },
-    "exportConfig": Object {
+    "exportConfig": {
       "supported": true,
     },
-    "openAsReport": Object {
+    "openAsReport": {
       "supported": false,
     },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
+    "recommendations": {},
+    "supportedOverTimeComparisonTypes": [],
   },
 }
 `;

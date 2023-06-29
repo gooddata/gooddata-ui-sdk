@@ -1,2 +1,5 @@
 .wiremock_containerid
 .wiremock/
+
+# ignore the auxiliary file created during build to extract package version
+src/__version.ts

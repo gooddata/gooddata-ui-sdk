@@ -1,251 +1,251 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`sizing getDashboardLayoutGridItemHeight should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true 1`] = `220`;
+exports[`sizing > getDashboardLayoutGridItemHeight > should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true 1`] = `220`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget area 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget area 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget bar 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget bar 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget bubble 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget bubble 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget bullet 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget bullet 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget column 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget column 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget combo 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget combo 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget combo2 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget combo2 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget donut 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget donut 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget funnel 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget funnel 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget headline 1`] = `240`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget headline 1`] = `240`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget heatmap 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget heatmap 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget line 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget line 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget pie 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget pie 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget pushpin 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget pushpin 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget scatter 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget scatter 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget table 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget table 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget treemap 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget treemap 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget xirr 1`] = `240`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for insight widget xirr 1`] = `240`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for kpi with pop widget 1`] = `240`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for kpi with pop widget 1`] = `240`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for kpi without pop widget 1`] = `240`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for kpi without pop widget 1`] = `240`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for unknown widget 1`] = `450`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for unknown widget 1`] = `450`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget area 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget area 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget bar 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget bar 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget bubble 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget bubble 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget bullet 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget bullet 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget column 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget column 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget combo 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget combo 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget combo2 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget combo2 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget donut 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget donut 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget funnel 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget funnel 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget headline 1`] = `160`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget headline 1`] = `160`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget heatmap 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget heatmap 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget line 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget line 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget pie 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget pie 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget pushpin 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget pushpin 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget scatter 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget scatter 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget table 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget table 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget treemap 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget treemap 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for insight widget xirr 1`] = `160`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget xirr 1`] = `160`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for kpi with pop widget 1`] = `220`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for kpi with pop widget 1`] = `220`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for kpi without pop widget 1`] = `160`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for kpi without pop widget 1`] = `160`;
 
-exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight true should get default height for unknown widget 1`] = `440`;
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for unknown widget 1`] = `440`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget area 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget area 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget bar 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget bar 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget bubble 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget bubble 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget bullet 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget bullet 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget column 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget column 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget combo 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget combo 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget combo2 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget combo2 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget donut 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget donut 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget funnel 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget funnel 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget headline 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget headline 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget heatmap 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget heatmap 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget line 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget line 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget pie 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget pie 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget pushpin 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget pushpin 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget scatter 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget scatter 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget table 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget table 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget treemap 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget treemap 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for insight widget xirr 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget xirr 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for kpi widget 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for kpi widget 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight false should get max height for unknown widget 1`] = `undefined`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for unknown widget 1`] = `undefined`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget area 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget area 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget bar 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget bar 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget bubble 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget bubble 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget bullet 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget bullet 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget column 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget column 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget combo 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget combo 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget combo2 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget combo2 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget donut 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget donut 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget funnel 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget funnel 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget headline 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget headline 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget heatmap 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget heatmap 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget line 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget line 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget pie 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget pie 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget pushpin 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget pushpin 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget scatter 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget scatter 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget table 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget table 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget treemap 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget treemap 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for insight widget xirr 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget xirr 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for kpi widget 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for kpi widget 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMaxGridHeight with customHeight true should get max height for unknown widget 1`] = `40`;
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for unknown widget 1`] = `40`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget area 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget area 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget bar 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget bar 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget bubble 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget bubble 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget bullet 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget bullet 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget column 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget column 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget combo 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget combo 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget combo2 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget combo2 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget donut 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget donut 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget funnel 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget funnel 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget headline 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget headline 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget heatmap 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget heatmap 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget line 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget line 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget pie 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget pie 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget pushpin 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget pushpin 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget scatter 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget scatter 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget table 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget table 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget treemap 1`] = `22.5`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget treemap 1`] = `22.5`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for insight widget xirr 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget xirr 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for kpi with pop widget 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for kpi with pop widget 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for kpi without pop widget 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for kpi without pop widget 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight false should get min height for unknown widget 1`] = `undefined`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for unknown widget 1`] = `undefined`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget area 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget area 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget bar 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget bar 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget bubble 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget bubble 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget bullet 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget bullet 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget column 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget column 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget combo 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget combo 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget combo2 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget combo2 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget donut 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget donut 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget funnel 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget funnel 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget headline 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget headline 1`] = `6`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget heatmap 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget heatmap 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget line 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget line 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget pie 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget pie 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget pushpin 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget pushpin 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget scatter 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget scatter 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget table 1`] = `12`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget table 1`] = `12`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget treemap 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget treemap 1`] = `22`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget xirr 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget xirr 1`] = `6`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for kpi with pop widget 1`] = `10`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for kpi with pop widget 1`] = `10`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for kpi without pop widget 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for kpi without pop widget 1`] = `6`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for unknown widget 1`] = `22`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for unknown widget 1`] = `22`;

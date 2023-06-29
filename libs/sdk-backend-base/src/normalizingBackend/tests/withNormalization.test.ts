@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
-
-import { withNormalization } from "../index";
-import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
+import { describe, it, expect } from "vitest";
+import { withNormalization } from "../index.js";
+import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { NoDataError } from "@gooddata/sdk-backend-spi";
 

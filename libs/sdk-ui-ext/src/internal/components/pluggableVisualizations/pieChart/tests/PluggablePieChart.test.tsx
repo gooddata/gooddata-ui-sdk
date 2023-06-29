@@ -1,19 +1,20 @@
 // (C) 2019-2022 GoodData Corporation
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
-import { PluggablePieChart } from "../PluggablePieChart";
+import { PluggablePieChart } from "../PluggablePieChart.js";
 
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import { IBucketOfFun } from "../../../../interfaces/Visualization";
-import * as testMocks from "../../../../tests/mocks/testMocks";
-import { getLastRenderEl } from "../../tests/testHelpers";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { IBucketOfFun } from "../../../../interfaces/Visualization.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 describe("PluggablePieChart", () => {
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps = {
         locale: DefaultLocale,

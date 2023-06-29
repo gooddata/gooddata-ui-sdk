@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import {
     ColumnChartWithSingleMeasureAndTwoViewByAndStack,
     ColumnChartWithSingleMeasureAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
-} from "./base";
+} from "./base.js";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { AttributeElements } from "../../_infra/predicates";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { AttributeElements } from "../../_infra/predicates.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.Drilling)

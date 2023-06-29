@@ -1,18 +1,19 @@
 // (C) 2019-2022 GoodData Corporation
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
-import { PluggableXirr } from "../PluggableXirr";
-import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as testMocks from "../../../../tests/mocks/testMocks";
+import { PluggableXirr } from "../PluggableXirr.js";
+import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { IDrillableItem } from "@gooddata/sdk-ui";
 import { CoreXirr, ICoreChartProps } from "@gooddata/sdk-ui-charts";
-import { getLastRenderEl } from "../../tests/testHelpers";
+import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 describe("PluggableXirr", () => {
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
@@ -21,10 +22,10 @@ describe("PluggableXirr", () => {
         configPanelElement: () => mockConfigElement,
         visualizationProperties: {},
         callbacks: {
-            afterRender: jest.fn(),
-            pushData: jest.fn(),
-            onLoadingChanged: jest.fn(),
-            onError: jest.fn(),
+            afterRender: vi.fn(),
+            pushData: vi.fn(),
+            onLoadingChanged: vi.fn(),
+            onError: vi.fn(),
         },
         renderFun: mockRenderFun,
     };
@@ -42,7 +43,7 @@ describe("PluggableXirr", () => {
 
     describe("init", () => {
         it("should not call pushData during init", () => {
-            const pushData = jest.fn();
+            const pushData = vi.fn();
 
             createComponent({
                 callbacks: {

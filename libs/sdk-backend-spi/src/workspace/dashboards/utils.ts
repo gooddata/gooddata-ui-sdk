@@ -10,7 +10,7 @@ import {
     isDashboardLayout,
     IDashboardWidget,
 } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
 /**
  * Has dashboard layout only empty sections and widgets?

@@ -8,10 +8,10 @@ import {
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
     IVisualizationMeta,
-} from "../../../interfaces/VisualizationDescriptor";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
-import { PluggableXirr } from "./PluggableXirr";
-import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { PluggableXirr } from "./PluggableXirr.js";
+import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -20,7 +20,7 @@ import {
     localeInsightConversion,
     singleAttributeBucketConversion,
     singleMeasureBucketConversion,
-} from "../../../utils/embeddingCodeGenerator";
+} from "../../../utils/embeddingCodeGenerator/index.js";
 
 export class XirrDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

@@ -3,7 +3,7 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { scenariosFor } from "../../src";
+import { scenariosFor } from "../../src/index.js";
 
 // this pivot table is such that if it is sorted by the measure, it has adjacent cells with the same content in the first column
 // -> they would be grouped if the grouping was enabled no matter what

@@ -1,29 +1,29 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`chartOptionsBuilder getDrillableSeries in usecase of bar chart with 3 measures and view by attribute with first and last drillable measures should assign correct drillIntersection to pointData with drilldown true 1`] = `
-Array [
-  Array [
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+exports[`chartOptionsBuilder > getDrillableSeries > in usecase of bar chart with 3 measures and view by attribute > with first and last drillable measures > should assign correct drillIntersection to pointData with drilldown true 1`] = `
+[
+  [
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "#,##0.00",
           "identifier": "af2Ewj9Re2vK",
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
         },
       },
     },
-    Object {
-      "header": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "header": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "created",
             "name": "Year created",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
             },
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
@@ -31,12 +31,12 @@ Array [
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
         },
-        "attributeHeaderItem": Object {
+        "attributeHeaderItem": {
           "name": "<button>2008</button>",
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
         },
@@ -44,28 +44,28 @@ Array [
     },
   ],
   undefined,
-  Array [
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+  [
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "#,##0.00",
           "identifier": "alUEwmBtbwSh",
           "localIdentifier": "expectedMetric",
           "name": "Expected",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
         },
       },
     },
-    Object {
-      "header": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "header": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "created",
             "name": "Year created",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
             },
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
@@ -73,12 +73,12 @@ Array [
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
         },
-        "attributeHeaderItem": Object {
+        "attributeHeaderItem": {
           "name": "<button>2008</button>",
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
         },
@@ -88,58 +88,58 @@ Array [
 ]
 `;
 
-exports[`chartOptionsBuilder getDrillableSeries in usecase of bubble chart with 3 measures and attribute should assign correct drillIntersection to pointData with drilldown true 1`] = `
-Object {
-  "drillIntersection": Array [
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+exports[`chartOptionsBuilder > getDrillableSeries > in usecase of bubble chart with 3 measures and attribute > should assign correct drillIntersection to pointData with drilldown true 1`] = `
+{
+  "drillIntersection": [
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "#,##0.00",
           "identifier": "ab0bydLaaisS",
           "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
           "name": "_Snapshot [EOP-2]",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
           },
           "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
         },
       },
     },
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "#,##0",
           "identifier": "aaYh6Voua2yj",
           "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
           "name": "# of Open Opps.",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
           },
           "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
         },
       },
     },
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "$#,#00.00",
           "identifier": "ab4EFOAmhjOx",
           "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
           "name": "Remaining Quota",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
           },
           "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
         },
       },
     },
-    Object {
-      "header": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "header": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "attr.owner.id",
             "name": "Sales Rep",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
             },
             "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
@@ -147,12 +147,12 @@ Object {
           "identifier": "label.owner.id.name",
           "localIdentifier": "49a659fbd7c541a69284769d53a2be7f",
           "name": "Owner Name",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
           },
           "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
         },
-        "attributeHeaderItem": Object {
+        "attributeHeaderItem": {
           "name": "Jessica Traven",
           "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
         },
@@ -167,44 +167,44 @@ Object {
 }
 `;
 
-exports[`chartOptionsBuilder getDrillableSeries in usecase of scatter plot with 2 measures and attribute should assign correct drillIntersection to pointData with drilldown true 1`] = `
-Array [
-  Array [
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+exports[`chartOptionsBuilder > getDrillableSeries > in usecase of scatter plot with 2 measures and attribute > should assign correct drillIntersection to pointData with drilldown true 1`] = `
+[
+  [
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "#,##0.00",
           "identifier": "af2Ewj9Re2vK",
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
         },
       },
     },
-    Object {
-      "header": Object {
-        "measureHeaderItem": Object {
+    {
+      "header": {
+        "measureHeaderItem": {
           "format": "#,##0.00",
           "identifier": "afSEwRwdbMeQ",
           "localIdentifier": "wonMetric",
           "name": "Won",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
         },
       },
     },
-    Object {
-      "header": Object {
-        "attributeHeader": Object {
-          "formOf": Object {
+    {
+      "header": {
+        "attributeHeader": {
+          "formOf": {
             "identifier": "created",
             "name": "Year created",
-            "ref": Object {
+            "ref": {
               "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
             },
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
@@ -212,12 +212,12 @@ Array [
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
-          "ref": Object {
+          "ref": {
             "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
           },
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
         },
-        "attributeHeaderItem": Object {
+        "attributeHeaderItem": {
           "name": "<button>2008</button>",
           "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
         },
@@ -227,12 +227,12 @@ Array [
 ]
 `;
 
-exports[`chartOptionsBuilder getSeries in use case of bubble should fill X, Y and Z with valid values when measure buckets are not empty 1`] = `
-Array [
-  Object {
+exports[`chartOptionsBuilder > getSeries > in use case of bubble > should fill X, Y and Z with valid values when measure buckets are not empty 1`] = `
+[
+  {
     "color": "rgb(20,178,226)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 33,
@@ -243,10 +243,10 @@ Array [
     "name": "Adam Bradley",
     "seriesIndex": 0,
   },
-  Object {
+  {
     "color": "rgb(0,193,141)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 29,
@@ -257,10 +257,10 @@ Array [
     "name": "Alejandro Vabiano",
     "seriesIndex": 1,
   },
-  Object {
+  {
     "color": "rgb(229,77,66)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 35,
@@ -271,10 +271,10 @@ Array [
     "name": "Alexsandr Fyodr",
     "seriesIndex": 2,
   },
-  Object {
+  {
     "color": "rgb(241,134,0)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 30,
@@ -285,10 +285,10 @@ Array [
     "name": "Cory Owens",
     "seriesIndex": 3,
   },
-  Object {
+  {
     "color": "rgb(171,85,163)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 30,
@@ -299,10 +299,10 @@ Array [
     "name": "Dale Perdadtin",
     "seriesIndex": 4,
   },
-  Object {
+  {
     "color": "rgb(244,213,33)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 35,
@@ -313,10 +313,10 @@ Array [
     "name": "Dave Bostadt",
     "seriesIndex": 5,
   },
-  Object {
+  {
     "color": "rgb(148,161,174)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 29,
@@ -327,10 +327,10 @@ Array [
     "name": "Ellen Jones",
     "seriesIndex": 6,
   },
-  Object {
+  {
     "color": "rgb(107,191,216)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 31,
@@ -341,10 +341,10 @@ Array [
     "name": "Huey Jonas",
     "seriesIndex": 7,
   },
-  Object {
+  {
     "color": "rgb(181,136,177)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 32,
@@ -355,10 +355,10 @@ Array [
     "name": "Jessica Traven",
     "seriesIndex": 8,
   },
-  Object {
+  {
     "color": "rgb(238,135,128)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 26,
@@ -369,10 +369,10 @@ Array [
     "name": "John Jovi",
     "seriesIndex": 9,
   },
-  Object {
+  {
     "color": "rgb(241,171,84)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 42,
@@ -383,10 +383,10 @@ Array [
     "name": "Jon Jons",
     "seriesIndex": 10,
   },
-  Object {
+  {
     "color": "rgb(133,209,188)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 30,
@@ -397,10 +397,10 @@ Array [
     "name": "Lea Forbes",
     "seriesIndex": 11,
   },
-  Object {
+  {
     "color": "rgb(41,117,170)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 30,
@@ -411,10 +411,10 @@ Array [
     "name": "Monique Babonas",
     "seriesIndex": 12,
   },
-  Object {
+  {
     "color": "rgb(4,140,103)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 64,
@@ -425,10 +425,10 @@ Array [
     "name": "Paul Gomez",
     "seriesIndex": 13,
   },
-  Object {
+  {
     "color": "rgb(181,60,51)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 88,
@@ -439,10 +439,10 @@ Array [
     "name": "Paul Jacobs",
     "seriesIndex": 14,
   },
-  Object {
+  {
     "color": "rgb(163,101,46)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 93,
@@ -453,10 +453,10 @@ Array [
     "name": "Ravi Deetri",
     "seriesIndex": 15,
   },
-  Object {
+  {
     "color": "rgb(140,57,132)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 70,
@@ -467,10 +467,10 @@ Array [
     "name": "Thomas Gones",
     "seriesIndex": 16,
   },
-  Object {
+  {
     "color": "rgb(136,219,244)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 71,
@@ -481,10 +481,10 @@ Array [
     "name": "Tom Stickler",
     "seriesIndex": 17,
   },
-  Object {
+  {
     "color": "rgb(189,234,222)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 60,
@@ -495,10 +495,10 @@ Array [
     "name": "Trevor Deegan",
     "seriesIndex": 18,
   },
-  Object {
+  {
     "color": "rgb(239,197,194)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 0,
         "y": 60,
@@ -512,12 +512,12 @@ Array [
 ]
 `;
 
-exports[`chartOptionsBuilder getSeries in use case of bubble should update seriesIndex correctly when one of X, Y or Z has null data 1`] = `
-Array [
-  Object {
+exports[`chartOptionsBuilder > getSeries > in use case of bubble > should update seriesIndex correctly when one of X, Y or Z has null data 1`] = `
+[
+  {
     "color": "rgb(171,85,163)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 546,
         "y": 30,
@@ -528,10 +528,10 @@ Array [
     "name": "Dale Perdadtin",
     "seriesIndex": 4,
   },
-  Object {
+  {
     "color": "rgb(244,213,33)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 12,
         "y": 35,
@@ -542,10 +542,10 @@ Array [
     "name": "Dave Bostadt",
     "seriesIndex": 5,
   },
-  Object {
+  {
     "color": "rgb(148,161,174)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 199,
         "y": 29,
@@ -556,10 +556,10 @@ Array [
     "name": "Ellen Jones",
     "seriesIndex": 6,
   },
-  Object {
+  {
     "color": "rgb(107,191,216)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 475,
         "y": 31,
@@ -570,10 +570,10 @@ Array [
     "name": "Huey Jonas",
     "seriesIndex": 7,
   },
-  Object {
+  {
     "color": "rgb(181,136,177)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 245,
         "y": 32,
@@ -584,10 +584,10 @@ Array [
     "name": "Jessica Traven",
     "seriesIndex": 8,
   },
-  Object {
+  {
     "color": "rgb(238,135,128)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 347,
         "y": 26,
@@ -598,10 +598,10 @@ Array [
     "name": "John Jovi",
     "seriesIndex": 9,
   },
-  Object {
+  {
     "color": "rgb(241,171,84)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 345,
         "y": 42,
@@ -612,10 +612,10 @@ Array [
     "name": "Jon Jons",
     "seriesIndex": 10,
   },
-  Object {
+  {
     "color": "rgb(133,209,188)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 34,
         "y": 30,
@@ -626,10 +626,10 @@ Array [
     "name": "Lea Forbes",
     "seriesIndex": 11,
   },
-  Object {
+  {
     "color": "rgb(41,117,170)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 323,
         "y": 30,
@@ -640,10 +640,10 @@ Array [
     "name": "Monique Babonas",
     "seriesIndex": 12,
   },
-  Object {
+  {
     "color": "rgb(4,140,103)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 346,
         "y": 64,
@@ -654,10 +654,10 @@ Array [
     "name": "Paul Gomez",
     "seriesIndex": 13,
   },
-  Object {
+  {
     "color": "rgb(181,60,51)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 457,
         "y": 88,
@@ -668,10 +668,10 @@ Array [
     "name": "Paul Jacobs",
     "seriesIndex": 14,
   },
-  Object {
+  {
     "color": "rgb(163,101,46)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 451,
         "y": 93,
@@ -682,10 +682,10 @@ Array [
     "name": "Ravi Deetri",
     "seriesIndex": 15,
   },
-  Object {
+  {
     "color": "rgb(140,57,132)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 232,
         "y": 70,
@@ -696,10 +696,10 @@ Array [
     "name": "Thomas Gones",
     "seriesIndex": 16,
   },
-  Object {
+  {
     "color": "rgb(136,219,244)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 311,
         "y": 71,
@@ -710,10 +710,10 @@ Array [
     "name": "Tom Stickler",
     "seriesIndex": 17,
   },
-  Object {
+  {
     "color": "rgb(189,234,222)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 700,
         "y": 60,
@@ -724,10 +724,10 @@ Array [
     "name": "Trevor Deegan",
     "seriesIndex": 18,
   },
-  Object {
+  {
     "color": "rgb(239,197,194)",
-    "data": Array [
-      Object {
+    "data": [
+      {
         "format": "$#,#00.00",
         "x": 246,
         "y": 60,

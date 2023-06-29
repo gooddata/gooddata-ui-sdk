@@ -1,19 +1,19 @@
 // (C) 2007-2022 GoodData Corporation
-import find from "lodash/find";
-import omit from "lodash/omit";
-import omitBy from "lodash/omitBy";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import { XhrModule } from "./xhr";
-import { ExecutionModule } from "./execution";
-import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces";
+import find from "lodash/find.js";
+import omit from "lodash/omit.js";
+import omitBy from "lodash/omitBy.js";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { XhrModule } from "./xhr.js";
+import { ExecutionModule } from "./execution.js";
+import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces.js";
 import {
     GdcCatalog,
     GdcDataSetsCsv,
     GdcDateDataSets,
     GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
-import { omitEmpty } from "./util";
+import { omitEmpty } from "./util.js";
 
 const REQUEST_DEFAULTS = {
     types: ["attribute", "metric", "fact"],

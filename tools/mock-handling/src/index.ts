@@ -4,26 +4,26 @@
 import { program } from "commander";
 import ora from "ora";
 import chalk from "chalk";
-import * as pkg from "../package.json";
+import pkg from "../package.json";
 import * as process from "process";
 import * as path from "path";
 import pmap from "p-map";
-import { log, logError, logInfo, logSuccess } from "./cli/loggers";
-import { clearLine, clearTerminal } from "./cli/clear";
-import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts";
-import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config";
-import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants";
-import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
-import { generateAllFiles } from "./codegen";
+import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
+import { clearLine, clearTerminal } from "./cli/clear.js";
+import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts.js";
+import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
+import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants.js";
+import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
+import { generateAllFiles } from "./codegen/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IRecording } from "./recordings/common";
-import { discoverExecutionRecordings } from "./recordings/executionRepository";
-import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository";
-import { discoverInsightRecordings } from "./recordings/insightsRepository";
-import { discoverCatalogRecordings } from "./recordings/catalogRepository";
-import { discoverVisClassesRecordings } from "./recordings/visClassesRepository";
-import { getOrInitBackend } from "./backend";
-import { discoverDashboardRecordings } from "./recordings/dashboardsRepository";
+import { IRecording } from "./recordings/common.js";
+import { discoverExecutionRecordings } from "./recordings/executionRepository.js";
+import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository.js";
+import { discoverInsightRecordings } from "./recordings/insightsRepository.js";
+import { discoverCatalogRecordings } from "./recordings/catalogRepository.js";
+import { discoverVisClassesRecordings } from "./recordings/visClassesRepository.js";
+import { getOrInitBackend } from "./backend.js";
+import { discoverDashboardRecordings } from "./recordings/dashboardsRepository.js";
 
 program
     .version(pkg.version)
@@ -238,4 +238,4 @@ export {
     ScenarioDescriptor,
     InsightRecordingSpec,
     requestPages,
-} from "./interface";
+} from "./interface.js";

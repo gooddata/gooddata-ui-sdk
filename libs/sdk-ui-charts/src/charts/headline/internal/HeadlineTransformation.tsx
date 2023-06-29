@@ -2,20 +2,20 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { IChartConfig } from "../../../interfaces";
+import { IChartConfig } from "../../../interfaces/index.js";
 import {
     ExplicitDrill,
     IDrillEventCallback,
     convertDrillableItemsToPredicates,
     fireDrillEvent,
 } from "@gooddata/sdk-ui";
-import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
+import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline.js";
 import {
     applyDrillableItems,
     buildDrillEventData,
     getHeadlineData,
-} from "./utils/HeadlineTransformationUtils";
-import noop from "lodash/noop";
+} from "./utils/HeadlineTransformationUtils.js";
+import noop from "lodash/noop.js";
 
 export interface IHeadlineTransformationProps {
     dataView: IDataView;

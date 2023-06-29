@@ -3,10 +3,10 @@
 import React, { ReactNode } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { Button } from "../Button";
-import { Icon } from "../Icon";
-import { Typography } from "../Typography";
-import { Overlay } from "./Overlay";
+import { Button } from "../Button/index.js";
+import { Icon } from "../Icon/index.js";
+import { Typography } from "../Typography/index.js";
+import { Overlay } from "./Overlay.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 /**

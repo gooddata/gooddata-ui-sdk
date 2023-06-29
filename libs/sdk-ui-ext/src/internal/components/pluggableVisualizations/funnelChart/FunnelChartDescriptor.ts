@@ -6,9 +6,9 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableFunnelChart } from "./PluggableFunnelChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableFunnelChart } from "./PluggableFunnelChart.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -18,8 +18,8 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 
-import { TableDescriptor } from "../../structure/tableDescriptor";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import {
     ColumnWidthItem,
     IMeasureColumnWidthItem,
@@ -9,7 +9,7 @@ import {
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,
     newWidthForSelectedColumns,
-} from "../../../columnWidths";
+} from "../../../columnWidths.js";
 import {
     getMaxWidth,
     getMaxWidthCached,
@@ -19,7 +19,7 @@ import {
     MIN_WIDTH,
     ResizedColumnsStore,
     SORT_ICON_WIDTH,
-} from "../columnSizing";
+} from "../columnSizing.js";
 import {
     ColumnOnlyResultDescriptor,
     getFakeColumn,
@@ -27,11 +27,12 @@ import {
     testStore,
     TwoMeasuresWithRowAttributeDescriptor,
     TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-} from "./columnSizing.fixture";
+} from "./columnSizing.fixture.js";
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants";
+import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants.js";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { pick } from "lodash";
+import { describe, it, expect, vi } from "vitest";
 
 // This cannot be created using factory functions & it's very awkward case for which
 export const ColumnOnlyWidth: IMeasureColumnWidthItem = {
@@ -733,7 +734,7 @@ describe("ResizedColumnStore", () => {
     describe("getMaxWidth", () => {
         const width = 20;
         const font = "15px Arial";
-        const measureTextMock = jest.fn();
+        const measureTextMock = vi.fn();
         const context: any = {
             measureText: measureTextMock.mockReturnValue({ width }),
         };
@@ -757,7 +758,7 @@ describe("ResizedColumnStore", () => {
     describe("getMaxWidthCached", () => {
         const width = 20;
         const font = "15px Arial";
-        const measureTextMock = jest.fn();
+        const measureTextMock = vi.fn();
         const context: any = {
             measureText: measureTextMock.mockReturnValue({ width }),
         };
@@ -784,16 +785,16 @@ describe("ResizedColumnStore", () => {
 
     describe("getUpdatedColumnDefs", () => {
         const column1 = {
-            getColDef: jest.fn().mockReturnValue({ field: "text1", colId: "c_0" }),
+            getColDef: vi.fn().mockReturnValue({ field: "text1", colId: "c_0" }),
         };
         const column2 = {
-            getColDef: jest.fn().mockReturnValue({ field: "text2", colId: "c_1" }),
+            getColDef: vi.fn().mockReturnValue({ field: "text2", colId: "c_1" }),
         };
         const column3 = {
-            getColDef: jest.fn().mockReturnValue({ field: "text3", colId: "c_2" }),
+            getColDef: vi.fn().mockReturnValue({ field: "text3", colId: "c_2" }),
         };
         const column4 = {
-            getColDef: jest.fn().mockReturnValue({ field: "text4", colId: "c_3" }),
+            getColDef: vi.fn().mockReturnValue({ field: "text4", colId: "c_3" }),
         };
         const columns: any = [column1, column2, column3];
         const padding = 10;

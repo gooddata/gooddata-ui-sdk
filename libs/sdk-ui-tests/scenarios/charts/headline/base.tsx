@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { GermanNumberFormat } from "../../_infra/formatting";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src/index.js";
+import { GermanNumberFormat } from "../../_infra/formatting.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const HeadlineWithTwoMeasures = {
     primaryMeasure: ReferenceMd.Won,

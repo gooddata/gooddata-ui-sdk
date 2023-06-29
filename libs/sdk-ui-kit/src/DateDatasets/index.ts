@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-export * from "./typings";
+export * from "./typings.js";
 
 export {
     getRecommendedDateDataset,
@@ -12,4 +12,4 @@ export {
     sortDateDatasets,
     transform2Dropdown,
     unrelatedHeader,
-} from "./dateDatasets";
+} from "./dateDatasets.js";

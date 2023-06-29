@@ -1,5 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
-import { sanitizeFiltersForExport } from "../utils";
+import { describe, it, expect } from "vitest";
+import { sanitizeFiltersForExport } from "../utils.js";
 import {
     absoluteDateFilter,
     attributeFilter,
@@ -7,7 +8,7 @@ import {
     relativeDateFilter,
     dateFilterWithUndefinedRange,
     dependentAttributeFilter,
-} from "./utils.fixtures";
+} from "./utils.fixtures.js";
 
 describe("dashboard export utils", () => {
     describe("sanitizeFiltersForExport", () => {

@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
-import { isAttribute, attributeLocalId } from "../attribute";
-import { IAttributeOrMeasure } from ".";
+import { isAttribute, attributeLocalId } from "../attribute/index.js";
+import { IAttributeOrMeasure } from "./index.js";
 
-import { isMeasure, measureLocalId } from "../measure";
+import { isMeasure, measureLocalId } from "../measure/index.js";
 
-import invariant, { InvariantError } from "ts-invariant";
+import { invariant, InvariantError } from "ts-invariant";
 
 /**
  * Gets value of local identifier of bucketItem

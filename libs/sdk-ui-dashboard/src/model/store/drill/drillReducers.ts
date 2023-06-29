@@ -2,7 +2,7 @@
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
-import { DrillState } from "./drillState";
+import { DrillState } from "./drillState.js";
 
 type DrillReducer<A extends Action> = CaseReducer<DrillState, A>;
 

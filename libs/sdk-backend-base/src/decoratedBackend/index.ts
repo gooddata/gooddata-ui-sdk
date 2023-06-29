@@ -33,7 +33,7 @@ import {
     IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
     public capabilities: IBackendCapabilities;

@@ -1,10 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
-import set from "lodash/set";
+import set from "lodash/set.js";
 import { WrappedComponentProps } from "react-intl";
-import { getTranslation } from "./translations";
-import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl";
+import { getTranslation } from "./translations.js";
+import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl.js";
 import { IPushData } from "@gooddata/sdk-ui";
-import { messages } from "../../locales";
+import { messages } from "../../locales.js";
 
 function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);

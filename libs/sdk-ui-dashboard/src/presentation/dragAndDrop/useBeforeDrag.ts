@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
-import { handleOnGoodstrapDragEvent } from "@gooddata/sdk-ui-kit/";
+import { handleOnGoodstrapDragEvent } from "@gooddata/sdk-ui-kit";
 
 /**
  * Fire global goodstrap event to close overlays before DnD start,

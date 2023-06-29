@@ -1,27 +1,27 @@
 // (C) 2021-2023 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IDashboardAttributeFilter, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { AddAttributeFilter } from "../../../commands/filters";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { attributeFilterAdded } from "../../../events/filters";
-import { filterContextActions } from "../../../store/filterContext";
+import { AddAttributeFilter } from "../../../commands/filters.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { attributeFilterAdded } from "../../../events/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreAttributeFilters,
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
-} from "../../../store/filterContext/filterContextSelectors";
+} from "../../../store/filterContext/filterContextSelectors.js";
 
-import { DashboardContext } from "../../../types/commonTypes";
-import { dispatchFilterContextChanged } from "../common";
-import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas";
-import { canFilterBeAdded } from "./validation/uniqueFiltersValidation";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
-import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
-import isEmpty from "lodash/isEmpty";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged } from "../common.js";
+import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
+import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
+import isEmpty from "lodash/isEmpty.js";
 import { batchActions } from "redux-batched-actions";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 

@@ -5,8 +5,8 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl"
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { formatMetric, HYPHEN, isValueUnhandledNull } from "./utils/format";
-import { getErrorPopInfo, getPopInfo, IPopInfo } from "./utils/pop";
+import { formatMetric, HYPHEN, isValueUnhandledNull } from "./utils/format.js";
+import { getErrorPopInfo, getPopInfo, IPopInfo } from "./utils/pop.js";
 import {
     HeadlinePagination,
     shouldRenderPagination,

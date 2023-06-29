@@ -12,7 +12,7 @@ import {
     selectAllCatalogMeasuresMap,
     DashboardCommandStarted,
     ChangeKpiWidgetMeasure,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
 export function useOptimisticMeasureUpdate(kpiWidget: IKpiWidget) {
     // ref of the measure the KPI is being updated to

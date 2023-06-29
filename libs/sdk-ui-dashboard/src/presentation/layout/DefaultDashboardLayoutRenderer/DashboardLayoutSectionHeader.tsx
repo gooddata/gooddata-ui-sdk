@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription";
+import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 
 /**
  * @alpha

@@ -2,12 +2,13 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 
-import { ScrollGradient } from "../ScrollGradient";
-import { IScrollGradientProps } from "../typings";
-import { useRightInScrollable } from "../hooks/useRightInScrollable";
-import { useScrollEvent } from "../hooks/useScrollEvent";
-import { useGradientColor } from "../hooks/useGradientColor";
-import { useContentHeight } from "../hooks/useContentHeight";
+import { ScrollGradient } from "../ScrollGradient.js";
+import { IScrollGradientProps } from "../typings.js";
+import { useRightInScrollable } from "../hooks/useRightInScrollable.js";
+import { useScrollEvent } from "../hooks/useScrollEvent.js";
+import { useGradientColor } from "../hooks/useGradientColor.js";
+import { useContentHeight } from "../hooks/useContentHeight.js";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 function renderScrollGradient(height: number, options: Partial<IScrollGradientProps>) {
     return render(
@@ -93,11 +94,11 @@ function renderContentHeight(element: HTMLElement): [() => ReturnType<typeof use
 describe("ScrollGradient", () => {
     describe("rendering", () => {
         let onScroll: IScrollGradientProps["onScroll"];
-        let spy: ReturnType<typeof jest.spyOn>;
+        let spy: ReturnType<typeof vi.spyOn>;
 
         beforeEach(() => {
-            onScroll = jest.fn();
-            spy = jest.spyOn(window, "getComputedStyle");
+            onScroll = vi.fn();
+            spy = vi.spyOn(window, "getComputedStyle");
             spy.mockReturnValue({ width: "185px" } as CSSStyleDeclaration);
         });
 
@@ -122,9 +123,9 @@ describe("ScrollGradient", () => {
     describe("useRightInScrollable", () => {
         function mock(width: number, space: number) {
             const content = document.createElement("div");
-            jest.spyOn(content, "offsetWidth", "get").mockReturnValue(width);
+            vi.spyOn(content, "offsetWidth", "get").mockReturnValue(width);
 
-            const getComputedStyleMock = jest.spyOn(window, "getComputedStyle").mockReturnValue({
+            const getComputedStyleMock = vi.spyOn(window, "getComputedStyle").mockReturnValue({
                 width: `${width - space}px`,
             } as CSSStyleDeclaration);
 
@@ -157,9 +158,9 @@ describe("ScrollGradient", () => {
     describe("useScrollEvent", () => {
         function mock(height: number, contentHeight: number, scrollTop: number) {
             const content = document.createElement("div");
-            jest.spyOn(content, "offsetHeight", "get").mockReturnValue(height);
-            jest.spyOn(content, "scrollHeight", "get").mockReturnValue(contentHeight);
-            const scrollTopSpy = jest.spyOn(content, "scrollTop", "get");
+            vi.spyOn(content, "offsetHeight", "get").mockReturnValue(height);
+            vi.spyOn(content, "scrollHeight", "get").mockReturnValue(contentHeight);
+            const scrollTopSpy = vi.spyOn(content, "scrollTop", "get");
             scrollTopSpy.mockReturnValue(scrollTop);
 
             return {
@@ -169,7 +170,7 @@ describe("ScrollGradient", () => {
         }
 
         function scroll(
-            scrollTopSpy: ReturnType<typeof jest.spyOn>,
+            scrollTopSpy: ReturnType<typeof vi.spyOn>,
             onScrollHandler: (e: React.MouseEvent<HTMLDivElement>) => void,
             top: number,
         ) {
@@ -235,10 +236,10 @@ describe("ScrollGradient", () => {
     });
 
     describe("useContentHeight", () => {
-        let raf: ReturnType<typeof jest.spyOn>, handler: FrameRequestCallback;
+        let raf: ReturnType<typeof vi.spyOn>, handler: FrameRequestCallback;
 
         beforeEach(() => {
-            raf = jest.spyOn(window, "requestAnimationFrame").mockImplementation((h) => {
+            raf = vi.spyOn(window, "requestAnimationFrame").mockImplementation((h) => {
                 handler = h;
                 return 1;
             });
@@ -246,7 +247,7 @@ describe("ScrollGradient", () => {
 
         it("determine content height from element", () => {
             const el = document.createElement("div");
-            const spy = jest.spyOn(el, "scrollHeight", "get");
+            const spy = vi.spyOn(el, "scrollHeight", "get");
 
             const [data, clear] = renderContentHeight(el);
             expect(data()).toBe(-1);

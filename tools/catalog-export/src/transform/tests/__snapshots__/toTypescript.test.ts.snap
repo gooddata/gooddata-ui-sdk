@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transformToTypescript creates new catalog 1`] = `
+exports[`transformToTypescript > creates new catalog 1`] = `
 "import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition, idRef } from \\"@gooddata/sdk-model\\";
 
 /**

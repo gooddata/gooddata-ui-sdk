@@ -1,16 +1,18 @@
 // (C) 2023 GoodData Corporation
-import { setAttributeFilterSelectionMode } from "../../../../commands";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
+import { beforeEach, describe, it, expect } from "vitest";
+import { setAttributeFilterSelectionMode } from "../../../../commands/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors.js";
 
 describe("changeAttributeSelectionModeHandler", () => {
     let Tester: DashboardTester;
-    beforeEach(
-        preloadedTesterFactory((tester) => {
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
             Tester = tester;
-        }, SimpleDashboardIdentifier),
-    );
+        }, SimpleDashboardIdentifier);
+    });
 
     it("should emit the appropriate events for changed attribute filter selection mode", async () => {
         const firstFilterLocalId = selectFilterContextAttributeFilters(Tester.state())[0].attributeFilter

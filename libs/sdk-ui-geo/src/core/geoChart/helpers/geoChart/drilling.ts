@@ -9,11 +9,11 @@ import {
     isSomeHeaderPredicateMatched,
     IDrillEvent,
 } from "@gooddata/sdk-ui";
-import { IGeoData, IGeoDrillEvent } from "../../../../GeoChart";
-import { AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from "./data";
+import { IGeoData, IGeoDrillEvent } from "../../../../GeoChart.js";
+import { AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from "./data.js";
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import without from "lodash/without";
-import omit from "lodash/omit";
+import without from "lodash/without.js";
+import omit from "lodash/omit.js";
 
 function getDrillIntersectionForGeoChart(
     drillableItems: IHeaderPredicate[],

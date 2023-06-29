@@ -9,14 +9,14 @@ import {
     newPositiveAttributeFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { ReferenceData } from "@gooddata/reference-workspace";
-import { Department, Region, Won } from "@gooddata/reference-workspace/dist/md/full";
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";
 const departmentUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1027";
 const westCoastUri = ReferenceData.Region.WestCoast.uri;
 const directSalesUri = ReferenceData.Department.DirectSales.uri;
+const { Department, Region, Won } = ReferenceMd;
 
 export const targetUri = "target-uri";
 

@@ -1,9 +1,9 @@
 // (C) 2021-2023 GoodData Corporation
-import LRUCache from "lru-cache";
+import { LRUCache } from "lru-cache";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { INSIGHT_CACHE_SIZE } from "./constants";
-import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory";
+import { INSIGHT_CACHE_SIZE } from "./constants.js";
+import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory.js";
 
 /**
  * @internal

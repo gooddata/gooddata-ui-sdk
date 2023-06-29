@@ -7,26 +7,27 @@ import {
     isDualAxisOrSomeSecondaryAxisMeasure,
     getHighchartsAxisNameConfiguration,
     getColumnWidthsFromProperties,
-} from "../propertiesHelper";
+} from "../propertiesHelper.js";
 import {
     emptyReferencePoint,
     simpleStackedReferencePoint,
     twoMeasureBucketsReferencePoint,
     measuresOnSecondaryAxisAndAttributeReferencePoint,
     oneMetricAndCategoryAndStackReferencePoint,
-} from "../../tests/mocks/referencePointMocks";
+} from "../../tests/mocks/referencePointMocks.js";
 import {
     simpleStackedBaseUiConfig,
     multipleMetricsAndCategoriesBaseUiConfig,
-} from "../../tests/mocks/uiConfigMocks";
-import { OPTIONAL_STACKING_PROPERTIES } from "../../constants/supportedProperties";
+} from "../../tests/mocks/uiConfigMocks.js";
+import { OPTIONAL_STACKING_PROPERTIES } from "../../constants/supportedProperties.js";
 import {
     IExtendedReferencePoint,
     IBucketItem,
     IVisualizationProperties,
-} from "../../interfaces/Visualization";
+} from "../../interfaces/Visualization.js";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 import { newAttributeSort } from "@gooddata/sdk-model";
+import { describe, it, expect } from "vitest";
 
 describe("propertiesHelper", () => {
     describe("getSupportedPropertiesControls", () => {

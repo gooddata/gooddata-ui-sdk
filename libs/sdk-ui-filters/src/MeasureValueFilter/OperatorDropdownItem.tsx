@@ -2,12 +2,12 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
-import capitalize from "lodash/capitalize";
-import noop from "lodash/noop";
+import capitalize from "lodash/capitalize.js";
+import noop from "lodash/noop.js";
 import { stringUtils } from "@gooddata/util";
 
-import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
-import { MeasureValueFilterOperator } from "./types";
+import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator.js";
+import { MeasureValueFilterOperator } from "./types.js";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 

@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import { isUriRef, ObjRef, Uri, isIdentifierRef, Identifier } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { TigerAuthenticatedCallGuard } from "../types";
+import { TigerAuthenticatedCallGuard } from "../types/index.js";
 
 /**
  * Converts ObjRef instance to URI. For UriRef returns the uri as is, for IdentifierRef calls the backend and gets the URI.

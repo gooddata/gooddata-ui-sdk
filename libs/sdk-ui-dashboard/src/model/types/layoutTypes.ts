@@ -13,8 +13,8 @@ import {
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Base type for custom widgets. Custom widgets may extend this and add extra properties to hold widget-specific

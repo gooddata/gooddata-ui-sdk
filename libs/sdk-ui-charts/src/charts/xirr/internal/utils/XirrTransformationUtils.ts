@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { Identifier, DataValue, IMeasureDescriptor } from "@gooddata/sdk-model";
 
-import { calculateXirr } from "./calculateXirr";
+import { calculateXirr } from "./calculateXirr.js";
 import {
     DataViewFacade,
     VisualizationTypes,
@@ -17,7 +17,7 @@ import {
     IHeaderPredicate,
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
-import { IHeadlineData } from "../../../headline/Headlines";
+import { IHeadlineData } from "../../../headline/Headlines.js";
 
 export interface IXirrExecutionData {
     date: string;

@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import noop from "lodash/noop";
-import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop.js";
+import set from "lodash/set.js";
+import cloneDeep from "lodash/cloneDeep.js";
 import cx from "classnames";
-import DisabledBubbleMessage from "../DisabledBubbleMessage";
-import { IVisualizationProperties } from "../../interfaces/Visualization";
-import { getTranslation } from "../../utils/translations";
+import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslation } from "../../utils/translations.js";
 
 export interface IInputControlProps {
     valuePath: string;

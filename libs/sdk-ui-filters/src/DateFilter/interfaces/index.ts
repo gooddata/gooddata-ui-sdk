@@ -14,7 +14,7 @@ import {
     isRelativeDateFilterPreset,
     RelativeDateFilterGranularityOffset,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Represents the global absolute date filter, which may contain selected values

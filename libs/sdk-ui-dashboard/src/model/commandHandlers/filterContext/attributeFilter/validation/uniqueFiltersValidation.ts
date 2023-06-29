@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { areObjRefsEqual, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../../types/commonTypes";
+import { DashboardContext } from "../../../../types/commonTypes.js";
 
 export async function canFilterBeAdded(
     ctx: DashboardContext,

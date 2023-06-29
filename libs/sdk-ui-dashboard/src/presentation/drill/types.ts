@@ -1,6 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 import {
     IInsight,
     ObjRef,
@@ -11,7 +11,7 @@ import {
     isDrillToCustomUrl,
     IListedDashboard,
 } from "@gooddata/sdk-model";
-import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
+import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
 import {
     DrillToLegacyDashboard,
     DashboardCommandFailed,
@@ -29,7 +29,7 @@ import {
     DrillToCustomUrl,
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillCommand,
-} from "../../model";
+} from "../../model/index.js";
 
 /**
  * @alpha

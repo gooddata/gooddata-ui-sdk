@@ -2,8 +2,8 @@
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import noop from "lodash/noop";
-import { IButtonProps } from "./typings";
+import noop from "lodash/noop.js";
+import { IButtonProps } from "./typings.js";
 
 /**
  * @internal

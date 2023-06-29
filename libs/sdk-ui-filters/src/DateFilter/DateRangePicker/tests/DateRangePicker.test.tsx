@@ -1,10 +1,11 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { DateRangePicker, IDateRange, IDateRangePickerProps } from "../DateRangePicker";
-import { IntlDecorator } from "./IntlDecorators";
-import noop from "lodash/noop";
+import { DateRangePicker, IDateRange, IDateRangePickerProps } from "../DateRangePicker.js";
+import { IntlDecorator } from "./IntlDecorators.js";
+import noop from "lodash/noop.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 const getDefaultRange = (): IDateRange => ({
@@ -41,26 +42,26 @@ const renderComponent = (props?: Partial<IDateRangePickerProps>) => {
 
 describe("DateRangePicker", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     describe("time disabled", () => {
         it("should call the appropriate callback when from input changes", () => {
-            const onRangeChange = jest.fn();
+            const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             writeToInput("05/01/2019", getInput("05/05/2019"));
             expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), from: new Date(2019, 4, 1) });
         });
 
         it("should call the appropriate callback when to input changes", () => {
-            const onRangeChange = jest.fn();
+            const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             writeToInput("06/01/2019", getInput("05/15/2019"));
             expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), to: new Date(2019, 5, 1) });
         });
 
         it("should call the appropriate callback when from picker is clicked", () => {
-            const onRangeChange = jest.fn();
+            const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             fireEvent.click(getInput("05/05/2019"));
             fireEvent.click(screen.getByText("6"));
@@ -73,7 +74,7 @@ describe("DateRangePicker", () => {
         });
 
         it("should call the appropriate callback when to picker is clicked", () => {
-            const onRangeChange = jest.fn();
+            const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             fireEvent.click(getInput("05/15/2019"));
             fireEvent.click(screen.getByText("6"));
@@ -99,7 +100,7 @@ describe("DateRangePicker", () => {
 
     describe("time enabled", () => {
         it("should call the appropriate callback when FROM time configured to 11", () => {
-            const onRangeChange = jest.fn();
+            const onRangeChange = vi.fn();
             renderComponent({ onRangeChange, isTimeEnabled: true });
             const input = screen.getAllByDisplayValue("00:00")[0];
             writeToInput("11:00", input);
@@ -119,7 +120,7 @@ describe("DateRangePicker", () => {
         it.each(toScenarios)(
             "should call the appropriate callback when %s",
             (_desc, value, expectedResult) => {
-                const onRangeChange = jest.fn();
+                const onRangeChange = vi.fn();
                 renderComponent({ onRangeChange, isTimeEnabled: true });
                 const input = screen.getAllByDisplayValue("00:00")[1];
                 writeToInput(value, input);

@@ -6,24 +6,24 @@ import {
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition, ObjRef } from "@gooddata/sdk-model";
-import flow from "lodash/flow";
-import map from "lodash/fp/map";
-import replace from "lodash/fp/replace";
-import uniq from "lodash/fp/uniq";
+import flow from "lodash/flow.js";
+import map from "lodash/fp/map.js";
+import replace from "lodash/fp/replace.js";
+import uniq from "lodash/fp/uniq.js";
 import {
     convertMetadataObject,
     SupportedMetadataObject,
     SupportedWrappedMetadataObject,
-} from "../../../convertors/fromBackend/MetaConverter";
+} from "../../../convertors/fromBackend/MetaConverter.js";
 import {
     convertListedMetric,
     convertMetricFromBackend,
-} from "../../../convertors/fromBackend/MetricConverter";
-import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToUri } from "../../../utils/api";
-import { getTokenValuesOfType, tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
-import { convertListedVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
+} from "../../../convertors/fromBackend/MetricConverter.js";
+import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { objRefToUri } from "../../../utils/api.js";
+import { getTokenValuesOfType, tokenizeExpression, IExpressionToken } from "./measureExpressionTokens.js";
+import { convertListedVisualization } from "../../../convertors/fromBackend/VisualizationConverter.js";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

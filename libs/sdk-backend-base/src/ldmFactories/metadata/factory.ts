@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { IMetadataObject } from "@gooddata/sdk-model";
-import { Builder, IBuilder } from "../builder";
+import { Builder, IBuilder } from "../builder.js";
 
 /**
  * Metadata object builder interface

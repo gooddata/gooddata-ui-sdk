@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/index.js";
 
 export const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = {
     index: () => 0,

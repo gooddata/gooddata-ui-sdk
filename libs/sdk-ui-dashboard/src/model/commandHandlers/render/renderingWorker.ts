@@ -2,9 +2,9 @@
 import { Task, SagaIterator } from "redux-saga";
 import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
-import { DashboardContext } from "../../types/commonTypes";
-import { newDashboardEventPredicate } from "../../events";
-import { renderRequested, renderResolved } from "../../events/render";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { newDashboardEventPredicate } from "../../events/index.js";
+import { renderRequested, renderResolved } from "../../events/render.js";
 
 function* wait(ms: number): SagaIterator<true> {
     yield delay(ms);

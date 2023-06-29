@@ -2,7 +2,7 @@
 import { bucketItems, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@gooddata/sdk-ui-charts";
-import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 export function countBucketItems(insight: IInsightDefinition): {
     viewByItemCount: number;

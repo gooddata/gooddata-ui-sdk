@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES } from "../../../constants";
+import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES } from "../../../constants.js";
 
 export const REPEAT_EXECUTE_ON_INDEX = {
     [REPEAT_EXECUTE_ON.DAY_OF_MONTH]: 1,

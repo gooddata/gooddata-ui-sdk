@@ -1,17 +1,17 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { extendedWidgetDebugStr } from "../../../model";
-import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { extendedWidgetDebugStr } from "../../../model/index.js";
+import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
 import { isDashboardWidget } from "@gooddata/sdk-model";
-import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types";
-import { EmptyDashboardDropZone, LoadingDashboardPlaceholderWidget } from "../../dragAndDrop";
+import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types.js";
+import { EmptyDashboardDropZone, LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
 import {
     isInitialPlaceholderWidget,
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
     isLoadingPlaceholderWidget,
-} from "../../../widgets";
+} from "../../../widgets/index.js";
 
 const BadWidgetType: React.FC = () => {
     return <div>Missing renderer</div>;

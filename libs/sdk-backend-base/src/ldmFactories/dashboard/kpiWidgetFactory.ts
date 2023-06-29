@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import {
     ObjRef,
     KpiDrillDefinition,
@@ -11,8 +11,8 @@ import {
     IKpiComparisonDirection,
     IKpiComparisonTypeComparison,
 } from "@gooddata/sdk-model";
-import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory";
-import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "../builder";
+import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
+import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "../builder.js";
 
 /**
  * Kpi widget builder

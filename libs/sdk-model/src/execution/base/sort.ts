@@ -1,9 +1,9 @@
-// (C) 2019-2023 GoodData Corporation
-import { Identifier } from "../../objRef/index";
-import { attributeLocalId, IAttribute } from "../attribute";
-import { IMeasure, measureLocalId } from "../measure";
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
+// (C) 2019-2022 GoodData Corporation
+import { Identifier } from "../../objRef/index.js";
+import { attributeLocalId, IAttribute } from "../attribute/index.js";
+import { IMeasure, measureLocalId } from "../measure/index.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 
 /**
  * Sort items can be used to specify how the result of an execution should be sorted.

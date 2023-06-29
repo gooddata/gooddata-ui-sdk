@@ -4,9 +4,9 @@ import {
     DescriptionTooltipOpenedData,
     ShareDialogInteractionData,
     userInteractionTriggered,
-} from "../events";
+} from "../events/index.js";
 
-import { useDashboardEventDispatch } from "./useDashboardEventDispatch";
+import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
 
 /**
  * Hook for dispatching relevant user interaction commands.

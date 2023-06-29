@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 
-import { IDashboardInsightMenuProps } from "../types";
-import { DashboardInsightMenu } from "./DashboardInsightMenu";
+import { IDashboardInsightMenuProps } from "../types.js";
+import { DashboardInsightMenu } from "./DashboardInsightMenu/index.js";
 
 /**
  * @alpha

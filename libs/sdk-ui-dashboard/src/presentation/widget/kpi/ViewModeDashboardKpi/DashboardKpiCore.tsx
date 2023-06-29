@@ -1,9 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { useDashboardComponentsContext } from "../../../dashboardContexts";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import {
     selectDashboardRef,
     selectDisableKpiDashboardHeadlineUnderline,
@@ -11,11 +11,11 @@ import {
     selectIsReadOnly,
     selectSeparators,
     useDashboardSelector,
-} from "../../../../model";
-import { IDashboardKpiProps } from "../types";
+} from "../../../../model/index.js";
+import { IDashboardKpiProps } from "../types.js";
 
-import { KpiExecutor } from "./KpiExecutor";
-import { useKpiData } from "../common";
+import { KpiExecutor } from "./KpiExecutor.js";
+import { useKpiData } from "../common/index.js";
 
 /**
  * @internal

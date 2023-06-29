@@ -2,7 +2,7 @@
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import { Identifier, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
-import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
+import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes.js";
 import {
     recordedBackend,
     RecordedBackendConfig,
@@ -10,19 +10,22 @@ import {
     objRefsToStringKey,
 } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands";
-import { IDashboardQueryService } from "../store/_infra/queryService";
+import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands/index.js";
+import { IDashboardQueryService } from "../store/_infra/queryService.js";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard";
-import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
+import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard/index.js";
+import {
+    newRenderingWorker,
+    RenderingWorkerConfiguration,
+} from "../commandHandlers/render/renderingWorker.js";
 import {
     DashboardEvents,
     DashboardEventType,
     isDashboardCommandStarted,
     isDashboardQueryCompleted,
     isDashboardQueryStarted,
-} from "../events";
-import { DashboardState } from "../store";
+} from "../events/index.js";
+import { DashboardState } from "../store/index.js";
 
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];
@@ -242,16 +245,21 @@ export interface PreloadedTesterOptions {
 }
 
 /**
- * This factory will return a function that can be integrated into jest's `beforeAll` or `beforeEach` statements. That returned
- * function will drive initialization of the dashboard tester and will tell jest it's `done` or it will `fail`.
+ * This factory will return a function that can be integrated into vitest's `beforeAll` or `beforeEach` statements. That returned
+ * function will drive initialization of the dashboard tester and will tell vitest it's `done` or it will `fail`.
  *
- * When successfully loaded, the returned function will call both the `onLoaded` callback and jest's `done` callback.
+ * When successfully loaded, the returned function will call the `onLoaded` callback
  *
  * An example usage:
  *
  * ```
  *    let Tester: DashboardTester;
- *    beforeAll(preloadedTesterFactory((tester) => Tester = tester, SimpleDashboardIdentifier));
+ *
+ *       beforeEach(async ()=> {
+ *           await preloadedTesterFactory2((tester) => {
+ *               Tester = tester;
+ *           }, SimpleDashboardIdentifier);
+ *       });
  *
  *    it("should do xyz", () => {
  *
@@ -268,39 +276,36 @@ export interface PreloadedTesterOptions {
  * @param identifier - identifier of the dashboard to load
  * @param options - options influencing how the tester is created
  */
-export function preloadedTesterFactory(
+export async function preloadedTesterFactory(
     onLoaded: (tester: DashboardTester) => void | Promise<void>,
     identifier?: Identifier,
     options: PreloadedTesterOptions = {},
-): (done: jest.DoneCallback) => void {
+) {
     const { initCommand = initializeDashboard(), queryServices, backendConfig } = options;
 
-    return (done: jest.DoneCallback): void => {
-        const tester = identifier
-            ? DashboardTester.forRecording(
-                  identifier,
-                  { queryServices },
-                  {
-                      ...backendConfig,
-                  },
-              )
-            : DashboardTester.forNewDashboard(
-                  { queryServices },
-                  {
-                      ...backendConfig,
-                  },
-              );
+    const tester = identifier
+        ? DashboardTester.forRecording(
+              identifier,
+              { queryServices },
+              {
+                  ...backendConfig,
+              },
+          )
+        : DashboardTester.forNewDashboard(
+              { queryServices },
+              {
+                  ...backendConfig,
+              },
+          );
 
-        tester.dispatch(initCommand);
+    tester.dispatch(initCommand);
 
-        tester
-            .waitFor("GDC.DASH/EVT.INITIALIZED")
-            .then(() => Promise.resolve(onLoaded(tester)).then(() => tester.resetMonitors()))
-            .then(() => done())
-            .catch((err) => {
-                done.fail(`DashboardTester failed to load dashboard: ${err.message}`);
-            });
-    };
+    await tester
+        .waitFor("GDC.DASH/EVT.INITIALIZED")
+        .then(() => Promise.resolve(onLoaded(tester)).then(() => tester.resetMonitors()))
+        .catch((err) => {
+            throw `DashboardTester failed to load dashboard: ${err.message}`;
+        });
 }
 
 const commonAttributeResponses: Record<string, ObjRef[]> = {

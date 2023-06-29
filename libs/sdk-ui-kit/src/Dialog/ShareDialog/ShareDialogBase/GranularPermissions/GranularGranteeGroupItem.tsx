@@ -4,15 +4,15 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 
-import { GranteeGroupIcon } from "../GranteeIcons";
-import { DialogModeType, GranteeItem, IGranularGranteeGroup } from "../types";
-import { getGranteeItemTestId, getGranteeLabel } from "../utils";
-import { CurrentUserPermissions } from "../../types";
+import { GranteeGroupIcon } from "../GranteeIcons.js";
+import { DialogModeType, GranteeItem, IGranularGranteeGroup } from "../types.js";
+import { getGranteeItemTestId, getGranteeLabel } from "../utils.js";
+import { CurrentUserPermissions } from "../../types.js";
 
-import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown";
-import { usePermissionsDropdownState } from "./usePermissionsDropdownState";
-import { getGranteePossibilities } from "./permissionsLogic";
-import { useShareDialogInteraction } from "../ComponentInteractionContext";
+import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown.js";
+import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
+import { getGranteePossibilities } from "./permissionsLogic.js";
+import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 
 interface IGranularGranteeGroupItemProps {
     grantee: IGranularGranteeGroup;

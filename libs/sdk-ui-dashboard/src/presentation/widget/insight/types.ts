@@ -20,7 +20,7 @@ import {
     OnDrillToDashboardSuccess,
     OnDrillToInsightSuccess,
     OnWidgetDrill,
-} from "../../drill/types";
+} from "../../drill/types.js";
 
 ///
 /// Component props

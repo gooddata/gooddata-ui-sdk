@@ -5,18 +5,18 @@
         "target": "es2017",
         "jsx": "react",
         "lib": ["es2017", "dom"],
-        "module": "ESNext",
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "esModuleInterop": true,
         "importHelpers": true,
         "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "dist",
+        "outDir": "esm",
         "sourceMap": true,
         "resolveJsonModule": true
     },
     "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "esm"]
 }

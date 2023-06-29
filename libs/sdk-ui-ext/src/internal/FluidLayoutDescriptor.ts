@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { IFluidLayoutDescriptor } from "./interfaces/LayoutDescriptor";
+import { IFluidLayoutDescriptor } from "./interfaces/LayoutDescriptor.js";
 
 // keep in sync with sdk-ui-dashboard
 const DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT = 12;

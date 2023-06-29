@@ -2,15 +2,15 @@
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
-import set from "lodash/set";
-import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
-import partial from "lodash/partial";
-import throttle from "lodash/throttle";
-import isNil from "lodash/isNil";
+import set from "lodash/set.js";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
+import partial from "lodash/partial.js";
+import throttle from "lodash/throttle.js";
+import isNil from "lodash/isNil.js";
 import cx from "classnames";
-import { OnLegendReady } from "../../interfaces";
-import { Chart, IChartProps } from "./Chart";
+import { OnLegendReady } from "../../interfaces/index.js";
+import { Chart, IChartProps } from "./Chart.js";
 import {
     isFunnel,
     isPieOrDonutChart,
@@ -18,10 +18,10 @@ import {
     isHeatmap,
     isSankeyOrDependencyWheel,
     isWaterfall,
-} from "../chartTypes/_util/common";
+} from "../chartTypes/_util/common.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib";
-import { alignChart } from "../chartTypes/_chartCreators/helpers";
+import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib/index.js";
+import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
     ILegendProps,
     Legend,
@@ -31,9 +31,9 @@ import {
     ILegendDetailOptions,
 } from "@gooddata/sdk-ui-vis-commons";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
-import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
+import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
 import { ITheme } from "@gooddata/sdk-model";
-import { IChartOptions, ISeriesDataItem } from "../typings/unsafe";
+import { IChartOptions, ISeriesDataItem } from "../typings/unsafe.js";
 
 /**
  * @internal

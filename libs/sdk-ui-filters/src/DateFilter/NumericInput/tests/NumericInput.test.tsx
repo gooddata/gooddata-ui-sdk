@@ -1,8 +1,9 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import noop from "lodash/noop";
-import { NumericInput } from "../NumericInput";
+import noop from "lodash/noop.js";
+import { NumericInput } from "../NumericInput.js";
+import { describe, it, expect, vi } from "vitest";
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;
@@ -51,7 +52,7 @@ describe("NumericInput", () => {
     });
 
     it("should not react to up arrow when max is reached", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(<NumericInput onChange={onChange} max={5} value={5} />);
 
         fireEvent.keyDown(getInput(), {
@@ -64,7 +65,7 @@ describe("NumericInput", () => {
     });
 
     it("should not react to down arrow when min is reached", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(<NumericInput onChange={onChange} min={5} value={5} />);
 
         fireEvent.keyDown(getInput(), {
@@ -89,7 +90,7 @@ describe("NumericInput", () => {
     ])(
         "should %s the value from %p to %i when the appropriate button is clicked",
         (_, from: number, to: number, buttonGetter: any) => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<NumericInput onChange={onChange} value={from} />);
 
             fireEvent.click(buttonGetter());
@@ -107,7 +108,7 @@ describe("NumericInput", () => {
     ])(
         "should %s %i to %i on click with min %p and max %p",
         (_, from: number, to: number, min: number, max: number, buttonGetter: any) => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
 
             fireEvent.click(buttonGetter());
@@ -129,7 +130,7 @@ describe("NumericInput", () => {
     ])(
         "should %s the value from %p to %i when the %s arrow is pressed",
         (_, from: number, to: number, arrowCode: number, key: string) => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<NumericInput onChange={onChange} value={from} />);
 
             fireEvent.keyDown(getInput(), {
@@ -151,7 +152,7 @@ describe("NumericInput", () => {
     ])(
         "should %s %i to %i on arrow press with min %p and max %p",
         (_, from: number, to: number, min: number, max: number, arrowCode: number, key: string) => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
 
             fireEvent.keyDown(getInput(), {

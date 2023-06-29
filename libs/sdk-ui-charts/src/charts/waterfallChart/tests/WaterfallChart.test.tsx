@@ -5,19 +5,20 @@ import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@go
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
-import { WaterfallChart } from "../WaterfallChart";
-import { CoreWaterfallChart } from "../CoreWaterfallChart";
+import { WaterfallChart } from "../WaterfallChart.js";
+import { CoreWaterfallChart } from "../CoreWaterfallChart.js";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreWaterfallChart", () => ({
-    CoreWaterfallChart: jest.fn(() => null),
+vi.mock("../CoreWaterfallChart", () => ({
+    CoreWaterfallChart: vi.fn(() => null),
 }));
 
 describe("WaterfallChart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render with custom SDK", () => {

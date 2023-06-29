@@ -7,9 +7,9 @@ import {
     ActionsApiInterface as ScanModelActionsApiInterface,
     Configuration,
     ConfigurationParameters,
-} from "./generated/scan-json-api";
+} from "./generated/scan-json-api/index.js";
 
-import { BaseAPI, RequestArgs } from "./generated/scan-json-api/base";
+import { BaseAPI, RequestArgs } from "./generated/scan-json-api/base.js";
 
 export {
     Configuration as ScanModelConfiguration,

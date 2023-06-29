@@ -16,9 +16,9 @@ import {
     VisElementType,
     VisType,
     XirrType,
-} from "./visualizationTypes";
-import isEmpty from "lodash/isEmpty";
-import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
+} from "./visualizationTypes.js";
+import isEmpty from "lodash/isEmpty.js";
+import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 
 /**
  * Drillable item reference or predicate that enables insight / kpi drilling if it matches some attribute or measure of the insight / kpi.

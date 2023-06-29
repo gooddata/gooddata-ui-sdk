@@ -1,11 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
-import map from "lodash/map";
-import zip from "lodash/zip";
-import values from "lodash/values";
-import flatten from "lodash/flatten";
-import identity from "lodash/identity";
-import isEmpty from "lodash/isEmpty";
-import Highcharts from "../../../lib";
+import map from "lodash/map.js";
+import zip from "lodash/zip.js";
+import values from "lodash/values.js";
+import flatten from "lodash/flatten.js";
+import identity from "lodash/identity.js";
+import isEmpty from "lodash/isEmpty.js";
+import Highcharts from "../../../lib/index.js";
 
 import {
     getAxisRangeForAxes,
@@ -16,7 +16,7 @@ import {
     isIntersecting,
     isStacked,
     toNeighbors,
-} from "../../../chartTypes/_chartCreators/helpers";
+} from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
     areLabelsStacked,
@@ -30,10 +30,10 @@ import {
     setStackVisibilityByOpacity,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
-} from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
+} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { UnsafeInternals, IUnsafeDataLabels, IStackItem } from "../../../typings/unsafe";
-import { isWaterfall } from "../../../chartTypes/_util/common";
+import { UnsafeInternals, IUnsafeDataLabels, IStackItem } from "../../../typings/unsafe.js";
+import { isWaterfall } from "../../../chartTypes/_util/common.js";
 
 /*
  * Code in this file accesses Highchart properties that are not included in

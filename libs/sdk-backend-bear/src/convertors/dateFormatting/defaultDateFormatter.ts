@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
-import format from "date-fns/format";
+import format from "date-fns/format/index.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
-import { DateFormatter } from "./types";
-import { dateFormats, DateFormat, DEFAULT_DATE_FORMAT } from "./dateValueParser";
+import { DateFormatter } from "./types.js";
+import { dateFormats, DateFormat, DEFAULT_DATE_FORMAT } from "./dateValueParser.js";
 
 /**
  * Creates a default date formatting function.

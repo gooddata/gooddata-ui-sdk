@@ -22,14 +22,14 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
-import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
-import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter";
-import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter";
-import { resolveCustomOverride } from "./utils";
-import { parseNameFromContentDisposition } from "../../../utils/downloadFile";
+import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions.js";
+import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result.js";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter.js";
+import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter.js";
+import { resolveCustomOverride } from "./utils.js";
+import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;

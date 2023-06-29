@@ -7,15 +7,15 @@ import {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
-import toNumber from "lodash/toNumber";
-import { ChangeDateFilterSelection, DateFilterSelection } from "../../../commands/filters";
-import { dateFilterChanged } from "../../../events/filters";
-import { filterContextActions } from "../../../store/filterContext";
-import { selectFilterContextDateFilter } from "../../../store/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../../types/commonTypes";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
-import { invalidArgumentsProvided } from "../../../events/general";
+import toNumber from "lodash/toNumber.js";
+import { ChangeDateFilterSelection, DateFilterSelection } from "../../../commands/filters.js";
+import { dateFilterChanged } from "../../../events/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { selectFilterContextDateFilter } from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { canApplyDateFilter, dispatchFilterContextChanged } from "../common.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,

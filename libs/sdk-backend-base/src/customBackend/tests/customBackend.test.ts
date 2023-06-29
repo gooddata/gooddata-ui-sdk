@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
-
-import { customBackend } from "../index";
+import { describe, it, expect, vi } from "vitest";
+import { customBackend } from "../index.js";
 import {
     IAuthenticatedPrincipal,
     IAuthenticationContext,
@@ -9,10 +9,10 @@ import {
     IExecutionResult,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import { dummyDataView } from "../../dummyBackend";
+import { dummyDataView } from "../../dummyBackend/index.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newDefForItems } from "@gooddata/sdk-model";
-import { AnonymousAuthProvider } from "../../toolkit/auth";
+import { AnonymousAuthProvider } from "../../toolkit/auth.js";
 import {
     ApiClientProvider,
     CustomBackendConfig,
@@ -20,7 +20,7 @@ import {
     DataProviderContext,
     ResultProvider,
     ResultProviderContext,
-} from "../config";
+} from "../config.js";
 
 function client(): ApiClientProvider {
     let i = 1;
@@ -60,9 +60,9 @@ function createBackend(
     resultProvider: ResultProvider = resultProviderUsingFactory,
     dataProvider: DataProvider = emptyDataProvider,
 ) {
-    const mockClientProvider = jest.fn(client());
-    const mockResultProvider = jest.fn(resultProvider);
-    const mockDataProvider = jest.fn(dataProvider);
+    const mockClientProvider = vi.fn(client());
+    const mockResultProvider = vi.fn(resultProvider);
+    const mockDataProvider = vi.fn(dataProvider);
 
     const backend = customBackend({
         clientProvider: mockClientProvider,
@@ -82,9 +82,9 @@ function createAuthenticationProvider(
     authMethod?: (ctx: IAuthenticationContext) => Promise<IAuthenticatedPrincipal>,
 ) {
     const anonymouse = new AnonymousAuthProvider();
-    const mockGetCurrentPrincipal = jest.fn(anonymouse.getCurrentPrincipal);
-    const mockDeauthenticate = jest.fn(anonymouse.deauthenticate);
-    const mockAuthenticate = jest.fn(authMethod || anonymouse.authenticate);
+    const mockGetCurrentPrincipal = vi.fn(anonymouse.getCurrentPrincipal);
+    const mockDeauthenticate = vi.fn(anonymouse.deauthenticate);
+    const mockAuthenticate = vi.fn(authMethod || anonymouse.authenticate);
 
     const provider: IAuthenticationProvider = {
         authenticate: mockAuthenticate,

@@ -1,12 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import { areObjRefsEqual, IDashboard, IDashboardDefinition, idRef } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual.js";
 import ora from "ora";
-import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
-import { ActionOptions } from "../_base/types";
-import { genericErrorReporter } from "../_base/utils";
-import { getUpdatePluginParamsCmdConfig, UpdatePluginParamsCmdConfig } from "./actionConfig";
+import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
+import { ActionOptions } from "../_base/types.js";
+import { genericErrorReporter } from "../_base/utils.js";
+import { getUpdatePluginParamsCmdConfig, UpdatePluginParamsCmdConfig } from "./actionConfig.js";
 
 function printUsedUpdatePluginParamsSummary(config: UpdatePluginParamsCmdConfig) {
     const {

@@ -12,10 +12,10 @@ if [ $WIREMOCK_RC -ne 0 ]; then
   exit 1
 fi
 
-jest
+vitest run
 UNIT_RC=$?
 
-NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config "integrated-test.config.js"
+NODE_TLS_REJECT_UNAUTHORIZED=0 vitest --config vite.integrated.config.ts run
 INTEGRATED_RC=$?
 
 npm run stop-wiremock

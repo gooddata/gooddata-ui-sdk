@@ -1,11 +1,11 @@
 // (C) 2007-2021 GoodData Corporation
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import * as path from "path";
-import { findFiles } from "../base/utils";
-import { logWarn } from "../cli/loggers";
-import { IRecording, isNonNullRecording, readJsonSync } from "./common";
-import { DashboardsDefinition } from "./displayForms";
-import { DashboardRecording } from "./dashboards";
+import { findFiles } from "../base/utils.js";
+import { logWarn } from "../cli/loggers.js";
+import { IRecording, isNonNullRecording, readJsonSync } from "./common.js";
+import { DashboardsDefinition } from "./displayForms.js";
+import { DashboardRecording } from "./dashboards.js";
 
 function createRecording(
     directory: string,

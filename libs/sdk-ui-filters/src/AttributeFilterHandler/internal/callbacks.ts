@@ -4,7 +4,7 @@ import {
     selectInvertableCommittedSelection,
     selectInvertableWorkingSelection,
     AttributeFilterHandlerEventListener,
-} from "./redux";
+} from "./redux/index.js";
 import {
     Callback,
     CallbackRegistration,
@@ -32,7 +32,7 @@ import {
     OnLoadCustomElementsCancelCallbackPayload,
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
-} from "../types";
+} from "../types/index.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 const newCallbackRegistrations = () => {

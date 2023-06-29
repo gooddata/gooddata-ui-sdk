@@ -17,9 +17,9 @@ import {
     userAccessGrantee,
     workspaceUser,
     defaultUser,
-} from "../ShareDialogBase/test/GranteeMock";
-import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types";
-import { GranteeGroupAll } from "../ShareDialogBase/utils";
+} from "../ShareDialogBase/test/GranteeMock.js";
+import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types.js";
+import { GranteeGroupAll } from "../ShareDialogBase/utils.js";
 import {
     mapGranteesToGranularAccessGrantees,
     mapGranteesToShareStatus,
@@ -30,7 +30,8 @@ import {
     mapWorkspaceUserToGrantee,
     mapAccessGranteeDetailToGrantee,
     mapSharedObjectToAffectedSharedObject,
-} from "../shareDialogMappers";
+} from "../shareDialogMappers.js";
+import { describe, it, expect } from "vitest";
 
 const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards.dash_aaRaEZRWdRpQ
     .obj as IDashboardWithReferences;

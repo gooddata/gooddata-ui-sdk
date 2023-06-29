@@ -2,11 +2,11 @@
 import { IDrillToCustomUrl, IInsightWidget, isDrillToCustomUrl, widgetRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
-import { extractDisplayFormIdentifiers } from "../widgets/validation/insightDrillDefinitionUtils";
-import { uiActions } from "../../store/ui";
-import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors";
-import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors";
-import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill";
+import { extractDisplayFormIdentifiers } from "../widgets/validation/insightDrillDefinitionUtils.js";
+import { uiActions } from "../../store/ui/index.js";
+import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
+import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
+import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
 
 interface IInvalidParamsInfo {
     widget: IInsightWidget;

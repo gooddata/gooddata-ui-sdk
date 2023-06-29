@@ -1,16 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 
-import { UICONFIG, SUPPORTED_COMPARISON_TYPES } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+import { UICONFIG, SUPPORTED_COMPARISON_TYPES } from "../../constants/uiConfig.js";
+import { BUCKETS } from "../../constants/bucket.js";
 
-import { getMeasureItems } from "../bucketHelper";
+import { getMeasureItems } from "../bucketHelper.js";
 import { IntlShape } from "react-intl";
-import { getTranslation } from "../translations";
-import { messages } from "../../../locales";
+import { getTranslation } from "../translations.js";
+import { messages } from "../../../locales.js";
 
 export function setColumnBarChartUiConfig(
     referencePoint: IExtendedReferencePoint,

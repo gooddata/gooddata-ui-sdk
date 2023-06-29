@@ -5,8 +5,8 @@ import {
     ActionsApiInterface,
     Configuration,
     ConfigurationParameters,
-} from "./generated/afm-rest-api";
-import { BaseAPI, RequestArgs } from "./generated/afm-rest-api/base";
+} from "./generated/afm-rest-api/index.js";
+import { BaseAPI, RequestArgs } from "./generated/afm-rest-api/base.js";
 
 export {
     Configuration as LabelElementsConfiguration,

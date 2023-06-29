@@ -16,30 +16,30 @@ import {
 import {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,
-} from "../../../_staging/dashboard/dashboardFilterConverter";
+} from "../../../_staging/dashboard/dashboardFilterConverter.js";
 
-import { IDashboardAttributeFilterProps } from "./types";
-import { useParentFilters } from "./useParentFilters";
+import { IDashboardAttributeFilterProps } from "./types.js";
+import { useParentFilters } from "./useParentFilters.js";
 import { filterObjRef } from "@gooddata/sdk-model";
-import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration";
+import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
 import {
     CustomAttributeFilterDropdownActions,
     CustomConfigureAttributeFilterDropdownActions,
-} from "./CustomDropdownActions";
+} from "./CustomDropdownActions.js";
 import {
     removeAttributeFilter,
     useDashboardDispatch,
     selectLocale,
     useDashboardSelector,
     selectIsInEditMode,
-} from "../../../model";
+} from "../../../model/index.js";
 import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
-} from "./AttributeFilterParentFilteringContext";
+} from "./AttributeFilterParentFilteringContext.js";
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
-import { useAttributes } from "../../../_staging/sharedHooks/useAttributes";
-import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet";
+import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
+import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.

@@ -1,22 +1,22 @@
 // (C) 2007-2020 GoodData Corporation
-import { IChartLimits } from "../../../interfaces";
+import { IChartLimits } from "../../../interfaces/index.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
-} from "../_chartCreators/commonConfiguration";
+} from "../_chartCreators/commonConfiguration.js";
 import {
     HEATMAP_DATA_POINTS_LIMIT,
     PIE_CHART_LIMIT,
     SANKEY_CHART_DATA_POINT_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
     WATERFALL_CHART_DATA_POINT_LIMIT,
-} from "../../constants/limits";
-import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
-import { isOneOfTypes, isTreemap } from "../_util/common";
-import { unsupportedNegativeValuesTypes } from "./chartCapabilities";
-import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators";
+} from "../../constants/limits.js";
+import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { isOneOfTypes, isTreemap } from "../_util/common.js";
+import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
+import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
 
 export interface IValidationResult {
     dataTooLarge: boolean;

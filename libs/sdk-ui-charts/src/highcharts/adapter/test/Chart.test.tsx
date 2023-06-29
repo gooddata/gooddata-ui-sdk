@@ -1,58 +1,61 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import Highcharts from "../../lib";
-import { Chart } from "../Chart";
+import Highcharts from "../../lib/index.js";
+import { Chart } from "../Chart.js";
 
-const destroyMock = jest.fn();
+const destroyMock = vi.fn();
 
-jest.mock("highcharts", () => {
+vi.mock("highcharts", () => {
     return {
-        Chart: (_: any, callback: any) => ({
-            callback: callback(),
-            destroy: destroyMock,
-        }),
+        default: {
+            Chart: (_: any, callback: any) => ({
+                callback: callback(),
+                destroy: destroyMock,
+            }),
+        },
     };
 });
 
-jest.mock("highcharts/modules/drilldown", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/drilldown", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/treemap", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/treemap", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/bullet", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/bullet", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/heatmap", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/heatmap", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/funnel", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/funnel", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/sankey", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/sankey", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/dependency-wheel", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/dependency-wheel", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/highcharts-more", () => {
-    return (H: any) => H;
+vi.mock("highcharts/highcharts-more", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("highcharts/modules/pattern-fill", () => {
-    return (H: any) => H;
+vi.mock("highcharts/modules/pattern-fill", () => {
+    return { default: vi.fn() };
 });
 
-jest.mock("../chartPlugins", () => {
+vi.mock("../chartPlugins", () => {
     return {
         initChartPlugins: (H: any) => H,
     };
@@ -60,7 +63,7 @@ jest.mock("../chartPlugins", () => {
 
 describe("Chart", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     function createComponent(props: any = {}) {
@@ -68,13 +71,13 @@ describe("Chart", () => {
     }
 
     it("should render highcharts", () => {
-        const spy = jest.spyOn(Highcharts as any, "Chart");
+        const spy = vi.spyOn(Highcharts as any, "Chart");
         createComponent();
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it("should call callback on componentDidMount", () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
         createComponent({ callback });
         expect(callback).toHaveBeenCalledTimes(1);
     });

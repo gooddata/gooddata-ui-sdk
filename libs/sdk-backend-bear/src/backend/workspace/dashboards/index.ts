@@ -58,37 +58,37 @@ import {
     GdcVisualizationClass,
     GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
-import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
-import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
-import clone from "lodash/clone";
-import compact from "lodash/compact";
-import flatMap from "lodash/flatMap";
-import flatten from "lodash/flatten";
-import isEqual from "lodash/isEqual";
-import set from "lodash/set";
+import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter.js";
+import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter/index.js";
+import clone from "lodash/clone.js";
+import compact from "lodash/compact.js";
+import flatMap from "lodash/flatMap.js";
+import flatten from "lodash/flatten.js";
+import isEqual from "lodash/isEqual.js";
+import set from "lodash/set.js";
 import {
     getObjectIdFromUri,
     objRefsToUris,
     objRefToUri,
     updateUserMap,
     userUriFromAuthenticatedPrincipalWithAnonymous,
-} from "../../../utils/api";
-import keyBy from "lodash/keyBy";
-import { BearWorkspaceInsights } from "../insights";
-import { WidgetReferencesQuery } from "./widgetReferences";
-import invariant from "ts-invariant";
-import { resolveWidgetFilters } from "./widgetFilters";
-import { sanitizeFilterContext } from "./filterContexts";
-import { getAnalyticalDashboardUserUris } from "../../../utils/metadata";
-import isEmpty from "lodash/isEmpty";
-import includes from "lodash/includes";
+} from "../../../utils/api.js";
+import keyBy from "lodash/keyBy.js";
+import { BearWorkspaceInsights } from "../insights/index.js";
+import { WidgetReferencesQuery } from "./widgetReferences.js";
+import { invariant } from "ts-invariant";
+import { resolveWidgetFilters } from "./widgetFilters.js";
+import { sanitizeFilterContext } from "./filterContexts.js";
+import { getAnalyticalDashboardUserUris } from "../../../utils/metadata.js";
+import isEmpty from "lodash/isEmpty.js";
+import includes from "lodash/includes.js";
 import isVisualization = GdcVisualizationObject.isVisualization;
 import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
-import remove from "lodash/remove";
-import { convertUser } from "../../../convertors/fromBackend/UsersConverter";
-import { BearWorkspacePermissionsFactory } from "../permissions/permissions";
+import remove from "lodash/remove.js";
+import { convertUser } from "../../../convertors/fromBackend/UsersConverter.js";
+import { BearWorkspacePermissionsFactory } from "../permissions/permissions.js";
 
 /**
  * Metadata object types closely related to the dashboard object.

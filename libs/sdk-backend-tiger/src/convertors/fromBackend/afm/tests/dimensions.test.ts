@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 
-import { transformResultDimensions } from "../dimensions";
-import { mockDimensions, mockMultipleDimensions } from "./dimensions.fixture";
+import { transformResultDimensions } from "../dimensions.js";
+import { mockDimensions, mockMultipleDimensions } from "./dimensions.fixture.js";
 import {
     defWithDimensions,
     emptyDef,
@@ -12,6 +12,7 @@ import {
     newMeasure,
     newTotal,
 } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
 
 describe("transformResultDimensions", () => {
     it("should fill in uris and refs for attribute descriptors", () => {

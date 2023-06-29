@@ -12,7 +12,7 @@ import {
     JsonApiLabelOutWithLinksTypeEnum,
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import keyBy from "lodash/keyBy";
+import keyBy from "lodash/keyBy.js";
 import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
@@ -27,7 +27,7 @@ import {
     IDataSetMetadataObject,
     IDashboardMetadataObject,
 } from "@gooddata/sdk-model";
-import { convertLabelType } from "./LabelTypeConverter";
+import { convertLabelType } from "./LabelTypeConverter.js";
 
 export type MetadataObjectFromApi =
     | JsonApiAttributeOutWithLinks

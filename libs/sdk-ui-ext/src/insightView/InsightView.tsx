@@ -24,15 +24,15 @@ import {
 } from "@gooddata/sdk-ui";
 import { withMapboxToken } from "@gooddata/sdk-ui-geo";
 
-import InsightTitle from "./InsightTitle";
-import { InsightRenderer } from "./InsightRenderer";
-import { InsightError } from "./InsightError";
+import InsightTitle from "./InsightTitle.js";
+import { InsightRenderer } from "./InsightRenderer.js";
+import { InsightError } from "./InsightError.js";
 import {
     colorPaletteDataLoaderFactory,
     insightDataLoaderFactory,
     userWorkspaceSettingsDataLoaderFactory,
-} from "../dataLoaders";
-import { IInsightViewProps } from "../internal";
+} from "../dataLoaders/index.js";
+import { IInsightViewProps } from "../internal/index.js";
 
 interface IInsightViewCoreState {
     isVisualizationLoading: boolean;

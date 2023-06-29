@@ -1,9 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { userWorkspaceSettingsDataLoaderFactory } from "../UserWorkspaceSettingsDataLoader";
+import { userWorkspaceSettingsDataLoaderFactory } from "../UserWorkspaceSettingsDataLoader.js";
 
 describe("UserWorkspaceSettingsDataLoader", () => {
     const workspace = "foo";
@@ -29,7 +30,7 @@ describe("UserWorkspaceSettingsDataLoader", () => {
 
     it("should cache getUserWorkspaceSettings calls", async () => {
         const loader = userWorkspaceSettingsDataLoaderFactory.forWorkspace(workspace);
-        const getUserWorkspaceSettings = jest.fn(() => Promise.resolve({} as any));
+        const getUserWorkspaceSettings = vi.fn(() => Promise.resolve({} as any));
         const backend = getMockBackend(getUserWorkspaceSettings);
 
         const first = loader.getUserWorkspaceSettings(backend);
@@ -43,7 +44,7 @@ describe("UserWorkspaceSettingsDataLoader", () => {
 
     it("should not cache getUserWorkspaceSettings errors", async () => {
         const loader = userWorkspaceSettingsDataLoaderFactory.forWorkspace(workspace);
-        const getUserWorkspaceSettings = jest.fn(() => Promise.resolve({} as any));
+        const getUserWorkspaceSettings = vi.fn(() => Promise.resolve({} as any));
         const errorBackend = getMockBackend(() => {
             throw new Error("FAIL");
         });

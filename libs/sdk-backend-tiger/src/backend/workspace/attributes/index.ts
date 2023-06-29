@@ -15,8 +15,8 @@ import {
     IDataSetMetadataObject,
     IdentifierRef,
 } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { TigerWorkspaceElements } from "./elements";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { TigerWorkspaceElements } from "./elements/index.js";
 import {
     ITigerClient,
     jsonApiHeaders,
@@ -25,16 +25,16 @@ import {
     JsonApiDatasetOutWithLinksTypeEnum,
     EntitiesApiGetAllEntitiesAttributesRequest,
 } from "@gooddata/api-client-tiger";
-import flatMap from "lodash/flatMap";
+import flatMap from "lodash/flatMap.js";
 import { invariant } from "ts-invariant";
 
 import {
     convertAttributesWithSideloadedLabels,
     convertAttributeWithSideloadedLabels,
     convertDatasetWithLinks,
-} from "../../../convertors/fromBackend/MetadataConverter";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
-import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance";
+} from "../../../convertors/fromBackend/MetadataConverter.js";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(

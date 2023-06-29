@@ -10,8 +10,8 @@ import {
     selectIsInEditMode,
     selectIsNewDashboard,
     useDashboardSelector,
-} from "../../../model";
-import { DateFilterValidationResult } from "../../../types";
+} from "../../../model/index.js";
+import { DateFilterValidationResult } from "../../../types.js";
 
 const workspaceValidationMessagesMapping: { [K in DateFilterValidationResult]?: MessageDescriptor } = {
     ConflictingIdentifiers: defineMessage({ id: "filters.config.warning.conflictingIdentifiers" }),

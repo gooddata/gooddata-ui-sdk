@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 import { ThemeColor, IThemePalette } from "@gooddata/sdk-model";
-
+import { describe, it, expect } from "vitest";
 import {
     getHigherContrastColor,
     getLowerContrastColor,
     getLeastContrastColor,
     mixWith0ComplementaryColor,
     mixWith8ComplementaryColor,
-} from "../derivedColors";
+} from "../derivedColors.js";
 
 describe("derivedColors", () => {
     describe("getHigherContrastColor", () => {

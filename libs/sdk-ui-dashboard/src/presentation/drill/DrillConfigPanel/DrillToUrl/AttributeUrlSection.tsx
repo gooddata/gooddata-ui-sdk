@@ -3,9 +3,9 @@ import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { AttributeUrlSectionItem } from "./AttributeUrlSectionItem";
-import { DropdownSectionHeader } from "./DropdownSectionHeader";
-import { IAttributeWithDisplayForm } from "./types";
+import { AttributeUrlSectionItem } from "./AttributeUrlSectionItem.js";
+import { DropdownSectionHeader } from "./DropdownSectionHeader.js";
+import { IAttributeWithDisplayForm } from "./types.js";
 
 interface IAttributeUrlSectionOwnProps {
     attributeDisplayForms: IAttributeWithDisplayForm[];

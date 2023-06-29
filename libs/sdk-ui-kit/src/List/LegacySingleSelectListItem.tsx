@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger";
-import { Bubble } from "../Bubble/Bubble";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { Bubble } from "../Bubble/Bubble.js";
 
 const BUBBLE_OFFSET_X = 16;
 

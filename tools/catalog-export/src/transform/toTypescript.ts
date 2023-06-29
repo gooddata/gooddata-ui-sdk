@@ -8,8 +8,8 @@ import {
     VariableStatementStructure,
 } from "ts-morph";
 import { MeasureAggregation } from "@gooddata/sdk-model";
-import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types";
-import { createUniqueVariableName, stringToVariableName, TakenNamesSet } from "./titles";
+import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types.js";
+import { createUniqueVariableName, stringToVariableName, TakenNamesSet } from "./titles.js";
 
 export type TypescriptOutput = {
     project: Project;

@@ -1,9 +1,0 @@
-{
-    "extends": "./tsconfig.json",
-    "include": ["scripts/open-api-dump.ts"],
-    "compilerOptions": {
-        "outDir": "scripts/dist",
-        "baseUrl": null,
-        "paths": null
-    }
-}

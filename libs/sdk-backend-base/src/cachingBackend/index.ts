@@ -28,25 +28,25 @@ import {
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
-} from "../decoratedBackend";
-import LRUCache from "lru-cache";
-import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings";
+} from "../decoratedBackend/index.js";
+import { LRUCache } from "lru-cache";
+import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
     DecoratedDataView,
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
     DecoratedPreparedExecution,
     PreparedExecutionWrapper,
-} from "../decoratedBackend/execution";
-import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
-import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements";
+} from "../decoratedBackend/execution.js";
+import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog.js";
+import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements.js";
 import stringify from "json-stable-stringify";
-import compact from "lodash/compact";
-import first from "lodash/first";
-import flow from "lodash/flow";
-import identity from "lodash/identity";
-import invariant from "ts-invariant";
-import partition from "lodash/partition";
+import compact from "lodash/compact.js";
+import first from "lodash/first.js";
+import flow from "lodash/flow.js";
+import identity from "lodash/identity.js";
+import { invariant } from "ts-invariant";
+import partition from "lodash/partition.js";
 import SparkMD5 from "spark-md5";
 import {
     areObjRefsEqual,
@@ -65,8 +65,8 @@ import {
     objRefToString,
     IMeasureDefinitionType,
 } from "@gooddata/sdk-model";
-import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes";
-import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings";
+import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
+import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
 
 //
 // Supporting types

@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import isArray from "lodash/isArray";
+import isEmpty from "lodash/isEmpty.js";
+import isArray from "lodash/isArray.js";
 
-import { EmbeddedKpiDashboard } from "../iframe/kd";
+import { EmbeddedKpiDashboard } from "../iframe/index.js";
 import { isObjRef } from "@gooddata/sdk-model";
 
 function isValidSetFilterParentsAttributeFilter(

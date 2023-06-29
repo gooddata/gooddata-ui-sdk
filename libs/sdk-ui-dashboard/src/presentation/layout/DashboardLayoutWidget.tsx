@@ -23,12 +23,12 @@ import {
     selectWidgetsModification,
     selectSectionModification,
     selectIsExport,
-} from "../../model";
-import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets";
-import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing";
-import { getLayoutCoordinates } from "../../_staging/layout/coordinates";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap";
-import { useDashboardComponentsContext } from "../dashboardContexts";
+} from "../../model/index.js";
+import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
+import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
+import { getLayoutCoordinates } from "../../_staging/layout/coordinates.js";
+import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
     DraggableLayoutItem,
@@ -38,16 +38,16 @@ import {
     useResizeItemStatus,
     useWidgetDragEndHandler,
     WidthResizerHotspot,
-} from "../dragAndDrop";
-import { DashboardWidget, IDashboardWidgetProps } from "../widget";
-import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
+} from "../dragAndDrop/index.js";
+import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
+import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     IDashboardLayoutItemFacade,
     IDashboardLayoutWidgetRenderer,
-} from "./DefaultDashboardLayoutRenderer";
-import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay";
-import { getRefsForSection, getRefsForItem } from "./refs";
+} from "./DefaultDashboardLayoutRenderer/index.js";
+import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
+import { getRefsForSection, getRefsForItem } from "./refs.js";
 
 /**
  * Tests in KD require widget index for css selectors.

@@ -1,13 +1,13 @@
 // (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { alertsAdapter } from "./alertsEntityAdapter";
-import { DashboardSelector, DashboardState } from "../types";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
-import compact from "lodash/compact";
-import memoize from "lodash/memoize";
+import { alertsAdapter } from "./alertsEntityAdapter.js";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
+import compact from "lodash/compact.js";
+import memoize from "lodash/memoize.js";
 import { Identifier, ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
 
-import { selectWidgetsMap } from "../layout/layoutSelectors";
+import { selectWidgetsMap } from "../layout/layoutSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

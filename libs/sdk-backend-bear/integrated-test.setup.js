@@ -1,5 +1,7 @@
 // (C) 2020 GoodData Corporation
 
+import https from "https";
+
 /*
  * integrated tests run against wiremock which uses self-signed certificates. tell node.js not to bomb and
  * instead just issue warnings.
@@ -29,7 +31,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
  * This is transparent to the node-fetch that is used by the api-client.
  */
 
-const https = require("https");
 const originalRequest = https.request;
 
 function stripDomain(cookies, domain) {
@@ -37,7 +38,7 @@ function stripDomain(cookies, domain) {
         return cookies.replace(`Domain=${domain};`, "");
     }
 
-    return cookies.map(c => {
+    return cookies.map((c) => {
         return c.replace(`Domain=${domain};`, "");
     });
 }
@@ -47,12 +48,12 @@ function addDomain(cookies, domain) {
         return cookies + `; Domain=${domain}`;
     }
 
-    return cookies.map(c => {
+    return cookies.map((c) => {
         return c + `; Domain=${domain}`;
     });
 }
 
-https.request = function cookieRewritingRequestFactory(req) {
+https.request = function cookieRewritingRequestFactory(_options, req) {
     const requestCookies = req.headers["cookie"];
 
     if (requestCookies) {
@@ -61,7 +62,7 @@ https.request = function cookieRewritingRequestFactory(req) {
 
     const newRequest = originalRequest.apply(this, arguments);
 
-    newRequest.on("response", res => {
+    newRequest.on("response", (res) => {
         const responseCookies = res.headers["set-cookie"];
 
         if (responseCookies) {

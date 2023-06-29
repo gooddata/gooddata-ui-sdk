@@ -4,10 +4,11 @@ import {
     stickyRowExists,
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
-} from "../stickyRowHandler";
-import { IGroupingProvider } from "../data/rowGroupingProvider";
+} from "../stickyRowHandler.js";
+import { IGroupingProvider } from "../data/rowGroupingProvider.js";
 import { GridApi } from "@ag-grid-community/all-modules";
-import { ROW_ATTRIBUTE_COLUMN } from "../base/constants";
+import { ROW_ATTRIBUTE_COLUMN } from "../base/constants.js";
+import { describe, it, expect, vi } from "vitest";
 
 describe("stickyRowHandler", () => {
     const fakeRow = {
@@ -29,10 +30,10 @@ describe("stickyRowHandler", () => {
     const fakeGetDisplayedRowAtIndexEmpty = (): any => ({});
 
     function getFakeGridApi(
-        fakeGetDisplayedRowAtIndex: any = jest.fn(),
-        fakeGetColumnDef: any = jest.fn(),
+        fakeGetDisplayedRowAtIndex: any = vi.fn(),
+        fakeGetColumnDef: any = vi.fn(),
         fakeGetPinnedTopRow: any = () => ({ data: {} }),
-        fakeSetPinnedTopRowData: any = jest.fn(),
+        fakeSetPinnedTopRowData: any = vi.fn(),
     ): GridApi {
         const fakeGridApi = {
             getDisplayedRowAtIndex: fakeGetDisplayedRowAtIndex,
@@ -48,22 +49,22 @@ describe("stickyRowHandler", () => {
         isColumnWithGroupingResult: boolean = false,
     ): IGroupingProvider {
         const groupingProvider: any = {
-            isRepeatedValue: jest.fn(() => isRepeatedValueResult),
-            isColumnWithGrouping: jest.fn(() => isColumnWithGroupingResult),
+            isRepeatedValue: vi.fn(() => isRepeatedValueResult),
+            isColumnWithGrouping: vi.fn(() => isColumnWithGroupingResult),
         };
         return groupingProvider as IGroupingProvider;
     }
 
     function getFakeGridApiWrapper(): any {
         return {
-            getHeaderHeight: jest.fn().mockReturnValue(0),
-            getCellElement: jest.fn(),
-            addCellClass: jest.fn(),
-            removeCellClass: jest.fn(),
-            getPinnedTopRowElement: jest.fn(),
-            addPinnedTopRowClass: jest.fn(),
-            removePinnedTopRowClass: jest.fn(),
-            setPinnedTopRowStyles: jest.fn(),
+            getHeaderHeight: vi.fn().mockReturnValue(0),
+            getCellElement: vi.fn(),
+            addCellClass: vi.fn(),
+            removeCellClass: vi.fn(),
+            getPinnedTopRowElement: vi.fn(),
+            addPinnedTopRowClass: vi.fn(),
+            removePinnedTopRowClass: vi.fn(),
+            setPinnedTopRowStyles: vi.fn(),
         };
     }
 

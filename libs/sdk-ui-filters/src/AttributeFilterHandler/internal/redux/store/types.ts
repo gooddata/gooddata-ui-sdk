@@ -2,7 +2,7 @@
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Action, AnyAction } from "@reduxjs/toolkit";
 import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
-import { AttributeFilterState } from "./state";
+import { AttributeFilterState } from "./state.js";
 
 /**
  * Event listener that can be used to listen dispatched AttributeFilterHandlerStore actions.

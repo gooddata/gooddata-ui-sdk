@@ -1,6 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
-import unescape from "lodash/unescape";
+import unescape from "lodash/unescape.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 

@@ -1,9 +1,11 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
 
-import { useDashboardDispatch } from "../../../model";
-import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../model/";
-import { InsightDraggableItem, KpiDraggableItem } from "../types";
+import {
+    useDashboardDispatch,
+    moveSectionItemAndRemoveOriginalSectionIfEmpty,
+} from "../../../model/index.js";
+import { InsightDraggableItem, KpiDraggableItem } from "../types.js";
 
 export function useMoveWidgetDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

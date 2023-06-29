@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
-import { loadingInitialState } from "./loadingState";
-import { loadingReducers } from "./loadingReducers";
+import { loadingInitialState } from "./loadingState.js";
+import { loadingReducers } from "./loadingReducers.js";
 
 const loadingSlice = createSlice({
     name: "loadingSlice",

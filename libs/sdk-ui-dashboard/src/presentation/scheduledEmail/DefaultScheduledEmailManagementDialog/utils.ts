@@ -3,7 +3,7 @@
 import { IntlShape } from "react-intl";
 import { isDashboardAttachment, isWidgetAttachment, ScheduledMailAttachment } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 
 export const getRecipientsLabel = (intl: IntlShape, recipients: string[], currentUserEmail?: string) => {
     const numberOfRecipients = recipients.length;

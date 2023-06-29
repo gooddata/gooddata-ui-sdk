@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`prepareComplementaryPalette should complete the complementary palette with missing shades 1`] = `
-Object {
-  "palette": Object {
-    "complementary": Object {
+exports[`prepareComplementaryPalette > should complete the complementary palette with missing shades 1`] = `
+{
+  "palette": {
+    "complementary": {
       "c0": "#fff",
       "c1": "#e2e2e2",
       "c2": "#c6c6c6",
@@ -19,10 +19,10 @@ Object {
 }
 `;
 
-exports[`prepareComplementaryPalette should complete the complementary palette with missing shades 2`] = `
-Object {
-  "palette": Object {
-    "complementary": Object {
+exports[`prepareComplementaryPalette > should complete the complementary palette with missing shades 2`] = `
+{
+  "palette": {
+    "complementary": {
       "c0": "#fff",
       "c1": "#d7f2fa",
       "c2": "#b0e5f5",
@@ -38,10 +38,10 @@ Object {
 }
 `;
 
-exports[`prepareTheme should prepare the theme 1`] = `
-Object {
-  "palette": Object {
-    "complementary": Object {
+exports[`prepareTheme > should prepare the theme 1`] = `
+{
+  "palette": {
+    "complementary": {
       "c0": "#fff",
       "c1": "#e2e2e2",
       "c2": "#c6c6c6",
@@ -53,17 +53,17 @@ Object {
       "c8": "#1c1c1c",
       "c9": "#000",
     },
-    "error": Object {
+    "error": {
       "base": "#f00",
       "contrast": "#0ff",
     },
-    "primary": Object {
+    "primary": {
       "base": "#14b2e2",
     },
-    "success": Object {
+    "success": {
       "base": "#00c18d",
     },
-    "warning": Object {
+    "warning": {
       "base": "#fada23",
     },
   },

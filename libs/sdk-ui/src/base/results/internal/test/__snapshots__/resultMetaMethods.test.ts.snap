@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`resultMetaMethods effective sort items are empty if there are no sorts 1`] = `Array []`;
+exports[`resultMetaMethods > effective sort items are empty if there are no sorts 1`] = `[]`;
 
-exports[`resultMetaMethods effective sort items strips invalid measure sort when attribute element not present 1`] = `Array []`;
+exports[`resultMetaMethods > effective sort items strips invalid measure sort when attribute element not present 1`] = `[]`;
 
-exports[`resultMetaMethods effective sort items strips invalid measure sort when attribute not present 1`] = `Array []`;
+exports[`resultMetaMethods > effective sort items strips invalid measure sort when attribute not present 1`] = `[]`;
 
-exports[`resultMetaMethods effective sort items strips invalid measure sort when measure not present 1`] = `Array []`;
+exports[`resultMetaMethods > effective sort items strips invalid measure sort when measure not present 1`] = `[]`;
 
-exports[`resultMetaMethods effective sort items strips invalid measure sort when no measures in result 1`] = `Array []`;
+exports[`resultMetaMethods > effective sort items strips invalid measure sort when no measures in result 1`] = `[]`;

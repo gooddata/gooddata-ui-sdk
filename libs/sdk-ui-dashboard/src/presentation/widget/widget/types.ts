@@ -3,9 +3,9 @@ import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types.js";
 import { ObjRef, ObjRefInScope, FilterContextItem, ScreenSize } from "@gooddata/sdk-model";
-import { ExtendedDashboardWidget } from "../../../model";
+import { ExtendedDashboardWidget } from "../../../model/index.js";
 
 /**
  * Dashboard widget props.

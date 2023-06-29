@@ -1,5 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 
 const WIDTH_SPAN = 900;
 const WIDTH = 0.8;

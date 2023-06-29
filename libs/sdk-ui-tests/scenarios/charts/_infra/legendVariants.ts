@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { UnboundVisProps, CustomizedScenario } from "../../../src";
+import { UnboundVisProps, CustomizedScenario } from "../../../src/index.js";
 import { ILegendConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
 
 const LegendVariants: Array<[string, ILegendConfig]> = [

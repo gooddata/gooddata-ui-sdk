@@ -3,9 +3,9 @@
 import React from "react";
 import { Bubble, BubbleHoverTrigger, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import { getTooltip } from "./DashboardListItem";
+import { getTooltip } from "./DashboardListItem.js";
 import { useIntl } from "react-intl";
-import { DashboardAccessibilityLimitation } from "./types";
+import { DashboardAccessibilityLimitation } from "./types.js";
 
 const tooltipAlignPoints = [
     { align: "cl cr", offset: { x: 0, y: -2 } },

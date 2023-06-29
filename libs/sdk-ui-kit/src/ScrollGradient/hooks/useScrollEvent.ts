@@ -2,8 +2,8 @@
 
 import React, { useEffect, useCallback } from "react";
 
-import { useNumberState } from "./useNumberState";
-import { useContentHeight } from "./useContentHeight";
+import { useNumberState } from "./useNumberState.js";
+import { useContentHeight } from "./useContentHeight.js";
 
 export function useScrollEvent(
     content: HTMLElement | null,

@@ -10,9 +10,9 @@ import {
     isComparisonCondition,
 } from "@gooddata/sdk-model";
 
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
-import { Dropdown } from "./Dropdown";
-import { IMeasureValueFilterCommonProps } from "./typings";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
+import { Dropdown } from "./Dropdown.js";
+import { IMeasureValueFilterCommonProps } from "./typings.js";
 
 /**
  * @beta

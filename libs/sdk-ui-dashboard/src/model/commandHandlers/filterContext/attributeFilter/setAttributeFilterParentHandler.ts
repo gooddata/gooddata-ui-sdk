@@ -1,21 +1,21 @@
 // (C) 2021-2022 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { SetAttributeFilterParents } from "../../../commands/filters";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { attributeFilterParentChanged } from "../../../events/filters";
-import { filterContextActions } from "../../../store/filterContext";
+import { SetAttributeFilterParents } from "../../../commands/filters.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { attributeFilterParentChanged } from "../../../events/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
-} from "../../../store/filterContext/filterContextSelectors";
-import { DashboardContext } from "../../../types/commonTypes";
-import { validateAttributeFilterParents } from "./validation/parentFiltersValidation";
-import { dispatchFilterContextChanged } from "../common";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
+} from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { validateAttributeFilterParents } from "./validation/parentFiltersValidation.js";
+import { dispatchFilterContextChanged } from "../common.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 
 export function* setAttributeFilterParentsHandler(
     ctx: DashboardContext,

@@ -1,52 +1,52 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`setAttributeFilterParentHandler should emit the appropriate events for valid set attribute filter parent command 1`] = `
-Array [
-  Object {
+exports[`setAttributeFilterParentHandler > should emit the appropriate events for valid set attribute filter parent command 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`setAttributeFilterParentHandler should emit the appropriate events when trying to set parent of a non-existent attribute filter 1`] = `
-Array [
-  Object {
+exports[`setAttributeFilterParentHandler > should emit the appropriate events when trying to set parent of a non-existent attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS",
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": undefined,
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
 `;
 
-exports[`setAttributeFilterParentHandler should set the appropriate values in state for valid set attribute filter parent command 1`] = `
-Object {
-  "attributeFilter": Object {
-    "attributeElements": Object {
-      "uris": Array [],
+exports[`setAttributeFilterParentHandler > should set the appropriate values in state for valid set attribute filter parent command 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [],
     },
-    "displayForm": Object {
+    "displayForm": {
       "uri": "/gdc/md/referenceworkspace/obj/1089",
     },
-    "filterElementsBy": Array [
-      Object {
+    "filterElementsBy": [
+      {
         "filterLocalIdentifier": "10450fbbd67b4e42b3d1f58e038f2614",
-        "over": Object {
-          "attributes": Array [
-            Object {
+        "over": {
+          "attributes": [
+            {
               "uri": "/gdc/md/referenceworkspace/obj/1057",
             },
           ],

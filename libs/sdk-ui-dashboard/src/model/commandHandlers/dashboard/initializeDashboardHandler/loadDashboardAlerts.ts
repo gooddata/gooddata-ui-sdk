@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { IWidgetAlert } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../types/commonTypes";
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function loadDashboardAlerts(ctx: DashboardContext): Promise<IWidgetAlert[]> {
     const { backend, workspace, dashboardRef } = ctx;

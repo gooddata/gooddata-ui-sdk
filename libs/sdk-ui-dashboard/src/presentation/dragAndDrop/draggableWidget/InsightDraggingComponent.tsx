@@ -3,8 +3,8 @@ import React from "react";
 import { insightIsLocked, insightTitle, insightUpdated, insightVisualizationType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { IInsightDraggingComponentProps } from "../../componentDefinition/types";
-import { DraggableInsightListItemBody } from "../../dashboard/DashboardSidebar/DraggableInsightList";
+import { IInsightDraggingComponentProps } from "../../componentDefinition/types.js";
+import { DraggableInsightListItemBody } from "../../dashboard/DashboardSidebar/DraggableInsightList/index.js";
 
 /*
  * @internal

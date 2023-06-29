@@ -10,15 +10,15 @@
  * Modified by `binh.nguyen@gooddata.com` to support min/max configuration
  */
 
-import partial from "lodash/partial";
-import isNil from "lodash/isNil";
-import zip from "lodash/zip";
-import sum from "lodash/sum";
-import compact from "lodash/compact";
+import partial from "lodash/partial.js";
+import isNil from "lodash/isNil.js";
+import zip from "lodash/zip.js";
+import sum from "lodash/sum.js";
+import compact from "lodash/compact.js";
 
-import { isComboChart, isLineChart } from "../_util/common";
-import { StackingType } from "../../constants/stacking";
-import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
+import { isComboChart, isLineChart } from "../_util/common.js";
+import { StackingType } from "../../constants/stacking.js";
+import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
 
 export interface ICanon {
     min?: number;

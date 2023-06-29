@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 
-import { Attribute, DateDataSet } from "../../base/types";
+import { Attribute, DateDataSet } from "../../base/types.js";
 import {
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
@@ -15,8 +15,8 @@ import {
     DatasetMap,
     getReferencedDataset,
     LabelMap,
-} from "./tigerCommon";
-import values from "lodash/values";
+} from "./tigerCommon.js";
+import values from "lodash/values.js";
 
 type DatasetWithAttributes = {
     dataset: JsonApiDatasetOut;

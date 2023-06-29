@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import invariant from "ts-invariant";
-import { ObjRef } from "../objRef";
+import { invariant } from "ts-invariant";
+import { ObjRef } from "../objRef/index.js";
 
 /**
  * Represents platform user.

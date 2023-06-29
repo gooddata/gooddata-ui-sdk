@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import omit from "lodash/omit";
+import omit from "lodash/omit.js";
 import {
     AttributeColorStrategy,
     ColorStrategy,
@@ -11,8 +11,8 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPalette, IColor, IAttributeDescriptor } from "@gooddata/sdk-model";
 import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
-import { IGeoData } from "../../../GeoChart";
-import { IGeoAttributesInDimension, findGeoAttributesInDimension } from "../helpers/geoChart/data";
+import { IGeoData } from "../../../GeoChart.js";
+import { IGeoAttributesInDimension, findGeoAttributesInDimension } from "../helpers/geoChart/data.js";
 
 class GeoChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

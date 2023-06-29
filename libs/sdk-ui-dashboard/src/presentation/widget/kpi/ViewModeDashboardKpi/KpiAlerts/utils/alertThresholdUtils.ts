@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IWidgetAlertBase } from "@gooddata/sdk-model";
-import isNil from "lodash/isNil";
-import round from "lodash/round";
+import isNil from "lodash/isNil.js";
+import round from "lodash/round.js";
 
 function getNumberOfDecimalPlaces(num: number): number {
     // http://stackoverflow.com/questions/10454518/

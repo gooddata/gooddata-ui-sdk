@@ -3,11 +3,11 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { scenariosFor } from "../../src";
+import { scenariosFor } from "../../src/index.js";
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,
-} from "./base";
+} from "./base.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("sorting")

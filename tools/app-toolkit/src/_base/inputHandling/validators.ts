@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { InputValidationError } from "../types";
+import isEmpty from "lodash/isEmpty.js";
+import { InputValidationError } from "../types.js";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;
 export type AsyncInputValidator = (value: string) => Promise<boolean | string>;

@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`addDrillTargetsHandler should add drill target to the state for given widget 1`] = `Object {}`;
+exports[`addDrillTargetsHandler > should add drill target to the state for given widget 1`] = `{}`;
 
-exports[`addDrillTargetsHandler should emit the appropriate events for add drill target 1`] = `
-Array [
-  Object {
+exports[`addDrillTargetsHandler > should emit the appropriate events for add drill target 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.DRILL_TARGETS.ADD",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
   },

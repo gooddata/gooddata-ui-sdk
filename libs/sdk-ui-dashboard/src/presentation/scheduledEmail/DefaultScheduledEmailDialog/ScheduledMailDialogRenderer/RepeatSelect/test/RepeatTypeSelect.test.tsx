@@ -2,17 +2,24 @@
 import React from "react";
 import { IntlShape } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import noop from "lodash/noop";
+import defaultUserEvent from "@testing-library/user-event";
+import noop from "lodash/noop.js";
+import { describe, it, expect, vi } from "vitest";
+import { defaultImport } from "default-import";
 
-import { RepeatTypeSelect, IRepeatTypeSelectProps } from "../RepeatTypeSelect";
+import { RepeatTypeSelect, IRepeatTypeSelectProps } from "../RepeatTypeSelect.js";
 
-import { getIntlDayName, getWeek } from "../../../utils/datetime";
-import { REPEAT_TYPES } from "../../../constants";
-import { IntlWrapper } from "../../../../../localization/IntlWrapper";
-import { createInternalIntl } from "../../../../../localization/createInternalIntl";
+import { getIntlDayName, getWeek } from "../../../utils/datetime.js";
+import { REPEAT_TYPES } from "../../../constants.js";
+import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
+import { createInternalIntl } from "../../../../../localization/createInternalIntl.js";
 
-import { TEXT_INDEX } from "./testUtils";
+import { TEXT_INDEX } from "./testUtils.js";
+
+// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
+// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
+// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
+const userEvent = defaultImport(defaultUserEvent);
 
 describe("RepeatTypeSelect", () => {
     const intl: IntlShape = createInternalIntl();
@@ -57,7 +64,7 @@ describe("RepeatTypeSelect", () => {
     });
 
     it("should trigger onChange", async () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderComponent({ onChange });
 
         await userEvent.click(screen.getByText(titleTypeDaily));

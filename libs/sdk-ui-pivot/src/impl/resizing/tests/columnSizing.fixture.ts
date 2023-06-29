@@ -1,10 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
-import { recordedDataFacade } from "../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { TableDescriptor } from "../../structure/tableDescriptor";
-import { ColumnWidthItem } from "../../../columnWidths";
-import { ResizedColumnsStore } from "../columnSizing";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
+import { ColumnWidthItem } from "../../../columnWidths.js";
+import { ResizedColumnsStore } from "../columnSizing.js";
 import { Column, ColumnApi } from "@ag-grid-community/all-modules";
 
 const ColumnOnlyResult = recordedDataFacade(

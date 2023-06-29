@@ -1,24 +1,24 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
 import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel.js";
 
-import { BUCKETS } from "../../../constants/bucket";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
-import { PIECHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { BUCKETS } from "../../../constants/bucket.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { PIECHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     DEFAULT_PIE_UICONFIG,
     PIE_UICONFIG_WITH_MULTIPLE_METRICS,
     PIE_UICONFIG_WITH_ONE_METRIC,
     UICONFIG,
-} from "../../../constants/uiConfig";
+} from "../../../constants/uiConfig.js";
 
 import {
     IExtendedReferencePoint,
@@ -27,10 +27,10 @@ import {
     IVisProps,
     IVisualizationProperties,
     IBucketItem,
-} from "../../../interfaces/Visualization";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+} from "../../../interfaces/Visualization.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAttributeItems,
     getMeasureItems,
@@ -39,10 +39,10 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
     getBucketItems,
-} from "../../../utils/bucketHelper";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
-import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
+} from "../../../utils/bucketHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper.js";
 
 /**
  * PluggablePieChart

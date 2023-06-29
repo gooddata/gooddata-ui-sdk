@@ -6,23 +6,17 @@ _build_styles() {
 }
 
 _clean() {
-    rm -rf dist
     rm -rf esm
     rm -rf styles/internal/css
     rm -rf styles/css
 }
 
 _common-build() {
-    mkdir -p dist/internal
-    # first copy everything in the assets (in case there are non-SVG files)
-    cp -rf src/internal/assets dist/internal/
-    # then use svgo to optimize all the SVGs there
-    svgo -rqf src/internal/assets dist/internal/assets
-    cp -rf src/internal/translations dist/internal/
-
     mkdir -p esm/internal
-    # copy optimized assets from dist, no need to run the optimization again
-    cp -rf dist/internal/assets esm/internal/
+    # first copy everything in the assets (in case there are non-SVG files)
+    cp -rf src/internal/assets esm/internal/
+    # then use svgo to optimize all the SVGs there
+    svgo -rqf src/internal/assets esm/internal/assets
     cp -rf src/internal/translations esm/internal/
 
     _build_styles
@@ -30,7 +24,7 @@ _common-build() {
 
 build() {
     _common-build
-    concurrently "npm run build-cjs" "npm run build-esm" && npm run api-extractor
+    npm run build-esm && npm run api-extractor
 }
 
 build-dev() {

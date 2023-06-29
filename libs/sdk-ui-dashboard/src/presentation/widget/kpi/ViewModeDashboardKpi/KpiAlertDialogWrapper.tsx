@@ -7,10 +7,10 @@ import {
     useDashboardSelector,
     selectCatalogDateDatasets,
     IBrokenAlertFilterBasicInfo,
-} from "../../../../model";
+} from "../../../../model/index.js";
 
-import { enrichBrokenAlertsInfo, IKpiAlertDialogProps, KpiAlertDialog } from "./KpiAlerts";
-import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
+import { enrichBrokenAlertsInfo, IKpiAlertDialogProps, KpiAlertDialog } from "./KpiAlerts/index.js";
+import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta.js";
 
 interface IKpiAlertDialogWrapperProps extends Omit<IKpiAlertDialogProps, "brokenAlertFilters" | "intl"> {
     brokenAlertFiltersBasicInfo: IBrokenAlertFilterBasicInfo[];

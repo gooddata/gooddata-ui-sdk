@@ -9,8 +9,8 @@ import {
     IWidgetDefinition,
     isInsightWidget,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import flow from "lodash/flow";
+import isEmpty from "lodash/isEmpty.js";
+import flow from "lodash/flow.js";
 
 /**
  * Purpose of methods in this file is to remove & replace legacy element uris in the visualization properties & sorts

@@ -2,11 +2,11 @@
 import { IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React from "react";
-import { selectIsInEditMode, useDashboardSelector } from "../../../model";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { getLayoutCoordinates } from "../../../_staging/layout/coordinates";
-import { Hotspot } from "./Hotspot";
-import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn";
+import { selectIsInEditMode, useDashboardSelector } from "../../../model/index.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { getLayoutCoordinates } from "../../../_staging/layout/coordinates.js";
+import { Hotspot } from "./Hotspot.js";
+import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 
 export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     item: IDashboardLayoutItemFacade<TWidget>;

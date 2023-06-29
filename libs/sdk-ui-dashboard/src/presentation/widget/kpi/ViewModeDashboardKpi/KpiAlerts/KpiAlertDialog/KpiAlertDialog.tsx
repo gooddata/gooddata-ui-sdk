@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, ReactNode, ReactText } from "react";
-import isEqual from "lodash/isEqual";
-import last from "lodash/last";
+import isEqual from "lodash/isEqual.js";
+import last from "lodash/last.js";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { Button, Input, Typography, Overlay, useMediaQuery, Spinner, Message } from "@gooddata/sdk-ui-kit";
 import {
@@ -15,15 +15,18 @@ import {
     IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 
-import { KpiAlertOperationStatus } from "../../../common";
+import { KpiAlertOperationStatus } from "../../../common/index.js";
 
-import { KpiAlertDialogDateRange } from "./KpiAlertDialogDateRange";
-import { kpiAlertDialogAlignPoints, kpiAlertDialogMobileAlignPoints } from "./alignPoints";
-import { IBrokenAlertFilter } from "../types";
-import { KpiAlertDialogBrokenFilters } from "./KpiAlertDialogBrokenFilters/KpiAlertDialogBrokenFilters";
-import { thresholdFromDecimalToPercent, thresholdFromPercentToDecimal } from "../utils/alertThresholdUtils";
-import { areKpiAlertFiltersSameAsDashboard } from "./utils/filterUtils";
-import { KpiAlertDialogWhenTriggeredPicker } from "./KpiAlertDialogWhenTriggeredPicker";
+import { KpiAlertDialogDateRange } from "./KpiAlertDialogDateRange.js";
+import { kpiAlertDialogAlignPoints, kpiAlertDialogMobileAlignPoints } from "./alignPoints.js";
+import { IBrokenAlertFilter } from "../types.js";
+import { KpiAlertDialogBrokenFilters } from "./KpiAlertDialogBrokenFilters/KpiAlertDialogBrokenFilters.js";
+import {
+    thresholdFromDecimalToPercent,
+    thresholdFromPercentToDecimal,
+} from "../utils/alertThresholdUtils.js";
+import { areKpiAlertFiltersSameAsDashboard } from "./utils/filterUtils.js";
+import { KpiAlertDialogWhenTriggeredPicker } from "./KpiAlertDialogWhenTriggeredPicker.js";
 
 export interface IKpiAlertDialogProps {
     alert?: IWidgetAlertDefinition;

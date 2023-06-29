@@ -2,7 +2,7 @@
 import { createIntl, IntlShape } from "react-intl";
 import { DefaultLocale, ILocale, pickCorrectWording } from "@gooddata/sdk-ui";
 
-import { translations } from "./translations";
+import { translations } from "./translations.js";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 /**

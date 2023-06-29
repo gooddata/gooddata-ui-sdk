@@ -21,10 +21,10 @@ import {
     IMeasureSortItem,
     IMeasureDropdownValue,
     IAvailableSortsGroup,
-} from "../types";
+} from "../types.js";
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble";
-import { DropdownButton, Dropdown, DropdownList } from "../../Dropdown";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
+import { DropdownButton, Dropdown, DropdownList } from "../../Dropdown/index.js";
 
 interface MeasureDropdownProps {
     currentItem: ISortItem;

@@ -12,13 +12,13 @@ import {
     newAttributeDisplayFormMetadataObject,
     newAttributeMetadataObject,
 } from "@gooddata/sdk-backend-base";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/api";
-import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/api.js";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";
 
-import { BearWorkspaceElements } from "./elements";
+import { BearWorkspaceElements } from "./elements/index.js";
 import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,

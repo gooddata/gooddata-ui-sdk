@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
-import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
+import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { IDashboardPlugin } from "@gooddata/sdk-model";
-import { ActionOptions } from "../_base/types";
-import { createBackend } from "../_base/backend";
-import { getDashboardFromOptions } from "../_base/inputHandling/extractors";
+import { ActionOptions } from "../_base/types.js";
+import { createBackend } from "../_base/backend.js";
+import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
 import ora from "ora";
 import {
     asyncValidOrDie,
@@ -12,11 +12,11 @@ import {
     createDashboardValidator,
     createWorkspaceValidator,
     InputValidator,
-} from "../_base/inputHandling/validators";
-import isEmpty from "lodash/isEmpty";
-import { promptDashboardIdWithoutChoice, promptPluginParameters } from "../_base/terminal/prompts";
-import { logError } from "../_base/terminal/loggers";
-import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
+} from "../_base/inputHandling/validators.js";
+import isEmpty from "lodash/isEmpty.js";
+import { promptDashboardIdWithoutChoice, promptPluginParameters } from "../_base/terminal/prompts.js";
+import { logError } from "../_base/terminal/loggers.js";
+import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils.js";
 
 export type LinkCmdActionConfig = WorkspaceTargetConfig & {
     /**

@@ -1,13 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import cx from "classnames";
 
-import { Message } from "./Message";
-import { IMessage, IMessagesProps } from "./typings";
-import { Overlay } from "../Overlay";
-import { Typography } from "../Typography";
+import { Message } from "./Message.js";
+import { IMessage, IMessagesProps } from "./typings.js";
+import { Overlay } from "../Overlay/index.js";
+import { Typography } from "../Typography/index.js";
 
 /**
  * @internal

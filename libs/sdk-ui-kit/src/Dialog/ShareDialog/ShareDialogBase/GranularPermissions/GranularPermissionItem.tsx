@@ -5,9 +5,9 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
-import { withBubble } from "../../../../Bubble";
-import { granularPermissionMessageLabels } from "../../../../locales";
+import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types.js";
+import { withBubble } from "../../../../Bubble/index.js";
+import { granularPermissionMessageLabels } from "../../../../locales.js";
 
 interface IGranularPermissionItemProps {
     grantee: IGranularGrantee;

@@ -60,7 +60,7 @@ export function createNotAuthenticatedError(error: Error): NotAuthenticated | un
 }
 
 function createLimitReachedError(error: Error): LimitReached | undefined {
-    const axiosErrorResponse = (error as AxiosError).response;
+    const axiosErrorResponse = (error as AxiosError<any>).response;
 
     if (
         !axiosErrorResponse ||
@@ -74,7 +74,7 @@ function createLimitReachedError(error: Error): LimitReached | undefined {
 }
 
 function createContractExpiredError(error: Error): ContractExpired | undefined {
-    const axiosErrorResponse = (error as AxiosError).response;
+    const axiosErrorResponse = (error as AxiosError<any>).response;
 
     if (
         !axiosErrorResponse ||

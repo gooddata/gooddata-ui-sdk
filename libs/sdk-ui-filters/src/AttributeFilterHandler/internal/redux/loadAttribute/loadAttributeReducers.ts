@@ -2,10 +2,10 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 
-import { Correlation } from "../../../types";
-import { AttributeFilterReducer } from "../store/state";
+import { Correlation } from "../../../types/index.js";
+import { AttributeFilterReducer } from "../store/state.js";
 
 const loadAttributeRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
 

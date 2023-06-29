@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import identity from "lodash/identity";
+import identity from "lodash/identity.js";
 import { ObjRef, ICatalogGroup, IGroupableCatalogItemBase } from "@gooddata/sdk-model";
-import { Builder, builderFactory, BuilderModifications, IBuilder } from "../builder";
+import { Builder, builderFactory, BuilderModifications, IBuilder } from "../builder.js";
 
 /**
  * Groupable catalog item builder interface

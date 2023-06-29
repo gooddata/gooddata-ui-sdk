@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
-import { modifyAttribute, newAttribute } from "../factory";
-import { Account } from "../../../../__mocks__/model";
+import { describe, expect, it } from "vitest";
+import { modifyAttribute, newAttribute } from "../factory.js";
+import { Account } from "../../../../__mocks__/model.js";
 
 describe("newAttribute", () => {
     it("should return a simple attribute", () => {

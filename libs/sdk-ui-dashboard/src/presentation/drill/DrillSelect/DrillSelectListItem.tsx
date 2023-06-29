@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { SyntheticEvent } from "react";
 import cx from "classnames";
-import compact from "lodash/compact";
+import compact from "lodash/compact.js";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ITheme } from "@gooddata/sdk-model";
-import { DashboardDrillDefinition } from "../../../types";
-import { DrillType, DrillSelectItem } from "./types";
+import { DashboardDrillDefinition } from "../../../types.js";
+import { DrillType, DrillSelectItem } from "./types.js";
 
 const DRILL_ICON_NAME: Record<DrillType, string> = {
     [DrillType.DRILL_TO_DASHBOARD]: "DrillToDashboard",

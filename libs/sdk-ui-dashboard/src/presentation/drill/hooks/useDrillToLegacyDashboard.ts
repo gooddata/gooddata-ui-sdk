@@ -5,7 +5,7 @@ import {
     DashboardCommandFailed,
     drillToLegacyDashboard,
     useDashboardCommandProcessing,
-} from "../../../model";
+} from "../../../model/index.js";
 
 /**
  * @internal

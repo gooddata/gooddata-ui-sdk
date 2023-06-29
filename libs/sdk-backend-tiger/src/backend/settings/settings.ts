@@ -2,8 +2,8 @@
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { v4 as uuidv4 } from "uuid";
 
-import { convertApiError } from "../../utils/errorHandling";
-import { TigerSettingsType } from "../../types";
+import { convertApiError } from "../../utils/errorHandling.js";
+import { TigerSettingsType } from "../../types/index.js";
 
 export class TigerSettingsService<T> {
     constructor() {}

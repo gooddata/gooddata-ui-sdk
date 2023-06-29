@@ -1,21 +1,21 @@
 // (C) 2019-2022 GoodData Corporation
-import noop from "lodash/noop";
-import cloneDeep from "lodash/cloneDeep";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
+import noop from "lodash/noop.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import {
     IBucketOfFun,
     IVisProps,
     IVisConstruct,
     IExtendedReferencePoint,
     IReferencePoint,
-} from "../../../interfaces/Visualization";
-import * as testMocks from "../../../tests/mocks/testMocks";
+} from "../../../interfaces/Visualization.js";
+import * as testMocks from "../../../tests/mocks/testMocks.js";
 import {
     COLUMN_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
-} from "../../../constants/supportedProperties";
-import { AXIS } from "../../../constants/axis";
-import { PluggableColumnChart } from "../columnChart/PluggableColumnChart";
+} from "../../../constants/supportedProperties.js";
+import { AXIS } from "../../../constants/axis.js";
+import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { insightSetProperties, IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
 import {
@@ -26,10 +26,13 @@ import {
     expectedInsightDefinitionWithStackByDrillToRegion,
     insightDefinition,
     expectedInsightDefinitionDrillToRegion,
-} from "./getInsightWithDrillDownAppliedMock";
+} from "./getInsightWithDrillDownAppliedMock.js";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { createDrillEvent, createDrillDefinition, insightDefinitionToInsight } from "./testHelpers";
-import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
+import { createDrillEvent, createDrillDefinition, insightDefinitionToInsight } from "./testHelpers.js";
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, it, expect, vi } from "vitest";
+
+const { Department, Region } = ReferenceMd;
 
 describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {
@@ -109,7 +112,7 @@ describe("PluggableColumnBarCharts", () => {
         it("should update supported properties list base on axis type", async () => {
             const mockProps = {
                 ...defaultProps,
-                pushData: jest.fn(),
+                pushData: vi.fn(),
             };
             const chart = createComponent(mockProps);
 

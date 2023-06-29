@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
-import some from "lodash/some";
-import every from "lodash/every";
-import isEmpty from "lodash/isEmpty";
-import reduce from "lodash/reduce";
-import flatMap from "lodash/flatMap";
+import some from "lodash/some.js";
+import every from "lodash/every.js";
+import isEmpty from "lodash/isEmpty.js";
+import reduce from "lodash/reduce.js";
+import flatMap from "lodash/flatMap.js";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
@@ -13,7 +13,7 @@ import {
     IReferencePoint,
     IFilters,
     IDateFilter,
-} from "../interfaces/Visualization";
+} from "../interfaces/Visualization.js";
 
 import {
     getItemsCount,
@@ -26,9 +26,9 @@ import {
     isDateBucketItem,
     isMeasureValueFilter,
     isRankingFilter,
-} from "./bucketHelper";
+} from "./bucketHelper.js";
 
-import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket";
+import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;

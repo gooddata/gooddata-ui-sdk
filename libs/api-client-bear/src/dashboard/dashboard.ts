@@ -1,8 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
 import { GdcExport, GdcFilterContext, sanitizeFiltersForExport } from "@gooddata/api-model-bear";
-import { ApiResponse, XhrModule } from "../xhr";
-import { handleHeadPolling, IPollingOptions } from "../util";
-import { isExportFinished } from "../utils/export";
+import { ApiResponse, XhrModule } from "../xhr.js";
+import { handleHeadPolling, IPollingOptions } from "../util.js";
+import { isExportFinished } from "../utils/export.js";
 
 interface IDashboardExportPayload {
     dashboardExport: {

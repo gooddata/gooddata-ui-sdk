@@ -1,16 +1,16 @@
 // (C) 2007-2023 GoodData Corporation
-import invoke from "lodash/invoke";
-import isEmpty from "lodash/isEmpty";
-import set from "lodash/set";
+import invoke from "lodash/invoke.js";
+import isEmpty from "lodash/isEmpty.js";
+import set from "lodash/set.js";
 import { IDrillConfig, ChartType } from "@gooddata/sdk-ui";
-import { IHighchartsAxisExtend } from "../../typings/extend";
-import { styleVariables } from "./styles/variables";
-import { isOneOfTypes } from "../_util/common";
-import { chartClick } from "./drilldownEventing";
-import { setupDrilldown } from "./setupDrilldownToParentAttribute";
-import Highcharts from "../../lib";
-import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities";
-import { IChartOptions } from "../../typings/unsafe";
+import { IHighchartsAxisExtend } from "../../typings/extend.js";
+import { styleVariables } from "./styles/variables.js";
+import { isOneOfTypes } from "../_util/common.js";
+import { chartClick } from "./drilldownEventing.js";
+import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
+import Highcharts from "../../lib/index.js";
+import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
+import { IChartOptions } from "../../typings/unsafe.js";
 import { ITheme } from "@gooddata/sdk-model";
 
 const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;

@@ -7,9 +7,9 @@ import { IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "./utils";
+import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "./utils.js";
 
-import { gdColorDisabled } from "../../constants/colors";
+import { gdColorDisabled } from "../../constants/colors.js";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;

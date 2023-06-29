@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
-
+import { describe, expect, it } from "vitest";
 import {
     getAttributeIdentifiersPlaceholdersFromUrl,
     joinDrillUrlParts,
     splitDrillUrlParts,
-} from "../drillUrl";
+} from "../drillUrl.js";
 
 describe("drill url placeholders", () => {
     it("should extracted placeholders", () => {

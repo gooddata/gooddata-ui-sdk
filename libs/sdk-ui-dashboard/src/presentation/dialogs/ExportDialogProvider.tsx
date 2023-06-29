@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { ExportDialog } from "@gooddata/sdk-ui-kit";
-import { useExportDialogContext } from "../dashboardContexts";
+import { useExportDialogContext } from "../dashboardContexts/index.js";
 
 /**
  * @internal

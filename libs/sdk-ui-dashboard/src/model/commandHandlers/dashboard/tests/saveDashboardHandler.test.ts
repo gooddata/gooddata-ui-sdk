@@ -1,26 +1,27 @@
 // (C) 2021-2022 GoodData Corporation
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { addLayoutSection, saveDashboard } from "../../../commands";
-import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { DashboardSaved } from "../../../events";
-import { selectBasicLayout } from "../../../store/layout/layoutSelectors";
-import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils";
-import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors";
-import { selectPersistedDashboard } from "../../../store/meta/metaSelectors";
-import { getDashboardWithSharing } from "../saveDashboardHandler";
+import { beforeEach, describe, it, expect } from "vitest";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { addLayoutSection, saveDashboard } from "../../../commands/index.js";
+import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { DashboardSaved } from "../../../events/index.js";
+import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
+import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
+import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import { getDashboardWithSharing } from "../saveDashboardHandler.js";
 import {
     SimpleDashboardFilterContext,
     SimpleDashboardWithReferences,
-} from "../../../tests/fixtures/SimpleDashboard.fixtures";
+} from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { IDashboardDefinition } from "@gooddata/sdk-model";
 
 describe("save dashboard handler", () => {
     describe("for a new dashboard", () => {
         let Tester: DashboardTester;
-        // each test starts with a new dashboard
-        beforeEach(
-            preloadedTesterFactory(
+
+        beforeEach(async () => {
+            await preloadedTesterFactory(
                 (tester) => {
                     Tester = tester;
                 },
@@ -30,8 +31,8 @@ describe("save dashboard handler", () => {
                         useRefType: "id",
                     },
                 },
-            ),
-        );
+            );
+        });
 
         it("should save a new dashboard", async () => {
             // add something onto the layout

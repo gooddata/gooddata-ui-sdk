@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 
-import { IButtonBarProps } from "./types";
-import { CancelButton, EditButton, SaveAsNewButton, SaveButton, ShareButton } from "./button";
+import { IButtonBarProps } from "./types.js";
+import { CancelButton, EditButton, SaveAsNewButton, SaveButton, ShareButton } from "./button/index.js";
 
 /**
  * @alpha

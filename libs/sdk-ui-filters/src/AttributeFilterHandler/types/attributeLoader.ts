@@ -6,7 +6,7 @@ import {
     CallbackPayloadWithCorrelation,
     CallbackRegistration,
     Correlation,
-} from "./common";
+} from "./common.js";
 
 /**
  * Handles the loading of the attribute metadata.

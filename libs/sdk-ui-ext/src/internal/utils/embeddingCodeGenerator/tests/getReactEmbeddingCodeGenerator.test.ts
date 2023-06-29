@@ -1,7 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newInsightDefinition } from "@gooddata/sdk-model";
-import { getReactEmbeddingCodeGenerator } from "..";
+import { getReactEmbeddingCodeGenerator } from "../index.js";
+import { describe, it, expect } from "vitest";
 
 describe("getReactEmbeddingCodeGenerator", () => {
     const mockInsight = newInsightDefinition("foo");

@@ -2,8 +2,8 @@
 import { useCallback } from "react";
 import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 
-import { getSizeInfo } from "../../../_staging/layout/sizing";
-import { newLoadingPlaceholderWidget } from "../../../widgets";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
+import { newLoadingPlaceholderWidget } from "../../../widgets/index.js";
 import {
     selectSettings,
     useDashboardDispatch,
@@ -16,7 +16,7 @@ import {
     addLayoutSection,
     dispatchAndWaitFor,
     replaceSectionItem,
-} from "../../../model";
+} from "../../../model/index.js";
 
 export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
     const dispatch = useDashboardDispatch();

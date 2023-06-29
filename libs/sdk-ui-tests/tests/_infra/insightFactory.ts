@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 
 import { IInsightDefinition, newInsightDefinition, VisualizationProperties } from "@gooddata/sdk-model";
-import { ChartInteractions } from "./backendWithCapturing";
-import { chartConfigToVisProperties, geoChartConfigToVisProperties } from "./chartConfigToVisProps";
-import { geoExecutionToInsightBuckets } from "./executionToInsightBuckets";
-import { pivotConfigToVisProperties } from "./pivotConfigToVisProps";
+import { ChartInteractions } from "./backendWithCapturing.js";
+import { chartConfigToVisProperties, geoChartConfigToVisProperties } from "./chartConfigToVisProps.js";
+import { geoExecutionToInsightBuckets } from "./executionToInsightBuckets.js";
+import { pivotConfigToVisProperties } from "./pivotConfigToVisProps.js";
 
 function visNameToUri(name: string): string {
     if (name === "PivotTable") {

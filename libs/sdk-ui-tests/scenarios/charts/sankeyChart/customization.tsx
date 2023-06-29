@@ -1,15 +1,15 @@
 // (C) 2023 GoodData Corporation
 import { SankeyChart, ISankeyChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
-import { legendForceEnabledCustomizer } from "../_infra/legendVariants";
-import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { scenariosFor } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { legendForceEnabledCustomizer } from "../_infra/legendVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 import {
     legendResponsiveSizeVariants,
     legendForceEnabledResponsiveVariants,
-} from "../_infra/legendResponsiveVariants";
-import { SankeyChartWithMeasureAndAttributeFrom, SankeyChartWithMeasureAttributeFromAndTo } from "./base";
+} from "../_infra/legendResponsiveVariants.js";
+import { SankeyChartWithMeasureAndAttributeFrom, SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
 
 const legendScenarios = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

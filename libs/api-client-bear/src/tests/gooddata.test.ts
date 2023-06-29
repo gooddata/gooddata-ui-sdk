@@ -1,7 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
-import { factory } from "../gooddata";
+import { describe, afterEach, expect, it } from "vitest";
+
+import fetchMock from "fetch-mock/esm/client.js";
+import { factory } from "../gooddata.js";
 
 const createSDK = (config = {}) => factory(fetch)(config);
 

@@ -1,15 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
-import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
-import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_LINE_UICONFIG, LINE_UICONFIG_WITH_MULTIPLE_DATES } from "../../../constants/uiConfig";
+import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
+import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { DEFAULT_LINE_UICONFIG, LINE_UICONFIG_WITH_MULTIPLE_DATES } from "../../../constants/uiConfig.js";
 import {
     IBucketItem,
     IDrillDownContext,
@@ -18,8 +18,8 @@ import {
     IVisConstruct,
     IUiConfig,
     IDrillDownDefinition,
-} from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+} from "../../../interfaces/Visualization.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     filterOutDerivedMeasures,
     getAllAttributeItemsWithPreference,
@@ -32,21 +32,21 @@ import {
     isDateBucketItem,
     sanitizeFilters,
     getBucketItems,
-} from "../../../utils/bucketHelper";
+} from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     setSecondaryMeasures,
-} from "../../../utils/propertiesHelper";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
-import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+} from "../../../utils/propertiesHelper.js";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper.js";
+import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
-} from "../drillDownUtil";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
+} from "../drillDownUtil.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
 /**
  * PluggableLineChart

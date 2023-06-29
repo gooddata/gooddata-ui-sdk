@@ -15,7 +15,12 @@ import {
     ISortItem,
     ITotal,
 } from "@gooddata/sdk-model";
-import { ValueOrPlaceholder, ValuesOrPlaceholders, AnyMeasure, ValueOrMultiValuePlaceholder } from "./base";
+import {
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+    AnyMeasure,
+    ValueOrMultiValuePlaceholder,
+} from "./base.js";
 
 //
 // Due to the combination of TypeScript union merging and the lack of ability to specify

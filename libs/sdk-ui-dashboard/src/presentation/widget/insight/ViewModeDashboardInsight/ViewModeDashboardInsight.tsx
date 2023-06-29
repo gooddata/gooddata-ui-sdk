@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 
-import { IDashboardInsightProps } from "../types";
-import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDialog";
+import { IDashboardInsightProps } from "../types.js";
+import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDialog.js";
 
 /**
  * @internal

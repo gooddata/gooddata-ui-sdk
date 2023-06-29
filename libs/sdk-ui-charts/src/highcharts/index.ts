@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import { Chart, IChartProps } from "./adapter/Chart";
-import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation";
-export { IHighChartsRendererProps } from "./adapter/HighChartsRenderer";
+import { Chart, IChartProps } from "./adapter/Chart.js";
+import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation.js";
+export { IHighChartsRendererProps } from "./adapter/HighChartsRenderer.js";
 export { Chart, ChartTransformation, IChartTransformationProps, IChartProps };
 
 /*
@@ -9,9 +9,9 @@ export { Chart, ChartTransformation, IChartTransformationProps, IChartProps };
  *  or moved elsewhere.
  */
 
-export { FLUID_LEGEND_THRESHOLD } from "./adapter/HighChartsRenderer";
-export { COMBO_SUPPORTED_CHARTS } from "./chartTypes/comboChart/comboChartOptions";
-export { updateConfigWithSettings } from "./chartTypes/_chartOptions/chartOptionsForSettings";
+export { FLUID_LEGEND_THRESHOLD } from "./adapter/HighChartsRenderer.js";
+export { COMBO_SUPPORTED_CHARTS } from "./chartTypes/comboChart/comboChartOptions.js";
+export { updateConfigWithSettings } from "./chartTypes/_chartOptions/chartOptionsForSettings.js";
 
 export {
     isLineChart,
@@ -33,10 +33,10 @@ export {
     isDependencyWheel,
     isSankeyOrDependencyWheel,
     isWaterfall,
-} from "./chartTypes/_util/common";
+} from "./chartTypes/_util/common.js";
 
-export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";
+export { BOTTOM, MIDDLE, TOP } from "./constants/alignments.js";
 
 // re-exports to maintain api-compatibility
 export { ColorUtils } from "@gooddata/sdk-ui-vis-commons";
-export { getValidColorPalette } from "./chartTypes/_util/color";
+export { getValidColorPalette } from "./chartTypes/_util/color.js";

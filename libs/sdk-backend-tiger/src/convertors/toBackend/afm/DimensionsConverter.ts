@@ -17,8 +17,8 @@ import {
     MeasureGroupIdentifier,
     SortDirection,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import findIndex from "lodash/findIndex";
+import isEmpty from "lodash/isEmpty.js";
+import findIndex from "lodash/findIndex.js";
 
 type SortKey = SortKeyAttribute | SortKeyValue;
 

@@ -4,10 +4,10 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 import fs from "fs";
 import path from "path";
-import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
-import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
-import isEmpty from "lodash/isEmpty";
-import { InsightRecordingSpec, RecordingFiles } from "../interface";
+import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
+import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
+import isEmpty from "lodash/isEmpty.js";
+import { InsightRecordingSpec, RecordingFiles } from "../interface.js";
 
 //
 // internal constants & types

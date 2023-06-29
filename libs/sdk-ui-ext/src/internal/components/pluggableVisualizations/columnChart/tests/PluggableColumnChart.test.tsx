@@ -1,20 +1,21 @@
 // (C) 2019-2022 GoodData Corporation
-import noop from "lodash/noop";
+import noop from "lodash/noop.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
-import { PluggableColumnChart } from "../PluggableColumnChart";
+import { PluggableColumnChart } from "../PluggableColumnChart.js";
 
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import { AXIS } from "../../../../constants/axis";
-import { IVisConstruct } from "../../../../interfaces/Visualization";
-import * as testMocks from "../../../../tests/mocks/testMocks";
-import { getLastRenderEl } from "../../tests/testHelpers";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { AXIS } from "../../../../constants/axis.js";
+import { IVisConstruct } from "../../../../interfaces/Visualization.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
 
 describe("PluggableColumnChart", () => {
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
-    const mockRenderFun = jest.fn();
+    const mockRenderFun = vi.fn();
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
@@ -44,7 +45,7 @@ describe("PluggableColumnChart", () => {
     });
 
     it("should send only supported properties and supported properties list via pushData callback", () => {
-        const pushData = jest.fn();
+        const pushData = vi.fn();
         const callbacks = {
             ...defaultProps.callbacks,
             pushData,

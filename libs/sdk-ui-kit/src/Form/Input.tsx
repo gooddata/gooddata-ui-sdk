@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import isNumber from "lodash/isNumber";
-import isString from "lodash/isString";
-import isNaN from "lodash/isNaN";
+import isNumber from "lodash/isNumber.js";
+import isString from "lodash/isString.js";
+import isNaN from "lodash/isNaN.js";
 
-import { InputPure, InputPureProps } from "./InputPure";
+import { InputPure, InputPureProps } from "./InputPure.js";
 
 const isValidNumber = (value: string | number) => isNumber(value) && !isNaN(value);
 const isNumberOrString = (value: string | number) =>

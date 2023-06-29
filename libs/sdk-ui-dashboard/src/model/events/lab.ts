@@ -1,7 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { DashboardEventBody, IDashboardEvent } from "./base";
-import { eventGuard } from "./util";
+import { DashboardEventBody, IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 // FIXME  this should be reworked in the RAIL-4834
 

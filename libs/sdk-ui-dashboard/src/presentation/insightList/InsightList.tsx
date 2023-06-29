@@ -11,13 +11,13 @@ import {
     areObjRefsEqual,
     insightSummary,
 } from "@gooddata/sdk-model";
-import debounce from "lodash/debounce";
-import range from "lodash/range";
+import debounce from "lodash/debounce.js";
+import range from "lodash/range.js";
 import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
 import { InsightListItem, DropdownList, ITab } from "@gooddata/sdk-ui-kit";
 
-import { InsightListNoData } from "./InsightListNoData";
+import { InsightListNoData } from "./InsightListNoData.js";
 import {
     createInsightRequested,
     selectAllowCreateInsightRequest,
@@ -27,9 +27,9 @@ import {
     selectSettings,
     useDashboardEventDispatch,
     useDashboardSelector,
-} from "../../model";
-import { IInsightListProps } from "./types";
-import { messages } from "../../locales";
+} from "../../model/index.js";
+import { IInsightListProps } from "./types.js";
+import { messages } from "../../locales.js";
 
 const ITEMS_PER_PAGE = 50;
 const ITEM_HEIGHT = 40;

@@ -1,18 +1,19 @@
 // (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
-import { ComboChart } from "../ComboChart";
-import { IChartConfig } from "../../../interfaces";
+import { ComboChart } from "../ComboChart.js";
+import { IChartConfig } from "../../../interfaces/index.js";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { CoreComboChart } from "../CoreComboChart";
+import { CoreComboChart } from "../CoreComboChart.js";
 import { IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
+import { describe, it, expect, vi } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
-jest.mock("../CoreComboChart", () => ({
-    CoreComboChart: jest.fn(() => null),
+vi.mock("../CoreComboChart", () => ({
+    CoreComboChart: vi.fn(() => null),
 }));
 
 // need to turn off ratio in the ReferenceMdExt.AmountWithRatio

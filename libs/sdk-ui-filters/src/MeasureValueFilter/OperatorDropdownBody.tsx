@@ -2,8 +2,8 @@
 import React from "react";
 import { Separator, Overlay } from "@gooddata/sdk-ui-kit";
 
-import OperatorDropdownItem from "./OperatorDropdownItem";
-import { MeasureValueFilterOperator } from "./types";
+import OperatorDropdownItem from "./OperatorDropdownItem.js";
+import { MeasureValueFilterOperator } from "./types.js";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 

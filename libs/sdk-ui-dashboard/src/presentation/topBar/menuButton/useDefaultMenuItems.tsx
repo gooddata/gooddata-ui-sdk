@@ -22,11 +22,11 @@ import {
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
-} from "../../../model";
-import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
-import { IMenuButtonItem } from "../../topBar/types";
-import { messages } from "../../../locales";
-import { selectIsSaveAsNewButtonVisible } from "../buttonBar/button";
+} from "../../../model/index.js";
+import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
+import { IMenuButtonItem } from "../types.js";
+import { messages } from "../../../locales.js";
+import { selectIsSaveAsNewButtonVisible } from "../buttonBar/button/index.js";
 
 /**
  * @internal

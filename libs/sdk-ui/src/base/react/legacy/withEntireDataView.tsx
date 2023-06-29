@@ -10,21 +10,21 @@ import {
 import { defFingerprint } from "@gooddata/sdk-model";
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
-import noop from "lodash/noop";
-import omit from "lodash/omit";
+import noop from "lodash/noop.js";
+import omit from "lodash/omit.js";
 
-import { IExportFunction, ILoadingState } from "../../vis/Events";
+import { IExportFunction, ILoadingState } from "../../vis/Events.js";
 import {
     DataTooLargeToDisplaySdkError,
     GoodDataSdkError,
     NegativeValuesSdkError,
-} from "../../errors/GoodDataSdkError";
-import { createExportErrorFunction, createExportFunction } from "../../vis/export";
-import { DataViewFacade } from "../../results/facade";
-import { convertError } from "../../errors/errorHandling";
-import { IntlWrapper } from "../../localization/IntlWrapper";
-import { IDataVisualizationProps } from "../../vis/VisualizationProps";
-import { getAvailableDrillTargets } from "./availableDrillTargets";
+} from "../../errors/GoodDataSdkError.js";
+import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
+import { DataViewFacade } from "../../results/facade.js";
+import { convertError } from "../../errors/errorHandling.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
+import { IDataVisualizationProps } from "../../vis/VisualizationProps.js";
+import { getAvailableDrillTargets } from "./availableDrillTargets.js";
 
 interface IDataViewLoadState {
     isLoading: boolean;

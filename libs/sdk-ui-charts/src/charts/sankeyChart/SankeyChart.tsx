@@ -8,11 +8,11 @@ import {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { sankeyDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
-import { CoreSankeyChart } from "./CoreSankeyChart";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
+import { sankeyDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
+import { CoreSankeyChart } from "./CoreSankeyChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
 
 //
 // Internals

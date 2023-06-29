@@ -2,7 +2,7 @@
 
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, newDashboardEngine } from "@gooddata/sdk-ui-dashboard";
-import { LoadedPlugin } from "../types";
+import { LoadedPlugin } from "../types.js";
 
 /**
  * This loader expects that a dashboard engine is build-time linked into the application and will create

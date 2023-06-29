@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { DecoratedExecutionFactory } from "../decoratedBackend/execution";
+import { DecoratedExecutionFactory } from "../decoratedBackend/execution.js";
 
 /**
  * Abstract base class that can be extended to implement concrete execution factories for different

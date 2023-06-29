@@ -17,13 +17,13 @@ import {
     AttributesOrPlaceholders,
     NullableFiltersOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
-import { truncate } from "../_commons/truncate";
-import { CoreBulletChart } from "./CoreBulletChart";
-import { stackedChartDimensions } from "../_commons/dimensions";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
-import { sanitizeConfig } from "../_commons/sanitizeStacking";
+import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
+import { truncate } from "../_commons/truncate.js";
+import { CoreBulletChart } from "./CoreBulletChart.js";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
+import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 
 //
 // Internals

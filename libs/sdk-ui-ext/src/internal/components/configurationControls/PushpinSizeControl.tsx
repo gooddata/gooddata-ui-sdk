@@ -2,12 +2,12 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import { IVisualizationProperties } from "../../interfaces/Visualization";
-import ConfigSubsection from "./ConfigSubsection";
-import DropdownControl from "./DropdownControl";
-import { getTranslatedDropdownItems } from "../../utils/translations";
-import { pushpinSizeDropdownItems } from "../../constants/dropdowns";
-import { messages } from "../../../locales";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import ConfigSubsection from "./ConfigSubsection.js";
+import DropdownControl from "./DropdownControl.js";
+import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { pushpinSizeDropdownItems } from "../../constants/dropdowns.js";
+import { messages } from "../../../locales.js";
 
 export interface IPushpinSizeControl {
     disabled: boolean;

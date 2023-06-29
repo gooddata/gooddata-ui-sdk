@@ -4,8 +4,8 @@ import {
     IWorkspaceUserGroupsQueryOptions,
     IWorkspaceUsersQueryOptions,
 } from "@gooddata/sdk-backend-spi";
-import { objRefToUri } from "../../../utils/api";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { objRefToUri } from "../../../utils/api.js";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import {
     ObjRef,
     AccessGranteeDetail,
@@ -18,9 +18,9 @@ import {
     convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee,
     convertWorkspaceUserToAvailableUserAccessGrantee,
     convertGranularAccessGranteeToAcessGrantee,
-} from "../../../convertors/fromBackend/AccessControlConverter";
-import { BearWorkspaceUsersQuery } from "../users";
-import { BearWorkspaceUserGroupsQuery } from "../userGroups";
+} from "../../../convertors/fromBackend/AccessControlConverter.js";
+import { BearWorkspaceUsersQuery } from "../users/index.js";
+import { BearWorkspaceUserGroupsQuery } from "../userGroups/index.js";
 
 export class BearWorkspaceAccessControlService implements IWorkspaceAccessControlService {
     private users: BearWorkspaceUsersQuery;

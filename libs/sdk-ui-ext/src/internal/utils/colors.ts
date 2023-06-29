@@ -1,13 +1,13 @@
 // (C) 2019-2023 GoodData Corporation
-import set from "lodash/set";
-import isEqual from "lodash/isEqual";
-import uniqBy from "lodash/uniqBy";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
-import compact from "lodash/compact";
+import set from "lodash/set.js";
+import isEqual from "lodash/isEqual.js";
+import uniqBy from "lodash/uniqBy.js";
+import isEmpty from "lodash/isEmpty.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import compact from "lodash/compact.js";
 
-import { IVisualizationProperties } from "../interfaces/Visualization";
-import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
+import { IVisualizationProperties } from "../interfaces/Visualization.js";
+import { IColorConfiguration, IColoredItem } from "../interfaces/Colors.js";
 import {
     IColor,
     IColorMappingItem,

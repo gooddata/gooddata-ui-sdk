@@ -28,7 +28,7 @@ export {
     IResolvedFilterValues,
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
-} from "./types/commonTypes";
+} from "./types/commonTypes.js";
 export {
     ICustomWidget,
     ICustomWidgetDefinition,
@@ -48,7 +48,7 @@ export {
     RelativeIndex,
     ExtendedDashboardItemType,
     ExtendedDashboardItemTypes,
-} from "./types/layoutTypes";
+} from "./types/layoutTypes.js";
 export {
     FilterOp,
     FilterOpReplaceAll,
@@ -61,7 +61,7 @@ export {
     WidgetFilterOperation,
     WidgetHeader,
     WidgetDescription,
-} from "./types/widgetTypes";
+} from "./types/widgetTypes.js";
 
 export {
     BrokenAlertType,
@@ -70,9 +70,9 @@ export {
     BrokenAlertAttributeFilterInfo,
     isBrokenAlertDateFilterInfo,
     isBrokenAlertAttributeFilterInfo,
-} from "./types/alertTypes";
+} from "./types/alertTypes.js";
 
-export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes";
+export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes.js";
 
 export {
     IConnectingAttribute,
@@ -80,20 +80,23 @@ export {
     IDashboardAttributeFilterParentItem,
     IParentWithConnectingAttributes,
     IUseAttributeElements,
-} from "./types/attributeFilterTypes";
+} from "./types/attributeFilterTypes.js";
 
-export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes";
-export { DashboardAccessibilityLimitation, IInaccessibleDashboard } from "./types/inaccessibleDashboardTypes";
+export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes.js";
+export {
+    DashboardAccessibilityLimitation,
+    IInaccessibleDashboard,
+} from "./types/inaccessibleDashboardTypes.js";
 
-export * from "./react";
-export * from "./commands";
-export * from "./events";
-export * from "./queries";
-export * from "./store";
+export * from "./react/index.js";
+export * from "./commands/index.js";
+export * from "./events/index.js";
+export * from "./queries/index.js";
+export * from "./store/index.js";
 
-export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets";
-export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta";
-export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets";
+export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDatasets.js";
+export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta.js";
+export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets.js";
 
 export {
     DashboardEventHandler,
@@ -104,8 +107,8 @@ export {
     commandStartedEventHandler,
     commandFailedEventHandler,
     DashboardEventEvalFn,
-} from "./eventHandlers/eventHandler";
-export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";
-export * from "./headlessDashboard";
+} from "./eventHandlers/eventHandler.js";
+export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory.js";
+export * from "./headlessDashboard/index.js";
 
-export { isTemporaryIdentity } from "./utils/dashboardItemUtils";
+export { isTemporaryIdentity } from "./utils/dashboardItemUtils.js";

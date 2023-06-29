@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src";
+import { scenariosFor } from "../../../src/index.js";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
-import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
-import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
-import { AttributeElements } from "../../_infra/predicates";
-import { replaceMappingPredicates } from "../_infra/insightConverters";
-import { ScenarioGroupNames } from "../_infra/groupNames";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
+import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
+import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
+import { AttributeElements } from "../../_infra/predicates.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { ReferenceData } from "@gooddata/reference-workspace";
 
 const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)

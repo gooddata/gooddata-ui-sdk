@@ -253,6 +253,9 @@ const DefaultOptions = {
        otherwise leave it out (or set to the default, which is 'node_modules')
     */
     // , externalModuleResolutionStrategy: 'node_modules'
+    enhancedResolveOptions: {
+        mainFields:["main","types"]
+    }
 };
 
 const DontImportRootIndex = {

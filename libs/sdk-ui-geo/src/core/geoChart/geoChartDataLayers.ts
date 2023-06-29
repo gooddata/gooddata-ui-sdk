@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import partial from "lodash/partial";
+import partial from "lodash/partial.js";
 import mapboxgl from "mapbox-gl";
 import {
     DEFAULT_CLUSTER_FILTER,
@@ -17,10 +17,10 @@ import {
     PUSHPIN_STYLE_CIRCLE_STROKE_COLOR,
     EMPTY_SEGMENT_VALUE,
     PUSHPIN_SIZE_OPTIONS_MAP,
-} from "./constants/geoChart";
-import { IGeoData, IGeoPointsConfig, IGeoConfig } from "../../GeoChart";
+} from "./constants/geoChart.js";
+import { IGeoData, IGeoPointsConfig, IGeoConfig } from "../../GeoChart.js";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { getMinMax } from "./helpers/geoChart/common";
+import { getMinMax } from "./helpers/geoChart/common.js";
 
 function createPushpinSizeOptions(
     geoData: IGeoData,

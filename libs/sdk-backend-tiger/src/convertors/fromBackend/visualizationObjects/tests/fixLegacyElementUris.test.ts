@@ -4,8 +4,9 @@ import {
     ColorMapping,
     fixInsightLegacyElementUris,
     fixWidgetLegacyElementUris,
-} from "../../fixLegacyElementUris";
-import { mockInsight, mockWidget } from "./fixLegacyElementUris.fixtures";
+} from "../../fixLegacyElementUris.js";
+import { mockInsight, mockWidget } from "./fixLegacyElementUris.fixtures.js";
+import { describe, expect, it } from "vitest";
 
 describe("fixInsightLegacyElementUris", () => {
     const insightWithUris = mockInsight([

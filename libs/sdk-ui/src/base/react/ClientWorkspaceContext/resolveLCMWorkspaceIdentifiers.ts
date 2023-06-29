@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 
-import partial from "lodash/partial";
-import last from "lodash/last";
+import partial from "lodash/partial.js";
+import last from "lodash/last.js";
 
-import { IClientWorkspaceIdentifiers } from "./interfaces";
+import { IClientWorkspaceIdentifiers } from "./interfaces.js";
 
 /**
  * Resolves LCM workspace identifiers. This function will use the data product and client information

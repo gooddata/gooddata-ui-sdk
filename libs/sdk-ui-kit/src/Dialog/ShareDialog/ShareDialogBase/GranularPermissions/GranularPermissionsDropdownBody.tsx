@@ -5,15 +5,15 @@ import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem";
+import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 
-import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types";
-import { ItemsWrapper, Separator } from "../../../../List";
-import { Overlay } from "../../../../Overlay";
-import { IAlignPoint } from "../../../../typings/positioning";
-import { withBubble } from "../../../../Bubble";
-import { granularPermissionMessageLabels } from "../../../../locales";
-import { useShareDialogInteraction } from "../ComponentInteractionContext";
+import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
+import { ItemsWrapper, Separator } from "../../../../List/index.js";
+import { Overlay } from "../../../../Overlay/index.js";
+import { IAlignPoint } from "../../../../typings/positioning.js";
+import { withBubble } from "../../../../Bubble/index.js";
+import { granularPermissionMessageLabels } from "../../../../locales.js";
+import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;

@@ -10,21 +10,21 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
-import { IRecording, RecordingType } from "../recordings/common";
-import { DisplayFormRecording } from "../recordings/displayForms";
-import { ExecutionRecording } from "../recordings/execution";
-import { InsightRecording } from "../recordings/insights";
-import { CatalogRecording } from "../recordings/catalog";
-import { VisClassesRecording } from "../recordings/visClasses";
-import { generateConstantsForDisplayForms } from "./displayForm";
-import { generateConstantsForDataSamples } from "./dataSample";
-import { generateConstantsForExecutions } from "./execution";
-import { generateConstantsForInsights } from "./insight";
-import { generateConstantsForCatalog } from "./catalog";
-import { generateConstantsForVisClasses } from "./visClasses";
-import groupBy from "lodash/groupBy";
-import { generateConstantsForDashboards } from "./dashboard";
-import { DashboardRecording } from "../recordings/dashboards";
+import { IRecording, RecordingType } from "../recordings/common.js";
+import { DisplayFormRecording } from "../recordings/displayForms.js";
+import { ExecutionRecording } from "../recordings/execution.js";
+import { InsightRecording } from "../recordings/insights.js";
+import { CatalogRecording } from "../recordings/catalog.js";
+import { VisClassesRecording } from "../recordings/visClasses.js";
+import { generateConstantsForDisplayForms } from "./displayForm.js";
+import { generateConstantsForDataSamples } from "./dataSample.js";
+import { generateConstantsForExecutions } from "./execution.js";
+import { generateConstantsForInsights } from "./insight.js";
+import { generateConstantsForCatalog } from "./catalog.js";
+import { generateConstantsForVisClasses } from "./visClasses.js";
+import groupBy from "lodash/groupBy.js";
+import { generateConstantsForDashboards } from "./dashboard.js";
+import { DashboardRecording } from "../recordings/dashboards.js";
 
 const FILE_DIRECTIVES = [
     "/* eslint-disable @typescript-eslint/no-var-requires */",

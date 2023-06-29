@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { IAttributeElements, isAttributeElementsByRef } from "@gooddata/sdk-model";
 
 export function assertNoNulls(elements: IAttributeElements): void {

@@ -2,10 +2,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { IListedDashboard } from "@gooddata/sdk-model";
 
-import { DashboardSelector, DashboardState } from "../types";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 
-import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter";
+import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -11,8 +11,8 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import { selectCatalogAttributes, useDashboardSelector } from "../../../model";
-import { AttributeFilterDraggingComponent } from "../../componentDefinition";
+import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
+import { AttributeFilterDraggingComponent } from "../../componentDefinition/index.js";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (

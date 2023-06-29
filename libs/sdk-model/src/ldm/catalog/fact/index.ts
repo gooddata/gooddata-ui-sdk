@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { IGroupableCatalogItemBase } from "../group";
-import { IFactMetadataObject } from "../../metadata/fact";
+import isEmpty from "lodash/isEmpty.js";
+import { IGroupableCatalogItemBase } from "../group/index.js";
+import { IFactMetadataObject } from "../../metadata/fact/index.js";
 
 /**
  * Type representing catalog fact

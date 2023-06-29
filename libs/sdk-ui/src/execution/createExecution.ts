@@ -13,9 +13,9 @@ import {
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import compact from "lodash/compact";
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 
 /**
  * @internal

@@ -2,11 +2,11 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import sortBy from "lodash/sortBy";
+import sortBy from "lodash/sortBy.js";
 
-import { TabsWrapper, Tab } from "../Tabs/Tabs";
-import { granularityIntlCodes } from "../constants/i18n";
-import { messages } from "../../locales";
+import { TabsWrapper, Tab } from "../Tabs/Tabs.js";
+import { granularityIntlCodes } from "../constants/i18n.js";
+import { messages } from "../../locales.js";
 
 const granularityOrders: { [G in DateFilterGranularity]: number } = {
     "GDC.time.year": 0,

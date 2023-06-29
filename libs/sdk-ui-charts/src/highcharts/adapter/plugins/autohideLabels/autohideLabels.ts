@@ -1,21 +1,25 @@
 // (C) 2007-2022 GoodData Corporation
-import { getChartType } from "../../../chartTypes/_chartCreators/helpers";
+import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
 
 import {
     getDataLabelsGdcVisible,
     minimizeDataLabel,
     hideDataLabel,
     getDataLabelsGdcTotalsVisible,
-} from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
+} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     autohideColumnLabels,
     autohideColumnTotalLabels,
     handleColumnLabelsOutsideChart,
-} from "./autohideColumnLabels";
-import { autohideBarLabels, autohideBarTotalLabels, handleBarLabelsOutsideChart } from "./autohideBarLabels";
-import autohidePieLabels from "./autohidePieLabels";
-import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape";
+} from "./autohideColumnLabels.js";
+import {
+    autohideBarLabels,
+    autohideBarTotalLabels,
+    handleBarLabelsOutsideChart,
+} from "./autohideBarLabels.js";
+import autohidePieLabels from "./autohidePieLabels.js";
+import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const autohideLabels = (Highcharts: any): void => {

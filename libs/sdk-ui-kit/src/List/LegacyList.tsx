@@ -2,8 +2,8 @@
 import React, { Component } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
-import { ScrollCallback } from "./List";
-import noop from "lodash/noop";
+import { ScrollCallback } from "./List.js";
+import noop from "lodash/noop.js";
 
 const BORDER_HEIGHT = 1;
 

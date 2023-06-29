@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { isFreemiumEdition, shouldEnableNewNavigation, shouldHidePPExperience } from "../featureFlags";
+import { isFreemiumEdition, shouldEnableNewNavigation, shouldHidePPExperience } from "../featureFlags.js";
+import { describe, it, expect } from "vitest";
 
 describe("featureFlags utils", () => {
     describe("shouldHidePPExperience", () => {

@@ -1,6 +1,7 @@
 // (C) 2021-2023 GoodData Corporation
 import { IDashboardLayoutSize } from "@gooddata/sdk-model";
-import { resizeInsightWidget } from "../layoutUtils";
+import { resizeInsightWidget } from "../layoutUtils.js";
+import { describe, it, expect } from "vitest";
 
 describe("layout utils", () => {
     describe("resizeInsightWidget", () => {

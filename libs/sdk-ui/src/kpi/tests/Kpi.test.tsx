@@ -3,9 +3,9 @@ import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { newMeasure } from "@gooddata/sdk-model";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
-// import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { FormattedNumber } from "../FormattedNumber";
-import { Kpi } from "../Kpi";
+import { FormattedNumber } from "../FormattedNumber.js";
+import { Kpi } from "../Kpi.js";
+import { describe, expect, it, vi, beforeEach } from "vitest";
 
 const testCustomFormat = "$#,#.##";
 const testMeasure = newMeasure("m1", (m) => m.localId("m1").format(testCustomFormat));
@@ -14,13 +14,13 @@ const testWorkspace = "dummyWorkspace";
 /**
  * This mock enables us to test props as parameters of the called component
  */
-jest.mock("../FormattedNumber", () => ({
-    FormattedNumber: jest.fn(() => null),
+vi.mock("../FormattedNumber", () => ({
+    FormattedNumber: vi.fn(() => null),
 }));
 
 describe("Kpi", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render loading indicator", () => {

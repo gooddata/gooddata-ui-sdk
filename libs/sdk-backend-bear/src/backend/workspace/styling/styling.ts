@@ -2,8 +2,8 @@
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { IColorPaletteItem, ITheme } from "@gooddata/sdk-model";
 import { GdcMetadataObject, GdcMetadata } from "@gooddata/api-model-bear";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { isApiResponseError } from "../../../utils/errorHandling";
+import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
+import { isApiResponseError } from "../../../utils/errorHandling.js";
 
 export class BearWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

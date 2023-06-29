@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`dashboard converter convert dashboard should convert dashboard with export temp filter context 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with export temp filter context 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
       "filterContext": "/tempFilterContext",
       "layout": undefined,
-      "widgets": Array [],
+      "widgets": [],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "dashboardWithTempFilterContext",
       "locked": undefined,
       "summary": "",
@@ -21,14 +21,14 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with extended date filters config 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
-      "dateFilterConfig": Object {
-        "addPresets": Object {
-          "relativePresets": Array [
-            Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with extended date filters config 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
+      "dateFilterConfig": {
+        "addPresets": {
+          "relativePresets": [
+            {
               "from": -6,
               "granularity": "GDC.time.month",
               "localIdentifier": "plus_minus_6_months",
@@ -39,16 +39,16 @@ Object {
           ],
         },
         "filterName": "Extended filter",
-        "hideGranularities": Array [
+        "hideGranularities": [
           "GDC.time.quarter",
         ],
         "mode": "readonly",
       },
       "filterContext": undefined,
       "layout": undefined,
-      "widgets": Array [],
+      "widgets": [],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "emptyDashboard",
       "locked": undefined,
       "summary": "",
@@ -61,15 +61,15 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with filter context 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with filter context 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
       "filterContext": "/gdc/md/obj/filterContext",
       "layout": undefined,
-      "widgets": Array [],
+      "widgets": [],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "dashboardWithFilterContext",
       "locked": undefined,
       "summary": "",
@@ -82,79 +82,79 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with layout 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with layout 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
       "filterContext": undefined,
-      "layout": Object {
-        "fluidLayout": Object {
-          "rows": Array [
-            Object {
-              "columns": Array [
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+      "layout": {
+        "fluidLayout": {
+          "rows": [
+            {
+              "columns": [
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetHeadline",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "width": 12,
                     },
                   },
                 },
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetKpi",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "width": 6,
                     },
                   },
                 },
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetBarChart",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "width": 2,
                     },
                   },
                 },
               ],
-              "header": Object {
+              "header": {
                 "title": "Section 1",
               },
             },
-            Object {
-              "columns": Array [],
-              "header": Object {
+            {
+              "columns": [],
+              "header": {
                 "description": "Section 2 description",
               },
             },
           ],
         },
       },
-      "widgets": Array [
+      "widgets": [
         "/gdc/md/obj/widgetHeadline",
         "/gdc/md/obj/widgetKpi",
         "/gdc/md/obj/widgetBarChart",
       ],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "emptyDashboard",
       "locked": undefined,
       "summary": "",
@@ -167,83 +167,83 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with layout with custom gridHeight 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with layout with custom gridHeight 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
       "filterContext": undefined,
-      "layout": Object {
-        "fluidLayout": Object {
-          "rows": Array [
-            Object {
-              "columns": Array [
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+      "layout": {
+        "fluidLayout": {
+          "rows": [
+            {
+              "columns": [
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetHeadline",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "height": 10,
                       "width": 12,
                     },
                   },
                 },
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetKpi",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "height": 6,
                       "width": 6,
                     },
                   },
                 },
               ],
-              "header": Object {
+              "header": {
                 "title": "Section 1",
               },
             },
-            Object {
-              "columns": Array [
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+            {
+              "columns": [
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetBarChart",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "height": 30,
                       "width": 2,
                     },
                   },
                 },
               ],
-              "header": Object {
+              "header": {
                 "description": "Section 2 description",
               },
             },
           ],
         },
       },
-      "widgets": Array [
+      "widgets": [
         "/gdc/md/obj/widgetHeadline",
         "/gdc/md/obj/widgetKpi",
         "/gdc/md/obj/widgetBarChart",
       ],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "emptyDashboard",
       "locked": undefined,
       "summary": "",
@@ -256,73 +256,73 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert dashboard with layout with empty row headers 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
+exports[`dashboard converter > convert dashboard > should convert dashboard with layout with empty row headers 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
       "filterContext": undefined,
-      "layout": Object {
-        "fluidLayout": Object {
-          "rows": Array [
-            Object {
-              "columns": Array [
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+      "layout": {
+        "fluidLayout": {
+          "rows": [
+            {
+              "columns": [
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetHeadline",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "width": 12,
                     },
                   },
                 },
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetKpi",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "width": 6,
                     },
                   },
                 },
-                Object {
-                  "content": Object {
-                    "widget": Object {
-                      "qualifier": Object {
+                {
+                  "content": {
+                    "widget": {
+                      "qualifier": {
                         "uri": "/gdc/md/obj/widgetBarChart",
                       },
                     },
                   },
-                  "size": Object {
-                    "xl": Object {
+                  "size": {
+                    "xl": {
                       "width": 2,
                     },
                   },
                 },
               ],
             },
-            Object {
-              "columns": Array [],
+            {
+              "columns": [],
             },
           ],
         },
       },
-      "widgets": Array [
+      "widgets": [
         "/gdc/md/obj/widgetHeadline",
         "/gdc/md/obj/widgetKpi",
         "/gdc/md/obj/widgetBarChart",
       ],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "emptyDashboard",
       "locked": undefined,
       "summary": "",
@@ -335,15 +335,15 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert dashboard should convert empty dashboard 1`] = `
-Object {
-  "analyticalDashboard": Object {
-    "content": Object {
+exports[`dashboard converter > convert dashboard > should convert empty dashboard 1`] = `
+{
+  "analyticalDashboard": {
+    "content": {
       "filterContext": undefined,
       "layout": undefined,
-      "widgets": Array [],
+      "widgets": [],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "emptyDashboard",
       "locked": undefined,
       "summary": "",
@@ -356,11 +356,11 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert drill should convert drill to dashboard with drill from attribute 1`] = `
-Object {
-  "drillToDashboard": Object {
-    "from": Object {
-      "drillFromAttribute": Object {
+exports[`dashboard converter > convert drill > should convert drill to dashboard with drill from attribute 1`] = `
+{
+  "drillToDashboard": {
+    "from": {
+      "drillFromAttribute": {
         "localIdentifier": "attributeLocalIdentifier",
       },
     },
@@ -370,11 +370,11 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert drill should convert drill to dashboard with drill from measure 1`] = `
-Object {
-  "drillToDashboard": Object {
-    "from": Object {
-      "drillFromMeasure": Object {
+exports[`dashboard converter > convert drill > should convert drill to dashboard with drill from measure 1`] = `
+{
+  "drillToDashboard": {
+    "from": {
+      "drillFromMeasure": {
         "localIdentifier": "measureLocalIdentifier",
       },
     },
@@ -384,38 +384,38 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert filter context should convert filter context 1`] = `
-Object {
-  "filterContext": Object {
-    "content": Object {
-      "filters": Array [
-        Object {
-          "attributeFilter": Object {
-            "attributeElements": Array [
+exports[`dashboard converter > convert filter context > should convert filter context 1`] = `
+{
+  "filterContext": {
+    "content": {
+      "filters": [
+        {
+          "attributeFilter": {
+            "attributeElements": [
               "/gdc/md/attrId",
             ],
             "displayForm": "/gdc/md/displayForm",
-            "filterElementsBy": Array [],
+            "filterElementsBy": [],
             "localIdentifier": undefined,
             "negativeSelection": false,
             "title": undefined,
           },
         },
-        Object {
-          "attributeFilter": Object {
-            "attributeElements": Array [
+        {
+          "attributeFilter": {
+            "attributeElements": [
               "/gdc/md/attrId",
             ],
             "displayForm": "/gdc/md/displayForm",
-            "filterElementsBy": Array [],
+            "filterElementsBy": [],
             "localIdentifier": undefined,
             "negativeSelection": false,
             "selectionMode": "single",
             "title": undefined,
           },
         },
-        Object {
-          "dateFilter": Object {
+        {
+          "dateFilter": {
             "attribute": "/attrId",
             "dataSet": "/dataSet",
             "from": "-12",
@@ -426,7 +426,7 @@ Object {
         },
       ],
     },
-    "meta": Object {
+    "meta": {
       "identifier": "filterContext",
       "summary": "",
       "title": "filterContext",
@@ -436,25 +436,25 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert filter context should convert temp filter context 1`] = `
-Object {
-  "tempFilterContext": Object {
+exports[`dashboard converter > convert filter context > should convert temp filter context 1`] = `
+{
+  "tempFilterContext": {
     "created": "2020-05-05 00:00:00",
-    "filters": Array [
-      Object {
-        "attributeFilter": Object {
-          "attributeElements": Array [
+    "filters": [
+      {
+        "attributeFilter": {
+          "attributeElements": [
             "/gdc/md/attrId",
           ],
           "displayForm": "/gdc/md/displayForm",
-          "filterElementsBy": Array [],
+          "filterElementsBy": [],
           "localIdentifier": undefined,
           "negativeSelection": false,
           "title": undefined,
         },
       },
-      Object {
-        "dateFilter": Object {
+      {
+        "dateFilter": {
           "attribute": "/attrId",
           "dataSet": "/dataSet",
           "from": "-12",
@@ -469,18 +469,18 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert widget should convert kpi widget 1`] = `
-Object {
-  "kpi": Object {
-    "content": Object {
+exports[`dashboard converter > convert widget > should convert kpi widget 1`] = `
+{
+  "kpi": {
+    "content": {
       "comparisonDirection": "growIsGood",
       "comparisonType": "lastYear",
       "dateDataSet": undefined,
       "drillTo": undefined,
-      "ignoreDashboardFilters": Array [],
+      "ignoreDashboardFilters": [],
       "metric": "/measure",
     },
-    "meta": Object {
+    "meta": {
       "identifier": "widgetKpi",
       "summary": "",
       "title": "widgetKpi",
@@ -490,21 +490,21 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert widget should convert kpi widget with drilling 1`] = `
-Object {
-  "kpi": Object {
-    "content": Object {
+exports[`dashboard converter > convert widget > should convert kpi widget with drilling 1`] = `
+{
+  "kpi": {
+    "content": {
       "comparisonDirection": "growIsGood",
       "comparisonType": "lastYear",
       "dateDataSet": undefined,
-      "drillTo": Object {
+      "drillTo": {
         "projectDashboard": "oldDashboardUri",
         "projectDashboardTab": "tab1",
       },
-      "ignoreDashboardFilters": Array [],
+      "ignoreDashboardFilters": [],
       "metric": "/measure",
     },
-    "meta": Object {
+    "meta": {
       "identifier": "widgetKpi",
       "summary": "",
       "title": "widgetKpi",
@@ -514,16 +514,16 @@ Object {
 }
 `;
 
-exports[`dashboard converter convert widget should convert visualization widget 1`] = `
-Object {
-  "visualizationWidget": Object {
-    "content": Object {
+exports[`dashboard converter > convert widget > should convert visualization widget 1`] = `
+{
+  "visualizationWidget": {
+    "content": {
       "dateDataSet": undefined,
-      "drills": Array [],
-      "ignoreDashboardFilters": Array [],
+      "drills": [],
+      "ignoreDashboardFilters": [],
       "visualization": "/headline",
     },
-    "meta": Object {
+    "meta": {
       "identifier": "widgetHeadline",
       "summary": "",
       "title": "widgetHeadline",

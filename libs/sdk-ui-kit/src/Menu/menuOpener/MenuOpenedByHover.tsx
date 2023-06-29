@@ -1,9 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 
-import { MenuPosition } from "../positioning/MenuPosition";
+import { MenuPosition } from "../positioning/MenuPosition.js";
 
-import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps";
+import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
 export class MenuOpenedByHover extends React.Component<IMenuOpenedBySharedProps> {
     private static openCloseDelayMs = 200;

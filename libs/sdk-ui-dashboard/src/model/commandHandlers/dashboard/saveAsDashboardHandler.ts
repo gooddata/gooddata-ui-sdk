@@ -4,37 +4,37 @@ import { IDashboard, IDashboardDefinition, IAccessControlAware } from "@gooddata
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
+import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import {
     dashboardLayoutRemoveIdentity,
     dashboardLayoutWidgetIdentityMap,
-} from "../../../_staging/dashboard/dashboardLayout";
-import { SaveDashboardAs } from "../../commands/dashboard";
-import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard";
-import { filterContextActions } from "../../store/filterContext";
-import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors";
-import { layoutActions } from "../../store/layout";
-import { selectBasicLayout } from "../../store/layout/layoutSelectors";
-import { metaActions } from "../../store/meta";
+} from "../../../_staging/dashboard/dashboardLayout.js";
+import { SaveDashboardAs } from "../../commands/dashboard.js";
+import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
+import { metaActions } from "../../store/meta/index.js";
 import {
     selectDashboardDescriptor,
     selectPersistedDashboard,
     selectPersistedDashboardFilterContextAsFilterContextDefinition,
-} from "../../store/meta/metaSelectors";
-import { DashboardContext } from "../../types/commonTypes";
-import { PromiseFnReturnType } from "../../types/sagas";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
-import { alertsActions } from "../../store/alerts";
-import { savingActions } from "../../store/saving";
-import { selectSettings } from "../../store/config/configSelectors";
-import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
-import { listedDashboardsActions } from "../../store/listedDashboards";
-import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils";
-import { accessibleDashboardsActions } from "../../store/accessibleDashboards";
-import { selectCurrentUser } from "../../store/user/userSelectors";
-import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler";
-import { changeRenderMode } from "../../commands";
-import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors";
+} from "../../store/meta/metaSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
+import { alertsActions } from "../../store/alerts/index.js";
+import { savingActions } from "../../store/saving/index.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
+import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
+import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
+import { selectCurrentUser } from "../../store/user/userSelectors.js";
+import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
+import { changeRenderMode } from "../../commands/index.js";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;

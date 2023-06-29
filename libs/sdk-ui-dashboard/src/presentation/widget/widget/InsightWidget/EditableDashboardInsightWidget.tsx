@@ -8,14 +8,18 @@ import {
     DashboardItem,
     DashboardItemVisualization,
     getVisTypeCssClass,
-} from "../../../presentationComponents";
-import { DashboardInsight } from "../../insight";
-import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import { selectIsDashboardSaving, useDashboardSelector, useWidgetSelection } from "../../../../model";
-import { useEditableInsightMenu } from "./useEditableInsightMenu";
-import { IDefaultDashboardInsightWidgetProps } from "./types";
-import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
-import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader";
+} from "../../../presentationComponents/index.js";
+import { DashboardInsight } from "../../insight/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import {
+    selectIsDashboardSaving,
+    useDashboardSelector,
+    useWidgetSelection,
+} from "../../../../model/index.js";
+import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
+import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
+import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
 
 export const EditableDashboardInsightWidget: React.FC<
     Omit<IDefaultDashboardInsightWidgetProps, "insight">

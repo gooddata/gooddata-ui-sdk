@@ -9,7 +9,8 @@ import {
     unwrap,
     percentFormatter,
     getAxesCounts,
-} from "../common";
+} from "../common.js";
+import { describe, it, expect } from "vitest";
 
 describe("Common utils", () => {
     describe("parseValue", () => {

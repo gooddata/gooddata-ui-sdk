@@ -9,9 +9,9 @@ import {
     ExportDashboardToPdf,
     DeleteDashboard,
     ChangeSharing,
-} from "./dashboard";
-import { TriggerEvent } from "./events";
-import { UpsertExecutionResult } from "./executionResults";
+} from "./dashboard.js";
+import { TriggerEvent } from "./events.js";
+import { UpsertExecutionResult } from "./executionResults.js";
 import {
     AddAttributeFilter,
     ChangeAttributeFilterSelection,
@@ -23,7 +23,7 @@ import {
     SetAttributeFilterDisplayForm,
     SetAttributeFilterTitle,
     SetAttributeFilterSelectionMode,
-} from "./filters";
+} from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
     ChangeInsightWidgetHeader,
@@ -35,7 +35,7 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
-} from "./insight";
+} from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
     ChangeKpiWidgetFilterSettings,
@@ -46,7 +46,7 @@ import {
     RefreshKpiWidget,
     SetDrillForKpiWidget,
     RemoveDrillForKpiWidget,
-} from "./kpi";
+} from "./kpi.js";
 import {
     AddLayoutSection,
     AddSectionItems,
@@ -61,9 +61,9 @@ import {
     ResizeHeight,
     ResizeWidth,
     RemoveSectionItemByWidgetRef,
-} from "./layout";
-import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts";
-import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail";
+} from "./layout.js";
+import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts.js";
+import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail.js";
 import {
     Drill,
     DrillDown,
@@ -73,12 +73,12 @@ import {
     DrillToInsight,
     DrillToLegacyDashboard,
     ChangeDrillableItems,
-} from "./drill";
-import { AddDrillTargets } from "./drillTargets";
-import { RequestAsyncRender, ResolveAsyncRender } from "./render";
-import { ChangeRenderMode } from "./renderMode";
+} from "./drill.js";
+import { AddDrillTargets } from "./drillTargets.js";
+import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
+import { ChangeRenderMode } from "./renderMode.js";
 
-export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
+export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
 export {
     InitialLoadCorrelationId,
     InitializeDashboard,
@@ -103,9 +103,9 @@ export {
     ChangeSharing,
     ChangeSharingPayload,
     changeSharing,
-} from "./dashboard";
+} from "./dashboard.js";
 
-export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events";
+export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
 
 export {
     ChangeDateFilterSelection,
@@ -144,7 +144,7 @@ export {
     SetAttributeFilterSelectionMode,
     SetAttributeFilterSelectionModePayload,
     setAttributeFilterSelectionMode,
-} from "./filters";
+} from "./filters.js";
 
 export {
     AddLayoutSection,
@@ -193,7 +193,7 @@ export {
     ResizeWidth,
     ResizeWidthPayload,
     resizeWidth,
-} from "./layout";
+} from "./layout.js";
 
 export {
     CreateAlert,
@@ -205,7 +205,7 @@ export {
     UpdateAlert,
     UpdateAlertPayload,
     updateAlert,
-} from "./alerts";
+} from "./alerts.js";
 
 export {
     CreateScheduledEmail,
@@ -214,7 +214,7 @@ export {
     SaveScheduledEmail,
     SaveScheduledEmailPayload,
     saveScheduledEmail,
-} from "./scheduledEmail";
+} from "./scheduledEmail.js";
 
 export {
     Drill,
@@ -242,14 +242,14 @@ export {
     drillToInsight,
     drillToLegacyDashboard,
     changeDrillableItems,
-} from "./drill";
+} from "./drill.js";
 
 export {
     UpsertExecutionResult,
     setExecutionResultData,
     setExecutionResultError,
     setExecutionResultLoading,
-} from "./executionResults";
+} from "./executionResults.js";
 
 export {
     ChangeKpiWidgetHeader,
@@ -285,7 +285,7 @@ export {
     SetDrillForKpiWidget,
     SetDrillForKpiWidgetPayload,
     setDrillForKpiWidget,
-} from "./kpi";
+} from "./kpi.js";
 
 export {
     ChangeInsightWidgetHeader,
@@ -324,7 +324,7 @@ export {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     exportInsightWidget,
-} from "./insight";
+} from "./insight.js";
 
 export {
     RequestAsyncRender,
@@ -333,7 +333,7 @@ export {
     ResolveAsyncRenderPayload,
     requestAsyncRender,
     resolveAsyncRender,
-} from "./render";
+} from "./render.js";
 
 export {
     changeRenderMode,
@@ -342,9 +342,9 @@ export {
     ChangeRenderMode,
     ChangeRenderModePayload,
     RenderModeChangeOptions,
-} from "./renderMode";
+} from "./renderMode.js";
 
-export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets";
+export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets.js";
 
 /**
  * Union type that contains all available built-in dashboard commands.

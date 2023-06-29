@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IDashboardCommand } from "./base";
+import { IDashboardCommand } from "./base.js";
 import {
     isObjRef,
     ObjRef,
@@ -14,8 +14,8 @@ import {
     WidgetFilterOperation,
     WidgetHeader,
     WidgetDescription,
-} from "../types/widgetTypes";
-import { IExportConfig } from "../types/exportTypes";
+} from "../types/widgetTypes.js";
+import { IExportConfig } from "../types/exportTypes.js";
 
 /**
  * Payload of the {@link ChangeInsightWidgetHeader} command.

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { describe, expect, it } from "vitest";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import {
     DataTooLargeError,
     isAnalyticalBackendError,
@@ -19,7 +19,7 @@ import {
     ProtectedDataError,
     UnexpectedError,
     UnexpectedResponseError,
-} from "../index";
+} from "../index.js";
 
 describe("result type guards", () => {
     describe("isAnalyticalBackendError", () => {

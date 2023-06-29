@@ -1,8 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
 import { GdcAccessControl } from "@gooddata/api-model-bear";
 
-import { convertWorkspaceUserGroup } from "./UserGroupsConverter";
-import { convertUsersItem } from "./UsersConverter";
+import { convertWorkspaceUserGroup } from "./UserGroupsConverter.js";
+import { convertUsersItem } from "./UsersConverter.js";
 import {
     AccessGranteeDetail,
     IGranularAccessGrantee,
@@ -13,7 +13,7 @@ import {
     IAccessGrantee,
     isGranularUserAccessGrantee,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty.js";
 
 function isGranteeUserInfo(
     grantee: GdcAccessControl.IGranteeUserInfo | GdcAccessControl.IGranteeUserGroupInfo,

@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ITopBarProps } from "./types";
+import { ITopBarProps } from "./types.js";
 
 /**
  * This implementation of top bar keeps it out of sight.

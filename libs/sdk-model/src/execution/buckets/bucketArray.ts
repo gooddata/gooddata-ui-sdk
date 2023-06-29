@@ -16,14 +16,20 @@ import {
     BucketItemModifications,
     bucketItemReduce,
     BucketItemReducer,
-} from "./index";
-import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
-import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure";
-import { ITotal } from "../base/totals";
-import flatMap from "lodash/flatMap";
-import invariant from "ts-invariant";
-import identity from "lodash/identity";
-import findIndex from "lodash/findIndex";
+} from "./index.js";
+import {
+    anyAttribute,
+    AttributePredicate,
+    IAttribute,
+    idMatchAttribute,
+    isAttribute,
+} from "../attribute/index.js";
+import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure/index.js";
+import { ITotal } from "../base/totals.js";
+import flatMap from "lodash/flatMap.js";
+import { invariant } from "ts-invariant";
+import identity from "lodash/identity.js";
+import findIndex from "lodash/findIndex.js";
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.

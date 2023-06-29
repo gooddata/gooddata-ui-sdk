@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { ICatalogDateDataset, uriRef } from "@gooddata/sdk-model";
-import includes from "lodash/includes";
+import includes from "lodash/includes.js";
 import { invariant } from "ts-invariant";
 
 /*

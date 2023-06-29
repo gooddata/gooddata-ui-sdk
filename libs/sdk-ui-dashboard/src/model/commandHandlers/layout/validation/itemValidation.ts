@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
-import { ExtendedDashboardItem } from "../../../types/layoutTypes";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
+import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
     areObjRefsEqual,
     IInsight,
@@ -13,30 +13,30 @@ import {
     isKpiWidget,
     isInsightWidget,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver";
-import { DashboardContext } from "../../../types/commonTypes";
+import { invariant } from "ts-invariant";
+import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
-import isEmpty from "lodash/isEmpty";
-import { invalidArgumentsProvided } from "../../../events/general";
-import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils";
-import { IDashboardCommand } from "../../../commands";
+import isEmpty from "lodash/isEmpty.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
+import { IDashboardCommand } from "../../../commands/index.js";
 import {
     InsightDateDatasets,
     insightSelectDateDataset,
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
-} from "../../../queries";
-import { query } from "../../../store/_infra/queryCall";
+} from "../../../queries/index.js";
+import { query } from "../../../store/_infra/queryCall.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
     validateDatasetForKpiWidgetDateFilter,
-} from "../../widgets/validation/filterValidation";
-import { ItemResolutionResult } from "./stashValidation";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
+} from "../../widgets/validation/filterValidation.js";
+import { ItemResolutionResult } from "./stashValidation.js";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
 
 function normalizeItems(
     items: ExtendedDashboardItem[],

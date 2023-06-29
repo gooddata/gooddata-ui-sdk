@@ -14,9 +14,9 @@ import {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
 } from "@gooddata/sdk-ui-filters";
-import compact from "lodash/compact";
-import flatten from "lodash/flatten";
-import values from "lodash/values";
+import compact from "lodash/compact.js";
+import flatten from "lodash/flatten.js";
+import values from "lodash/values.js";
 
 const VIRTUAL_PRESET_IDENTIFIER = "GDC__VIRTUAL_PRESET";
 

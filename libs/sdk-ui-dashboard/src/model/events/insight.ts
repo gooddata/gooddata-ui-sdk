@@ -11,11 +11,11 @@ import {
     IInsightWidgetConfiguration,
 } from "@gooddata/sdk-model";
 
-import { IDashboardEvent } from "./base";
-import { WidgetDescription, WidgetHeader } from "../types/widgetTypes";
-import { DashboardContext } from "../types/commonTypes";
-import { eventGuard } from "./util";
-import { IExportConfig } from "../types/exportTypes";
+import { IDashboardEvent } from "./base.js";
+import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { eventGuard } from "./util.js";
+import { IExportConfig } from "../types/exportTypes.js";
 import { IExportBlobResult } from "@gooddata/sdk-backend-spi";
 
 /**

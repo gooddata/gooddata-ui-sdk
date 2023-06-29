@@ -1,12 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import mapboxgl from "mapbox-gl";
-import { createPushpinDataSource, IGeoDataSourceProps } from "../geoChartDataSource";
+import { createPushpinDataSource, IGeoDataSourceProps } from "../geoChartDataSource.js";
 import { DataViewFacade, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
-import { getGeoData } from "../helpers/geoChart/data";
-import { getColorStrategy } from "../colorStrategy/geoChart";
-import { RecShortcuts } from "../../../../__mocks__/recordings";
+import { getGeoData } from "../helpers/geoChart/data.js";
+import { getColorStrategy } from "../colorStrategy/geoChart.js";
+import { RecShortcuts } from "../../../../__mocks__/recordings.js";
+import { describe, it, expect } from "vitest";
 
 const commonDataSourceProps: Partial<IGeoDataSourceProps> = {
     config: { mapboxToken: "" },

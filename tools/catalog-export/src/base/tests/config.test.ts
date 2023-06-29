@@ -1,23 +1,23 @@
 // (C) 2007-2023 GoodData Corporation
+import { beforeEach, describe, vi, it, expect } from "vitest";
 import {
     getConfigFromConfigFile,
     getConfigFromEnv,
     getConfigFromOptions,
     mergeConfigs,
     getConfigFromPackage,
-} from "../config";
+} from "../config.js";
+import * as fs from "fs/promises";
 
-jest.mock("fs/promises");
+vi.mock("fs/promises", () => ({
+    readFile: vi.fn(),
+}));
 
-let fs: typeof import("./__mocks__/fs/promises").default;
+beforeEach(() => {
+    vi.clearAllMocks();
+});
 
 describe("configuration", () => {
-    beforeAll(async () => {
-        // Mocking FS does not work well with TypeScript..
-        fs = (await import("fs/promises"))
-            .default as unknown as typeof import("./__mocks__/fs/promises").default;
-    });
-
     describe("mergeConfigs", () => {
         it("should override the values based on the order", () => {
             const merged = mergeConfigs({ hostname: "old value" }, { hostname: "new value" });
@@ -52,7 +52,7 @@ describe("configuration", () => {
                 token: "secret",
                 unknown: "value",
                 // technically, we can't prevent user from putting random vars in JSON file...
-            } as unknown as import("../types").CatalogExportConfig);
+            } as unknown as import("../types.js").CatalogExportConfig);
 
             expect(merged).toMatchSnapshot();
         });
@@ -107,32 +107,32 @@ describe("configuration", () => {
 
     describe("getConfigFromConfigFile", () => {
         it("should read the given config file and return allowed values from it", async () => {
-            fs.__setMockFiles({
-                "/path/to/config.json": JSON.stringify({
+            vi.spyOn(fs, "readFile").mockResolvedValue(
+                JSON.stringify({
                     hostname: "hostname",
                     workspaceId: "workspaceId",
                     catalogOutput: "catalogOutput",
                     backend: "backend",
                 }),
-            });
+            );
 
             await expect(getConfigFromConfigFile("/path/to/config.json")).resolves.toMatchSnapshot();
         });
 
         it("should return an empty object if there is no config file", async () => {
-            fs.__setMockFiles({});
+            vi.spyOn(fs, "readFile").mockResolvedValue(JSON.stringify({}));
 
             await expect(getConfigFromConfigFile("/path/to/config.json")).resolves.toEqual({});
         });
 
         it("should not parse credentials out of config file", async () => {
-            fs.__setMockFiles({
-                "/path/to/config.json": JSON.stringify({
+            vi.spyOn(fs, "readFile").mockResolvedValue(
+                JSON.stringify({
                     token: "token",
                     username: "username",
                     password: "password",
                 }),
-            });
+            );
 
             await expect(getConfigFromConfigFile("/path/to/config.json")).resolves.toEqual({});
         });
@@ -140,8 +140,8 @@ describe("configuration", () => {
 
     describe("getConfigFromPackage", () => {
         it("should parse allowed values from the package.json file in a given folder", async () => {
-            fs.__setMockFiles({
-                "/path/to/project/package.json": JSON.stringify({
+            vi.spyOn(fs, "readFile").mockResolvedValue(
+                JSON.stringify({
                     gooddata: {
                         hostname: "hostname",
                         workspaceId: "workspaceId",
@@ -149,35 +149,44 @@ describe("configuration", () => {
                         backend: "backend",
                     },
                 }),
-            });
+            );
 
             await expect(getConfigFromPackage("/path/to/project")).resolves.toMatchSnapshot();
         });
 
         it("should override parent folder package.jsons with child ones", async () => {
-            fs.__setMockFiles({
-                "/path/to/package.json": JSON.stringify({
-                    gooddata: {
-                        hostname: "hostname",
-                        workspaceId: "workspaceId",
-                        catalogOutput: "catalogOutput",
-                        backend: "backend",
-                    },
-                }),
-                "/path/to/project/package.json": JSON.stringify({
-                    gooddata: {
-                        hostname: "hostname-new",
-                        workspaceId: "workspaceId-new",
-                    },
-                }),
+            vi.spyOn(fs, "readFile").mockImplementation((path: any) => {
+                const files: Record<any, string> = {
+                    "/path/to/package.json": JSON.stringify({
+                        gooddata: {
+                            hostname: "hostname",
+                            workspaceId: "workspaceId",
+                            catalogOutput: "catalogOutput",
+                            backend: "backend",
+                        },
+                    }),
+                    "/path/to/project/package.json": JSON.stringify({
+                        gooddata: {
+                            hostname: "hostname-new",
+                            workspaceId: "workspaceId-new",
+                        },
+                    }),
+                };
+
+                if (files[path]) return Promise.resolve(files[path]);
+
+                // when file is not found, readFile should return ENOENT error
+                const err = new Error("File not found");
+                (err as any).code = "ENOENT";
+                return Promise.reject(err);
             });
 
             await expect(getConfigFromPackage("/path/to/project")).resolves.toMatchSnapshot();
         });
 
         it("should ignore credentials and not supported values", async () => {
-            fs.__setMockFiles({
-                "/path/to/project/package.json": JSON.stringify({
+            vi.spyOn(fs, "readFile").mockResolvedValue(
+                JSON.stringify({
                     gooddata: {
                         hostname: "hostname",
                         workspaceId: "workspaceId",
@@ -187,23 +196,24 @@ describe("configuration", () => {
                         random: "random",
                     },
                 }),
-            });
+            );
 
             await expect(getConfigFromPackage("/path/to/project")).resolves.toMatchSnapshot();
         });
 
         it("should return an empty object if file does not exist", async () => {
-            fs.__setMockFiles({});
+            vi.spyOn(fs, "readFile").mockResolvedValue(JSON.stringify({}));
 
             await expect(getConfigFromPackage("/path/to/project")).resolves.toEqual({});
         });
+
         it("should return an empty object if file does not have gooddata property", async () => {
-            fs.__setMockFiles({
-                "/path/to/project/package.json": JSON.stringify({
+            vi.spyOn(fs, "readFile").mockResolvedValue(
+                JSON.stringify({
                     name: "my-package",
                     version: "v1.0.0",
                 }),
-            });
+            );
 
             await expect(getConfigFromPackage("/path/to/project")).resolves.toEqual({});
         });

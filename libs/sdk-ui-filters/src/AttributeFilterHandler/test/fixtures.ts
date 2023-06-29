@@ -18,7 +18,7 @@ import {
     IAttributeElement,
 } from "@gooddata/sdk-model";
 
-import { IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory";
+import { IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory.js";
 
 export const particularAttributeElements: ElementsQueryOptionsElementsSpecification = {
     uris: [

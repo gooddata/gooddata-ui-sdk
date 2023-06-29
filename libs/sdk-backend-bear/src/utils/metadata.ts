@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
-import compact from "lodash/compact";
-import uniq from "lodash/uniq";
+import compact from "lodash/compact.js";
+import uniq from "lodash/uniq.js";
 import { GdcDashboard, GdcVisualizationObject } from "@gooddata/api-model-bear";
 
 /**

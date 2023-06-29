@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
-import { ActionOptions, AppTemplate, SupportedPackageManager, TargetAppLanguage } from "../_base/types";
+import { ActionOptions, AppTemplate, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
 import {
     applicationNameValidator,
     languageValidator,
     packageManagerValidator,
     templateValidator,
     validOrDie,
-} from "../_base/inputHandling/validators";
-import { promptLanguage, promptName, promptTemplate } from "../_base/terminal/prompts";
+} from "../_base/inputHandling/validators.js";
+import { promptLanguage, promptName, promptTemplate } from "../_base/terminal/prompts.js";
 
 function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { XhrModule } from "./xhr";
+import { XhrModule } from "./xhr.js";
 
 export class LdmModule {
     constructor(private xhr: XhrModule) {}

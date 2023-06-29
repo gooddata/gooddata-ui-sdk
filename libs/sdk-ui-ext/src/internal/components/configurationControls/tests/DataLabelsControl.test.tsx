@@ -1,10 +1,11 @@
 // (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import noop from "lodash/noop";
-import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
-import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import noop from "lodash/noop.js";
+import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl.js";
+import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import { IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
+import { describe, it, expect } from "vitest";
 
 describe("DataLabelsControl", () => {
     const HIDE_LABEL = "hide";

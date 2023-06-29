@@ -2,13 +2,13 @@
 import { objRefToString } from "@gooddata/sdk-model";
 import React, { Fragment } from "react";
 
-import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout";
-import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRenderer";
-import { DashboardEditLayoutRowRenderer } from "./DashboardEditLayoutRowRenderer";
-import { DashboardEditLayoutSectionHeaderRenderer } from "./DashboardEditLayoutSectionHeaderRenderer";
-import { DashboardEditLayoutSectionRenderer } from "./DashboardEditLayoutSectionRenderer";
-import { IDashboardEditLayout } from "./DashboardEditLayoutTypes";
-import { DashboardEditLayoutWidgetRenderer } from "./DashboardEditLayoutWidgetRenderer";
+import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
+import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRenderer.js";
+import { DashboardEditLayoutRowRenderer } from "./DashboardEditLayoutRowRenderer.js";
+import { DashboardEditLayoutSectionHeaderRenderer } from "./DashboardEditLayoutSectionHeaderRenderer.js";
+import { DashboardEditLayoutSectionRenderer } from "./DashboardEditLayoutSectionRenderer.js";
+import { IDashboardEditLayout } from "./DashboardEditLayoutTypes.js";
+import { DashboardEditLayoutWidgetRenderer } from "./DashboardEditLayoutWidgetRenderer.js";
 
 export interface IDashboardEditLayoutStateProps {
     isDragging?: boolean;

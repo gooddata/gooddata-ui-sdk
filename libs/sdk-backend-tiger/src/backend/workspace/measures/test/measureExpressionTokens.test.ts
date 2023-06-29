@@ -1,5 +1,6 @@
 // (C) 2020-2023 GoodData Corporation
-import { tokenizeExpression } from "../measureExpressionTokens";
+import { tokenizeExpression } from "../measureExpressionTokens.js";
+import { describe, expect, it } from "vitest";
 
 describe("tokenizeExpression", () => {
     it("splits MAQL string to tokens", () => {

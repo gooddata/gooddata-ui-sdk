@@ -10,10 +10,10 @@ export {
     UseCustomWidgetExecutionDataViewCallbacks,
     UseCustomWidgetInsightDataViewCallbacks,
     UseInsightWidgetInsightDataViewCallbacks,
-} from "./common";
+} from "./common/index.js";
 
-export * from "./insight";
-export * from "./insightMenu";
-export * from "./kpi";
-export * from "./kpiPlaceholder";
-export * from "./widget";
+export * from "./insight/index.js";
+export * from "./insightMenu/index.js";
+export * from "./kpi/index.js";
+export * from "./kpiPlaceholder/index.js";
+export * from "./widget/index.js";

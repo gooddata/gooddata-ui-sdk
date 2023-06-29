@@ -8,7 +8,7 @@ import {
     newBucket,
     ISortItem,
 } from "@gooddata/sdk-model";
-import { truncate } from "../_commons/truncate";
+import { truncate } from "../_commons/truncate.js";
 import {
     BucketNames,
     useResolveValuesWithPlaceholders,
@@ -18,12 +18,12 @@ import {
     FiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { stackedChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
-import { CoreColumnChart } from "./CoreColumnChart";
-import { IChartDefinition } from "../_commons/chartDefinition";
-import { withChart } from "../_base/withChart";
-import { sanitizeConfig } from "../_commons/sanitizeStacking";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
+import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
+import { CoreColumnChart } from "./CoreColumnChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { withChart } from "../_base/withChart.js";
+import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 
 //
 // Internals

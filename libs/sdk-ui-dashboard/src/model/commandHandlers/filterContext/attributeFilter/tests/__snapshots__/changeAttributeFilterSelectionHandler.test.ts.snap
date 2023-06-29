@@ -1,49 +1,49 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events for changed attribute filter selection 1`] = `
-Array [
-  Object {
+exports[`changeAttributeFilterSelectionHandler.test > should emit the appropriate events for changed attribute filter selection 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]
 `;
 
-exports[`changeAttributeFilterSelectionHandler.test should emit the appropriate events when trying to change a non-existent attribute filter 1`] = `
-Array [
-  Object {
+exports[`changeAttributeFilterSelectionHandler.test > should emit the appropriate events when trying to change a non-existent attribute filter 1`] = `
+[
+  {
     "commandType": "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
-  Object {
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.COMMAND.FAILED",
   },
 ]
 `;
 
-exports[`changeAttributeFilterSelectionHandler.test should set the attribute selection in state on changed attribute filter selection 1`] = `
-Object {
-  "attributeFilter": Object {
-    "attributeElements": Object {
-      "uris": Array [
+exports[`changeAttributeFilterSelectionHandler.test > should set the attribute selection in state on changed attribute filter selection 1`] = `
+{
+  "attributeFilter": {
+    "attributeElements": {
+      "uris": [
         "testing/uri",
       ],
     },
-    "displayForm": Object {
+    "displayForm": {
       "uri": "/gdc/md/referenceworkspace/obj/1089",
     },
-    "filterElementsBy": Array [],
+    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
   },

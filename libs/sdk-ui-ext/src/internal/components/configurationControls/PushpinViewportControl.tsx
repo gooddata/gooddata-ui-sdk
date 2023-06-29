@@ -2,12 +2,12 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import DropdownControl from "./DropdownControl";
-import { IVisualizationProperties } from "../../interfaces/Visualization";
-import { getTranslatedDropdownItems } from "../../utils/translations";
-import { pushpinViewportDropdownItems } from "../../constants/dropdowns";
+import DropdownControl from "./DropdownControl.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
 import { IGeoConfigViewport } from "@gooddata/sdk-ui-geo";
-import { messages } from "../../../locales";
+import { messages } from "../../../locales.js";
 
 export interface IPushpinViewportControl {
     disabled: boolean;

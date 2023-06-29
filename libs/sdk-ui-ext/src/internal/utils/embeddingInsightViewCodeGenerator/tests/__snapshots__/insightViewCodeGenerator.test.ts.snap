@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`insightViewCodeGenerator tests should generate code for insight 1`] = `
+exports[`insightViewCodeGenerator tests > should generate code for insight 1`] = `
 "import React from \\"react\\";
 import { IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 import { InsightView } from \\"@gooddata/sdk-ui-ext\\";
@@ -29,7 +29,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`insightViewCodeGenerator tests should generate code for insight geo chart and define config with mapbox Token placeholder 1`] = `
+exports[`insightViewCodeGenerator tests > should generate code for insight geo chart and define config with mapbox Token placeholder 1`] = `
 "import React from \\"react\\";
 import { IGeoConfig } from \\"@gooddata/sdk-ui-geo\\";
 import { InsightView } from \\"@gooddata/sdk-ui-ext\\";
@@ -53,7 +53,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`insightViewCodeGenerator tests should generate code for insight with non default locale 1`] = `
+exports[`insightViewCodeGenerator tests > should generate code for insight with non default locale 1`] = `
 "import React from \\"react\\";
 import { IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 import { InsightView } from \\"@gooddata/sdk-ui-ext\\";
@@ -82,4 +82,4 @@ export function MyComponent() {
     );
 }
 "
-`;;
+`;

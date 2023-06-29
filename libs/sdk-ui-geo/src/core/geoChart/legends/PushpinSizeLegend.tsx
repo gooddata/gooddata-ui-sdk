@@ -1,7 +1,7 @@
 // (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { calculateAverage } from "../helpers/geoChart/common";
+import { calculateAverage } from "../helpers/geoChart/common.js";
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 
 export interface IPushpinSizeLegendProps {

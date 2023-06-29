@@ -2,12 +2,12 @@
 import React, { useMemo } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 
-import { IDropdownItem } from "../../interfaces";
-import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_TYPES } from "../../constants";
-import { getWeek, getIntlDayName } from "../../utils/datetime";
-import { messages } from "../../../../../locales";
+import { IDropdownItem } from "../../interfaces.js";
+import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_TYPES } from "../../constants.js";
+import { getWeek, getIntlDayName } from "../../utils/datetime.js";
+import { messages } from "../../../../../locales.js";
 
 const DROPDOWN_WIDTH = 199;
 

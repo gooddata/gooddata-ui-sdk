@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from "lodash/cloneDeep.js";
 import { IntlShape } from "react-intl";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization";
-import { UICONFIG } from "../../constants/uiConfig";
-import { setBucketTitles, getItemsCount } from "./../bucketHelper";
-import { getTranslation } from "../translations";
-import { messages } from "../../../locales";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import { UICONFIG } from "../../constants/uiConfig.js";
+import { setBucketTitles, getItemsCount } from "../bucketHelper.js";
+import { getTranslation } from "../translations.js";
+import { messages } from "../../../locales.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

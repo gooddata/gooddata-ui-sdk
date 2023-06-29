@@ -6,9 +6,9 @@ import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableDonutChart } from "./PluggableDonutChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
+} from "../../../interfaces/VisualizationDescriptor.js";
+import { PluggableDonutChart } from "./PluggableDonutChart.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -18,8 +18,8 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
+} from "../../../utils/embeddingCodeGenerator/index.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class DonutChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
