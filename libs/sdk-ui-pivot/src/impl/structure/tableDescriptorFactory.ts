@@ -247,7 +247,7 @@ function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOper
     return groupColumns(leafColumns, scopingAttributes);
 }
 
-function createRowDescriptor(index: number, attributeDescriptor: IAttributeDescriptor): SliceCol {
+function createRowDescriptor(attributeDescriptor: IAttributeDescriptor, index: number): SliceCol {
     return {
         type: "sliceCol",
         id: `r_${index}`,
@@ -260,16 +260,9 @@ function createRowDescriptor(index: number, attributeDescriptor: IAttributeDescr
 
 function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
     if (getMeasureGroupDimensionIndex(dv) === 0) {
-        return dv
-            .meta()
-            .attributeDescriptorsForDim(0)
-            .map((attributeDescriptor, idx) => createRowDescriptor(idx, attributeDescriptor));
+        return dv.meta().attributeDescriptorsForDim(0).map(createRowDescriptor);
     } else {
-        return dv
-            .data()
-            .slices()
-            .descriptors.filter(isAttributeDescriptor)
-            .map((attributeDescriptor, idx) => createRowDescriptor(idx, attributeDescriptor));
+        return dv.data().slices().descriptors.filter(isAttributeDescriptor).map(createRowDescriptor);
     }
 }
 
@@ -297,7 +290,9 @@ function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
 }
 
 function getMeasureGroupDimensionIndex(dv: DataViewFacade) {
-    return dv.definition.dimensions.findIndex((dimension) => dimension.itemIdentifiers.includes("measureGroup"));
+    return dv.definition.dimensions.findIndex((dimension) =>
+        dimension.itemIdentifiers.includes("measureGroup"),
+    );
 }
 
 function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): SliceMeasureCol[] {
@@ -306,23 +301,27 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
     }
     const idx = rows.length;
     // always just one measure column if measures are in row dimension
-    return [{
-        type: "sliceMeasureCol",
-        id: `r_${idx}`,
-        index: idx,
-        fullIndexPathToHere: [idx],
-    }];
+    return [
+        {
+            type: "sliceMeasureCol",
+            id: `r_${idx}`,
+            index: idx,
+            fullIndexPathToHere: [idx],
+        },
+    ];
 }
 
 function createMeasureValuesColumnDescriptors(): MixedValuesCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
-    return [{
-        type: "mixedValuesCol",
-        id: `amv_${idx}`,
-        index: idx,
-        fullIndexPathToHere: [idx],
-    }]
+    return [
+        {
+            type: "mixedValuesCol",
+            id: `amv_${idx}`,
+            index: idx,
+            fullIndexPathToHere: [idx],
+        },
+    ];
 }
 
 function createTableHeaders(dv: DataViewFacade): TableCols {

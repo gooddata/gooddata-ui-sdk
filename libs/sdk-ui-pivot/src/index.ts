@@ -7,7 +7,7 @@
  *
  * @packageDocumentation
  */
-export { PivotTable, pivotTableMenuForCapabilities } from "./PivotTable.js";
+export { PivotTable, pivotTableMenuForCapabilities, getPivotTableDimensions } from "./PivotTable.js";
 export { CorePivotTable } from "./CorePivotTable.js";
 
 export {
@@ -20,6 +20,7 @@ export {
     ICorePivotTableProps,
     ColumnResizedCallback,
     IMenu,
+    MeasureGroupDimension,
 } from "./publicTypes.js";
 
 export {

@@ -559,8 +559,10 @@ export function updateColumnDefinitionsWithWidths(
 
     allSizableCols.forEach(([colDesc, colDef]) => {
         const colId = colDesc.id;
-        // TODO INE optimize for slice measure column
-        const manualSize = isSliceMeasureCol(colDesc) ? undefined : resizedColumnsStore.getManuallyResizedColumn2(colDesc);
+        // TODO TNT-1594 Handle manual width for slice measure column
+        const manualSize = isSliceMeasureCol(colDesc)
+            ? undefined
+            : resizedColumnsStore.getManuallyResizedColumn2(colDesc);
         const autoResizeSize = autoResizedColumns[colId];
 
         colDef.maxWidth = MANUALLY_SIZED_MAX_WIDTH;

@@ -2,54 +2,42 @@
 import compact from "lodash/compact.js";
 import {
     bucketAttributes,
-    bucketTotals,
-    bucketIsEmpty,
     BucketPredicate,
     IAttribute,
     IDimension,
     IInsightDefinition,
-    ITotal,
     insightAttributes,
     insightBucket,
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
     insightProperties,
+    insightBuckets,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper";
+import {
+    MeasureGroupDimension,
+    getPivotTableDimensions as getPivotTableDimensionsShared,
+} from "@gooddata/sdk-ui-pivot";
 
 function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | BucketPredicate): IAttribute[] {
     const matchingBucket = insightBucket(insight, idOrFun);
     return matchingBucket ? bucketAttributes(matchingBucket) : [];
 }
 
-function safeBucketTotals(insight: IInsightDefinition, idOrFun: string | BucketPredicate): ITotal[] {
-    const matchingBucket = insightBucket(insight, idOrFun);
-    return matchingBucket ? bucketTotals(matchingBucket) : [];
+function isTransposed(insight: IInsightDefinition) {
+    const measureGroupDimension: MeasureGroupDimension =
+        getMeasureGroupDimensionFromProperties(insightProperties(insight)) ?? "columns";
+    return measureGroupDimension === "rows";
 }
 
 export function getPivotTableDimensions(insight: IInsightDefinition): IDimension[] {
-    const measures = insightBucket(insight, BucketNames.MEASURES);
-    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
+    const buckets = insightBuckets(insight);
 
-    const rowAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
-    const columnAttributes = safeBucketAttributes(insight, BucketNames.COLUMNS);
+    const transposed = isTransposed(insight);
 
-    const rowTotals = safeBucketTotals(insight, BucketNames.ATTRIBUTE);
-    const colTotals = safeBucketTotals(insight, BucketNames.COLUMNS);
-
-    const measureGroupDimension: string = getMeasureGroupDimensionFromProperties(
-        insightProperties(insight),
-    ) ?? "columns";
-
-    const rowMeasureItemIdentifiers = measureGroupDimension === "rows" ? measuresItemIdentifiers : [];
-    const columnMeasureItemIdentifiers = measureGroupDimension === "columns" ? measuresItemIdentifiers : [];
-
-    return newTwoDimensional(
-        [...rowAttributes, ...rowMeasureItemIdentifiers, ...rowTotals],
-        [...columnAttributes, ...colTotals, ...columnMeasureItemIdentifiers],
-    );
+    return getPivotTableDimensionsShared(buckets, transposed);
 }
 
 function getPieDonutFunnelWaterfallDimensions(insight: IInsightDefinition): IDimension[] {

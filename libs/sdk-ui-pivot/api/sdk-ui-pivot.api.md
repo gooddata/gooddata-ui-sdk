@@ -11,7 +11,9 @@ import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
+import { IBucket } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
+import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -43,6 +45,9 @@ export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
 // @public (undocumented)
 export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
+
+// @public
+export function getPivotTableDimensions(buckets: IBucket[], isTransposed: boolean): IDimension[];
 
 // @public (undocumented)
 export interface IAbsoluteColumnWidth {
@@ -169,7 +174,7 @@ export interface IPivotTableConfig {
     groupRows?: boolean;
     maxHeight?: number;
     // (undocumented)
-    measureGroupDimension?: "columns" | "rows";
+    measureGroupDimension?: MeasureGroupDimension;
     menu?: IMenu;
     separators?: ISeparators;
 }
@@ -226,6 +231,9 @@ export interface IWeakMeasureColumnWidthItemBody {
     // (undocumented)
     width: IAbsoluteColumnWidth;
 }
+
+// @public (undocumented)
+export type MeasureGroupDimension = "columns" | "rows";
 
 // @public
 export function newAttributeColumnLocator(attributeOrId: IAttribute | string, element?: string): IAttributeColumnLocator;

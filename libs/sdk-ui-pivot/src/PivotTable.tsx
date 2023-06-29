@@ -53,7 +53,9 @@ function prepareExecution(props: IPivotTableProps): IPreparedExecution {
         .workspace(workspace!)
         .execution()
         .forBuckets(getBuckets(props), filters as INullableFilter[])
-        .withDimensions((def: IExecutionDefinition) => pivotDimensions(def, config))
+        .withDimensions((def: IExecutionDefinition) =>
+            getPivotTableDimensions(def.buckets, isTransposed(config)),
+        )
         .withSorting(...(sortBy as ISortItem[]))
         .withExecConfig(execConfig);
 }
@@ -86,27 +88,9 @@ function getBuckets(props: IPivotTableBucketProps): IBucket[] {
     ];
 }
 
-function pivotDimensions(def: IExecutionDefinition, config: IPivotTableConfig): IDimension[] {
-    const { buckets } = def;
-    const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-    const columns = bucketsFind(buckets, BucketNames.COLUMNS);
-    const measures = bucketsFind(buckets, BucketNames.MEASURES);
-
-    const rowAttributes = row ? bucketAttributes(row) : [];
-    const columnAttributes = columns ? bucketAttributes(columns) : [];
-
-    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
-    const rowTotals = row ? bucketTotals(row) : [];
-    const colTotals = columns ? bucketTotals(columns) : [];
-
+function isTransposed(config: IPivotTableConfig) {
     const measureGroupDimension = config.measureGroupDimension ?? "columns";
-    const rowMeasureItemIdentifiers = measureGroupDimension === "rows" ? measuresItemIdentifiers : [];
-    const columnMeasureItemIdentifiers = measureGroupDimension === "columns" ? measuresItemIdentifiers : [];
-
-    return newTwoDimensional(
-        [...rowAttributes, ...rowMeasureItemIdentifiers, ...rowTotals],
-        [...columnAttributes, ...colTotals, ...columnMeasureItemIdentifiers],
-    );
+    return measureGroupDimension === "rows";
 }
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
@@ -215,4 +199,32 @@ export function pivotTableMenuForCapabilities(
     }
 
     return effectiveMenu;
+}
+
+/**
+ * Prepares dimensions for pivot table execution from buckets and info if table is transposed or not.
+ *
+ * @param buckets - table buckets
+ * @param isTransposed - whether table is transposed (metrics are in rows)
+ * @public
+ */
+export function getPivotTableDimensions(buckets: IBucket[], isTransposed: boolean): IDimension[] {
+    const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+    const columns = bucketsFind(buckets, BucketNames.COLUMNS);
+    const measures = bucketsFind(buckets, BucketNames.MEASURES);
+
+    const rowAttributes = row ? bucketAttributes(row) : [];
+    const columnAttributes = columns ? bucketAttributes(columns) : [];
+
+    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
+    const rowTotals = row ? bucketTotals(row) : [];
+    const colTotals = columns ? bucketTotals(columns) : [];
+
+    const rowMeasureItemIdentifiers = isTransposed ? measuresItemIdentifiers : [];
+    const columnMeasureItemIdentifiers = isTransposed ? [] : measuresItemIdentifiers;
+
+    return newTwoDimensional(
+        [...rowAttributes, ...rowMeasureItemIdentifiers, ...rowTotals],
+        [...columnAttributes, ...colTotals, ...columnMeasureItemIdentifiers],
+    );
 }

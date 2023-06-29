@@ -14,7 +14,7 @@ import {
     IResultHeader,
     isResultAttributeHeader,
     isResultTotalHeader,
-    isResultMeasureHeader
+    isResultMeasureHeader,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { isSeriesCol, SliceCol, SliceMeasureCol } from "../structure/tableDescriptorTypes";
@@ -60,7 +60,7 @@ function getCell(
         isSubtotal: false,
     };
 
-    if (isResultAttributeHeader(rowHeaderDataItem)) {
+    if (isResultAttributeHeader(rowHeaderDataItem) || isResultMeasureHeader(rowHeaderDataItem)) {
         return {
             ...cell,
             value: valueWithEmptyHandling(
@@ -77,14 +77,6 @@ function getCell(
                 getSubtotalLabelCellIndex(rowHeaderData, rowIndex) === rowHeaderIndex
                     ? intl.formatMessage(messages[totalName])
                     : null,
-        };
-    } else if (isResultMeasureHeader(rowHeaderDataItem)) {
-        return {
-            ...cell,
-            value: valueWithEmptyHandling(
-                rowHeaderDataItem.measureHeaderItem.name, // TODO INE should somehow use getMappingHeaderFormattedName and extend the type that is its parameter?
-                emptyHeaderTitleFromIntl(intl),
-            ),
         };
     } else {
         invariant(false, "row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem");
@@ -142,7 +134,7 @@ export function getRow(
 
     tableDescriptor.headers.mixedValuesCols.forEach((measureValueHeader, headerIndex) => {
         row[measureValueHeader.id] = cellData[headerIndex];
-    })
+    });
 
     if (!tableDescriptor.hasDataLeafCols()) {
         // table has no leaf columns - it is a row-only table listing a bunch of

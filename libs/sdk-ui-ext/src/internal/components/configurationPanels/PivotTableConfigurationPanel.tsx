@@ -23,7 +23,6 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
                 <MetricsPositionControl
                     isDisabled={controlsDisabled}
                     properties={properties}
-                   // propertiesMeta={propertiesMeta}
                     pushData={pushData}
                 />
                 <Bubble

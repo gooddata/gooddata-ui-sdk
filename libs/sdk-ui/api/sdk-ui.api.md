@@ -427,7 +427,7 @@ export function getIntersectionPartAfter(intersection: IDrillEventIntersectionEl
 export function getIntl(locale?: ILocale): IntlShape;
 
 // @internal
-export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined | null;
+export function getMappingHeaderFormattedName(header: IMappingHeader | IResultMeasureHeader): string | undefined | null;
 
 // @internal (undocumented)
 export function getMappingHeaderIdentifier(header: IMappingHeader): string | undefined;
@@ -436,7 +436,7 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string | und
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string;
 
 // @internal (undocumented)
-export function getMappingHeaderName(header: IMappingHeader): string | undefined | null;
+export function getMappingHeaderName(header: IMappingHeader | IResultMeasureHeader): string | undefined | null;
 
 // @internal (undocumented)
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
