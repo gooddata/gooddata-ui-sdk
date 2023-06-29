@@ -38,7 +38,7 @@ export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
 export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = createDataColGroupHeaders(col);
 
-    if(row.measureDescriptor){
+    if (row.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
     }
 
@@ -48,7 +48,7 @@ export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): I
 function createAttributeMeasureValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
-    if(row.measureDescriptor){
+    if (row.measureDescriptor) {
         mappingHeaders.push(row.measureDescriptor);
     }
 

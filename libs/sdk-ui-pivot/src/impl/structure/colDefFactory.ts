@@ -274,12 +274,10 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
-
     createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
     createAndAddDataColDefs(table, state, intl);
     // handle metrics in rows and no column attribute case
     createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
-
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 

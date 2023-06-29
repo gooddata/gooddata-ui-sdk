@@ -57,9 +57,10 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     public render() {
         const { displayName, enableSorting, menu, column } = this.props;
         const col = this.getColDescriptor();
-        const textAlign = isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
+        const textAlign =
+            isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
-        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && enableSorting
+        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && enableSorting;
 
         return (
             <HeaderCell

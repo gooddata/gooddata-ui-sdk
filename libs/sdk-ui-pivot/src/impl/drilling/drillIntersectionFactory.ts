@@ -28,8 +28,8 @@ export function createDrillIntersection(
     if (isSeriesCol(col)) {
         mappingHeaders.push(...createDataColLeafHeaders(col));
     }
-    if(tableDescriptor.isTransposed() && isScopeCol(col)){
-        mappingHeaders.push(...createScopeColWithMetricHeaders(col, row))
+    if (tableDescriptor.isTransposed() && isScopeCol(col)) {
+        mappingHeaders.push(...createScopeColWithMetricHeaders(col, row));
     }
 
     const effectiveSliceCols = tableDescriptor.getSliceColsUpToIncludingCol(col);

@@ -95,7 +95,6 @@ import { removeInvalidTotals } from "./totalsHelpers.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const ReactMeasure = defaultImport(Measure);
 
-
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
         buckets,
@@ -239,22 +238,25 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             filters,
         );
 
-        const measureGroupDimensionProp = tableTranspositionEnabled(this.settings) && originalMeasureGroupDimension ? {
-            measureGroupDimension: originalMeasureGroupDimension,
-        } : {}
+        const measureGroupDimensionProp =
+            tableTranspositionEnabled(this.settings) && originalMeasureGroupDimension
+                ? {
+                      measureGroupDimension: originalMeasureGroupDimension,
+                  }
+                : {};
 
         const controlsObj = columnWidths
             ? {
                   controls: {
                       columnWidths,
-                      ...measureGroupDimensionProp
+                      ...measureGroupDimensionProp,
                   },
               }
             : {
-                controls: {
-                    ...measureGroupDimensionProp
-                }
-            };
+                  controls: {
+                      ...measureGroupDimensionProp,
+                  },
+              };
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(
@@ -445,7 +447,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            if(tableTranspositionEnabled(this.settings)) {
+            if (tableTranspositionEnabled(this.settings)) {
                 this.renderFun(
                     <PivotTableConfigurationPanel
                         locale={this.locale}
@@ -461,13 +463,12 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             } else {
                 this.renderFun(
                     <UnsupportedConfigurationPanel
-                    pushData={this.pushData}
-                    properties={sanitizedProperties}
+                        pushData={this.pushData}
+                        properties={sanitizedProperties}
                     />,
                     configPanelElement,
-                )
+                );
             }
-
         }
     }
 
@@ -526,7 +527,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             this.pushData({
                 properties: {
                     sortItems: data.properties.sortItems,
-                    ... (data.properties.controls ? {controls: data.properties.controls} : {}),
+                    ...(data.properties.controls ? { controls: data.properties.controls } : {}),
                     ...addTotals,
                 },
             });
@@ -551,7 +552,6 @@ function tableSortingCheckDisabled(settings: ISettings): boolean {
 function tableTranspositionEnabled(settings: ISettings): boolean {
     return settings.enablePivotTableTransposition === true;
 }
-
 
 /**
  * Given plug viz GDC config, current environment and platform settings, this creates pivot table config.

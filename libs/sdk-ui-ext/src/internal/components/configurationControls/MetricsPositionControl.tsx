@@ -8,7 +8,7 @@ import { getTranslatedDropdownItems } from "../../utils/translations";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { messages } from "../../../locales";
 import ConfigSubsection from "./ConfigSubsection";
-import {ConfigDummySection} from "./ConfigDummySection";
+import { ConfigDummySection } from "./ConfigDummySection";
 
 export interface IMetricsPositionControlProps {
     pushData: (data: any) => any;
@@ -24,14 +24,7 @@ class MetricsPositionControl extends React.Component<IMetricsPositionControlProp
         showDisabledMessage: false,
     };
     public render() {
-        const {
-            pushData,
-            properties,
-            intl,
-            isDisabled,
-            showDisabledMessage,
-            defaultValue,
-        } = this.props;
+        const { pushData, properties, intl, isDisabled, showDisabledMessage, defaultValue } = this.props;
         const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
 
         return (

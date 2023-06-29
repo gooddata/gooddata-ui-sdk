@@ -95,7 +95,7 @@ export class TableDescriptor {
     }
 
     private _zipOneCol(col: AnySliceCol): [AnySliceCol, ColDef] {
-        const colDef = this.colDefs.sliceColDefs.find((def)=> def.colId === col.id);
+        const colDef = this.colDefs.sliceColDefs.find((def) => def.colId === col.id);
         if (colDef === undefined) {
             throw Error(`No definition for column ${col.id}`);
         }
@@ -292,7 +292,11 @@ export class TableDescriptor {
             // a col that is not a leaf
             invariant(isEmptyScopeCol(col));
 
-            return this.sliceColCount() + this.sliceMeasureColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
+            return (
+                this.sliceColCount() +
+                this.sliceMeasureColCount() +
+                findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id)
+            );
         }
 
         return this.sliceColCount() + col.index;

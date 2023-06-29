@@ -251,8 +251,9 @@ function createDataSeriesDigest(
     const dimIdx = locations[0];
     const headerItems = dataViewHeaders(dataView, dimIdx);
     const measureHeaders =
-        headerItems.find((headers): headers is IResultMeasureHeader[] => isResultMeasureHeader(headers[0]))?.filter(isResultMeasureHeader) ??
-        [];
+        headerItems
+            .find((headers): headers is IResultMeasureHeader[] => isResultMeasureHeader(headers[0]))
+            ?.filter(isResultMeasureHeader) ?? [];
 
     const allAttributeHeaders =
         headerItems.filter((headers): headers is IResultAttributeHeader[] =>

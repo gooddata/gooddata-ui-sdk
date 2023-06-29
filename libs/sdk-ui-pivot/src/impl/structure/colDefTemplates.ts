@@ -65,10 +65,10 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
 
                 return params.value !== undefined
                     ? getMeasureCellFormattedValue(
-                        params.value,
-                        measureDescriptor.measureHeaderItem.format,
-                        separators,
-                    )
+                          params.value,
+                          measureDescriptor.measureHeaderItem.format,
+                          separators,
+                      )
                     : (null as any);
             }
             return params.value === undefined ? null : params.value;
@@ -79,11 +79,11 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
 
                 return params.value !== undefined
                     ? getMeasureCellStyle(
-                        params.value,
-                        measureDescriptor.measureHeaderItem.format,
-                        separators,
-                        true,
-                    )
+                          params.value,
+                          measureDescriptor.measureHeaderItem.format,
+                          separators,
+                          true,
+                      )
                     : null;
             }
             return null;

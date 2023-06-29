@@ -13,7 +13,13 @@ export const ColumnGroupingDescriptorId = "root";
  * @remarks see {@link ScopeCol}
  * @remarks see {@link RootCol}
  */
-export type TableColType = "sliceCol" | "sliceMeasureCol" | "mixedValuesCol" | "seriesCol" | "scopeCol" | "rootCol";
+export type TableColType =
+    | "sliceCol"
+    | "sliceMeasureCol"
+    | "mixedValuesCol"
+    | "seriesCol"
+    | "scopeCol"
+    | "rootCol";
 
 /**
  * Base interface for all col types.
@@ -122,7 +128,6 @@ export interface MixedValuesCol extends TableCol {
 export function isMixedValuesCol(obj: unknown): obj is MixedValuesCol {
     return (obj as MixedValuesCol)?.type === "mixedValuesCol";
 }
-
 
 /**
  * Represents most granular column under which computed measure data for a single data series is shown.

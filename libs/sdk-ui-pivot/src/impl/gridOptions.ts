@@ -126,7 +126,7 @@ export function createGridOptions(
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
             [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
-			[COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
+            [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },
 
