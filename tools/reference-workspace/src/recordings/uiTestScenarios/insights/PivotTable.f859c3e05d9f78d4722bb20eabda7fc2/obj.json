@@ -37,7 +37,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.f859c3e05d9f78d4722bb20eabda7fc2",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [
             {
                 "attributeSortItem": {

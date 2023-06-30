@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
 
 import {
@@ -6,15 +6,22 @@ import {
     emptyHeaderTitleFromIntl,
     getMappingHeaderFormattedName,
     IMappingHeader,
+    BucketNames,
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
 import {
     DataValue,
     IResultHeader,
+    IExecutionDefinition,
     isResultAttributeHeader,
     isResultTotalHeader,
     isResultMeasureHeader,
+    IResultMeasureHeader,
+    isMeasureDescriptor,
+    bucketsFind,
+    isAttribute,
+    attributeLocalId,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { isSeriesCol, SliceCol, SliceMeasureCol } from "../structure/tableDescriptorTypes.js";
@@ -39,6 +46,18 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
           (fill(Array(numberOfRowHeaderItems), [null]) as DataValue[][]);
+}
+
+function getMeasureHeaders(rowHeaderData: IResultHeader[][]) {
+    return rowHeaderData
+        .find((headers): headers is IResultMeasureHeader[] => isResultMeasureHeader(headers[0]))
+        ?.filter(isMeasureDescriptor);
+}
+
+function getTotalLinkValue(measureHeaders: IResultMeasureHeader[] | undefined, totalLink: number) {
+    return (
+        measureHeaders?.find((m) => m.measureHeaderItem.order === totalLink)?.measureHeaderItem.name ?? null
+    );
 }
 
 function getCell(
@@ -70,6 +89,18 @@ function getCell(
         };
     } else if (isResultTotalHeader(rowHeaderDataItem)) {
         const totalName = rowHeaderDataItem.totalHeaderItem.name;
+        const totalLink = rowHeaderDataItem.totalHeaderItem.measureIndex;
+
+        if (totalLink !== undefined) {
+            const measureHeaders = getMeasureHeaders(rowHeaderData);
+            const value = getTotalLinkValue(measureHeaders, totalLink);
+
+            return {
+                ...cell,
+                isSubtotal: true,
+                value,
+            };
+        }
         return {
             ...cell,
             isSubtotal: true,
@@ -129,6 +160,11 @@ export function getRow(
         // when metrics in rows store measureDescriptor as part of each row
         if (isResultMeasureHeader(rowHeaderDataItem)) {
             row.measureDescriptor = tableDescriptor.getMeasures()[rowHeaderDataItem.measureHeaderItem.order];
+        } else if (isResultTotalHeader(rowHeaderDataItem)) {
+            const totalLink = rowHeaderDataItem.totalHeaderItem.measureIndex;
+            if (totalLink !== undefined) {
+                row.measureDescriptor = tableDescriptor.getMeasures()[totalLink];
+            }
         }
     });
 
@@ -152,6 +188,35 @@ export function getRow(
     return row;
 }
 
+function getGrandTotalAttribute(definition: IExecutionDefinition) {
+    const rowBucket = bucketsFind(definition.buckets, BucketNames.ATTRIBUTE);
+    const firstItem = rowBucket?.items?.[0];
+
+    return isAttribute(firstItem) ? attributeLocalId(firstItem) : "";
+}
+
+function getMeasureItem(tableDescriptor: TableDescriptor, localIdentifier: string) {
+    return tableDescriptor
+        .getMeasures()
+        .find((measure) => measure.measureHeaderItem.localIdentifier === localIdentifier);
+}
+
+function getEffectiveTotals(tableDescriptor: TableDescriptor, dv: DataViewFacade) {
+    const grandTotalColDescriptor = tableDescriptor.getGrandTotalCol();
+    const grandTotalAttributeId = getGrandTotalAttribute(dv.definition);
+    const colGrandTotalDefs = dv.definition.dimensions[0].totals;
+    const colGrandTotalDefsOuter =
+        colGrandTotalDefs?.filter((total) => total.attributeIdentifier === grandTotalAttributeId) ?? [];
+
+    // effective totals do not contain duplicities (e.g. when 'sum' is defined on multiple measures). This is fine
+    // when measures are in columns (only one row is needed for each grand total), but when measures are in rows,
+    // we need a row for each total definition => take from total definitions and prepare header items.
+    return tableDescriptor.isTransposed()
+        ? colGrandTotalDefsOuter.map((def) => ({
+              totalHeaderItem: { name: def.type, measureIdentifier: def.measureIdentifier },
+          }))
+        : grandTotalColDescriptor.effectiveTotals;
+}
 export function getRowTotals(
     tableDescriptor: TableDescriptor,
     dv: DataViewFacade,
@@ -172,6 +237,7 @@ export function getRowTotals(
         return null;
     }
 
+    const effectiveTotals = getEffectiveTotals(tableDescriptor, dv);
     const grandTotalColDescriptor = tableDescriptor.getGrandTotalCol();
     const grandTotalAttrDescriptor = grandTotalColDescriptor.attributeDescriptor;
     const leafColumns = tableDescriptor.zippedLeaves;
@@ -179,7 +245,8 @@ export function getRowTotals(
     const totalOfTotals = dv.rawData().totalOfTotals();
 
     return colGrandTotals.map((totalsPerLeafColumn: DataValue[], totalIdx: number) => {
-        const grandTotalName = grandTotalColDescriptor.effectiveTotals[totalIdx].totalHeaderItem.name;
+        const effectiveTotal = effectiveTotals[totalIdx];
+        const grandTotalName = effectiveTotal?.totalHeaderItem.name;
         const measureCells: Record<string, DataValue> = {};
         const calculatedForColumns: string[] = [];
         const calculatedForMeasures = colGrandTotalDefs
@@ -196,33 +263,43 @@ export function getRowTotals(
             : totalsPerLeafColumn;
 
         mergedTotals.forEach((value, idx) => {
-            const [leafDescriptor] = leafColumns[idx];
-
-            // if code bombs here then there must be something wrong in the table / datasource code because
-            // totals cannot (by definition) appear in a table that does not have measures - yet here we are
-            // processing totals
-            invariant(isSeriesCol(leafDescriptor));
+            const leafColumn = leafColumns[idx];
+            const leafDescriptor = leafColumn ? leafColumn[0] : tableDescriptor.headers.mixedValuesCols[idx];
 
             measureCells[leafDescriptor.id] = value;
 
             if (
+                !isSeriesCol(leafDescriptor) ||
                 calculatedForMeasures.indexOf(
-                    leafDescriptor.seriesDescriptor.measureDescriptor.measureHeaderItem.localIdentifier,
+                    (leafDescriptor as any).seriesDescriptor.measureDescriptor.measureHeaderItem
+                        .localIdentifier,
                 ) > -1
             ) {
                 calculatedForColumns.push(leafDescriptor.id);
             }
         });
 
+        let measuresDefInGrandTotals = {};
+        if (tableDescriptor.isTransposed()) {
+            const mixedCol = tableDescriptor.headers.sliceMeasureCols[0];
+            const effectiveMeasureId = (effectiveTotal?.totalHeaderItem as any)?.measureIdentifier;
+            const effectiveMeasureItem = getMeasureItem(tableDescriptor, effectiveMeasureId);
+            measuresDefInGrandTotals = {
+                [mixedCol.id]: effectiveMeasureItem?.measureHeaderItem?.name,
+                measureDescriptor: effectiveMeasureItem,
+            };
+        }
+
         return {
             colSpan: {
-                count: tableDescriptor.sliceColCount(),
+                count: tableDescriptor.sliceColCount() - tableDescriptor.sliceMeasureColCount(),
                 headerKey: grandTotalColDescriptor.id,
             },
             ...measureCells,
             [grandTotalColDescriptor.id]: intl.formatMessage({
                 id: `visualizations.totals.dropdown.title.${grandTotalName}`,
             }),
+            ...measuresDefInGrandTotals,
             calculatedForColumns,
             type: ROW_TOTAL,
         };

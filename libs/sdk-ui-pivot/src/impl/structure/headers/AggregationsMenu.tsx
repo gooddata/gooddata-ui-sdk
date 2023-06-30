@@ -28,7 +28,13 @@ import menuHelper, { getAttributeDescriptorsLocalId } from "./aggregationsMenuHe
 import AggregationsSubMenu from "./AggregationsSubMenu.js";
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
 import { TableDescriptor } from "../tableDescriptor.js";
-import { isScopeCol, isSeriesCol, isRootCol, isSliceCol } from "../tableDescriptorTypes.js";
+import {
+    isSliceMeasureCol,
+    isScopeCol,
+    isSeriesCol,
+    isRootCol,
+    isSliceCol,
+} from "../tableDescriptorTypes.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { messages } from "../../../locales.js";
 /*
@@ -92,12 +98,20 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             return null;
         }
 
+        // Note: for measures in rows, where the column is of type isSliceMeasureCol()
+        // we have all measures associated with the menu. This is overriden in the individual
+        // cell renderers for particular measure with specific onMenuAggregationClick fn.
         const measures = isSeriesCol(col)
             ? [col.seriesDescriptor.measureDescriptor]
             : tableDescriptor.getMeasures();
         const measureLocalIdentifiers = measures.map((m) => m.measureHeaderItem.localIdentifier);
-        const columnTotals = this.getColumnTotals(measureLocalIdentifiers, isScopeCol(col));
-        const rowTotals = this.getRowTotals(measureLocalIdentifiers, isScopeCol(col));
+        const useGrouped = isScopeCol(col) || isSliceMeasureCol(col);
+        const columnTotals = this.getColumnTotals(
+            measureLocalIdentifiers,
+            useGrouped,
+            isSliceMeasureCol(col),
+        );
+        const rowTotals = this.getRowTotals(measureLocalIdentifiers, useGrouped, isSliceMeasureCol(col));
         const rowAttributeDescriptors = tableDescriptor.getSlicingAttributes();
         const columnAttributeDescriptors = tableDescriptor.getScopingAttributes();
 
@@ -127,21 +141,33 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         );
     }
 
-    private getColumnTotals(measureLocalIdentifiers: string[], isGroupedHeader: boolean): IColumnTotal[] {
+    private getColumnTotals(
+        measureLocalIdentifiers: string[],
+        isGroupedHeader: boolean,
+        ignoreMeasures: boolean,
+    ): IColumnTotal[] {
         const columnTotals = this.props.getColumnTotals?.() ?? [];
 
         if (isGroupedHeader) {
-            return menuHelper.getTotalsForAttributeHeader(columnTotals, measureLocalIdentifiers);
+            return menuHelper.getTotalsForAttributeHeader(
+                columnTotals,
+                measureLocalIdentifiers,
+                ignoreMeasures,
+            );
         }
 
         return menuHelper.getTotalsForMeasureHeader(columnTotals, measureLocalIdentifiers[0]);
     }
 
-    private getRowTotals(measureLocalIdentifiers: string[], isGroupedHeader: boolean): IColumnTotal[] {
+    private getRowTotals(
+        measureLocalIdentifiers: string[],
+        isGroupedHeader: boolean,
+        ignoreMeasures: boolean,
+    ): IColumnTotal[] {
         const rowTotals = this.props.getRowTotals?.() ?? [];
 
         if (isGroupedHeader) {
-            return menuHelper.getTotalsForAttributeHeader(rowTotals, measureLocalIdentifiers);
+            return menuHelper.getTotalsForAttributeHeader(rowTotals, measureLocalIdentifiers, ignoreMeasures);
         }
 
         return menuHelper.getTotalsForMeasureHeader(rowTotals, measureLocalIdentifiers[0]);

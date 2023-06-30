@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.6cfa2f092c46cab1b6e3f43ddf1b7fe2",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - german number format",
         "uri": "PivotTable.6cfa2f092c46cab1b6e3f43ddf1b7fe2",

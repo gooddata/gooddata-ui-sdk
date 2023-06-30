@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.b9ebc3f963ff72688a7338d1bc8a4523",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - no totals and max height 200",
         "uri": "PivotTable.b9ebc3f963ff72688a7338d1bc8a4523",

@@ -72,7 +72,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.a67421af5053da63004557acae0d9187",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with drill on all row attributes and measures",
         "uri": "PivotTable.a67421af5053da63004557acae0d9187",

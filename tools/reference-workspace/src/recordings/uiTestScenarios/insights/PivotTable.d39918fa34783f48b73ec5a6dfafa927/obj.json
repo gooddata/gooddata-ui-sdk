@@ -41,7 +41,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.d39918fa34783f48b73ec5a6dfafa927",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with two measures and row attribute with auto-resizing",
         "uri": "PivotTable.d39918fa34783f48b73ec5a6dfafa927",

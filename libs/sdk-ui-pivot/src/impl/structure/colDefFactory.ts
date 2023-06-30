@@ -87,7 +87,7 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
             type: ROW_MEASURE_COLUMN,
             colId: col.id,
             field: col.id,
-            headerName: " ",
+            headerName: "",
             headerTooltip: undefined,
             ...cellRendererProp,
         };
@@ -109,7 +109,7 @@ function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state:
             type: MIXED_VALUES_COLUMN,
             colId: col.id,
             field: col.id,
-            headerName: " ", // do not render header, yet leave ability to resize it
+            headerName: "", // do not render header, yet leave ability to resize it
             headerTooltip: undefined,
             ...cellRendererProp,
         };
@@ -123,6 +123,11 @@ function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state:
     }
 }
 
+function getTotalHeaderName(col: ScopeCol, intl: IntlShape | undefined, headerName: string) {
+    const isTotalSubGroup = col.headersToHere.some((header) => isResultTotalHeader(header));
+    return isTotalSubGroup ? "" : intl?.formatMessage(messages[headerName]);
+}
+
 function createColumnGroupColDef(
     col: ScopeCol,
     state: TransformState,
@@ -134,12 +139,16 @@ function createColumnGroupColDef(
         state.emptyHeaderTitle,
     );
     if (children.length === 0) {
+        const mappedHeaderName = isResultTotalHeader(col.header)
+            ? getTotalHeaderName(col, intl, headerName)
+            : headerName;
+
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
             field: col.id, // this will allow scopeCol to display measure values in the column if measures are in rows
-            headerName,
-            headerTooltip: headerName,
+            headerName: mappedHeaderName,
+            headerTooltip: mappedHeaderName,
         };
 
         state.allColDefs.push(colDef);

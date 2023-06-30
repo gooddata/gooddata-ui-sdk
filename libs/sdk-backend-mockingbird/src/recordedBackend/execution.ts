@@ -325,7 +325,6 @@ class RecordedDataView implements IDataView {
         this.count = recordedDataView.count;
         this.offset = recordedDataView.offset;
         this.totalCount = recordedDataView.totalCount;
-        this.totalTotals = recordedDataView.totalTotals;
 
         this._fp = `${defFingerprint(this.definition)}/dataView/${this.offset.join(",")}_${this.count.join(
             ",",

@@ -1,0 +1,118 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute",
+                "totals": [
+                    {
+                        "attributeIdentifier": "a_label.owner.department",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.department",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "min"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "sum"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_aangOxLSeztu",
+                        "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.owner.region",
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "type": "nat"
+                    }
+                ]
+            },
+            { "items": [], "localIdentifier": "columns" }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.44163eff5565a7f457046d5166d4d549",
+        "properties": {
+            "controls": {
+                "columnWidths": [
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_abEgMnq5hyJQ" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_acugFHNJgsBy" } },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "attributeColumnWidthItem": {
+                            "attributeIdentifier": "a_label.owner.region",
+                            "width": { "value": 120 }
+                        }
+                    }
+                ],
+                "measureGroupDimension": "rows"
+            }
+        },
+        "sorts": [],
+        "title": "PivotTable - multiple measures and no columns, with totals",
+        "uri": "PivotTable.44163eff5565a7f457046d5166d4d549",
+        "visualizationUrl": "local:table"
+    }
+}

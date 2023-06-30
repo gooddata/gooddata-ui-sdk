@@ -26,9 +26,9 @@ import {
 import {
     columnAttributeTemplate,
     measureColumnTemplate,
-    mixedValuesTemplate,
     rowAttributeTemplate,
     rowMeasureTemplate,
+    mixedValuesColsTemplate,
     totalSubTotalColumnTemplate,
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";
@@ -128,7 +128,7 @@ export function createGridOptions(
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
             [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
-            [MIXED_VALUES_COLUMN]: mixedValuesTemplate(table, props),
+            [MIXED_VALUES_COLUMN]: mixedValuesColsTemplate(table, props),
             [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },

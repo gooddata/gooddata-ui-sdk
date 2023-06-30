@@ -73,7 +73,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.51f14b5c54ca0618d9c559bc1e8fec62",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - two measures and one subtotal",
         "uri": "PivotTable.51f14b5c54ca0618d9c559bc1e8fec62",

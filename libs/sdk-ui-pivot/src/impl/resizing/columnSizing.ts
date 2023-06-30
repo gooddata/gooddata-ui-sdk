@@ -847,7 +847,7 @@ function calculateColumnWidths(
     config: CalculateColumnWidthsConfig,
     resizedColumnsStore: ResizedColumnsStore,
 ) {
-    const { context } = config;
+    const { context, tableDescriptor } = config;
     const maxWidths = new Map<string, number>();
     if (context) {
         let calculatedColumnsTotalWidth = 0;
@@ -855,6 +855,8 @@ function calculateColumnWidths(
             const column: Column = config.columns[i];
             const colDef: ColDef = column.getColDef();
             const colId = agColId(colDef);
+            const colDesc = tableDescriptor.getCol(colId);
+
             const maxWidth = colId ? maxWidths.get(colId) : undefined;
             if (shouldStopCalculation(config, calculatedColumnsTotalWidth)) {
                 break;
@@ -874,7 +876,7 @@ function calculateColumnWidths(
                 }
             }
             config.rowData.forEach((row: IGridRow, index: number) => {
-                const font = getRowDataFont(colDef, row, config);
+                const font = getRowDataFont(colDef, row, config, colDesc);
                 collectWidths(config, row, column, maxWidths, font, index);
             });
 
@@ -960,10 +962,15 @@ function getMeasureHeadersFont(colDef: ColDef, config: CalculateColumnWidthsConf
     }
 }
 
-function getRowDataFont(colDef: ColDef, row: IGridRow, config: CalculateColumnWidthsConfig): string {
-    if (isColumnTotal(colDef)) {
+function getRowDataFont(
+    colDef: ColDef,
+    row: IGridRow,
+    config: CalculateColumnWidthsConfig,
+    colDesc: AnyCol,
+): string {
+    if (isColumnTotal(colDef) || (isScopeCol(colDesc) && colDesc.isTotal)) {
         return config.totalColumnFont;
-    } else if (isColumnSubtotal(colDef)) {
+    } else if (isColumnSubtotal(colDef) || (isScopeCol(colDesc) && colDesc.isSubtotal)) {
         return config.subtotalColumnFont;
     } else if (isSomeTotal(row.type)) {
         return config.subtotalFont;

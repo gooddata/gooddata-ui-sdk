@@ -38,7 +38,7 @@
             }
         ],
         "identifier": "PivotTable.25c27bc5cf6442b716ad550dffeb9392",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with ranking filter",
         "uri": "PivotTable.25c27bc5cf6442b716ad550dffeb9392",

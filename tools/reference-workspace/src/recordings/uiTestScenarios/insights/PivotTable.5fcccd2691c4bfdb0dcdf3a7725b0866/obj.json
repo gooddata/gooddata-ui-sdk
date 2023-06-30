@@ -108,7 +108,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.5fcccd2691c4bfdb0dcdf3a7725b0866",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - with two measures, grand totals and subtotals with auto-resizing",
         "uri": "PivotTable.5fcccd2691c4bfdb0dcdf3a7725b0866",

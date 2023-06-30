@@ -3456,6 +3456,11 @@
     "PivotTable.42bc5c37bcd179c07efd2312b65e4552": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom metric column size."
     },
+    "PivotTable.44163eff5565a7f457046d5166d4d549": {
+        "comment": "Auto-generated insight for test scenario PivotTable - multiple measures and no columns, with totals.",
+        "scenarioName": "multiple measures and no columns, with totals",
+        "visName": "PivotTable"
+    },
     "PivotTable.44bc6f17d36eba6a67953586fccd4953": {
         "comment": "Auto-generated insight for test scenario PivotTable - single measure with column attribute.",
         "scenarioName": "single measure with column attribute",
@@ -3599,6 +3604,11 @@
     "PivotTable.a2bf2906e75de15e1389bb770a0e84af": {
         "comment": "Auto-generated insight for test scenario PivotTable - arithmetic measures.",
         "scenarioName": "arithmetic measures",
+        "visName": "PivotTable"
+    },
+    "PivotTable.a433df48c4fdab9f9aaaae146f1189b9": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple column/row subtotals with metrics in rows.",
+        "scenarioName": "two measures and multiple column/row subtotals with metrics in rows",
         "visName": "PivotTable"
     },
     "PivotTable.a64c658913fd686f8026853d6d45b194": {
@@ -4686,11 +4696,17 @@
     "WaterfallChart.cb51a19006d4639caada16eb2ef0d0fd": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - auto legend."
     },
+    "WaterfallChart.ccd75bba89907df176f81dd2f61193d8": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - default state."
+    },
     "WaterfallChart.cff7f5e77f3060ebb10b32808fcb96cf": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
     },
     "WaterfallChart.d09ba4ed8ec8916ed588aa2b01f83066": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - labels forced hidden totals auto visibility."
+    },
+    "WaterfallChart.d26e1b3c1ac8728969b9444f69aba82a": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - change the orientation configuration."
     },
     "WaterfallChart.d7ca7ee8eb46019983a84cba337d3f5c": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - 610x154 - Force position RIGHT - legend on right."

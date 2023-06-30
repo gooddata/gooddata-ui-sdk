@@ -37,7 +37,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.030d176493ffa73f59df782329af3482",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [
             { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
         ],

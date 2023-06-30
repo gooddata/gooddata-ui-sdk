@@ -56,7 +56,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.6505c191912087a7187a8365369df497",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - themed",
         "uri": "PivotTable.6505c191912087a7187a8365369df497",

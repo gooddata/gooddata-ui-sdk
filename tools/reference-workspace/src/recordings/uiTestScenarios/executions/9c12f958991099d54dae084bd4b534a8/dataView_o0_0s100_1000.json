@@ -1,0 +1,209 @@
+{
+    "count": [16, 1],
+    "data": [
+        ["21978695.46"],
+        ["8384271.02"],
+        ["58427629.5"],
+        ["18120589.06"],
+        ["80406324.96"],
+        ["40203162.48"],
+        ["13252430.04"],
+        ["26504860.08"],
+        ["6038400.96"],
+        ["2158488.63"],
+        ["30180730.62"],
+        ["9647404.74"],
+        ["36219131.58"],
+        ["18109565.79"],
+        ["5902946.685"],
+        ["11805893.37"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "min", "type": "min" } }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "min", "type": "min" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "nat", "type": "nat" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "measureIndex": 1, "name": "min", "type": "min" } }
+            ]
+        ],
+        []
+    ],
+    "offset": [0, 0],
+    "totalCount": [16, 1],
+    "totals": [[["116625456.54"], ["2158488.63"]], []]
+}

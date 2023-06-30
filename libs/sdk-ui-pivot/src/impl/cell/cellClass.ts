@@ -1,12 +1,12 @@
 // (C) 2007-2021 GoodData Corporation
-import { CellClassParams } from "@ag-grid-community/all-modules";
+import { CellClassParams, ColDef } from "@ag-grid-community/all-modules";
 import { TableFacade } from "../tableFacade.js";
 import { ICorePivotTableProps } from "../../publicTypes.js";
 import { IGridRow } from "../data/resultTypes.js";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes.js";
+import { isSeriesCol, isRootCol, isScopeCol, AnyCol } from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
 import {
     ROW_SUBTOTAL,
@@ -19,6 +19,7 @@ import {
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import last from "lodash/last.js";
 import { getCellClassNames } from "./cellUtils.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 
@@ -54,8 +55,8 @@ export function cellClassFactory(
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
         const isRowTotal = row.type === ROW_TOTAL;
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
-        const isColumnTotal = colDef.type === COLUMN_TOTAL;
-        const isColumnSubtotal = colDef.type === COLUMN_SUBTOTAL;
+        const isColumnTotal = getColumnTotals(colDef, col, table.tableDescriptor);
+        const isColumnSubtotal = getColumnSubTotals(colDef, col, table.tableDescriptor);
         const isRowMetric = colDef.type === ROW_MEASURE_COLUMN;
         let hasDrillableHeader = false;
 
@@ -66,6 +67,7 @@ export function cellClassFactory(
             hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
         }
 
+        const isTransposed = table.tableDescriptor.isTransposed();
         const colIndex = table.tableDescriptor.getAbsoluteLeafColIndex(col);
         const measureIndex = isSeriesCol(col) ? last(col.fullIndexPathToHere) : undefined;
         const isPinnedRow = cellClassParams.node.isRowPinned();
@@ -104,6 +106,23 @@ export function cellClassFactory(
                 ? "gd-table-row-subtotal-column-total s-table-row-subtotal-column-total"
                 : null,
             belongsToRowMetric ? "gd-table-row-metric-cell" : null,
+            isTransposed ? "gd-transpose" : null,
         );
     };
+}
+
+function getColumnTotals(colDef: ColDef, col: AnyCol, tableDescriptor: TableDescriptor) {
+    if (tableDescriptor.isTransposed()) {
+        return isScopeCol(col) && col.isTotal === true;
+    } else {
+        return colDef.type === COLUMN_TOTAL;
+    }
+}
+
+function getColumnSubTotals(colDef: ColDef, col: AnyCol, tableDescriptor: TableDescriptor) {
+    if (tableDescriptor.isTransposed()) {
+        return isScopeCol(col) && col.isSubtotal === true;
+    } else {
+        return colDef.type === COLUMN_SUBTOTAL;
+    }
 }

@@ -78,7 +78,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.dcc22e90b38904c5e4228f3e01245451",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - single measure and multiple grand totals",
         "uri": "PivotTable.dcc22e90b38904c5e4228f3e01245451",

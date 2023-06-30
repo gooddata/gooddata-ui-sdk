@@ -68,7 +68,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.a2bf2906e75de15e1389bb770a0e84af",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - arithmetic measures",
         "uri": "PivotTable.a2bf2906e75de15e1389bb770a0e84af",

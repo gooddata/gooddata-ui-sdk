@@ -57,7 +57,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - two measures with two row and one column attributes",
         "uri": "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d",

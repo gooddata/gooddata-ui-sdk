@@ -21,7 +21,7 @@
         ],
         "filters": [],
         "identifier": "PivotTable.9c5d01875f0c02bb196e96139c5e084d",
-        "properties": {},
+        "properties": { "controls": {} },
         "sorts": [],
         "title": "PivotTable - single measure",
         "uri": "PivotTable.9c5d01875f0c02bb196e96139c5e084d",

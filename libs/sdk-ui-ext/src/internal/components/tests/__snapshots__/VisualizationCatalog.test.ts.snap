@@ -38398,6 +38398,62 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for PivotTable - multiple measures and no columns, with totals 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"min\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.owner.region\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    measureGroupDimension: \\"rows\\"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for PivotTable - no totals and max height 200 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
@@ -39595,7 +39651,8 @@ const config: IPivotTableConfig = {
         aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    measureGroupDimension: \\"rows\\"
 };
 const style = {height: 400};
 
@@ -40842,6 +40899,72 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for PivotTable - two measures and multiple column/row subtotals with metrics in rows 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\"),
+    newTotal(\\"sum\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.region\\"),
+    newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\"),
+    newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.region\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_abEgMnq5hyJQ\\", 100),
+            newWidthForAllColumnsForMeasure(\\"m_acugFHNJgsBy\\", 100),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 120),
+            newWidthForAttributeColumn(\\"a_label.owner.department\\", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    measureGroupDimension: \\"rows\\"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for PivotTable - two measures and multiple grand totals for each 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -41802,7 +41925,8 @@ const config: IPivotTableConfig = {
         aggregationsSubMenu: true,
         aggregationsSubMenuForRows: true
     },
-    separators: {decimal: \\".\\", thousand: \\",\\"}
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    measureGroupDimension: \\"rows\\"
 };
 const style = {height: 400};
 
@@ -51602,6 +51726,38 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for WaterfallChart - change the orientation configuration 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
+];
+const config: IChartConfig = {
+    orientation: {position: \\"vertical\\"},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <WaterfallChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for WaterfallChart - change the total column name 1`] = `
 "import React from \\"react\\";
 import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
@@ -51932,6 +52088,37 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const config: IChartConfig = {
     dataLabels: {totalsVisible: \\"auto\\", visible: false},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <WaterfallChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for WaterfallChart - default state 1`] = `
+"import React from \\"react\\";
+import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Sum Velocity\\").format(\\"$#,##0\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"fact.hardwaretest.values\\", \\"fact\\"), m => m.alias(\\"Sum Values\\").format(\\"$#,##0\\").localId(\\"m_fact.hardwaretest.values_sum\\").aggregation(\\"sum\\")),
+    newMeasure(idRef(\\"acEsTPZKdqzb\\", \\"measure\\"), m => m.alias(\\"Negative Sum Probability\\").format(\\"$#,##0\\").localId(\\"m_acEsTPZKdqzb\\")),
+    newMeasure(idRef(\\"abTsUy7k6OIl\\", \\"measure\\"), m => m.alias(\\"Negative Sum Duration\\").format(\\"$#,##0\\").localId(\\"m_abTsUy7k6OIl\\"))
+];
+const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
     dataPoints: {visible: \\"auto\\"}
