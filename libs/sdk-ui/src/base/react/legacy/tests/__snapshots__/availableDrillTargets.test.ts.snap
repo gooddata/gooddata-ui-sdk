@@ -19639,40 +19639,40 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
       "attribute": {
         "attributeHeader": {
           "formOf": {
-            "identifier": "attr.stage.name",
-            "name": "Stage Name",
+            "identifier": "attr.product.id",
+            "name": "Product",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1091",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
-          "identifier": "label.stage.name.stagename",
-          "localIdentifier": "a_label.stage.name.stagename",
-          "name": "Stage Name",
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
           "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1092",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": [
         {
           "attributeHeader": {
             "formOf": {
-              "identifier": "attr.stage.name",
-              "name": "Stage Name",
+              "identifier": "attr.product.id",
+              "name": "Product",
               "ref": {
-                "uri": "/gdc/md/referenceworkspace/obj/1091",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "identifier": "label.stage.name.stagename",
-            "localIdentifier": "a_label.stage.name.stagename",
-            "name": "Stage Name",
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1092",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -19684,20 +19684,20 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
         {
           "attributeHeader": {
             "formOf": {
-              "identifier": "attr.stage.name",
-              "name": "Stage Name",
+              "identifier": "attr.product.id",
+              "name": "Product",
               "ref": {
-                "uri": "/gdc/md/referenceworkspace/obj/1091",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "identifier": "label.stage.name.stagename",
-            "localIdentifier": "a_label.stage.name.stagename",
-            "name": "Stage Name",
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1092",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -20018,40 +20018,40 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
       "attribute": {
         "attributeHeader": {
           "formOf": {
-            "identifier": "attr.stage.name",
-            "name": "Stage Name",
+            "identifier": "attr.product.id",
+            "name": "Product",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1091",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
-          "identifier": "label.stage.name.stagename",
-          "localIdentifier": "a_label.stage.name.stagename",
-          "name": "Stage Name",
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
           "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1092",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": [
         {
           "attributeHeader": {
             "formOf": {
-              "identifier": "attr.stage.name",
-              "name": "Stage Name",
+              "identifier": "attr.product.id",
+              "name": "Product",
               "ref": {
-                "uri": "/gdc/md/referenceworkspace/obj/1091",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "identifier": "label.stage.name.stagename",
-            "localIdentifier": "a_label.stage.name.stagename",
-            "name": "Stage Name",
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1092",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -20063,20 +20063,20 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
         {
           "attributeHeader": {
             "formOf": {
-              "identifier": "attr.stage.name",
-              "name": "Stage Name",
+              "identifier": "attr.product.id",
+              "name": "Product",
               "ref": {
-                "uri": "/gdc/md/referenceworkspace/obj/1091",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "identifier": "label.stage.name.stagename",
-            "localIdentifier": "a_label.stage.name.stagename",
-            "name": "Stage Name",
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1092",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -20104,40 +20104,40 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
       "attribute": {
         "attributeHeader": {
           "formOf": {
-            "identifier": "attr.stage.name",
-            "name": "Stage Name",
+            "identifier": "attr.product.id",
+            "name": "Product",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1091",
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
-          "identifier": "label.stage.name.stagename",
-          "localIdentifier": "a_label.stage.name.stagename",
-          "name": "Stage Name",
+          "identifier": "label.product.id.name",
+          "localIdentifier": "a_label.product.id.name",
+          "name": "Product Name",
           "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
-          "uri": "/gdc/md/referenceworkspace/obj/1092",
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
       "intersectionAttributes": [
         {
           "attributeHeader": {
             "formOf": {
-              "identifier": "attr.stage.name",
-              "name": "Stage Name",
+              "identifier": "attr.product.id",
+              "name": "Product",
               "ref": {
-                "uri": "/gdc/md/referenceworkspace/obj/1091",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "identifier": "label.stage.name.stagename",
-            "localIdentifier": "a_label.stage.name.stagename",
-            "name": "Stage Name",
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1092",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],
@@ -20149,20 +20149,20 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
         {
           "attributeHeader": {
             "formOf": {
-              "identifier": "attr.stage.name",
-              "name": "Stage Name",
+              "identifier": "attr.product.id",
+              "name": "Product",
               "ref": {
-                "uri": "/gdc/md/referenceworkspace/obj/1091",
+                "uri": "/gdc/md/referenceworkspace/obj/1054",
               },
-              "uri": "/gdc/md/referenceworkspace/obj/1091",
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
             },
-            "identifier": "label.stage.name.stagename",
-            "localIdentifier": "a_label.stage.name.stagename",
-            "name": "Stage Name",
+            "identifier": "label.product.id.name",
+            "localIdentifier": "a_label.product.id.name",
+            "name": "Product Name",
             "ref": {
-              "uri": "/gdc/md/referenceworkspace/obj/1092",
+              "uri": "/gdc/md/referenceworkspace/obj/1055",
             },
-            "uri": "/gdc/md/referenceworkspace/obj/1092",
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
           },
         },
       ],

@@ -1606,7 +1606,7 @@ exports[`createDataAccessDigest > should find slices and series for: WaterfallCh
 {
   "seriesCount": 1,
   "seriesIdx": 0,
-  "slicesCount": 8,
+  "slicesCount": 6,
   "slicesIdx": 1,
 }
 `;
@@ -1660,7 +1660,7 @@ exports[`createDataAccessDigest > should find slices and series for: WaterfallCh
 {
   "seriesCount": 1,
   "seriesIdx": 0,
-  "slicesCount": 8,
+  "slicesCount": 6,
   "slicesIdx": 1,
 }
 `;
@@ -1669,7 +1669,7 @@ exports[`createDataAccessDigest > should find slices and series for: WaterfallCh
 {
   "seriesCount": 1,
   "seriesIdx": 0,
-  "slicesCount": 8,
+  "slicesCount": 6,
   "slicesIdx": 1,
 }
 `;
