@@ -27,7 +27,7 @@ import { PROPERTY_CONTROLS } from "../constants/properties.js";
 import { UICONFIG_AXIS } from "../constants/uiConfig.js";
 import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/AxisType.js";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
-import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets, ISettings } from "@gooddata/sdk-model";
 
 export function getSupportedPropertiesControls(
@@ -288,6 +288,12 @@ export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {
     return visualizationProperties?.controls?.columnWidths;
+}
+
+export function getMeasureGroupDimensionFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): MeasureGroupDimension {
+    return visualizationProperties?.controls?.measureGroupDimension;
 }
 
 export function getLegendConfiguration(

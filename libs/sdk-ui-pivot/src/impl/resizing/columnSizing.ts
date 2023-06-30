@@ -47,6 +47,8 @@ import {
     isSliceCol,
     SliceCol,
     LeafDataCol,
+    SliceMeasureCol,
+    isSliceMeasureCol,
 } from "../structure/tableDescriptorTypes.js";
 import { createColumnLocator } from "../structure/colLocatorFactory.js";
 import { colMeasureLocalId } from "../structure/colAccessors.js";
@@ -551,13 +553,16 @@ export function updateColumnDefinitionsWithWidths(
     const sliceCols = tableDescriptor.zippedSliceCols;
     const leaves = tableDescriptor.zippedLeaves;
 
-    const allSizableCols: Array<[SliceCol | SeriesCol | ScopeCol, ColDef]> = [];
+    const allSizableCols: Array<[SliceCol | SliceMeasureCol | SeriesCol | ScopeCol, ColDef]> = [];
     allSizableCols.push(...sliceCols);
     allSizableCols.push(...leaves);
 
     allSizableCols.forEach(([colDesc, colDef]) => {
         const colId = colDesc.id;
-        const manualSize = resizedColumnsStore.getManuallyResizedColumn2(colDesc);
+        // TODO TNT-1594 Handle manual width for slice measure column
+        const manualSize = isSliceMeasureCol(colDesc)
+            ? undefined
+            : resizedColumnsStore.getManuallyResizedColumn2(colDesc);
         const autoResizeSize = autoResizedColumns[colId];
 
         colDef.maxWidth = MANUALLY_SIZED_MAX_WIDTH;

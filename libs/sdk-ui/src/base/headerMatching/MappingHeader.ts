@@ -12,6 +12,8 @@ import {
     ITotalDescriptorItem,
     IColorDescriptor,
     isColorDescriptor,
+    IResultMeasureHeader,
+    isResultMeasureHeader,
 } from "@gooddata/sdk-model";
 
 /**
@@ -63,12 +65,14 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
 /**
  * @internal
  */
-export function getMappingHeaderName(header: IMappingHeader): string | undefined | null {
+export function getMappingHeaderName(
+    header: IMappingHeader | IResultMeasureHeader,
+): string | undefined | null {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.formOf.name;
     } else if (isResultAttributeHeader(header)) {
         return header.attributeHeaderItem.name;
-    } else if (isMeasureDescriptor(header)) {
+    } else if (isMeasureDescriptor(header) || isResultMeasureHeader(header)) {
         return header.measureHeaderItem.name;
     } else if (isColorDescriptor(header)) {
         return header.colorHeaderItem.name;
@@ -82,7 +86,9 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
  *
  * @internal
  */
-export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined | null {
+export function getMappingHeaderFormattedName(
+    header: IMappingHeader | IResultMeasureHeader,
+): string | undefined | null {
     if (isResultAttributeHeader(header)) {
         return getAttributeHeaderItemName(header.attributeHeaderItem);
     } else if (isTotalDescriptor(header)) {

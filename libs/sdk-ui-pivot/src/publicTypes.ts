@@ -91,6 +91,11 @@ export interface IColumnSizing {
 /**
  * @public
  */
+export type MeasureGroupDimension = "columns" | "rows";
+
+/**
+ * @public
+ */
 export interface IPivotTableConfig {
     /**
      * Customize column sizing strategy.
@@ -125,6 +130,7 @@ export interface IPivotTableConfig {
      * Customize maximum height of the table.
      */
     maxHeight?: number;
+    measureGroupDimension?: MeasureGroupDimension;
 }
 
 /**

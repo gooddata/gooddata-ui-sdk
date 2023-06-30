@@ -76,6 +76,7 @@ import {
     setPivotTableUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
@@ -225,6 +226,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         const originalSortItems: ISortItem[] = newReferencePoint.properties?.sortItems ?? [];
         const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
+        const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
@@ -236,13 +238,25 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             filters,
         );
 
+        const measureGroupDimensionProp =
+            tableTranspositionEnabled(this.settings) && originalMeasureGroupDimension
+                ? {
+                      measureGroupDimension: originalMeasureGroupDimension,
+                  }
+                : {};
+
         const controlsObj = columnWidths
             ? {
                   controls: {
                       columnWidths,
+                      ...measureGroupDimensionProp,
                   },
               }
-            : {};
+            : {
+                  controls: {
+                      ...measureGroupDimensionProp,
+                  },
+              };
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(
@@ -433,14 +447,28 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            this.renderFun(
-                <UnsupportedConfigurationPanel
-                    locale={this.locale}
-                    pushData={this.pushData}
-                    properties={sanitizedProperties}
-                />,
-                configPanelElement,
-            );
+            if (tableTranspositionEnabled(this.settings)) {
+                this.renderFun(
+                    <PivotTableConfigurationPanel
+                        locale={this.locale}
+                        properties={sanitizedProperties}
+                        propertiesMeta={this.propertiesMeta}
+                        insight={insight}
+                        pushData={this.handlePushData}
+                        isError={this.getIsError()}
+                        isLoading={this.isLoading}
+                    />,
+                    configPanelElement,
+                );
+            } else {
+                this.renderFun(
+                    <UnsupportedConfigurationPanel
+                        pushData={this.pushData}
+                        properties={sanitizedProperties}
+                    />,
+                    configPanelElement,
+                );
+            }
         }
     }
 
@@ -499,6 +527,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             this.pushData({
                 properties: {
                     sortItems: data.properties.sortItems,
+                    ...(data.properties.controls ? { controls: data.properties.controls } : {}),
                     ...addTotals,
                 },
             });
@@ -518,6 +547,10 @@ function multipleDatesEnabled(settings: ISettings): boolean {
 
 function tableSortingCheckDisabled(settings: ISettings): boolean {
     return settings.tableSortingCheckDisabled === true;
+}
+
+function tableTranspositionEnabled(settings: ISettings): boolean {
+    return settings.enablePivotTableTransposition === true;
 }
 
 /**

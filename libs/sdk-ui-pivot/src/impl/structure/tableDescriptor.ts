@@ -12,6 +12,9 @@ import {
     agColId,
     isEmptyScopeCol,
     LeafDataCol,
+    SliceMeasureCol,
+    AnySliceCol,
+    MixedValuesCol,
 } from "./tableDescriptorTypes.js";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
@@ -52,7 +55,7 @@ export class TableDescriptor {
      * This field contains slice column descriptors zipped with their respective ColDef that should
      * be used for ag-grid.
      */
-    public readonly zippedSliceCols: Array<[SliceCol, ColDef]> = [];
+    public readonly zippedSliceCols: Array<[SliceCol | SliceMeasureCol, ColDef]> = [];
 
     /**
      * This field contains descriptors of leaf columns zipped with their respective ColDef that should
@@ -91,9 +94,20 @@ export class TableDescriptor {
         });
     }
 
+    private _zipOneCol(col: AnySliceCol): [AnySliceCol, ColDef] {
+        const colDef = this.colDefs.sliceColDefs.find((def) => def.colId === col.id);
+        if (colDef === undefined) {
+            throw Error(`No definition for column ${col.id}`);
+        }
+        return [col, colDef];
+    }
+
     private _initializeZippedSliceCols() {
-        this.headers.sliceCols.forEach((col, idx) => {
-            this.zippedSliceCols.push([col, this.colDefs.sliceColDefs[idx]]);
+        this.headers.sliceCols.forEach((col) => {
+            this.zippedSliceCols.push(this._zipOneCol(col));
+        });
+        this.headers.sliceMeasureCols.forEach((col) => {
+            this.zippedSliceCols.push(this._zipOneCol(col));
         });
     }
 
@@ -154,6 +168,20 @@ export class TableDescriptor {
      */
     public sliceColCount(): number {
         return this.headers.sliceCols.length;
+    }
+
+    /**
+     *
+     */
+    public sliceMeasureColCount(): number {
+        return this.headers.sliceMeasureCols.length;
+    }
+
+    /**
+     * whether metrics are moved to rows or not
+     */
+    public isTransposed(): boolean {
+        return this.sliceMeasureColCount() !== 0;
     }
 
     /**
@@ -256,7 +284,7 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | LeafDataCol): number {
+    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | MixedValuesCol): number {
         if (isSliceCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
@@ -264,7 +292,11 @@ export class TableDescriptor {
             // a col that is not a leaf
             invariant(isEmptyScopeCol(col));
 
-            return this.sliceColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
+            return (
+                this.sliceColCount() +
+                this.sliceMeasureColCount() +
+                findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id)
+            );
         }
 
         return this.sliceColCount() + col.index;

@@ -7,6 +7,8 @@ import {
     isSeriesCol,
     isSliceCol,
     SliceCol,
+    isMixedValuesCol,
+    MixedValuesCol,
 } from "../structure/tableDescriptorTypes.js";
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
@@ -26,6 +28,29 @@ export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
         );
     }
     mappingHeaders.push(col.seriesDescriptor.measureDescriptor);
+
+    return mappingHeaders;
+}
+
+/**
+ * For transposed table add metric descriptor from row
+ */
+export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): IMappingHeader[] {
+    const mappingHeaders: IMappingHeader[] = createDataColGroupHeaders(col);
+
+    if (row.measureDescriptor) {
+        mappingHeaders.push(row.measureDescriptor);
+    }
+
+    return mappingHeaders;
+}
+
+function createAttributeMeasureValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
+    const mappingHeaders: IMappingHeader[] = [];
+
+    if (row.measureDescriptor) {
+        mappingHeaders.push(row.measureDescriptor);
+    }
 
     return mappingHeaders;
 }
@@ -80,6 +105,12 @@ export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[
         invariant(row);
 
         return createSliceColHeaders(col, row);
+    } else if (isMixedValuesCol(col)) {
+        // if this bombs, then the client is not calling the function at the right time. in order
+        // to construct drilling headers for a metrics in rows, both the column & the row data must be
+        // available because the metric descriptor is only available in the data itself
+        invariant(row);
+        return createAttributeMeasureValuesColHeaders(col, row);
     }
 
     throw new InvariantError(`unable to obtain drill headers for column of type ${col.type}`);

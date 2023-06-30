@@ -9,9 +9,15 @@ import {
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
-import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
+import {
+    DataValue,
+    IResultHeader,
+    isResultAttributeHeader,
+    isResultTotalHeader,
+    isResultMeasureHeader,
+} from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import { isSeriesCol, SliceCol } from "../structure/tableDescriptorTypes.js";
+import { isSeriesCol, SliceCol, SliceMeasureCol } from "../structure/tableDescriptorTypes.js";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes.js";
 import { getSubtotalStyles } from "./dataSourceUtils.js";
@@ -38,7 +44,7 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
 function getCell(
     rowHeaderData: IResultHeader[][],
     rowIndex: number,
-    rowHeader: SliceCol,
+    rowHeader: SliceCol | SliceMeasureCol,
     rowHeaderIndex: number,
     intl: IntlShape,
 ): {
@@ -54,7 +60,7 @@ function getCell(
         isSubtotal: false,
     };
 
-    if (isResultAttributeHeader(rowHeaderDataItem)) {
+    if (isResultAttributeHeader(rowHeaderDataItem) || isResultMeasureHeader(rowHeaderDataItem)) {
         return {
             ...cell,
             value: valueWithEmptyHandling(
@@ -107,6 +113,27 @@ export function getRow(
 
         row[field] = value;
         row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
+    });
+
+    tableDescriptor.headers.sliceMeasureCols.forEach((rowHeader) => {
+        const { field, value, rowHeaderDataItem } = getCell(
+            rowHeaderData,
+            rowIndex,
+            rowHeader,
+            rowHeader.index,
+            intl,
+        );
+
+        row[field] = value;
+        row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
+        // when metrics in rows store measureDescriptor as part of each row
+        if (isResultMeasureHeader(rowHeaderDataItem)) {
+            row.measureDescriptor = tableDescriptor.getMeasures()[rowHeaderDataItem.measureHeaderItem.order];
+        }
+    });
+
+    tableDescriptor.headers.mixedValuesCols.forEach((measureValueHeader, headerIndex) => {
+        row[measureValueHeader.id] = cellData[headerIndex];
     });
 
     if (!tableDescriptor.hasDataLeafCols()) {
