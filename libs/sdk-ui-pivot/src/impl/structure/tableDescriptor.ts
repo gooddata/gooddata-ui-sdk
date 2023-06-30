@@ -15,7 +15,7 @@ import {
     SliceMeasureCol,
     AnySliceCol,
     MixedValuesCol,
-} from "./tableDescriptorTypes";
+} from "./tableDescriptorTypes.js";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
 import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../columnWidths.js";

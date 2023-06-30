@@ -4,15 +4,15 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent";
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
 
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble";
-import MetricsPositionControl from "../configurationControls/MetricsPositionControl";
+} from "../../constants/bubble.js";
+import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

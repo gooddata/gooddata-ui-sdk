@@ -49,15 +49,15 @@ import {
     LeafDataCol,
     SliceMeasureCol,
     isSliceMeasureCol,
-} from "../structure/tableDescriptorTypes";
-import { createColumnLocator } from "../structure/colLocatorFactory";
-import { colMeasureLocalId } from "../structure/colAccessors";
-import { IGridRow } from "../data/resultTypes";
-import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils";
-import { TableDescriptor } from "../structure/tableDescriptor";
-import { ColumnResizingConfig } from "../privateTypes";
-import { DefaultColumnWidth } from "../../publicTypes";
-import { IGroupingProvider } from "../data/rowGroupingProvider";
+} from "../structure/tableDescriptorTypes.js";
+import { createColumnLocator } from "../structure/colLocatorFactory.js";
+import { colMeasureLocalId } from "../structure/colAccessors.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { ColumnResizingConfig } from "../privateTypes.js";
+import { DefaultColumnWidth } from "../../publicTypes.js";
+import { IGroupingProvider } from "../data/rowGroupingProvider.js";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;

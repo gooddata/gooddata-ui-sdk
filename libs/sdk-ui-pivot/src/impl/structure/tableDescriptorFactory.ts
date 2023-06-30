@@ -20,8 +20,8 @@ import {
     TableColDefs,
     TableCols,
     LeafDataCol,
-	SliceMeasureCol,
-	MixedValuesCol,
+    SliceMeasureCol,
+    MixedValuesCol,
 } from "./tableDescriptorTypes.js";
 import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 

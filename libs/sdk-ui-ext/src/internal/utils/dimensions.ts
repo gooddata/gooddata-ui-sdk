@@ -15,7 +15,7 @@ import {
     insightBuckets,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper";
+import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 import {
     MeasureGroupDimension,
     getPivotTableDimensions as getPivotTableDimensionsShared,

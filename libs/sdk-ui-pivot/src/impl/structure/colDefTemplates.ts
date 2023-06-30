@@ -11,7 +11,7 @@ import { isSeriesCol } from "./tableDescriptorTypes.js";
 import { cellClassFactory } from "../cell/cellClass.js";
 import { createCellRenderer } from "../cell/cellRenderer.js";
 import ColumnTotalHeader from "./headers/ColumnTotalHeader.js";
-import { IMeasureDescriptor } from '@gooddata/sdk-model';
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();

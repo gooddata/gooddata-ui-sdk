@@ -4,7 +4,11 @@ import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { AnyCol, isScopeCol, isSeriesCol, isSliceCol } from "../structure/tableDescriptorTypes.js";
 import { CellEvent } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
-import { createDataColLeafHeaders, createScopeColWithMetricHeaders, createSliceColHeaders } from "./colDrillHeadersFactory.js";
+import {
+    createDataColLeafHeaders,
+    createScopeColWithMetricHeaders,
+    createSliceColHeaders,
+} from "./colDrillHeadersFactory.js";
 import { IGridRow } from "../data/resultTypes.js";
 
 /**

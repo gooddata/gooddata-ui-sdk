@@ -26,7 +26,7 @@ import {
     columnAttributeTemplate,
     measureColumnTemplate,
     rowAttributeTemplate,
-	rowMeasureTemplate,
+    rowMeasureTemplate,
     totalSubTotalColumnTemplate,
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";

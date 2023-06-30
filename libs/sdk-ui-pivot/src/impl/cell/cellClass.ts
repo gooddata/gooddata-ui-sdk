@@ -8,11 +8,17 @@ import cx from "classnames";
 import { invariant } from "ts-invariant";
 import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
-import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN, ROW_MEASURE_COLUMN } from "../base/constants";
-import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
-import last from "lodash/last";
-import { getCellClassNames } from "./cellUtils";
-import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./../base/constants";
+import {
+    ROW_SUBTOTAL,
+    ROW_TOTAL,
+    MEASURE_COLUMN,
+    ROW_MEASURE_COLUMN,
+    COLUMN_TOTAL,
+    COLUMN_SUBTOTAL,
+} from "../base/constants.js";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
+import last from "lodash/last.js";
+import { getCellClassNames } from "./cellUtils.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 
