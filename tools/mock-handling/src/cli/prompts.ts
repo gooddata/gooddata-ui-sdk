@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import { DistinctQuestion, prompt } from "inquirer";
+import pkg, { DistinctQuestion } from "inquirer";
+const { prompt } = pkg;
 import getBackend from "../backend.js";
 
 export async function promptUsername(): Promise<string> {
