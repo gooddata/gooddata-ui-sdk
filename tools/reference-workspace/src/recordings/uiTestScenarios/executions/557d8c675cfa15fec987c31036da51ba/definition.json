@@ -1,6 +1,23 @@
 {
     "attributes": [],
-    "buckets": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aadpHDMBecIy"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        { "items": [], "localIdentifier": "attribute" }
+    ],
     "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
     "filters": [],
     "measures": [

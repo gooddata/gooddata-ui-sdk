@@ -7,7 +7,25 @@
             }
         }
     ],
-    "buckets": [],
+    "buckets": [
+        { "items": [], "localIdentifier": "size" },
+        { "items": [], "localIdentifier": "color" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location"
+                    }
+                }
+            ],
+            "localIdentifier": "location"
+        },
+        { "items": [], "localIdentifier": "segment" }
+    ],
     "dimensions": [{ "itemIdentifiers": ["a_label.uscities.city.location"] }],
     "filters": [],
     "measures": [],

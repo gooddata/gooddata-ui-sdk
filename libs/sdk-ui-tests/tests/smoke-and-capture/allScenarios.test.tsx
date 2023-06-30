@@ -94,7 +94,6 @@ function scenarioSaveDefinition(
 
     writeAsJsonSync(path.join(recordingDir, RecordingFiles.Execution.Definition), {
         ...triggeredExecution,
-        buckets: [],
     });
 
     scenarioSaveDataCaptureRequests(scenario, recordingDir, interactions);

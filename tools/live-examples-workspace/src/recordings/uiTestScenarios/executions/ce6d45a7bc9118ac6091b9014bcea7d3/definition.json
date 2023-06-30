@@ -19,7 +19,46 @@
             }
         }
     ],
-    "buckets": [],
+    "buckets": [
+        { "items": [], "localIdentifier": "size" },
+        { "items": [], "localIdentifier": "color" },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location"
+                    }
+                }
+            ],
+            "localIdentifier": "location"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.uscities.state_name", "type": "displayForm" },
+                        "localIdentifier": "a_label.uscities.state_name"
+                    }
+                }
+            ],
+            "localIdentifier": "segment"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
+                        "localIdentifier": "a_label.uscities.city"
+                    }
+                }
+            ],
+            "localIdentifier": "tooltipText"
+        }
+    ],
     "dimensions": [
         {
             "itemIdentifiers": [

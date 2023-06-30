@@ -1,6 +1,39 @@
 {
     "attributes": [],
-    "buckets": [],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        { "items": [], "localIdentifier": "secondary_measures" },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "localIdentifier": "tertiary_measures"
+        },
+        { "items": [], "localIdentifier": "view" }
+    ],
     "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
     "filters": [],
     "measures": [
