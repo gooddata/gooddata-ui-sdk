@@ -407,7 +407,7 @@ export {
     isDashboardRenderModeChanged,
 } from "./renderMode.js";
 
-export { createInsightRequested, CreateInsightRequested } from "./lab.js";
+export { createInsightRequested, CreateInsightRequested, isCreateInsightRequested } from "./lab.js";
 
 /**
  * Union type that contains all available built-in dashboard events.

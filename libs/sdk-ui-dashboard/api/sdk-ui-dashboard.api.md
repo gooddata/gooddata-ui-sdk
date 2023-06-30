@@ -4301,6 +4301,9 @@ export interface IScheduledEmailManagementDialogProps {
     onLoadError?: (error: GoodDataSdkError) => void;
 }
 
+// @internal
+export const isCreateInsightRequested: (obj: unknown) => obj is CreateInsightRequested;
+
 // @public
 export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent;
 
