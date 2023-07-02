@@ -5,7 +5,9 @@ export const YAXIS_LABELS_SELECTOR =
 export const XAXIS_LABELS_SELECTOR =
     ".highcharts-xaxis-labels text[text-anchor = 'middle'], .highcharts-xaxis-labels text[text-anchor = 'end']";
 const LEGEND_ICON_SELECTOR = ".viz-legend .series-icon";
-
+const LEGEND_NAME_SELECTOR = ".viz-legend .series-item .series-name";
+const TOOLTIP_TITLE_SELECTOR = ".gd-viz-tooltip-title";
+const HIGHCHART_POINT_SELECTOR = ".highcharts-point";
 const DATA_LABELS_SELECTOR = ".highcharts-data-labels .highcharts-label text";
 
 export class Chart {
@@ -130,5 +132,25 @@ export class Chart {
         for (let i = 0; i < labels.length; i++) {
             this.getElement().find(DATA_LABELS_SELECTOR).eq(i).contains(labels[i]).should("exist");
         }
+    }
+
+    public assertShortenMetricNameInLegend(width: number) {
+        this.assertShortenMetricName(LEGEND_NAME_SELECTOR, width);
+    }
+
+    public hoverOnChart1stPointInHigh() {
+        cy.get(HIGHCHART_POINT_SELECTOR).first().as("firstElement");
+        cy.get("@firstElement").trigger("mouseover", { force: true });
+        return this;
+    }
+
+    public assertShortenMetricNameInTooltip(width: number) {
+        this.assertShortenMetricName(TOOLTIP_TITLE_SELECTOR, width);
+    }
+
+    public assertShortenMetricName(element: string, width: number) {
+        cy.get(element).invoke("css", "text-overflow").should("equal", "ellipsis");
+        cy.get(element).invoke("width").should("equal", width);
+        return this;
     }
 }

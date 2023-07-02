@@ -57,6 +57,9 @@ import { DashboardScenarioTigerUnknownVisualization } from "../components/Scenar
 import { FunnelChartScenario } from "../components/Scenarios/Visualizations/FunnelChart/FunnelChartScenario";
 import { PyramidChartScenario } from "../components/Scenarios/Visualizations/PyramidChart/PyramidChartScenario";
 import { DashboardWithTableManyRowsColumnsScenario } from "../components/Scenarios/Dashboard/DashboardWithTableManyRowColumnScenario";
+import { ShortenMetricNameChartScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameChartScenario";
+import { ShortenMetricNameTableScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameTableScenario";
+import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dashboard/DashboardShortenMetricNameScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -119,6 +122,9 @@ export const SCENARIO_KEYS = {
     SINGLE_SELECT_FILTER_INTEGRATION: "dashboard/single-select-filter-integration",
     VIS_FUNNEL_CHART: "visualizations/funnelchart/funnel-chart-scenario",
     VIS_PYRAMID_CHART: "visualizations/pyramidchart/pyramid-chart-scenario",
+    VIS_SHORTEN_METRIC_NAME_CHART: "visualizations/shortenmetricname/shorten-metric-name-chart-scenario",
+    VIS_SHORTEN_METRIC_NAME_TABLE: "visualizations/shortenmetricname/shorten-metric-name-table-scenario",
+    DASHBOARD_SHORTEN_METRIC_NAME: "dashboard/shorten-metric-name",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -185,6 +191,9 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.SINGLE_SELECT_FILTER_INTEGRATION, SingleSelectFilterIntegration],
     [SCENARIO_KEYS.VIS_PYRAMID_CHART, PyramidChartScenario],
     [SCENARIO_KEYS.VIS_FUNNEL_CHART, FunnelChartScenario],
+    [SCENARIO_KEYS.VIS_SHORTEN_METRIC_NAME_CHART, ShortenMetricNameChartScenario],
+    [SCENARIO_KEYS.VIS_SHORTEN_METRIC_NAME_TABLE, ShortenMetricNameTableScenario],
+    [SCENARIO_KEYS.DASHBOARD_SHORTEN_METRIC_NAME, DashboardShortenMetricNameScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

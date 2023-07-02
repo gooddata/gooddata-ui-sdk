@@ -188,4 +188,10 @@ export class Table {
             .trigger("mouseup", { force: true });
         return this;
     }
+
+    assertShortenMetricName(width: number) {
+        cy.get(".s-header-cell-label span").invoke("css", "text-overflow").should("equal", "ellipsis");
+        cy.get(".s-header-cell-label span").invoke("width").should("equal", width);
+        return this;
+    }
 }
