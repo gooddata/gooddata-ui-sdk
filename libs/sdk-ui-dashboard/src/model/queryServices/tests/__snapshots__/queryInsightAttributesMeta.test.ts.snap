@@ -6,6 +6,40 @@ exports[`query insight attributes meta > should return metadata for insight with
     {
       "deprecated": false,
       "description": "",
+      "displayForms": [
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.product.id.name",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.product.id",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1056",
+          },
+          "title": "Product",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1056",
+        },
+      ],
       "id": "attr.product.id",
       "production": true,
       "ref": {
@@ -182,6 +216,40 @@ exports[`query insight attributes meta > should return metadata for insight with
     {
       "deprecated": false,
       "description": "",
+      "displayForms": [
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.product.id.name",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        },
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1054",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.product.id",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1056",
+          },
+          "title": "Product",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1056",
+        },
+      ],
       "id": "attr.product.id",
       "production": true,
       "ref": {
@@ -195,6 +263,24 @@ exports[`query insight attributes meta > should return metadata for insight with
     {
       "deprecated": false,
       "description": "",
+      "displayForms": [
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1088",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.owner.department",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1089",
+          },
+          "title": "Department",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1089",
+        },
+      ],
       "id": "attr.owner.department",
       "production": true,
       "ref": {
@@ -208,6 +294,40 @@ exports[`query insight attributes meta > should return metadata for insight with
     {
       "deprecated": false,
       "description": "",
+      "displayForms": [
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1091",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.stage.name.stagename",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1092",
+          },
+          "title": "Stage Name",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1092",
+        },
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1091",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.stage.name.order",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1093",
+          },
+          "title": "Order",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1093",
+        },
+      ],
       "id": "attr.stage.name",
       "production": true,
       "ref": {
@@ -221,6 +341,24 @@ exports[`query insight attributes meta > should return metadata for insight with
     {
       "deprecated": false,
       "description": "",
+      "displayForms": [
+        {
+          "attribute": {
+            "uri": "/gdc/md/referenceworkspace/obj/1086",
+          },
+          "deprecated": false,
+          "description": "",
+          "id": "label.owner.region",
+          "production": true,
+          "ref": {
+            "uri": "/gdc/md/referenceworkspace/obj/1087",
+          },
+          "title": "Region",
+          "type": "displayForm",
+          "unlisted": false,
+          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        },
+      ],
       "id": "attr.owner.region",
       "production": true,
       "ref": {

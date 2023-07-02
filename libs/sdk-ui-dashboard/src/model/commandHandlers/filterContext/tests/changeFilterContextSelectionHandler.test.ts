@@ -8,38 +8,71 @@ import {
 } from "../../../commands/index.js";
 import { selectFilterContextAttributeFilters } from "../../../store/index.js";
 import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { IAttributeElementsByRef } from "@gooddata/sdk-model";
+import { DashboardAttributeFilterSelectionMode, IAttributeElementsByRef, ObjRef } from "@gooddata/sdk-model";
 
 describe("change filter context selection handler", () => {
-    describe("single select filter", () => {
-        let Tester: DashboardTester;
+    const FILTER_ELEMENTS = ["element1", "element2", "element3"];
+    const FIRST_ELEMENT = [FILTER_ELEMENTS[0]];
 
+    const addFilter = async (
+        Tester: DashboardTester,
+        displayForm: ObjRef,
+        selection: DashboardAttributeFilterSelectionMode = "single",
+    ) => {
+        await Tester.dispatchAndWaitFor(
+            addAttributeFilter(displayForm, 0, undefined, selection),
+            "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
+        );
+    };
+
+    const changeFilterSelection = async (
+        Tester: DashboardTester,
+        filterSelection: {
+            displayForm: ObjRef;
+            negativeSelection: boolean;
+            elements: string[];
+            selectionMode?: DashboardAttributeFilterSelectionMode;
+        },
+    ) => {
+        await Tester.dispatchAndWaitFor(
+            changeFilterContextSelection([
+                {
+                    attributeFilter: {
+                        displayForm: filterSelection.displayForm,
+                        negativeSelection: filterSelection.negativeSelection,
+                        attributeElements: {
+                            uris: filterSelection.elements,
+                        },
+                        selectionMode: filterSelection.selectionMode,
+                    },
+                },
+            ]),
+            "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
+        );
+    };
+
+    const getFilters = (Tester: DashboardTester) => {
+        const filters = selectFilterContextAttributeFilters(Tester.state());
+        const elements = filters.map(
+            (filter) => filter.attributeFilter.attributeElements as IAttributeElementsByRef,
+        );
+        return {
+            filters,
+            elements,
+        };
+    };
+
+    describe("single select filter", () => {
+        const DASHBOARD_FILTER_DISPLAY_FORM = {
+            uri: "/gdc/md/referenceworkspace/obj/1089",
+        };
+
+        let Tester: DashboardTester;
         beforeEach(async () => {
             await preloadedTesterFactory((tester) => {
                 Tester = tester;
             }, EmptyDashboardIdentifier);
         });
-
-        const FILTER_ELEMENTS = ["element1", "element2", "element3"];
-        const FIRST_ELEMENT = [FILTER_ELEMENTS[0]];
-
-        const getFilters = () => {
-            const filters = selectFilterContextAttributeFilters(Tester.state());
-            const elements = filters.map(
-                (filter) => filter.attributeFilter.attributeElements as IAttributeElementsByRef,
-            );
-            return {
-                filters,
-                elements,
-            };
-        };
-
-        const addFilter = async (selection: "single" | "multi") => {
-            await Tester.dispatchAndWaitFor(
-                addAttributeFilter({ uri: "/gdc/md/referenceworkspace/obj/1089" }, 0, undefined, selection),
-                "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
-            );
-        };
 
         const removeFilter = async () => {
             const filters = selectFilterContextAttributeFilters(Tester.state());
@@ -50,25 +83,14 @@ describe("change filter context selection handler", () => {
         };
 
         it("should cast positive multi select filter into single select", async () => {
-            await addFilter("single");
-            await Tester.dispatchAndWaitFor(
-                changeFilterContextSelection([
-                    {
-                        attributeFilter: {
-                            displayForm: {
-                                uri: "/gdc/md/referenceworkspace/obj/1089",
-                            },
-                            negativeSelection: false,
-                            attributeElements: {
-                                uris: FILTER_ELEMENTS,
-                            },
-                        },
-                    },
-                ]),
-                "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
-            );
+            await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM, "single");
+            await changeFilterSelection(Tester, {
+                displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                negativeSelection: false,
+                elements: FILTER_ELEMENTS,
+            });
 
-            const { filters, elements } = getFilters();
+            const { filters, elements } = getFilters(Tester);
 
             expect(elements[0].uris).toEqual(FIRST_ELEMENT);
             expect(filters[0].attributeFilter.negativeSelection).toEqual(false);
@@ -78,25 +100,14 @@ describe("change filter context selection handler", () => {
         });
 
         it("should cast negative multi select filter into single select", async () => {
-            await addFilter("single");
-            await Tester.dispatchAndWaitFor(
-                changeFilterContextSelection([
-                    {
-                        attributeFilter: {
-                            displayForm: {
-                                uri: "/gdc/md/referenceworkspace/obj/1089",
-                            },
-                            negativeSelection: true,
-                            attributeElements: {
-                                uris: FILTER_ELEMENTS,
-                            },
-                        },
-                    },
-                ]),
-                "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
-            );
+            await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM, "single");
+            await changeFilterSelection(Tester, {
+                displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                negativeSelection: true,
+                elements: FILTER_ELEMENTS,
+            });
 
-            const { filters, elements } = getFilters();
+            const { filters, elements } = getFilters(Tester);
 
             expect(elements[0].uris).toEqual([]);
             expect(filters[0].attributeFilter.negativeSelection).toEqual(false);
@@ -106,25 +117,14 @@ describe("change filter context selection handler", () => {
         });
 
         it("should cast multi select filter with one value into single select", async () => {
-            await addFilter("single");
-            await Tester.dispatchAndWaitFor(
-                changeFilterContextSelection([
-                    {
-                        attributeFilter: {
-                            displayForm: {
-                                uri: "/gdc/md/referenceworkspace/obj/1089",
-                            },
-                            negativeSelection: false,
-                            attributeElements: {
-                                uris: FIRST_ELEMENT,
-                            },
-                        },
-                    },
-                ]),
-                "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
-            );
+            await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM, "single");
+            await changeFilterSelection(Tester, {
+                displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                negativeSelection: false,
+                elements: FIRST_ELEMENT,
+            });
 
-            const { filters, elements } = getFilters();
+            const { filters, elements } = getFilters(Tester);
 
             expect(elements[0].uris).toEqual(FIRST_ELEMENT);
             expect(filters[0].attributeFilter.negativeSelection).toEqual(false);
@@ -134,32 +134,89 @@ describe("change filter context selection handler", () => {
         });
 
         it("should cast single select filter into multi select", async () => {
-            await addFilter("multi");
-            await Tester.dispatchAndWaitFor(
-                changeFilterContextSelection([
-                    {
-                        attributeFilter: {
-                            displayForm: {
-                                uri: "/gdc/md/referenceworkspace/obj/1089",
-                            },
-                            negativeSelection: false,
-                            attributeElements: {
-                                uris: FIRST_ELEMENT,
-                            },
-                            selectionMode: "single",
-                        },
-                    },
-                ]),
-                "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
-            );
+            await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM, "multi");
+            await changeFilterSelection(Tester, {
+                displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                negativeSelection: false,
+                elements: FIRST_ELEMENT,
+                selectionMode: "single",
+            });
 
-            const { filters, elements } = getFilters();
+            const { filters, elements } = getFilters(Tester);
 
             expect(elements[0].uris).toEqual(FIRST_ELEMENT);
             expect(filters[0].attributeFilter.negativeSelection).toEqual(false);
             expect(filters[0].attributeFilter.selectionMode).toEqual("multi");
 
             await removeFilter();
+        });
+    });
+
+    describe("apply selection from another attribute display form", () => {
+        const DASHBOARD_FILTER_DISPLAY_FORM = {
+            identifier: "label.activity.id.subject",
+        };
+        const FILTER_COMMAND_DISPLAY_FORM = {
+            identifier: "label.activity.id",
+        };
+        2;
+        describe("backend supportsElementUris", () => {
+            let Tester: DashboardTester;
+            beforeEach(async () => {
+                await preloadedTesterFactory(async (tester) => {
+                    Tester = tester;
+                    await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM);
+                    await changeFilterSelection(Tester, {
+                        displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                        negativeSelection: false,
+                        elements: FIRST_ELEMENT,
+                    });
+                }, EmptyDashboardIdentifier);
+            });
+
+            it("should apply elements from command correctly", async () => {
+                await changeFilterSelection(Tester, {
+                    displayForm: FILTER_COMMAND_DISPLAY_FORM,
+                    negativeSelection: false,
+                    elements: [FILTER_ELEMENTS[1]],
+                });
+                const { elements } = getFilters(Tester);
+                expect(elements[0].uris).toEqual([FILTER_ELEMENTS[1]]);
+            });
+        });
+
+        describe("backend not supportsElementUris", () => {
+            let Tester: DashboardTester;
+
+            beforeEach(async () => {
+                await preloadedTesterFactory(
+                    async (tester) => {
+                        Tester = tester;
+                        await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM);
+                        await changeFilterSelection(Tester, {
+                            displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                            negativeSelection: false,
+                            elements: FIRST_ELEMENT,
+                        });
+                    },
+                    EmptyDashboardIdentifier,
+                    {
+                        customCapabilities: {
+                            supportsElementUris: false,
+                        },
+                    },
+                );
+            });
+
+            it("should not apply elements from command", async () => {
+                await changeFilterSelection(Tester, {
+                    displayForm: FILTER_COMMAND_DISPLAY_FORM,
+                    negativeSelection: false,
+                    elements: [FILTER_ELEMENTS[1]],
+                });
+                const { elements } = getFilters(Tester);
+                expect(elements[0].uris).toEqual(FIRST_ELEMENT);
+            });
         });
     });
 });

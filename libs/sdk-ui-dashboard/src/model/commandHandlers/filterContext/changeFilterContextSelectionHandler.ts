@@ -124,7 +124,7 @@ function* getAttributeFiltersUpdateActions(
         let dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
             yield select(selectFilterContextAttributeFilterByDisplayForm(filterRef));
 
-        if (!dashboardFilter) {
+        if (!dashboardFilter && canMapDashboardFilterFromAnotherDisplayForm(ctx)) {
             if (isUriRef(filterRef) && !ctx.backend.capabilities.supportsObjectUris) {
                 throw new NotSupported(
                     "Unsupported filter ObjRef! Please provide IdentifierRef instead of UriRef.",
@@ -244,3 +244,21 @@ const getAttributeFilterSelectionPayload = (
 
     return attributeFilterSelectionPayload;
 };
+
+/**
+ *  For Bear:
+ *  Attribute element in Bear can be matched because Bear utilizes a unique URI to identify each attribute element.
+ *  This URI remains constant regardless of the attribute label (the URI points to the attribute URI rather than the label URI).
+ *  In Bear, there are duplicate values, and each label contains the same number of element values.
+ *  As a result, we can easily map one value from one label to another, and enabling us to determine the customer's intended selection
+ *
+ *  For Tiger/Panther:
+ *  Attribute elements in Tiger/Panther are referenced solely by the values that the user sees. There is no URI like in Bear.
+ *  Only the display value is available in Tiger/Panther. Additionally, Tiger only displays unique values for each label.
+ *  In Tiger/Panther, you may observe a varying number of element values in the labels if duplicates are present.
+ *  Therefore, mapping one value from one label to another is not straightforward, as it can be mapped to multiple values,
+ *  and it is not always possible to ascertain the customer's intended selection.
+ */
+function canMapDashboardFilterFromAnotherDisplayForm(ctx: DashboardContext) {
+    return ctx.backend.capabilities.supportsElementUris;
+}

@@ -235,6 +235,13 @@ export interface PreloadedTesterOptions {
     backendConfig?: RecordedBackendConfig;
 
     /**
+     * Customize recorded backend capabilities
+     *
+     * Default is no customization
+     */
+    customCapabilities?: Partial<IBackendCapabilities>;
+
+    /**
      * Customize implementations of query services to use for the component.
      *
      * Default is no customization, meaning default implementations will be used. Note that with default
@@ -281,7 +288,7 @@ export async function preloadedTesterFactory(
     identifier?: Identifier,
     options: PreloadedTesterOptions = {},
 ) {
-    const { initCommand = initializeDashboard(), queryServices, backendConfig } = options;
+    const { initCommand = initializeDashboard(), queryServices, backendConfig, customCapabilities } = options;
 
     const tester = identifier
         ? DashboardTester.forRecording(
@@ -289,6 +296,9 @@ export async function preloadedTesterFactory(
               { queryServices },
               {
                   ...backendConfig,
+              },
+              {
+                  ...customCapabilities,
               },
           )
         : DashboardTester.forNewDashboard(
