@@ -1317,5 +1317,15 @@
         "value": "rows",
         "comment": "",
         "limit": 0
+    },
+    "dashboard.bucket.table.subtitle.columns": {
+        "value": "in columns",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.table.subtitle.rows": {
+        "value": "in rows",
+        "comment": "",
+        "limit": 0
     }
 }

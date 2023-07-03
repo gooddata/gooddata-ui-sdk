@@ -17,6 +17,8 @@ import {
 import { BUCKETS } from "../../constants/bucket.js";
 
 import { setBucketTitles } from "../bucketHelper.js";
+import { getTranslation } from "../translations.js";
+import { messages } from "../../../locales.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -31,6 +33,12 @@ export function setPivotTableUiConfig(
     visualizationType: string,
 ): void {
     set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    const messageId =
+        referencePoint.properties?.controls?.measureGroupDimension === "rows"
+            ? messages["inRows"].id
+            : messages["inColumns"].id;
+    const subtitle = getTranslation(messageId, intl);
+    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], true);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], true);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], true);
