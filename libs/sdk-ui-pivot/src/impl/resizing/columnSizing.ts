@@ -35,7 +35,6 @@ import {
     IWeakMeasureColumnWidthItem,
 } from "../../columnWidths.js";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { getMeasureCellFormattedValue } from "../cell/cellUtils.js";
 import isEmpty from "lodash/isEmpty.js";
 import {
     agColId,
@@ -49,6 +48,7 @@ import {
     LeafDataCol,
     SliceMeasureCol,
     isSliceMeasureCol,
+    isMixedValuesCol,
 } from "../structure/tableDescriptorTypes.js";
 import { createColumnLocator } from "../structure/colLocatorFactory.js";
 import { colMeasureLocalId } from "../structure/colAccessors.js";
@@ -702,6 +702,8 @@ interface CalculateColumnWidthsConfig {
     columnAutoresizeOption: DefaultColumnWidth;
     clientWidth?: number;
     groupingProvider?: IGroupingProvider;
+    gridApi: GridApi;
+    columnApi: ColumnApi;
 }
 
 export function getMaxWidth(
@@ -746,11 +748,9 @@ export function getMaxWidthCached(
     return maxWidth === undefined || width > maxWidth ? width : undefined;
 }
 
-function valueFormatter(text: string, col: SeriesCol, separators: any) {
-    return text !== undefined
-        ? getMeasureCellFormattedValue(text, col.seriesDescriptor.measureFormat(), separators)
-        : null;
-}
+const shouldApplyFormatting = (col: AnyCol, transposed: boolean) => {
+    return isSeriesCol(col) || (transposed && isScopeCol(col)) || isMixedValuesCol(col);
+};
 
 function collectWidths(
     config: CalculateColumnWidthsConfig,
@@ -760,13 +760,33 @@ function collectWidths(
     font: string,
     rowIndex: number,
 ): void {
-    const { context } = config;
+    const { context, gridApi, columnApi } = config;
 
     const col = config.tableDescriptor.getCol(column);
+    const colDef = column.getColDef();
 
     if (col && context) {
         const text = row[col.id];
-        const formattedText = isSeriesCol(col) && valueFormatter(text, col, config.separators);
+        let formattedText = undefined;
+        const valueFormatter = colDef.valueFormatter;
+        if (valueFormatter) {
+            // all of our valueFormatters are functions
+            invariant(typeof valueFormatter === "function", "provided valueFormatter needs to be function");
+            formattedText =
+                shouldApplyFormatting(col, config.tableDescriptor.isTransposed()) &&
+                typeof valueFormatter === "function"
+                    ? valueFormatter({
+                          data: row,
+                          value: text,
+                          column,
+                          colDef,
+                          columnApi,
+                          api: gridApi,
+                          node: null,
+                          context: undefined,
+                      })
+                    : undefined;
+        }
         const textForCalculation = formattedText || text;
         const maxWidth = col.id ? maxWidths.get(col.id) : undefined;
         let possibleMaxWidth;
@@ -1041,6 +1061,8 @@ export function getAutoResizedColumns(
                 columnAutoresizeOption,
                 clientWidth,
                 groupingProvider,
+                gridApi,
+                columnApi,
             },
             resizedColumnsStore,
         );
