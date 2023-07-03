@@ -144,7 +144,7 @@ export function getSettingsForCurrentUser(
         const profile = await client.profile.getCurrent();
         const features = await new TigerFeaturesService(authCall).getFeatures(
             profile,
-            pickContext(attributes),
+            pickContext(attributes, profile.organizationId),
         );
 
         return {
