@@ -2,7 +2,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { format } from "prettier";
+import pkg from "prettier";
+const { format } = pkg;
 import {
     OptionalKind,
     Project,

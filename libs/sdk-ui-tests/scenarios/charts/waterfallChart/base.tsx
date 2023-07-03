@@ -7,7 +7,7 @@ import { modifyMeasure } from "@gooddata/sdk-model";
 
 export const WaterfallChartWithSingleMeasureAndViewBy = {
     measures: [ReferenceMd.Amount],
-    viewBy: ReferenceMd.StageName.Default,
+    viewBy: ReferenceMd.Product.Name,
 };
 
 export const WaterfallChartWithMultiMeasures = {

@@ -4,7 +4,7 @@
 import { program } from "commander";
 import ora from "ora";
 import chalk from "chalk";
-import pkg from "../package.json";
+import pkg from "../package.json" assert { type: "json" };
 import * as process from "process";
 import * as path from "path";
 import pmap from "p-map";

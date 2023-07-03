@@ -80,6 +80,7 @@ const DefaultSettings: ISettings = {
     enableAxisNameConfiguration: true,
     enableHidingOfDataPoints: true,
     enableSeparateTotalLabels: true,
+    enableChartsSorting: true,
 };
 
 //

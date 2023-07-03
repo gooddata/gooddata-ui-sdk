@@ -14,7 +14,7 @@ exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip fo
 
 exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for normal data point with the expected format 1`] = `
 "<div class=\\"gd-viz-tooltip-item gd-multiline-supported\\">
-                        <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Stage Name</span>
+                        <span class=\\"gd-viz-tooltip-title\\" style=\\"max-width: 300px;\\">Product</span>
                         <div class=\\"gd-viz-tooltip-value-wraper\\" style=\\"max-width: 300px;\\">
                             <span class=\\"gd-viz-tooltip-value gd-clamp-two-line\\" style=\\"max-width: 300px;\\">Grants</span>
                         </div>

@@ -49868,7 +49868,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -49902,7 +49902,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -49935,7 +49935,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -49969,7 +49969,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50003,7 +50003,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50037,7 +50037,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50071,7 +50071,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50105,7 +50105,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -50138,7 +50138,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50172,7 +50172,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50206,7 +50206,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50240,7 +50240,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50274,7 +50274,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50308,7 +50308,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -50341,7 +50341,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50375,7 +50375,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50409,7 +50409,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50443,7 +50443,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50477,7 +50477,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50511,7 +50511,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -50544,7 +50544,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50578,7 +50578,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50612,7 +50612,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50646,7 +50646,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50680,7 +50680,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50714,7 +50714,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -50747,7 +50747,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50781,7 +50781,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50815,7 +50815,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50849,7 +50849,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50883,7 +50883,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50917,7 +50917,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -50950,7 +50950,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -50984,7 +50984,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51018,7 +51018,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51052,7 +51052,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51086,7 +51086,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51120,7 +51120,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -51153,7 +51153,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51187,7 +51187,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51221,7 +51221,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51255,7 +51255,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51289,7 +51289,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51323,7 +51323,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         responsive: \\"autoPositionWithPopup\\",
@@ -51356,7 +51356,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51390,7 +51390,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51424,7 +51424,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51458,7 +51458,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     legend: {
         enabled: true,
@@ -51563,7 +51563,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -51912,7 +51912,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -52314,7 +52314,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -52344,7 +52344,7 @@ import { IChartConfig, WaterfallChart } from \\"@gooddata/sdk-ui-charts\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const viewBy: IAttribute = newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\"));
+const viewBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
