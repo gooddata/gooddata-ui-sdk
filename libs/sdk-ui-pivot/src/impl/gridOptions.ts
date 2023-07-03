@@ -21,10 +21,12 @@ import {
     COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
+    MIXED_VALUES_COLUMN,
 } from "./base/constants.js";
 import {
     columnAttributeTemplate,
     measureColumnTemplate,
+    mixedValuesTemplate,
     rowAttributeTemplate,
     rowMeasureTemplate,
     totalSubTotalColumnTemplate,
@@ -126,6 +128,7 @@ export function createGridOptions(
             [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(table, props),
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
             [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
+            [MIXED_VALUES_COLUMN]: mixedValuesTemplate(table, props),
             [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },
