@@ -10,6 +10,7 @@ import drilling from "./drilling.js";
 import grouping from "./grouping.js";
 import experimental from "./experimental.js";
 import theming from "./theming.js";
+import transposition from "./transposition.js";
 
 export default [
     base,
@@ -22,4 +23,5 @@ export default [
     grouping,
     experimental,
     theming,
+    transposition,
 ];
