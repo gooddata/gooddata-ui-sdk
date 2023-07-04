@@ -120,6 +120,8 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     );
 };
 
+const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
+
 /**
  * PluggablePivotTable
  *
@@ -168,6 +170,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
         this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
+        this.propertiesAffectingReferencePoint = PROPERTIES_AFFECTING_REFERENCE_POINT;
         this.initializeProperties(props.visualizationProperties);
         this.backendCapabilities = props.backend.capabilities;
     }

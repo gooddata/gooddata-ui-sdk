@@ -74,19 +74,6 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     renderer?(component: any, target: Element): void;
 }
 
-const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
-
-const somePropertiesRelevantForReferencePointChanged = (
-    currentReferencePoint: IReferencePoint,
-    nextReferencePoint: IReferencePoint,
-) => {
-    return PROPERTIES_AFFECTING_REFERENCE_POINT.some(
-        (prop) =>
-            currentReferencePoint?.properties?.controls?.[prop] !==
-            nextReferencePoint?.properties?.controls?.[prop],
-    );
-};
-
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
     public static defaultProps: Pick<
         IBaseVisualizationProps,
@@ -148,6 +135,11 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             nextProps.referencePoint,
         );
 
+        const relevantPropertiesChanged = this.somePropertiesRelevantForReferencePointChanged(
+            this.props.referencePoint,
+            nextProps.referencePoint,
+        );
+
         const propertiesControlsChanged = BaseVisualization.propertiesControlsHasChanged(
             this.props.referencePoint,
             nextProps.referencePoint,
@@ -158,7 +150,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             this.setupVisualization(nextProps);
         }
 
-        if (referencePointChanged || visualizationClassChanged) {
+        if (referencePointChanged || relevantPropertiesChanged || visualizationClassChanged) {
             this.triggerExtendedReferencePointChanged(
                 nextProps,
                 // only pass current props if the visualization class is the same (see getExtendedReferencePoint JSDoc)
@@ -320,16 +312,9 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
-        const relevantPropertiesChanged = somePropertiesRelevantForReferencePointChanged(
-            currentReferencePoint,
-            nextReferencePoint,
-        );
-        return (
-            relevantPropertiesChanged ||
-            !isEqual(
-                omit(currentReferencePoint, ["properties", "availableSorts"]),
-                omit(nextReferencePoint, ["properties", "availableSorts"]),
-            )
+        return !isEqual(
+            omit(currentReferencePoint, ["properties", "availableSorts"]),
+            omit(nextReferencePoint, ["properties", "availableSorts"]),
         );
     }
 
@@ -341,6 +326,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             currentReferencePoint?.properties?.controls,
             nextReferencePoint?.properties?.controls,
         );
+    }
+
+    private somePropertiesRelevantForReferencePointChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ) {
+        if (this.visualization) {
+            return this.visualization.haveSomePropertiesRelevantForReferencePointChanged(
+                currentReferencePoint,
+                nextReferencePoint,
+            );
+        }
+        return false;
     }
 
     private getVisualizationProps(): IVisProps {
