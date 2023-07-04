@@ -13,6 +13,7 @@
     "browser": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
+        "./styles/css/main.css": "./styles/css/main.css",
         "./internal-tests/CoreAreaChart": "./esm/charts/areaChart/CoreAreaChart.js",
         "./internal-tests/CoreBarChart": "./esm/charts/barChart/CoreBarChart.js",
         "./internal-tests/CoreBubbleChart": "./esm/charts/bubbleChart/CoreBubbleChart.js",
