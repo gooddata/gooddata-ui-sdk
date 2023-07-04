@@ -2,6 +2,7 @@
 import { AxiosInstance } from "axios";
 
 export type FeatureContext = {
+    organizationId: string;
     earlyAccess: string;
 };
 

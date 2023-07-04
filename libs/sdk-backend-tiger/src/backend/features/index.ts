@@ -55,11 +55,18 @@ function featuresAreStatic(item: any): item is IStaticFeatures {
     return Boolean(item?.static);
 }
 
-export function pickContext(attributes: JsonApiWorkspaceInAttributes | undefined): Partial<FeatureContext> {
+export function pickContext(
+    attributes: JsonApiWorkspaceInAttributes | undefined,
+    organizationId: string | undefined,
+): Partial<FeatureContext> {
     const context: Partial<FeatureContext> = {};
 
-    if (attributes?.["earlyAccess"] !== undefined) {
-        context.earlyAccess = attributes["earlyAccess"];
+    if (attributes?.earlyAccess !== undefined) {
+        context.earlyAccess = attributes.earlyAccess;
+    }
+
+    if (organizationId !== undefined) {
+        context.organizationId = organizationId;
     }
     return context;
 }
