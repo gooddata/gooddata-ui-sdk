@@ -1,5 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcMetadata, GdcFilterContext } from "@gooddata/api-model-bear";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+
 import { uriRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { convertFilterContext } from "./filterContext.js";
 

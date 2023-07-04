@@ -11,7 +11,7 @@ import {
 import * as EmbeddedGdc from "./EmbeddedGdc.js";
 
 import { ObjRef } from "@gooddata/sdk-model";
-import { GdcVisualizationObject } from "@gooddata/api-model-bear";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 
 /**
  * Base type for KD events.
@@ -322,7 +322,7 @@ export type SaveDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Save, IKd
 export type SaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Save, IKdSaveCommandBody>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.SaveDashboardCommandData}.
+ * Type-guard checking whether object is an instance of SaveDashboardCommandData.
  *
  * @param obj - object to test
  *
@@ -363,7 +363,7 @@ export type SaveAsDashboardCommandData = IGdcKdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.SaveAsDashboardCommandData}.
+ * Type-guard checking whether object is an instance of SaveAsDashboardCommandData.
  *
  * @param obj - object to test
  *
@@ -393,7 +393,7 @@ export type CancelEditCommand = IGdcKdMessageEvent<GdcKdCommandType.CancelEdit, 
 export type CancelEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.CancelEdit, null>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.CancelEditCommandData}.
+ * Type-guard checking whether object is an instance of CancelEditCommandData.
  *
  * @param obj - object to test
  *
@@ -444,7 +444,7 @@ export type SwitchToEditCommand = IGdcKdMessageEvent<GdcKdCommandType.SwitchToEd
 export type SwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SwitchToEdit, null>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.SwitchToEditCommandData}.
+ * Type-guard checking whether object is an instance of SwitchToEditCommandData.
  *
  * @param obj - object to test
  * @public
@@ -479,7 +479,7 @@ export type DrillableItemsCommandData = IGdcKdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.DrillableItemsCommandData}.
+ * Type-guard checking whether object is an instance of DrillableItemsCommandData.
  *
  * @param obj - object to test
  * @public
@@ -509,7 +509,7 @@ export type SetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, ISetSi
 export type SetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSize, ISetSizeCommandBody>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.SetSizeCommandData}.
+ * Type-guard checking whether object is an instance of SetSizeCommandData.
  *
  * @param obj - object to test
  * @public
@@ -549,7 +549,7 @@ export type SetFilterContextCommand = IGdcKdMessageEvent<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedKpiDashboard.SetFilterContextCommand}
+ * Type-guard checking whether an object is an instance of SetFilterContextCommand
  *
  * @param obj - object to test
  * @public
@@ -582,7 +582,7 @@ export type RemoveFilterContextCommand = IGdcKdMessageEvent<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedKpiDashboard.RemoveFilterContextCommand}
+ * Type-guard checking whether an object is an instance of RemoveFilterContextCommand
  *
  * @param obj - object to test
  * @public
@@ -632,7 +632,7 @@ export interface IAddWidgetBody {
 }
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.IIdentifierInsightRef}.
+ * Type-guard checking whether object is an instance of IIdentifierInsightRef.
  *
  * @param obj - object to test
  * @public
@@ -642,7 +642,7 @@ export function isIdentifierInsight(obj: unknown): obj is IIdentifierInsightRef 
 }
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.IUriInsightRef}.
+ * Type-guard checking whether object is an instance of IUriInsightRef.
  *
  * @param obj - object to test
  * @public
@@ -676,10 +676,13 @@ export function isUriInsight(obj: unknown): obj is IUriInsightRef {
  */
 export type AddWidgetCommand = IGdcKdMessageEvent<GdcKdCommandType.AddWidget, IAddWidgetBody>;
 
+/**
+ * @public
+ */
 export type AddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddWidget, IAddWidgetBody>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.AddWidgetCommandData}.
+ * Type-guard checking whether object is an instance of AddWidgetCommandData.
  *
  * @param obj - object to test
  * @public
@@ -702,10 +705,13 @@ export function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandDat
  */
 export type AddFilterCommand = IGdcKdMessageEvent<GdcKdCommandType.AddFilter, null>;
 
+/**
+ * @public
+ */
 export type AddFilterCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddFilter, null>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.AddFilterCommandData}.
+ * Type-guard checking whether object is an instance of AddFilterCommandData.
  *
  * @param obj - object to test
  * @public
@@ -733,7 +739,7 @@ export type ExportToPdfCommand = IGdcKdMessageEvent<GdcKdCommandType.ExportToPdf
 export type ExportToPdfCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ExportToPdf, null>;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.ExportToPdfCommandData}.
+ * Type-guard checking whether object is an instance of ExportToPdfCommandData.
  *
  * @param obj - object to test
  * @public
@@ -767,6 +773,7 @@ export interface IResizedBody {
 
 /**
  * This event is emitted when the content is fully loaded
+ * @public
  */
 export type ResizedEventData = IGdcKdMessageEnvelope<GdcKdEventType.Resized, IResizedBody>;
 
@@ -807,40 +814,50 @@ export type IDashboardBody = IKdAvailableCommands & IDashboardObjectMeta;
 
 /**
  * Data type of event that was emitted when a dashboard has been created and saved.
+ * @public
  */
 export type IDashboardCreatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardCreated, IDashboardBody>;
 
 /**
  * Data type of event that was emitted when the content is fully loaded,
  * and the user has permissions to access the dashboard.
+ * @public
  */
 export type IDashboardLoadedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardLoaded, IDashboardBody>;
 
 /**
  * Data type of event that was emitted when the existing dashboard has been updated.
+ * @public
  */
 export type IDashboardUpdatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardUpdated, IDashboardBody>;
 
 /**
  * Data type of event that was emitted when the dashboard has been saved.
+ * @public
  */
 export type IDashboardSavedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardSaved, IDashboardBody>;
 
 /**
  * Data type of event that was emitted when the dashboard has been deleted.
+ * @public
  */
 export type IDashboardDeletedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardDeleted, IDashboardBody>;
 
 /**
  * This event is emitted after KD switched a dashboard from view mode to edit mode.
+ * @public
  */
 export type SwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, IDashboardBody>;
 
 /**
  * This event is emitted after KD switched a dashboard from edit mode to view mode.
+ * @public
  */
 export type SwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, IDashboardBody>;
 
+/**
+ * @public
+ */
 export interface IPlatformBody {
     status?: string;
     errorCode?: number;
@@ -892,6 +909,7 @@ export type FilterAddedBody = IKdAvailableCommands;
  *
  * Note: users can still cancel the filter customization flow meaning no new attribute filter
  * will end on the filter bar.
+ * @public
  */
 export type FilterAddedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterAdded, FilterAddedBody>;
 
@@ -1038,7 +1056,7 @@ export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.OpenScheduleEmailDialogCommandData}.
+ * Type-guard checking whether object is an instance of OpenScheduleEmailDialogCommandData.
  *
  * @param obj - object to test
  *
@@ -1327,7 +1345,7 @@ export type OpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.OpenDeleteDashboardDialogCommandData}.
+ * Type-guard checking whether object is an instance of OpenDeleteDashboardDialogCommandData.
  *
  * @param obj - object to test
  *
@@ -1368,14 +1386,14 @@ export type SetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken
  * Data type of set API token command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedKpiDashboard.ISetApiTokenBody}
+ * @remarks See ISetApiTokenBody
  *
  * @public
  */
 export type SetApiTokenCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetApiToken, ISetApiTokenBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedKpiDashboard.SetApiTokenCommandData}
+ * Type-guard checking whether an object is an instance of SetApiTokenCommandData
  *
  * @param obj - object to test
  *

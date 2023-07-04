@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { GdcDashboardPlugin } from "@gooddata/api-model-bear";
+import * as GdcDashboardPlugin from "@gooddata/api-model-bear/GdcDashboardPlugin";
 import { uriRef, IDashboardPlugin } from "@gooddata/sdk-model";
 
 export function convertDashboardPlugin(plugin: GdcDashboardPlugin.IWrappedDashboardPlugin): IDashboardPlugin {

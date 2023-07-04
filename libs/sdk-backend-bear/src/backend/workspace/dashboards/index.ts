@@ -48,16 +48,16 @@ import {
     IDashboardPluginLink,
     IDashboardPermissions,
 } from "@gooddata/sdk-model";
-import {
-    GdcDashboard,
-    GdcDashboardPlugin,
-    GdcFilterContext,
-    GdcMetadata,
-    GdcMetadataObject,
-    GdcScheduledMail,
-    GdcVisualizationClass,
-    GdcVisualizationObject,
-} from "@gooddata/api-model-bear";
+
+import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
+import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
+import * as GdcDashboardPlugin from "@gooddata/api-model-bear/GdcDashboardPlugin";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter.js";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter.js";

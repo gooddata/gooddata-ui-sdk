@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { GdcScheduledMail } from "@gooddata/api-model-bear";
+import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
 import { convertScheduledMail } from "../scheduledMails.js";
 import { describe, expect, it } from "vitest";
 

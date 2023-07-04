@@ -27,7 +27,8 @@ import { invariant } from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth.js";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api.js";
-import { GdcExecuteAFM, GdcMetadata } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
 import { LimitingAfmFactory } from "./limitingAfmFactory.js";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 

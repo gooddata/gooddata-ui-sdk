@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { GdcExecution } from "@gooddata/api-model-bear";
+import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
 
 export const dimensions: GdcExecution.IResultDimension[] = [
     {

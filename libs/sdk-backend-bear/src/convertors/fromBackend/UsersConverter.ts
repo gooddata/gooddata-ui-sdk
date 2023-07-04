@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcUser } from "@gooddata/api-model-bear";
+import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
 import { uriRef, IWorkspaceUser, IUser } from "@gooddata/sdk-model";
 
 const getUserFullName = (

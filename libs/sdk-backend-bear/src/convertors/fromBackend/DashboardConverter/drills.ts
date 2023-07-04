@@ -1,6 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
 
-import { GdcVisualizationWidget, GdcKpi } from "@gooddata/api-model-bear";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
+import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
+
 import {
     uriRef,
     idRef,
@@ -10,6 +12,9 @@ import {
 } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
+/**
+ * @internal
+ */
 export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboard => {
     const { drillTo: { projectDashboard, projectDashboardTab } = {}, metric } = kpi.kpi.content;
 
@@ -25,6 +30,9 @@ export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboar
     };
 };
 
+/**
+ * @internal
+ */
 export const convertDrillOrigin = (from: GdcVisualizationWidget.DrillFromType): DrillOrigin => {
     if (GdcVisualizationWidget.isDrillFromMeasure(from)) {
         return {
@@ -41,6 +49,9 @@ export const convertDrillOrigin = (from: GdcVisualizationWidget.DrillFromType): 
     }
 };
 
+/**
+ * @internal
+ */
 export const convertVisualizationWidgetDrill = (
     drill: GdcVisualizationWidget.IDrillDefinition,
 ): InsightDrillDefinition => {

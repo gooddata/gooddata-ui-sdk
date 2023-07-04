@@ -1,14 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
+import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
+import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
 
-import {
-    GdcDashboard,
-    GdcFilterContext,
-    GdcMetadata,
-    GdcVisualizationWidget,
-    GdcKpi,
-    GdcVisualizationObject,
-    GdcVisualizationClass,
-} from "@gooddata/api-model-bear";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import { BearDashboardDependency } from "../DashboardConverter/index.js";
 
 const createObjectMeta = (id: string): GdcMetadata.IObjectMeta => ({

@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { GdcExecution } from "@gooddata/api-model-bear";
+import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
 import { isUri } from "@gooddata/api-client-bear";
 import {
     uriRef,

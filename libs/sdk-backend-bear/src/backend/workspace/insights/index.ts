@@ -13,7 +13,10 @@ import {
     SupportedInsightReferenceTypes,
     IGetInsightOptions,
 } from "@gooddata/sdk-backend-spi";
-import { GdcVisualizationClass, GdcVisualizationObject, GdcMetadata } from "@gooddata/api-model-bear";
+import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
 import {
     IInsight,

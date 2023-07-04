@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcScheduledMail } from "@gooddata/api-model-bear";
+import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
 import {
     IUser,
     uriRef,
@@ -46,6 +46,9 @@ export const convertScheduledMailAttachment = (
     }
 };
 
+/**
+ * @internal
+ */
 export const convertScheduledMail = (
     scheduledMail: GdcScheduledMail.IWrappedScheduledMail,
     userMap?: Map<string, IUser>,

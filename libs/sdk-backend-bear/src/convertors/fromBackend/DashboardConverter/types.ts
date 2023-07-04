@@ -1,13 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-model";
-import {
-    GdcVisualizationWidget,
-    GdcKpi,
-    GdcFilterContext,
-    GdcVisualizationObject,
-    GdcDashboardPlugin,
-} from "@gooddata/api-model-bear";
+import * as GdcDashboardPlugin from "@gooddata/api-model-bear/GdcDashboardPlugin";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
+
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 
 export type DashboardDependency = IWidget | IFilterContext | ITempFilterContext;
 

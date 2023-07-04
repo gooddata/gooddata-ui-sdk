@@ -3,7 +3,10 @@
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IWidgetReferences, SupportedWidgetReferenceTypes } from "@gooddata/sdk-backend-spi";
 import { CatalogItem, IWidget, widgetUri } from "@gooddata/sdk-model";
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
+
+import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+
 import { getObjectIdFromUri } from "../../../utils/api.js";
 import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter.js";
 import isEmpty from "lodash/isEmpty.js";

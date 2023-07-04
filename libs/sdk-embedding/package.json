@@ -28,7 +28,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "npm run build-esm #&& npm run api-extractor",
+        "build": "npm run build-esm && npm run api-extractor",
         "build-esm": "tsc -p tsconfig.build.json",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "vitest watch",

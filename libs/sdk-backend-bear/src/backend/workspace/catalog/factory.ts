@@ -13,7 +13,10 @@ import {
     isCatalogFact,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
-import { GdcCatalog, GdcDateDataSets, GdcMetadata } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcDateDataSets from "@gooddata/api-model-bear/GdcDateDataSets";
+import * as GdcCatalog from "@gooddata/api-model-bear/GdcCatalog";
+
 import {
     convertAttribute,
     convertDateDataset,

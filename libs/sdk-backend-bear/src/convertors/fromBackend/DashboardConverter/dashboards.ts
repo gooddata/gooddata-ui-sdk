@@ -1,14 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
+import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
+import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
+import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 
-import {
-    GdcMetadata,
-    GdcDashboard,
-    GdcFilterContext,
-    GdcVisualizationWidget,
-    GdcKpi,
-    GdcVisualizationObject,
-    GdcVisualizationClass,
-} from "@gooddata/api-model-bear";
 import {
     IUser,
     uriRef,
@@ -72,6 +70,9 @@ const convertDateFilterConfigAddedPresets = (
     };
 };
 
+/**
+ * @internal
+ */
 export const convertDashboardDateFilterConfig = (
     dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig,
 ): IDashboardDateFilterConfig => {

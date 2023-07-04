@@ -1,16 +1,15 @@
 // (C) 2007-2023 GoodData Corporation
 import { layoutWidgets, UnexpectedError, NotSupported } from "@gooddata/sdk-backend-spi";
-import {
-    GdcDashboardLayout,
-    GdcDashboard,
-    GdcVisualizationWidget,
-    GdcKpi,
-    GdcExtendedDateFilters,
-    GdcMetadata,
-    GdcFilterContext,
-    GdcScheduledMail,
-    GdcDashboardPlugin,
-} from "@gooddata/api-model-bear";
+import * as GdcExtendedDateFilters from "@gooddata/api-model-bear/GdcExtendedDateFilters";
+import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
+import * as GdcDashboardLayout from "@gooddata/api-model-bear/GdcDashboardLayout";
+import * as GdcDashboardPlugin from "@gooddata/api-model-bear/GdcDashboardPlugin";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
+import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
+
 import {
     ObjRef,
     isUriRef,
@@ -93,6 +92,9 @@ const refToLocalId = (ref: ObjRefInScope) => {
     return ref.localIdentifier;
 };
 
+/**
+ * @internal
+ */
 export const convertLayoutSize = (size: IDashboardLayoutSize): GdcDashboardLayout.IFluidLayoutSize => {
     const converted: GdcDashboardLayout.IFluidLayoutSize = {
         width: size.gridWidth,
@@ -109,6 +111,9 @@ export const convertLayoutSize = (size: IDashboardLayoutSize): GdcDashboardLayou
     return converted;
 };
 
+/**
+ * @internal
+ */
 export const convertLayoutItemSize = (
     column: IDashboardLayoutSizeByScreenSize,
 ): GdcDashboardLayout.IFluidLayoutColSize => {
@@ -391,6 +396,9 @@ export function convertDrill(
     throw new UnexpectedError("Unable to convert unknown drill!");
 }
 
+/**
+ * @internal
+ */
 export const convertWidget = (
     widget: IWidget | IWidgetDefinition,
 ): GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI => {
@@ -653,6 +661,9 @@ export const convertScheduledMailAttachment = (
     );
 };
 
+/**
+ * @internal
+ */
 export const convertScheduledMail = (
     scheduledMail: IScheduledMail | IScheduledMailDefinition,
 ): GdcScheduledMail.IWrappedScheduledMail => {

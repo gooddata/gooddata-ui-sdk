@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
-import { GdcVisualizationObject } from "@gooddata/api-model-bear";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import { isUri } from "@gooddata/api-client-bear";
 import isArray from "lodash/isArray.js";
 import isObject from "lodash/isObject.js";

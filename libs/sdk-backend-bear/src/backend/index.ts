@@ -26,12 +26,12 @@ import { BearWorkspace } from "./workspace/index.js";
 import { BearWorkspaceQueryFactory } from "./workspaces/index.js";
 import { BearUserService } from "./user/index.js";
 import { convertInsight } from "../convertors/toBackend/InsightConverter.js";
-import {
-    GdcUser,
-    GdcProjectDashboard,
-    GdcMetadataObject,
-    GdcVisualizationObject,
-} from "@gooddata/api-model-bear";
+
+import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
+import * as GdcProjectDashboard from "@gooddata/api-model-bear/GdcProjectDashboard";
+import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData/index.js";
 import {
     IAuthProviderCallGuard,

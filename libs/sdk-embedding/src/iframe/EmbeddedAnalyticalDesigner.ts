@@ -13,7 +13,8 @@ import {
 } from "./common.js";
 import * as EmbeddedGdc from "./EmbeddedGdc.js";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { GdcExport, GdcVisualizationObject } from "@gooddata/api-model-bear";
+import * as GdcExport from "@gooddata/api-model-bear/GdcExport";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 
 /**
  * Insight Export configuration
@@ -232,7 +233,7 @@ export type AdCommandFailed = CommandFailed<GdcProductName.ANALYTICAL_DESIGNER>;
 export type AdCommandFailedData = CommandFailedData<GdcProductName.ANALYTICAL_DESIGNER>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.AdCommandFailedData}
+ * Type-guard checking whether an object is an instance of AdCommandFailedData
  *
  * @param obj - object to test
  *
@@ -271,7 +272,7 @@ export type DrillableItemsCommandData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.DrillableItemsCommandData}
+ * Type-guard checking whether an object is an instance of DrillableItemsCommandData
  *
  * @param obj - object to test
  *
@@ -360,7 +361,7 @@ export type OpenInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.OpenInsight
  *
  * Note: The main event data was wrapped to application and product data structure
  *
- * @remarks See {@link EmbeddedAnalyticalDesigner.IOpenInsightCommandBody}
+ * @remarks See IOpenInsightCommandBody
  *
  * @public
  */
@@ -370,7 +371,7 @@ export type OpenInsightCommandData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.OpenInsightCommandData}
+ * Type-guard checking whether an object is an instance of OpenInsightCommandData
  *
  * @param obj - object to test
  *
@@ -401,7 +402,7 @@ export type ClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>
 export type ClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ClearCommandData}
+ * Type-guard checking whether an object is an instance of ClearCommandData
  *
  * @param obj - object to test
  *
@@ -432,7 +433,7 @@ export type ClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsig
 export type ClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ClearInsightCommandData}
+ * Type-guard checking whether an object is an instance of ClearInsightCommandData
  *
  * @param obj - object to test
  *
@@ -466,7 +467,7 @@ export type RequestCancellationCommandData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.RequestCancellationCommandData}
+ * Type-guard checking whether an object is an instance of RequestCancellationCommandData
  *
  * @param obj - object to test
  *
@@ -516,14 +517,14 @@ export type SaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, ISave
  * Data type of save insight command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.ISaveCommandBody}
+ * @remarks See ISaveCommandBody
  *
  * @public
  */
 export type SaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, ISaveCommandBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.SaveInsightCommandData}
+ * Type-guard checking whether an object is an instance of SaveInsightCommandData
  *
  * @param obj - object to test
  *
@@ -552,7 +553,7 @@ export interface ISaveAsInsightCommandBody {
 /**
  * Saves current insight as a new object, with a different title. The title is specified
  *
- * Contract is same as {@link EmbeddedAnalyticalDesigner.SaveInsightCommand}.
+ * Contract is same as SaveInsightCommand.
  *
  * @public
  */
@@ -562,7 +563,7 @@ export type SaveAsInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.SaveAs, I
  * Data type of save as insight command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.ISaveAsInsightCommandBody}
+ * @remarks See ISaveAsInsightCommandBody
  *
  * @public
  */
@@ -572,7 +573,7 @@ export type SaveAsInsightCommandData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.SaveAsInsightCommandData}
+ * Type-guard checking whether an object is an instance of SaveAsInsightCommandData
  *
  * @param obj - object to test
  *
@@ -595,7 +596,7 @@ export interface IExportInsightCommandBody {
     /**
      * Configuration for exported file.
      *
-     * @remarks See {@link EmbeddedAnalyticalDesigner.IInsightExportConfig} for more details about possible configuration options
+     * @remarks See IInsightExportConfig for more details about possible configuration options
      *
      * @public
      */
@@ -624,7 +625,7 @@ export type ExportInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Export, I
  * Data type of export insight command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.IExportInsightCommandBody}
+ * @remarks See IExportInsightCommandBody
  *
  * @public
  */
@@ -634,7 +635,7 @@ export type ExportInsightCommandData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ExportInsightCommandData}
+ * Type-guard checking whether an object is an instance of ExportInsightCommandData
  *
  * @param obj - object to test
  *
@@ -672,7 +673,7 @@ export type UndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
 export type UndoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Undo, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.UndoCommandData}
+ * Type-guard checking whether an object is an instance of UndoCommandData
  *
  * @param obj - object to test
  *
@@ -710,7 +711,7 @@ export type RedoCommand = IGdcAdMessageEvent<GdcAdCommandType.Redo, undefined>;
 export type RedoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Redo, undefined>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.RedoCommandData}
+ * Type-guard checking whether an object is an instance of RedoCommandData
  *
  * @param obj - object to test
  *
@@ -750,7 +751,7 @@ export type SetFilterContextCommand = IGdcAdMessageEvent<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.SetFilterContextCommand}
+ * Type-guard checking whether an object is an instance of SetFilterContextCommand
  *
  * @param obj - object to test
  *
@@ -784,7 +785,7 @@ export type RemoveFilterContextCommand = IGdcAdMessageEvent<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.RemoveFilterContextCommand}
+ * Type-guard checking whether an object is an instance of RemoveFilterContextCommand
  *
  * @param obj - object to test
  *
@@ -844,7 +845,7 @@ export type NewInsightInitializedData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.NewInsightInitializedData}
+ * Type-guard checking whether an object is an instance of NewInsightInitializedData
  *
  * @param obj - object to test
  *
@@ -887,14 +888,14 @@ export type InsightOpened = IGdcAdMessageEvent<GdcAdEventType.InsightOpened, Ins
  * Data type of event that was emitted when an insight is opened
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.InsightOpenedBody}
+ * @remarks See InsightOpenedBody
  *
  * @public
  */
 export type InsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, InsightOpenedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.InsightOpenedData}
+ * Type-guard checking whether an object is an instance of InsightOpenedData
  *
  * @param obj - object to test
  *
@@ -937,14 +938,14 @@ export type InsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered,
  * Data type of event that was emitted when an insight is rendered
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.InsightRenderedBody}
+ * @remarks See InsightRenderedBody
  *
  * @public
  */
 export type InsightRenderedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightRendered, InsightRenderedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.InsightRenderedData}
+ * Type-guard checking whether an object is an instance of InsightRenderedData
  *
  * @param obj - object to test
  *
@@ -975,7 +976,7 @@ export type ClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAv
 export type ClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFinished, IAvailableCommands>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ClearFinishedData}
+ * Type-guard checking whether an object is an instance of ClearFinishedData
  *
  * @param obj - object to test
  *
@@ -1012,7 +1013,7 @@ export type ClearInsightFinishedData = IGdcAdMessageEnvelope<
 >;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ClearInsightFinishedData}
+ * Type-guard checking whether an object is an instance of ClearInsightFinishedData
  *
  * @param obj - object to test
  *
@@ -1052,13 +1053,13 @@ export type InsightSaved = IGdcAdMessageEvent<GdcAdEventType.InsightSaved, Insig
  * Data type of event that was emitted when an insight is saved
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.InsightSavedBody}
+ * @remarks See InsightSavedBody
  * @public
  */
 export type InsightSavedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightSaved, InsightSavedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.InsightSavedData}
+ * Type-guard checking whether an object is an instance of InsightSavedData
  *
  * @param obj - object to test
  * @public
@@ -1092,13 +1093,13 @@ export type ExportFinished = IGdcAdMessageEvent<GdcAdEventType.ExportFinished, E
  * Data type of event that was emitted after an insight was exported
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.ExportFinishedBody}
+ * @remarks See ExportFinishedBody
  * @public
  */
 export type ExportFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ExportFinished, ExportFinishedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ExportFinishedData}
+ * Type-guard checking whether an object is an instance of ExportFinishedData
  *
  * @param obj - object to test
  * @public
@@ -1127,13 +1128,13 @@ export type UndoFinished = IGdcAdMessageEvent<GdcAdEventType.UndoFinished, UndoF
  * Data type of event that was emitted after finish undo action
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.UndoFinishedBody}
+ * @remarks See UndoFinishedBody
  * @public
  */
 export type UndoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.UndoFinished, UndoFinishedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.UndoFinishedData}
+ * Type-guard checking whether an object is an instance of UndoFinishedData
  *
  * @param obj - object to test
  * @public
@@ -1163,13 +1164,13 @@ export type RedoFinished = IGdcAdMessageEvent<GdcAdEventType.RedoFinished, RedoF
  * Data type of event that was emitted after finish redo action
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.RedoFinishedBody}
+ * @remarks See RedoFinishedBody
  * @public
  */
 export type RedoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RedoFinished, RedoFinishedBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.RedoFinishedData}
+ * Type-guard checking whether an object is an instance of RedoFinishedData
  *
  * @param obj - object to test
  * @public
@@ -1274,14 +1275,14 @@ export type SetApiTokenCommand = IGdcAdMessageEvent<GdcAdCommandType.SetApiToken
  * Data type of set API token command
  *
  * Note: The main event data was wrapped to application and product data structure
- * @remarks See {@link EmbeddedAnalyticalDesigner.ISetApiTokenBody}
+ * @remarks See ISetApiTokenBody
  *
  * @public
  */
 export type SetApiTokenCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
 
 /**
- * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.SetApiTokenCommandData}
+ * Type-guard checking whether an object is an instance of SetApiTokenCommandData
  *
  * @param obj - object to test
  *

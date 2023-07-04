@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { GdcVisualizationWidget } from "@gooddata/api-model-bear";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
 import { localIdRef } from "@gooddata/sdk-model";
 
 export const drillFromMeasure: GdcVisualizationWidget.IDrillFromMeasure = {

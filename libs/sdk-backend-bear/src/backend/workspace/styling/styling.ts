@@ -1,7 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { IColorPaletteItem, ITheme } from "@gooddata/sdk-model";
-import { GdcMetadataObject, GdcMetadata } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { isApiResponseError } from "../../../utils/errorHandling.js";
 

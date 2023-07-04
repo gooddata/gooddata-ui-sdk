@@ -1,5 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcProject, GdcUser } from "@gooddata/api-model-bear";
+import * as GdcProject from "@gooddata/api-model-bear/GdcProject";
+import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
+
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 
