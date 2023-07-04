@@ -324,6 +324,14 @@
     border-radius: 50%;
     background-color: variables.$button-grey-background;
 
+    &:hover {
+        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+
+        svg path {
+            fill: kit-variables.$gd-color-white;
+        }
+    }
+
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         top: -73px;
     }
