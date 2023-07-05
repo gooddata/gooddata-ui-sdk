@@ -9,11 +9,11 @@ import { execSync } from "child_process";
 
 import { TIGER_FIXTURE_CATALOG, BEAR_FIXTURE_CATALOG } from "./constant.js";
 
-export function exportCatalogBear(host, projectId, username, password) {
+export function exportCatalogBear(host, projectId, username) {
     // NOTE: we support this only for goodsales
     const outputFile = BEAR_FIXTURE_CATALOG["goodsales"];
     execSync(
-        `echo '${password}' | npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --backend "bear" --catalog-output "${outputFile}"`,
+        `npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --backend "bear" --catalog-output "${outputFile}"`,
         { stdio: "inherit" },
     );
 }
