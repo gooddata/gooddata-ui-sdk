@@ -3164,6 +3164,139 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "b41b7d490bee44cea0c14ade29c3ff5c",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_id_name}}}"
+                                            },
+                                            "localIdentifier": "4d237ce020c14a7b82673131211cb58a"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_name_stagename}}}"
+                                            },
+                                            "localIdentifier": "da17dea5331742d79b320631bed7be56"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{closed_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "93329cf6d93147d3927057848ab49ceb"
+                                        }
+                                    },
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{created_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "7e4769f3c92f44b49aa5c7b42f896c6a"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "columns"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"4d237ce020c14a7b82673131211cb58a\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aajOOAvz2tOI",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table has many rows/columns"
+                    }
+                }
+            },
+            "name": "visualizationObject_Table_has_many_rows_columns_aajOOAvz2tOI"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "a87aa8a291614405b807dde372902526",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_stage_status}}}"
+                                            },
+                                            "localIdentifier": "cfe287e2ff154704abc4d8c61ae7d857"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"cfe287e2ff154704abc4d8c61ae7d857\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aadiViS7TBVF",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Insight has invalid interaction"
+                    }
+                }
+            },
+            "name": "visualizationObject_Insight_has_invalid_interaction_aadiViS7TBVF"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -10495,6 +10628,137 @@
                 }
             },
             "name": "analyticalDashboard_Single_select_filters_aakfv3CaA9wt"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aacOQOXx2Jqf",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aacOQOXx2Jqf"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_has_many_rows_columns_aajOOAvz2tOI}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacOQ2db2K0y",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table has many rows/columns"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_has_many_rows_columns_aacOQ2db2K0y"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{created_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromMeasure": {
+                                            "localIdentifier": "5bf185f70106470297e820d5e936ed75"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Table_has_many_rows_columns_aajOOAvz2tOI}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Insight_has_invalid_interaction_aadiViS7TBVF}}}"
+                    },
+                    "meta": {
+                        "identifier": "aaciVi7JTLgL",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Insight has invalid interaction"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Insight_has_invalid_interaction_aaciVi7JTLgL"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aacOQOXx2Jqf}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_has_many_rows_columns_aacOQ2db2K0y}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Insight_has_invalid_interaction_aaciVi7JTLgL}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Table_has_many_rows_columns_aacOQ2db2K0y}}}",
+                            "{{{visualizationWidget_Insight_has_invalid_interaction_aaciVi7JTLgL}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aadOQOXx2Jqf",
+                        "summary": "",
+                        "tags": "",
+                        "title": "KD with table has many rows/columns"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_KD_with_table_has_many_rows_columns_aadOQOXx2Jqf"
         },
         {
             "content": {

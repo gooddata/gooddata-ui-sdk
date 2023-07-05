@@ -1,22 +1,16 @@
 // (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+import { idRef } from "../../../../../../sdk-model";
+import * as TigerMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
+import * as BearMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
-let dashboardRef: string;
-if (process.env.SDK_BACKEND === "TIGER") {
-    import(
-        "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger"
-    ).then((module) => {
-        dashboardRef = module.Dashboards.InsightOnDashboard;
-    });
-} else if (process.env.SDK_BACKEND === "BEAR") {
-    import(
-        "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear"
-    ).then((module) => {
-        dashboardRef = module.Dashboards.InsightOnDashboard;
-    });
-}
+type MDObjectsType = typeof TigerMDObjects & typeof BearMDObjects;
+
+export const MDObject = (
+    process.env.SDK_BACKEND === "TIGER" ? TigerMDObjects : BearMDObjects
+) as MDObjectsType;
 
 export const InsightOnDashboardScenario: React.FC = () => {
-    return <Dashboard dashboard={dashboardRef} />;
+    return <Dashboard dashboard={idRef(MDObject.Dashboards.InsightOnDashboard)} />;
 };

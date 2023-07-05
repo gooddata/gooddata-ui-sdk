@@ -62,7 +62,13 @@ export class Table {
     }
 
     scrollTo(position: Cypress.PositionType) {
-        this.getElement().find(".ag-center-cols-viewport").scrollTo(position);
+        this.getElement().find(".ag-center-cols-viewport").scrollTo(position, { ensureScrollable: true });
+        return this;
+    }
+
+    scrollVerticalTo(position: Cypress.PositionType) {
+        this.getElement().find(".ag-body-viewport").scrollTo(position, { ensureScrollable: true });
+        return this;
     }
 
     getMeasureCellHeader(cellIndex: number, index: number) {

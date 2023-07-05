@@ -3,7 +3,7 @@
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { EditMode } from "../../tools/editMode";
-import { Dashboard } from "../../tools/dashboards";
+import { Dashboard, FilterBar } from "../../tools/dashboards";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
 import { DashboardMenu } from "../../tools/dashboardMenu";
 import { DashboardHeader } from "../../tools/dashboardHeader";
@@ -72,4 +72,20 @@ describe("Insight on dashboard", () => {
         new Widget(5).scrollIntoView().removeVizWidget();
         dashboard.hasRowsCount(3);
     });
+
+    //Cover ticket: RAIL-4715
+    it(
+        "should able to resize widget when is placed next to other in one row",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        () => {
+            Navigation.visit("dashboard/insight");
+            editMode.edit();
+            new FilterBar().clickDateFilter().selectDateFilterOption(".s-all-time").clickApply();
+            insightCatalog.waitForCatalogReload();
+            dashboard.getWidget(0).add("WithOwnDescription", "prev");
+            dashboard.waitItemLoaded();
+            dashboard.getWidget(0).hasWidth(6).resizeWidthTo(4).hasWidth(4);
+            dashboard.getWidget(1).hasWidth(6).resizeWidthTo(12).hasWidth(8);
+        },
+    );
 });

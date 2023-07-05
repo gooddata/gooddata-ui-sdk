@@ -5,8 +5,7 @@ import { Table } from "./table";
 import { Kpi } from "./kpi";
 import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 import { Headline } from "./headline";
-
-const MAXIMUM_TIMEOUT = Cypress.env("timeForInsightLoading");
+import { getMaximumTimeout } from "../support/constants";
 
 export class Widget {
     constructor(private index: number) {}
@@ -21,7 +20,7 @@ export class Widget {
 
     waitChartLoaded() {
         this.getElement()
-            .find(".visualization-value-loading", { timeout: MAXIMUM_TIMEOUT })
+            .find(".visualization-value-loading", { timeout: getMaximumTimeout() })
             .should("not.exist");
         this.getElement().find(".s-loading").should("not.exist");
         return this;
@@ -117,6 +116,30 @@ export class Widget {
         this.getElement()
             .parents(".s-fluid-layout-column")
             .should("have.class", `s-fluid-layout-column-width-${size}`);
+        return this;
+    }
+
+    /**
+     * This will drag width to bulletIndex
+     * @param bulletIndex - index of bullet
+     * @returns
+     */
+    resizeWidthTo(bulletIndex: number) {
+        const dataTransfer = new DataTransfer();
+        const parentElement = ".gd-fluidlayout-column-container";
+
+        cy.get(this.getElementSelector())
+            .parents(parentElement)
+            .find(".s-dash-width-resizer-hotspot")
+            .trigger("dragstart", {
+                dataTransfer,
+            });
+
+        cy.get(`.s-resize-bullet-${bulletIndex}`).trigger("drop", "center", {
+            dataTransfer,
+            force: true,
+        });
+
         return this;
     }
 
