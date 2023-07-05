@@ -1767,7 +1767,7 @@
         "limit": 0
     },
     "embedInsightDialog.code.options.display.configuration": {
-        "value": "Display configuration",
+        "value": "Include configuration",
         "comment": "",
         "limit": 0
     },
