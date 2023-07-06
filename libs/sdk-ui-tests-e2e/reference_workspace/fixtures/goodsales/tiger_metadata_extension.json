@@ -6,6 +6,106 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "19551c0c-62a1-40ee-898b-b46b95e59074",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {
+                                    "title": "Pivot Table KPI"
+                                },
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "343b329b-e2b0-43b2-9724-de8cd664ebac",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Table has AM metric",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {
+                                    "title": "Pivot Table With Multi Format Metrics KPI"
+                                },
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6d236ec6-5cf7-493e-8285-6613fde4ce18",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "title": "Table has multi metrics and multi formats",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "c03bd065-4377-4b63-80c1-a00b00d20ddd",
+                "permissions": [
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Pivot Table Dashboard"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "be26570e-a52c-4b54-b2d2-4f54e063b096",
                             "type": "filterContext"
                         }
@@ -1794,6 +1894,15 @@
                 },
                 "description": "",
                 "id": "16145829-9c6a-4350-aa65-a8dee47c4d11",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "19551c0c-62a1-40ee-898b-b46b95e59074",
                 "title": "filterContext"
             },
             {

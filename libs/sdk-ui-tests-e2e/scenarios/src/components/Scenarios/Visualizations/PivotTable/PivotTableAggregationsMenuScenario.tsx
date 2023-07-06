@@ -25,6 +25,8 @@ const columnTotalsOne: TotalsOrPlaceholders = [
     newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
 ];
 
+const rowSubtotalsOne: TotalsOrPlaceholders = [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region)];
+
 const pivotTableConfig: IPivotTableConfig = {
     menu: {
         aggregations: true,
@@ -90,4 +92,8 @@ export const PivotTableAggregationsMenuOneColumnTotalScenario = () => {
 
 export const PivotTableColumnsAggregationsMenuAllTotalScenario = () => {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsAll} />;
+};
+
+export const PivotTableColumnsAggregationsMenuOneSubtotalScenario = () => {
+    return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={rowSubtotalsOne} />;
 };

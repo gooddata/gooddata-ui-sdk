@@ -272,6 +272,24 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "description": "Metric with long name",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
+        "format": "$#,##0.00",
+        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+        "isLocked": false,
+        "ref": {
+          "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+          "type": "measure",
+        },
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
         "description": "Metric has null value",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
         "format": "#,##0",
@@ -282,6 +300,24 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "measure",
         },
         "title": "Metric has null value",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "description": "",
+        "expression": "SELECT SUM({metric/amount_bop} * -1 )",
+        "format": "#,##0.00",
+        "id": "negative_metric",
+        "isLocked": false,
+        "ref": {
+          "identifier": "negative_metric",
+          "type": "measure",
+        },
+        "title": "Negative Metric",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -2230,6 +2266,24 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
     {
       "groups": [],
       "measure": {
+        "description": "Metric with long name",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
+        "format": "$#,##0.00",
+        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+        "isLocked": false,
+        "ref": {
+          "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+          "type": "measure",
+        },
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
         "description": "Metric has null value",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
         "format": "#,##0",
@@ -2240,6 +2294,24 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "type": "measure",
         },
         "title": "Metric has null value",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "description": "",
+        "expression": "SELECT SUM({metric/amount_bop} * -1 )",
+        "format": "#,##0.00",
+        "id": "negative_metric",
+        "isLocked": false,
+        "ref": {
+          "identifier": "negative_metric",
+          "type": "measure",
+        },
+        "title": "Negative Metric",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -9280,6 +9352,24 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
     {
       "groups": [],
       "measure": {
+        "description": "Metric with long name",
+        "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}",
+        "format": "$#,##0.00",
+        "id": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+        "isLocked": false,
+        "ref": {
+          "identifier": "lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i",
+          "type": "measure",
+        },
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
         "description": "Metric has null value",
         "expression": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\\"\\", NULL, \\"East Coast\\", \\"West Coast\\" )",
         "format": "#,##0",
@@ -9290,6 +9380,24 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "type": "measure",
         },
         "title": "Metric has null value",
+        "type": "measure",
+        "uri": "sanitize_uri",
+      },
+      "type": "measure",
+    },
+    {
+      "groups": [],
+      "measure": {
+        "description": "",
+        "expression": "SELECT SUM({metric/amount_bop} * -1 )",
+        "format": "#,##0.00",
+        "id": "negative_metric",
+        "isLocked": false,
+        "ref": {
+          "identifier": "negative_metric",
+          "type": "measure",
+        },
+        "title": "Negative Metric",
         "type": "measure",
         "uri": "sanitize_uri",
       },
@@ -14667,7 +14775,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "dateDataset",
     ],
   },
-  "workspace": "2b7da2afb0d34f4397481c4d2a2d50b0",
+  "workspace": "c87f6d4b58d44bec856b4b446f6e82ba",
 }
 `;
 
@@ -18241,6 +18349,6 @@ exports[`tiger catalog > should read catalog for reference workspace with additi
       "dateDataset",
     ],
   },
-  "workspace": "2b7da2afb0d34f4397481c4d2a2d50b0",
+  "workspace": "c87f6d4b58d44bec856b4b446f6e82ba",
 }
 `;
