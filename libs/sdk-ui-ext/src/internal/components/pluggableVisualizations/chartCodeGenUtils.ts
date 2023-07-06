@@ -48,6 +48,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "yFormat",
     "yLabel",
     "total",
+    "orientation",
 ]);
 
 export function chartConfigFromInsight(

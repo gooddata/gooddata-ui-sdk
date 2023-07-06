@@ -22,6 +22,7 @@ import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
 
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import OrientationDropdownControl from "../configurationControls/OrientationDropdownControl.js";
 
 const TOOLTIP_ARROW_OFFSET = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const TOOLTIP_ALIGN_POINT = [{ align: "tc bc" }];
@@ -60,6 +61,14 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                         properties={properties}
                         pushData={pushData}
                     >
+                        <OrientationDropdownControl
+                            pushData={pushData}
+                            properties={properties}
+                            disabled={controlsDisabled}
+                            value={properties.controls?.orientation?.position || "horizontal"}
+                            showDisabledMessage={false}
+                        />
+
                         <DataLabelsControl
                             pushData={pushData}
                             properties={properties}

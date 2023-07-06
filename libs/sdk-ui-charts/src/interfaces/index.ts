@@ -17,6 +17,8 @@ export {
     IContinuousLineConfig,
     ITooltipConfig,
     ITotalConfig,
+    IOrientationConfig,
+    ChartOrientationType,
 } from "./chartConfig.js";
 
 export {
