@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+    ],
+    "packageRules": [
+        {
+            "matchDatasources": ["docker"],
+            "commitMessageAction": "update",
+            "commitMessageTopic": "of dependency by renovate",
+            "commitMessageExtra": "",
+            "commitMessageSuffix": ""
+        }
   ]
 }
