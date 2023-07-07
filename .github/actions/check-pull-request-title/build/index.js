@@ -3171,12 +3171,14 @@
             /^(FEATURE|BUGFIX|RELATED|TRIVIAL|CONFIG): [A-Z0-9]+-\d+(, [A-Z0-9]+-\d+)* .+/;
         const TRIVIAL_CHANGE_REGEX = /^(TRIVIAL|CONFIG): .+/;
         const CROSS_MERGE_REGEX = /^Merge yenkins-admin:.?/;
+        const RENOVATE_REGEX = /^chore: update of dependency by renovate$/;
         try {
             const title = core.getInput("pull_request_title");
             if (
                 REGULAR_CHANGE_REGEX.test(title) ||
                 TRIVIAL_CHANGE_REGEX.test(title) ||
-                CROSS_MERGE_REGEX.test(title)
+                CROSS_MERGE_REGEX.test(title) ||
+                RENOVATE_REGEX.test(title)
             ) {
                 console.log("The pull request title is valid 🎉");
             } else {
