@@ -1,6 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
+import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
+import * as GdcExport from "@gooddata/api-model-bear/GdcExport";
 
-import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
 import { transformResultHeaders } from "@gooddata/sdk-backend-base";
 import {
     IDataView,

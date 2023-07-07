@@ -1,5 +1,6 @@
 // (C) 2019-2023 GoodData Corporation
-import { GdcFilterContext } from "@gooddata/api-model-bear";
+import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
+
 import {
     uriRef,
     FilterContextItem,
@@ -29,6 +30,9 @@ export const sanitizeExportFilterContext = (
     };
 };
 
+/**
+ * @internal
+ */
 export const convertFilterContextItem = (
     filterContextItem: GdcFilterContext.FilterContextItem,
 ): FilterContextItem => {
@@ -89,6 +93,9 @@ export const convertFilterContextItem = (
     return convertedFilterContextItem;
 };
 
+/**
+ * @internal
+ */
 export const convertFilterContext = (
     filterContext: GdcFilterContext.IWrappedFilterContext,
 ): IFilterContext | IFilterContextDefinition => {

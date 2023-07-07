@@ -19,7 +19,8 @@ import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import omit from "lodash/omit.js";
-import { GdcMetadata, GdcVisualizationObject } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import { convertReferencesToUris } from "./ReferenceConverter.js";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter.js";
 import { fromBearRef, fromScopedBearRef } from "./ObjRefConverter.js";
@@ -166,6 +167,9 @@ const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): IAttr
         : convertAttribute(bucketItem);
 };
 
+/**
+ * @internal
+ */
 export const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket => {
     return {
         items: bucket.items.map(convertBucketItem),

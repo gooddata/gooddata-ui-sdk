@@ -12,7 +12,7 @@ import {
     isPreviousPeriodMeasureDefinition,
     MeasureAggregation,
 } from "@gooddata/sdk-model";
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
 import { convertMeasureFilter } from "./FilterConverter.js";
 import { toBearRef } from "../ObjRefConverter.js";
 import compact from "lodash/compact.js";

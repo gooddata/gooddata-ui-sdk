@@ -1,5 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
-import { GdcVisualizationObject, GdcExecuteAFM } from "@gooddata/api-model-bear";
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
+
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import { ObjectType, ObjRef, ObjRefInScope, idRef, uriRef, localIdRef } from "@gooddata/sdk-model";
 
 /**

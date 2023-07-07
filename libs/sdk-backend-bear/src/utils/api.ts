@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcUser } from "@gooddata/api-model-bear";
+import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
 import { IAuthenticatedPrincipal, UnexpectedError, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { Identifier, isIdentifierRef, isUriRef, IUser, ObjRef, Uri } from "@gooddata/sdk-model";
 import last from "lodash/last.js";

@@ -1,6 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { GdcDashboardLayout, GdcVisualizationObject, GdcVisualizationClass } from "@gooddata/api-model-bear";
+import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
+import * as GdcDashboardLayout from "@gooddata/api-model-bear/GdcDashboardLayout";
+
+import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
 import {
     uriRef,
     idRef,
@@ -21,6 +24,9 @@ const KPI_SIZE = 2;
 // Default layout column size for the visualization widget, when generating implicit layout
 const VISUALIZATION_SIZE = 12;
 
+/**
+ * @internal
+ */
 export const convertLayoutSize = (size: GdcDashboardLayout.IFluidLayoutSize): IDashboardLayoutSize => {
     const converted: IDashboardLayoutSize = {
         gridWidth: size.width,
@@ -37,6 +43,9 @@ export const convertLayoutSize = (size: GdcDashboardLayout.IFluidLayoutSize): ID
     return converted;
 };
 
+/**
+ * @internal
+ */
 export const convertLayoutItemSize = (
     column: GdcDashboardLayout.IFluidLayoutColSize,
 ): IDashboardLayoutSizeByScreenSize => {
@@ -100,6 +109,9 @@ const convertLayoutSection = (
     return section;
 };
 
+/**
+ * @internal
+ */
 export const convertLayout = (
     layout: GdcDashboardLayout.Layout,
     widgetDependencies: IWidget[],

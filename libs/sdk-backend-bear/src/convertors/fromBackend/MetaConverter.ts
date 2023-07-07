@@ -1,5 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
+
 import { uriRef, ObjectType, IMetadataObject, MetadataObject } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {

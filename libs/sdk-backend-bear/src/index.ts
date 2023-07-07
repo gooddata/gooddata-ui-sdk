@@ -57,6 +57,18 @@ import { convertInsight, convertInsightDefinition } from "./convertors/toBackend
 import { toAfmExecution } from "./convertors/toBackend/afm/ExecutionConverter.js";
 
 /**
+ * @internal
+ */
+export {
+    convertInsightDefinition,
+    toAfmExecution,
+    convertScheduledMail,
+    convertWidget,
+    convertLayoutSize,
+    convertLayoutItemSize,
+};
+
+/**
  * Some of the convertors from bear types are exported through this so that they can be used by our
  * applications that were using bear-specific types in their state.
  *
@@ -101,6 +113,27 @@ import {
     convertLayoutItemSize as convertLayoutItemSizeFromBackend,
 } from "./convertors/fromBackend/DashboardConverter/index.js";
 
+/**
+ * @internal
+ */
+export {
+    convertBucket,
+    convertVisualization,
+    convertReferencesToUris,
+    convertFilterContext,
+    convertFilterContextItem,
+    convertFilterReference,
+    convertKpiDrill,
+    convertInsight,
+    convertVisualizationWidgetDrill,
+    convertScheduledMailFromBackend,
+    convertDashboardDateFilterConfig,
+    convertUrisToReferences,
+    serializeProperties,
+    deserializeProperties,
+    convertLayoutSizeFromBackend,
+    convertLayoutItemSizeFromBackend,
+};
 /**
  * Some of the convertors to bear types are exported through this so that they can be used by our
  * applications that were using bear-specific types in their state.

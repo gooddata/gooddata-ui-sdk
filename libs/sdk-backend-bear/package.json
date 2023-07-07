@@ -31,7 +31,7 @@
         "build": "bash scripts/build.sh && npm run api-extractor",
         "build-esm": "tsc -p tsconfig.build.json",
         "build-dev": "bash scripts/build.sh --dev",
-        "api-extractor": "mkdir -p api",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "integrated-test": "./scripts/integrated-test.sh",
         "integrated-test-rec": "GD_BEAR_REC=true NODE_TLS_REJECT_UNAUTHORIZED=0 vitest --config vite.integrated.config.ts run",
         "refresh-recordings": "npm run clear-recordings && npm run start-wiremock-recording && npm run integrated-test-rec; npm run stop-wiremock && npm run remove-sensitive-data",

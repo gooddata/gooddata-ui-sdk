@@ -1,5 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,

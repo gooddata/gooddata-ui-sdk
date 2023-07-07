@@ -1,5 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
-import { GdcExecuteAFM, Uri, Identifier, GdcMetadata } from "@gooddata/api-model-bear";
+import { Uri, Identifier } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
+
 import {
     ObjRef,
     IAttributeFilter,

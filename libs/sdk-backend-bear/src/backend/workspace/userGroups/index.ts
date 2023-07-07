@@ -9,7 +9,7 @@ import { IWorkspaceUserGroup } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { convertWorkspaceUserGroup } from "../../../convertors/fromBackend/UserGroupsConverter.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { GdcUserGroup } from "@gooddata/api-model-bear";
+import * as GdcUserGroup from "@gooddata/api-model-bear/GdcUserGroup";
 
 export class BearWorkspaceUserGroupsQuery implements IWorkspaceUserGroupsQuery {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {}

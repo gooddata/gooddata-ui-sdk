@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import { GdcAccessControl } from "@gooddata/api-model-bear";
+import * as GdcAccessControl from "@gooddata/api-model-bear/GdcAccessControl";
 
 import { convertWorkspaceUserGroup } from "./UserGroupsConverter.js";
 import { convertUsersItem } from "./UsersConverter.js";

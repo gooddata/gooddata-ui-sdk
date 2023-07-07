@@ -1,5 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -226,11 +226,29 @@ export function isRemoveRankingFilter(filter: unknown): filter is IRemoveRanking
     return !isEmpty(filter) && (filter as IRemoveRankingFilterItem).removeRankingFilter !== undefined;
 }
 
+/**
+ * @public
+ */
 export type AllTimeType = "allTime";
+
+/**
+ * @public
+ */
 export type AbsoluteType = "absolute";
+
+/**
+ * @public
+ */
 export type RelativeType = "relative";
 
+/**
+ * @public
+ */
 export type DateString = string;
+
+/**
+ * @public
+ */
 export type DateFilterGranularity =
     | "GDC.time.minute"
     | "GDC.time.hour"
@@ -240,10 +258,16 @@ export type DateFilterGranularity =
     | "GDC.time.quarter"
     | "GDC.time.year";
 
+/**
+ * @public
+ */
 export interface IDashboardAllTimeDateFilter {
     dateFilter: { type: AllTimeType };
 }
 
+/**
+ * @public
+ */
 export interface IDashboardAbsoluteDateFilter {
     dateFilter: {
         type: AbsoluteType;
@@ -253,6 +277,9 @@ export interface IDashboardAbsoluteDateFilter {
     };
 }
 
+/**
+ * @public
+ */
 export interface IDashboardRelativeDateFilter {
     dateFilter: {
         type: RelativeType;
@@ -262,20 +289,38 @@ export interface IDashboardRelativeDateFilter {
     };
 }
 
+/**
+ * @public
+ */
 export type DashboardDateFilter =
     | IDashboardAllTimeDateFilter
     | IDashboardAbsoluteDateFilter
     | IDashboardRelativeDateFilter;
 
+/**
+ * @public
+ */
 export function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter {
     return !isEmpty(filter) && (filter as DashboardDateFilter).dateFilter !== undefined;
 }
+
+/**
+ * @public
+ */
 export function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter {
     return !isEmpty(filter) && (filter as IDashboardAllTimeDateFilter).dateFilter?.type === "allTime";
 }
+
+/**
+ * @public
+ */
 export function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashboardAbsoluteDateFilter {
     return !isEmpty(filter) && (filter as IDashboardAbsoluteDateFilter).dateFilter?.type === "absolute";
 }
+
+/**
+ * @public
+ */
 export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter {
     return !isEmpty(filter) && (filter as IDashboardRelativeDateFilter).dateFilter?.type === "relative";
 }

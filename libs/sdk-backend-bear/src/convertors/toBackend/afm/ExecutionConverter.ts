@@ -1,6 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
+
 import { convertFilters } from "./FilterConverter.js";
 import { convertMeasure } from "./MeasureConverter.js";
 import {

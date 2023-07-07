@@ -1,11 +1,17 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { GdcVisualizationWidget, GdcKpi, GdcExtendedDateFilters } from "@gooddata/api-model-bear";
+import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
+import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
+import * as GdcExtendedDateFilters from "@gooddata/api-model-bear/GdcExtendedDateFilters";
+
 import { uriRef, IDashboardFilterReference, IWidget } from "@gooddata/sdk-model";
 import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills.js";
 import { convertReferencesToUris } from "../ReferenceConverter.js";
 import { deserializeProperties } from "../PropertiesConverter.js";
 
+/**
+ * @internal
+ */
 export const convertFilterReference = (
     filterReference:
         | GdcExtendedDateFilters.IDateFilterReference

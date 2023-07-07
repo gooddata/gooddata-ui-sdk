@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { GdcMetadata } from "@gooddata/api-model-bear";
+import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
 import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import { IMetadataObject, IDataset } from "@gooddata/sdk-model";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";

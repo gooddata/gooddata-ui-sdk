@@ -5,15 +5,15 @@
 ```ts
 
 import { FilterContextItem } from '@gooddata/sdk-model';
-import { GdcDashboard } from '@gooddata/api-model-bear';
-import { GdcDashboardLayout } from '@gooddata/api-model-bear';
-import { GdcExecuteAFM } from '@gooddata/api-model-bear';
-import { GdcExtendedDateFilters } from '@gooddata/api-model-bear';
-import { GdcFilterContext } from '@gooddata/api-model-bear';
-import { GdcKpi } from '@gooddata/api-model-bear';
-import { GdcScheduledMail } from '@gooddata/api-model-bear';
-import { GdcVisualizationObject } from '@gooddata/api-model-bear';
-import { GdcVisualizationWidget } from '@gooddata/api-model-bear';
+import * as GdcDashboard from '@gooddata/api-model-bear/GdcDashboard';
+import * as GdcDashboardLayout from '@gooddata/api-model-bear/GdcDashboardLayout';
+import * as GdcExecuteAFM from '@gooddata/api-model-bear/GdcExecuteAFM';
+import * as GdcExtendedDateFilters from '@gooddata/api-model-bear/GdcExtendedDateFilters';
+import * as GdcFilterContext from '@gooddata/api-model-bear/GdcFilterContext';
+import * as GdcKpi from '@gooddata/api-model-bear/GdcKpi';
+import * as GdcScheduledMail from '@gooddata/api-model-bear/GdcScheduledMail';
+import * as GdcVisualizationObject from '@gooddata/api-model-bear/GdcVisualizationObject';
+import * as GdcVisualizationWidget from '@gooddata/api-model-bear/GdcVisualizationWidget';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
@@ -38,7 +38,6 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
-import { ReferenceConverter as ReferenceConverter_2 } from './convertors/fromBackend/ReferenceConverter.js';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @public
@@ -55,22 +54,22 @@ export class AnonymousAuthProvider implements IAuthenticationProvider {
 
 // @internal
 export const BackendToBearConvertors: {
-    convertBucket: (bucket: GdcVisualizationObject.IBucket) => IBucket;
-    convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Map<string, IUser> | undefined) => IInsight;
-    convertReferencesToUris: ReferenceConverter_2;
-    convertFilterContext: (filterContext: GdcFilterContext.IWrappedFilterContext) => IFilterContextDefinition | IFilterContext;
-    convertFilterContextItem: (filterContextItem: GdcFilterContext.FilterContextItem) => FilterContextItem;
-    convertFilterReference: (filterReference: GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference) => IDashboardFilterReference;
-    convertKpiDrill: (kpi: GdcKpi.IWrappedKPI) => IDrillToLegacyDashboard;
-    convertInsight: (insight: IInsight) => GdcVisualizationObject.IVisualizationObject;
-    convertVisualizationWidgetDrill: (drill: GdcVisualizationWidget.IDrillDefinition) => InsightDrillDefinition;
-    convertScheduledMail: (scheduledMail: GdcScheduledMail.IWrappedScheduledMail, userMap?: Map<string, IUser> | undefined) => IScheduledMailDefinition | IScheduledMail;
-    convertDashboardDateFilterConfig: (dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig) => IDashboardDateFilterConfig;
-    convertUrisToReferences: ReferenceConverter_2;
-    serializeProperties: (properties: VisualizationProperties) => string;
-    deserializeProperties: (properties: string | undefined) => VisualizationProperties;
-    convertLayoutSize: (size: GdcDashboardLayout.IFluidLayoutSize) => IDashboardLayoutSize;
-    convertLayoutItemSize: (column: GdcDashboardLayout.IFluidLayoutColSize) => IDashboardLayoutSizeByScreenSize;
+    convertBucket: typeof convertBucket;
+    convertVisualization: typeof convertVisualization;
+    convertReferencesToUris: typeof convertReferencesToUris;
+    convertFilterContext: typeof convertFilterContext;
+    convertFilterContextItem: typeof convertFilterContextItem;
+    convertFilterReference: typeof convertFilterReference;
+    convertKpiDrill: typeof convertKpiDrill;
+    convertInsight: typeof convertInsight;
+    convertVisualizationWidgetDrill: typeof convertVisualizationWidgetDrill;
+    convertScheduledMail: typeof convertScheduledMailFromBackend;
+    convertDashboardDateFilterConfig: typeof convertDashboardDateFilterConfig;
+    convertUrisToReferences: typeof convertUrisToReferences;
+    serializeProperties: typeof serializeProperties;
+    deserializeProperties: typeof deserializeProperties;
+    convertLayoutSize: typeof convertLayoutSizeFromBackend;
+    convertLayoutItemSize: typeof convertLayoutItemSizeFromBackend;
 };
 
 // @public
@@ -99,13 +98,13 @@ export default bearFactory;
 
 // @internal
 export const BearToBackendConvertors: {
-    convertInsight: (insight: IInsight) => GdcVisualizationObject.IVisualizationObject;
-    convertInsightDefinition: (insight: IInsightDefinition) => GdcVisualizationObject.IVisualizationObject;
-    toAfmExecution: (def: IExecutionDefinition) => GdcExecuteAFM.IExecution;
-    convertScheduledMail: (scheduledMail: IScheduledMailDefinition | IScheduledMail) => GdcScheduledMail.IWrappedScheduledMail;
-    convertWidget: (widget: IWidgetDefinition | IWidget) => GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI;
-    convertLayoutSize: (size: IDashboardLayoutSize) => GdcDashboardLayout.IFluidLayoutSize;
-    convertLayoutItemSize: (column: IDashboardLayoutSizeByScreenSize) => GdcDashboardLayout.IFluidLayoutColSize;
+    convertInsight: typeof convertInsight;
+    convertInsightDefinition: typeof convertInsightDefinition;
+    toAfmExecution: typeof toAfmExecution;
+    convertScheduledMail: typeof convertScheduledMail;
+    convertWidget: typeof convertWidget;
+    convertLayoutSize: typeof convertLayoutSize;
+    convertLayoutItemSize: typeof convertLayoutItemSize;
 };
 
 // @public
@@ -116,6 +115,66 @@ export class ContextDeferredAuthProvider extends BearAuthProviderBase implements
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
+
+// @internal (undocumented)
+export const convertBucket: (bucket: GdcVisualizationObject.IBucket) => IBucket;
+
+// @internal (undocumented)
+export const convertDashboardDateFilterConfig: (dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig) => IDashboardDateFilterConfig;
+
+// @internal (undocumented)
+export const convertFilterContext: (filterContext: GdcFilterContext.IWrappedFilterContext) => IFilterContext | IFilterContextDefinition;
+
+// @internal (undocumented)
+export const convertFilterContextItem: (filterContextItem: GdcFilterContext.FilterContextItem) => FilterContextItem;
+
+// @internal (undocumented)
+export const convertFilterReference: (filterReference: GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference) => IDashboardFilterReference;
+
+// @internal (undocumented)
+export const convertInsight: (insight: IInsight) => GdcVisualizationObject.IVisualizationObject;
+
+// @internal (undocumented)
+export const convertInsightDefinition: (insight: IInsightDefinition) => GdcVisualizationObject.IVisualizationObject;
+
+// @internal (undocumented)
+export const convertKpiDrill: (kpi: GdcKpi.IWrappedKPI) => IDrillToLegacyDashboard;
+
+// @internal (undocumented)
+export const convertLayoutItemSize: (column: IDashboardLayoutSizeByScreenSize) => GdcDashboardLayout.IFluidLayoutColSize;
+
+// @internal (undocumented)
+export const convertLayoutItemSizeFromBackend: (column: GdcDashboardLayout.IFluidLayoutColSize) => IDashboardLayoutSizeByScreenSize;
+
+// @internal (undocumented)
+export const convertLayoutSize: (size: IDashboardLayoutSize) => GdcDashboardLayout.IFluidLayoutSize;
+
+// @internal (undocumented)
+export const convertLayoutSizeFromBackend: (size: GdcDashboardLayout.IFluidLayoutSize) => IDashboardLayoutSize;
+
+// @internal
+export const convertReferencesToUris: ReferenceConverter;
+
+// @internal (undocumented)
+export const convertScheduledMail: (scheduledMail: IScheduledMail | IScheduledMailDefinition) => GdcScheduledMail.IWrappedScheduledMail;
+
+// @internal (undocumented)
+export const convertScheduledMailFromBackend: (scheduledMail: GdcScheduledMail.IWrappedScheduledMail, userMap?: Map<string, IUser>) => IScheduledMail | IScheduledMailDefinition;
+
+// @internal
+export const convertUrisToReferences: ReferenceConverter;
+
+// @internal (undocumented)
+export const convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Map<string, IUser>) => IInsight;
+
+// @internal (undocumented)
+export const convertVisualizationWidgetDrill: (drill: GdcVisualizationWidget.IDrillDefinition) => InsightDrillDefinition;
+
+// @internal (undocumented)
+export const convertWidget: (widget: IWidget | IWidgetDefinition) => GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI;
+
+// @internal (undocumented)
+export const deserializeProperties: (properties: string | undefined) => VisualizationProperties;
 
 // @public
 export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
@@ -137,5 +196,11 @@ export type IdGenerator = () => string;
 
 // @internal (undocumented)
 export type ReferenceConverter = (conversionData: IConversionData, idGenerator?: IdGenerator) => IConversionData;
+
+// @internal (undocumented)
+export const serializeProperties: (properties: VisualizationProperties) => string;
+
+// @internal
+export const toAfmExecution: (def: IExecutionDefinition) => GdcExecuteAFM.IExecution;
 
 ```
