@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import React from "react";
+import React, { useEffect } from "react";
 import { ContentRect } from "react-measure";
 
 import {
@@ -135,14 +135,16 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         onNegativeValues(chartOptions);
     }
 
-    pushData({
-        propertiesMeta: {
-            legend_enabled: legendOptions.toggleEnabled,
-        },
-        colors: {
-            colorAssignments: chartOptions.colorAssignments,
-            colorPalette: chartOptions.colorPalette,
-        },
+    useEffect(() => {
+        pushData({
+            propertiesMeta: {
+                legend_enabled: legendOptions.toggleEnabled,
+            },
+            colors: {
+                colorAssignments: chartOptions.colorAssignments,
+                colorPalette: chartOptions.colorPalette,
+            },
+        });
     });
 
     if (!isChartSupported(visType)) {

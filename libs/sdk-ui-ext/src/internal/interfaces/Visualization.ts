@@ -33,6 +33,8 @@ import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
+export type UnmountFunction = (elementsOrSelectors?: (string | HTMLElement)[]) => void;
+
 export type ElementSelectorFunction = () => HTMLElement | null;
 
 export interface IVisConstruct {
@@ -49,6 +51,7 @@ export interface IVisConstruct {
     featureFlags?: ISettings;
     visualizationProperties: VisualizationProperties;
     renderFun: RenderFunction;
+    unmountFun: UnmountFunction;
 }
 
 export interface ICustomProps {

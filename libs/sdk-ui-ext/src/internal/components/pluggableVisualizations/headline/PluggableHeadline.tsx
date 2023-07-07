@@ -24,6 +24,7 @@ import {
     IVisConstruct,
     IVisProps,
     RenderFunction,
+    UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
@@ -38,7 +39,6 @@ import {
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
@@ -86,16 +86,18 @@ import cloneDeep from "lodash/cloneDeep.js";
 export class PluggableHeadline extends AbstractPluggableVisualization {
     private readonly settings?: ISettings;
     private readonly renderFun: RenderFunction;
+    private readonly unmountFun: UnmountFunction;
 
     constructor(props: IVisConstruct) {
         super(props);
 
         this.settings = props.featureFlags;
         this.renderFun = props.renderFun;
+        this.unmountFun = props.unmountFun;
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
     }
 
     public getExtendedReferencePoint(

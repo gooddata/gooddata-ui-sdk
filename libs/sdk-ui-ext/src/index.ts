@@ -53,6 +53,8 @@ export {
     IEmbedInsightDialogProps,
 } from "./internal/index.js";
 
+export { provideCreateRoot, CreateRoot, Root } from "./internal/createRootProvider.js";
+
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
 /**
  * @internal

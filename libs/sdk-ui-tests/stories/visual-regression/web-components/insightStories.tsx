@@ -60,5 +60,5 @@ storiesOf(`${WebComponents}/Insight`)
                 ))}
             </>
         ),
-        { screenshot: true },
+        { screenshot: { postInteractionWait: 1000 } },
     );

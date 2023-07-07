@@ -16,7 +16,13 @@ import {
     insightSetProperties,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps } from "../internal/index.js";
+import {
+    IVisualization,
+    IVisProps,
+    FullVisualizationCatalog,
+    IInsightViewProps,
+    unmountComponentsAtNodes,
+} from "../internal/index.js";
 import {
     OnError,
     fillMissingTitles,
@@ -36,6 +42,7 @@ import {
     ExecutionFactoryWithFixedFilters,
 } from "@gooddata/sdk-backend-base";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { Root, _createRoot } from "../internal/createRootProvider.js";
 
 /**
  * @internal
@@ -69,6 +76,13 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
+
+    /**
+     * The component may render both visualization and config panel. In React18 we therefore need two
+     * roots with their respective render methods. This Map holds the roots for both and provides
+     * render and unmount methods whenever needed.
+     */
+    private reactRootsMap: Map<HTMLElement, Root> = new Map();
 
     public static defaultProps: Pick<
         IInsightRendererProps,
@@ -173,8 +187,31 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.props.insight),
             featureFlags: this.props.settings,
-            renderFun: render,
+            renderFun: this.getReactRenderFunction(),
+            unmountFun: this.getReactUnmountFunction(),
         });
+    };
+
+    private getReactRenderFunction = () => {
+        if (_createRoot) {
+            return (children: any, element: HTMLElement) => {
+                if (!this.reactRootsMap.get(element)) {
+                    this.reactRootsMap.set(element, _createRoot(element));
+                }
+                this.reactRootsMap.get(element).render(children);
+            };
+        } else {
+            return render;
+        }
+    };
+
+    private getReactUnmountFunction = () => {
+        if (_createRoot) {
+            return () => this.reactRootsMap.forEach((root) => root.render(null));
+        } else {
+            return (elementsOrSelectors: (string | HTMLElement)[]) =>
+                unmountComponentsAtNodes(elementsOrSelectors);
+        }
     };
 
     private onExportReadyDecorator = (exportFunction: IExportFunction): void => {
@@ -253,6 +290,12 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 
     public componentWillUnmount() {
         this.unmountVisualization();
+        if (_createRoot) {
+            // In order to avoid race conditions when mounting and unmounting synchronously,
+            // we use timeout for React18.
+            // https://github.com/facebook/react/issues/25675
+            this.reactRootsMap.forEach((root) => setTimeout(() => root.unmount(), 0));
+        }
     }
 
     public render() {

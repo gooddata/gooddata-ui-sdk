@@ -1,6 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import { unmountComponentAtNode } from "react-dom";
 
+/**
+ * @internal
+ */
 export function unmountComponentsAtNodes(
     elementsOrSelectors: Array<HTMLElement | string> = [],
     {

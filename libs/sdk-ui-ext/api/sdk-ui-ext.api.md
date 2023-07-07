@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -38,6 +40,9 @@ export function addIntersectionFiltersToInsight(source: IInsight, intersection: 
 
 // @public
 export function clearInsightViewCaches(): void;
+
+// @public
+export type CreateRoot = (container: Element | DocumentFragment, options?: any) => Root;
 
 // @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
@@ -270,6 +275,17 @@ export const PluggableVisualizationErrorCodes: {
 
 // @alpha (undocumented)
 export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
+
+// @public
+export function provideCreateRoot(createRoot: CreateRoot): void;
+
+// @public
+export interface Root {
+    // (undocumented)
+    render(children: React.ReactNode): void;
+    // (undocumented)
+    unmount(): void;
+}
 
 // @internal (undocumented)
 export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;

@@ -19,7 +19,6 @@ const targetFile = path.resolve(__dirname, "stories.json");
 describe("story-extractor", () => {
     it("dumps stories into a file", () => {
         const fileContents = toBackstopJson();
-        console.log("test");
         writeFileSync(targetFile, fileContents, { encoding: "utf8" });
         expect(existsSync(targetFile)).toBe(true);
     });
