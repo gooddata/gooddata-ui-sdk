@@ -9,9 +9,10 @@ import { execSync } from "child_process";
 
 import { TIGER_FIXTURE_CATALOG, BEAR_FIXTURE_CATALOG } from "./constant.js";
 
-export function exportCatalogBear(host, projectId, username) {
+export function exportCatalogBear(host, projectId, username, password) {
     // NOTE: we support this only for goodsales
     const outputFile = BEAR_FIXTURE_CATALOG["goodsales"];
+    process.env["GDC_PASSWORD"] = password;
     execSync(
         `npx gdc-catalog-export --accept-untrusted-ssl --hostname "${host}" --workspace-id "${projectId}" --username "${username}" --backend "bear" --catalog-output "${outputFile}"`,
         { stdio: "inherit" },

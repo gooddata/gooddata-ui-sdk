@@ -36,9 +36,7 @@ async function main() {
         );
 
         log("Exporting metadata objects identifiers to local TypeScript file\n");
-        // export catalog reads password from GDC_PASSWORD variable in .env
-        fs.appendFileSync(".env", `GDC_PASSWORD=${PASSWORD}\n`, () => {});
-        exportCatalogBear(HOST, newReferenceWorkspaceId, USER_NAME);
+        exportCatalogBear(HOST, newReferenceWorkspaceId, USER_NAME, PASSWORD);
 
         fs.appendFileSync(".env", `TEST_WORKSPACE_ID=${newReferenceWorkspaceId}\n`, () => {
             log("TEST_WORKSPACE_ID added to the .env file\n");
