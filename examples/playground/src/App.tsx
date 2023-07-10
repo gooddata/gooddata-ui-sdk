@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createBackend } from "./createBackend.js";
+import { ControlledTransposedPivot } from "./playground/ControlledTransposedPivot.js";
 
 function hasCredentialsSetup(): boolean {
     if (BACKEND_TYPE === "tiger") {
@@ -19,7 +20,8 @@ const AppWithBackend: React.FC = () => {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={WORKSPACE}>
-                {/* Build your playground components under the playground directory.*/}
+                <h1>Transposing</h1>
+                <ControlledTransposedPivot />
             </WorkspaceProvider>
         </BackendProvider>
     );

@@ -508,7 +508,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            if (tableTranspositionEnabled(this.settings)) {
+            if (
+                tableTranspositionEnabled(this.settings) ||
+                tableColumnHeadersPositionEnabled(this.settings)
+            ) {
                 this.renderFun(
                     <PivotTableConfigurationPanel
                         locale={this.locale}
