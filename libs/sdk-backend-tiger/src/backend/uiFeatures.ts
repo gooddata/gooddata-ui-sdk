@@ -50,6 +50,8 @@ export enum TigerFeaturesNames {
     EnablePivotTableTransposition = "enablePivotTableTransposition",
     //boolean + possible values: enabled, disabled
     EnableNewHeadline = "enableNewHeadline",
+     //boolean + possible values: enabled, disabled
+    EnableColumnHeadersPosition = "enableColumnHeadersPosition",
 }
 
 export type ITigerFeatureFlags = {
@@ -74,6 +76,7 @@ export type ITigerFeatureFlags = {
     enablePdmRemovalDeprecationPhase: typeof FeatureFlagsValues["enablePdmRemovalDeprecationPhase"][number];
     enablePivotTableTransposition: typeof FeatureFlagsValues["enablePivotTableTransposition"][number];
     enableNewHeadline: typeof FeatureFlagsValues["enableNewHeadline"][number];
+    enableColumnHeadersPosition: typeof FeatureFlagsValues["enableColumnHeadersPosition"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -98,6 +101,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePdmRemovalDeprecationPhase: false,
     enablePivotTableTransposition: false,
     enableNewHeadline: false,
+    enableColumnHeadersPosition: false,
 };
 
 export const FeatureFlagsValues = {
@@ -126,4 +130,5 @@ export const FeatureFlagsValues = {
     enablePdmRemovalDeprecationPhase: [true, false] as const,
     enablePivotTableTransposition: [true, false] as const,
     enableNewHeadline: [true, false] as const,
+    enableColumnHeadersPosition: [true, false] as const,
 };

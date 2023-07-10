@@ -28,12 +28,15 @@ export function pivotTableConfigFromInsight(
     const separatorsProp = !isEmpty(baseConfig.separators) ? { separators: baseConfig.separators } : {};
     const measureGroupDimension = insightProperties(insight)?.controls?.measureGroupDimension;
     const metricsPositionProp = !isEmpty(measureGroupDimension) ? { measureGroupDimension } : {};
+    const columnHeadersPosition = insightProperties(insight)?.controls?.columnHeadersPosition;
+    const columnHeadersPositionProp = !isEmpty(columnHeadersPosition) ? { columnHeadersPosition } : {};
 
     return {
         ...columnSizingProp,
         ...menuProp,
         ...separatorsProp,
         ...metricsPositionProp,
+        ...columnHeadersPositionProp,
         // the user can fill the rest on their own later
     };
 }

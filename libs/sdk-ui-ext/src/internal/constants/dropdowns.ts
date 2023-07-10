@@ -122,3 +122,8 @@ export const metricsPositionDropdownItems: IDropdownItem[] = [
     { title: messages.metricsPositionColumns.id, value: "columns" },
     { title: messages.metricsPositionRows.id, value: "rows" },
 ];
+
+export const columnHeadersPositionDropdownItems: IDropdownItem[] = [
+    { title: messages.columnHeaderPositionTop.id, value: "top" },
+    { title: messages.columnHeaderPositionLeft.id, value: "left" },
+];

@@ -1,10 +1,13 @@
 // (C) 2019-2023 GoodData Corporation
 import set from "lodash/set.js";
 import { WrappedComponentProps } from "react-intl";
+import { BucketNames, IPushData } from "@gooddata/sdk-ui";
+import { bucketsFind, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
+
 import { getTranslation } from "./translations.js";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl.js";
-import { IPushData } from "@gooddata/sdk-ui";
 import { messages } from "../../locales.js";
+import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 
 function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);
@@ -139,4 +142,11 @@ export function minInputValidateAndPushData(
     }
 
     pushData({ properties, propertiesMeta });
+}
+
+export function isSetColumnHeadersPositionToLeftAllowed(insight: IInsightDefinition) {
+    const rowAttribute = bucketsFind(insightBuckets(insight), BucketNames.ATTRIBUTE);
+    const measureGroupDimension = getMeasureGroupDimensionFromProperties(insight) ?? "columns";
+
+    return !!rowAttribute || measureGroupDimension === "rows";
 }

@@ -49,6 +49,8 @@ import {
     SliceMeasureCol,
     isSliceMeasureCol,
     isMixedValuesCol,
+    MixedHeadersCol,
+    MixedValuesCol,
 } from "../structure/tableDescriptorTypes.js";
 import { createColumnLocator } from "../structure/colLocatorFactory.js";
 import { colMeasureLocalId } from "../structure/colAccessors.js";
@@ -553,7 +555,9 @@ export function updateColumnDefinitionsWithWidths(
     const sliceCols = tableDescriptor.zippedSliceCols;
     const leaves = tableDescriptor.zippedLeaves;
 
-    const allSizableCols: Array<[SliceCol | SliceMeasureCol | SeriesCol | ScopeCol, ColDef]> = [];
+    const allSizableCols: Array<
+        [SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol | SeriesCol | ScopeCol, ColDef]
+    > = [];
     allSizableCols.push(...sliceCols);
     allSizableCols.push(...leaves);
 

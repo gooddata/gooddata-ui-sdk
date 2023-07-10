@@ -4,10 +4,10 @@ SCRIPTDIR=`dirname $0`
 ROOTDIR="${SCRIPTDIR}/.."
 EXPORTER="${ROOTDIR}/node_modules/.bin/gdc-catalog-export"
 OUTPUT="${ROOTDIR}/src/md/full.ts"
-WORKSPACEID="xms7ga4tf3g3nzucd8380o2bev8oeknp"
+WORKSPACEID="heo9nbbna28ol3jnai0ut79tjer5cqdn"
 
 $EXPORTER \
   --backend bear \
-  --hostname "https://developer.na.gooddata.com" \
+  --hostname "https://staging3.intgdc.com" \
   --catalog-output "${OUTPUT}" \
   --workspace-id "${WORKSPACEID}"

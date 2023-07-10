@@ -21,6 +21,7 @@ export {
     ColumnResizedCallback,
     IMenu,
     MeasureGroupDimension,
+    ColumnHeadersPosition,
 } from "./publicTypes.js";
 
 export {

@@ -11,6 +11,7 @@ import {
     MIXED_VALUES_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
+    MIXED_HEADERS_COLUMN
 } from "../base/constants.js";
 import {
     agColId,
@@ -22,11 +23,13 @@ import {
     ScopeCol,
     SliceMeasureCol,
     MixedValuesCol,
+    MixedHeadersCol,
 } from "./tableDescriptorTypes.js";
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { IPivotTableConfig } from "../../publicTypes.js";
 import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
 import { messages } from "../../locales.js";
 
@@ -110,6 +113,31 @@ function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state:
             colId: col.id,
             field: col.id,
             headerName: "", // do not render header, yet leave ability to resize it
+            headerTooltip: undefined,
+            ...cellRendererProp,
+        };
+
+        state.rowColDefs.push(colDef); // TODO maybe add to a new collection
+        state.allColDefs.push(colDef);
+
+        if (!state.cellRendererPlaced) {
+            state.cellRendererPlaced = colDef;
+        }
+    }
+}
+
+function createAndAddMixedHeadersColDefs(
+    mixedHeadersCol: MixedHeadersCol[],
+    state: TransformState,
+) {
+    for (const col of mixedHeadersCol) {
+        const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+
+        const colDef: ColDef = {
+            type: MIXED_HEADERS_COLUMN,
+            colId: col.id,
+            field: col.id,
+            headerName: " ", // do not render header, yet leave ability to resize it
             headerTooltip: undefined,
             ...cellRendererProp,
         };
@@ -266,11 +294,13 @@ function createAndAddDataColDefs(table: TableCols, state: TransformState, intl?:
  * @param table - table col descriptors
  * @param initialSorts - initial table sorting definition
  * @param emptyHeaderTitle - what to show for title of headers with empty title
+ * @param config - optional pivot config
  */
 export function createColDefsFromTableDescriptor(
     table: TableCols,
     initialSorts: ISortItem[],
     emptyHeaderTitle: string,
+    config?: IPivotTableConfig,
     intl?: IntlShape,
 ): TableColDefs {
     const state: TransformState = {
@@ -283,10 +313,15 @@ export function createColDefsFromTableDescriptor(
         emptyHeaderTitle,
     };
 
-    createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
-    createAndAddDataColDefs(table, state, intl);
-    // handle metrics in rows and no column attribute case
-    createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
+    if (config?.columnHeadersPosition === "left") {
+        createAndAddMixedHeadersColDefs(table.mixedHeadersCols, state);
+        createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
+    } else {
+        createAndAddSliceColDefs(table.sliceCols, table.sliceMeasureCols, state);
+        createAndAddDataColDefs(table, state, intl);
+        // handle metrics in rows and no column attribute case
+        createAndAddMixedValuesColDefs(table.mixedValuesCols, state);
+    }
 
     const idToColDef: Record<string, ColDef | ColGroupDef> = {};
 

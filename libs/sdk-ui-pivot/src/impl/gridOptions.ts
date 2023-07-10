@@ -21,6 +21,7 @@ import {
     COLUMN_SUBTOTAL,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
+    MIXED_HEADERS_COLUMN,
     MIXED_VALUES_COLUMN,
 } from "./base/constants.js";
 import {
@@ -30,6 +31,7 @@ import {
     rowMeasureTemplate,
     mixedValuesColsTemplate,
     totalSubTotalColumnTemplate,
+    mixedHeadersTemplate,
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";
@@ -129,6 +131,7 @@ export function createGridOptions(
             [MEASURE_COLUMN]: measureColumnTemplate(table, props),
             [ROW_MEASURE_COLUMN]: rowMeasureTemplate(table, props),
             [MIXED_VALUES_COLUMN]: mixedValuesColsTemplate(table, props),
+            [MIXED_HEADERS_COLUMN]: mixedHeadersTemplate(table, props),
             [COLUMN_TOTAL]: totalSubTotalColumnTemplate(table, props),
             [COLUMN_SUBTOTAL]: totalSubTotalColumnTemplate(table, props),
         },

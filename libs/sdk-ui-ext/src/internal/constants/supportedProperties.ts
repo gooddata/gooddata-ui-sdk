@@ -267,7 +267,11 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "colorMapping",
 ];
 
-export const PIVOT_TABLE_SUPPORTED_PROPERTIES = ["columnWidths", "measureGroupDimension"];
+export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
+    "columnWidths",
+    "measureGroupDimension",
+    "columnHeadersPosition",
+];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping"];
 
