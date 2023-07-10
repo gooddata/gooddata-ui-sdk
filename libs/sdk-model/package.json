@@ -11,7 +11,6 @@
     "license": "MIT",
     "type": "module",
     "browser": "./esm/index.js",
-    "main": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
         "./internal": "./esm/internal.js"

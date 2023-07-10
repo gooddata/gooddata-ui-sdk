@@ -12,7 +12,6 @@
     "license": "MIT",
     "type": "module",
     "exports": "./esm/index.js",
-    "main": "esm/index.js",
     "types": "esm/index.d.ts",
     "sideEffects": [
         "*.css",

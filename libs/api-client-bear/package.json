@@ -10,7 +10,6 @@
     },
     "license": "MIT",
     "type": "module",
-    "main": "./esm/gooddata-node.js",
     "browser": "./esm/gooddata-browser.js",
     "exports": {
         "node": "./esm/gooddata-node.js",
