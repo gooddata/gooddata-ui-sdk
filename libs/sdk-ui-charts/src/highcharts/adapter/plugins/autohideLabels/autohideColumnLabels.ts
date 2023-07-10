@@ -93,10 +93,20 @@ const toggleNonStackedChartLabels = (
             showDataLabelInAxisRange(
                 point,
                 isWaterfall(type) ? Math.abs(point.y) : point.y,
-                axisRangeForAxes,
+                isWaterfall(type) ? getWaterfallAxisRangeForAxes(axisRangeForAxes) : axisRangeForAxes,
             ),
         );
     }
+};
+
+const getWaterfallAxisRangeForAxes = (axisRangeForAxes: IAxisRangeForAxes) => {
+    const { minAxisValue, maxAxisValue } = axisRangeForAxes.first;
+    return {
+        first: {
+            minAxisValue,
+            maxAxisValue: minAxisValue < 0 ? maxAxisValue + Math.abs(minAxisValue) : maxAxisValue,
+        },
+    };
 };
 
 const toggleStackedChartLabels = (visiblePoints: Highcharts.Point[], axisRangeForAxes: IAxisRangeForAxes) => {
