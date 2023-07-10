@@ -17,7 +17,7 @@ import MetricsPositionControl from "../configurationControls/MetricsPositionCont
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
         const { properties, pushData } = this.props;
-        const controlsDisabled = this.isControlDisabled();
+        const controlsDisabled = this.isPositionControlDisabled();
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <MetricsPositionControl
@@ -38,7 +38,12 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
 
     private getBubbleClassNames() {
         return cx("bubble-primary", {
-            invisible: !this.isControlDisabled(),
+            invisible: !this.isPositionControlDisabled(),
         });
+    }
+
+    private isPositionControlDisabled() {
+        const { insight, isError, isLoading } = this.props;
+        return !insight || isError || isLoading;
     }
 }

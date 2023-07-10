@@ -4,7 +4,7 @@ import React from "react";
 import { IMenu } from "../../../publicTypes.js";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
-import { isEmptyScopeCol, isSliceCol, isSliceMeasureCol } from "../tableDescriptorTypes.js";
+import { isEmptyScopeCol, isMixedValuesCol, isSliceCol, isSliceMeasureCol } from "../tableDescriptorTypes.js";
 import { SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
@@ -60,7 +60,8 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         const textAlign =
             isSliceCol(col) || isEmptyScopeCol(col) || isSliceMeasureCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;
         const isColumnAttribute = isEmptyScopeCol(col);
-        const isSortingEnabled = !isColumnAttribute && !isSliceMeasureCol(col) && enableSorting;
+        const isSortingEnabled =
+            !isColumnAttribute && !isSliceMeasureCol(col) && !isMixedValuesCol(col) && enableSorting;
 
         return (
             <HeaderCell

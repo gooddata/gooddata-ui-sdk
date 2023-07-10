@@ -130,6 +130,10 @@ export interface IPivotTableConfig {
      * Customize maximum height of the table.
      */
     maxHeight?: number;
+
+    /**
+     * Customize placement of metrics - in columns or in rows
+     */
     measureGroupDimension?: MeasureGroupDimension;
 }
 

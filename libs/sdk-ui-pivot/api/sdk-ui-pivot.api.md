@@ -173,7 +173,6 @@ export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
     groupRows?: boolean;
     maxHeight?: number;
-    // (undocumented)
     measureGroupDimension?: MeasureGroupDimension;
     menu?: IMenu;
     separators?: ISeparators;

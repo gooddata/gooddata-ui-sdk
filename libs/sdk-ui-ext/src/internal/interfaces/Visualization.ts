@@ -417,6 +417,16 @@ export interface IVisualization {
      * @param referencePoint - the reference point for which the sort config needs to be evaluated
      */
     getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig>;
+
+    /**
+     * Called whenever props of visualization changed. Detects if some of properties which affect also reference point did change. If so, reference point will be then recalculated.
+     * @param currentReferencePoint - the current reference point
+     * @param nextReferencePoint - the new reference point
+     */
+    haveSomePropertiesRelevantForReferencePointChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ): boolean;
 }
 
 export interface IGdcConfig {

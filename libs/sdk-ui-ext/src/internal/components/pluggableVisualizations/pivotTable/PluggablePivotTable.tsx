@@ -69,6 +69,7 @@ import { unmountComponentsAtNodes } from "../../../utils/domHelper.js";
 import {
     getColumnWidthsFromProperties,
     getReferencePointWithSupportedProperties,
+    getSupportedPropertiesControls,
 } from "../../../utils/propertiesHelper.js";
 
 import {
@@ -119,6 +120,8 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     );
 };
 
+const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
+
 /**
  * PluggablePivotTable
  *
@@ -167,6 +170,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
         this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
+        this.propertiesAffectingReferencePoint = PROPERTIES_AFFECTING_REFERENCE_POINT;
+        this.initializeProperties(props.visualizationProperties);
         this.backendCapabilities = props.backend.capabilities;
     }
 
@@ -316,6 +321,19 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             .withSorting(...(getPivotTableSortItems(insight) ?? []))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
+    }
+
+    protected initializeProperties(visualizationProperties: IVisualizationProperties): void {
+        const controls = visualizationProperties?.controls;
+
+        const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
+        const initialProperties = {
+            supportedProperties: { controls: supportedProperties },
+        };
+
+        this.pushData({
+            initialProperties,
+        });
     }
 
     private createCorePivotTableProps = () => {

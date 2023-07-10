@@ -11,7 +11,7 @@ import { isSeriesCol } from "./tableDescriptorTypes.js";
 import { cellClassFactory } from "../cell/cellClass.js";
 import { createCellRenderer } from "../cell/cellRenderer.js";
 import ColumnTotalHeader from "./headers/ColumnTotalHeader.js";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { IMeasureDescriptor, ISeparators } from "@gooddata/sdk-model";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
@@ -52,6 +52,21 @@ export function rowMeasureTemplate(table: TableFacade, props: Readonly<ICorePivo
     };
 }
 
+function potentialRowMeasureFormatter(params: ValueFormatterParams, separators?: ISeparators) {
+    if (params.data?.measureDescriptor) {
+        const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+        return params.value !== undefined
+            ? getMeasureCellFormattedValue(
+                  params.value,
+                  measureDescriptor.measureHeaderItem.format,
+                  separators,
+              )
+            : (null as any);
+    }
+    return params.value === undefined ? null : params.value;
+}
+
 export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const separators = props.config?.separators;
     const cellRenderer = createCellRenderer();
@@ -60,18 +75,7 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
         cellClass: cellClassFactory(table, props, "gd-column-attribute-column"),
         headerClass: headerClassFactory(table, props, "gd-column-attribute-column-header"),
         valueFormatter: (params: ValueFormatterParams) => {
-            if (params.data?.measureDescriptor) {
-                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
-
-                return params.value !== undefined
-                    ? getMeasureCellFormattedValue(
-                          params.value,
-                          measureDescriptor.measureHeaderItem.format,
-                          separators,
-                      )
-                    : (null as any);
-            }
-            return params.value === undefined ? null : params.value;
+            return potentialRowMeasureFormatter(params, separators);
         },
         cellStyle: (params) => {
             if (params.data?.measureDescriptor) {
@@ -133,6 +137,39 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
                       true,
                   )
                 : null;
+        },
+        cellRenderer,
+    };
+}
+
+export function mixedValuesTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
+    const separators = props.config?.separators;
+    const cellRenderer = createCellRenderer();
+
+    return {
+        cellClass: cellClassFactory(table, props, "gd-column-attribute-column gd-mixed-values-column"),
+        headerClass: headerClassFactory(
+            table,
+            props,
+            "gd-column-attribute-column-header gd-mixed-values-column",
+        ),
+        valueFormatter: (params: ValueFormatterParams) => {
+            return potentialRowMeasureFormatter(params, separators);
+        },
+        cellStyle: (params) => {
+            if (params.data?.measureDescriptor) {
+                const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
+
+                return params.value !== undefined
+                    ? getMeasureCellStyle(
+                          params.value,
+                          measureDescriptor.measureHeaderItem.format,
+                          separators,
+                          true,
+                      )
+                    : null;
+            }
+            return null;
         },
         cellRenderer,
     };

@@ -26,11 +26,14 @@ export function pivotTableConfigFromInsight(
         : {};
     const menuProp = !isEmpty(baseConfig.menu) ? { menu: baseConfig.menu } : {};
     const separatorsProp = !isEmpty(baseConfig.separators) ? { separators: baseConfig.separators } : {};
+    const measureGroupDimension = insightProperties(insight)?.controls?.measureGroupDimension;
+    const metricsPositionProp = !isEmpty(measureGroupDimension) ? { measureGroupDimension } : {};
 
     return {
         ...columnSizingProp,
         ...menuProp,
         ...separatorsProp,
+        ...metricsPositionProp,
         // the user can fill the rest on their own later
     };
 }

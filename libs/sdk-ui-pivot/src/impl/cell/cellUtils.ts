@@ -49,19 +49,26 @@ export function getMeasureCellStyle(
 ): CellStyle {
     const formattedNumber = getFormattedNumber(value, format, separators);
     const { backgroundColor, color, label } = colors2Object(formattedNumber);
+    const measureCellDefault = {
+        textAlign: "right",
+    };
 
     if (label === "") {
         return {
+            ...measureCellDefault,
             color: "var(--gd-table-nullValueColor, var(--gd-palette-complementary-6, #94a1ad))",
             fontWeight: "bold",
         };
     }
 
     if (!applyColor) {
-        return {};
+        return {
+            ...measureCellDefault,
+        };
     }
 
     return {
+        ...measureCellDefault,
         ...(color && { color }),
         ...(backgroundColor && { backgroundColor }),
     };

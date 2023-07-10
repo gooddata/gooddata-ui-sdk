@@ -58,6 +58,13 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected propertiesMeta: any;
 
     /**
+     * List of properties which affect content of reference point and when these changed, reference point needs to be re-generated
+     *
+     * Note: Object reference equality is being used and no deep object value comparison is being made.
+     */
+    protected propertiesAffectingReferencePoint: string[];
+
+    /**
      * Classname or a getter function of the element where visualization should be mounted
      */
     private readonly element: string | ElementSelectorFunction;
@@ -82,6 +89,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         this.intl = createInternalIntl(this.locale);
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
+        this.propertiesAffectingReferencePoint = [];
     }
 
     /**
@@ -352,5 +360,16 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             supported: false,
             disabled: false,
         });
+    }
+
+    public haveSomePropertiesRelevantForReferencePointChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ) {
+        return this.propertiesAffectingReferencePoint.some(
+            (prop) =>
+                currentReferencePoint?.properties?.controls?.[prop] !==
+                nextReferencePoint?.properties?.controls?.[prop],
+        );
     }
 }

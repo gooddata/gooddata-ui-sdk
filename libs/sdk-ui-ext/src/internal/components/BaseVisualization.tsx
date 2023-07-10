@@ -135,6 +135,11 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             nextProps.referencePoint,
         );
 
+        const relevantPropertiesChanged = this.somePropertiesRelevantForReferencePointChanged(
+            this.props.referencePoint,
+            nextProps.referencePoint,
+        );
+
         const propertiesControlsChanged = BaseVisualization.propertiesControlsHasChanged(
             this.props.referencePoint,
             nextProps.referencePoint,
@@ -145,7 +150,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             this.setupVisualization(nextProps);
         }
 
-        if (referencePointChanged || visualizationClassChanged) {
+        if (referencePointChanged || relevantPropertiesChanged || visualizationClassChanged) {
             this.triggerExtendedReferencePointChanged(
                 nextProps,
                 // only pass current props if the visualization class is the same (see getExtendedReferencePoint JSDoc)
@@ -321,6 +326,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             currentReferencePoint?.properties?.controls,
             nextReferencePoint?.properties?.controls,
         );
+    }
+
+    private somePropertiesRelevantForReferencePointChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ) {
+        if (this.visualization) {
+            return this.visualization.haveSomePropertiesRelevantForReferencePointChanged(
+                currentReferencePoint,
+                nextReferencePoint,
+            );
+        }
+        return false;
     }
 
     private getVisualizationProps(): IVisProps {

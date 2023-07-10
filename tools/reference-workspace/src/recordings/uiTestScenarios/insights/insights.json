@@ -3568,6 +3568,11 @@
         "scenarioName": "with date filter",
         "visName": "PivotTable"
     },
+    "PivotTable.90c0425e18a46b40a7a56829745d50b5": {
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot with both attributes and metrics in rows.",
+        "scenarioName": "single measure pivot with both attributes and metrics in rows",
+        "visName": "PivotTable"
+    },
     "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and one column attributes.",
         "scenarioName": "two measures with two row and one column attributes",
@@ -3699,6 +3704,11 @@
     "PivotTable.f10228632d440da4e898d5cab17ed4d6": {
         "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by first row attr.",
         "scenarioName": "single measure pivot sorted by first row attr",
+        "visName": "PivotTable"
+    },
+    "PivotTable.f20c3906be9722337d73a9878c88c242": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr with metrics in rows.",
+        "scenarioName": "two measures with single row attr with metrics in rows",
         "visName": "PivotTable"
     },
     "PivotTable.f4e6daf76d4f96679de3ecbe4bb07088": {

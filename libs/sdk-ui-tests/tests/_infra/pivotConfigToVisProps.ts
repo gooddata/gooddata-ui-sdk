@@ -37,7 +37,11 @@ import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
  */
 export function pivotConfigToVisProperties(tableConfig: IPivotTableConfig = {}): any {
     if (!tableConfig?.columnSizing?.columnWidths) {
-        return {};
+        return {
+            controls: {
+                measureGroupDimension: tableConfig.measureGroupDimension,
+            },
+        };
     }
 
     /*
@@ -49,6 +53,7 @@ export function pivotConfigToVisProperties(tableConfig: IPivotTableConfig = {}):
      */
     return {
         controls: {
+            measureGroupDimension: tableConfig.measureGroupDimension,
             columnWidths: tableConfig.columnSizing.columnWidths,
         },
     };

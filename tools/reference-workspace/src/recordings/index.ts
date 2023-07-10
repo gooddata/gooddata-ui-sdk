@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-30T12:19:29.624Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-06-30T14:33:39.454Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1116,6 +1116,18 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
+const fp_7ea428830522d20c12ba46d6d0c1b6ff = {
+    definition: require("./uiTestScenarios/executions/7ea428830522d20c12ba46d6d0c1b6ff/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/7ea428830522d20c12ba46d6d0c1b6ff/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/7ea428830522d20c12ba46d6d0c1b6ff/dataView_o0_0s100_1000.json"),
+    scenarios: require("./uiTestScenarios/executions/7ea428830522d20c12ba46d6d0c1b6ff/scenarios.json"),
+};
+const fp_aab7407b6374f8757c1263b08eacfd1e = {
+    definition: require("./uiTestScenarios/executions/aab7407b6374f8757c1263b08eacfd1e/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/aab7407b6374f8757c1263b08eacfd1e/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/aab7407b6374f8757c1263b08eacfd1e/dataView_o0_0s100_1000.json"),
+    scenarios: require("./uiTestScenarios/executions/aab7407b6374f8757c1263b08eacfd1e/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -1333,6 +1345,14 @@ export const Scenarios = {
         TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
             scenarioIndex: 0,
             execution: fp_feb54597636051ea61a1ad9aa1a5138a,
+        },
+        SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
+            scenarioIndex: 0,
+            execution: fp_7ea428830522d20c12ba46d6d0c1b6ff,
+        },
+        TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
+            scenarioIndex: 0,
+            execution: fp_aab7407b6374f8757c1263b08eacfd1e,
         },
     },
     BarChart: {
@@ -4921,6 +4941,9 @@ const i_PivotTable_8c62ad2a73c8f465d3e98134c943b12b = {
 const i_PivotTable_900afab80fb4183b8ae26f67ed50d283 = {
     obj: require("./uiTestScenarios/insights/PivotTable.900afab80fb4183b8ae26f67ed50d283/obj.json"),
 };
+const i_PivotTable_90c0425e18a46b40a7a56829745d50b5 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.90c0425e18a46b40a7a56829745d50b5/obj.json"),
+};
 const i_PivotTable_93eeaa75bbc82826b65d9e41973c4d6d = {
     obj: require("./uiTestScenarios/insights/PivotTable.93eeaa75bbc82826b65d9e41973c4d6d/obj.json"),
 };
@@ -5019,6 +5042,9 @@ const i_PivotTable_f00f6d0684c10d8d6fcedb74950a95f0 = {
 };
 const i_PivotTable_f10228632d440da4e898d5cab17ed4d6 = {
     obj: require("./uiTestScenarios/insights/PivotTable.f10228632d440da4e898d5cab17ed4d6/obj.json"),
+};
+const i_PivotTable_f20c3906be9722337d73a9878c88c242 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.f20c3906be9722337d73a9878c88c242/obj.json"),
 };
 const i_PivotTable_f4e6daf76d4f96679de3ecbe4bb07088 = {
     obj: require("./uiTestScenarios/insights/PivotTable.f4e6daf76d4f96679de3ecbe4bb07088/obj.json"),
@@ -6182,6 +6208,7 @@ export const Insights = {
         TwoMeasuresAndMultipleColumnRowSubtotals: i_PivotTable_8a844958f911b8032b3928533ed781cc,
         TwoMeasuresAndOneColumnSubtotal: i_PivotTable_8c62ad2a73c8f465d3e98134c943b12b,
         WithDateFilter: i_PivotTable_900afab80fb4183b8ae26f67ed50d283,
+        SingleMeasurePivotWithBothAttributesAndMetricsInRows: i_PivotTable_90c0425e18a46b40a7a56829745d50b5,
         TwoMeasuresWithTwoRowAndOneColumnAttributes: i_PivotTable_93eeaa75bbc82826b65d9e41973c4d6d,
         TwoMeasuresWithTwoRowAndTwoColumnAttributes: i_PivotTable_9a68316496fc540eb9f22355b8698804,
         SingleMeasureAndSingleColumnGrandTotal: i_PivotTable_9b35c4532cf843f29704462b22646af2,
@@ -6199,6 +6226,7 @@ export const Insights = {
         SingleMeasureWithRowAndColumnAttributes: i_PivotTable_ebc191f36bf2361b778edfc57dcffe4a,
         TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: i_PivotTable_ebdaa11359007f93053adb4fa37e0351,
         SingleMeasurePivotSortedByFirstRowAttr: i_PivotTable_f10228632d440da4e898d5cab17ed4d6,
+        TwoMeasuresWithSingleRowAttrWithMetricsInRows: i_PivotTable_f20c3906be9722337d73a9878c88c242,
         TwoMeasuresAndSingleColumnRowGrandTotalForEach: i_PivotTable_f4e6daf76d4f96679de3ecbe4bb07088,
         TwoMeasuresAndSingleColumnGrandTotalForEach: i_PivotTable_f5ac7b9d629b8859810f1533d9c83bbe,
         SingleMeasurePivotWithGroupingSortedByFirstRowAttr: i_PivotTable_f859c3e05d9f78d4722bb20eabda7fc2,
@@ -6492,6 +6520,8 @@ export const Recordings = {
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_feb54597636051ea61a1ad9aa1a5138a,
         fp_ff74085f6f31c71f4797251924d3205d,
+        fp_7ea428830522d20c12ba46d6d0c1b6ff,
+        fp_aab7407b6374f8757c1263b08eacfd1e,
     },
     metadata: {
         catalog,
@@ -7579,6 +7609,7 @@ export const Recordings = {
             i_PivotTable_8a844958f911b8032b3928533ed781cc,
             i_PivotTable_8c62ad2a73c8f465d3e98134c943b12b,
             i_PivotTable_900afab80fb4183b8ae26f67ed50d283,
+            i_PivotTable_90c0425e18a46b40a7a56829745d50b5,
             i_PivotTable_93eeaa75bbc82826b65d9e41973c4d6d,
             i_PivotTable_9a68316496fc540eb9f22355b8698804,
             i_PivotTable_9b35c4532cf843f29704462b22646af2,
@@ -7612,6 +7643,7 @@ export const Recordings = {
             i_PivotTable_ebdaa11359007f93053adb4fa37e0351,
             i_PivotTable_f00f6d0684c10d8d6fcedb74950a95f0,
             i_PivotTable_f10228632d440da4e898d5cab17ed4d6,
+            i_PivotTable_f20c3906be9722337d73a9878c88c242,
             i_PivotTable_f4e6daf76d4f96679de3ecbe4bb07088,
             i_PivotTable_f5ac7b9d629b8859810f1533d9c83bbe,
             i_PivotTable_f859c3e05d9f78d4722bb20eabda7fc2,

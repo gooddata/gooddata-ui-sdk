@@ -45,7 +45,7 @@ export function createScopeColWithMetricHeaders(col: ScopeCol, row: IGridRow): I
     return mappingHeaders;
 }
 
-function createAttributeMeasureValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
+function createMixedValuesColHeaders(_col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (row.measureDescriptor) {
@@ -110,7 +110,7 @@ export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[
         // to construct drilling headers for a metrics in rows, both the column & the row data must be
         // available because the metric descriptor is only available in the data itself
         invariant(row);
-        return createAttributeMeasureValuesColHeaders(col, row);
+        return createMixedValuesColHeaders(col, row);
     }
 
     throw new InvariantError(`unable to obtain drill headers for column of type ${col.type}`);
