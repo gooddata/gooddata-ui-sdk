@@ -748,7 +748,9 @@ export function getMaxWidthCached(
     return maxWidth === undefined || width > maxWidth ? width : undefined;
 }
 
-const shouldApplyFormatting = (col: AnyCol, transposed: boolean) => {
+const shouldApplyFormatting = (col: AnyCol, config: CalculateColumnWidthsConfig) => {
+    const transposed = config.tableDescriptor.isTransposed();
+
     return isSeriesCol(col) || (transposed && isScopeCol(col)) || isMixedValuesCol(col);
 };
 
@@ -769,23 +771,17 @@ function collectWidths(
         const text = row[col.id];
         let formattedText = undefined;
         const valueFormatter = colDef.valueFormatter;
-        if (valueFormatter) {
-            // all of our valueFormatters are functions
-            invariant(typeof valueFormatter === "function", "provided valueFormatter needs to be function");
-            formattedText =
-                shouldApplyFormatting(col, config.tableDescriptor.isTransposed()) &&
-                typeof valueFormatter === "function"
-                    ? valueFormatter({
-                          data: row,
-                          value: text,
-                          column,
-                          colDef,
-                          columnApi,
-                          api: gridApi,
-                          node: null,
-                          context: undefined,
-                      })
-                    : undefined;
+        if (valueFormatter && shouldApplyFormatting(col, config) && typeof valueFormatter === "function") {
+            formattedText = valueFormatter({
+                data: row,
+                value: text,
+                column,
+                colDef,
+                columnApi,
+                api: gridApi,
+                node: null,
+                context: undefined,
+            });
         }
         const textForCalculation = formattedText || text;
         const maxWidth = col.id ? maxWidths.get(col.id) : undefined;

@@ -59,6 +59,8 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
     /**
      * List of properties which affect content of reference point and when these changed, reference point needs to be re-generated
+     *
+     * Note: Object reference equality is being used and no deep object value comparison is being made.
      */
     protected propertiesAffectingReferencePoint: string[];
 

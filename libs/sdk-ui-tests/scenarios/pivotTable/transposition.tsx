@@ -14,17 +14,11 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         config: {
             measureGroupDimension: "rows",
-            // columnSizing: {
-            //     defaultWidth: "autoresizeAll"
-            // }
         },
     })
     .addScenario("two measures with single row attr with metrics in rows", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {
             measureGroupDimension: "rows",
-            // columnSizing: {
-            //     defaultWidth: "autoresizeAll"
-            // }
         },
     });
