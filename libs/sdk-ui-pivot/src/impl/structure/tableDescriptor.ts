@@ -227,6 +227,10 @@ export class TableDescriptor {
         return this.headers.mixedHeadersCols.length;
     }
 
+    public attributeMeasureHeadersColsCount(): number {
+        return this.headers.mixedHeadersCols.length;
+    }
+
     /**
      * Gets count of scoping attributes (columns).
      */
