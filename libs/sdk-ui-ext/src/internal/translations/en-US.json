@@ -1333,6 +1333,26 @@
         "comment": "",
         "limit": 0
     },
+    "properties.column.headers.title": {
+        "value": "Columns Headers",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.column.headers.position": {
+        "value": "Position",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.column.headers.position.top": {
+        "value": "top (default)",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.column.headers.position.left": {
+        "value": "left",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.table.subtitle.columns": {
         "value": "in columns",
         "comment": "",

@@ -17,6 +17,7 @@ export type TableColType =
     | "sliceCol"
     | "sliceMeasureCol"
     | "mixedValuesCol"
+    | "mixedHeadersCol"
     | "seriesCol"
     | "scopeCol"
     | "rootCol";
@@ -107,9 +108,20 @@ export interface SliceMeasureCol extends TableCol {
     readonly fullIndexPathToHere: number[];
 }
 
-export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {
-    return (obj as SliceMeasureCol)?.type === "sliceMeasureCol";
+export interface MixedHeadersCol extends TableCol {
+    readonly type: "mixedHeadersCol";
+
+    /**
+     * Column index among all slice columns
+     */
+    index: number; // probably will always be 0 as there will be always just one
+
+    /**
+     * Path of indexes to follow from root, through children in order to get to this node.
+     */
+    readonly fullIndexPathToHere: number[];
 }
+// TODO pivot operates with slices and series. Better name should be used than the introduction of attr/measures.
 
 export interface MixedValuesCol extends TableCol {
     readonly type: "mixedValuesCol";
@@ -123,6 +135,14 @@ export interface MixedValuesCol extends TableCol {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
+}
+
+export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {
+    return (obj as SliceMeasureCol)?.type === "sliceMeasureCol";
+}
+
+export function isMixedHeadersCol(obj: unknown): obj is MixedHeadersCol {
+    return (obj as MixedHeadersCol)?.type === "mixedHeadersCol";
 }
 
 export function isMixedValuesCol(obj: unknown): obj is MixedValuesCol {
@@ -287,7 +307,7 @@ export type AnySliceCol = SliceCol | SliceMeasureCol;
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
  */
-export type AnyCol = SliceCol | SliceMeasureCol | MixedValuesCol | DataCol | ScopeCol;
+export type AnyCol = SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol | DataCol | ScopeCol;
 
 /**
  * Descriptors of all table columns. The table columns are divided into two groups:
@@ -323,6 +343,8 @@ export type TableCols = {
      * Column used for metric names when table is transposed (metrics are in rows)
      */
     readonly sliceMeasureCols: SliceMeasureCol[];
+
+    readonly mixedHeadersCols: MixedHeadersCol[];
 
     /**
      * Column with values of either elements or metrics or both mixed together

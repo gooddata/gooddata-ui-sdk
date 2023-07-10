@@ -96,6 +96,11 @@ export type MeasureGroupDimension = "columns" | "rows";
 /**
  * @public
  */
+export type ColumnHeadersPosition = "top" | "left";
+
+/**
+ * @public
+ */
 export interface IPivotTableConfig {
     /**
      * Customize column sizing strategy.
@@ -136,6 +141,11 @@ export interface IPivotTableConfig {
      * @alpha
      */
     measureGroupDimension?: MeasureGroupDimension;
+
+    /**
+     * Customize placement of column headers - top or left
+     */
+    columnHeadersPosition?: ColumnHeadersPosition;
 }
 
 /**

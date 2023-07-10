@@ -2244,6 +2244,7 @@ export interface ISettings {
     enableBulletChart?: boolean;
     enableChartsSorting?: boolean;
     enableClickableAttributeURL?: boolean;
+    enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCompositeGrain?: boolean;
     enableCustomColorPicker?: boolean;

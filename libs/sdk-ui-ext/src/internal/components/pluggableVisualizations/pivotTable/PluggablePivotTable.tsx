@@ -25,11 +25,13 @@ import {
     ISortItem,
     newAttributeSort,
     ISettings,
+    bucketsFind,
 } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
+    ColumnHeadersPosition,
     ColumnWidthItem,
     CorePivotTable,
     IColumnSizing,
@@ -67,6 +69,7 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
 import {
+    getColumnHeadersPositionFromProperties,
     getColumnWidthsFromProperties,
     getReferencePointWithSupportedProperties,
     getMeasureGroupDimensionFromProperties,
@@ -235,6 +238,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const originalSortItems: ISortItem[] = newReferencePoint.properties?.sortItems ?? [];
         const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
         const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
+        const originalColumnHeadersPosition =
+            rowAttributes.length > 0 || originalMeasureGroupDimension === "columns"
+                ? "top"
+                : newReferencePoint.properties?.controls?.columnHeadersPosition;
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
@@ -253,16 +260,25 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : {};
 
+        const columnHeaderPositionProp =
+            tableColumnHeadersPositionEnabled(this.settings) && originalColumnHeadersPosition
+                ? {
+                      columnHeadersPosition: originalColumnHeadersPosition,
+                  }
+                : {};
+
         const controlsObj = columnWidths
             ? {
                   controls: {
                       columnWidths,
                       ...measureGroupDimensionProp,
+                      ...columnHeaderPositionProp,
                   },
               }
             : {
                   controls: {
                       ...measureGroupDimensionProp,
+                      ...columnHeaderPositionProp,
                   },
               };
 
@@ -410,6 +426,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             insightProperties(insight),
         );
 
+        const buckets = insightBuckets(insight);
+        const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+
+        const columnHeadersPosition: ColumnHeadersPosition = row
+            ? "top"
+            : getColumnHeadersPositionFromProperties(insightProperties(insight));
+
         const tableConfig: IPivotTableConfig = {
             ...createPivotTableConfig(
                 config,
@@ -421,6 +444,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             ...customVisualizationConfig,
             maxHeight,
             maxWidth,
+            columnHeadersPosition,
         };
 
         const pivotTableProps: ICorePivotTableProps = {
@@ -494,6 +518,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         pushData={this.handlePushData}
                         isError={this.getIsError()}
                         isLoading={this.isLoading}
+                        featureFlags={this.settings}
                     />,
                     configPanelElement,
                 );
@@ -588,6 +613,10 @@ function tableSortingCheckDisabled(settings: ISettings): boolean {
 
 function tableTranspositionEnabled(settings: ISettings): boolean {
     return settings.enablePivotTableTransposition === true;
+}
+
+function tableColumnHeadersPositionEnabled(settings: ISettings): boolean {
+    return settings.enableColumnHeadersPosition === true;
 }
 
 /**

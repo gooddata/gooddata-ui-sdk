@@ -1127,6 +1127,8 @@ export interface IResultDataMethods {
     isEmpty(): boolean;
     // (undocumented)
     rowTotals(): DataValue[][] | undefined;
+    // (undocumented)
+    secondDimSize(): number;
     singleDimData(): DataValue[];
     // (undocumented)
     totalOfTotals(): DataValue[][][] | undefined;
