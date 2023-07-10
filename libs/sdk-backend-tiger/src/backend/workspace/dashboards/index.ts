@@ -256,6 +256,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                 content: dashboardContent,
                                 title: dashboard.title,
                                 description: dashboard.description || "",
+                                ...(dashboard.tags ? { tags: dashboard.tags } : {}),
                             },
                         },
                     },
