@@ -29,6 +29,9 @@ import { TotalType } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
+export type ColumnHeadersPosition = "top" | "left";
+
+// @public (undocumented)
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
 // @public (undocumented)
@@ -170,6 +173,7 @@ export interface IPivotTableBucketProps {
 
 // @public (undocumented)
 export interface IPivotTableConfig {
+    columnHeadersPosition?: ColumnHeadersPosition;
     columnSizing?: IColumnSizing;
     groupRows?: boolean;
     maxHeight?: number;

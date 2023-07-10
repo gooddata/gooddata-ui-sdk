@@ -16,6 +16,8 @@ import {
     AnySliceCol,
     MixedValuesCol,
     isSliceMeasureCol,
+    isMixedHeadersCol,
+    MixedHeadersCol,
 } from "./tableDescriptorTypes.js";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
@@ -28,6 +30,7 @@ import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting.js
 import { createSortItemForCol } from "./colSortItemFactory.js";
 import keyBy from "lodash/keyBy.js";
 import findIndex from "lodash/findIndex.js";
+import { IPivotTableConfig } from "../../publicTypes.js";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information
@@ -65,6 +68,8 @@ export class TableDescriptor {
     public readonly zippedLeaves: Array<[LeafDataCol, ColDef]> = [];
     private readonly _seriesColsCount: number;
 
+    // TODO solve zipping and lookup (does not seems to be used in the new transpose mode for now)
+
     private constructor(
         private readonly dv: DataViewFacade,
         public readonly headers: TableCols,
@@ -80,9 +85,15 @@ export class TableDescriptor {
      *
      * @param dv - data view facade
      * @param emptyHeaderTitle - what to show for title of headers with empty title
+     * @param config - optional pivot configuration
      */
-    public static for(dv: DataViewFacade, emptyHeaderTitle: string, intl?: IntlShape): TableDescriptor {
-        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, intl);
+    public static for(
+        dv: DataViewFacade,
+        emptyHeaderTitle: string,
+        config?: IPivotTableConfig,
+        intl?: IntlShape,
+    ): TableDescriptor {
+        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderTitle, config, intl);
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 
@@ -185,6 +196,10 @@ export class TableDescriptor {
         return this.sliceMeasureColCount() !== 0;
     }
 
+    public attributeMeasureHeadersColsCount(): number {
+        return this.headers.mixedHeadersCols.length;
+    }
+
     /**
      * Gets count of scoping attributes (columns).
      */
@@ -278,6 +293,13 @@ export class TableDescriptor {
     }
 
     /**
+     * Tests whether the table has column headers moved to the
+     */
+    public hasHeadersOnLeft(): boolean {
+        return this.headers.mixedHeadersCols.length > 0;
+    }
+
+    /**
      * Given a column that may appear as a leaf of table headers this method returns its absolute index in the table.
      *
      * This takes into account that the table columns go from left-to-right, starting with slicing columns first then
@@ -285,8 +307,10 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | SliceMeasureCol | LeafDataCol | MixedValuesCol): number {
-        if (isSliceCol(col) || isSliceMeasureCol(col)) {
+    public getAbsoluteLeafColIndex(
+        col: SliceCol | SliceMeasureCol | LeafDataCol | MixedHeadersCol | MixedValuesCol,
+    ): number {
+        if (isSliceCol(col) || isSliceMeasureCol(col) || isMixedHeadersCol(col)) {
             return col.index;
         } else if (isScopeCol(col)) {
             // if this bombs, caller is not operating with the leaf columns correctly and sent over
@@ -300,7 +324,12 @@ export class TableDescriptor {
             );
         }
 
-        return this.sliceColCount() + this.sliceMeasureColCount() + col.index;
+        return (
+            this.sliceColCount() +
+            this.sliceMeasureColCount() +
+            this.attributeMeasureHeadersColsCount() +
+            col.index
+        );
     }
 
     /**

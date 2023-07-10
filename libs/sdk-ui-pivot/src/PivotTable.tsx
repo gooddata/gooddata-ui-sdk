@@ -114,6 +114,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
             ["measures", "rows", "columns", "totals", "filters", "sortBy"],
         );
 
+        // NESTOR Update columnheaders position based on rows?
         const pivotTableConfig: IPivotTableConfig = {
             ...config,
             menu: pivotTableMenuForCapabilities(backend.capabilities, config?.menu),

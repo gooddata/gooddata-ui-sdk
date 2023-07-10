@@ -158,6 +158,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableColumnHeadersPosition,
+            "enableColumnHeadersPosition",
+            "BOOLEAN",
+            FeatureFlagsValues.enableColumnHeadersPosition,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNewHeadline,
             "enableNewHeadline",
             "BOOLEAN",

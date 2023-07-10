@@ -14,18 +14,36 @@ import {
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble.js";
 import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
+import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
+import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
-        const { properties, pushData } = this.props;
-        const controlsDisabled = this.isPositionControlDisabled();
+        const { properties, featureFlags, insight, pushData, isLoading } = this.props;
+        const metricPositionControlsDisabled = this.isPositionControlDisabled();
+        const columnHeadersControlsDisabled = this.isColumnHeadersPositionControlDisabled();
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
-                <MetricsPositionControl
-                    isDisabled={controlsDisabled}
-                    properties={properties}
-                    pushData={pushData}
-                />
+                <div>
+                    {featureFlags.enablePivotTableTransposition ? (
+                        <MetricsPositionControl
+                            isDisabled={metricPositionControlsDisabled}
+                            showDisabledMessage={metricPositionControlsDisabled ? !isLoading : false}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+                    ) : null}
+                    {featureFlags.enablePivotTableTransposition &&
+                    featureFlags.enableColumnHeadersPosition ? (
+                        <ColumnHeadersPositionControl
+                            isDisabled={columnHeadersControlsDisabled}
+                            showDisabledMessage={columnHeadersControlsDisabled ? !isLoading : false}
+                            properties={properties}
+                            pushData={pushData}
+                            insight={insight}
+                        />
+                    ) : null}
+                </div>
                 <Bubble
                     className={this.getBubbleClassNames()}
                     arrowOffsets={{ "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] }}
@@ -39,7 +57,10 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
 
     private getBubbleClassNames() {
         return cx("bubble-primary", {
-            invisible: !this.isPositionControlDisabled(),
+            invisible:
+                !this.isPositionControlDisabled() ||
+                this.isColumnHeadersPositionControlDisabled() ||
+                this.props.isLoading,
         });
     }
 
@@ -49,5 +70,15 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
         const measures = insightMeasures(insight);
 
         return measures.length === 0 || isError || isLoading;
+    }
+
+    private isColumnHeadersPositionControlDisabled() {
+        const { insight, isError, isLoading } = this.props;
+
+        const columnHeadersLeftPositionAllowed = insight
+            ? isSetColumnHeadersPositionToLeftAllowed(insight)
+            : false;
+
+        return !insight || isError || isLoading || !columnHeadersLeftPositionAllowed;
     }
 }

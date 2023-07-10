@@ -50,7 +50,7 @@ import {
     TableConfigAccessors,
     OnExecutionTransformed,
 } from "./privateTypes.js";
-import { ICorePivotTableProps } from "../publicTypes.js";
+import { ICorePivotTableProps, IPivotTableConfig } from "../publicTypes.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
@@ -76,6 +76,7 @@ export class TableFacade {
     public readonly tableDescriptor: TableDescriptor;
     private readonly resizedColumnsStore: ResizedColumnsStore;
     private readonly originalExecution: IPreparedExecution;
+    private readonly config: IPivotTableConfig | undefined;
 
     /**
      * When user changes sorts or totals by interacting with the table, the current execution result will
@@ -137,6 +138,7 @@ export class TableFacade {
         this.tableDescriptor = TableDescriptor.for(
             this.visibleData,
             emptyHeaderTitleFromIntl(props.intl),
+            props.config,
             props.intl,
         );
 
@@ -150,6 +152,8 @@ export class TableFacade {
         this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
         this.updateColumnWidths(tableMethods.getResizingConfig());
         this.originalExecution = props.execution;
+
+        this.config = props.config;
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -251,6 +255,7 @@ export class TableFacade {
                 getGroupRows: tableMethods.getGroupRows,
                 getColumnTotals: tableMethods.getColumnTotals,
                 getRowTotals: tableMethods.getRowTotals,
+                getColumnHeadersPosition: tableMethods.getColumnHeadersPosition,
                 onPageLoaded: this.onPageLoaded,
                 onExecutionTransformed: this.onExecutionTransformed,
                 onTransformedExecutionFailed: this.onTransformedExecutionFailed,
@@ -806,7 +811,11 @@ export class TableFacade {
 
         const dv = this.visibleData;
 
-        const rowCount = dv.rawData().firstDimSize();
+        // NESTOR - is enough with this?
+        const rowCount =
+            this.config?.columnHeadersPosition === "left"
+                ? dv.rawData().secondDimSize()
+                : dv.rawData().firstDimSize();
         const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;
 
         const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
