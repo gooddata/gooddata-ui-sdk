@@ -7,6 +7,7 @@ import {
     IDashboardExtensionProps,
     IDashboardPluginContract_V1,
     IDashboardProps,
+    newDashboardEngine,
 } from "@gooddata/sdk-ui-dashboard";
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
@@ -222,14 +223,28 @@ export class DashboardLoader implements IDashboardLoader {
         // eslint-disable-next-line no-console
         console.debug("Loading engine and plugins...");
 
-        if (beforeLoad) {
-            await beforeLoad(ctx, dashboardWithPlugins);
-        }
+        let engine: IDashboardEngine = newDashboardEngine();
+        let plugins: LoadedPlugin[] = [];
 
-        const [engine, plugins] = await Promise.all([
-            engineLoader(dashboardWithPlugins),
-            pluginLoader(ctx, dashboardWithPlugins, { beforePluginsLoaded: beforeExternalPluginLoaded }),
-        ]);
+        try {
+            if (beforeLoad) {
+                await beforeLoad(ctx, dashboardWithPlugins);
+            }
+
+            const [resolvedEngine, resolvedPlugins] = await Promise.all([
+                engineLoader(dashboardWithPlugins),
+                pluginLoader(ctx, dashboardWithPlugins, { beforePluginsLoaded: beforeExternalPluginLoaded }),
+            ]);
+
+            if (resolvedEngine && resolvedPlugins) {
+                engine = resolvedEngine;
+                plugins = resolvedPlugins;
+            }
+        } catch (err) {
+            console.error(
+                "Dashboard plugins load failed. Loader is falling back to the statically linked dashboard without any external plugins.",
+            );
+        }
 
         // eslint-disable-next-line no-console
         console.debug("Initializing the plugins...");
