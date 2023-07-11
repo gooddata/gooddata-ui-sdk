@@ -52,6 +52,11 @@ export const legendPositionDropdownItems: IDropdownItem[] = [
     { title: messages.positionLeft.id, value: "left", icon: "gd-dropdown-icon-legend-left" },
 ];
 
+export const orientationDropdownItems: IDropdownItem[] = [
+    { title: messages.horizontal.id, value: "horizontal", icon: "gd-dropdown-icon-orientation-horizontal" },
+    { title: messages.vertical.id, value: "vertical", icon: "gd-dropdown-icon-orientation-vertical" },
+];
+
 export const dataLabelsDropdownItems: IDropdownItem[] = [
     { title: messages.dataLabelsAuto.id, value: "auto" },
     { type: "separator" },

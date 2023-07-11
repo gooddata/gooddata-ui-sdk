@@ -53,4 +53,21 @@ const totalConfigScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart"
         config: { total: { enabled: true, name: "Balance" } },
     });
 
-export default [legendScenarios, ...legendResponziveScenarios, dataLabelScenarios, totalConfigScenarios];
+const orientationConfigScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({ groupUnder: "orientation section" })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario("default state", {
+        ...WaterfallChartWithMultiMeasures,
+    })
+    .addScenario("change the orientation configuration", {
+        ...WaterfallChartWithMultiMeasures,
+        config: { orientation: { position: "vertical" } },
+    });
+export default [
+    legendScenarios,
+    ...legendResponziveScenarios,
+    dataLabelScenarios,
+    totalConfigScenarios,
+    orientationConfigScenarios,
+];

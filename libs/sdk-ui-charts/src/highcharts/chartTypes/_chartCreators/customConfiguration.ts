@@ -70,6 +70,7 @@ import { AxisLabelsFormatterCallbackFunction } from "highcharts";
 import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
+import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -1423,6 +1424,7 @@ export function getCustomizedConfiguration(
         getReversedStacking,
         getContinuousLineConfiguration,
         getWaterfallXAxisConfiguration,
+        getChartOrientationConfiguration,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

@@ -1073,6 +1073,21 @@
         "comment": "",
         "limit": 0
     },
+    "properties.orientation.title": {
+        "value": "Orientation",
+        "comment": "The title for the orientation configuration section",
+        "limit": 0
+    },
+    "properties.orientation.horizontal": {
+        "value": "Horizontal (default)",
+        "comment": "The chart orientation configuration",
+        "limit": 0
+    },
+    "properties.orientation.vertical": {
+        "value": "Vertical",
+        "comment": "The chart orientation configuration",
+        "limit": 0
+    },
     "properties.points.title": {
         "value": "Points",
         "comment": "Points on map",

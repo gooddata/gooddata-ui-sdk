@@ -58,6 +58,9 @@ export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
+// @public
+export type ChartOrientationType = "horizontal" | "vertical";
+
 export { ColorUtils }
 
 // @public
@@ -210,6 +213,8 @@ export interface IChartConfig {
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
     limits?: IChartLimits;
+    // @internal
+    orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
@@ -421,6 +426,12 @@ export interface ILineChartBucketProps {
 
 // @public (undocumented)
 export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
+}
+
+// @public
+export interface IOrientationConfig {
+    // (undocumented)
+    position?: ChartOrientationType;
 }
 
 // @public (undocumented)

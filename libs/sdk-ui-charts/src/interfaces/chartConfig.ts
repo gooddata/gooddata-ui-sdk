@@ -268,6 +268,12 @@ export interface IChartConfig {
      * @internal
      */
     tooltip?: ITooltipConfig;
+
+    /**
+     * The orientation of the chart
+     * @internal
+     */
+    orientation?: IOrientationConfig;
 }
 
 /**
@@ -276,6 +282,22 @@ export interface IChartConfig {
 export interface IGridConfig {
     enabled?: boolean;
 }
+
+/**
+ * Chart orientation config
+ *
+ * @public
+ */
+export interface IOrientationConfig {
+    position?: ChartOrientationType;
+}
+
+/**
+ * Available orientation positions.
+ *
+ * @public
+ */
+export type ChartOrientationType = "horizontal" | "vertical";
 
 /**
  * Indicates whether the continuous line for the missing value display or not on Area, Line, and Combo chart
