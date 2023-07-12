@@ -214,6 +214,14 @@ export enum GdcAdEventType {
      * AD will not continue with initialization until the token is set.
      */
     ListeningForApiToken = "listeningForApiToken",
+
+    /**
+     * Type notifies embedding application that API token is about to expire and a new API token
+     * must be set via "setApiToken" command, otherwise session will expire soon (how soon depends on
+     * the reminder settings, by default in 60 seconds, can be changed by optional parameter with
+     * "setApiToken" was called the last time).
+     */
+    ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
 }
 
 /**
@@ -1256,6 +1264,15 @@ export interface ISetApiTokenBody {
      * API token value - used to set up SDK backend instance
      */
     token: string;
+    /**
+     * Type of the API token, default value is "GoodData"
+     */
+    type?: "gooddata" | "jwt";
+    /**
+     * Number of seconds before a postMessage event about to be expired JWT is emitted.
+     * Used only when type == jwt. Default value is 60 seconds.
+     */
+    secondsBeforeTokenExpirationToEmitReminder?: number;
 }
 
 /**

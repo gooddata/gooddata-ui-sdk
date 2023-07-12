@@ -9,8 +9,10 @@ import {
     NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken, IUserProfile } from "@gooddata/api-client-tiger";
+import { invariant } from "ts-invariant";
 
 import { convertApiError } from "./utils/errorHandling.js";
+import { validateJwt, computeExpirationReminderTimeout } from "./utils/jwt.js";
 
 /**
  * Base for other IAuthenticationProvider implementations.
@@ -89,6 +91,97 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
         await this.obtainCurrentPrincipal(context);
 
         return this.principal!;
+    }
+}
+
+/**
+ * Callback that is used to set the new JWT value before original token expires.
+ *
+ * Optionally, the callback accepts the number of seconds before the token expiration in which
+ * JwtIsAboutToExpireHandler will be called the next time. Expiration reminder will not be called
+ * when value is not provided or it is not greater than zero.
+ *
+ * @alpha
+ */
+export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
+
+/**
+ * Handler that will be called by a JWT authentication provider before the JWT
+ * is about to expire. The handler will receive a method that can be used to set a new JWT value.
+ *
+ * The method throws an exception when the provided JWT is not for the same subject as the previously set
+ * JWT (if such token was already set).
+ *
+ * @alpha
+ */
+export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
+
+/**
+ * The implementation of authentication provider uses an JWT (JSON Web Token) as bearer of authentication.
+ *
+ * @remarks
+ * You can provide token at construction time, and it will be passed on all calls to Tiger APIs.
+ *
+ * Keep in mind that this authentication provider can lead to security holes; having
+ * the token available as JavaScript variable in an UI application means anyone can find it and use it for
+ * themselves while the token is valid. UI applications should prefer {@link ContextDeferredAuthProvider}
+ * instead.
+ *
+ * @alpha
+ */
+export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
+    private client?: ITigerClient = undefined;
+
+    /**
+     * Create a new instance of TigerJwtAuthProvider
+     *
+     * @param jwt - The JSON Web Token value.
+     * @param notAuthenticatedHandler - Optional handler called when auth provider encounters
+     *  "non-authenticated" error (for example when session is no longer valid due to expired JWT).
+     * @param tokenIsAboutToExpireHandler - Optional handler called when JWT is about to expire. The handler
+     *  will receive function that can be used to set the new JWT to continue the current session.
+     * @param secondsBeforeTokenExpirationToCallReminder - The number of seconds before token expiration to
+     *  call tokenIsAboutToExpireHandler handler. The handler is called only when the value is positive number
+     *  greater than zero and tokenIsAboutToExpireHandler handler value is provided.
+     */
+    public constructor(
+        private jwt: string,
+        notAuthenticatedHandler?: NotAuthenticatedHandler,
+        private readonly tokenIsAboutToExpireHandler?: JwtIsAboutToExpireHandler,
+        private readonly secondsBeforeTokenExpirationToCallReminder = 60,
+    ) {
+        super(jwt, notAuthenticatedHandler);
+        this.startReminder(jwt);
+    }
+
+    public initializeClient(client: ITigerClient): void {
+        super.initializeClient(client);
+        this.client = client; // keep reference to the tiger client for token re-initialization purposes
+    }
+
+    private startReminder(jwt: string): void {
+        if (
+            this.tokenIsAboutToExpireHandler === undefined ||
+            this.secondsBeforeTokenExpirationToCallReminder <= 0
+        ) {
+            return;
+        }
+        setTimeout(
+            () => this.tokenIsAboutToExpireHandler!((newJwt: string) => this.reauthenticate(newJwt)),
+            computeExpirationReminderTimeout(
+                jwt,
+                this.secondsBeforeTokenExpirationToCallReminder,
+                Date.now(),
+            ),
+        );
+    }
+
+    private reauthenticate(jwt: string): void {
+        invariant(this.client, "The method cannot be called before initializeClient method.");
+        validateJwt(jwt, this.jwt);
+        this.jwt = jwt;
+        setAxiosAuthorizationToken(this.client.axios, jwt); // set the new JWT as a Bearer token in the client
+        this.startReminder(jwt);
     }
 }
 

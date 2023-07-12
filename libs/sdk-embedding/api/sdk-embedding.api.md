@@ -452,6 +452,7 @@ enum GdcAdCommandType {
 
 // @public
 enum GdcAdEventType {
+    ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
     ClearFinished = "clearFinished",
     ClearInsightFinished = "clearInsightFinished",
     Drill = "drill",
@@ -506,6 +507,7 @@ enum GdcKdCommandType {
 
 // @public
 enum GdcKdEventType {
+    ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
     DashboardCreated = "dashboardCreated",
     DashboardCreationCanceled = "dashboardCreationCanceled",
     DashboardDeleted = "dashboardDeleted",
@@ -1033,12 +1035,16 @@ function isDrillableItemsCommandData_2(obj: unknown): obj is DrillableItemsComma
 
 // @public
 interface ISetApiTokenBody {
+    secondsBeforeTokenExpirationToEmitReminder?: number;
     token: string;
+    type?: "gooddata" | "jwt";
 }
 
 // @public
 interface ISetApiTokenBody_2 {
+    secondsBeforeTokenExpirationToEmitReminder?: number;
     token: string;
+    type?: "gooddata" | "jwt";
 }
 
 // @public
