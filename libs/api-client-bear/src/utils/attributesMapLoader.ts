@@ -1,26 +1,23 @@
 // (C) 2007-2020 GoodData Corporation
-import { GdcMetadata } from "@gooddata/api-model-bear";
+import { IWrappedAttribute, IWrappedAttributeDisplayForm } from "@gooddata/api-model-bear";
 import { MetadataModule } from "../metadata.js";
 
-function getAttributeUris(displayForms: GdcMetadata.IWrappedAttributeDisplayForm[]) {
+function getAttributeUris(displayForms: IWrappedAttributeDisplayForm[]) {
     return displayForms.map((displayForm) => displayForm.attributeDisplayForm.content.formOf);
 }
 
 function createAttributesMap(
-    displayForms: GdcMetadata.IWrappedAttributeDisplayForm[],
-    attributes: GdcMetadata.IWrappedAttribute[],
-): Record<string, GdcMetadata.IWrappedAttribute> {
-    return displayForms.reduce(
-        (attributesMap: Record<string, GdcMetadata.IWrappedAttribute>, displayForm) => {
-            const dfUri = displayForm.attributeDisplayForm.meta.uri!;
-            const attribute = attributes.find(
-                (attr) => attr.attribute.meta.uri === displayForm.attributeDisplayForm.content.formOf,
-            );
-            attributesMap[dfUri] = attribute!;
-            return attributesMap;
-        },
-        {},
-    );
+    displayForms: IWrappedAttributeDisplayForm[],
+    attributes: IWrappedAttribute[],
+): Record<string, IWrappedAttribute> {
+    return displayForms.reduce((attributesMap: Record<string, IWrappedAttribute>, displayForm) => {
+        const dfUri = displayForm.attributeDisplayForm.meta.uri!;
+        const attribute = attributes.find(
+            (attr) => attr.attribute.meta.uri === displayForm.attributeDisplayForm.content.formOf,
+        );
+        attributesMap[dfUri] = attribute!;
+        return attributesMap;
+    }, {});
 }
 
 export function getMissingUrisInAttributesMap(
@@ -43,14 +40,12 @@ export class AttributesMapLoaderModule {
         }
 
         return this.md
-            .getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(projectId, attributeDisplayFormUris)
+            .getObjects<IWrappedAttributeDisplayForm>(projectId, attributeDisplayFormUris)
             .then((displayForms) => {
                 const attributeUris = getAttributeUris(displayForms);
-                return this.md
-                    .getObjects<GdcMetadata.IWrappedAttribute>(projectId, attributeUris)
-                    .then((attributes) => {
-                        return createAttributesMap(displayForms, attributes);
-                    });
+                return this.md.getObjects<IWrappedAttribute>(projectId, attributeUris).then((attributes) => {
+                    return createAttributesMap(displayForms, attributes);
+                });
             });
     }
 }

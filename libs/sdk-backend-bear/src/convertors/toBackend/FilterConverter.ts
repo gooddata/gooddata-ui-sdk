@@ -1,5 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    IVisualizationObjectAbsoluteDateFilter,
+    IVisualizationObjectMeasureValueFilter,
+    IVisualizationObjectNegativeAttributeFilter,
+    IVisualizationObjectPositiveAttributeFilter,
+    IVisualizationObjectRankingFilter,
+    IVisualizationObjectRelativeDateFilter,
+    VisualizationObjectExtendedFilter,
+    VisualizationObjectFilter,
+} from "@gooddata/api-model-bear";
 import {
     IFilter,
     isPositiveAttributeFilter,
@@ -34,9 +43,7 @@ const convertObjRefInScopeToRefWithoutIdentifier = (ref: ObjRefInScope) => {
     return ref;
 };
 
-const convertMeasureValueFilter = (
-    filter: IMeasureValueFilter,
-): GdcVisualizationObject.IMeasureValueFilter => {
+const convertMeasureValueFilter = (filter: IMeasureValueFilter): IVisualizationObjectMeasureValueFilter => {
     const measureObjQualifier = measureValueFilterMeasure(filter);
 
     if (isIdentifierRef(measureObjQualifier)) {
@@ -51,7 +58,7 @@ const convertMeasureValueFilter = (
     };
 };
 
-const convertRankingFilter = (filter: IRankingFilter): GdcVisualizationObject.IRankingFilter => {
+const convertRankingFilter = (filter: IRankingFilter): IVisualizationObjectRankingFilter => {
     const { measure, attributes, operator, value } = filter.rankingFilter;
 
     return {
@@ -64,9 +71,7 @@ const convertRankingFilter = (filter: IRankingFilter): GdcVisualizationObject.IR
     };
 };
 
-const convertRelativeDateFilter = (
-    filter: IRelativeDateFilter,
-): GdcVisualizationObject.IRelativeDateFilter => {
+const convertRelativeDateFilter = (filter: IRelativeDateFilter): IVisualizationObjectRelativeDateFilter => {
     return {
         relativeDateFilter: {
             dataSet: toBearRef(filterObjRef(filter)),
@@ -75,9 +80,7 @@ const convertRelativeDateFilter = (
     };
 };
 
-const convertAbsoluteDateFilter = (
-    filter: IAbsoluteDateFilter,
-): GdcVisualizationObject.IAbsoluteDateFilter => {
+const convertAbsoluteDateFilter = (filter: IAbsoluteDateFilter): IVisualizationObjectAbsoluteDateFilter => {
     return {
         absoluteDateFilter: {
             dataSet: toBearRef(filterObjRef(filter)),
@@ -88,7 +91,7 @@ const convertAbsoluteDateFilter = (
 
 const convertNegativeAttributeFilter = (
     filter: INegativeAttributeFilter,
-): GdcVisualizationObject.INegativeAttributeFilter => {
+): IVisualizationObjectNegativeAttributeFilter => {
     const elements = filterAttributeElements(filter);
     assertNoNulls(elements);
     return {
@@ -101,7 +104,7 @@ const convertNegativeAttributeFilter = (
 
 const convertPositiveAttributeFilter = (
     filter: IPositiveAttributeFilter,
-): GdcVisualizationObject.IPositiveAttributeFilter => {
+): IVisualizationObjectPositiveAttributeFilter => {
     const elements = filterAttributeElements(filter);
     assertNoNulls(elements);
     return {
@@ -112,7 +115,7 @@ const convertPositiveAttributeFilter = (
     };
 };
 
-export const convertExtendedFilter = (filter: IFilter): GdcVisualizationObject.ExtendedFilter => {
+export const convertExtendedFilter = (filter: IFilter): VisualizationObjectExtendedFilter => {
     if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
     } else if (isRankingFilter(filter)) {
@@ -122,7 +125,7 @@ export const convertExtendedFilter = (filter: IFilter): GdcVisualizationObject.E
     }
 };
 
-export const convertFilter = (filter: IMeasureFilter): GdcVisualizationObject.Filter => {
+export const convertFilter = (filter: IMeasureFilter): VisualizationObjectFilter => {
     if (isPositiveAttributeFilter(filter)) {
         return convertPositiveAttributeFilter(filter);
     } else if (isNegativeAttributeFilter(filter)) {

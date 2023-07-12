@@ -1,6 +1,10 @@
 // (C) 2019-2023 GoodData Corporation
-import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
-import * as GdcExport from "@gooddata/api-model-bear/GdcExport";
+//import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
+import {
+    IExportConfig as IBearExportConfig,
+    IExecutionResponse,
+    IExecutionResult as IBearExecutionResult,
+} from "@gooddata/api-model-bear";
 
 import { transformResultHeaders } from "@gooddata/sdk-backend-base";
 import {
@@ -57,7 +61,7 @@ export class BearExecutionResult implements IExecutionResult {
         private readonly authApiCall: BearAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly execFactory: IExecutionFactory,
-        private readonly execResponse: GdcExecution.IExecutionResponse,
+        private readonly execResponse: IExecutionResponse,
     ) {
         this.dimensions = convertDimensions(execResponse.dimensions);
         this._fingerprint = SparkMD5.hash(execResponse.links.executionResult);
@@ -115,8 +119,8 @@ export class BearExecutionResult implements IExecutionResult {
         );
     }
 
-    private buildExportOptions(options: IExportConfig): GdcExport.IExportConfig {
-        const optionsForBackend: GdcExport.IExportConfig = {
+    private buildExportOptions(options: IExportConfig): IBearExportConfig {
+        const optionsForBackend: IBearExportConfig = {
             format: options.format,
             mergeHeaders: options.mergeHeaders,
             title: options.title,
@@ -175,7 +179,7 @@ function sanitizeSize(size: number[]): number[] {
     });
 }
 
-type DataViewFactory = (promisedRes: Promise<GdcExecution.IExecutionResult | null>) => Promise<IDataView>;
+type DataViewFactory = (promisedRes: Promise<IBearExecutionResult | null>) => Promise<IDataView>;
 
 // for each level (column attribute), prepare a set of totals corresponding for that level
 function separateTotalsByLevels(columnTotals: ITotal[], columnIdentifiers: string[]): IIndexedTotals {
@@ -307,7 +311,7 @@ class BearDataView implements IDataView {
     public readonly warnings?: IResultWarning[];
     private readonly _fingerprint: string;
 
-    constructor(result: IExecutionResult, dataResult: GdcExecution.IExecutionResult) {
+    constructor(result: IExecutionResult, dataResult: IBearExecutionResult) {
         this.result = result;
         this.definition = result.definition;
         this.data = dataResult.data;
@@ -342,14 +346,14 @@ class BearDataView implements IDataView {
 //
 //
 
-function hasEmptyData(result: GdcExecution.IExecutionResult): boolean {
+function hasEmptyData(result: IBearExecutionResult): boolean {
     return result.data.length === 0;
 }
 
-function hasMissingHeaderItems(result: GdcExecution.IExecutionResult): boolean {
+function hasMissingHeaderItems(result: IBearExecutionResult): boolean {
     return !result.headerItems;
 }
 
-function isEmptyDataResult(result: GdcExecution.IExecutionResult): boolean {
+function isEmptyDataResult(result: IBearExecutionResult): boolean {
     return hasEmptyData(result) && hasMissingHeaderItems(result);
 }

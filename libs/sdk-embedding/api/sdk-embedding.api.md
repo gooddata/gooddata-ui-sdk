@@ -4,71 +4,215 @@
 
 ```ts
 
-import * as GdcExecuteAFM from '@gooddata/api-model-bear/GdcExecuteAFM';
-import * as GdcExport from '@gooddata/api-model-bear/GdcExport';
-import * as GdcVisualizationObject from '@gooddata/api-model-bear/GdcVisualizationObject';
+import { IBaseExportConfig } from '@gooddata/api-model-bear';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { ILocalIdentifierQualifier as ILocalIdentifierQualifier_2 } from '@gooddata/api-model-bear';
+import { isObjectUriQualifier as isObjectUriQualifier_2 } from '@gooddata/api-model-bear';
+import { isObjIdentifierQualifier as isObjIdentifierQualifier_2 } from '@gooddata/api-model-bear';
+import { IVisualization } from '@gooddata/api-model-bear';
+import { ObjQualifier as ObjQualifier_2 } from '@gooddata/api-model-bear';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @public (undocumented)
-type AbsoluteType = "absolute";
+export type AbsoluteType = "absolute";
 
 // @public
-type AdCommandFailed = CommandFailed<GdcProductName.ANALYTICAL_DESIGNER>;
+export type AdClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>;
 
 // @public
-type AdCommandFailedData = CommandFailedData<GdcProductName.ANALYTICAL_DESIGNER>;
+export type AdClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, undefined>;
 
 // @public
-type AddFilterCommand = IGdcKdMessageEvent<GdcKdCommandType.AddFilter, null>;
+export type AdClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAdAvailableCommands>;
+
+// @public
+export type AdClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFinished, IAdAvailableCommands>;
+
+// @public
+export type AdClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsight, undefined>;
+
+// @public
+export type AdClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
+
+// @public
+export type AdClearInsightFinished = IGdcAdMessageEvent<GdcAdEventType.ClearInsightFinished, IAdAvailableCommands>;
+
+// @public
+export type AdClearInsightFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearInsightFinished, IAdAvailableCommands>;
+
+// @public
+export type AdCommandFailed = CommandFailed<GdcProductName.ANALYTICAL_DESIGNER>;
+
+// @public
+export type AdCommandFailedData = CommandFailedData<GdcProductName.ANALYTICAL_DESIGNER>;
+
+// @public
+export type AdDrillableItemsCommand = IGdcAdMessageEvent<GdcAdCommandType.DrillableItems, IDrillableItemsCommandBody>;
+
+// @public
+export type AdDrillableItemsCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.DrillableItems, IDrillableItemsCommandBody>;
+
+// @public
+export type AdExportFinished = IGdcAdMessageEvent<GdcAdEventType.ExportFinished, AdExportFinishedBody>;
+
+// @public
+export type AdExportFinishedBody = IAdAvailableCommands & {
+    link: string;
+};
+
+// @public
+export type AdExportFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ExportFinished, AdExportFinishedBody>;
+
+// @public
+export type AdExportInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Export, IAdExportInsightCommandBody>;
+
+// @public
+export type AdExportInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Export, IAdExportInsightCommandBody>;
+
+// @public
+export type AdFilterContextChangedBody = IAdAvailableCommands & IFilterContextContent;
+
+// @public
+export type AdFilterContextChangedData = IGdcAdMessageEnvelope<GdcAdEventType.FilterContextChanged, AdFilterContextChangedBody>;
 
 // @public (undocumented)
-type AddFilterCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddFilter, null>;
-
-// @public
-type AddWidgetCommand = IGdcKdMessageEvent<GdcKdCommandType.AddWidget, IAddWidgetBody>;
-
-// @public (undocumented)
-type AddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddWidget, IAddWidgetBody>;
+export type AdInsightChangedBody = IAdAvailableCommands & {
+    definition: IInsightDefinition;
+};
 
 // @public (undocumented)
-type AllTimeType = "allTime";
+export type AdInsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightChanged, AdInsightChangedBody>;
+
+// @public
+export type AdInsightOpened = IGdcAdMessageEvent<GdcAdEventType.InsightOpened, AdInsightOpenedBody>;
+
+// @public
+export type AdInsightOpenedBody = IAdAvailableCommands & {
+    insight: IObjectMeta;
+    definition: IInsightDefinition;
+};
+
+// @public
+export type AdInsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, AdInsightOpenedBody>;
+
+// @public
+export type AdInsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, AdInsightRenderedBody>;
+
+// @public
+export type AdInsightRenderedBody = IAdAvailableCommands & {
+    insight: IObjectMeta;
+    errorMessage?: string;
+};
+
+// @public
+export type AdInsightRenderedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightRendered, AdInsightRenderedBody>;
+
+// @public
+export type AdInsightSaved = IGdcAdMessageEvent<GdcAdEventType.InsightSaved, AdInsightSavedBody>;
+
+// @public
+export type AdInsightSavedBody = IAdAvailableCommands & IVisualization & {
+    insight: IObjectMeta;
+};
+
+// @public
+export type AdInsightSavedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightSaved, AdInsightSavedBody>;
+
+// @public
+export type AdNewInsightInitialized = IGdcAdMessageEvent<GdcAdEventType.NewInsightInitialized, AdNewInsightInitializedBody>;
+
+// @public
+export type AdNewInsightInitializedBody = IAdAvailableCommands;
+
+// @public
+export type AdNewInsightInitializedData = IGdcAdMessageEnvelope<GdcAdEventType.NewInsightInitialized, undefined>;
+
+// @public
+export type AdOpenInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.OpenInsight, IAdOpenInsightCommandBody>;
+
+// @public
+export type AdOpenInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.OpenInsight, IAdOpenInsightCommandBody>;
+
+// @public
+export type AdRedoCommand = IGdcAdMessageEvent<GdcAdCommandType.Redo, undefined>;
+
+// @public
+export type AdRedoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Redo, undefined>;
+
+// @public
+export type AdRedoFinished = IGdcAdMessageEvent<GdcAdEventType.RedoFinished, AdRedoFinishedBody>;
+
+// @public
+export type AdRedoFinishedBody = IAdAvailableCommands;
+
+// @public
+export type AdRedoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RedoFinished, AdRedoFinishedBody>;
+
+// @public
+export type AdRemoveFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.RemoveFilterContext, IRemoveFilterContextContent>;
+
+// @public
+export type AdRemoveFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.RemoveFilterContext, IRemoveFilterContextContent>;
+
+// @public
+export type AdRemoveFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RemoveFilterContextFinished, IAdAvailableCommands>;
+
+// @public
+export type AdRequestCancellationCommand = IGdcAdMessageEvent<GdcAdCommandType.RequestCancellation, undefined>;
+
+// @public
+export type AdRequestCancellationCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.RequestCancellation, undefined>;
+
+// @public
+export type AdSaveAsInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.SaveAs, IAdSaveAsInsightCommandBody>;
+
+// @public
+export type AdSaveAsInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SaveAs, IAdSaveAsInsightCommandBody>;
+
+// @public
+export type AdSaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, IAdSaveCommandBody>;
+
+// @public
+export type AdSaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, IAdSaveCommandBody>;
+
+// @public
+export type AdSetApiTokenCommand = IGdcAdMessageEvent<GdcAdCommandType.SetApiToken, IAdSetApiTokenBody>;
+
+// @public
+export type AdSetApiTokenCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetApiToken, IAdSetApiTokenBody>;
+
+// @public
+export type AdSetFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.SetFilterContext, IFilterContextContent>;
+
+// @public
+export type AdSetFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetFilterContext, IFilterContextContent>;
+
+// @public
+export type AdSetFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.SetFilterContextFinished, IAdAvailableCommands>;
+
+// @public
+export type AdUndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
+
+// @public
+export type AdUndoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Undo, undefined>;
+
+// @public
+export type AdUndoFinished = IGdcAdMessageEvent<GdcAdEventType.UndoFinished, AdUndoFinishedBody>;
+
+// @public
+export type AdUndoFinishedBody = IAdAvailableCommands;
+
+// @public
+export type AdUndoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.UndoFinished, AdUndoFinishedBody>;
 
 // @public (undocumented)
-type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
+export type AllTimeType = "allTime";
 
 // @public (undocumented)
-type AttributeFilterItemSelectionMode = "single" | "multi";
-
-// @public
-type CancelEditCommand = IGdcKdMessageEvent<GdcKdCommandType.CancelEdit, null>;
+export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @public (undocumented)
-type CancelEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.CancelEdit, null>;
-
-// @public
-type ClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>;
-
-// @public
-type ClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, undefined>;
-
-// @public
-type ClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAvailableCommands>;
-
-// @public
-type ClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFinished, IAvailableCommands>;
-
-// @public
-type ClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsight, undefined>;
-
-// @public
-type ClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
-
-// @public
-type ClearInsightFinished = IGdcAdMessageEvent<GdcAdEventType.ClearInsightFinished, IAvailableCommands>;
-
-// @public
-type ClearInsightFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearInsightFinished, IAvailableCommands>;
+export type AttributeFilterItemSelectionMode = "single" | "multi";
 
 // @public
 export type CommandFailed<Product> = IGdcMessageEvent<Product, GdcEventType.AppCommandFailed, ICommandFailedBody>;
@@ -77,364 +221,22 @@ export type CommandFailed<Product> = IGdcMessageEvent<Product, GdcEventType.AppC
 export type CommandFailedData<Product> = IGdcMessageEnvelope<Product, GdcEventType.AppCommandFailed, ICommandFailedBody>;
 
 // @public (undocumented)
-type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
+export type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
 
 // @public (undocumented)
-type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @public (undocumented)
-type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
+export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
 
 // @public (undocumented)
-type DateString = string;
-
-// @public
-type DeleteDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Delete, null>;
+export type DateString = string;
 
 // @public (undocumented)
-type DeleteDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Delete, null>;
+export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
 
 // @public
-type DrillableItemsCommand = IGdcAdMessageEvent<GdcAdCommandType.DrillableItems, IDrillableItemsCommandBody>;
-
-// @public
-type DrillableItemsCommand_2 = IGdcKdMessageEvent<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
-
-// @public
-type DrillableItemsCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.DrillableItems, IDrillableItemsCommandBody>;
-
-// @public
-type DrillableItemsCommandData_2 = IGdcKdMessageEnvelope<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
-
-// @public (undocumented)
-type DrillToUrlFilters = Array<EmbeddedGdc.DashboardDateFilter | EmbeddedGdc.IDashboardAttributeFilter>;
-
-// @public (undocumented)
-type DrillToUrlResolvedData = IGdcKdMessageEnvelope<GdcKdEventType.DrillToUrlResolved, IDrillToUrlResolvedDataBody>;
-
-// @public (undocumented)
-type DrillToUrlStartedData = IGdcKdMessageEnvelope<GdcKdEventType.DrillToUrlStarted, IDrillToUrlStartedDataBody>;
-
-declare namespace EmbeddedAnalyticalDesigner {
-    export {
-        isAdCommandFailedData,
-        isDrillableItemsCommandData,
-        isOpenInsightCommandData,
-        isClearCommandData,
-        isClearInsightCommandData,
-        isRequestCancellationCommandData,
-        isSaveInsightCommandData,
-        isSaveAsInsightCommandData,
-        isExportInsightCommandData,
-        isUndoCommandData,
-        isRedoCommandData,
-        isSetFilterContextCommandData,
-        isRemoveFilterContextCommandData,
-        isNewInsightInitializedData,
-        isInsightOpenedData,
-        isInsightRenderedData,
-        isClearFinishedData,
-        isClearInsightFinishedData,
-        isInsightSavedData,
-        isExportFinishedData,
-        isUndoFinishedData,
-        isRedoFinishedData,
-        isSetApiTokenCommandData,
-        IInsightExportConfig,
-        IGdcAdMessageEvent,
-        IGdcAdMessageEnvelope,
-        GdcAdCommandType,
-        GdcAdEventType,
-        AdCommandFailed,
-        AdCommandFailedData,
-        DrillableItemsCommand,
-        DrillableItemsCommandData,
-        IOpenInsightCommandBody,
-        OpenInsightCommand,
-        OpenInsightCommandData,
-        ClearCommand,
-        ClearCommandData,
-        ClearInsightCommand,
-        ClearInsightCommandData,
-        RequestCancellationCommand,
-        RequestCancellationCommandData,
-        ISaveCommandBody,
-        SaveInsightCommand,
-        SaveInsightCommandData,
-        ISaveAsInsightCommandBody,
-        SaveAsInsightCommand,
-        SaveAsInsightCommandData,
-        IExportInsightCommandBody,
-        ExportInsightCommand,
-        ExportInsightCommandData,
-        UndoCommand,
-        UndoCommandData,
-        RedoCommand,
-        RedoCommandData,
-        SetFilterContextCommandData,
-        SetFilterContextCommand,
-        RemoveFilterContextCommandData,
-        RemoveFilterContextCommand,
-        IAvailableCommands,
-        NewInsightInitializedBody,
-        NewInsightInitialized,
-        NewInsightInitializedData,
-        InsightOpenedBody,
-        InsightOpened,
-        InsightOpenedData,
-        InsightRenderedBody,
-        InsightRendered,
-        InsightRenderedData,
-        ClearFinished,
-        ClearFinishedData,
-        ClearInsightFinished,
-        ClearInsightFinishedData,
-        InsightSavedBody,
-        InsightSaved,
-        InsightSavedData,
-        ExportFinishedBody,
-        ExportFinished,
-        ExportFinishedData,
-        UndoFinishedBody,
-        UndoFinished,
-        UndoFinishedData,
-        RedoFinishedBody,
-        RedoFinished,
-        RedoFinishedData,
-        SetFilterContextFinishedData,
-        RemoveFilterContextFinishedData,
-        FilterContextChangedBody,
-        FilterContextChangedData,
-        InsightChangedBody,
-        InsightChangedData,
-        ISetApiTokenBody,
-        SetApiTokenCommand,
-        SetApiTokenCommandData
-    }
-}
-export { EmbeddedAnalyticalDesigner }
-
-declare namespace EmbeddedGdc {
-    export {
-        isDateFilter,
-        isRelativeDateFilter,
-        isAbsoluteDateFilter,
-        isAttributeFilter,
-        isPositiveAttributeFilter,
-        isNegativeAttributeFilter,
-        isRankingFilter,
-        isRemoveDateFilter,
-        isRemoveAttributeFilter,
-        isRemoveRankingFilter,
-        isDashboardDateFilter,
-        isDashboardAllTimeDateFilter,
-        isDashboardAbsoluteDateFilter,
-        isDashboardRelativeDateFilter,
-        isDashboardAttributeFilter,
-        IPositiveAttributeFilter,
-        INegativeAttributeFilter,
-        IAbsoluteDateFilter,
-        IRelativeDateFilter,
-        RankingFilterOperator,
-        IRankingFilter,
-        AttributeFilterItem,
-        DateFilterItem,
-        FilterItem,
-        ILocalIdentifierQualifier,
-        ObjQualifier,
-        AttributeFilterItemSelectionMode,
-        IRemoveDateFilterItem,
-        IRemoveAttributeFilterItem,
-        IRemoveRankingFilterItem,
-        RemoveFilterItem,
-        isObjIdentifierQualifier,
-        isObjectUriQualifier,
-        IFilterContextContent,
-        IRemoveFilterContextContent,
-        AllTimeType,
-        AbsoluteType,
-        RelativeType,
-        DateString,
-        DateFilterGranularity,
-        IDashboardAllTimeDateFilter,
-        IDashboardAbsoluteDateFilter,
-        IDashboardRelativeDateFilter,
-        DashboardDateFilter,
-        IDashboardAttributeFilter,
-        IResolvedAttributeFilterValues,
-        IResolvedDateFilterValue,
-        ResolvedDateFilterValues,
-        IResolvedFilterValues
-    }
-}
-export { EmbeddedGdc }
-
-declare namespace EmbeddedKpiDashboard {
-    export {
-        isSaveDashboardCommandData,
-        isSaveAsDashboardCommandData,
-        isCancelEditCommandData,
-        isSwitchToEditCommandData,
-        isDrillableItemsCommandData_2 as isDrillableItemsCommandData,
-        isSetSizeCommandData,
-        isSetFilterContextCommandData_2 as isSetFilterContextCommandData,
-        isRemoveFilterContextCommandData_2 as isRemoveFilterContextCommandData,
-        isIdentifierInsight,
-        isUriInsight,
-        isAddWidgetCommandData,
-        isAddFilterCommandData,
-        isExportToPdfCommandData,
-        isOpenScheduleEmailDialogCommandData,
-        isSetFilterParentsCommandData,
-        isOpenDeleteDashboardDialogCommandData,
-        isSetApiTokenCommandData_2 as isSetApiTokenCommandData,
-        IGdcKdMessageEvent,
-        IGdcKdMessageEnvelope,
-        GdcKdCommandType,
-        GdcKdEventType,
-        IKdAvailableCommands,
-        IKdSaveCommandBody,
-        SaveDashboardCommand,
-        SaveDashboardCommandData,
-        SaveAsDashboardCommand,
-        SaveAsDashboardCommandData,
-        CancelEditCommand,
-        CancelEditCommandData,
-        DeleteDashboardCommand,
-        DeleteDashboardCommandData,
-        SwitchToEditCommand,
-        SwitchToEditCommandData,
-        DrillableItemsCommand_2 as DrillableItemsCommand,
-        DrillableItemsCommandData_2 as DrillableItemsCommandData,
-        ISetSizeCommandBody,
-        SetSizeCommand,
-        SetSizeCommandData,
-        SetFilterContextCommandData_2 as SetFilterContextCommandData,
-        SetFilterContextCommand_2 as SetFilterContextCommand,
-        RemoveFilterContextCommandData_2 as RemoveFilterContextCommandData,
-        RemoveFilterContextCommand_2 as RemoveFilterContextCommand,
-        IKpiWidget,
-        IIdentifierInsightRef,
-        IUriInsightRef,
-        IInsightWidget,
-        IAddWidgetBody,
-        AddWidgetCommand,
-        AddWidgetCommandData,
-        AddFilterCommand,
-        AddFilterCommandData,
-        ExportToPdfCommand,
-        ExportToPdfCommandData,
-        INoPermissionsBody,
-        NoPermissionsEventData,
-        IResizedBody,
-        ResizedEventData,
-        IDashboardObjectMeta,
-        IDashboardBody,
-        IDashboardCreatedData,
-        IDashboardLoadedData,
-        IDashboardUpdatedData,
-        IDashboardSavedData,
-        IDashboardDeletedData,
-        SwitchedToEditData,
-        SwitchedToViewData,
-        IPlatformBody,
-        PlatformData,
-        IInsightWidgetBody,
-        IAddedWidgetBody,
-        WidgetAddedData,
-        FilterAddedBody,
-        FilterAddedData,
-        ExportToPdfFinishedBody,
-        ExportToPdfFinishedData,
-        SetFilterContextFinishedData_2 as SetFilterContextFinishedData,
-        RemoveFilterContextFinishedData_2 as RemoveFilterContextFinishedData,
-        FilterContextChangedBody_2 as FilterContextChangedBody,
-        FilterContextChangedData_2 as FilterContextChangedData,
-        DrillToUrlFilters,
-        IDrillToUrlStartedDataBody,
-        IDrillToUrlResolvedDataBody,
-        DrillToUrlStartedData,
-        DrillToUrlResolvedData,
-        OpenScheduleEmailDialogCommand,
-        OpenScheduleEmailDialogCommandData,
-        ISetFilterParentsAttributeFilter,
-        SetFilterParentsItemFilter,
-        ISetFilterParentsItemParent,
-        ISetFilterParentsItem,
-        ISetFilterParentsDataBody,
-        SetFilterParentsCommand,
-        SetFilterParentsCommandData,
-        SetFilterParentsFinished,
-        SetFilterParentsFinishedData,
-        SetFilterParentsErrorCode,
-        ISetFilterParentsFailedDataBody,
-        SetFilterParentsFailed,
-        SetFilterParentsFailedData,
-        IInsightSavedBody,
-        InsightSavedData_2 as InsightSavedData,
-        OpenDeleteDashboardDialogCommand,
-        OpenDeleteDashboardDialogCommandData,
-        ISetApiTokenBody_2 as ISetApiTokenBody,
-        SetApiTokenCommand_2 as SetApiTokenCommand,
-        SetApiTokenCommandData_2 as SetApiTokenCommandData
-    }
-}
-export { EmbeddedKpiDashboard }
-
-// @public
-type ExportFinished = IGdcAdMessageEvent<GdcAdEventType.ExportFinished, ExportFinishedBody>;
-
-// @public
-type ExportFinishedBody = IAvailableCommands & {
-    link: string;
-};
-
-// @public
-type ExportFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ExportFinished, ExportFinishedBody>;
-
-// @public
-type ExportInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Export, IExportInsightCommandBody>;
-
-// @public
-type ExportInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Export, IExportInsightCommandBody>;
-
-// @public
-type ExportToPdfCommand = IGdcKdMessageEvent<GdcKdCommandType.ExportToPdf, null>;
-
-// @public (undocumented)
-type ExportToPdfCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ExportToPdf, null>;
-
-// @public (undocumented)
-type ExportToPdfFinishedBody = IKdAvailableCommands & {
-    link: string;
-};
-
-// @public
-type ExportToPdfFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.ExportedToPdf, ExportToPdfFinishedBody>;
-
-// @public (undocumented)
-type FilterAddedBody = IKdAvailableCommands;
-
-// @public
-type FilterAddedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterAdded, FilterAddedBody>;
-
-// @public
-type FilterContextChangedBody = IAvailableCommands & EmbeddedGdc.IFilterContextContent;
-
-// @public
-type FilterContextChangedBody_2 = IKdAvailableCommands & EmbeddedGdc.IFilterContextContent;
-
-// @public
-type FilterContextChangedData = IGdcAdMessageEnvelope<GdcAdEventType.FilterContextChanged, FilterContextChangedBody>;
-
-// @public
-type FilterContextChangedData_2 = IGdcKdMessageEnvelope<GdcKdEventType.FilterContextChanged, FilterContextChangedBody_2>;
-
-// @public (undocumented)
-type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
-
-// @public
-enum GdcAdCommandType {
+export enum GdcAdCommandType {
     Clear = "clear",
     ClearInsight = "clearInsight",
     DrillableItems = "drillableItems",
@@ -451,7 +253,7 @@ enum GdcAdCommandType {
 }
 
 // @public
-enum GdcAdEventType {
+export enum GdcAdEventType {
     ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
     ClearFinished = "clearFinished",
     ClearInsightFinished = "clearInsightFinished",
@@ -486,7 +288,7 @@ export enum GdcEventType {
 }
 
 // @public
-enum GdcKdCommandType {
+export enum GdcKdCommandType {
     AddFilter = "addFilter",
     AddWidget = "addWidget",
     CancelEdit = "cancelEdit",
@@ -506,7 +308,7 @@ enum GdcKdCommandType {
 }
 
 // @public
-enum GdcKdEventType {
+export enum GdcKdEventType {
     ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
     DashboardCreated = "dashboardCreated",
     DashboardCreationCanceled = "dashboardCreationCanceled",
@@ -551,7 +353,7 @@ export enum GdcProductName {
 export function getEventType(obj: Record<string, any>): string;
 
 // @public (undocumented)
-interface IAbsoluteDateFilter {
+export interface IAbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: {
         dataSet?: ObjQualifier;
@@ -560,21 +362,43 @@ interface IAbsoluteDateFilter {
     };
 }
 
-// @public (undocumented)
-interface IAddedWidgetBody {
-    // (undocumented)
-    insight?: IInsightWidgetBody;
-}
-
-// @public (undocumented)
-interface IAddWidgetBody {
-    // (undocumented)
-    widget: IKpiWidget | IInsightWidget;
+// @public
+export interface IAdAvailableCommands {
+    availableCommands: GdcAdCommandType[];
 }
 
 // @public
-interface IAvailableCommands {
-    availableCommands: GdcAdCommandType[];
+export interface IAdExportInsightCommandBody {
+    readonly config: IInsightExportConfig;
+}
+
+// @public
+export interface IAdOpenInsightCommandBody {
+    clientId?: string;
+    dataset?: string;
+    excludeObjectsWithTags?: string;
+    includeObjectsWithTags?: string;
+    insightId?: string;
+    productId?: string;
+    projectId?: string;
+    reportId?: string;
+}
+
+// @public
+export interface IAdSaveAsInsightCommandBody {
+    readonly title: string;
+}
+
+// @public
+export interface IAdSaveCommandBody {
+    title: string;
+}
+
+// @public
+export interface IAdSetApiTokenBody {
+    secondsBeforeTokenExpirationToEmitReminder?: number;
+    token: string;
+    type?: "gooddata" | "jwt";
 }
 
 // @public (undocumented)
@@ -584,7 +408,7 @@ export interface ICommandFailedBody {
 }
 
 // @public (undocumented)
-interface IDashboardAbsoluteDateFilter {
+export interface IDashboardAbsoluteDateFilter {
     // (undocumented)
     dateFilter: {
         type: AbsoluteType;
@@ -595,7 +419,7 @@ interface IDashboardAbsoluteDateFilter {
 }
 
 // @public (undocumented)
-interface IDashboardAllTimeDateFilter {
+export interface IDashboardAllTimeDateFilter {
     // (undocumented)
     dateFilter: {
         type: AllTimeType;
@@ -603,7 +427,7 @@ interface IDashboardAllTimeDateFilter {
 }
 
 // @public (undocumented)
-interface IDashboardAttributeFilter {
+export interface IDashboardAttributeFilter {
     // (undocumented)
     attributeFilter: {
         displayForm: string;
@@ -613,28 +437,7 @@ interface IDashboardAttributeFilter {
 }
 
 // @public (undocumented)
-type IDashboardBody = IKdAvailableCommands & IDashboardObjectMeta;
-
-// @public
-type IDashboardCreatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardCreated, IDashboardBody>;
-
-// @public
-type IDashboardDeletedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardDeleted, IDashboardBody>;
-
-// @public
-type IDashboardLoadedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardLoaded, IDashboardBody>;
-
-// @public (undocumented)
-interface IDashboardObjectMeta {
-    client?: string;
-    dashboard: string;
-    dashboardId: string;
-    project: string;
-    title: string;
-}
-
-// @public (undocumented)
-interface IDashboardRelativeDateFilter {
+export interface IDashboardRelativeDateFilter {
     // (undocumented)
     dateFilter: {
         type: RelativeType;
@@ -645,55 +448,27 @@ interface IDashboardRelativeDateFilter {
 }
 
 // @public
-type IDashboardSavedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardSaved, IDashboardBody>;
-
-// @public
-type IDashboardUpdatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardUpdated, IDashboardBody>;
-
-// @public
 export interface IDrillableItemsCommandBody extends ISimpleDrillableItemsCommandBody {
     composedFrom?: ISimpleDrillableItemsCommandBody;
 }
 
-// @public (undocumented)
-interface IDrillToUrlResolvedDataBody {
-    filters: DrillToUrlFilters;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    resolvedFilterValues?: EmbeddedGdc.IResolvedFilterValues;
-    // (undocumented)
-    url: string;
-}
-
-// @public (undocumented)
-interface IDrillToUrlStartedDataBody {
-    // (undocumented)
-    id: string;
-}
-
 // @public
-interface IExportInsightCommandBody {
-    readonly config: IInsightExportConfig;
-}
-
-// @public
-interface IFilterContextContent {
+export interface IFilterContextContent {
     // (undocumented)
     filters: FilterItem[];
 }
 
 // @public
-type IGdcAdMessageEnvelope<T, TBody> = IGdcMessageEnvelope<GdcProductName.ANALYTICAL_DESIGNER, T, TBody>;
+export type IGdcAdMessageEnvelope<T, TBody> = IGdcMessageEnvelope<GdcProductName.ANALYTICAL_DESIGNER, T, TBody>;
 
 // @public
-type IGdcAdMessageEvent<T, TBody> = IGdcMessageEvent<GdcProductName.ANALYTICAL_DESIGNER, T, TBody>;
+export type IGdcAdMessageEvent<T, TBody> = IGdcMessageEvent<GdcProductName.ANALYTICAL_DESIGNER, T, TBody>;
 
 // @public
-type IGdcKdMessageEnvelope<T, TBody> = IGdcMessageEnvelope<GdcProductName.KPI_DASHBOARD, T, TBody>;
+export type IGdcKdMessageEnvelope<T, TBody> = IGdcMessageEnvelope<GdcProductName.KPI_DASHBOARD, T, TBody>;
 
 // @public
-type IGdcKdMessageEvent<T, TBody> = IGdcMessageEvent<GdcProductName.KPI_DASHBOARD, T, TBody>;
+export type IGdcKdMessageEvent<T, TBody> = IGdcMessageEvent<GdcProductName.KPI_DASHBOARD, T, TBody>;
 
 // @public
 export interface IGdcMessage<Product, T, TBody> {
@@ -725,32 +500,90 @@ export interface IGdcMessageEventListenerConfig {
     validReceivedPostEvents: string[];
 }
 
+// @public
+export interface IInsightExportConfig extends IBaseExportConfig {
+    includeFilterContext?: boolean;
+}
+
 // @public (undocumented)
-interface IIdentifierInsightRef {
+export interface IKdAddedWidgetBody {
+    // (undocumented)
+    insight?: IKdInsightWidgetBody;
+}
+
+// @public (undocumented)
+export interface IKdAddWidgetBody {
+    // (undocumented)
+    widget: IKdKpiWidget | IKdInsightWidget;
+}
+
+// @public
+export interface IKdAvailableCommands {
+    availableCommands: GdcKdCommandType[];
+}
+
+// @public
+export type IKdDashboardCreatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardCreated, KdDashboardBody>;
+
+// @public
+export type IKdDashboardDeletedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardDeleted, KdDashboardBody>;
+
+// @public
+export type IKdDashboardLoadedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardLoaded, KdDashboardBody>;
+
+// @public (undocumented)
+export interface IKdDashboardObjectMeta {
+    client?: string;
+    dashboard: string;
+    dashboardId: string;
+    project: string;
+    title: string;
+}
+
+// @public
+export type IKdDashboardSavedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardSaved, KdDashboardBody>;
+
+// @public
+export type IKdDashboardUpdatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardUpdated, KdDashboardBody>;
+
+// @public (undocumented)
+export interface IKdDrillToUrlResolvedDataBody {
+    filters: KdDrillToUrlFilters;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    resolvedFilterValues?: IResolvedFilterValues;
+    // (undocumented)
+    url: string;
+}
+
+// @public (undocumented)
+export interface IKdDrillToUrlStartedDataBody {
+    // (undocumented)
+    id: string;
+}
+
+// @public (undocumented)
+export interface IKdIdentifierInsightRef {
     // (undocumented)
     identifier: string;
 }
 
 // @public
-interface IInsightExportConfig extends GdcExport.IBaseExportConfig {
-    includeFilterContext?: boolean;
-}
-
-// @public
-type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
+export type IKdInsightSavedBody = IVisualization & {
     insight: IObjectMeta;
 };
 
 // @public (undocumented)
-interface IInsightWidget {
+export interface IKdInsightWidget {
     // (undocumented)
-    ref: IIdentifierInsightRef | IUriInsightRef;
+    ref: IKdIdentifierInsightRef | IKdUriInsightRef;
     // (undocumented)
     type: "insight";
 }
 
 // @public (undocumented)
-interface IInsightWidgetBody {
+export interface IKdInsightWidgetBody {
     // (undocumented)
     identifier?: string;
     // (undocumented)
@@ -761,27 +594,92 @@ interface IInsightWidgetBody {
     widgetCategory: "kpi" | "visualization";
 }
 
-// @public
-interface IKdAvailableCommands {
-    availableCommands: GdcKdCommandType[];
-}
-
-// @public
-interface IKdSaveCommandBody {
-    title: string;
-}
-
 // @public (undocumented)
-interface IKpiWidget {
+export interface IKdKpiWidget {
     // (undocumented)
     type: "kpi";
 }
 
 // @public (undocumented)
-type ILocalIdentifierQualifier = GdcExecuteAFM.ILocalIdentifierQualifier;
+export interface IKdNoPermissionsBody {
+    reason: string;
+}
 
 // @public (undocumented)
-interface INegativeAttributeFilter {
+export interface IKdPlatformBody {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    errorCode?: number;
+    // (undocumented)
+    status?: string;
+}
+
+// @public (undocumented)
+export interface IKdResizedBody {
+    // (undocumented)
+    height: number;
+}
+
+// @public
+export interface IKdSaveCommandBody {
+    title: string;
+}
+
+// @public
+export interface IKdSetApiTokenBody {
+    secondsBeforeTokenExpirationToEmitReminder?: number;
+    token: string;
+    type?: "gooddata" | "jwt";
+}
+
+// @public
+export interface IKdSetFilterParentsAttributeFilter {
+    // (undocumented)
+    attributeFilter: {
+        displayForm: ObjRef;
+    };
+}
+
+// @public
+export interface IKdSetFilterParentsDataBody {
+    // (undocumented)
+    filters: IKdSetFilterParentsItem[];
+}
+
+// @public
+export interface IKdSetFilterParentsFailedDataBody {
+    errorCode: KdSetFilterParentsErrorCode;
+}
+
+// @public
+export interface IKdSetFilterParentsItem {
+    filter: KdSetFilterParentsItemFilter;
+    parents: IKdSetFilterParentsItemParent[];
+}
+
+// @public
+export interface IKdSetFilterParentsItemParent {
+    connectingAttribute: ObjRef;
+    parent: KdSetFilterParentsItemFilter;
+}
+
+// @public (undocumented)
+export interface IKdSetSizeCommandBody {
+    height: number;
+}
+
+// @public (undocumented)
+export interface IKdUriInsightRef {
+    // (undocumented)
+    uri: string;
+}
+
+// @public (undocumented)
+export type ILocalIdentifierQualifier = ILocalIdentifierQualifier_2;
+
+// @public (undocumented)
+export interface INegativeAttributeFilter {
     // (undocumented)
     negativeAttributeFilter: {
         displayForm: ObjQualifier;
@@ -791,57 +689,6 @@ interface INegativeAttributeFilter {
     };
 }
 
-// @public (undocumented)
-interface INoPermissionsBody {
-    reason: string;
-}
-
-// @public (undocumented)
-type InsightChangedBody = IAvailableCommands & {
-    definition: IInsightDefinition;
-};
-
-// @public (undocumented)
-type InsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightChanged, InsightChangedBody>;
-
-// @public
-type InsightOpened = IGdcAdMessageEvent<GdcAdEventType.InsightOpened, InsightOpenedBody>;
-
-// @public
-type InsightOpenedBody = IAvailableCommands & {
-    insight: IObjectMeta;
-    definition: IInsightDefinition;
-};
-
-// @public
-type InsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, InsightOpenedBody>;
-
-// @public
-type InsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, InsightRenderedBody>;
-
-// @public
-type InsightRenderedBody = IAvailableCommands & {
-    insight: IObjectMeta;
-    errorMessage?: string;
-};
-
-// @public
-type InsightRenderedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightRendered, InsightRenderedBody>;
-
-// @public
-type InsightSaved = IGdcAdMessageEvent<GdcAdEventType.InsightSaved, InsightSavedBody>;
-
-// @public
-type InsightSavedBody = IAvailableCommands & GdcVisualizationObject.IVisualization & {
-    insight: IObjectMeta;
-};
-
-// @public
-type InsightSavedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightSaved, InsightSavedBody>;
-
-// @public
-type InsightSavedData_2 = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IInsightSavedBody>;
-
 // @public
 export interface IObjectMeta {
     identifier: string;
@@ -850,29 +697,7 @@ export interface IObjectMeta {
 }
 
 // @public
-interface IOpenInsightCommandBody {
-    clientId?: string;
-    dataset?: string;
-    excludeObjectsWithTags?: string;
-    includeObjectsWithTags?: string;
-    insightId?: string;
-    productId?: string;
-    projectId?: string;
-    reportId?: string;
-}
-
-// @public (undocumented)
-interface IPlatformBody {
-    // (undocumented)
-    description?: string;
-    // (undocumented)
-    errorCode?: number;
-    // (undocumented)
-    status?: string;
-}
-
-// @public
-interface IPositiveAttributeFilter {
+export interface IPositiveAttributeFilter {
     // (undocumented)
     positiveAttributeFilter: {
         displayForm: ObjQualifier;
@@ -891,7 +716,7 @@ export interface IPostMessageContextPayload {
 }
 
 // @public (undocumented)
-interface IRankingFilter {
+export interface IRankingFilter {
     // (undocumented)
     rankingFilter: {
         measure: ILocalIdentifierQualifier;
@@ -902,7 +727,7 @@ interface IRankingFilter {
 }
 
 // @public (undocumented)
-interface IRelativeDateFilter {
+export interface IRelativeDateFilter {
     // (undocumented)
     relativeDateFilter: {
         dataSet?: ObjQualifier;
@@ -913,43 +738,37 @@ interface IRelativeDateFilter {
 }
 
 // @public (undocumented)
-interface IRemoveAttributeFilterItem {
+export interface IRemoveAttributeFilterItem {
     // (undocumented)
     displayForm: ObjQualifier;
 }
 
 // @public (undocumented)
-interface IRemoveDateFilterItem {
+export interface IRemoveDateFilterItem {
     // (undocumented)
     dataSet: ObjQualifier;
 }
 
 // @public
-interface IRemoveFilterContextContent {
+export interface IRemoveFilterContextContent {
     // (undocumented)
     filters: RemoveFilterItem[];
 }
 
 // @public (undocumented)
-interface IRemoveRankingFilterItem {
+export interface IRemoveRankingFilterItem {
     // (undocumented)
     removeRankingFilter: unknown;
 }
 
 // @public (undocumented)
-interface IResizedBody {
-    // (undocumented)
-    height: number;
-}
-
-// @public (undocumented)
-interface IResolvedAttributeFilterValues {
+export interface IResolvedAttributeFilterValues {
     // (undocumented)
     [elementRef: string]: string | undefined;
 }
 
 // @public (undocumented)
-interface IResolvedDateFilterValue {
+export interface IResolvedDateFilterValue {
     // (undocumented)
     from: string;
     // (undocumented)
@@ -957,7 +776,7 @@ interface IResolvedDateFilterValue {
 }
 
 // @public
-interface IResolvedFilterValues {
+export interface IResolvedFilterValues {
     // (undocumented)
     attributeFilters: {
         [filterStringRef: string]: IResolvedAttributeFilterValues;
@@ -967,133 +786,100 @@ interface IResolvedFilterValues {
 }
 
 // @public (undocumented)
-function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
+export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
 
 // @public
-function isAdCommandFailedData(obj: unknown): obj is AdCommandFailedData;
+export function isAdClearCommandData(obj: unknown): obj is AdClearCommandData;
 
 // @public
-function isAddFilterCommandData(obj: unknown): obj is AddFilterCommandData;
+export function isAdClearFinishedData(obj: unknown): obj is AdClearFinishedData;
 
 // @public
-function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandData;
+export function isAdClearInsightCommandData(obj: unknown): obj is AdClearInsightCommandData;
+
+// @public
+export function isAdClearInsightFinishedData(obj: unknown): obj is AdClearInsightFinishedData;
+
+// @public
+export function isAdCommandFailedData(obj: unknown): obj is AdCommandFailedData;
+
+// @public
+export function isAdDrillableItemsCommandData(obj: unknown): obj is AdDrillableItemsCommandData;
+
+// @public
+export function isAdExportFinishedData(obj: unknown): obj is AdExportFinishedData;
+
+// @public
+export function isAdExportInsightCommandData(obj: unknown): obj is AdExportInsightCommandData;
+
+// @public
+export function isAdInsightOpenedData(obj: unknown): obj is AdInsightOpenedData;
+
+// @public
+export function isAdInsightRenderedData(obj: unknown): obj is AdInsightRenderedData;
+
+// @public
+export function isAdInsightSavedData(obj: unknown): obj is AdInsightSavedData;
+
+// @public
+export function isAdNewInsightInitializedData(obj: unknown): obj is AdNewInsightInitializedData;
+
+// @public
+export function isAdOpenInsightCommandData(obj: unknown): obj is AdOpenInsightCommandData;
+
+// @public
+export function isAdRedoCommandData(obj: unknown): obj is AdRedoCommandData;
+
+// @public
+export function isAdRedoFinishedData(obj: unknown): obj is AdRedoFinishedData;
+
+// @public
+export function isAdRemoveFilterContextCommandData(obj: unknown): obj is AdRemoveFilterContextCommandData;
+
+// @public
+export function isAdRequestCancellationCommandData(obj: unknown): obj is AdRequestCancellationCommandData;
+
+// @public
+export function isAdSaveAsInsightCommandData(obj: unknown): obj is AdSaveAsInsightCommandData;
+
+// @public
+export function isAdSaveInsightCommandData(obj: unknown): obj is AdSaveInsightCommandData;
+
+// @public
+export function isAdSetApiTokenCommandData(obj: unknown): obj is AdSetApiTokenCommandData;
+
+// @public
+export function isAdSetFilterContextCommandData(obj: unknown): obj is AdSetFilterContextCommandData;
+
+// @public
+export function isAdUndoCommandData(obj: unknown): obj is AdUndoCommandData;
+
+// @public
+export function isAdUndoFinishedData(obj: unknown): obj is AdUndoFinishedData;
 
 // @public (undocumented)
-function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
-
-// @public
-interface ISaveAsInsightCommandBody {
-    readonly title: string;
-}
-
-// @public
-interface ISaveCommandBody {
-    title: string;
-}
-
-// @public
-function isCancelEditCommandData(obj: unknown): obj is CancelEditCommandData;
-
-// @public
-function isClearCommandData(obj: unknown): obj is ClearCommandData;
-
-// @public
-function isClearFinishedData(obj: unknown): obj is ClearFinishedData;
-
-// @public
-function isClearInsightCommandData(obj: unknown): obj is ClearInsightCommandData;
-
-// @public
-function isClearInsightFinishedData(obj: unknown): obj is ClearInsightFinishedData;
+export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
 
 // @public
 export function isCommandFailedData<Product>(obj: unknown): obj is CommandFailedData<Product>;
 
 // @public (undocumented)
-function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashboardAbsoluteDateFilter;
+export function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashboardAbsoluteDateFilter;
 
 // @public (undocumented)
-function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter;
+export function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter;
 
 // @public (undocumented)
-function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter;
+export function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter;
 
 // @public (undocumented)
-function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter;
+export function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter;
 
 // @public (undocumented)
-function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter;
+export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter;
 
 // @public (undocumented)
-function isDateFilter(filter: unknown): filter is DateFilterItem;
-
-// @public
-function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData;
-
-// @public
-function isDrillableItemsCommandData_2(obj: unknown): obj is DrillableItemsCommandData_2;
-
-// @public
-interface ISetApiTokenBody {
-    secondsBeforeTokenExpirationToEmitReminder?: number;
-    token: string;
-    type?: "gooddata" | "jwt";
-}
-
-// @public
-interface ISetApiTokenBody_2 {
-    secondsBeforeTokenExpirationToEmitReminder?: number;
-    token: string;
-    type?: "gooddata" | "jwt";
-}
-
-// @public
-interface ISetFilterParentsAttributeFilter {
-    // (undocumented)
-    attributeFilter: {
-        displayForm: ObjRef;
-    };
-}
-
-// @public
-interface ISetFilterParentsDataBody {
-    // (undocumented)
-    filters: ISetFilterParentsItem[];
-}
-
-// @public
-interface ISetFilterParentsFailedDataBody {
-    errorCode: SetFilterParentsErrorCode;
-}
-
-// @public
-interface ISetFilterParentsItem {
-    filter: SetFilterParentsItemFilter;
-    parents: ISetFilterParentsItemParent[];
-}
-
-// @public
-interface ISetFilterParentsItemParent {
-    connectingAttribute: ObjRef;
-    parent: SetFilterParentsItemFilter;
-}
-
-// @public (undocumented)
-interface ISetSizeCommandBody {
-    height: number;
-}
-
-// @public
-function isExportFinishedData(obj: unknown): obj is ExportFinishedData;
-
-// @public
-function isExportInsightCommandData(obj: unknown): obj is ExportInsightCommandData;
-
-// @public
-function isExportToPdfCommandData(obj: unknown): obj is ExportToPdfCommandData;
-
-// @public
-function isIdentifierInsight(obj: unknown): obj is IIdentifierInsightRef;
+export function isDateFilter(filter: unknown): filter is DateFilterItem;
 
 // @public
 export interface ISimpleDrillableItemsCommandBody {
@@ -1102,268 +888,219 @@ export interface ISimpleDrillableItemsCommandBody {
 }
 
 // @public
-function isInsightOpenedData(obj: unknown): obj is InsightOpenedData;
+export function isKdAddFilterCommandData(obj: unknown): obj is KdAddFilterCommandData;
 
 // @public
-function isInsightRenderedData(obj: unknown): obj is InsightRenderedData;
+export function isKdAddWidgetCommandData(obj: unknown): obj is KdAddWidgetCommandData;
 
 // @public
-function isInsightSavedData(obj: unknown): obj is InsightSavedData;
-
-// @public (undocumented)
-function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;
+export function isKdCancelEditCommandData(obj: unknown): obj is KdCancelEditCommandData;
 
 // @public
-function isNewInsightInitializedData(obj: unknown): obj is NewInsightInitializedData;
-
-// @public (undocumented)
-const isObjectUriQualifier: typeof GdcExecuteAFM.isObjectUriQualifier;
-
-// @public (undocumented)
-const isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
+export function isKdDrillableItemsCommandData(obj: unknown): obj is KdDrillableItemsCommandData;
 
 // @public
-function isOpenDeleteDashboardDialogCommandData(obj: unknown): obj is OpenDeleteDashboardDialogCommandData;
+export function isKdExportToPdfCommandData(obj: unknown): obj is KdExportToPdfCommandData;
 
 // @public
-function isOpenInsightCommandData(obj: unknown): obj is OpenInsightCommandData;
+export function isKdIdentifierInsight(obj: unknown): obj is IKdIdentifierInsightRef;
 
 // @public
-function isOpenScheduleEmailDialogCommandData(obj: unknown): obj is OpenScheduleEmailDialogCommandData;
-
-// @public (undocumented)
-function isPositiveAttributeFilter(filter: unknown): filter is IPositiveAttributeFilter;
-
-// @public (undocumented)
-function isRankingFilter(filter: unknown): filter is IRankingFilter;
+export function isKdOpenDeleteDashboardDialogCommandData(obj: unknown): obj is KdOpenDeleteDashboardDialogCommandData;
 
 // @public
-function isRedoCommandData(obj: unknown): obj is RedoCommandData;
+export function isKdOpenScheduleEmailDialogCommandData(obj: unknown): obj is KdOpenScheduleEmailDialogCommandData;
 
 // @public
-function isRedoFinishedData(obj: unknown): obj is RedoFinishedData;
-
-// @public (undocumented)
-function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFilter;
-
-// @public (undocumented)
-function isRemoveAttributeFilter(filter: unknown): filter is IRemoveAttributeFilterItem;
-
-// @public (undocumented)
-function isRemoveDateFilter(filter: unknown): filter is IRemoveDateFilterItem;
+export function isKdRemoveFilterContextCommandData(obj: unknown): obj is KdRemoveFilterContextCommandData;
 
 // @public
-function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData;
+export function isKdSaveAsDashboardCommandData(obj: unknown): obj is KdSaveAsDashboardCommandData;
 
 // @public
-function isRemoveFilterContextCommandData_2(obj: unknown): obj is RemoveFilterContextCommandData_2;
+export function isKdSaveDashboardCommandData(obj: unknown): obj is KdSaveDashboardCommandData;
+
+// @public
+export function isKdSetApiTokenCommandData(obj: unknown): obj is KdSetApiTokenCommandData;
+
+// @public
+export function isKdSetFilterContextCommandData(obj: unknown): obj is KdSetFilterContextCommandData;
+
+// @public
+export function isKdSetFilterParentsCommandData(obj: unknown): obj is KdSetFilterParentsCommandData;
+
+// @public
+export function isKdSetSizeCommandData(obj: unknown): obj is KdSetSizeCommandData;
+
+// @public
+export function isKdSwitchToEditCommandData(obj: unknown): obj is KdSwitchToEditCommandData;
+
+// @public
+export function isKdUriInsight(obj: unknown): obj is IKdUriInsightRef;
 
 // @public (undocumented)
-function isRemoveRankingFilter(filter: unknown): filter is IRemoveRankingFilterItem;
-
-// @public
-function isRequestCancellationCommandData(obj: unknown): obj is RequestCancellationCommandData;
-
-// @public
-function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData;
-
-// @public
-function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCommandData;
-
-// @public
-function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCommandData;
-
-// @public
-function isSaveInsightCommandData(obj: unknown): obj is SaveInsightCommandData;
-
-// @public
-function isSetApiTokenCommandData(obj: unknown): obj is SetApiTokenCommandData;
-
-// @public
-function isSetApiTokenCommandData_2(obj: unknown): obj is SetApiTokenCommandData_2;
-
-// @public
-function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData;
-
-// @public
-function isSetFilterContextCommandData_2(obj: unknown): obj is SetFilterContextCommandData_2;
-
-// @public
-function isSetFilterParentsCommandData(obj: unknown): obj is SetFilterParentsCommandData;
-
-// @public
-function isSetSizeCommandData(obj: unknown): obj is SetSizeCommandData;
-
-// @public
-function isSwitchToEditCommandData(obj: unknown): obj is SwitchToEditCommandData;
-
-// @public
-function isUndoCommandData(obj: unknown): obj is UndoCommandData;
-
-// @public
-function isUndoFinishedData(obj: unknown): obj is UndoFinishedData;
-
-// @public
-function isUriInsight(obj: unknown): obj is IUriInsightRef;
+export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;
 
 // @public (undocumented)
-interface IUriInsightRef {
-    // (undocumented)
-    uri: string;
-}
-
-// @public
-type NewInsightInitialized = IGdcAdMessageEvent<GdcAdEventType.NewInsightInitialized, NewInsightInitializedBody>;
-
-// @public
-type NewInsightInitializedBody = IAvailableCommands;
-
-// @public
-type NewInsightInitializedData = IGdcAdMessageEnvelope<GdcAdEventType.NewInsightInitialized, undefined>;
-
-// @public
-type NoPermissionsEventData = IGdcKdMessageEnvelope<GdcKdEventType.NoPermissions, INoPermissionsBody>;
+export const isObjectUriQualifier: typeof isObjectUriQualifier_2;
 
 // @public (undocumented)
-type ObjQualifier = GdcExecuteAFM.ObjQualifier;
-
-// @public
-type OpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
+export const isObjIdentifierQualifier: typeof isObjIdentifierQualifier_2;
 
 // @public (undocumented)
-type OpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
-
-// @public
-type OpenInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.OpenInsight, IOpenInsightCommandBody>;
-
-// @public
-type OpenInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.OpenInsight, IOpenInsightCommandBody>;
-
-// @public
-type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
+export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveAttributeFilter;
 
 // @public (undocumented)
-type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
+export function isRankingFilter(filter: unknown): filter is IRankingFilter;
 
 // @public (undocumented)
-type PlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlatformBody>;
+export function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFilter;
 
 // @public (undocumented)
-type RankingFilterOperator = "TOP" | "BOTTOM";
-
-// @public
-type RedoCommand = IGdcAdMessageEvent<GdcAdCommandType.Redo, undefined>;
-
-// @public
-type RedoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Redo, undefined>;
-
-// @public
-type RedoFinished = IGdcAdMessageEvent<GdcAdEventType.RedoFinished, RedoFinishedBody>;
-
-// @public
-type RedoFinishedBody = IAvailableCommands;
-
-// @public
-type RedoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RedoFinished, RedoFinishedBody>;
+export function isRemoveAttributeFilter(filter: unknown): filter is IRemoveAttributeFilterItem;
 
 // @public (undocumented)
-type RelativeType = "relative";
-
-// @public
-type RemoveFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
-
-// @public
-type RemoveFilterContextCommand_2 = IGdcKdMessageEvent<GdcKdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
-
-// @public
-type RemoveFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
-
-// @public
-type RemoveFilterContextCommandData_2 = IGdcKdMessageEnvelope<GdcKdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
-
-// @public
-type RemoveFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RemoveFilterContextFinished, IAvailableCommands>;
-
-// @public
-type RemoveFilterContextFinishedData_2 = IGdcKdMessageEnvelope<GdcKdEventType.RemoveFilterContextFinished, IKdAvailableCommands>;
+export function isRemoveDateFilter(filter: unknown): filter is IRemoveDateFilterItem;
 
 // @public (undocumented)
-type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
+export function isRemoveRankingFilter(filter: unknown): filter is IRemoveRankingFilterItem;
 
 // @public
-type RequestCancellationCommand = IGdcAdMessageEvent<GdcAdCommandType.RequestCancellation, undefined>;
-
-// @public
-type RequestCancellationCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.RequestCancellation, undefined>;
-
-// @public
-type ResizedEventData = IGdcKdMessageEnvelope<GdcKdEventType.Resized, IResizedBody>;
+export type KdAddFilterCommand = IGdcKdMessageEvent<GdcKdCommandType.AddFilter, null>;
 
 // @public (undocumented)
-type ResolvedDateFilterValues = IResolvedDateFilterValue[];
+export type KdAddFilterCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddFilter, null>;
 
 // @public
-type SaveAsDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.SaveAsDashboard, IKdSaveCommandBody>;
+export type KdAddWidgetCommand = IGdcKdMessageEvent<GdcKdCommandType.AddWidget, IKdAddWidgetBody>;
 
 // @public (undocumented)
-type SaveAsDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SaveAsDashboard, IKdSaveCommandBody>;
+export type KdAddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddWidget, IKdAddWidgetBody>;
 
 // @public
-type SaveAsInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
-
-// @public
-type SaveAsInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
-
-// @public
-type SaveDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Save, IKdSaveCommandBody>;
+export type KdCancelEditCommand = IGdcKdMessageEvent<GdcKdCommandType.CancelEdit, null>;
 
 // @public (undocumented)
-type SaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Save, IKdSaveCommandBody>;
+export type KdCancelEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.CancelEdit, null>;
+
+// @public (undocumented)
+export type KdDashboardBody = IKdAvailableCommands & IKdDashboardObjectMeta;
 
 // @public
-type SaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, ISaveCommandBody>;
+export type KdDeleteDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Delete, null>;
+
+// @public (undocumented)
+export type KdDeleteDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Delete, null>;
 
 // @public
-type SaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, ISaveCommandBody>;
+export type KdDrillableItemsCommand = IGdcKdMessageEvent<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
 
 // @public
-type SetApiTokenCommand = IGdcAdMessageEvent<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
+export type KdDrillableItemsCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
+
+// @public (undocumented)
+export type KdDrillToUrlFilters = Array<DashboardDateFilter | IDashboardAttributeFilter>;
+
+// @public (undocumented)
+export type KdDrillToUrlResolvedData = IGdcKdMessageEnvelope<GdcKdEventType.DrillToUrlResolved, IKdDrillToUrlResolvedDataBody>;
+
+// @public (undocumented)
+export type KdDrillToUrlStartedData = IGdcKdMessageEnvelope<GdcKdEventType.DrillToUrlStarted, IKdDrillToUrlStartedDataBody>;
 
 // @public
-type SetApiTokenCommand_2 = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken, ISetApiTokenBody_2>;
+export type KdExportToPdfCommand = IGdcKdMessageEvent<GdcKdCommandType.ExportToPdf, null>;
+
+// @public (undocumented)
+export type KdExportToPdfCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ExportToPdf, null>;
+
+// @public (undocumented)
+export type KdExportToPdfFinishedBody = IKdAvailableCommands & {
+    link: string;
+};
 
 // @public
-type SetApiTokenCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
+export type KdExportToPdfFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.ExportedToPdf, KdExportToPdfFinishedBody>;
+
+// @public (undocumented)
+export type KdFilterAddedBody = IKdAvailableCommands;
 
 // @public
-type SetApiTokenCommandData_2 = IGdcKdMessageEnvelope<GdcKdCommandType.SetApiToken, ISetApiTokenBody_2>;
+export type KdFilterAddedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterAdded, KdFilterAddedBody>;
 
 // @public
-type SetFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
+export type KdFilterContextChangedBody = IKdAvailableCommands & IFilterContextContent;
 
 // @public
-type SetFilterContextCommand_2 = IGdcKdMessageEvent<GdcKdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
+export type KdFilterContextChangedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterContextChanged, KdFilterContextChangedBody>;
 
 // @public
-type SetFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
+export type KdInsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IKdInsightSavedBody>;
 
 // @public
-type SetFilterContextCommandData_2 = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
+export type KdNoPermissionsEventData = IGdcKdMessageEnvelope<GdcKdEventType.NoPermissions, IKdNoPermissionsBody>;
 
 // @public
-type SetFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.SetFilterContextFinished, IAvailableCommands>;
+export type KdOpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
+
+// @public (undocumented)
+export type KdOpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
 
 // @public
-type SetFilterContextFinishedData_2 = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterContextFinished, IKdAvailableCommands>;
+export type KdOpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
+
+// @public (undocumented)
+export type KdOpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
+
+// @public (undocumented)
+export type KdPlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IKdPlatformBody>;
 
 // @public
-type SetFilterParentsCommand = IGdcKdMessageEvent<GdcKdCommandType.SetFilterParents, ISetFilterParentsDataBody>;
+export type KdRemoveFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.RemoveFilterContext, IRemoveFilterContextContent>;
 
 // @public
-type SetFilterParentsCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterParents, ISetFilterParentsDataBody>;
+export type KdRemoveFilterContextCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.RemoveFilterContext, IRemoveFilterContextContent>;
 
 // @public
-enum SetFilterParentsErrorCode {
+export type KdRemoveFilterContextFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.RemoveFilterContextFinished, IKdAvailableCommands>;
+
+// @public
+export type KdResizedEventData = IGdcKdMessageEnvelope<GdcKdEventType.Resized, IKdResizedBody>;
+
+// @public
+export type KdSaveAsDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.SaveAsDashboard, IKdSaveCommandBody>;
+
+// @public (undocumented)
+export type KdSaveAsDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SaveAsDashboard, IKdSaveCommandBody>;
+
+// @public
+export type KdSaveDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Save, IKdSaveCommandBody>;
+
+// @public (undocumented)
+export type KdSaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Save, IKdSaveCommandBody>;
+
+// @public
+export type KdSetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken, IKdSetApiTokenBody>;
+
+// @public
+export type KdSetApiTokenCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetApiToken, IKdSetApiTokenBody>;
+
+// @public
+export type KdSetFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.SetFilterContext, IFilterContextContent>;
+
+// @public
+export type KdSetFilterContextCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterContext, IFilterContextContent>;
+
+// @public
+export type KdSetFilterContextFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterContextFinished, IKdAvailableCommands>;
+
+// @public
+export type KdSetFilterParentsCommand = IGdcKdMessageEvent<GdcKdCommandType.SetFilterParents, IKdSetFilterParentsDataBody>;
+
+// @public
+export type KdSetFilterParentsCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterParents, IKdSetFilterParentsDataBody>;
+
+// @public
+export enum KdSetFilterParentsErrorCode {
     CircularDependency = "circularDependency",
     DuplicateFilters = "duplicateFilters",
     DuplicateParents = "duplicateParents",
@@ -1376,54 +1113,54 @@ enum SetFilterParentsErrorCode {
 }
 
 // @public
-type SetFilterParentsFailed = IGdcKdMessageEvent<GdcKdEventType.SetFilterParentsFailed, ISetFilterParentsFailedDataBody>;
+export type KdSetFilterParentsFailed = IGdcKdMessageEvent<GdcKdEventType.SetFilterParentsFailed, IKdSetFilterParentsFailedDataBody>;
 
 // @public
-type SetFilterParentsFailedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterParentsFailed, ISetFilterParentsFailedDataBody>;
+export type KdSetFilterParentsFailedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterParentsFailed, IKdSetFilterParentsFailedDataBody>;
 
 // @public
-type SetFilterParentsFinished = IGdcKdMessageEvent<GdcKdEventType.SetFilterParentsFinished, IKdAvailableCommands>;
+export type KdSetFilterParentsFinished = IGdcKdMessageEvent<GdcKdEventType.SetFilterParentsFinished, IKdAvailableCommands>;
 
 // @public
-type SetFilterParentsFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterParentsFinished, IKdAvailableCommands>;
+export type KdSetFilterParentsFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterParentsFinished, IKdAvailableCommands>;
 
 // @public
-type SetFilterParentsItemFilter = ISetFilterParentsAttributeFilter;
+export type KdSetFilterParentsItemFilter = IKdSetFilterParentsAttributeFilter;
 
 // @public (undocumented)
-type SetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, ISetSizeCommandBody>;
+export type KdSetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, IKdSetSizeCommandBody>;
 
 // @public (undocumented)
-type SetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSize, ISetSizeCommandBody>;
+export type KdSetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSize, IKdSetSizeCommandBody>;
 
 // @public
-type SwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, IDashboardBody>;
+export type KdSwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, KdDashboardBody>;
 
 // @public
-type SwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, IDashboardBody>;
+export type KdSwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, KdDashboardBody>;
 
 // @public
-type SwitchToEditCommand = IGdcKdMessageEvent<GdcKdCommandType.SwitchToEdit, null>;
+export type KdSwitchToEditCommand = IGdcKdMessageEvent<GdcKdCommandType.SwitchToEdit, null>;
 
 // @public (undocumented)
-type SwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SwitchToEdit, null>;
+export type KdSwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SwitchToEdit, null>;
 
 // @public
-type UndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
+export type KdWidgetAddedData = IGdcKdMessageEnvelope<GdcKdEventType.WidgetAdded, IKdAddedWidgetBody>;
 
-// @public
-type UndoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Undo, undefined>;
+// @public (undocumented)
+export type ObjQualifier = ObjQualifier_2;
 
-// @public
-type UndoFinished = IGdcAdMessageEvent<GdcAdEventType.UndoFinished, UndoFinishedBody>;
+// @public (undocumented)
+export type RankingFilterOperator = "TOP" | "BOTTOM";
 
-// @public
-type UndoFinishedBody = IAvailableCommands;
+// @public (undocumented)
+export type RelativeType = "relative";
 
-// @public
-type UndoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.UndoFinished, UndoFinishedBody>;
+// @public (undocumented)
+export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
 
-// @public
-type WidgetAddedData = IGdcKdMessageEnvelope<GdcKdEventType.WidgetAdded, IAddedWidgetBody>;
+// @public (undocumented)
+export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
 
 ```

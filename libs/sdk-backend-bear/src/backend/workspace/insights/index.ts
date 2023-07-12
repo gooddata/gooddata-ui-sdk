@@ -13,10 +13,7 @@ import {
     SupportedInsightReferenceTypes,
     IGetInsightOptions,
 } from "@gooddata/sdk-backend-spi";
-import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import { IObjectXrefEntry, IVisualization, IVisualizationClassWrapped } from "@gooddata/api-model-bear";
 import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
 import {
     IInsight,
@@ -56,20 +53,19 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     public getVisualizationClasses = async (
         options: IGetVisualizationClassesOptions = {},
     ): Promise<IVisualizationClass[]> => {
-        const visualizationClassesResult: GdcVisualizationClass.IVisualizationClassWrapped[] =
-            await this.authCall((sdk) => {
-                const queryOptions: IGetObjectsByQueryOptions = {
-                    category: "visualizationClass",
-                };
+        const visualizationClassesResult: IVisualizationClassWrapped[] = await this.authCall((sdk) => {
+            const queryOptions: IGetObjectsByQueryOptions = {
+                category: "visualizationClass",
+            };
 
-                if (options.includeDeprecated) {
-                    queryOptions.deprecated = true;
-                }
+            if (options.includeDeprecated) {
+                queryOptions.deprecated = true;
+            }
 
-                return sdk.md.getObjectsByQuery(this.workspace, queryOptions);
-            });
+            return sdk.md.getObjectsByQuery(this.workspace, queryOptions);
+        });
 
-        const visClassOrderingIndex = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
+        const visClassOrderingIndex = (visClass: IVisualizationClassWrapped) =>
             visClass.visualizationClass.content.orderIndex ?? 0;
 
         return flow(
@@ -131,16 +127,13 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const data = await this.authCall((sdk) =>
-                    sdk.md.getObjectsByQueryWithPaging<GdcVisualizationObject.IVisualization>(
-                        this.workspace,
-                        {
-                            category: "visualizationObject",
-                            ...mergedOptions,
-                            // the limit must be specified at all times, otherwise we get 400 (RAIL-3557)
-                            limit,
-                            offset,
-                        },
-                    ),
+                    sdk.md.getObjectsByQueryWithPaging<IVisualization>(this.workspace, {
+                        category: "visualizationObject",
+                        ...mergedOptions,
+                        // the limit must be specified at all times, otherwise we get 400 (RAIL-3557)
+                        limit,
+                        offset,
+                    }),
                 );
 
                 const {
@@ -223,12 +216,12 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const objectId = getObjectIdFromUri(uri);
         return this.authCall(async (sdk) => {
-            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+            const usedBy = await sdk.xhr.getParsed<{ entries: IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/usedby2/${objectId}?types=analyticalDashboard`,
             );
 
             return {
-                analyticalDashboards: usedBy.entries.map((entry: GdcMetadata.IObjectXrefEntry) =>
+                analyticalDashboards: usedBy.entries.map((entry: IObjectXrefEntry) =>
                     convertMetadataObjectXrefEntry("analyticalDashboard", entry),
                 ),
             };

@@ -1,6 +1,21 @@
 // (C) 2007-2022 GoodData Corporation
 import { invariant } from "ts-invariant";
-import { GdcProject, GdcUser, GdcUserGroup, GdcAccessControl } from "@gooddata/api-model-bear";
+import {
+    IProjectId,
+    IUserProjectsResponse,
+    IUserProjectsParams,
+    ITimezone as IBearTimezone,
+    IProjectLcmIdentifiers,
+    IProject,
+    IGetUserListParams,
+    IGetUserListResponse,
+    IUserListItem,
+    IAssociatedProjectPermissions,
+    IGetUserGroupsParams,
+    IGetUserGroupsResponse,
+    IGetGranteesParams,
+    IGetGranteesResponse,
+} from "@gooddata/api-model-bear";
 
 import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingItemValue } from "./util.js";
 import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces.js";
@@ -89,7 +104,7 @@ export class ProjectModule {
      */
     public getCurrentProjectId(): Promise<string> {
         return this.xhr
-            .getParsed<GdcProject.IProjectId>("/gdc/app/account/bootstrap/projectId")
+            .getParsed<IProjectId>("/gdc/app/account/bootstrap/projectId")
             .then((response) => response.projectId);
     }
 
@@ -99,7 +114,7 @@ export class ProjectModule {
      * @param projectId - Project identifier
      * @returns Project
      */
-    public getProject(projectId: string): Promise<GdcUser.IProject> {
+    public getProject(projectId: string): Promise<IProject> {
         return this.xhr.getParsed(`/gdc/projects/${projectId}`);
     }
 
@@ -109,7 +124,7 @@ export class ProjectModule {
      * @param profileId - User profile identifier
      * @returns An Array of projects
      */
-    public getProjects(profileId: string): Promise<GdcUser.IProject[]> {
+    public getProjects(profileId: string): Promise<IProject[]> {
         return getAllPagesByOffsetLimit(
             this.xhr,
             `/gdc/account/profile/${profileId}/projects`,
@@ -129,9 +144,9 @@ export class ProjectModule {
         offset: number,
         limit: number,
         search?: string,
-    ): Promise<GdcProject.IUserProjectsResponse> {
+    ): Promise<IUserProjectsResponse> {
         // inspired by ProjectDataSource in goodstrap. Maybe the /gdc/account/profile/${profileId}/projects would be suitable as well.
-        const mergedOptions: GdcProject.IUserProjectsParams = {
+        const mergedOptions: IUserProjectsParams = {
             limit,
             offset,
             userId,
@@ -264,7 +279,7 @@ export class ProjectModule {
      */
     public getTimezone(projectId: string): Promise<ITimezone> {
         const uri = `/gdc/app/projects/${projectId}/timezone`;
-        return this.xhr.getParsed<GdcProject.ITimezone>(uri).then((result) => result.timezone);
+        return this.xhr.getParsed<IBearTimezone>(uri).then((result) => result.timezone);
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -436,9 +451,9 @@ export class ProjectModule {
      */
     public getUserListWithPaging(
         projectId: string,
-        options: GdcUser.IGetUserListParams,
-    ): Promise<GdcUser.IGetUserListResponse> {
-        return this.xhr.getParsed<GdcUser.IGetUserListResponse>(`/gdc/projects/${projectId}/userlist`, {
+        options: IGetUserListParams,
+    ): Promise<IGetUserListResponse> {
+        return this.xhr.getParsed<IGetUserListResponse>(`/gdc/projects/${projectId}/userlist`, {
             data: options,
         });
     }
@@ -452,13 +467,13 @@ export class ProjectModule {
      */
     public getUserList(
         projectId: string,
-        options: Omit<GdcUser.IGetUserListParams, "offset" | "limit">,
-    ): Promise<GdcUser.IUserListItem[]> {
+        options: Omit<IGetUserListParams, "offset" | "limit">,
+    ): Promise<IUserListItem[]> {
         const loadPage = async (
             offset = 0,
             limit = 1000,
-            items: GdcUser.IUserListItem[] = [],
-        ): Promise<GdcUser.IUserListItem[]> => {
+            items: IUserListItem[] = [],
+        ): Promise<IUserListItem[]> => {
             return this.getUserListWithPaging(projectId, { ...options, limit, offset }).then(
                 ({
                     userList: {
@@ -482,13 +497,10 @@ export class ProjectModule {
      * @param options - paging params
      * @returns List of user groups with paging
      */
-    public getUserGroups(
-        projectId: string,
-        options: GdcUserGroup.IGetUserGroupsParams,
-    ): Promise<GdcUserGroup.IGetUserGroupsResponse> {
+    public getUserGroups(projectId: string, options: IGetUserGroupsParams): Promise<IGetUserGroupsResponse> {
         const { offset = "0", limit = 100 } = options;
 
-        return this.xhr.getParsed<GdcUserGroup.IGetUserGroupsResponse>(
+        return this.xhr.getParsed<IGetUserGroupsResponse>(
             `/gdc/userGroups?project=${projectId}&offset=${offset}&limit=${limit}`,
         );
     }
@@ -500,15 +512,10 @@ export class ProjectModule {
      * @param options - grantee limitations params
      * @returns List of all grantees
      */
-    public getGranteesInfo(
-        objectUri: string,
-        options: GdcAccessControl.IGetGranteesParams,
-    ): Promise<GdcAccessControl.IGetGranteesResponse> {
+    public getGranteesInfo(objectUri: string, options: IGetGranteesParams): Promise<IGetGranteesResponse> {
         const { permission = "read" } = options;
         const apiUri = objectUri.replace("/md/", "/projects/");
-        return this.xhr.getParsed<GdcAccessControl.IGetGranteesResponse>(
-            `${apiUri}/grantees?permission=${permission}`,
-        );
+        return this.xhr.getParsed<IGetGranteesResponse>(`${apiUri}/grantees?permission=${permission}`);
     }
 
     private convertGrantees(granteeUris: string[] = []) {
@@ -564,11 +571,8 @@ export class ProjectModule {
      * @param workspaceId - ID of the workspace
      * @param userId - ID of the user
      */
-    public getPermissions(
-        workspaceId: string,
-        userId: string,
-    ): Promise<GdcUser.IAssociatedProjectPermissions> {
-        return this.xhr.getParsed<GdcUser.IAssociatedProjectPermissions>(
+    public getPermissions(workspaceId: string, userId: string): Promise<IAssociatedProjectPermissions> {
+        return this.xhr.getParsed<IAssociatedProjectPermissions>(
             `/gdc/projects/${workspaceId}/users/${userId}/permissions`,
         );
     }
@@ -595,7 +599,7 @@ export class ProjectModule {
         projectId?: string,
         productId?: string,
         clientId?: string,
-    ): Promise<GdcProject.IProjectLcmIdentifiers> {
+    ): Promise<IProjectLcmIdentifiers> {
         invariant(domainId, "domain ID must be specified");
 
         if (projectId) {

@@ -12,13 +12,10 @@ import {
     isAttributeSortItem,
     isDateFilter,
     isExpressionFilter,
-    isLocalIdentifierQualifier,
     isMeasureLocatorItem,
     isMeasureSortItem,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
-    isObjIdentifierQualifier,
-    isObjectUriQualifier,
     isPopMeasureDefinition,
     isPositiveAttributeFilter,
     isPreviousPeriodMeasureDefinition,
@@ -46,6 +43,11 @@ import {
     rankingFilter,
     localIdentifierQualifier,
 } from "./GdcExecuteAFM.fixtures.js";
+import {
+    isLocalIdentifierQualifier,
+    isObjIdentifierQualifier,
+    isObjectUriQualifier,
+} from "../../base/GdcTypes.js";
 
 describe("GdcExecuteAFM", () => {
     describe("isDateFilter", () => {

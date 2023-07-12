@@ -1,13 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import { IWrappedFilterContext, IWrappedKpiAlert } from "@gooddata/api-model-bear";
 
 import { uriRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { convertFilterContext } from "./filterContext.js";
 
 export const convertAlert = (
-    alert: GdcMetadata.IWrappedKpiAlert,
-    filterContext?: GdcFilterContext.IWrappedFilterContext,
+    alert: IWrappedKpiAlert,
+    filterContext?: IWrappedFilterContext,
 ): IWidgetAlert | IWidgetAlertDefinition => {
     const {
         kpiAlert: {

@@ -1,5 +1,14 @@
 // (C) 2019-2021 GoodData Corporation
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    IPreviousPeriodDateDataSet as IBearPreviousPeriodDateDataSet,
+    IPreviousPeriodMeasureDefinition as IBearPreviousPeriodMeasureDefinition,
+    IVisualizationObjectArithmeticMeasureDefinition,
+    IVisualizationObjectMeasure,
+    IVisualizationObjectMeasureDefinition,
+    IVisualizationObjectPoPMeasureDefinition,
+    VisualizationObjectMeasureDefinitionType,
+} from "@gooddata/api-model-bear";
+
 import {
     IMeasureDefinitionType,
     IMeasure,
@@ -34,7 +43,7 @@ import { convertAggregation } from "./afm/MeasureConverter.js";
 
 const convertPreviousPeriodDataSet = (
     dataSet: IPreviousPeriodDateDataSet,
-): GdcVisualizationObject.IPreviousPeriodDateDataSet => {
+): IBearPreviousPeriodDateDataSet => {
     return {
         dataSet: toBearRef(dataSet.dataSet),
         periodsAgo: dataSet.periodsAgo,
@@ -43,7 +52,7 @@ const convertPreviousPeriodDataSet = (
 
 const convertPreviousPeriodMeasureDefinition = (
     measure: IMeasure<IPreviousPeriodMeasureDefinition>,
-): GdcVisualizationObject.IPreviousPeriodMeasureDefinition => {
+): IBearPreviousPeriodMeasureDefinition => {
     return {
         previousPeriodMeasure: {
             measureIdentifier: measureMasterIdentifier(measure)!,
@@ -54,7 +63,7 @@ const convertPreviousPeriodMeasureDefinition = (
 
 const convertPoPMeasureDefinition = (
     measure: IMeasure<IPoPMeasureDefinition>,
-): GdcVisualizationObject.IPoPMeasureDefinition => {
+): IVisualizationObjectPoPMeasureDefinition => {
     return {
         popMeasureDefinition: {
             measureIdentifier: measureMasterIdentifier(measure)!,
@@ -65,7 +74,7 @@ const convertPoPMeasureDefinition = (
 
 const convertArithmeticMeasureDefinition = (
     measure: IMeasure<IArithmeticMeasureDefinition>,
-): GdcVisualizationObject.IArithmeticMeasureDefinition => {
+): IVisualizationObjectArithmeticMeasureDefinition => {
     return {
         arithmeticMeasure: {
             measureIdentifiers: measureArithmeticOperands(measure)!,
@@ -76,7 +85,7 @@ const convertArithmeticMeasureDefinition = (
 
 const convertSimpleMeasureDefinition = (
     measure: IMeasure<IMeasureDefinition>,
-): GdcVisualizationObject.IMeasureDefinition => {
+): IVisualizationObjectMeasureDefinition => {
     const identifier = measureIdentifier(measure);
     const uri = measureUri(measure);
 
@@ -100,7 +109,7 @@ const convertSimpleMeasureDefinition = (
 
 const convertMeasureDefinition = (
     measure: IMeasure<IMeasureDefinitionType>,
-): GdcVisualizationObject.IMeasureDefinitionType => {
+): VisualizationObjectMeasureDefinitionType => {
     if (isSimpleMeasure(measure)) {
         return convertSimpleMeasureDefinition(measure);
     } else if (isArithmeticMeasure(measure)) {
@@ -114,9 +123,7 @@ const convertMeasureDefinition = (
     throw new Error("Unknown measure type");
 };
 
-export const convertMeasure = (
-    measure: IMeasure<IMeasureDefinitionType>,
-): GdcVisualizationObject.IMeasure => {
+export const convertMeasure = (measure: IMeasure<IMeasureDefinitionType>): IVisualizationObjectMeasure => {
     const alias = measureAlias(measure);
     const format = measureFormat(measure);
     const title = measureTitle(measure);

@@ -14,14 +14,19 @@ import negate from "lodash/negate.js";
 import partial from "lodash/partial.js";
 import flatten from "lodash/flatten.js";
 import set from "lodash/set.js";
-import { getAttributesDisplayForms, GdcVisualizationObject, GdcCatalog } from "@gooddata/api-model-bear";
+import {
+    getAttributesDisplayForms,
+    IColumnsAndDefinitions,
+    isVisualizationObjectAttribute,
+    isVisualizationObjectAttributeFilter,
+    isVisualizationObjectMeasure,
+    IVisualizationObjectContent,
+} from "@gooddata/api-model-bear";
 
 import { Rules } from "../utils/rules.js";
 import { sortDefinitions } from "../utils/definitions.js";
 import { getMissingUrisInAttributesMap } from "../utils/attributesMapLoader.js";
 import { XhrModule } from "../xhr.js";
-import isAttribute = GdcVisualizationObject.isAttribute;
-import isMeasure = GdcVisualizationObject.isMeasure;
 
 const notEmpty = negate<Array<string | null>>(isEmpty);
 
@@ -144,7 +149,7 @@ function getDateFilterExpression() {
 }
 
 function getFilterExpression(attributesMap: any, measureFilter: any) {
-    if (GdcVisualizationObject.isAttributeFilter(measureFilter)) {
+    if (isVisualizationObjectAttributeFilter(measureFilter)) {
         return getAttrFilterExpression(measureFilter, attributesMap);
     }
     return getDateFilterExpression();
@@ -458,10 +463,10 @@ function getMetricFactory(measure: any, mdObj: any) {
 }
 
 function getExecutionDefinitionsAndColumns(
-    mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+    mdObj: IVisualizationObjectContent,
     options: { removeDateItems?: boolean },
     attributesMap: any,
-): GdcCatalog.IColumnsAndDefinitions {
+): IColumnsAndDefinitions {
     const measures = getMeasures(mdObj);
     let attributes = getAttributes(mdObj);
 
@@ -488,7 +493,7 @@ function getBuckets(mdObj: any) {
 
 function getAttributesInBucket(bucket: any) {
     return bucket.items.reduce((list: any, bucketItem: any) => {
-        if (isAttribute(bucketItem)) {
+        if (isVisualizationObjectAttribute(bucketItem)) {
             list.push(bucketItem.visualizationAttribute);
         }
         return list;
@@ -509,7 +514,7 @@ function getDefinition(measure: any) {
 
 function getMeasuresInBucket(bucket: any) {
     return bucket.items.reduce((list: any, bucketItem: any) => {
-        if (isMeasure(bucketItem)) {
+        if (isVisualizationObjectMeasure(bucketItem)) {
             list.push(bucketItem.measure);
         }
         return list;
@@ -617,9 +622,9 @@ export class ExperimentalExecutionsModule {
 
     public mdToExecutionDefinitionsAndColumns(
         projectId: string,
-        mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+        mdObj: IVisualizationObjectContent,
         options: { attributesMap?: Record<string, unknown>; removeDateItems?: boolean } = {},
-    ): Promise<GdcCatalog.IColumnsAndDefinitions> {
+    ): Promise<IColumnsAndDefinitions> {
         const allDfUris = getAttributesDisplayForms(mdObj);
         const attributesMapPromise = this.getAttributesMap(options, allDfUris, projectId);
 

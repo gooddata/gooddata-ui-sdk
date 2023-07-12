@@ -27,10 +27,14 @@ import { BearWorkspaceQueryFactory } from "./workspaces/index.js";
 import { BearUserService } from "./user/index.js";
 import { convertInsight } from "../convertors/toBackend/InsightConverter.js";
 
-import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
-import * as GdcProjectDashboard from "@gooddata/api-model-bear/GdcProjectDashboard";
-import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    IBootstrapResource,
+    IProfileSetting,
+    IUISettings,
+    IVisualization,
+    IWrappedProjectDashboard,
+    WrappedObject,
+} from "@gooddata/api-model-bear";
 
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData/index.js";
 import {
@@ -116,22 +120,22 @@ type BearLegacyFunctions = {
         productId?: string;
         clientId?: string;
         loadAnalyticalDashboards?: boolean;
-    }): Promise<GdcUser.IBootstrapResource>;
+    }): Promise<IBootstrapResource>;
     ajaxSetup?(setup: any): void;
     log?(uri: string, logMessages: string[]): Promise<any>;
-    updateProfileCurrentWorkspace?(workspace: string, profileSetting: GdcUser.IProfileSetting): Promise<void>;
+    updateProfileCurrentWorkspace?(workspace: string, profileSetting: IProfileSetting): Promise<void>;
     sanitizeDrillingActivationPostMessageData?(
         workspace: string,
         postMessageData: IDrillableItemsCommandBody,
     ): Promise<IDrillableItemsCommandBody>;
-    getProjectDashboards?(workspace: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]>;
+    getProjectDashboards?(workspace: string): Promise<IWrappedProjectDashboard[]>;
     getUrisFromIdentifiers?(
         workspace: string,
         identifiers: string[],
     ): Promise<{ uri: string; identifier: string }[]>;
-    getObjectsByUri?(workspace: string, uris: string[]): Promise<GdcMetadataObject.WrappedObject[]>;
-    getVisualizationObject?(workspace: string, uri: string): Promise<GdcVisualizationObject.IVisualization>;
-    getUISettings?(): Promise<{ settings: GdcUser.IUISettings }>;
+    getObjectsByUri?(workspace: string, uris: string[]): Promise<WrappedObject[]>;
+    getVisualizationObject?(workspace: string, uri: string): Promise<IVisualization>;
+    getUISettings?(): Promise<{ settings: IUISettings }>;
     isDomainAdmin?(domainUri: string): Promise<boolean>;
 };
 
@@ -230,7 +234,7 @@ export class BearBackend implements IAnalyticalBackend {
                     const userId = profileSetting.links?.profile?.split("/").pop();
                     invariant(userId, "Cannot obtain userId from IProfileSetting");
 
-                    const newProfileSetting: GdcUser.IProfileSetting = {
+                    const newProfileSetting: IProfileSetting = {
                         ...profileSetting,
                         currentProjectUri: `/gdc/projects/${workspace}`,
                     };
@@ -262,10 +266,7 @@ export class BearBackend implements IAnalyticalBackend {
 
                 getVisualizationObject: (workspace, uri) => {
                     return this.authApiCall(async (sdk) => {
-                        const [visObject] = await sdk.md.getObjects<GdcVisualizationObject.IVisualization>(
-                            workspace,
-                            [uri],
-                        );
+                        const [visObject] = await sdk.md.getObjects<IVisualization>(workspace, [uri]);
 
                         return visObject;
                     });

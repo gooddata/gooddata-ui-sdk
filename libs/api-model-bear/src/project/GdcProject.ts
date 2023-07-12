@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { Uri } from "../aliases.js";
+import { Uri } from "../base/GdcTypes.js";
 import { IBearPagingWithTotalCount } from "../base/GdcPaging.js";
 
 /**

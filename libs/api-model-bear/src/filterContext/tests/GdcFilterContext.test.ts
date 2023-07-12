@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
-import { isAttributeFilter, isDateFilter } from "../GdcFilterContext.js";
+import { isFilterContextAttributeFilter, isFilterContextDateFilter } from "../GdcFilterContext.js";
 import { attributeFilter, dateFilter } from "./GdcFilterContext.fixtures.js";
 
 describe("GdcFilterContext", () => {
@@ -13,7 +13,7 @@ describe("GdcFilterContext", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isAttributeFilter(input)).toBe(expectedResult);
+            expect(isFilterContextAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -25,7 +25,7 @@ describe("GdcFilterContext", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isDateFilter(input)).toBe(expectedResult);
+            expect(isFilterContextDateFilter(input)).toBe(expectedResult);
         });
     });
 });

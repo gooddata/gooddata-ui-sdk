@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import { invariant } from "ts-invariant";
 import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import { IObjectXrefEntry } from "@gooddata/api-model-bear";
 import { ObjRef, IMetadataObject } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter.js";
@@ -15,7 +15,7 @@ export class BearWorkspaceFacts implements IWorkspaceFactsService {
         const objectId = getObjectIdFromUri(uri);
 
         return this.authCall(async (sdk) => {
-            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+            const usedBy = await sdk.xhr.getParsed<{ entries: IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/usedby2/${objectId}?types=dataSet`,
             );
 

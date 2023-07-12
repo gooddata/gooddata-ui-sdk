@@ -1,8 +1,8 @@
 // (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { Uri, Timestamp, NumberAsString } from "../aliases.js";
-import { DateFilterGranularity, DateString } from "../extendedDateFilters/GdcExtendedDateFilters.js";
+import { DateFilterGranularity } from "../extendedDateFilters/GdcExtendedDateFilters.js";
 import { IObjectMeta } from "../meta/GdcMetadata.js";
+import { DateString, Uri, Timestamp, NumberAsString } from "../base/GdcTypes.js";
 
 /**
  * @public
@@ -61,7 +61,7 @@ export interface IWrappedTempFilterContext {
 /**
  * @public
  */
-export interface IAttributeFilter {
+export interface IFilterContextAttributeFilter {
     attributeFilter: {
         displayForm: string;
         negativeSelection: boolean;
@@ -81,7 +81,7 @@ export interface IAttributeFilter {
 /**
  * @public
  */
-export interface IDateFilter {
+export interface IFilterContextDateFilter {
     dateFilter: {
         type: DateFilterType;
         granularity: DateFilterGranularity;
@@ -95,20 +95,22 @@ export interface IDateFilter {
 /**
  * @public
  */
-export type FilterContextItem = IAttributeFilter | IDateFilter;
+export type FilterContextItem = IFilterContextAttributeFilter | IFilterContextDateFilter;
 
 /**
  * @public
  */
-export function isDateFilter(filter: FilterContextItem): filter is IDateFilter {
-    return !isEmpty(filter) && !!(filter as IDateFilter).dateFilter;
+export function isFilterContextDateFilter(filter: FilterContextItem): filter is IFilterContextDateFilter {
+    return !isEmpty(filter) && !!(filter as IFilterContextDateFilter).dateFilter;
 }
 
 /**
  * @public
  */
-export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter {
-    return !isEmpty(filter) && !!(filter as IAttributeFilter).attributeFilter;
+export function isFilterContextAttributeFilter(
+    filter: FilterContextItem,
+): filter is IFilterContextAttributeFilter {
+    return !isEmpty(filter) && !!(filter as IFilterContextAttributeFilter).attributeFilter;
 }
 
 /**
@@ -134,7 +136,9 @@ export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
         !isEmpty(obj) &&
         (obj as ITempFilterContext).created &&
         (obj as ITempFilterContext).uri &&
-        (obj as ITempFilterContext).filters.every((x) => isDateFilter(x) || isAttributeFilter(x))
+        (obj as ITempFilterContext).filters.every(
+            (x) => isFilterContextDateFilter(x) || isFilterContextAttributeFilter(x),
+        )
     );
 }
 

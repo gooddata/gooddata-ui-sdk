@@ -1,14 +1,36 @@
 // (C) 2007-2023 GoodData Corporation
 import { layoutWidgets, UnexpectedError, NotSupported } from "@gooddata/sdk-backend-spi";
-import * as GdcExtendedDateFilters from "@gooddata/api-model-bear/GdcExtendedDateFilters";
-import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
-import * as GdcDashboardLayout from "@gooddata/api-model-bear/GdcDashboardLayout";
-import * as GdcDashboardPlugin from "@gooddata/api-model-bear/GdcDashboardPlugin";
-import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
-import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
-import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
+
+import {
+    IDashboardPluginLink as IBearDashboardPluginLink,
+    IDashboardDateFilterConfig as IBearDashboardDateFilterConfig,
+    IAttributeFilterReference,
+    IDateFilterAbsolutePreset,
+    IDateFilterReference,
+    IDateFilterRelativePreset,
+    IWrappedAnalyticalDashboard,
+    IFluidLayoutSize,
+    IFluidLayoutColSize,
+    IFluidLayoutColumn,
+    IFluidLayoutRow,
+    ISectionHeader,
+    Layout,
+    IWrappedDashboardPlugin,
+    IFilterContextDateFilter,
+    IFilterContextAttributeFilter,
+    IWrappedTempFilterContext,
+    IWrappedFilterContext,
+    ITempFilterContext as IBearTempFilterContext,
+    IKpiProjectDashboardLink,
+    IWrappedKPI,
+    IDrillDefinition as IBearDrillDefinition,
+    DrillFromType,
+    IWrappedVisualizationWidget,
+    IObjectMeta,
+    IWrappedKpiAlert,
+    ScheduledMailAttachment as BearScheduledMailAttachment,
+    IWrappedScheduledMail,
+} from "@gooddata/api-model-bear";
 
 import {
     ObjRef,
@@ -95,8 +117,8 @@ const refToLocalId = (ref: ObjRefInScope) => {
 /**
  * @internal
  */
-export const convertLayoutSize = (size: IDashboardLayoutSize): GdcDashboardLayout.IFluidLayoutSize => {
-    const converted: GdcDashboardLayout.IFluidLayoutSize = {
+export const convertLayoutSize = (size: IDashboardLayoutSize): IFluidLayoutSize => {
+    const converted: IFluidLayoutSize = {
         width: size.gridWidth,
     };
 
@@ -114,21 +136,19 @@ export const convertLayoutSize = (size: IDashboardLayoutSize): GdcDashboardLayou
 /**
  * @internal
  */
-export const convertLayoutItemSize = (
-    column: IDashboardLayoutSizeByScreenSize,
-): GdcDashboardLayout.IFluidLayoutColSize => {
+export const convertLayoutItemSize = (column: IDashboardLayoutSizeByScreenSize): IFluidLayoutColSize => {
     const allScreens: ScreenSize[] = ["xl", "md", "lg", "sm", "xs"];
-    return allScreens.reduce((acc: GdcDashboardLayout.IFluidLayoutColSize, el) => {
+    return allScreens.reduce((acc: IFluidLayoutColSize, el) => {
         const size = column[el];
         if (size) {
             acc[el] = convertLayoutSize(size);
         }
 
         return acc;
-    }, {} as GdcDashboardLayout.IFluidLayoutColSize);
+    }, {} as IFluidLayoutColSize);
 };
 
-const convertLayoutItem = (column: IDashboardLayoutItem): GdcDashboardLayout.IFluidLayoutColumn => {
+const convertLayoutItem = (column: IDashboardLayoutItem): IFluidLayoutColumn => {
     const { size, widget } = column;
     if (isWidget(widget)) {
         return {
@@ -152,8 +172,8 @@ const convertLayoutItem = (column: IDashboardLayoutItem): GdcDashboardLayout.IFl
     };
 };
 
-const convertLayoutSection = (section: IDashboardLayoutSection): GdcDashboardLayout.IFluidLayoutRow => {
-    const convertedRow: GdcDashboardLayout.IFluidLayoutRow = {
+const convertLayoutSection = (section: IDashboardLayoutSection): IFluidLayoutRow => {
+    const convertedRow: IFluidLayoutRow = {
         columns: section.items.map((column) => convertLayoutItem(column)),
     };
     if (section.header) {
@@ -161,7 +181,7 @@ const convertLayoutSection = (section: IDashboardLayoutSection): GdcDashboardLay
         const headerWithoutEmptyStrings = omitBy(section.header, (x) => !x);
         const isEmptyHeader = isEmpty(headerWithoutEmptyStrings);
         if (!isEmptyHeader) {
-            const header = {} as GdcDashboardLayout.ISectionHeader;
+            const header = {} as ISectionHeader;
             if (section.header?.title) {
                 header.title = section.header.title;
             }
@@ -175,9 +195,9 @@ const convertLayoutSection = (section: IDashboardLayoutSection): GdcDashboardLay
     return convertedRow;
 };
 
-const convertLayout = (layout: IDashboardLayout): GdcDashboardLayout.Layout => {
+const convertLayout = (layout: IDashboardLayout): Layout => {
     const { sections } = layout;
-    const convertedLayout: GdcDashboardLayout.Layout = {
+    const convertedLayout: Layout = {
         fluidLayout: {
             rows: sections.map(convertLayoutSection),
         },
@@ -191,12 +211,12 @@ const convertLayout = (layout: IDashboardLayout): GdcDashboardLayout.Layout => {
 
 export const convertFilterContextItem = (
     filterContextItem: FilterContextItem,
-): GdcFilterContext.IDateFilter | GdcFilterContext.IAttributeFilter => {
+): IFilterContextDateFilter | IFilterContextAttributeFilter => {
     if (isDashboardDateFilter(filterContextItem)) {
         const {
             dateFilter: { granularity, type, attribute, dataSet, from, to },
         } = filterContextItem;
-        const convertedDateFilter: GdcFilterContext.IDateFilter = {
+        const convertedDateFilter: IFilterContextDateFilter = {
             dateFilter: {
                 granularity,
                 type,
@@ -257,15 +277,13 @@ export const convertFilterContextItem = (
     };
 };
 
-export function convertFilterContext(
-    filterContext: ITempFilterContext,
-): GdcFilterContext.IWrappedTempFilterContext;
+export function convertFilterContext(filterContext: ITempFilterContext): IWrappedTempFilterContext;
 export function convertFilterContext(
     filterContext: IFilterContext | IFilterContextDefinition,
-): GdcFilterContext.IWrappedFilterContext;
+): IWrappedFilterContext;
 export function convertFilterContext(
     filterContext: ITempFilterContext | IFilterContext | IFilterContextDefinition,
-): GdcFilterContext.IWrappedTempFilterContext | GdcFilterContext.IWrappedFilterContext {
+): IWrappedTempFilterContext | IWrappedFilterContext {
     if (isTempFilterContext(filterContext)) {
         const { created, filters } = filterContext;
 
@@ -278,7 +296,7 @@ export function convertFilterContext(
                           uri: refToUri(filterContext.ref),
                       }
                     : {}),
-            } as GdcFilterContext.ITempFilterContext,
+            } as IBearTempFilterContext,
         };
     }
 
@@ -305,7 +323,7 @@ export function convertFilterContext(
 
 const convertFilterReference = (
     filterReference: IDashboardFilterReference,
-): GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference => {
+): IDateFilterReference | IAttributeFilterReference => {
     if (isDashboardDateFilterReference(filterReference)) {
         return {
             dateFilterReference: {
@@ -321,13 +339,11 @@ const convertFilterReference = (
     };
 };
 
-export function convertDrill(drill: IDrillToLegacyDashboard): GdcKpi.IKpiProjectDashboardLink;
+export function convertDrill(drill: IDrillToLegacyDashboard): IKpiProjectDashboardLink;
 export function convertDrill(
     drill: IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl,
-): GdcVisualizationWidget.IDrillDefinition;
-export function convertDrill(
-    drill: DrillDefinition,
-): GdcKpi.IKpiProjectDashboardLink | GdcVisualizationWidget.IDrillDefinition {
+): IBearDrillDefinition;
+export function convertDrill(drill: DrillDefinition): IKpiProjectDashboardLink | IBearDrillDefinition {
     if (isDrillToLegacyDashboard(drill)) {
         const { tab } = drill;
         return {
@@ -337,7 +353,7 @@ export function convertDrill(
     }
 
     const { origin } = drill;
-    let drillFrom: GdcVisualizationWidget.DrillFromType;
+    let drillFrom: DrillFromType;
     if (isDrillFromMeasure(origin)) {
         const { measure } = origin;
         drillFrom = {
@@ -401,7 +417,7 @@ export function convertDrill(
  */
 export const convertWidget = (
     widget: IWidget | IWidgetDefinition,
-): GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI => {
+): IWrappedVisualizationWidget | IWrappedKPI => {
     const { ignoreDashboardFilters, dateDataSet, title, description, drills } = widget;
     const meta = {
         ...(isWidget(widget)
@@ -472,23 +488,17 @@ export const convertWidget = (
     };
 };
 
-const convertAbsoluteDateFilterPreset = (
-    preset: IAbsoluteDateFilterPreset,
-): GdcExtendedDateFilters.IDateFilterAbsolutePreset => {
+const convertAbsoluteDateFilterPreset = (preset: IAbsoluteDateFilterPreset): IDateFilterAbsolutePreset => {
     const { type: _, ...rest } = preset;
     return rest;
 };
 
-const convertRelativeDateFilterPreset = (
-    preset: IRelativeDateFilterPreset,
-): GdcExtendedDateFilters.IDateFilterRelativePreset => {
+const convertRelativeDateFilterPreset = (preset: IRelativeDateFilterPreset): IDateFilterRelativePreset => {
     const { type: _, ...rest } = preset;
     return rest;
 };
 
-const convertDateFilterConfig = (
-    config: IDashboardDateFilterConfig,
-): GdcDashboard.IDashboardDateFilterConfig => {
+const convertDateFilterConfig = (config: IDashboardDateFilterConfig): IBearDashboardDateFilterConfig => {
     const absolutePresets = config.addPresets?.absolutePresets?.map(convertAbsoluteDateFilterPreset);
     const relativePresets = config.addPresets?.relativePresets?.map(convertRelativeDateFilterPreset);
 
@@ -506,7 +516,7 @@ const convertDateFilterConfig = (
     };
 };
 
-export const convertPluginLink = (pluginLink: IDashboardPluginLink): GdcDashboard.IDashboardPluginLink => {
+export const convertPluginLink = (pluginLink: IDashboardPluginLink): IBearDashboardPluginLink => {
     const { plugin, parameters } = pluginLink;
 
     return {
@@ -517,7 +527,7 @@ export const convertPluginLink = (pluginLink: IDashboardPluginLink): GdcDashboar
 
 export const convertDashboard = (
     dashboard: IDashboard | IDashboardDefinition,
-): GdcDashboard.IWrappedAnalyticalDashboard => {
+): IWrappedAnalyticalDashboard => {
     const {
         filterContext,
         layout,
@@ -539,7 +549,7 @@ export const convertDashboard = (
     const convertedDateFilterConfig = dateFilterConfig && convertDateFilterConfig(dateFilterConfig);
     const convertedPlugins = plugins?.map(convertPluginLink);
 
-    const sharedWithSomeoneProp: Partial<GdcMetadata.IObjectMeta> =
+    const sharedWithSomeoneProp: Partial<IObjectMeta> =
         shareStatus === "shared"
             ? {
                   sharedWithSomeone: 1,
@@ -585,9 +595,7 @@ export const convertDashboard = (
     };
 };
 
-export const convertWidgetAlert = (
-    alert: IWidgetAlert | IWidgetAlertDefinition,
-): GdcMetadata.IWrappedKpiAlert => {
+export const convertWidgetAlert = (alert: IWidgetAlert | IWidgetAlertDefinition): IWrappedKpiAlert => {
     const {
         dashboard,
         widget,
@@ -629,7 +637,7 @@ export const convertWidgetAlert = (
 
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: ScheduledMailAttachment,
-): GdcScheduledMail.ScheduledMailAttachment => {
+): BearScheduledMailAttachment => {
     if (isDashboardAttachment(scheduledMailAttachment)) {
         const { dashboard, format, filterContext } = scheduledMailAttachment;
 
@@ -666,7 +674,7 @@ export const convertScheduledMailAttachment = (
  */
 export const convertScheduledMail = (
     scheduledMail: IScheduledMail | IScheduledMailDefinition,
-): GdcScheduledMail.IWrappedScheduledMail => {
+): IWrappedScheduledMail => {
     const {
         title,
         description,
@@ -717,7 +725,7 @@ export const convertScheduledMail = (
 
 export const convertDashboardPlugin = (
     plugin: IDashboardPlugin | IDashboardPluginDefinition,
-): GdcDashboardPlugin.IWrappedDashboardPlugin => {
+): IWrappedDashboardPlugin => {
     const { uri, identifier, name, tags, description, url } = plugin;
 
     return {

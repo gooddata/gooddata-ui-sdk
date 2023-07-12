@@ -1,7 +1,7 @@
 // (C) 2019-2023 GoodData Corporation
-import { IAttributeFilter, IDateFilter } from "../GdcFilterContext.js";
+import { IFilterContextAttributeFilter, IFilterContextDateFilter } from "../GdcFilterContext.js";
 
-export const relativeDateFilter: IDateFilter = {
+export const relativeDateFilter: IFilterContextDateFilter = {
     dateFilter: {
         type: "relative",
         from: "-11",
@@ -10,7 +10,7 @@ export const relativeDateFilter: IDateFilter = {
     },
 };
 
-export const absoluteDateFilter: IDateFilter = {
+export const absoluteDateFilter: IFilterContextDateFilter = {
     dateFilter: {
         type: "absolute",
         from: "2019-08-06",
@@ -19,7 +19,7 @@ export const absoluteDateFilter: IDateFilter = {
     },
 };
 
-export const attributeFilter: IAttributeFilter = {
+export const attributeFilter: IFilterContextAttributeFilter = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
@@ -27,7 +27,7 @@ export const attributeFilter: IAttributeFilter = {
     },
 };
 
-export const singleSelectionAttributeFilter: IAttributeFilter = {
+export const singleSelectionAttributeFilter: IFilterContextAttributeFilter = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
@@ -35,7 +35,7 @@ export const singleSelectionAttributeFilter: IAttributeFilter = {
     },
 };
 
-export const dependentAttributeFilter: IAttributeFilter = {
+export const dependentAttributeFilter: IFilterContextAttributeFilter = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
@@ -52,7 +52,7 @@ export const dependentAttributeFilter: IAttributeFilter = {
     },
 };
 
-export const dateFilterWithUndefinedRange: IDateFilter = {
+export const dateFilterWithUndefinedRange: IFilterContextDateFilter = {
     dateFilter: {
         type: "relative",
         from: undefined,

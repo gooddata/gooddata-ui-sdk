@@ -3,8 +3,16 @@
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import { IInsight, insightUri, CatalogItem, IMetadataObject } from "@gooddata/sdk-model";
 import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend-spi";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
+import {
+    IFact,
+    IMetadataObjectAttribute,
+    IMetric,
+    IObject,
+    IObjectXrefEntry,
+    ObjectCategory,
+    WrappedObject,
+    unwrapMetadataObject,
+} from "@gooddata/api-model-bear";
 import { getObjectIdFromUri } from "../../../utils/api.js";
 import union from "lodash/union.js";
 import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter.js";
@@ -21,7 +29,7 @@ import {
     convertWrappedAttribute,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 
-const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.ObjectCategory => {
+const objectTypeToObjectCategory = (type: InsightReferenceTypes): ObjectCategory => {
     switch (type) {
         case "displayForm":
             return "attributeDisplayForm";
@@ -35,10 +43,10 @@ const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.Ob
 };
 
 const objectTypesWithLinkToDataset: InsightReferenceTypes[] = ["fact", "attribute"];
-const objectCategoriesWithLinkToDataset: GdcMetadata.ObjectCategory[] =
+const objectCategoriesWithLinkToDataset: ObjectCategory[] =
     objectTypesWithLinkToDataset.map(objectTypeToObjectCategory);
 
-type BulkUsedByResponse = { useMany: { [idx: number]: { entries: GdcMetadata.IObjectXrefEntry[] } } };
+type BulkUsedByResponse = { useMany: { [idx: number]: { entries: IObjectXrefEntry[] } } };
 
 /**
  * Given requested types, return types of objects that should be queried using 'using2' resource
@@ -94,7 +102,7 @@ export class InsightReferencesQuery {
             return {};
         }
 
-        const xrefs: GdcMetadata.IObjectXrefEntry[] = await this.findReferencedObjects();
+        const xrefs: IObjectXrefEntry[] = await this.findReferencedObjects();
 
         /*
          * If dataSet information is needed, do one more call to find out to which data sets do the
@@ -102,7 +110,7 @@ export class InsightReferencesQuery {
          * to dataSets is in the 'opposite direction'.
          */
         if (this.requestedTypes.includes("dataSet")) {
-            const datasets: GdcMetadata.IObjectXrefEntry[] = await this.findDatasets(xrefs);
+            const datasets: IObjectXrefEntry[] = await this.findDatasets(xrefs);
 
             xrefs.push(...datasets);
         }
@@ -122,10 +130,10 @@ export class InsightReferencesQuery {
     /**
      * Uses the query resource to obtain all objects of the desired types which are used by the insight.
      */
-    private findReferencedObjects = async (): Promise<GdcMetadata.IObjectXrefEntry[]> => {
+    private findReferencedObjects = async (): Promise<IObjectXrefEntry[]> => {
         const categories = this.typesForXref.map(objectTypeToObjectCategory);
         const { entries: allDirectObjects } = await this.authCall((sdk) =>
-            sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+            sdk.xhr.getParsed<{ entries: IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/using2/${this.objectId}?types=${categories.join(",")}`,
             ),
         );
@@ -137,14 +145,10 @@ export class InsightReferencesQuery {
      * Given objects used by the insight, retrieve dataSets to which they belong. The usedBy2 is bulk mode
      * is used for this.
      */
-    private findDatasets = async (
-        objects: GdcMetadata.IObjectXrefEntry[],
-    ): Promise<GdcMetadata.IObjectXrefEntry[]> => {
+    private findDatasets = async (objects: IObjectXrefEntry[]): Promise<IObjectXrefEntry[]> => {
         // only some object types will have a reference to a dataSet, so no need to load other object types
         const uris = objects
-            .filter((i) =>
-                objectCategoriesWithLinkToDataset.includes(i.category as GdcMetadata.ObjectCategory),
-            )
+            .filter((i) => objectCategoriesWithLinkToDataset.includes(i.category as ObjectCategory))
             .map((i) => i.link);
 
         const usedByPayload = {
@@ -162,20 +166,18 @@ export class InsightReferencesQuery {
         });
 
         return flow(
-            flatMap((response: { entries: GdcMetadata.IObjectXrefEntry[] }) => response.entries),
-            uniqBy((dataSet: GdcMetadata.IObjectXrefEntry) => dataSet.identifier),
+            flatMap((response: { entries: IObjectXrefEntry[] }) => response.entries),
+            uniqBy((dataSet: IObjectXrefEntry) => dataSet.identifier),
         )(values(datasetResponses.useMany));
     };
 
     /**
      * Give the discovered references, bulk load data for objects of those types that the caller is interested in.
      */
-    private loadObjects = async (
-        xrefs: GdcMetadata.IObjectXrefEntry[],
-    ): Promise<GdcMetadataObject.WrappedObject[]> => {
+    private loadObjects = async (xrefs: IObjectXrefEntry[]): Promise<WrappedObject[]> => {
         const categories = this.typesForLoad.map(objectTypeToObjectCategory);
         const objectUrisToObtain = xrefs
-            .filter((i) => categories.includes(i.category as GdcMetadata.ObjectCategory))
+            .filter((i) => categories.includes(i.category as ObjectCategory))
             .map((meta) => meta.link);
 
         return this.authCall((sdk) => sdk.md.getObjects(this.workspace, objectUrisToObtain));
@@ -185,10 +187,8 @@ export class InsightReferencesQuery {
     //
     //
 
-    private createResult(objects: GdcMetadataObject.WrappedObject[]): IInsightReferences {
-        const unwrappedObjects: GdcMetadataObject.IObject[] = objects.map(
-            GdcMetadataObject.unwrapMetadataObject,
-        );
+    private createResult(objects: WrappedObject[]): IInsightReferences {
+        const unwrappedObjects: IObject[] = objects.map(unwrapMetadataObject);
         const convertedObjects = unwrappedObjects.map(convertMetadataObject);
         const wantDatasets = this.requestedTypes.includes("dataSet");
 
@@ -216,14 +216,14 @@ export class InsightReferencesQuery {
                     break;
                 case "attribute":
                     catalogItems.push(
-                        convertWrappedAttribute({ attribute: fullObject as GdcMetadata.IAttribute }),
+                        convertWrappedAttribute({ attribute: fullObject as IMetadataObjectAttribute }),
                     );
                     break;
                 case "fact":
-                    catalogItems.push(convertWrappedFact({ fact: fullObject as GdcMetadata.IFact }));
+                    catalogItems.push(convertWrappedFact({ fact: fullObject as IFact }));
                     break;
                 case "measure":
-                    catalogItems.push(convertMetric({ metric: fullObject as GdcMetadata.IMetric }));
+                    catalogItems.push(convertMetric({ metric: fullObject as IMetric }));
                     break;
                 case "dataSet":
                     dataSetMeta.push(obj);

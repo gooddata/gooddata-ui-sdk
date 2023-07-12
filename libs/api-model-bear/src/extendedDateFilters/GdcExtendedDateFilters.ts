@@ -2,18 +2,13 @@
 //import { GdcMetadata } from "../meta/index.js";
 import isEmpty from "lodash/isEmpty.js";
 import { IObjectMeta } from "../meta/GdcMetadata.js";
+import { DateString } from "../base/GdcTypes.js";
 
 /**
  * Generated unique identification string that is not subject to change during project copying.
  * @public
  */
 export type GUID = string;
-
-/**
- * Internal platform date string - ISO-8601 calendar date string, eg.: '2018-12-30'
- * @public
- */
-export type DateString = string;
 
 /**
  * @public

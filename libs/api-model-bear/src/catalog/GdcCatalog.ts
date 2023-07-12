@@ -87,7 +87,21 @@ export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
 /**
  * @public
  */
-export type ItemDescription = { uri: string } | { expression: string };
+export interface IStoredItemDescription {
+    uri: string;
+}
+
+/**
+ * @public
+ */
+export interface IAdHocItemDescription {
+    expression: string;
+}
+
+/**
+ * @public
+ */
+export type ItemDescription = IStoredItemDescription | IAdHocItemDescription;
 
 /**
  * @public

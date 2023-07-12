@@ -1,5 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
+import {
+    AttributeElements,
+    CompatibilityFilter,
+    ExtendedFilter,
+    FilterItem,
+    IMeasureValueFilter as IBearMeasureValueFilter,
+    IRankingFilter as IBearRankingFilter,
+} from "@gooddata/api-model-bear";
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,
@@ -22,7 +29,7 @@ import { toBearRef, toScopedBearRef } from "../ObjRefConverter.js";
 import compact from "lodash/compact.js";
 import { assertNoNulls } from "../utils.js";
 
-function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
+function convertAttributeFilter(filter: IAttributeFilter): FilterItem | null {
     /*
      * When sending either positive or negative filter and the in/notIn is empty, backend will bomb
      * with "Cannot parse MAQL expression(s): %s". Previously code was only throwing away empty negative
@@ -39,7 +46,7 @@ function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterI
         return {
             negativeAttributeFilter: {
                 displayForm: toBearRef(filter.negativeAttributeFilter.displayForm),
-                notIn: filter.negativeAttributeFilter.notIn as GdcExecuteAFM.AttributeElements, // checked above so the cast is ok
+                notIn: filter.negativeAttributeFilter.notIn as AttributeElements, // checked above so the cast is ok
             },
         };
     }
@@ -48,12 +55,12 @@ function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterI
     return {
         positiveAttributeFilter: {
             displayForm: toBearRef(filter.positiveAttributeFilter.displayForm),
-            in: filter.positiveAttributeFilter.in as GdcExecuteAFM.AttributeElements, // checked above so the cast is ok
+            in: filter.positiveAttributeFilter.in as AttributeElements, // checked above so the cast is ok
         },
     };
 }
 
-export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): GdcExecuteAFM.FilterItem | null {
+export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): FilterItem | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -69,7 +76,7 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): GdcExecu
     };
 }
 
-export function convertRelativeDateFilter(filter: IRelativeDateFilter): GdcExecuteAFM.FilterItem | null {
+export function convertRelativeDateFilter(filter: IRelativeDateFilter): FilterItem | null {
     const { relativeDateFilter } = filter;
 
     if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
@@ -124,9 +131,7 @@ function trimConditionToSupportedPrecision(
     }
 }
 
-export function convertMeasureValueFilter(
-    filter: IMeasureValueFilter,
-): GdcExecuteAFM.IMeasureValueFilter | null {
+export function convertMeasureValueFilter(filter: IMeasureValueFilter): IBearMeasureValueFilter | null {
     if (filter.measureValueFilter.condition === undefined) {
         return null;
     }
@@ -139,7 +144,7 @@ export function convertMeasureValueFilter(
     };
 }
 
-export function convertRankingFilter(filter: IRankingFilter): GdcExecuteAFM.IRankingFilter | null {
+export function convertRankingFilter(filter: IRankingFilter): IBearRankingFilter | null {
     const { measure, attributes, operator, value } = filter.rankingFilter;
     return {
         rankingFilter: {
@@ -151,7 +156,7 @@ export function convertRankingFilter(filter: IRankingFilter): GdcExecuteAFM.IRan
     };
 }
 
-export function convertFilter(filter: IFilter): GdcExecuteAFM.ExtendedFilter | null {
+export function convertFilter(filter: IFilter): ExtendedFilter | null {
     if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
     }
@@ -163,7 +168,7 @@ export function convertFilter(filter: IFilter): GdcExecuteAFM.ExtendedFilter | n
     return convertMeasureFilter(filter);
 }
 
-export function convertMeasureFilter(filter: IMeasureFilter): GdcExecuteAFM.FilterItem | null {
+export function convertMeasureFilter(filter: IMeasureFilter): FilterItem | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {
@@ -173,6 +178,6 @@ export function convertMeasureFilter(filter: IMeasureFilter): GdcExecuteAFM.Filt
     }
 }
 
-export function convertFilters(filters: IFilter[]): GdcExecuteAFM.CompatibilityFilter[] {
+export function convertFilters(filters: IFilter[]): CompatibilityFilter[] {
     return filters ? compact(filters.map(convertFilter)) : [];
 }

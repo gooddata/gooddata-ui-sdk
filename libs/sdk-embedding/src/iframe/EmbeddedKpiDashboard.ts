@@ -8,10 +8,15 @@ import {
     IDrillableItemsCommandBody,
     IObjectMeta,
 } from "./common.js";
-import * as EmbeddedGdc from "./EmbeddedGdc.js";
-
 import { ObjRef } from "@gooddata/sdk-model";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import { IVisualization } from "@gooddata/api-model-bear";
+import {
+    DashboardDateFilter,
+    IDashboardAttributeFilter,
+    IFilterContextContent,
+    IRemoveFilterContextContent,
+    IResolvedFilterValues,
+} from "./EmbeddedGdc.js";
 
 /**
  * Base type for KD events.
@@ -322,21 +327,21 @@ export interface IKdSaveCommandBody {
  *
  * @public
  */
-export type SaveDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Save, IKdSaveCommandBody>;
+export type KdSaveDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Save, IKdSaveCommandBody>;
 
 /**
  * @public
  */
-export type SaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Save, IKdSaveCommandBody>;
+export type KdSaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Save, IKdSaveCommandBody>;
 
 /**
- * Type-guard checking whether object is an instance of SaveDashboardCommandData.
+ * Type-guard checking whether object is an instance of {@link KdSaveDashboardCommandData}.
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCommandData {
+export function isKdSaveDashboardCommandData(obj: unknown): obj is KdSaveDashboardCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.Save;
 }
 
@@ -360,24 +365,27 @@ export function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCo
  *
  * @public
  */
-export type SaveAsDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.SaveAsDashboard, IKdSaveCommandBody>;
-
-/**
- * @public
- */
-export type SaveAsDashboardCommandData = IGdcKdMessageEnvelope<
+export type KdSaveAsDashboardCommand = IGdcKdMessageEvent<
     GdcKdCommandType.SaveAsDashboard,
     IKdSaveCommandBody
 >;
 
 /**
- * Type-guard checking whether object is an instance of SaveAsDashboardCommandData.
+ * @public
+ */
+export type KdSaveAsDashboardCommandData = IGdcKdMessageEnvelope<
+    GdcKdCommandType.SaveAsDashboard,
+    IKdSaveCommandBody
+>;
+
+/**
+ * Type-guard checking whether object is an instance of {@link KdSaveAsDashboardCommandData}.
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData {
+export function isKdSaveAsDashboardCommandData(obj: unknown): obj is KdSaveAsDashboardCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.SaveAsDashboard;
 }
 
@@ -393,21 +401,21 @@ export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboa
  *
  * @public
  */
-export type CancelEditCommand = IGdcKdMessageEvent<GdcKdCommandType.CancelEdit, null>;
+export type KdCancelEditCommand = IGdcKdMessageEvent<GdcKdCommandType.CancelEdit, null>;
 
 /**
  * @public
  */
-export type CancelEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.CancelEdit, null>;
+export type KdCancelEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.CancelEdit, null>;
 
 /**
- * Type-guard checking whether object is an instance of CancelEditCommandData.
+ * Type-guard checking whether object is an instance of {@link KdCancelEditCommandData}.
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isCancelEditCommandData(obj: unknown): obj is CancelEditCommandData {
+export function isKdCancelEditCommandData(obj: unknown): obj is KdCancelEditCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.CancelEdit;
 }
 
@@ -424,12 +432,12 @@ export function isCancelEditCommandData(obj: unknown): obj is CancelEditCommandD
  *
  * @public
  */
-export type DeleteDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Delete, null>;
+export type KdDeleteDashboardCommand = IGdcKdMessageEvent<GdcKdCommandType.Delete, null>;
 
 /**
  * @public
  */
-export type DeleteDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Delete, null>;
+export type KdDeleteDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Delete, null>;
 
 /**
  * Switches current dashboard to edit mode.
@@ -444,20 +452,20 @@ export type DeleteDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.
  *
  * @public
  */
-export type SwitchToEditCommand = IGdcKdMessageEvent<GdcKdCommandType.SwitchToEdit, null>;
+export type KdSwitchToEditCommand = IGdcKdMessageEvent<GdcKdCommandType.SwitchToEdit, null>;
 
 /**
  * @public
  */
-export type SwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SwitchToEdit, null>;
+export type KdSwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SwitchToEdit, null>;
 
 /**
- * Type-guard checking whether object is an instance of SwitchToEditCommandData.
+ * Type-guard checking whether object is an instance of {@link KdSwitchToEditCommandData}.
  *
  * @param obj - object to test
  * @public
  */
-export function isSwitchToEditCommandData(obj: unknown): obj is SwitchToEditCommandData {
+export function isKdSwitchToEditCommandData(obj: unknown): obj is KdSwitchToEditCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.SwitchToEdit;
 }
 
@@ -469,7 +477,7 @@ export function isSwitchToEditCommandData(obj: unknown): obj is SwitchToEditComm
  * - Drillable items can be set by uris or identifiers of dashboard's measures/attributes
  * @public
  */
-export type DrillableItemsCommand = IGdcKdMessageEvent<
+export type KdDrillableItemsCommand = IGdcKdMessageEvent<
     GdcKdCommandType.DrillableItems,
     IDrillableItemsCommandBody
 >;
@@ -481,25 +489,25 @@ export type DrillableItemsCommand = IGdcKdMessageEvent<
  * @remarks See {@link IDrillableItemsCommandBody}
  * @public
  */
-export type DrillableItemsCommandData = IGdcKdMessageEnvelope<
+export type KdDrillableItemsCommandData = IGdcKdMessageEnvelope<
     GdcKdCommandType.DrillableItems,
     IDrillableItemsCommandBody
 >;
 
 /**
- * Type-guard checking whether object is an instance of DrillableItemsCommandData.
+ * Type-guard checking whether object is an instance of {@link KdDrillableItemsCommandData}.
  *
  * @param obj - object to test
  * @public
  */
-export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData {
+export function isKdDrillableItemsCommandData(obj: unknown): obj is KdDrillableItemsCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.DrillableItems;
 }
 
 /**
  * @public
  */
-export interface ISetSizeCommandBody {
+export interface IKdSetSizeCommandBody {
     /**
      * the height of the hosting iframe
      */
@@ -509,31 +517,31 @@ export interface ISetSizeCommandBody {
 /**
  * @public
  */
-export type SetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, ISetSizeCommandBody>;
+export type KdSetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, IKdSetSizeCommandBody>;
 
 /**
  * @public
  */
-export type SetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSize, ISetSizeCommandBody>;
+export type KdSetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSize, IKdSetSizeCommandBody>;
 
 /**
- * Type-guard checking whether object is an instance of SetSizeCommandData.
+ * Type-guard checking whether object is an instance of {@link KdSetSizeCommandData}.
  *
  * @param obj - object to test
  * @public
  */
-export function isSetSizeCommandData(obj: unknown): obj is SetSizeCommandData {
+export function isKdSetSizeCommandData(obj: unknown): obj is KdSetSizeCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetSize;
 }
 
 /**
- * Data type of SetFilterContext command
+ * Data type of {@link KdSetFilterContextCommand} command
  *
  * @public
  */
-export type SetFilterContextCommandData = IGdcKdMessageEnvelope<
+export type KdSetFilterContextCommandData = IGdcKdMessageEnvelope<
     GdcKdCommandType.SetFilterContext,
-    EmbeddedGdc.IFilterContextContent
+    IFilterContextContent
 >;
 
 /**
@@ -551,18 +559,18 @@ export type SetFilterContextCommandData = IGdcKdMessageEnvelope<
  *
  * @public
  */
-export type SetFilterContextCommand = IGdcKdMessageEvent<
+export type KdSetFilterContextCommand = IGdcKdMessageEvent<
     GdcKdCommandType.SetFilterContext,
-    EmbeddedGdc.IFilterContextContent
+    IFilterContextContent
 >;
 
 /**
- * Type-guard checking whether an object is an instance of SetFilterContextCommand
+ * Type-guard checking whether an object is an instance of {@link KdSetFilterContextCommand}
  *
  * @param obj - object to test
  * @public
  */
-export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData {
+export function isKdSetFilterContextCommandData(obj: unknown): obj is KdSetFilterContextCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetFilterContext;
 }
 
@@ -571,9 +579,9 @@ export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterCon
  *
  * @public
  */
-export type RemoveFilterContextCommandData = IGdcKdMessageEnvelope<
+export type KdRemoveFilterContextCommandData = IGdcKdMessageEnvelope<
     GdcKdCommandType.RemoveFilterContext,
-    EmbeddedGdc.IRemoveFilterContextContent
+    IRemoveFilterContextContent
 >;
 
 /**
@@ -584,18 +592,18 @@ export type RemoveFilterContextCommandData = IGdcKdMessageEnvelope<
  *
  * @public
  */
-export type RemoveFilterContextCommand = IGdcKdMessageEvent<
+export type KdRemoveFilterContextCommand = IGdcKdMessageEvent<
     GdcKdCommandType.RemoveFilterContext,
-    EmbeddedGdc.IRemoveFilterContextContent
+    IRemoveFilterContextContent
 >;
 
 /**
- * Type-guard checking whether an object is an instance of RemoveFilterContextCommand
+ * Type-guard checking whether an object is an instance of {@link KdRemoveFilterContextCommand}
  *
  * @param obj - object to test
  * @public
  */
-export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData {
+export function isKdRemoveFilterContextCommandData(obj: unknown): obj is KdRemoveFilterContextCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.RemoveFilterContext;
 }
 
@@ -606,57 +614,57 @@ export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFil
 /**
  * @public
  */
-export interface IKpiWidget {
+export interface IKdKpiWidget {
     type: "kpi";
 }
 
 /**
  * @public
  */
-export interface IIdentifierInsightRef {
+export interface IKdIdentifierInsightRef {
     identifier: string;
 }
 
 /**
  * @public
  */
-export interface IUriInsightRef {
+export interface IKdUriInsightRef {
     uri: string;
 }
 
 /**
  * @public
  */
-export interface IInsightWidget {
+export interface IKdInsightWidget {
     type: "insight";
-    ref: IIdentifierInsightRef | IUriInsightRef;
+    ref: IKdIdentifierInsightRef | IKdUriInsightRef;
 }
 
 /**
  * @public
  */
-export interface IAddWidgetBody {
-    widget: IKpiWidget | IInsightWidget;
+export interface IKdAddWidgetBody {
+    widget: IKdKpiWidget | IKdInsightWidget;
 }
 
 /**
- * Type-guard checking whether object is an instance of IIdentifierInsightRef.
+ * Type-guard checking whether object is an instance of {@link IKdIdentifierInsightRef}.
  *
  * @param obj - object to test
  * @public
  */
-export function isIdentifierInsight(obj: unknown): obj is IIdentifierInsightRef {
-    return (obj as IIdentifierInsightRef).identifier !== undefined;
+export function isKdIdentifierInsight(obj: unknown): obj is IKdIdentifierInsightRef {
+    return (obj as IKdIdentifierInsightRef).identifier !== undefined;
 }
 
 /**
- * Type-guard checking whether object is an instance of IUriInsightRef.
+ * Type-guard checking whether object is an instance of {@link IKdUriInsightRef}.
  *
  * @param obj - object to test
  * @public
  */
-export function isUriInsight(obj: unknown): obj is IUriInsightRef {
-    return (obj as IUriInsightRef).uri !== undefined;
+export function isKdUriInsight(obj: unknown): obj is IKdUriInsightRef {
+    return (obj as IKdUriInsightRef).uri !== undefined;
 }
 
 /**
@@ -682,20 +690,20 @@ export function isUriInsight(obj: unknown): obj is IUriInsightRef {
  *
  * @public
  */
-export type AddWidgetCommand = IGdcKdMessageEvent<GdcKdCommandType.AddWidget, IAddWidgetBody>;
+export type KdAddWidgetCommand = IGdcKdMessageEvent<GdcKdCommandType.AddWidget, IKdAddWidgetBody>;
 
 /**
  * @public
  */
-export type AddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddWidget, IAddWidgetBody>;
+export type KdAddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddWidget, IKdAddWidgetBody>;
 
 /**
- * Type-guard checking whether object is an instance of AddWidgetCommandData.
+ * Type-guard checking whether object is an instance of {@link KdAddWidgetCommandData}.
  *
  * @param obj - object to test
  * @public
  */
-export function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandData {
+export function isKdAddWidgetCommandData(obj: unknown): obj is KdAddWidgetCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.AddWidget;
 }
 
@@ -711,20 +719,20 @@ export function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandDat
  *
  * @public
  */
-export type AddFilterCommand = IGdcKdMessageEvent<GdcKdCommandType.AddFilter, null>;
+export type KdAddFilterCommand = IGdcKdMessageEvent<GdcKdCommandType.AddFilter, null>;
 
 /**
  * @public
  */
-export type AddFilterCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddFilter, null>;
+export type KdAddFilterCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddFilter, null>;
 
 /**
- * Type-guard checking whether object is an instance of AddFilterCommandData.
+ * Type-guard checking whether object is an instance of {@link KdAddFilterCommandData}.
  *
  * @param obj - object to test
  * @public
  */
-export function isAddFilterCommandData(obj: unknown): obj is AddFilterCommandData {
+export function isKdAddFilterCommandData(obj: unknown): obj is KdAddFilterCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.AddFilter;
 }
 
@@ -739,27 +747,27 @@ export function isAddFilterCommandData(obj: unknown): obj is AddFilterCommandDat
  *    be posted
  * @public
  */
-export type ExportToPdfCommand = IGdcKdMessageEvent<GdcKdCommandType.ExportToPdf, null>;
+export type KdExportToPdfCommand = IGdcKdMessageEvent<GdcKdCommandType.ExportToPdf, null>;
 
 /**
  * @public
  */
-export type ExportToPdfCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ExportToPdf, null>;
+export type KdExportToPdfCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ExportToPdf, null>;
 
 /**
- * Type-guard checking whether object is an instance of ExportToPdfCommandData.
+ * Type-guard checking whether object is an instance of {@link KdExportToPdfCommandData}.
  *
  * @param obj - object to test
  * @public
  */
-export function isExportToPdfCommandData(obj: unknown): obj is ExportToPdfCommandData {
+export function isKdExportToPdfCommandData(obj: unknown): obj is KdExportToPdfCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.ExportToPdf;
 }
 
 /**
  * @public
  */
-export interface INoPermissionsBody {
+export interface IKdNoPermissionsBody {
     /**
      * the 'data' section contains information about whether view or edit permissions are missing
      */
@@ -770,12 +778,15 @@ export interface INoPermissionsBody {
  * This event is emitted When User does not have permissions to view or edit the content
  * @public
  */
-export type NoPermissionsEventData = IGdcKdMessageEnvelope<GdcKdEventType.NoPermissions, INoPermissionsBody>;
+export type KdNoPermissionsEventData = IGdcKdMessageEnvelope<
+    GdcKdEventType.NoPermissions,
+    IKdNoPermissionsBody
+>;
 
 /**
  * @public
  */
-export interface IResizedBody {
+export interface IKdResizedBody {
     height: number;
 }
 
@@ -783,12 +794,12 @@ export interface IResizedBody {
  * This event is emitted when the content is fully loaded
  * @public
  */
-export type ResizedEventData = IGdcKdMessageEnvelope<GdcKdEventType.Resized, IResizedBody>;
+export type KdResizedEventData = IGdcKdMessageEnvelope<GdcKdEventType.Resized, IKdResizedBody>;
 
 /**
  * @public
  */
-export interface IDashboardObjectMeta {
+export interface IKdDashboardObjectMeta {
     /**
      * Client id - Each client has an identifier unique within the domain
      *
@@ -818,55 +829,55 @@ export interface IDashboardObjectMeta {
 /**
  * @public
  */
-export type IDashboardBody = IKdAvailableCommands & IDashboardObjectMeta;
+export type KdDashboardBody = IKdAvailableCommands & IKdDashboardObjectMeta;
 
 /**
  * Data type of event that was emitted when a dashboard has been created and saved.
  * @public
  */
-export type IDashboardCreatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardCreated, IDashboardBody>;
+export type IKdDashboardCreatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardCreated, KdDashboardBody>;
 
 /**
  * Data type of event that was emitted when the content is fully loaded,
  * and the user has permissions to access the dashboard.
  * @public
  */
-export type IDashboardLoadedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardLoaded, IDashboardBody>;
+export type IKdDashboardLoadedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardLoaded, KdDashboardBody>;
 
 /**
  * Data type of event that was emitted when the existing dashboard has been updated.
  * @public
  */
-export type IDashboardUpdatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardUpdated, IDashboardBody>;
+export type IKdDashboardUpdatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardUpdated, KdDashboardBody>;
 
 /**
  * Data type of event that was emitted when the dashboard has been saved.
  * @public
  */
-export type IDashboardSavedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardSaved, IDashboardBody>;
+export type IKdDashboardSavedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardSaved, KdDashboardBody>;
 
 /**
  * Data type of event that was emitted when the dashboard has been deleted.
  * @public
  */
-export type IDashboardDeletedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardDeleted, IDashboardBody>;
+export type IKdDashboardDeletedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardDeleted, KdDashboardBody>;
 
 /**
  * This event is emitted after KD switched a dashboard from view mode to edit mode.
  * @public
  */
-export type SwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, IDashboardBody>;
+export type KdSwitchedToEditData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToEdit, KdDashboardBody>;
 
 /**
  * This event is emitted after KD switched a dashboard from edit mode to view mode.
  * @public
  */
-export type SwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, IDashboardBody>;
+export type KdSwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, KdDashboardBody>;
 
 /**
  * @public
  */
-export interface IPlatformBody {
+export interface IKdPlatformBody {
     status?: string;
     errorCode?: number;
     description?: string;
@@ -875,12 +886,12 @@ export interface IPlatformBody {
 /**
  * @public
  */
-export type PlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlatformBody>;
+export type KdPlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IKdPlatformBody>;
 
 /**
  * @public
  */
-export interface IInsightWidgetBody {
+export interface IKdInsightWidgetBody {
     widgetCategory: "kpi" | "visualization";
     identifier?: string;
     uri?: string;
@@ -890,8 +901,8 @@ export interface IInsightWidgetBody {
 /**
  * @public
  */
-export interface IAddedWidgetBody {
-    insight?: IInsightWidgetBody;
+export interface IKdAddedWidgetBody {
+    insight?: IKdInsightWidgetBody;
 }
 
 /**
@@ -904,12 +915,12 @@ export interface IAddedWidgetBody {
  *
  * @public
  */
-export type WidgetAddedData = IGdcKdMessageEnvelope<GdcKdEventType.WidgetAdded, IAddedWidgetBody>;
+export type KdWidgetAddedData = IGdcKdMessageEnvelope<GdcKdEventType.WidgetAdded, IKdAddedWidgetBody>;
 
 /**
  * @public
  */
-export type FilterAddedBody = IKdAvailableCommands;
+export type KdFilterAddedBody = IKdAvailableCommands;
 
 /**
  * This event is emitted after KD added a new filter to dashboard's filter bar and started its
@@ -919,12 +930,12 @@ export type FilterAddedBody = IKdAvailableCommands;
  * will end on the filter bar.
  * @public
  */
-export type FilterAddedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterAdded, FilterAddedBody>;
+export type KdFilterAddedData = IGdcKdMessageEnvelope<GdcKdEventType.FilterAdded, KdFilterAddedBody>;
 
 /**
  * @public
  */
-export type ExportToPdfFinishedBody = IKdAvailableCommands & {
+export type KdExportToPdfFinishedBody = IKdAvailableCommands & {
     /**
      * Link to the file containing exported data.
      */
@@ -935,9 +946,9 @@ export type ExportToPdfFinishedBody = IKdAvailableCommands & {
  * This event is emitted after dashboard has been exported to PDF
  * @public
  */
-export type ExportToPdfFinishedData = IGdcKdMessageEnvelope<
+export type KdExportToPdfFinishedData = IGdcKdMessageEnvelope<
     GdcKdEventType.ExportedToPdf,
-    ExportToPdfFinishedBody
+    KdExportToPdfFinishedBody
 >;
 
 //
@@ -950,7 +961,7 @@ export type ExportToPdfFinishedData = IGdcKdMessageEnvelope<
  * Note: The main event data was wrapped to application and product data structure
  * @public
  */
-export type SetFilterContextFinishedData = IGdcKdMessageEnvelope<
+export type KdSetFilterContextFinishedData = IGdcKdMessageEnvelope<
     GdcKdEventType.SetFilterContextFinished,
     IKdAvailableCommands
 >;
@@ -965,7 +976,7 @@ export type SetFilterContextFinishedData = IGdcKdMessageEnvelope<
  * Note: The main event data was wrapped to application and product data structure
  * @public
  */
-export type RemoveFilterContextFinishedData = IGdcKdMessageEnvelope<
+export type KdRemoveFilterContextFinishedData = IGdcKdMessageEnvelope<
     GdcKdEventType.RemoveFilterContextFinished,
     IKdAvailableCommands
 >;
@@ -978,7 +989,7 @@ export type RemoveFilterContextFinishedData = IGdcKdMessageEnvelope<
  * Main data of Filter context changed event
  * @public
  */
-export type FilterContextChangedBody = IKdAvailableCommands & EmbeddedGdc.IFilterContextContent;
+export type KdFilterContextChangedBody = IKdAvailableCommands & IFilterContextContent;
 
 /**
  * Data type of event that was emitted after finishing change filter context
@@ -986,56 +997,54 @@ export type FilterContextChangedBody = IKdAvailableCommands & EmbeddedGdc.IFilte
  * Note: The main event data was wrapped to application and product data structure
  * @public
  */
-export type FilterContextChangedData = IGdcKdMessageEnvelope<
+export type KdFilterContextChangedData = IGdcKdMessageEnvelope<
     GdcKdEventType.FilterContextChanged,
-    FilterContextChangedBody
+    KdFilterContextChangedBody
 >;
 
 /**
  * @public
  */
-export type DrillToUrlFilters = Array<
-    EmbeddedGdc.DashboardDateFilter | EmbeddedGdc.IDashboardAttributeFilter
->;
+export type KdDrillToUrlFilters = Array<DashboardDateFilter | IDashboardAttributeFilter>;
 
 /**
  * @public
  */
-export interface IDrillToUrlStartedDataBody {
+export interface IKdDrillToUrlStartedDataBody {
     id: string;
 }
 
 /**
  * @public
  */
-export interface IDrillToUrlResolvedDataBody {
+export interface IKdDrillToUrlResolvedDataBody {
     id: string;
     url: string;
 
     /**
      * Contains date filter and attribute filters set in the dashboard.
      *
-     * Note: You can use the type guards defined in EmbeddedGdc namespace to test the type of the filter.
+     * Note: You can use the type guards defined in EmbeddedGdc.js to test the type of the filter.
      * For instance, you can call data.filters.find(isDashboardDateFilter) to get the date filter.
      */
-    filters: DrillToUrlFilters;
-    resolvedFilterValues?: EmbeddedGdc.IResolvedFilterValues;
+    filters: KdDrillToUrlFilters;
+    resolvedFilterValues?: IResolvedFilterValues;
 }
 
 /**
  * @public
  */
-export type DrillToUrlStartedData = IGdcKdMessageEnvelope<
+export type KdDrillToUrlStartedData = IGdcKdMessageEnvelope<
     GdcKdEventType.DrillToUrlStarted,
-    IDrillToUrlStartedDataBody
+    IKdDrillToUrlStartedDataBody
 >;
 
 /**
  * @public
  */
-export type DrillToUrlResolvedData = IGdcKdMessageEnvelope<
+export type KdDrillToUrlResolvedData = IGdcKdMessageEnvelope<
     GdcKdEventType.DrillToUrlResolved,
-    IDrillToUrlResolvedDataBody
+    IKdDrillToUrlResolvedDataBody
 >;
 
 /**
@@ -1050,7 +1059,7 @@ export type DrillToUrlResolvedData = IGdcKdMessageEnvelope<
  *
  * @public
  */
-export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<
+export type KdOpenScheduleEmailDialogCommand = IGdcKdMessageEvent<
     GdcKdCommandType.OpenScheduleEmailDialog,
     null
 >;
@@ -1058,21 +1067,21 @@ export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<
 /**
  * @public
  */
-export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<
+export type KdOpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<
     GdcKdCommandType.OpenScheduleEmailDialog,
     null
 >;
 
 /**
- * Type-guard checking whether object is an instance of OpenScheduleEmailDialogCommandData.
+ * Type-guard checking whether object is an instance of {@link KdOpenScheduleEmailDialogCommandData}.
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isOpenScheduleEmailDialogCommandData(
+export function isKdOpenScheduleEmailDialogCommandData(
     obj: unknown,
-): obj is OpenScheduleEmailDialogCommandData {
+): obj is KdOpenScheduleEmailDialogCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog;
 }
 
@@ -1081,7 +1090,7 @@ export function isOpenScheduleEmailDialogCommandData(
  *
  * @public
  */
-export interface ISetFilterParentsAttributeFilter {
+export interface IKdSetFilterParentsAttributeFilter {
     attributeFilter: {
         displayForm: ObjRef;
     };
@@ -1092,18 +1101,18 @@ export interface ISetFilterParentsAttributeFilter {
  *
  * @public
  */
-export type SetFilterParentsItemFilter = ISetFilterParentsAttributeFilter;
+export type KdSetFilterParentsItemFilter = IKdSetFilterParentsAttributeFilter;
 
 /**
  * Type that represents filter connection to its parent.
  *
  * @public
  */
-export interface ISetFilterParentsItemParent {
+export interface IKdSetFilterParentsItemParent {
     /**
      * Parent is filter that is present on a dashboard.
      */
-    parent: SetFilterParentsItemFilter;
+    parent: KdSetFilterParentsItemFilter;
 
     /**
      * Connecting attribute is common attribute for both child and parent attribute filter.
@@ -1116,18 +1125,18 @@ export interface ISetFilterParentsItemParent {
  *
  * @public
  */
-export interface ISetFilterParentsItem {
+export interface IKdSetFilterParentsItem {
     /**
      * Filter property is reference to filter that exists on a dashboard. If filter is not on a dashboard `FilterNotFound`
      * error will be returned.
      */
-    filter: SetFilterParentsItemFilter;
+    filter: KdSetFilterParentsItemFilter;
 
     /**
      * Parents is array of filters that this filter depends on, parents filters also need to be present on a dashboard.
      * If filter should not depend on any parent filters pass empty array `[]` to `parents` property.
      */
-    parents: ISetFilterParentsItemParent[];
+    parents: IKdSetFilterParentsItemParent[];
 }
 
 /**
@@ -1136,8 +1145,8 @@ export interface ISetFilterParentsItem {
  *
  * @public
  */
-export interface ISetFilterParentsDataBody {
-    filters: ISetFilterParentsItem[];
+export interface IKdSetFilterParentsDataBody {
+    filters: IKdSetFilterParentsItem[];
 }
 
 /**
@@ -1177,29 +1186,29 @@ export interface ISetFilterParentsDataBody {
  *
  * @public
  */
-export type SetFilterParentsCommand = IGdcKdMessageEvent<
+export type KdSetFilterParentsCommand = IGdcKdMessageEvent<
     GdcKdCommandType.SetFilterParents,
-    ISetFilterParentsDataBody
+    IKdSetFilterParentsDataBody
 >;
 
 /**
- * Type that represents `SetFilterParentsCommand` data. For more information on use look at `SetFilterParentsCommand`
+ * Type that represents `SetFilterParentsCommand` data. For more information on use look at {@link KdSetFilterParentsCommand}
  *
  * @public
  */
-export type SetFilterParentsCommandData = IGdcKdMessageEnvelope<
+export type KdSetFilterParentsCommandData = IGdcKdMessageEnvelope<
     GdcKdCommandType.SetFilterParents,
-    ISetFilterParentsDataBody
+    IKdSetFilterParentsDataBody
 >;
 
 /**
- * Type-guard that checks if event in `SetFilterParents`
+ * Type-guard that checks if event in {@link KdSetFilterParentsCommandData}
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSetFilterParentsCommandData(obj: unknown): obj is SetFilterParentsCommandData {
+export function isKdSetFilterParentsCommandData(obj: unknown): obj is KdSetFilterParentsCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetFilterParents;
 }
 
@@ -1208,7 +1217,7 @@ export function isSetFilterParentsCommandData(obj: unknown): obj is SetFilterPar
  *
  * @public
  */
-export type SetFilterParentsFinished = IGdcKdMessageEvent<
+export type KdSetFilterParentsFinished = IGdcKdMessageEvent<
     GdcKdEventType.SetFilterParentsFinished,
     IKdAvailableCommands
 >;
@@ -1218,7 +1227,7 @@ export type SetFilterParentsFinished = IGdcKdMessageEvent<
  *
  * @public
  */
-export type SetFilterParentsFinishedData = IGdcKdMessageEnvelope<
+export type KdSetFilterParentsFinishedData = IGdcKdMessageEnvelope<
     GdcKdEventType.SetFilterParentsFinished,
     IKdAvailableCommands
 >;
@@ -1228,7 +1237,7 @@ export type SetFilterParentsFinishedData = IGdcKdMessageEnvelope<
  *
  * @public
  */
-export enum SetFilterParentsErrorCode {
+export enum KdSetFilterParentsErrorCode {
     /**
      * Command data format is invalid e.g. missing properties or wrong types.
      */
@@ -1280,11 +1289,11 @@ export enum SetFilterParentsErrorCode {
  *
  * @public
  */
-export interface ISetFilterParentsFailedDataBody {
+export interface IKdSetFilterParentsFailedDataBody {
     /**
      * Code that represents cause of error look at `SetFilterParentsErrorCode` for more information.
      */
-    errorCode: SetFilterParentsErrorCode;
+    errorCode: KdSetFilterParentsErrorCode;
 }
 
 /**
@@ -1293,9 +1302,9 @@ export interface ISetFilterParentsFailedDataBody {
  *
  * @public
  */
-export type SetFilterParentsFailed = IGdcKdMessageEvent<
+export type KdSetFilterParentsFailed = IGdcKdMessageEvent<
     GdcKdEventType.SetFilterParentsFailed,
-    ISetFilterParentsFailedDataBody
+    IKdSetFilterParentsFailedDataBody
 >;
 
 /**
@@ -1303,9 +1312,9 @@ export type SetFilterParentsFailed = IGdcKdMessageEvent<
  *
  * @public
  */
-export type SetFilterParentsFailedData = IGdcKdMessageEnvelope<
+export type KdSetFilterParentsFailedData = IGdcKdMessageEnvelope<
     GdcKdEventType.SetFilterParentsFailed,
-    ISetFilterParentsFailedDataBody
+    IKdSetFilterParentsFailedDataBody
 >;
 
 /**
@@ -1313,7 +1322,7 @@ export type SetFilterParentsFailedData = IGdcKdMessageEnvelope<
  *
  * @public
  */
-export type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
+export type IKdInsightSavedBody = IVisualization & {
     insight: IObjectMeta;
 };
 
@@ -1322,7 +1331,7 @@ export type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
  *
  * @public
  */
-export type InsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IInsightSavedBody>;
+export type KdInsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IKdInsightSavedBody>;
 
 /**
  * Open delete dashboard dialog, user will be able to delete currently existing dashboard
@@ -1339,7 +1348,7 @@ export type InsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved
  *
  * @public
  */
-export type OpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<
+export type KdOpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<
     GdcKdCommandType.OpenDeleteDashboardDialog,
     null
 >;
@@ -1347,21 +1356,21 @@ export type OpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<
 /**
  * @public
  */
-export type OpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<
+export type KdOpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<
     GdcKdCommandType.OpenDeleteDashboardDialog,
     null
 >;
 
 /**
- * Type-guard checking whether object is an instance of OpenDeleteDashboardDialogCommandData.
+ * Type-guard checking whether object is an instance of {@link KdOpenDeleteDashboardDialogCommandData}.
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isOpenDeleteDashboardDialogCommandData(
+export function isKdOpenDeleteDashboardDialogCommandData(
     obj: unknown,
-): obj is OpenDeleteDashboardDialogCommandData {
+): obj is KdOpenDeleteDashboardDialogCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenDeleteDashboardDialog;
 }
 
@@ -1370,7 +1379,7 @@ export function isOpenDeleteDashboardDialogCommandData(
  *
  * @public
  */
-export interface ISetApiTokenBody {
+export interface IKdSetApiTokenBody {
     /**
      * API token value - used to set up SDK backend instance
      */
@@ -1397,7 +1406,7 @@ export interface ISetApiTokenBody {
  *
  * @public
  */
-export type SetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken, ISetApiTokenBody>;
+export type KdSetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken, IKdSetApiTokenBody>;
 
 /**
  * Data type of set API token command
@@ -1407,15 +1416,18 @@ export type SetApiTokenCommand = IGdcKdMessageEvent<GdcKdCommandType.SetApiToken
  *
  * @public
  */
-export type SetApiTokenCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetApiToken, ISetApiTokenBody>;
+export type KdSetApiTokenCommandData = IGdcKdMessageEnvelope<
+    GdcKdCommandType.SetApiToken,
+    IKdSetApiTokenBody
+>;
 
 /**
- * Type-guard checking whether an object is an instance of SetApiTokenCommandData
+ * Type-guard checking whether an object is an instance of {@link KdSetApiTokenCommandData}.
  *
  * @param obj - object to test
  *
  * @public
  */
-export function isSetApiTokenCommandData(obj: unknown): obj is SetApiTokenCommandData {
+export function isKdSetApiTokenCommandData(obj: unknown): obj is KdSetApiTokenCommandData {
     return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetApiToken;
 }

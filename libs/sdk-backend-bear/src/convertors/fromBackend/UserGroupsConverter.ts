@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
-import * as GdcUserGroup from "@gooddata/api-model-bear/GdcUserGroup";
+import { IUserGroupItem } from "@gooddata/api-model-bear";
 import { uriRef, IWorkspaceUserGroup } from "@gooddata/sdk-model";
 
-export const convertWorkspaceUserGroup = (group: GdcUserGroup.IUserGroupItem): IWorkspaceUserGroup => {
+export const convertWorkspaceUserGroup = (group: IUserGroupItem): IWorkspaceUserGroup => {
     const {
         content: { name, description, id },
         links,

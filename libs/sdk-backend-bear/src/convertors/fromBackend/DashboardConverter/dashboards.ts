@@ -1,11 +1,17 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
-import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
-import * as GdcKpi from "@gooddata/api-model-bear/GdcKpi";
-import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
-import * as GdcVisualizationWidget from "@gooddata/api-model-bear/GdcVisualizationWidget";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    IDashboardDateFilterAddedPresets as IBearDashboardDateFilterAddedPresets,
+    IDashboardDateFilterConfig as IBearIDashboardDateFilterConfig,
+    IDashboardPluginLink as IBearDashboardPluginLink,
+    IWrappedAnalyticalDashboard,
+    IVisualizationClassWrapped,
+    isWrappedKpi,
+    isWrappedFilterContext,
+    isWrappedTempFilterContext,
+    isWrappedVisualizationWidget,
+    IObjectLink,
+    isVisualization,
+} from "@gooddata/api-model-bear";
 
 import {
     IUser,
@@ -32,7 +38,7 @@ import { DashboardDependency, BearDashboardDependency } from "./types.js";
 import { convertVisualizationWidget, convertKpi } from "./widget.js";
 
 export const convertListedDashboard = (
-    dashboardLink: GdcMetadata.IObjectLink,
+    dashboardLink: IObjectLink,
     availability: ListedDashboardAvailability,
     userMap?: Map<string, IUser>,
 ): IListedDashboard => {
@@ -61,7 +67,7 @@ export const convertListedDashboard = (
 };
 
 const convertDateFilterConfigAddedPresets = (
-    addPresets: GdcDashboard.IDashboardDateFilterAddedPresets,
+    addPresets: IBearDashboardDateFilterAddedPresets,
 ): IDashboardDateFilterAddedPresets => {
     const { absolutePresets = [], relativePresets = [] } = addPresets;
     return {
@@ -74,7 +80,7 @@ const convertDateFilterConfigAddedPresets = (
  * @internal
  */
 export const convertDashboardDateFilterConfig = (
-    dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig,
+    dateFilterConfig: IBearIDashboardDateFilterConfig,
 ): IDashboardDateFilterConfig => {
     const { filterName, mode, addPresets, hideGranularities, hideOptions } = dateFilterConfig;
 
@@ -87,7 +93,7 @@ export const convertDashboardDateFilterConfig = (
     };
 };
 
-const convertPluginLink = (link: GdcDashboard.IDashboardPluginLink): IDashboardPluginLink => {
+const convertPluginLink = (link: IBearDashboardPluginLink): IDashboardPluginLink => {
     const { type, parameters } = link;
 
     return {
@@ -108,9 +114,9 @@ const getShareStatus = (unlisted: boolean, sharedWithSomeone: boolean): ShareSta
 };
 
 export const convertDashboard = (
-    dashboard: GdcDashboard.IWrappedAnalyticalDashboard,
+    dashboard: IWrappedAnalyticalDashboard,
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[] = [],
+    visualizationClasses: IVisualizationClassWrapped[] = [],
     exportFilterContextUri?: string,
     userMap?: Map<string, IUser>,
 ): IDashboard => {
@@ -135,7 +141,7 @@ export const convertDashboard = (
 
     const sdkDependencies = dependencies
         // Filter out visualization objects - we only need them to create implicit layout
-        .filter((d) => !GdcVisualizationObject.isVisualization(d))
+        .filter((d) => !isVisualization(d))
         .map(convertDashboardDependency);
     const unsortedWidgets = sdkDependencies.filter(isWidget);
 
@@ -186,13 +192,13 @@ export const convertDashboard = (
 };
 
 const convertDashboardDependency = (dependency: BearDashboardDependency): DashboardDependency => {
-    if (GdcVisualizationWidget.isWrappedVisualizationWidget(dependency)) {
+    if (isWrappedVisualizationWidget(dependency)) {
         return convertVisualizationWidget(dependency);
-    } else if (GdcKpi.isWrappedKpi(dependency)) {
+    } else if (isWrappedKpi(dependency)) {
         return convertKpi(dependency);
-    } else if (GdcFilterContext.isWrappedFilterContext(dependency)) {
+    } else if (isWrappedFilterContext(dependency)) {
         return convertFilterContext(dependency) as IFilterContext;
-    } else if (GdcFilterContext.isWrappedTempFilterContext(dependency)) {
+    } else if (isWrappedTempFilterContext(dependency)) {
         return convertTempFilterContext(dependency);
     }
 

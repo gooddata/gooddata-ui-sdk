@@ -1,9 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
+import { IMetric, IObjectLink } from "@gooddata/api-model-bear";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { uriRef, IMeasureMetadataObject } from "@gooddata/sdk-model";
-import IMetric = GdcMetadata.IMetric;
 
 export function convertMetricFromBackend(metric: IMetric): IMeasureMetadataObject {
     const ref = uriRef(metric.meta.uri!);
@@ -25,7 +24,7 @@ export function convertMetricFromBackend(metric: IMetric): IMeasureMetadataObjec
     );
 }
 
-export function convertListedMetric(metricLink: GdcMetadata.IObjectLink): IMeasureMetadataObject {
+export function convertListedMetric(metricLink: IObjectLink): IMeasureMetadataObject {
     const ref = uriRef(metricLink.link);
 
     return newMeasureMetadataObject(ref, (m) =>

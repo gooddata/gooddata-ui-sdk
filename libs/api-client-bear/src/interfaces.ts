@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { GdcVisualizationObject, GdcExecuteAFM, GdcMetadata, Uri } from "@gooddata/api-model-bear";
+import { IVisualizationObjectContent, Uri, SortItem, ObjectCategory } from "@gooddata/api-model-bear";
 
 export type SortDirection = "asc" | "desc";
 
@@ -46,7 +46,7 @@ export interface IGetObjectsByQueryOptions {
     /**
      * Metadata object category to query (e.g. scheduledMail)
      */
-    category: GdcMetadata.ObjectCategory;
+    category: ObjectCategory;
 
     /**
      * Limits the number of items to return per page (50 is maximum)
@@ -119,7 +119,7 @@ export interface IEtlPullResponse {
 }
 
 export interface IBaseLoadOptions {
-    bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
+    bucketItems?: IVisualizationObjectContent;
     excludeObjectsWithTags?: string[];
     includeObjectsWithTags?: string[];
 }
@@ -349,15 +349,5 @@ export interface IPropertiesControls {
 
 export interface IProperties {
     controls?: IPropertiesControls;
-    sortItems?: GdcExecuteAFM.SortItem[];
+    sortItems?: SortItem[];
 }
-
-export interface IStoredItemDescription {
-    uri: string;
-}
-
-export interface IAdHocItemDescription {
-    expression: string;
-}
-
-export type ItemDescription = IStoredItemDescription | IAdHocItemDescription;

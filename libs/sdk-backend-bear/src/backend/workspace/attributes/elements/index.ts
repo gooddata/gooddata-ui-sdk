@@ -1,4 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
+import { invariant } from "ts-invariant";
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -23,14 +24,12 @@ import {
     isRelativeDateFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
+import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
+import { IAfm, IValidElementsParams } from "@gooddata/api-model-bear";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth.js";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api.js";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcExecuteAFM from "@gooddata/api-model-bear/GdcExecuteAFM";
 import { LimitingAfmFactory } from "./limitingAfmFactory.js";
-import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -60,7 +59,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
     private dateFilters: IRelativeDateFilter[] | undefined;
     private measures: IMeasure[] | undefined;
     // cached AFM used to apply attributeRef and attributeFilters to the element queries
-    private limitingAfm: GdcExecuteAFM.IAfm | undefined;
+    private limitingAfm: IAfm | undefined;
 
     // cached value of objectId corresponding to identifier
     private objectId: string | undefined;
@@ -148,7 +147,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
 
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                const params: GdcMetadata.IValidElementsParams = {
+                const params: IValidElementsParams = {
                     ...restOptions,
                     ...{ uris: urisToUse as string[] | undefined },
                     limit,
@@ -163,7 +162,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
                 const totalCount = Number.parseInt(paging.total, 10);
 
                 return {
-                    items: items.map(({ element }) => element),
+                    items: items.map(({ element }: { element: any }) => element),
                     totalCount,
                 };
             },

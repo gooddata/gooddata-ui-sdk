@@ -6,12 +6,17 @@ import cloneDeepWith from "lodash/cloneDeepWith.js";
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";
 import {
-    GdcKpi,
-    GdcDashboard,
-    GdcFilterContext,
-    GdcVisualizationWidget,
-    GdcMetadata,
-    GdcVisualizationObject,
+    IKPI,
+    IWrappedKPI,
+    IAnalyticalDashboard,
+    IAnalyticalDashboardContent,
+    IWrappedAnalyticalDashboard,
+    IWrappedFilterContext,
+    IFilterContext,
+    IWrappedVisualizationWidget,
+    IVisualizationWidget,
+    IObjectMeta,
+    IVisualization,
 } from "@gooddata/api-model-bear";
 
 /**
@@ -56,10 +61,7 @@ export function createTranslator(
  * @param originalMeta - the meta to start with
  * @param options - the options relevant to this particular run
  */
-function getSanitizedMeta(
-    originalMeta: GdcMetadata.IObjectMeta,
-    options: ICopyDashboardOptions,
-): GdcMetadata.IObjectMeta {
+function getSanitizedMeta(originalMeta: IObjectMeta, options: ICopyDashboardOptions): IObjectMeta {
     return omit(
         originalMeta,
         compact([
@@ -83,10 +85,10 @@ function getSanitizedMeta(
  * @experimental
  */
 export function updateContent(
-    analyticalDashboard: GdcDashboard.IAnalyticalDashboard,
+    analyticalDashboard: IAnalyticalDashboard,
     uriTranslator: UriTranslator,
     filterContext: string,
-): GdcDashboard.IAnalyticalDashboardContent {
+): IAnalyticalDashboardContent {
     return cloneDeepWith(
         {
             ...analyticalDashboard.content,
@@ -142,8 +144,7 @@ export class MetadataModuleExt {
     ): Promise<string> {
         const objectsFromDashboard = await this.getObjectsFromDashboard(projectId, dashboardUri);
         const dashboardDetails = await this.metadataModule.getObjectDetails(dashboardUri);
-        const { analyticalDashboard }: { analyticalDashboard: GdcDashboard.IAnalyticalDashboard } =
-            dashboardDetails;
+        const { analyticalDashboard }: { analyticalDashboard: IAnalyticalDashboard } = dashboardDetails;
         const allCreatedObjUris: string[] = [];
         const visWidgetUris: string[] = [];
         try {
@@ -158,7 +159,7 @@ export class MetadataModuleExt {
             const translator = createTranslator(kpiMap, visWidgetMap);
             const updatedContent = updateContent(analyticalDashboard, translator, filterContext);
 
-            const duplicateDashboard: GdcDashboard.IWrappedAnalyticalDashboard = {
+            const duplicateDashboard: IWrappedAnalyticalDashboard = {
                 analyticalDashboard: {
                     ...dashboardDetails.analyticalDashboard,
                     content: {
@@ -228,8 +229,8 @@ export class MetadataModuleExt {
                 objsFromDashboard
                     .filter((obj: any) => this.unwrapObj(obj).meta.category === "kpi")
                     .map(async (kpiWidget: any) => {
-                        const { kpi }: { kpi: GdcKpi.IKPI } = kpiWidget;
-                        const toSave: GdcKpi.IWrappedKPI = {
+                        const { kpi }: { kpi: IKPI } = kpiWidget;
+                        const toSave: IWrappedKPI = {
                             kpi: {
                                 meta: getSanitizedMeta(kpi.meta, options),
                                 content: { ...kpi.content },
@@ -275,7 +276,7 @@ export class MetadataModuleExt {
             const visObj = await this.metadataModule.getObjectDetails(
                 visualizationWidget.content.visualization,
             );
-            const toSave: GdcVisualizationObject.IVisualization = {
+            const toSave: IVisualization = {
                 visualizationObject: {
                     meta: getSanitizedMeta(visObj.visualizationObject.meta, options),
                     content: { ...visObj.visualizationObject.content },
@@ -284,7 +285,7 @@ export class MetadataModuleExt {
             const newUriVisObj = (await this.metadataModule.createObject(projectId, toSave))
                 .visualizationObject.meta.uri;
 
-            const updatedVisWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
+            const updatedVisWidget: IWrappedVisualizationWidget = {
                 visualizationWidget: {
                     meta: getSanitizedMeta(visWidget.visualizationWidget.meta, options),
                     content: {
@@ -297,7 +298,7 @@ export class MetadataModuleExt {
                 .visualizationWidget.meta.uri!;
             uriMap.set(visualizationWidget.meta.uri, visUri);
         } else {
-            const updatedVisWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
+            const updatedVisWidget: IWrappedVisualizationWidget = {
                 visualizationWidget: {
                     meta: getSanitizedMeta(visWidget.visualizationWidget.meta, options),
                     content: { ...visWidget.visualizationWidget.content },
@@ -320,7 +321,7 @@ export class MetadataModuleExt {
             (obj: any) => this.unwrapObj(obj).meta.category === "filterContext",
         )[0];
 
-        const toSave: GdcFilterContext.IWrappedFilterContext = {
+        const toSave: IWrappedFilterContext = {
             filterContext: {
                 meta: getSanitizedMeta(originalFilterContext.filterContext.meta, options),
                 content: { ...originalFilterContext.filterContext.content },
@@ -334,9 +335,7 @@ export class MetadataModuleExt {
     private async getObjectsFromDashboard(
         projectId: string,
         dashboardUri: string,
-    ): Promise<
-        Array<GdcKpi.IKPI | GdcFilterContext.IFilterContext | GdcVisualizationWidget.IVisualizationWidget>
-    > {
+    ): Promise<Array<IKPI | IFilterContext | IVisualizationWidget>> {
         const uris = await this.getObjectsUrisInDashboard(projectId, dashboardUri);
         return this.metadataModule.getObjects<any>(projectId, uris); // TODO improve types
     }

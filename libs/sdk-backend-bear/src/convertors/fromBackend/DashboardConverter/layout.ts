@@ -1,9 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
 
-import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
-import * as GdcDashboardLayout from "@gooddata/api-model-bear/GdcDashboardLayout";
-
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
+import {
+    IFluidLayoutColSize,
+    IFluidLayoutColumn,
+    IFluidLayoutRow,
+    IFluidLayoutSize,
+    IVisualization,
+    IVisualizationClassWrapped,
+    Layout,
+    isFluidLayout,
+    isLayoutWidget,
+    isObjectUriQualifier,
+    isVisualization,
+} from "@gooddata/api-model-bear";
 import {
     uriRef,
     idRef,
@@ -27,7 +36,7 @@ const VISUALIZATION_SIZE = 12;
 /**
  * @internal
  */
-export const convertLayoutSize = (size: GdcDashboardLayout.IFluidLayoutSize): IDashboardLayoutSize => {
+export const convertLayoutSize = (size: IFluidLayoutSize): IDashboardLayoutSize => {
     const converted: IDashboardLayoutSize = {
         gridWidth: size.width,
     };
@@ -46,9 +55,7 @@ export const convertLayoutSize = (size: GdcDashboardLayout.IFluidLayoutSize): ID
 /**
  * @internal
  */
-export const convertLayoutItemSize = (
-    column: GdcDashboardLayout.IFluidLayoutColSize,
-): IDashboardLayoutSizeByScreenSize => {
+export const convertLayoutItemSize = (column: IFluidLayoutColSize): IDashboardLayoutSizeByScreenSize => {
     const allScreens: ScreenSize[] = ["xl", "md", "lg", "sm", "xs"];
 
     return allScreens.reduce((acc: IDashboardLayoutSizeByScreenSize, el) => {
@@ -62,14 +69,14 @@ export const convertLayoutItemSize = (
 };
 
 const convertLayoutItem = (
-    column: GdcDashboardLayout.IFluidLayoutColumn,
+    column: IFluidLayoutColumn,
     widgetDependencies: IWidget[],
 ): IDashboardLayoutItem => {
     const { content } = column;
-    if (GdcDashboardLayout.isLayoutWidget(content)) {
+    if (isLayoutWidget(content)) {
         const widget = widgetDependencies.find((dep) => {
             const { qualifier } = content.widget;
-            if (GdcVisualizationObject.isObjUriQualifier(qualifier)) {
+            if (isObjectUriQualifier(qualifier)) {
                 return areObjRefsEqual(uriRef(qualifier.uri), dep.ref);
             }
 
@@ -81,7 +88,7 @@ const convertLayoutItem = (
             size: convertLayoutItemSize(column.size),
             widget,
         };
-    } else if (GdcDashboardLayout.isFluidLayout(content)) {
+    } else if (isFluidLayout(content)) {
         return {
             type: "IDashboardLayoutItem",
             widget: convertLayout(content, widgetDependencies),
@@ -96,7 +103,7 @@ const convertLayoutItem = (
 };
 
 const convertLayoutSection = (
-    row: GdcDashboardLayout.IFluidLayoutRow,
+    row: IFluidLayoutRow,
     widgetDependencies: IWidget[],
 ): IDashboardLayoutSection => {
     const section: IDashboardLayoutSection = {
@@ -112,10 +119,7 @@ const convertLayoutSection = (
 /**
  * @internal
  */
-export const convertLayout = (
-    layout: GdcDashboardLayout.Layout,
-    widgetDependencies: IWidget[],
-): IDashboardLayout => {
+export const convertLayout = (layout: Layout, widgetDependencies: IWidget[]): IDashboardLayout => {
     const {
         fluidLayout: { rows },
         fluidLayout,
@@ -140,7 +144,7 @@ export const convertLayout = (
 export function createImplicitDashboardLayout(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+    visualizationClasses: IVisualizationClassWrapped[],
 ): IDashboardLayout | undefined {
     if (widgets.length < 1) {
         return undefined;
@@ -156,7 +160,7 @@ export function createImplicitDashboardLayout(
 function createLayoutSections(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+    visualizationClasses: IVisualizationClassWrapped[],
 ): IDashboardLayoutSection[] {
     return [
         {
@@ -169,7 +173,7 @@ function createLayoutSections(
 function createLayoutItems(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+    visualizationClasses: IVisualizationClassWrapped[],
 ): IDashboardLayoutItem[] {
     return widgets.map((widget) => createLayoutItem(widget, dependencies, visualizationClasses));
 }
@@ -177,7 +181,7 @@ function createLayoutItems(
 function createLayoutItem(
     widget: IWidget,
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+    visualizationClasses: IVisualizationClassWrapped[],
 ): IDashboardLayoutItem {
     return {
         type: "IDashboardLayoutItem",
@@ -193,7 +197,7 @@ function createLayoutItem(
 function implicitWidgetWidth(
     widget: IWidget,
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+    visualizationClasses: IVisualizationClassWrapped[],
 ) {
     if (widget.type === "kpi") {
         return KPI_SIZE;
@@ -201,9 +205,8 @@ function implicitWidgetWidth(
 
     const visualizationUri = (widget.insight as UriRef).uri;
     const vis = dependencies.find(
-        (v) =>
-            GdcVisualizationObject.isVisualization(v) && v.visualizationObject.meta.uri === visualizationUri,
-    ) as GdcVisualizationObject.IVisualization;
+        (v) => isVisualization(v) && v.visualizationObject.meta.uri === visualizationUri,
+    ) as IVisualization;
     const visualizationClassUri = vis.visualizationObject.content.visualizationClass.uri;
     const visualizationClass = visualizationClasses.find(
         (visClass) => visClass.visualizationClass.meta.uri === visualizationClassUri,
@@ -211,7 +214,7 @@ function implicitWidgetWidth(
     return implicitInsightWidth(visualizationClass!);
 }
 
-function implicitInsightWidth(visualizationClass: GdcVisualizationClass.IVisualizationClassWrapped) {
+function implicitInsightWidth(visualizationClass: IVisualizationClassWrapped) {
     const visualizationType = visualizationClass.visualizationClass.content.url.split(":")[1];
     return visualizationType === "headline" ? KPI_SIZE : VISUALIZATION_SIZE;
 }

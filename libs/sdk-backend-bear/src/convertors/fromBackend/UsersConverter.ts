@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcUser from "@gooddata/api-model-bear/GdcUser";
+import { IAccountSetting, IUserListItem, IUsersItem } from "@gooddata/api-model-bear";
 import { uriRef, IWorkspaceUser, IUser } from "@gooddata/sdk-model";
 
 const getUserFullName = (
@@ -13,7 +13,7 @@ const getUserFullName = (
     return [firstName, lastName].filter(Boolean).join(" ");
 };
 
-export const convertUser = (user: GdcUser.IAccountSetting): IUser => {
+export const convertUser = (user: IAccountSetting): IUser => {
     const { email, login, firstName, lastName, links } = user;
     return {
         ref: uriRef(links!.self!),
@@ -25,10 +25,8 @@ export const convertUser = (user: GdcUser.IAccountSetting): IUser => {
     };
 };
 
-export const convertWorkspaceUser = (user: GdcUser.IUserListItem): IWorkspaceUser => {
-    const getStatusFromState = (
-        state: GdcUser.IUserListItem["state"],
-    ): IWorkspaceUser["status"] | undefined => {
+export const convertWorkspaceUser = (user: IUserListItem): IWorkspaceUser => {
+    const getStatusFromState = (state: IUserListItem["state"]): IWorkspaceUser["status"] | undefined => {
         switch (state) {
             case "ACTIVE":
                 return "ENABLED";
@@ -54,7 +52,7 @@ export const convertWorkspaceUser = (user: GdcUser.IUserListItem): IWorkspaceUse
     };
 };
 
-export const convertUsersItem = (user: GdcUser.IUsersItem): IWorkspaceUser => {
+export const convertUsersItem = (user: IUsersItem): IWorkspaceUser => {
     const {
         content: { email, login, firstname, lastname, status },
         links,

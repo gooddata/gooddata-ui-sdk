@@ -1,7 +1,6 @@
 // (C) 2007-2023 GoodData Corporation
 import { SUCCESS_REQUEST_STATUS, BAD_REQUEST_STATUS } from "../constants/errors.js";
-import { GdcExport } from "@gooddata/api-model-bear";
-import IBaseExportConfig = GdcExport.IBaseExportConfig;
+import { IBaseExportConfig } from "@gooddata/api-model-bear";
 
 export function isExportFinished(response: Response): boolean {
     const taskState = response.status;

@@ -49,15 +49,6 @@ import {
     IDashboardPermissions,
 } from "@gooddata/sdk-model";
 
-import * as GdcDashboard from "@gooddata/api-model-bear/GdcDashboard";
-import * as GdcVisualizationClass from "@gooddata/api-model-bear/GdcVisualizationClass";
-import * as GdcDashboardPlugin from "@gooddata/api-model-bear/GdcDashboardPlugin";
-import * as GdcFilterContext from "@gooddata/api-model-bear/GdcFilterContext";
-import * as GdcMetadataObject from "@gooddata/api-model-bear/GdcMetadataObject";
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
-import * as GdcScheduledMail from "@gooddata/api-model-bear/GdcScheduledMail";
-import * as GdcVisualizationObject from "@gooddata/api-model-bear/GdcVisualizationObject";
-
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter.js";
 import { BearAuthenticatedCallGuard } from "../../../types/auth.js";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter.js";
@@ -84,17 +75,29 @@ import { sanitizeFilterContext } from "./filterContexts.js";
 import { getAnalyticalDashboardUserUris } from "../../../utils/metadata.js";
 import isEmpty from "lodash/isEmpty.js";
 import includes from "lodash/includes.js";
-import isVisualization = GdcVisualizationObject.isVisualization;
-import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
 import remove from "lodash/remove.js";
 import { convertUser } from "../../../convertors/fromBackend/UsersConverter.js";
 import { BearWorkspacePermissionsFactory } from "../permissions/permissions.js";
+import {
+    IObjectLink,
+    isDashboardPlugin,
+    isVisualization,
+    IVisualizationClassWrapped,
+    IWrappedAnalyticalDashboard,
+    IWrappedDashboardPlugin,
+    IWrappedFilterContext,
+    IWrappedKpiAlert,
+    IWrappedScheduledMail,
+    IWrappedTempFilterContext,
+    ObjectCategory,
+    WrappedObject,
+} from "@gooddata/api-model-bear";
 
 /**
  * Metadata object types closely related to the dashboard object.
  */
 type RelatedObjectTypes = Extract<
-    GdcMetadata.ObjectCategory,
+    ObjectCategory,
     "kpi" | "visualizationWidget" | "visualizationObject" | "filterContext" | "dashboardPlugin"
 >;
 
@@ -157,7 +160,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const bearDashboard = await this.getBearDashboard(dashboardUri);
         const dependenciesToGet = [...DashboardComponentTypes];
-        const bearVisualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[] = [];
+        const bearVisualizationClasses: IVisualizationClassWrapped[] = [];
 
         if (!bearDashboard.analyticalDashboard.content.layout) {
             // when dashboard has no layout and only list of widgets, the conversion will build an
@@ -376,7 +379,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         }
 
         const wrappedScheduledMails = await this.authCall(async (sdk) => {
-            return sdk.md.getObjects<GdcScheduledMail.IWrappedScheduledMail>(
+            return sdk.md.getObjects<IWrappedScheduledMail>(
                 this.workspace,
                 scheduledMailObjectLinks.map(({ link }) => link),
             );
@@ -525,8 +528,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Dashboards
 
-    private getBearDashboard = async (uri: string): Promise<GdcDashboard.IWrappedAnalyticalDashboard> => {
-        return this.authCall((sdk) => sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri));
+    private getBearDashboard = async (uri: string): Promise<IWrappedAnalyticalDashboard> => {
+        return this.authCall((sdk) => sdk.md.getObjectDetails<IWrappedAnalyticalDashboard>(uri));
     };
 
     private createBearDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
@@ -548,7 +551,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private getAccessibleDashboards = async (
-        explicitlySharedDashboardsObjectLinks: GdcMetadata.IObjectLink[],
+        explicitlySharedDashboardsObjectLinks: IObjectLink[],
         includeAvailableViaLink: boolean,
     ) => {
         if (!includeAvailableViaLink) {
@@ -566,10 +569,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    private isExplicitlyShared(
-        dashboard: GdcMetadata.IObjectLink,
-        explicitlySharedDashboards: GdcMetadata.IObjectLink[],
-    ) {
+    private isExplicitlyShared(dashboard: IObjectLink, explicitlySharedDashboards: IObjectLink[]) {
         return explicitlySharedDashboards.some(({ link }) => link === dashboard.link);
     }
 
@@ -639,9 +639,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getBearExportFilterContext = async (
         exportFilterContextRef: ObjRef | undefined,
-    ): Promise<
-        GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | undefined
-    > => {
+    ): Promise<IWrappedFilterContext | IWrappedTempFilterContext | undefined> => {
         if (!exportFilterContextRef) {
             return;
         }
@@ -653,15 +651,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         return this.authCall(async (sdk) => {
-            let result:
-                | GdcFilterContext.IWrappedFilterContext
-                | GdcFilterContext.IWrappedTempFilterContext
-                | undefined;
+            let result: IWrappedFilterContext | IWrappedTempFilterContext | undefined;
 
             try {
-                result = await sdk.md.getObjectDetails<
-                    GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext
-                >(exportFilterContextUri);
+                result = await sdk.md.getObjectDetails<IWrappedFilterContext | IWrappedTempFilterContext>(
+                    exportFilterContextUri,
+                );
             } catch (err: any) {
                 if (err?.response?.status === 404) {
                     // Export filter context has expired
@@ -768,13 +763,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     // Alerts
-    private getAllBearKpiAlertsForCurrentUser = async (): Promise<GdcMetadata.IWrappedKpiAlert[]> => {
+    private getAllBearKpiAlertsForCurrentUser = async (): Promise<IWrappedKpiAlert[]> => {
         return this.authCall(async (sdk, context) => {
             const author = await userUriFromAuthenticatedPrincipalWithAnonymous(context.getPrincipal);
             if (!author) {
                 return [];
             }
-            return sdk.md.getObjectsByQuery<GdcMetadata.IWrappedKpiAlert>(this.workspace, {
+            return sdk.md.getObjectsByQuery<IWrappedKpiAlert>(this.workspace, {
                 category: "kpiAlert",
                 author,
             });
@@ -783,7 +778,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getDashboardBearKpiAlertsForCurrentUser = async (
         dashboardRef: ObjRef,
-    ): Promise<GdcMetadata.IWrappedKpiAlert[]> => {
+    ): Promise<IWrappedKpiAlert[]> => {
         const allAlerts = await this.getAllBearKpiAlertsForCurrentUser();
         if (allAlerts.length === 0) {
             return [];
@@ -793,7 +788,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         return allAlerts.filter((alert) => alert.kpiAlert.content.dashboard === dashboardUri);
     };
 
-    private getConvertedAlerts = async (alerts: GdcMetadata.IWrappedKpiAlert[]): Promise<IWidgetAlert[]> => {
+    private getConvertedAlerts = async (alerts: IWrappedKpiAlert[]): Promise<IWidgetAlert[]> => {
         const filterContexts = await this.getBearKpiAlertsFilterContexts(alerts);
         const filterContextByUri = keyBy(
             filterContexts,
@@ -806,13 +801,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private getBearKpiAlertsFilterContexts = async (
-        kpiAlerts: GdcMetadata.IWrappedKpiAlert[],
-    ): Promise<GdcFilterContext.IWrappedFilterContext[]> => {
+        kpiAlerts: IWrappedKpiAlert[],
+    ): Promise<IWrappedFilterContext[]> => {
         const filterContextUris = kpiAlerts
             .map((alert) => alert.kpiAlert.content.filterContext)
             .filter((a): a is string => !!a);
         return this.authCall((sdk) =>
-            sdk.md.getObjects<GdcFilterContext.IWrappedFilterContext>(this.workspace, filterContextUris),
+            sdk.md.getObjects<IWrappedFilterContext>(this.workspace, filterContextUris),
         );
     };
 
@@ -820,7 +815,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getScheduledMailObjectLinksForDashboard = async (
         dashboardRef: ObjRef,
-    ): Promise<GdcMetadata.IObjectLink[]> => {
+    ): Promise<IObjectLink[]> => {
         const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
         return this.authCall((sdk) =>
             sdk.md.getObjectUsedBy(this.workspace, dashboardUri, {
@@ -832,7 +827,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getScheduledMailObjectLinksForDashboardAndCurrentUser = async (
         dashboardRef: ObjRef,
-    ): Promise<GdcMetadata.IObjectLink[]> => {
+    ): Promise<IObjectLink[]> => {
         return this.authCall(async (_sdk, context) => {
             const user = await userUriFromAuthenticatedPrincipalWithAnonymous(context.getPrincipal);
             if (!user) {
@@ -847,10 +842,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Metadata
 
-    private updateBearMetadataObject = async (
-        ref: ObjRef,
-        bearMetadataObject: GdcMetadataObject.WrappedObject,
-    ) => {
+    private updateBearMetadataObject = async (ref: ObjRef, bearMetadataObject: WrappedObject) => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const metadataObjectId = getObjectIdFromUri(uri);
         await this.authCall((sdk) =>
@@ -863,11 +855,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         return this.authCall((sdk) => sdk.md.deleteObject(uri) as Promise<never>);
     };
 
-    private getBearVisualizationClasses = async (): Promise<
-        GdcVisualizationClass.IVisualizationClassWrapped[]
-    > => {
+    private getBearVisualizationClasses = async (): Promise<IVisualizationClassWrapped[]> => {
         return this.authCall((sdk) =>
-            sdk.md.getObjectsByQuery<GdcVisualizationClass.IVisualizationClassWrapped>(this.workspace, {
+            sdk.md.getObjectsByQuery<IVisualizationClassWrapped>(this.workspace, {
                 category: "visualizationClass",
             }),
         );
@@ -1019,7 +1009,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
 
         return this.authCall((sdk) => {
-            return sdk.md.getObjectDetails<GdcDashboardPlugin.IWrappedDashboardPlugin>(uri);
+            return sdk.md.getObjectDetails<IWrappedDashboardPlugin>(uri);
         }).then(toSdkModel.convertDashboardPlugin);
     };
 
@@ -1028,7 +1018,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const pluginUris = pluginLinks.map((link) => link.link);
 
         return this.authCall((sdk) => {
-            return sdk.md.getObjects<GdcDashboardPlugin.IWrappedDashboardPlugin>(this.workspace, pluginUris);
+            return sdk.md.getObjects<IWrappedDashboardPlugin>(this.workspace, pluginUris);
         }).then((plugins) => {
             return plugins.map(toSdkModel.convertDashboardPlugin);
         });
@@ -1046,9 +1036,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getDashboardPermissions = async (ref: ObjRef): Promise<IDashboardPermissions> => {
         try {
             const uri = await objRefToUri(ref, this.workspace, this.authCall);
-            await this.authCall((sdk) =>
-                sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri),
-            );
+            await this.authCall((sdk) => sdk.md.getObjectDetails<IWrappedAnalyticalDashboard>(uri));
 
             const workspacePermissions = await this.authCall(() =>
                 this.permissions.getPermissionsForCurrentUser(),

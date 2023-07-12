@@ -2,6 +2,7 @@
 import isEmpty from "lodash/fp/isEmpty.js";
 import has from "lodash/has.js";
 import {
+    SortDirection,
     Timestamp,
     MaqlExpression,
     Uri,
@@ -9,7 +10,7 @@ import {
     BooleanAsString,
     ThemeColor,
     ThemeFontUri,
-} from "../aliases.js";
+} from "../base/GdcTypes.js";
 import { IAfm } from "../executeAfm/GdcExecuteAFM.js";
 
 /**
@@ -83,7 +84,7 @@ export interface IMetadataObject {
 /**
  * @public
  */
-export interface IAttribute extends IMetadataObject {
+export interface IMetadataObjectAttribute extends IMetadataObject {
     content: {
         dimension?: string;
         displayForms: IAttributeDisplayForm[];
@@ -332,7 +333,7 @@ export interface ITheme extends IMetadataObject {
 /**
  * @public
  */
-export interface IDataSet extends IMetadataObject {
+export interface IMetadataObjectDataSet extends IMetadataObject {
     attributes: Uri[];
     dataLoadingColumns: Uri[];
     facts: Uri[];
@@ -343,7 +344,7 @@ export interface IDataSet extends IMetadataObject {
  * @public
  */
 export interface IWrappedAttribute {
-    attribute: IAttribute;
+    attribute: IMetadataObjectAttribute;
 }
 
 /**
@@ -384,8 +385,8 @@ export interface IWrappedKpiAlert {
 /**
  * @public
  */
-export interface IWrappedDataSet {
-    dataSet: IDataSet;
+export interface IMetadataObjectWrappedDataSet {
+    dataSet: IMetadataObjectDataSet;
 }
 
 /**
@@ -506,11 +507,6 @@ export interface IObjectXrefEntry {
 }
 
 /**
- * @public
- */
-export type SortDirection = "asc" | "desc";
-
-/**
  * Request params for POST /gdc/md/\{projectId\}/obj/\{attributeDisplayFormMetadataObjectId\}/validElements\{params\}
  * @public
  */
@@ -622,8 +618,8 @@ export interface IGetObjectsUsedByManyEntry {
 /**
  * @public
  */
-export function isAttribute(obj: unknown): obj is IAttribute {
-    return !isEmpty(obj) && (obj as IAttribute).meta.category === "attribute";
+export function isMetadataObjectAttribute(obj: unknown): obj is IMetadataObjectAttribute {
+    return !isEmpty(obj) && (obj as IMetadataObjectAttribute).meta.category === "attribute";
 }
 
 /**
@@ -697,14 +693,14 @@ export function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert {
 /**
  * @public
  */
-export function isDataSet(obj: unknown): obj is IDataSet {
-    return !isEmpty(obj) && (obj as IDataSet).meta.category === "dataSet";
+export function isMetadataObjectDataSet(obj: unknown): obj is IMetadataObjectDataSet {
+    return !isEmpty(obj) && (obj as IMetadataObjectDataSet).meta.category === "dataSet";
 }
 
 /**
  * @public
  */
-export function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet {
+export function isMetadataObjectWrappedDataSet(obj: unknown): obj is IMetadataObjectWrappedDataSet {
     // eslint-disable-next-line no-prototype-builtins
     return !isEmpty(obj) && has(obj, "dataSet");
 }

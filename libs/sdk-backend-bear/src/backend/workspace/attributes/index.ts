@@ -1,5 +1,4 @@
 // (C) 2019-2022 GoodData Corporation
-import * as GdcMetadata from "@gooddata/api-model-bear/GdcMetadata";
 import {
     UriRef,
     ObjRef,
@@ -24,6 +23,14 @@ import {
     IWorkspaceAttributesService,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeDisplayForm,
+    IMetadataObjectAttribute,
+    IObjectXrefEntry,
+    IWrappedAttribute,
+    IWrappedAttributeDisplayForm,
+    isWrappedAttributeDisplayForm,
+} from "@gooddata/api-model-bear";
 
 export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -34,7 +41,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
         const displayFormUri = await objRefToUri(ref, this.workspace, this.authCall);
-        const wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm = await this.authCall((sdk) =>
+        const wrappedDisplayForm: IWrappedAttributeDisplayForm = await this.authCall((sdk) =>
             sdk.md.getObjectDetails(displayFormUri),
         );
         const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
@@ -44,7 +51,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
         const attributeUri = await objRefToUri(ref, this.workspace, this.authCall);
-        const wrappedAttribute: GdcMetadata.IWrappedAttribute = await this.authCall((sdk) =>
+        const wrappedAttribute: IWrappedAttribute = await this.authCall((sdk) =>
             sdk.md.getObjectDetails(attributeUri),
         );
         return this.buildAttribute(wrappedAttribute.attribute);
@@ -68,10 +75,10 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
 
     public async getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {
         const displayFormUri = await objRefToUri(ref, this.workspace, this.authCall);
-        const wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm = await this.authCall((sdk) =>
+        const wrappedDisplayForm: IWrappedAttributeDisplayForm = await this.authCall((sdk) =>
             sdk.md.getObjectDetails(displayFormUri),
         );
-        const wrappedAttribute: GdcMetadata.IWrappedAttribute = await this.authCall((sdk) =>
+        const wrappedAttribute: IWrappedAttribute = await this.authCall((sdk) =>
             sdk.md.getObjectDetails(wrappedDisplayForm.attributeDisplayForm.content.formOf),
         );
         return this.buildAttribute(wrappedAttribute.attribute);
@@ -81,58 +88,53 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         refs: ObjRef[],
     ): Promise<IAttributeDisplayFormMetadataObject[]> => {
         const displayFormUris = await objRefsToUris(refs, this.workspace, this.authCall, false);
-        const wrappedAttributeDisplayForms: GdcMetadata.IWrappedAttributeDisplayForm[] = await this.authCall(
-            (sdk) =>
-                sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(this.workspace, displayFormUris),
+        const wrappedAttributeDisplayForms: IWrappedAttributeDisplayForm[] = await this.authCall((sdk) =>
+            sdk.md.getObjects<IWrappedAttributeDisplayForm>(this.workspace, displayFormUris),
         );
 
-        return wrappedAttributeDisplayForms.map(
-            (wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm) => {
-                if (!GdcMetadata.isWrappedAttributeDisplayForm(wrappedDisplayForm)) {
-                    throw new UnexpectedError(
-                        "INVALID_REFERENCED_OBJECT",
-                        new Error("Referenced object is not attributeDisplayForm"),
-                    );
-                }
+        return wrappedAttributeDisplayForms.map((wrappedDisplayForm: IWrappedAttributeDisplayForm) => {
+            if (!isWrappedAttributeDisplayForm(wrappedDisplayForm)) {
+                throw new UnexpectedError(
+                    "INVALID_REFERENCED_OBJECT",
+                    new Error("Referenced object is not attributeDisplayForm"),
+                );
+            }
 
-                const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
-                return this.buildAttributeDisplayForm(displayFormDetails);
-            },
-        );
+            const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
+            return this.buildAttributeDisplayForm(displayFormDetails);
+        });
     };
 
     public getAttributes = async (refs: ObjRef[]): Promise<IAttributeMetadataObject[]> => {
         const attributeUris = await objRefsToUris(refs, this.workspace, this.authCall, false);
         const wrappedAttributes = await this.authCall((sdk) =>
-            sdk.md.getObjects<GdcMetadata.IWrappedAttribute>(this.workspace, attributeUris),
+            sdk.md.getObjects<IWrappedAttribute>(this.workspace, attributeUris),
         );
 
-        return wrappedAttributes.map(
-            (wrappedAttribute: GdcMetadata.IWrappedAttribute): IAttributeMetadataObject => {
-                const {
-                    meta: { title, uri, isProduction, identifier, summary },
-                    content: { displayForms },
-                } = wrappedAttribute.attribute;
-                const ref = uriRef(uri!);
-                const attributeDisplayForms = displayForms.map((displayForm) =>
-                    this.buildAttributeDisplayForm(displayForm),
-                );
+        return wrappedAttributes.map((wrappedAttribute: IWrappedAttribute): IAttributeMetadataObject => {
+            const {
+                meta: { title, uri, isProduction, identifier, summary },
+                content: { displayForms },
+            } = wrappedAttribute.attribute;
+            const ref = uriRef(uri!);
+            const attributeDisplayForms = displayForms.map((displayForm) =>
+                this.buildAttributeDisplayForm(displayForm),
+            );
 
-                return newAttributeMetadataObject(ref, (attribute) =>
-                    attribute
-                        .title(title)
-                        .uri(uri!)
-                        .production(Boolean(isProduction))
-                        .id(identifier!)
-                        .description(summary!)
-                        .displayForms(attributeDisplayForms),
-                );
-            },
-        );
+            return newAttributeMetadataObject(ref, (attribute) =>
+                attribute
+                    .title(title)
+                    .uri(uri!)
+                    .production(Boolean(isProduction))
+                    .id(identifier!)
+                    .description(summary!)
+                    .displayForms(attributeDisplayForms),
+            );
+        });
     };
 
     private buildAttributeDisplayForm = (
-        displayFormDetails: GdcMetadata.IAttributeDisplayForm,
+        displayFormDetails: IAttributeDisplayForm,
     ): IAttributeDisplayFormMetadataObject => {
         const {
             meta: { title, summary, identifier, uri },
@@ -152,7 +154,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         );
     };
 
-    private buildAttribute = (attributeDetails: GdcMetadata.IAttribute): IAttributeMetadataObject => {
+    private buildAttribute = (attributeDetails: IMetadataObjectAttribute): IAttributeMetadataObject => {
         const { title, uri, isProduction, identifier, summary } = attributeDetails.meta;
         const { displayForms } = attributeDetails.content;
         const attributeDisplayForms = displayForms.map((displayForm) =>
@@ -175,7 +177,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         const objectId = getObjectIdFromUri(uri);
 
         return this.authCall(async (sdk) => {
-            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+            const usedBy = await sdk.xhr.getParsed<{ entries: IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/usedby2/${objectId}?types=dataSet`,
             );
 

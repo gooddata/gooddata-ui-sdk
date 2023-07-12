@@ -1,5 +1,12 @@
 // (C) 2007-2023 GoodData Corporation
-import { GdcExecuteAFM, GdcExport } from "@gooddata/api-model-bear";
+import {
+    CompatibilityFilter,
+    IAfm,
+    IBaseExportConfig,
+    IExportBlobResponse,
+    IExportConfig,
+    IExportResponse,
+} from "@gooddata/api-model-bear";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors.js";
@@ -7,9 +14,9 @@ import { ApiResponse, ApiResponseError, XhrModule } from "../xhr.js";
 import { handleHeadPolling, IPollingOptions } from "../util.js";
 import { isExportFinished, getFormatContentType } from "../utils/export.js";
 
-interface IExtendedExportConfig extends GdcExport.IBaseExportConfig {
+interface IExtendedExportConfig extends IBaseExportConfig {
     showFilters?: boolean;
-    afm?: GdcExecuteAFM.IAfm;
+    afm?: IAfm;
 }
 
 interface IResultExport {
@@ -43,9 +50,9 @@ export class ReportModule {
     public exportResult(
         projectId: string,
         executionResult: string,
-        exportConfig: GdcExport.IExportConfig = {},
+        exportConfig: IExportConfig = {},
         pollingOptions: IPollingOptions = {},
-    ): Promise<GdcExport.IExportResponse> {
+    ): Promise<IExportResponse> {
         return this.exportResultToBlob(projectId, executionResult, exportConfig, pollingOptions).then(
             (result) => {
                 URL.revokeObjectURL(result.objectUrl); // release blob memory as it will not be used
@@ -74,9 +81,9 @@ export class ReportModule {
     public exportResultToBlob(
         projectId: string,
         executionResult: string,
-        exportConfig: GdcExport.IExportConfig = {},
+        exportConfig: IExportConfig = {},
         pollingOptions: IPollingOptions = {},
-    ): Promise<GdcExport.IExportBlobResponse> {
+    ): Promise<IExportBlobResponse> {
         const requestPayload: IExportResultPayload = {
             resultExport: {
                 executionResult,
@@ -90,7 +97,7 @@ export class ReportModule {
         return this.xhr
             .post(`/gdc/internal/projects/${projectId}/exportResult`, { body: requestPayload })
             .then((response: ApiResponse) => response.getData())
-            .then((data: GdcExport.IExportResponse) =>
+            .then((data: IExportResponse) =>
                 handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, isExportFinished, {
                     ...pollingOptions,
                     blobContentType: getFormatContentType(exportConfig.format),
@@ -99,11 +106,11 @@ export class ReportModule {
             .catch(this.handleExportResultError);
     }
 
-    private sanitizeExportConfig(exportConfig: GdcExport.IExportConfig): IExtendedExportConfig {
+    private sanitizeExportConfig(exportConfig: IExportConfig): IExtendedExportConfig {
         const { afm } = exportConfig;
 
         if (afm && !isEmpty(afm.filters)) {
-            const sanitizedAfm: GdcExecuteAFM.IAfm = {
+            const sanitizedAfm: IAfm = {
                 ...afm,
                 filters: this.sanitizeFilters(afm.filters),
             };
@@ -135,9 +142,7 @@ export class ReportModule {
         return (error as ApiResponseError).response !== undefined;
     }
 
-    private sanitizeFilters(
-        filters?: GdcExecuteAFM.CompatibilityFilter[],
-    ): GdcExecuteAFM.CompatibilityFilter[] {
+    private sanitizeFilters(filters?: CompatibilityFilter[]): CompatibilityFilter[] {
         return filters ? compact(filters) : [];
     }
 }
