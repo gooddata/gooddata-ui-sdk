@@ -15,7 +15,7 @@ module.exports = {
     parserOptions: { tsconfigRootDir: __dirname },
     ignorePatterns: [
         "webpack.config.cjs",
-        "scripts/refresh-md.cjs",
+        "scripts/refresh-md.js",
         "configTemplates/ts/vite.config.ts",
         "configTemplates/js/vite.config.js",
     ],
