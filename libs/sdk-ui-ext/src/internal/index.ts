@@ -22,7 +22,7 @@ export {
     LegendSection,
 };
 
-export { BaseVisualization } from "./components/BaseVisualization.js";
+export { BaseVisualization, IBaseVisualizationProps } from "./components/BaseVisualization.js";
 
 export {
     IVisualizationCatalog,
