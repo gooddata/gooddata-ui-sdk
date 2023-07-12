@@ -97,6 +97,7 @@ export class AnalyticalDesigner {
                 this.getElement().find(OVERLAY_MESSAGE_SELECTOR).should("not.exist");
             });
     }
+    
 
     waitForMainLoading() {
         this.getElement().find("main-loading").should("not.exist");
