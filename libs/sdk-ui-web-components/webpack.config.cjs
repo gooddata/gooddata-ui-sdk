@@ -39,20 +39,6 @@ module.exports = (env, argv) => ({
             ".js": [".ts", ".tsx", ".js", ".jsx"],
         },
 
-        alias: {
-            react: path.resolve("./node_modules/react"),
-            "react-dom": path.resolve("./node_modules/react-dom"),
-
-            // fixes tilde imports in CSS from sdk-ui-* packages
-            "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
-            "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
-            "@gooddata/sdk-ui-geo": path.resolve("./node_modules/@gooddata/sdk-ui-geo"),
-            "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
-            "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
-            "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
-            "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
-        },
-
         // Prefer ESM versions of packages to enable tree shaking
         mainFields: ["module", "browser", "main"],
     },
