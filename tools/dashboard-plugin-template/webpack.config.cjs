@@ -77,17 +77,6 @@ module.exports = (_env, argv) => {
                     ".js": [".ts", ".tsx", ".js", ".jsx"],
             },
 
-            alias: {
-
-                // fixes tilde imports in CSS from sdk-ui-* packages
-                "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
-                "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
-                "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
-                "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
-                "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
-                "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
-            },
-
             // Prefer ESM versions of packages to enable tree shaking
             mainFields: ["module", "browser", "main"],
 

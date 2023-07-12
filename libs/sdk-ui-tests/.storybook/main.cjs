@@ -28,18 +28,10 @@ module.exports = {
             },
             alias: {
                 ...config.resolve.alias,
-                // fixes tilde imports in CSS from sdk-ui-ext
+                // fixes internal exports from sdk-ui-ext
                 "@gooddata/sdk-ui-ext/internal": path.resolve(
                     "./node_modules/@gooddata/sdk-ui-ext/esm/internal",
                 ),
-                "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
-                "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
-                "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
-                "@gooddata/sdk-ui": path.resolve("./node_modules/@gooddata/sdk-ui"),
-                "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
-                "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
-                "@gooddata/sdk-ui-geo": path.resolve("./node_modules/@gooddata/sdk-ui-geo"),
-                "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
             },
         },
         plugins: [
