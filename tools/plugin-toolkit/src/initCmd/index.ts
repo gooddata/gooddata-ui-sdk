@@ -140,7 +140,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
             },
         ],
         scripts: {
-            "refresh-md.cjs": [
+            "refresh-md.js": [
                 {
                     regex: /const backend = "bear"/g,
                     value: 'const backend = "tiger"',

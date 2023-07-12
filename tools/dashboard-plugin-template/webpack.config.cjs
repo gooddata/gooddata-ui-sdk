@@ -206,15 +206,15 @@ module.exports = (_env, argv) => {
                          * this is the main entry point providing info about the engine and plugin
                          * this allows us to only load the plugin and/or engine when needed
                          */
-                        [`./${MODULE_FEDERATION_NAME}_ENTRY`]: `./src/${MODULE_FEDERATION_NAME}_entry`,
+                        [`./${MODULE_FEDERATION_NAME}_ENTRY`]: `./src/${MODULE_FEDERATION_NAME}_entry/index.js`,
                         /**
                          * this is the entry to the plugin itself
                          */
-                        [`./${MODULE_FEDERATION_NAME}_PLUGIN`]: `./src/${MODULE_FEDERATION_NAME}`,
+                        [`./${MODULE_FEDERATION_NAME}_PLUGIN`]: `./src/${MODULE_FEDERATION_NAME}/index.js`,
                         /**
                          * this is the entry to the engine
                          */
-                        [`./${MODULE_FEDERATION_NAME}_ENGINE`]: `./src/${MODULE_FEDERATION_NAME}_engine`,
+                        [`./${MODULE_FEDERATION_NAME}_ENGINE`]: `./src/${MODULE_FEDERATION_NAME}_engine/index.js`,
                     },
 
                     // adds react as shared module

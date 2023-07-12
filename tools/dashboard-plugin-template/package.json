@@ -47,7 +47,7 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.jsc --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
-        "refresh-md": "node ./scripts/refresh-md.cjs"
+        "refresh-md": "node ./scripts/refresh-md.js"
     },
     "dependencies": {
         "@gooddata/sdk-ui-dashboard": "workspace:*",
