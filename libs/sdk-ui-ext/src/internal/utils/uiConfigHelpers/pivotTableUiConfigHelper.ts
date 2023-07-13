@@ -2,6 +2,7 @@
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
+import { ISettings } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
 
@@ -31,14 +32,19 @@ export function setPivotTableUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: IntlShape,
     visualizationType: string,
+    settings: ISettings,
 ): void {
     set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
-    const messageId =
-        referencePoint.properties?.controls?.measureGroupDimension === "rows"
-            ? messages["inRows"].id
-            : messages["inColumns"].id;
-    const subtitle = getTranslation(messageId, intl);
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
+
+    if (settings?.enablePivotTableTransposition) {
+        const messageId =
+            referencePoint.properties?.controls?.measureGroupDimension === "rows"
+                ? messages["inRows"].id
+                : messages["inColumns"].id;
+        const subtitle = getTranslation(messageId, intl);
+        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
+    }
+
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], true);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], true);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], true);
