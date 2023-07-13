@@ -570,6 +570,22 @@ describe("PluggablePivotTable", () => {
                     expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
         });
+
+        it("should return a new reference point with ui config with measures bucket subtitles", () => {
+            const pivotTable = createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enablePivotTableTransposition: true,
+                },
+            });
+            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+
+            return pivotTable
+                .getExtendedReferencePoint(sourceReferencePoint)
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
+                });
+        });
     });
 });
 

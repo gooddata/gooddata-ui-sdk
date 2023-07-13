@@ -67,7 +67,6 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given an empty refere
       "isShowInPercentEnabled": false,
       "isShowInPercentVisible": true,
       "itemsLimit": 20,
-      "subtitle": "in columns",
       "title": "Measures",
     },
   },
@@ -152,7 +151,6 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given multipleMetrics
       "isShowInPercentEnabled": false,
       "isShowInPercentVisible": true,
       "itemsLimit": 20,
-      "subtitle": "in columns",
       "title": "Measures",
     },
   },
@@ -237,7 +235,6 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
       "isShowInPercentEnabled": true,
       "isShowInPercentVisible": true,
       "itemsLimit": 20,
-      "subtitle": "in columns",
       "title": "Measures",
     },
   },
@@ -291,6 +288,90 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new r
       "itemsLimit": 20,
       "itemsLimitByType": {
         "date": 20,
+      },
+      "title": "Columns",
+    },
+    "filters": {
+      "accepts": [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": {
+        "date": 1,
+      },
+    },
+    "measures": {
+      "accepts": [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-measures.svg",
+      "isShowInPercentEnabled": true,
+      "isShowInPercentVisible": true,
+      "itemsLimit": 20,
+      "title": "Measures",
+    },
+  },
+  "exportConfig": {
+    "supported": true,
+  },
+  "openAsReport": {
+    "supported": false,
+  },
+  "recommendations": {},
+  "supportedOverTimeComparisonTypes": [
+    "same_period_previous_year",
+    "previous_period",
+  ],
+}
+`;
+
+exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new reference point with ui config with measures bucket subtitles 1`] = `
+{
+  "buckets": {
+    "attribute": {
+      "accepts": [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-rows.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": {
+        "date": 1,
+      },
+      "title": "Rows",
+    },
+    "columns": {
+      "accepts": [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-columns.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": {
+        "date": 1,
       },
       "title": "Columns",
     },
