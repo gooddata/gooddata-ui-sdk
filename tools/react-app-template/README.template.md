@@ -7,8 +7,6 @@ See it action by running `{{packageManager}} start` command.
 
 ## Quick Introduction
 
-> TODO - describe the data that is used in the project, with link to CN docs
-
 The project includes:
 
 -   All necessary NPM dependencies in [`package.json`](./package.json).
@@ -18,7 +16,7 @@ The project includes:
     -   `{{packageManager}} run clean` - to clear the results of the previous build.
     -   `{{packageManager}} run refresh-md` - to update the [metadata catalogue](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html).
 -   A sample [Webpack configuration](./webpack.config.js).
--   A development proxy to easily connect to the public demo data for visualizations without the need to work around CORS.
+-   A development proxy to easily connect to the public [demo data](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/connect-data#ConnectData-SampleDatabase) for visualizations without the need to work around CORS.
 -   An example code for GoodData Rect SDK in the [`App.{{language}}x`](./src/App.{{language}}x) file.
 
 ## What's next?
@@ -194,7 +192,7 @@ your own data instead.
     TIGER_API_TOKEN=<your_api_token>
     ```
    Make sure you do not commit the `.env` file to your VCS (e.g. Git)
-3. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `npm run refresh-md`.
+3. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `{{packageManager}} run refresh-md`.
 4. Update the `App.{{language}}x`. Since we've switched to your own data, the reference to the insight in `App.{{language}}x` is no longer valid.
    Select a new insight to render from the catalog and update `App.{{language}}x`:
     ```diff
@@ -238,7 +236,7 @@ By default, GoodData React SDK is configured to connect to GoodData Cloud or Goo
     +    PASSWORD=<your-password>
     ```
    Make sure you do not commit the `.env` file to your VCS (e.g. Git).
-4. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `npm run refresh-md`.
+4. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `{{packageManager}} run refresh-md`.
 5. Update the `App.{{language}}x`. Since we've switched to your own data, the reference to the insight in `App.{{language}}x` is no longer valid.
    Select a new insight to render from the catalog and update `App.{{language}}x`:
     ```diff
