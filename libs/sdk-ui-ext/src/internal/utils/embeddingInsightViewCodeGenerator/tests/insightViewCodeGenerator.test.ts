@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { insightViewCodeGenerator } from "../insightViewCodeGenerator.js";
+import { insightViewCodeGenerator, insightViewEmbeddedCodeGenerator } from "../insightViewCodeGenerator.js";
 import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { idRef, IInsight, insightUri, newInsightDefinition } from "@gooddata/sdk-model";
@@ -67,6 +67,27 @@ describe("insightViewCodeGenerator tests", () => {
         );
         expect(
             insightViewCodeGenerator(insight, {
+                context: {
+                    settings: {
+                        enableAxisNameConfiguration: true,
+                        enableHidingOfDataPoints: true,
+                        locale: "de-DE",
+                        separators: { decimal: ".", thousand: "," },
+                        userId: "user",
+                        workspace: "workspace",
+                    },
+                },
+                language: "ts",
+            }),
+        ).toMatchSnapshot();
+    });
+
+    it("should generate code without the insight configuration", () => {
+        const insight = recordedInsights(ReferenceRecordings.Recordings).find(
+            (insight) => insightUri(insight) === INSIGHT_URI,
+        );
+        expect(
+            insightViewEmbeddedCodeGenerator(insight, {
                 context: {
                     settings: {
                         enableAxisNameConfiguration: true,

@@ -60,12 +60,36 @@ import { InsightView } from \\"@gooddata/sdk-ui-ext\\";
 
 const insight = \\"AreaChart.0229f24b92f336871eeb04e1e16c4e68\\";
 const showTitle = \\"AreaChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top\\";
+const locale = \\"de-DE\\";
 const config: IChartConfig = {
     legend: {
         position: \\"top\\",
         responsive: \\"autoPositionWithPopup\\"
     }
 };
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <InsightView
+                insight={insight}
+                showTitle={showTitle}
+                locale={locale}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`insightViewCodeGenerator tests > should generate code without the insight configuration 1`] = `
+"import React from \\"react\\";
+import { InsightView } from \\"@gooddata/sdk-ui-ext\\";
+
+const insight = \\"AreaChart.0229f24b92f336871eeb04e1e16c4e68\\";
+const showTitle = \\"AreaChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top\\";
 const locale = \\"de-DE\\";
 const style = {height: 400};
 
@@ -75,7 +99,6 @@ export function MyComponent() {
             <InsightView
                 insight={insight}
                 showTitle={showTitle}
-                config={config}
                 locale={locale}
             />
         </div>

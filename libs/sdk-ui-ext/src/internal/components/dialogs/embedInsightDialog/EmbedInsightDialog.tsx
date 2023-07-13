@@ -18,7 +18,7 @@ import {
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 import { FullVisualizationCatalog } from "../../VisualizationCatalog.js";
-import { insightViewCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator.js";
+import { insightViewEmbeddedCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator.js";
 import { getWebComponentsCodeGenerator } from "../../../utils/embeddingCodeGenerator/getWebComponentsCodeGenerator.js";
 
 const INSIGHT_VIEW_PROPERTIES_LINK =
@@ -196,7 +196,7 @@ const generateCodeByReact = (input: ICodeGenInput<IReactOptions>) => {
         const descriptor = FullVisualizationCatalog.forInsight(insight);
         return descriptor.getEmbeddingCode?.(insight, generateCodeConfig);
     }
-    return insightViewCodeGenerator(insight, generateCodeConfig);
+    return insightViewEmbeddedCodeGenerator(insight, generateCodeConfig);
 };
 
 const generateCodeByWebComponents = (input: ICodeGenInput<IWebComponentsOptions>) => {
