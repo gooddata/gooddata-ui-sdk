@@ -338,6 +338,7 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
     constructor(jwt: string, notAuthenticatedHandler?: NotAuthenticatedHandler, tokenIsAboutToExpireHandler?: JwtIsAboutToExpireHandler | undefined, secondsBeforeTokenExpirationToCallReminder?: number);
     // (undocumented)
     initializeClient(client: ITigerClient): void;
+    updateJwt: (jwt: string) => void;
 }
 
 // @internal
