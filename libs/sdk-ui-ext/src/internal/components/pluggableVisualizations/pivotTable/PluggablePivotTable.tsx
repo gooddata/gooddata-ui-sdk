@@ -280,7 +280,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             ...controlsObj,
         };
 
-        setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE);
+        setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE, this.settings);
         configurePercent(newReferencePoint, false);
         configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
         Object.assign(
