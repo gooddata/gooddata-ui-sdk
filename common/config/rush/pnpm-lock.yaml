@@ -3255,6 +3255,7 @@ importers:
       ts-node: ^10.4.0
       tslib: ^2.5.0
       typescript: 5.0.2
+      validate-npm-package-name: ^5.0.0
       vitest: 0.31.4
     dependencies:
       '@babel/cli': 7.21.0_@babel+core@7.21.4
@@ -3278,6 +3279,7 @@ importers:
       strip-ansi: 6.0.1
       tar: 6.1.13
       tslib: 2.5.0
+      validate-npm-package-name: 5.0.0
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@types/columnify': 1.5.1
@@ -3894,6 +3896,7 @@ importers:
       ts-node: ^10.4.0
       tslib: ^2.5.0
       typescript: 5.0.2
+      validate-npm-package-name: ^5.0.0
       vitest: 0.31.4
     dependencies:
       '@babel/cli': 7.21.0_@babel+core@7.21.4
@@ -3918,6 +3921,7 @@ importers:
       strip-ansi: 6.0.1
       tar: 6.1.13
       tslib: 2.5.0
+      validate-npm-package-name: 5.0.0
     devDependencies:
       '@gooddata/eslint-config': 4.1.0_e26rfststzmmda6s4rqitickwm
       '@types/columnify': 1.5.1
@@ -10989,6 +10993,12 @@ packages:
 
   /builtin-status-codes/3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
+    dev: false
+
+  /builtins/5.0.1:
+    resolution: {integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==}
+    dependencies:
+      semver: 7.5.1
     dev: false
 
   /bundle-name/3.0.0:
@@ -21997,6 +22007,13 @@ packages:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
+
+  /validate-npm-package-name/5.0.0:
+    resolution: {integrity: sha512-YuKoXDAhBYxY7SfOKxHBDoSyENFeW5VvIIQp2TGQuit8gpK6MnWaQelBKxso72DoxTZfZdcP3W90LqpSkgPzLQ==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    dependencies:
+      builtins: 5.0.1
+    dev: false
 
   /validator/13.9.0:
     resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}

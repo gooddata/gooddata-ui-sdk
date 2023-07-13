@@ -1,17 +1,19 @@
 // (C) 2007-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
-import url from "url";
-import includes from "lodash/includes.js";
-import { InputValidationError, TargetBackendType } from "../types.js";
 import axios, { AxiosError } from "axios";
+import validateNpmPackageName from "validate-npm-package-name";
+import url from "url";
+import isEmpty from "lodash/isEmpty.js";
+import includes from "lodash/includes.js";
+import capitalize from "lodash/capitalize.js";
 import {
     IAnalyticalBackend,
     isUnexpectedResponseError,
     IDashboardWithReferences,
     IAnalyticalWorkspace,
 } from "@gooddata/sdk-backend-spi";
-import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";
 import { idRef, IDashboardPlugin } from "@gooddata/sdk-model";
+import { InputValidationError, TargetBackendType } from "../types.js";
+import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;
 export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
@@ -28,13 +30,14 @@ export function pluginNameValidator(value: string): boolean | string {
         return "Please enter non-empty plugin name.";
     }
 
-    // pattern used by VS code:
-    if (!value.match(/^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/)) {
-        return "Invalid plugin name. Plugin name must be a valid package name.";
-    }
+    const result = validateNpmPackageName(value);
 
-    if (value.length > 214) {
-        return "Invalid plugin name. Plugin too long.";
+    if (result.errors?.length) {
+        return `Invalid plugin name. ${result.errors
+            .map((e: string) => {
+                return `${capitalize(e)}.`;
+            })
+            .join(" ")}`;
     }
 
     return true;

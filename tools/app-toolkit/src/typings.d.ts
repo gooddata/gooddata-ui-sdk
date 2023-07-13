@@ -14,3 +14,14 @@ declare module "*.json" {
     const value: any;
     export default value;
 }
+
+declare module "validate-npm-package-name" {
+    const validate: (value: string) => {
+        validForNewPackages: boolean;
+        validForOldPackages: boolean;
+        errors?: string[];
+        warnings?: string[];
+    };
+
+    export default validate;
+}

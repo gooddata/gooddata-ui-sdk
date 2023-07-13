@@ -63,7 +63,8 @@
         "ora": "^5.3.0",
         "strip-ansi": "^6.0.0",
         "tar": "^6.1.11",
-        "tslib": "^2.5.0"
+        "tslib": "^2.5.0",
+        "validate-npm-package-name": "^5.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
