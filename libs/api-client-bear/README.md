@@ -1,5 +1,8 @@
 # GoodData Platform REST API Client
 
+
+test
+
 [![npm version](https://img.shields.io/npm/v/@gooddata/api-client-bear)](https://www.npmjs.com/@gooddata/api-client-bear)&nbsp;
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/api-client-bear)](https://npmcharts.com/compare/@gooddata/api-client-bear?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
