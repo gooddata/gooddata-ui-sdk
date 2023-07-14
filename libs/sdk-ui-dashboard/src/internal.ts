@@ -21,3 +21,4 @@ export * from "./_staging/dashboard/fluidLayout/config.js";
 export * from "./_staging/layout/sizing.js";
 export * from "./_staging/dateFilterConfig/dateFilterOptionMapping.js";
 export * from "./_staging/dateFilterConfig/dateFilterConfigConverters.js";
+export * from "./_staging/dashboard/dashboardFilterConverter.js";
