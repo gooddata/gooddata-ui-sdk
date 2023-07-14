@@ -5,7 +5,13 @@ import { CellEvent } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes.js";
 import { isSomeTotal } from "../data/dataSourceUtils.js";
-import { isScopeCol, isSeriesCol, isSliceCol } from "../structure/tableDescriptorTypes.js";
+import {
+    isMixedValuesCol,
+    isScopeCol,
+    isSeriesCol,
+    isSliceCol,
+    isSliceMeasureCol,
+} from "../structure/tableDescriptorTypes.js";
 import {
     convertDrillableItemsToPredicates,
     IDrillEvent,
@@ -35,6 +41,10 @@ export function onCellClickedFactory(
 
         const { colDef, data, rowIndex } = cellEvent;
         const col = table.tableDescriptor.getCol(colDef);
+
+        if (isSliceMeasureCol(col) || isMixedValuesCol(col)) {
+            return false;
+        }
 
         // cells belong to either slice column or leaf data column; if cells belong to column of a different
         // type then there must be either something messed up with table construction or a new type of cell
